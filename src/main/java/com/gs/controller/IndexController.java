@@ -17,7 +17,8 @@ public class IndexController {
 
     @RequestMapping(value = "index",method = RequestMethod.GET)
     public String home() {
-        return "customer/index";
+        logger.info("进入主页");
+        return "company/index";
     }
 
 }
