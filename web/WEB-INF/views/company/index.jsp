@@ -405,7 +405,8 @@
             <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
         </div>
         <div class="row J_mainContent" id="content-main">
-            <iframe class="J_iframe" id="J_iframe" name="iframe0" width="100%" height="100%" src="<%=path %>/company/home"
+            <iframe class="J_iframe" id="J_iframe" name="iframe0" width="100%" height="100%"
+                    src="<%=path %>/company/home"
                     frameborder="0" data-id="<%=path %>/company/home" seamless></iframe>
         </div>
         <div class="footer">
@@ -487,27 +488,27 @@
                             </div>
                         </div>
                         <div class="title">皮肤选择</div>
-                        <div class="setings-item default-skin nb">
+                        <a href="#" class="s-skin-0">
+                            <div class="setings-item default-skin nb">
                                 <span class="skin-name ">
-                         <a href="#" class="s-skin-0">
-                             默认皮肤
-                         </a>
-                    </span>
-                        </div>
-                        <div class="setings-item blue-skin nb">
-                                <span class="skin-name ">
+                                    默认皮肤
+                                </span>
+                            </div>
+                        </a>
                         <a href="#" class="s-skin-1">
-                            蓝色主题
-                        </a>
-                    </span>
-                        </div>
-                        <div class="setings-item yellow-skin nb">
+                            <div class="setings-item blue-skin nb">
                                 <span class="skin-name ">
-                        <a href="#" class="s-skin-3">
-                            黄色/紫色主题
+                                    蓝色主题
+                                </span>
+                            </div>
                         </a>
-                    </span>
-                        </div>
+                        <a href="#" class="s-skin-3">
+                            <div class="setings-item yellow-skin nb">
+                                <span class="skin-name ">
+                                    黄色/紫色主题
+                                </span>
+                            </div>
+                        </a>
                     </div>
                 </div>
                 <div id="tab-2" class="tab-pane">
@@ -731,12 +732,20 @@
     </div>
 </div>
 
-
 <div id="Menu1" style="background-color:White; border:1px solid #cccccc; padding:10px;">
-    <div id="mm-tabupdate" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)" style="cursor: pointer;" class="J_tabThisRefresh">刷新</div>
-    <div id="mm-tabclose" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)" style="cursor: pointer;" class="J_tabCloseThis">关闭</div>
-    <div id="mm-tabcloseother" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)" style="cursor: pointer;" class="J_tabCloseOther">关闭其他</div>
-    <div id="mm-tabcloseall" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)" style="cursor: pointer;" class="J_tabCloseAll">关闭全部</div>
+    <div id="mm-tabupdate" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)"
+         style="cursor: pointer; padding: 5px;" class="J_tabThisRefresh">刷新当前页
+    </div>
+    <div style="border-bottom: 1px solid #cccccc; height: 5px; margin-bottom: 5px;"></div>
+    <div id="mm-tabclose" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)"
+         style="cursor: pointer; padding: 5px;" class="J_tabCloseThis">关闭当前页
+    </div>
+    <div id="mm-tabcloseother" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)"
+         style="cursor: pointer; padding: 5px;" class="J_tabCloseOther">关闭其他页
+    </div>
+    <div id="mm-tabcloseall" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)"
+         style="cursor: pointer; padding: 5px;" class="J_tabCloseAll">关闭全部
+    </div>
 </div>
 
 <script src="<%=path %>/js/jquery.min.js?v=2.1.4"></script>
@@ -747,154 +756,14 @@
 <script src="<%=path %>/js/hplus.min.js?v=4.1.0"></script>
 <script src="<%=path %>/js/contabs.min.js" type="text/javascript"></script>
 <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
+<script src="<%=path %>/js/main.js" type="text/javascript"></script>
 <script>
-    $(function() {
+    $(function () {
 
         var MM = new csMenu(document.getElementById("rightEvent"), document.getElementById("Menu1"));
         tabCloseEven();
     });
-    //绑定右键菜单事件
-    function tabCloseEven() {
-        var menu = document.getElementById("Menu1")
-        //刷新
-        $('#mm-tabupdate').click(function() {
-            menu.style.display = "none";
-        })
-        //关闭当前
-        $('#mm-tabclose').click(function() {
-            menu.style.display = "none";
-        })
-        //全部关闭
-        $('#mm-tabcloseall').click(function() {
-            menu.style.display = "none";
-        });
-        //关闭除当前之外的TAB
-        $('#mm-tabcloseother').click(function() {
-            menu.style.display = "none";
-        });
 
-
-    }
-
-    function csMenu(_object, _menu)
-    {
-        this.IEventHander = null;
-        this.IFrameHander = null;
-        this.IContextMenuHander = null;
-
-        this.Show = function(_menu)
-        {
-            var e = window.event || event;
-            if (e.button == 2)
-            {
-                if (window.document.all)
-                {
-                    this.IContextMenuHander = function(){return false;};
-                    document.attachEvent("oncontextmenu", this.IContextMenuHander);
-                }
-                else
-                {
-                    this.IContextMenuHander = document.oncontextmenu;
-                    document.oncontextmenu = function(){return false;};
-                }
-
-                window.csMenu$Object = this;
-                this.IEventHander = function(){window.csMenu$Object.Hide(_menu);};
-
-                if (window.document.all)
-                    document.attachEvent("onmousedown", this.IEventHander);
-                else
-                    document.addEventListener("mousedown", this.IEventHander, false);
-
-                _menu.style.left = e.clientX;
-                _menu.style.top = e.clientY;
-                _menu.style.display = "";
-
-                if (this.IFrameHander)
-                {
-                    var _iframe = document.getElementById(this.IFrameHander);
-                    _iframe.style.left = e.clientX;
-                    _iframe.style.top = e.clientY;
-                    _iframe.style.height = _menu.offsetHeight;
-                    _iframe.style.width = _menu.offsetWidth;
-                    _iframe.style.display = "";
-                }
-            }
-        };
-
-        this.Hide = function(_menu)
-        {
-            var e = window.event || event;
-            var _element = e.srcElement;
-            do
-            {
-                if (_element == _menu)
-                {
-                    return false;
-                }
-            }
-            while ((_element = _element.offsetParent));
-
-            if (window.document.all)
-                document.detachEvent("on"+e.type, this.IEventHander);
-            else
-                document.removeEventListener(e.type, this.IEventHander, false);
-
-            if (this.IFrameHander)
-            {
-                var _iframe = document.getElementById(this.IFrameHander);
-                _iframe.style.display = "none";
-            }
-
-            _menu.style.display = "none";
-
-            if (window.document.all)
-                document.detachEvent("oncontextmenu", this.IContextMenuHander);
-            else
-                document.oncontextmenu = this.IContextMenuHander;
-        };
-
-        this.initialize = function(_object, _menu)
-        {
-            window._csMenu$Object = this;
-            var _eventHander = function(){window._csMenu$Object.Show(_menu);};
-
-            _menu.style.position = "absolute";
-            _menu.style.display = "none";
-            _menu.style.zIndex = "1000000";
-
-            if (window.document.all)
-            {
-                var _iframe = document.createElement('iframe');
-                document.body.insertBefore(_iframe, document.body.firstChild);
-                _iframe.id = _menu.id + "_iframe";
-                this.IFrameHander = _iframe.id;
-
-                _iframe.style.position = "absolute";
-                _iframe.style.display = "none";
-                _iframe.style.zIndex = "999999";
-                _iframe.style.border = "0px";
-                _iframe.style.height = "0px";
-                _iframe.style.width = "0px";
-
-                _object.attachEvent("onmouseup", _eventHander);
-            }
-            else
-            {
-                _object.addEventListener("mouseup", _eventHander, false);
-            }
-        };
-
-        this.initialize(_object, _menu);
-    }
-    function mouseLeave(obj) {
-        obj.style.backgroundColor="white";
-        obj.style.color="black";
-    }
-    function mouseOver(obj) {
-        obj.style.backgroundColor="gray";
-        obj.style.color="white";
-    }
 </script>
 </body>
 
