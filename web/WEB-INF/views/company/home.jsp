@@ -12,11 +12,13 @@
 <html>
 <head>
     <title>主页</title>
+
+    <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 公司主页
-<button onclick="sha()">aa</button>
 
-
+<%@ include file="../common/rightMenu.jsp" %>
+<script src="<%=path %>/js/contextmenu.js"></script>
 </body>
 </html>

@@ -26,4 +26,10 @@ public class CompanyController {
         logger.info("显示公司基本信息");
         return "company/company_info";
     }
+
+    @RequestMapping(value = "brand", method = RequestMethod.GET)
+    private String showCarBrand() {
+        logger.info("显示汽车品牌");
+        return "company/car_brand";
+    }
 }

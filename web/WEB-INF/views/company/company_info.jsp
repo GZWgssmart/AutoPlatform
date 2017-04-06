@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -9,17 +12,9 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
-    <link href="/css/sweet-alert.css" rel="stylesheet" type="text/css">
-
-
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/bootstrap-table.js"></script>
-    <script src="/js/bootstrap-table-zh-CN.min.js"></script>
-    <script src="/js/sweet-alert.min.js"></script>
-    <script src="/js/jquery.formFill.js"></script>
+    <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -151,6 +146,15 @@
         </div>
     </div>
 </div>
+
+<%@ include file="../common/rightMenu.jsp" %>
+<script src="<%=path %>/js/contextmenu.js"></script>
+<script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrap.min.js"></script>
+<script src="<%=path %>/js/bootstrap-table.js"></script>
+<script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
+<script src="<%=path %>/js/sweet-alert.min.js"></script>
+<script src="<%=path %>/js/jquery.formFill.js"></script>
 <script type="text/javascript">
     function initTable() {
         //先销毁表格

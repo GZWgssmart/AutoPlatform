@@ -74,7 +74,7 @@
                             <a class="J_menuItem" href="<%=path %>/company/info">公司信息管理</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="<%=path %>/company/home">汽车品牌管理</a>
+                            <a class="J_menuItem" href="<%=path %>/company/brand">汽车品牌管理</a>
                         </li>
                         <li>
                             <a class="J_menuItem" href="graph_morris.html">车型管理</a>
@@ -396,6 +396,8 @@
                     <li class="J_tabShowActive"><a>定位当前选项卡</a>
                     </li>
                     <li class="divider"></li>
+                    <li class="J_tabCloseThis"><a>关闭当前选项卡</a>
+                    </li>
                     <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
                     </li>
                     <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
@@ -410,7 +412,8 @@
                     frameborder="0" data-id="<%=path %>/company/home" seamless></iframe>
         </div>
         <div class="footer">
-            <div class="pull-right">&copy; 2017-2030 <a href="#">FirstGroup</a>
+            <div class="pull-right">
+                &copy;版权所有 15秋预科
             </div>
         </div>
     </div>
@@ -732,22 +735,6 @@
     </div>
 </div>
 
-<div id="Menu1" style="background-color:White; border:1px solid #cccccc; padding:10px;">
-    <div id="mm-tabupdate" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)"
-         style="cursor: pointer; padding: 5px;" class="J_tabThisRefresh">刷新当前页
-    </div>
-    <div style="border-bottom: 1px solid #cccccc; height: 5px; margin-bottom: 5px;"></div>
-    <div id="mm-tabclose" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)"
-         style="cursor: pointer; padding: 5px;" class="J_tabCloseThis">关闭当前页
-    </div>
-    <div id="mm-tabcloseother" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)"
-         style="cursor: pointer; padding: 5px;" class="J_tabCloseOther">关闭其他页
-    </div>
-    <div id="mm-tabcloseall" onmouseleave="mouseLeave(this)" onmouseover="mouseOver(this)"
-         style="cursor: pointer; padding: 5px;" class="J_tabCloseAll">关闭全部
-    </div>
-</div>
-
 <script src="<%=path %>/js/jquery.min.js?v=2.1.4"></script>
 <script src="<%=path %>/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="<%=path %>/js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -756,15 +743,7 @@
 <script src="<%=path %>/js/hplus.min.js?v=4.1.0"></script>
 <script src="<%=path %>/js/contabs.min.js" type="text/javascript"></script>
 <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
-<script src="<%=path %>/js/main.js" type="text/javascript"></script>
-<script>
-    $(function () {
 
-        var MM = new csMenu(document.getElementById("rightEvent"), document.getElementById("Menu1"));
-        tabCloseEven();
-    });
-
-</script>
 </body>
 
 
