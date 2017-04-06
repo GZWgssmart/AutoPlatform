@@ -13,19 +13,10 @@
 <head>
     <title>主页</title>
 </head>
-<body onload="refresh()">
+<body>
 公司主页
 <button onclick="sha()">aa</button>
 
-<script>
-    function refresh()
-    {
-        alert("刷新！");
-    }
-    function sha() {
-        location.reload();
-    }
 
-</script>
 </body>
 </html>

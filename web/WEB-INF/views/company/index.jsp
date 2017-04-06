@@ -71,7 +71,7 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="<%=path %>/company/home">公司信息管理</a>
+                            <a class="J_menuItem" href="<%=path %>/company/info">公司信息管理</a>
                         </li>
                         <li>
                             <a class="J_menuItem" href="<%=path %>/company/home">汽车品牌管理</a>
