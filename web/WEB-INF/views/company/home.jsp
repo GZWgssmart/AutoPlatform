@@ -12,20 +12,13 @@
 <html>
 <head>
     <title>主页</title>
+
+    <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
-<body onload="refresh()">
+<body>
 公司主页
-<button onclick="sha()">aa</button>
 
-<script>
-    function refresh()
-    {
-        alert("刷新！");
-    }
-    function sha() {
-        location.reload();
-    }
-
-</script>
+<%@ include file="../common/rightMenu.jsp" %>
+<script src="<%=path %>/js/contextmenu.js"></script>
 </body>
 </html>
