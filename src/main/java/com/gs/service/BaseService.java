@@ -70,7 +70,7 @@ public interface BaseService<PK extends Serializable, T> {
      * @param status
      * @return
      */
-    public List<T> queryAll(String status);
+    public List<T> queryByStatus(String status);
 
     /**
      * 查询单个记录

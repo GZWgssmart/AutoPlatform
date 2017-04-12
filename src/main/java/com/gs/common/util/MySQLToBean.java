@@ -49,6 +49,8 @@ public class MySQLToBean extends JFrame {
     String configFile = "config.ini";
     private JLabel lblNewLabel_4;
 
+    private boolean dateFlag = false;
+
     public MySQLToBean() {
 
         setResizable(false);
@@ -132,6 +134,7 @@ public class MySQLToBean extends JFrame {
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 go();
+                dateFlag = false;
             }
         });
         button.setBounds(145, 242, 93, 23);
@@ -365,6 +368,7 @@ public class MySQLToBean extends JFrame {
     private void parseTableByShowCreate(Connection conn, String tablename,
                                         String packname, String outputdir) {
         StringBuilder classInfo = new StringBuilder("/**\r\n*");
+        String importDate = "import java.util.Date;\r\n\r\n";
         boolean shouldCloseConn = false;
         String sql = "desc " + tablename;
         ResultSet rs = null;
@@ -420,6 +424,9 @@ public class MySQLToBean extends JFrame {
         try {
             FileWriter fw = new FileWriter(file);
             fw.write(packageinfo);
+            if (dateFlag) {
+                fw.write(importDate);
+            }
             fw.write(classInfo.toString());
             fw.flush();
             fw.close();
@@ -435,7 +442,7 @@ public class MySQLToBean extends JFrame {
      * @return
      */
     private String getMethodStr(String field, String type) {
-        StringBuilder get = new StringBuilder("\tpublic ");
+        StringBuilder get = new StringBuilder("\r\n\tpublic ");
         get.append(type).append(" ");
         if (type.equals("boolean")) {
             get.append(field);
@@ -492,6 +499,7 @@ public class MySQLToBean extends JFrame {
             return "String";
         } else if (type.contains("date") || type.contains("time")
                 || type.contains("datetime") || type.contains("timestamp")) {
+            dateFlag = true;
             return "Date";
         }
         else if (type.contains("binary") || type.contains("blob")) {
