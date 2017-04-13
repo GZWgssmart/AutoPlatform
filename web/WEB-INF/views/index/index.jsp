@@ -276,8 +276,6 @@
                         </li>
                         <li><a class="J_menuItem" href="form_advanced.html">权限管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_basic.html">权限管理</a>
-                        </li>
                         <li><a class="J_menuItem" href="form_basic.html">流程管理</a>
                         </li>
                     </ul>
