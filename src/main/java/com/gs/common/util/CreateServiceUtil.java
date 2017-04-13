@@ -33,7 +33,7 @@ public class CreateServiceUtil extends JFrame {
         setTitle("自动创建Service的小工具");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        setBounds(100, 100, 400, 300);
+        setBounds(100, 100, 600, 300);
 
         JPanel panel = new JPanel();
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -48,6 +48,11 @@ public class CreateServiceUtil extends JFrame {
         panel.add(txtClazz);
         txtClazz.setColumns(10);
 
+        JLabel lbl1 = new JLabel("* 如：com.jh.bean.User");
+        lbl1.setForeground(Color.RED);
+        lbl1.setBounds(345, 13, 350, 15);
+        panel.add(lbl1);
+
         JLabel label = new JLabel("包名:");
         label.setBounds(80, 42, 100, 15);
         panel.add(label);
@@ -56,6 +61,11 @@ public class CreateServiceUtil extends JFrame {
         txtPackageName.setBounds(190, 39, 147, 21);
         panel.add(txtPackageName);
         txtPackageName.setColumns(10);
+
+        JLabel lbl3 = new JLabel("* 如：com.jh.service，用于导入包");
+        lbl3.setForeground(Color.RED);
+        lbl3.setBounds(345, 42, 350, 15);
+        panel.add(lbl3);
 
         JLabel label_1 = new JLabel("输出目录:");
         label_1.setBounds(80, 71, 100, 15);
@@ -66,6 +76,11 @@ public class CreateServiceUtil extends JFrame {
         panel.add(txtFilePath);
         txtFilePath.setColumns(10);
 
+        JLabel lbl5 = new JLabel("如：E:\\， 默认创建在项目目录下");
+        lbl5.setForeground(Color.BLACK);
+        lbl5.setBounds(345, 71, 350, 15);
+        panel.add(lbl5);
+
         JLabel label_2 = new JLabel("生成包结构目录:");
         label_2.setBounds(79, 100, 100, 15);
         panel.add(label_2);
@@ -75,6 +90,11 @@ public class CreateServiceUtil extends JFrame {
         panel.add(txtPackage);
         txtPackage.setColumns(10);
 
+        JLabel lbl7 = new JLabel("* 如：com.jh.service,用于自动生成文件夹");
+        lbl7.setForeground(Color.RED);
+        lbl7.setBounds(345, 100, 350, 15);
+        panel.add(lbl7);
+
         JLabel lblNewLabel = new JLabel("Service的描述信息：");
         lblNewLabel.setBounds(80, 129, 150, 15);
         panel.add(lblNewLabel);
@@ -83,6 +103,11 @@ public class CreateServiceUtil extends JFrame {
         txtDes.setBounds(190, 126, 147, 21);
         panel.add(txtDes);
         txtDes.setColumns(10);
+
+        JLabel lbl11 = new JLabel("如：用户的Service");
+        lbl11.setForeground(Color.BLACK);
+        lbl11.setBounds(353, 129, 180, 15);
+        panel.add(lbl11);
 
         checkBox = new JCheckBox("生成包结构目录");
         checkBox.setSelected(true);
@@ -132,9 +157,13 @@ public class CreateServiceUtil extends JFrame {
         String des = txtDes.getText();
         boolean createPackage = checkBox.getSelectedObjects() != null;
 
-        if (clazz.equals("") || packageName.equals("") || filePath.equals("") || packages.equals("")) {
+        if (clazz.equals("") || packageName.equals("") || packages.equals("")) {
             setTips("所有都必须输入");
             return;
+        }
+
+        if (filePath.equals("")) {
+            filePath = getProjSrcPath();
         }
 
         if (filePath != null && !filePath.isEmpty()) {
@@ -215,6 +244,11 @@ public class CreateServiceUtil extends JFrame {
 
     public void setTips(String msg) {
         txtError.setText(msg);
+    }
+
+    public String getProjSrcPath() {
+        String path = System.getProperty("user.dir")+"\\src\\main\\java";
+        return path;
     }
 
     /**

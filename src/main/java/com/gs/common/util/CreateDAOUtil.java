@@ -35,7 +35,7 @@ public class CreateDAOUtil extends JFrame {
         setTitle("自动创建DAO的小工具");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        setBounds(100, 100, 400, 300);
+        setBounds(100, 100, 600, 300);
 
         JPanel panel = new JPanel();
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -50,6 +50,11 @@ public class CreateDAOUtil extends JFrame {
         panel.add(txtClazz);
         txtClazz.setColumns(10);
 
+        JLabel lbl1 = new JLabel("* 如：com.jh.bean.User");
+        lbl1.setForeground(Color.RED);
+        lbl1.setBounds(350, 13, 350, 15);
+        panel.add(lbl1);
+
         JLabel label = new JLabel("包名:");
         label.setBounds(80, 42, 100, 15);
         panel.add(label);
@@ -58,6 +63,11 @@ public class CreateDAOUtil extends JFrame {
         txtPackageName.setBounds(190, 39, 147, 21);
         panel.add(txtPackageName);
         txtPackageName.setColumns(10);
+
+        JLabel lbl2 = new JLabel("* 如：com.jh.dao，用于导入包");
+        lbl2.setForeground(Color.RED);
+        lbl2.setBounds(350, 42, 350, 15);
+        panel.add(lbl2);
 
         JLabel label_1 = new JLabel("输出目录:");
         label_1.setBounds(80, 71, 100, 15);
@@ -68,6 +78,11 @@ public class CreateDAOUtil extends JFrame {
         panel.add(txtFilePath);
         txtFilePath.setColumns(10);
 
+        JLabel lbl3 = new JLabel("如：E:\\,默认在项目的目录下");
+        lbl3.setForeground(Color.BLACK);
+        lbl3.setBounds(350, 69, 350, 15);
+        panel.add(lbl3);
+
         JLabel label_2 = new JLabel("生成包结构目录:");
         label_2.setBounds(79, 100, 100, 15);
         panel.add(label_2);
@@ -77,6 +92,11 @@ public class CreateDAOUtil extends JFrame {
         panel.add(txtPackage);
         txtPackage.setColumns(10);
 
+        JLabel lbl4 = new JLabel("* 如：com.jh.dao,用于自动生成文件夹");
+        lbl4.setForeground(Color.RED);
+        lbl4.setBounds(350, 97, 350, 15);
+        panel.add(lbl4);
+
         JLabel lblNewLabel = new JLabel("DAO的描述信息：");
         lblNewLabel.setBounds(80, 129, 130, 15);
         panel.add(lblNewLabel);
@@ -85,6 +105,10 @@ public class CreateDAOUtil extends JFrame {
         txtDes.setBounds(190, 126, 147, 21);
         panel.add(txtDes);
         txtDes.setColumns(10);
+
+        JLabel lbl5 = new JLabel("如：用户的DAO");
+        lbl5.setBounds(357, 126, 350, 15);
+        panel.add(lbl5);
 
         checkBox = new JCheckBox("生成包结构目录");
         checkBox.setSelected(true);
@@ -134,9 +158,13 @@ public class CreateDAOUtil extends JFrame {
         String des = txtDes.getText();
         boolean createPackage = checkBox.getSelectedObjects() != null;
 
-        if (clazz.equals("") || packageName.equals("") || filePath.equals("") || packages.equals("")) {
+        if (clazz.equals("") || packageName.equals("") || packages.equals("")) {
             setTips("所有都必须输入");
             return;
+        }
+
+        if (filePath.equals("")) {
+            filePath = getProjSrcPath();
         }
 
         if (filePath != null && !filePath.isEmpty()) {
@@ -219,6 +247,11 @@ public class CreateDAOUtil extends JFrame {
         txtError.setText(msg);
     }
 
+    public String getProjSrcPath() {
+        String path = System.getProperty("user.dir")+"\\src\\main\\java";
+        return path;
+    }
+
     /**
      * 自动创建DAO
      * @param filePath 生成的文件路径
@@ -226,7 +259,7 @@ public class CreateDAOUtil extends JFrame {
      * @param clazz Bean的全限定名
      * @param des DAO的描述信息
      */
-    public void createDAO(String filePath, String packageName, String clazz, String des) {
+     public void createDAO(String filePath, String packageName, String clazz, String des) {
 
         String beanName = clazz.substring(clazz.lastIndexOf(".")+1,clazz.length());
         String packageinfo = "package " + packageName

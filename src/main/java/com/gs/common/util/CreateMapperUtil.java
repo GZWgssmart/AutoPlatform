@@ -33,7 +33,7 @@ public class CreateMapperUtil extends JFrame {
         setTitle("自动创建Mapper的小工具");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        setBounds(100, 100, 400, 300);
+        setBounds(100, 100, 600, 300);
 
         JPanel panel = new JPanel();
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -48,36 +48,56 @@ public class CreateMapperUtil extends JFrame {
         panel.add(txtClazz);
         txtClazz.setColumns(10);
 
+        JLabel lbl1 = new JLabel("* 如：com.jh.bean.User");
+        lbl1.setForeground(Color.RED);
+        lbl1.setBounds(345, 13, 350, 15);
+        panel.add(lbl1);
+
         JLabel label_1 = new JLabel("输出目录:");
-        label_1.setBounds(80, 71, 100, 15);
+        label_1.setBounds(80, 41, 100, 15);
         panel.add(label_1);
 
         txtFilePath = new JTextField();
-        txtFilePath.setBounds(190, 68, 147, 21);
+        txtFilePath.setBounds(190, 38, 147, 21);
         panel.add(txtFilePath);
         txtFilePath.setColumns(10);
 
+        JLabel lbl5 = new JLabel("如：E:\\，不指定默认在项目目录下");
+        lbl5.setForeground(Color.BLACK);
+        lbl5.setBounds(345, 41, 350, 15);
+        panel.add(lbl5);
+
         JLabel label_2 = new JLabel("生成包结构目录:");
-        label_2.setBounds(79, 100, 100, 15);
+        label_2.setBounds(79, 70, 100, 15);
         panel.add(label_2);
 
         txtPackage = new JTextField();
-        txtPackage.setBounds(190, 97, 147, 21);
+        txtPackage.setBounds(190, 67, 147, 21);
         panel.add(txtPackage);
         txtPackage.setColumns(10);
 
+        JLabel lbl9 = new JLabel("* 如：com.jh.mapper,用于自动生成文件夹");
+        lbl9.setForeground(Color.RED);
+        lbl9.setBounds(345, 70, 350, 15);
+        panel.add(lbl9);
+
         JLabel lblNewLabel = new JLabel("DAO的全限定名：");
-        lblNewLabel.setBounds(80, 129, 130, 15);
+        lblNewLabel.setBounds(80, 99, 130, 15);
         panel.add(lblNewLabel);
 
         txtDaoClazz = new JTextField();
-        txtDaoClazz.setBounds(190, 126, 147, 21);
+        txtDaoClazz.setBounds(190, 96, 147, 21);
         panel.add(txtDaoClazz);
         txtDaoClazz.setColumns(10);
 
+        JLabel lbl2 = new JLabel("* 如：com.jh.dao，用于导入包");
+        lbl2.setForeground(Color.RED);
+        lbl2.setBounds(345, 99, 350, 15);
+        panel.add(lbl2);
+
         checkBox = new JCheckBox("生成包结构目录");
         checkBox.setSelected(true);
-        checkBox.setBounds(190, 150, 147, 23);
+        checkBox.setBounds(190, 120, 147, 23);
         panel.add(checkBox);
 
         JButton button = new JButton("执行");
@@ -86,12 +106,12 @@ public class CreateMapperUtil extends JFrame {
                 go();
             }
         });
-        button.setBounds(190, 190, 93, 23);
+        button.setBounds(190, 160, 93, 23);
         panel.add(button);
 
         txtError = new JLabel("");
         txtError.setForeground(Color.RED);
-        txtError.setBounds(145, 230, 150, 15);
+        txtError.setBounds(145, 200, 150, 15);
         panel.add(txtError);
 
         addWindowListener(new WindowAdapter() {
@@ -121,9 +141,13 @@ public class CreateMapperUtil extends JFrame {
         String daoClazz = txtDaoClazz.getText();
         boolean createPackage = checkBox.getSelectedObjects() != null;
 
-        if (clazz.equals("") || filePath.equals("") || packages.equals("") || daoClazz.equals("")) {
+        if (clazz.equals("") || packages.equals("") || daoClazz.equals("")) {
             setTips("所有都必须输入");
             return;
+        }
+
+        if (filePath.equals("")) {
+            filePath = getProjSrcPath();
         }
 
         if (filePath != null && !filePath.isEmpty()) {
@@ -201,6 +225,11 @@ public class CreateMapperUtil extends JFrame {
 
     public void setTips(String msg) {
         txtError.setText(msg);
+    }
+
+    public String getProjSrcPath() {
+        String path = System.getProperty("user.dir")+"\\src\\main\\resources";
+        return path;
     }
 
     /**

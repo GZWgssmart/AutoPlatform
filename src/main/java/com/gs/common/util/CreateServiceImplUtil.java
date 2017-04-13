@@ -33,7 +33,7 @@ public class CreateServiceImplUtil extends JFrame {
         setTitle("自动创建ServiceImpl的小工具");
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
-        setBounds(100, 100, 450, 350);
+        setBounds(100, 100, 650, 350);
 
         JPanel panel = new JPanel();
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -48,6 +48,11 @@ public class CreateServiceImplUtil extends JFrame {
         panel.add(txtClazz);
         txtClazz.setColumns(10);
 
+        JLabel lbl1 = new JLabel("* 如：com.jh.bean.User");
+        lbl1.setForeground(Color.RED);
+        lbl1.setBounds(350, 13, 350, 15);
+        panel.add(lbl1);
+
         JLabel label = new JLabel("包名:");
         label.setBounds(80, 42, 100, 15);
         panel.add(label);
@@ -56,6 +61,11 @@ public class CreateServiceImplUtil extends JFrame {
         txtPackageName.setBounds(200, 39, 147, 21);
         panel.add(txtPackageName);
         txtPackageName.setColumns(10);
+
+        JLabel lbl4 = new JLabel("* 如：com.jh.service.impl，用于导入包");
+        lbl4.setForeground(Color.RED);
+        lbl4.setBounds(350, 42, 350, 15);
+        panel.add(lbl4);
 
         JLabel label_1 = new JLabel("输出目录:");
         label_1.setBounds(80, 71, 100, 15);
@@ -66,6 +76,11 @@ public class CreateServiceImplUtil extends JFrame {
         panel.add(txtFilePath);
         txtFilePath.setColumns(10);
 
+        JLabel lbl5 = new JLabel("如：E:\\,默认创建在项目目录下");
+        lbl5.setForeground(Color.BLACK);
+        lbl5.setBounds(350, 71, 350, 15);
+        panel.add(lbl5);
+
         JLabel label_2 = new JLabel("生成包结构目录:");
         label_2.setBounds(79, 100, 100, 15);
         panel.add(label_2);
@@ -74,6 +89,11 @@ public class CreateServiceImplUtil extends JFrame {
         txtPackage.setBounds(200, 97, 147, 21);
         panel.add(txtPackage);
         txtPackage.setColumns(10);
+
+        JLabel lbl8 = new JLabel("* 如：com.jh.service.impl,用于自动生成文件夹");
+        lbl8.setForeground(Color.RED);
+        lbl8.setBounds(350, 100, 350, 15);
+        panel.add(lbl8);
 
         JLabel lblNewLabel = new JLabel("Service的描述信息：");
         lblNewLabel.setBounds(80, 129, 150, 15);
@@ -84,6 +104,11 @@ public class CreateServiceImplUtil extends JFrame {
         panel.add(txtDes);
         txtDes.setColumns(10);
 
+        JLabel lbl11 = new JLabel("如：用户的Service");
+        lbl11.setForeground(Color.BLACK);
+        lbl11.setBounds(358, 129, 180, 15);
+        panel.add(lbl11);
+
         JLabel lbldaoLabel = new JLabel("DAO的全限定名：");
         lbldaoLabel.setBounds(80, 158, 150, 15);
         panel.add(lbldaoLabel);
@@ -92,6 +117,11 @@ public class CreateServiceImplUtil extends JFrame {
         txtDAOClazz.setBounds(200, 155, 147, 21);
         panel.add(txtDAOClazz);
         txtDAOClazz.setColumns(10);
+
+        JLabel lbl13 = new JLabel("* 如：com.jh.dao.UserDAO,用于导入包");
+        lbl13.setForeground(Color.RED);
+        lbl13.setBounds(350, 158, 350, 15);
+        panel.add(lbl13);
 
         JLabel lblServiceLabel = new JLabel("Service的全限定名：");
         lblServiceLabel.setBounds(80, 187, 150, 15);
@@ -102,6 +132,11 @@ public class CreateServiceImplUtil extends JFrame {
         panel.add(txtServiceClazz);
         txtServiceClazz.setColumns(10);
 
+        JLabel lbl14 = new JLabel("* 如：com.jh.service.UserService,用于导入包");
+        lbl14.setForeground(Color.RED);
+        lbl14.setBounds(350, 187, 350, 15);
+        panel.add(lbl14);
+
         JLabel lblPageLabel = new JLabel("分页工具类的全限定名：");
         lblPageLabel.setBounds(80, 216, 150, 15);
         panel.add(lblPageLabel);
@@ -110,6 +145,11 @@ public class CreateServiceImplUtil extends JFrame {
         txtPageClazz.setBounds(200, 213, 147, 21);
         panel.add(txtPageClazz);
         txtPageClazz.setColumns(10);
+
+        JLabel lbl15 = new JLabel("* 如：com.gs.common.bean.Pager,用于导入包");
+        lbl15.setForeground(Color.RED);
+        lbl15.setBounds(350, 216, 350, 15);
+        panel.add(lbl15);
 
         checkBox = new JCheckBox("生成包结构目录");
         checkBox.setSelected(true);
@@ -165,10 +205,14 @@ public class CreateServiceImplUtil extends JFrame {
         String des = txtDes.getText();
         boolean createPackage = checkBox.getSelectedObjects() != null;
 
-        if (clazz.equals("") || packageName.equals("") || filePath.equals("")
-                || packages.equals("") || daoClazz.equals("") || serviceClazz.equals("") || pageClazz.equals("")) {
+        if (clazz.equals("") || packageName.equals("") ||
+                packages.equals("") || daoClazz.equals("") || serviceClazz.equals("") || pageClazz.equals("")) {
             setTips("所有都必须输入");
             return;
+        }
+
+        if (filePath.equals("")) {
+            filePath = getProjSrcPath();
         }
 
         if (filePath != null && !filePath.isEmpty()) {
@@ -258,6 +302,11 @@ public class CreateServiceImplUtil extends JFrame {
 
     public void setTips(String msg) {
         txtError.setText(msg);
+    }
+
+    public String getProjSrcPath() {
+        String path = System.getProperty("user.dir")+"\\src\\main\\java";
+        return path;
     }
 
     /**
