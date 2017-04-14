@@ -336,8 +336,8 @@ public class CreateBatchServiceImplUtil extends JFrame {
             importBean.append("import javax.annotation.Resource;\r\n");
             importBean.append("import java.util.List;\r\n");
 
-            importBean.append("import " + daoClazz + ";\r\n");
-            importBean.append("import " + serviceClazz + ";\r\n");
+            importBean.append("import " + daoClazz + "." + beanName + "DAO;\r\n");
+            importBean.append("import " + serviceClazz + "." + beanName + "Service;\r\n");
             importBean.append("import " + pageClazz + ";\r\n");
 
             classInfo.append("由Wjhsmart技术支持\r\n*");
@@ -373,7 +373,7 @@ public class CreateBatchServiceImplUtil extends JFrame {
             classInfo.append("\r\n");
             classInfo.append("\tpublic List<" + beanName + "> queryAll() { return " + lowerBeanName + "DAO.queryAll(); }");
             classInfo.append("\r\n");
-            classInfo.append("\tpublic List<" + beanName + "> queryByStatus(String status) { return " + lowerBeanName + "DAO.queryAll(status); }");
+            classInfo.append("\tpublic List<" + beanName + "> queryByStatus(String status) { return " + lowerBeanName + "DAO.queryByStatus(status); }");
             classInfo.append("\r\n");
             classInfo.append("\tpublic " + beanName + " query(" + beanName + " " + lowerBeanName + ") { return " + lowerBeanName + "DAO.query(" + lowerBeanName + "); }");
             classInfo.append("\r\n");

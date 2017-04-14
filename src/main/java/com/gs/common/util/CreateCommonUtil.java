@@ -604,7 +604,7 @@ public class CreateCommonUtil extends JFrame {
         classInfo.append("\r\n");
         classInfo.append("\tpublic List<" + beanName + "> queryAll() { return " + lowerBeanName + "DAO.queryAll(); }");
         classInfo.append("\r\n");
-        classInfo.append("\tpublic List<" + beanName + "> queryByStatus(String status) { return " + lowerBeanName + "DAO.queryAll(status); }");
+        classInfo.append("\tpublic List<" + beanName + "> queryByStatus(String status) { return " + lowerBeanName + "DAO.queryByStatus(status); }");
         classInfo.append("\r\n");
         classInfo.append("\tpublic " + beanName + " query(" + beanName + " " + lowerBeanName + ") { return " + lowerBeanName + "DAO.query(" + lowerBeanName + "); }");
         classInfo.append("\r\n");

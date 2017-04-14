@@ -109,7 +109,7 @@ public class CreateServiceImplUtil extends JFrame {
         lbl11.setBounds(358, 129, 180, 15);
         panel.add(lbl11);
 
-        JLabel lbldaoLabel = new JLabel("DAO的全限定名：");
+        JLabel lbldaoLabel = new JLabel("DAO的包名：");
         lbldaoLabel.setBounds(80, 158, 150, 15);
         panel.add(lbldaoLabel);
 
@@ -118,12 +118,12 @@ public class CreateServiceImplUtil extends JFrame {
         panel.add(txtDAOClazz);
         txtDAOClazz.setColumns(10);
 
-        JLabel lbl13 = new JLabel("* 如：com.jh.dao.UserDAO,用于导入包");
+        JLabel lbl13 = new JLabel("* 如：com.jh.dao,用于导入包");
         lbl13.setForeground(Color.RED);
         lbl13.setBounds(350, 158, 350, 15);
         panel.add(lbl13);
 
-        JLabel lblServiceLabel = new JLabel("Service的全限定名：");
+        JLabel lblServiceLabel = new JLabel("Service的包名：");
         lblServiceLabel.setBounds(80, 187, 150, 15);
         panel.add(lblServiceLabel);
 
@@ -132,7 +132,7 @@ public class CreateServiceImplUtil extends JFrame {
         panel.add(txtServiceClazz);
         txtServiceClazz.setColumns(10);
 
-        JLabel lbl14 = new JLabel("* 如：com.jh.service.UserService,用于导入包");
+        JLabel lbl14 = new JLabel("* 如：com.jh.service,用于导入包");
         lbl14.setForeground(Color.RED);
         lbl14.setBounds(350, 187, 350, 15);
         panel.add(lbl14);
