@@ -133,11 +133,11 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="form_basic.html">配件分类管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">库存管理</a>
-                        </li>
                         <li><a class="J_menuItem" href="form_advanced.html">配件采购管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_wizard.html">配件销售管理</a>
+                        </li>
+                        <li><a class="J_menuItem" href="form_validate.html">库存管理</a>
                         </li>
                     </ul>
                 </li>
@@ -147,10 +147,6 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="form_basic.html">预约管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="form_basic.html">电话预约</a>
-                        </li>
-                        <li><a class="J_menuItem" href="form_basic.html">微信预约</a>
                         </li>
                     </ul>
                 </li>
@@ -163,10 +159,6 @@
                         </li>
                         <li><a class="J_menuItem" href="form_advanced.html">维修保养明细管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_basic.html">维修保养明细确认</a>
-                        </li>
-                        <li><a class="J_menuItem" href="form_validate.html">微信查看维修保养明细</a>
-                        </li>
                     </ul>
                 </li>
 
@@ -175,8 +167,6 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="form_wizard.html">物料清单</a>
-                        </li>
-                        <li><a class="J_menuItem" href="form_advanced.html">指派员工</a>
                         </li>
                         <li><a class="J_menuItem" href="form_basic.html">领料管理</a>
                         </li>
@@ -191,8 +181,6 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="form_wizard.html">车辆维修保养进度管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_advanced.html">微信查看维修保养进度</a>
-                        </li>
                     </ul>
                 </li>
 
@@ -201,13 +189,9 @@
                             class="nav-label">结算提车</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_wizard.html">提车提醒</a>
+                        <li><a class="J_menuItem" href="form_wizard.html">提车提醒管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_advanced.html">收费单据管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="form_basic.html">微信确认维修保养单据</a>
-                        </li>
-                        <li><a class="J_menuItem" href="form_validate.html">打印单据</a>
                         </li>
                     </ul>
                 </li>
@@ -218,7 +202,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="form_wizard.html">维修保养记录管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_advanced.html">维修保养提醒</a>
+                        <li><a class="J_menuItem" href="form_advanced.html">维修保养提醒管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_basic.html">消费统计管理</a>
                         </li>
@@ -226,9 +210,7 @@
                         </li>
                         <li><a class="J_menuItem" href="form_validate.html">跟踪回访管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">短信群发</a>
-                        </li>
-                        <li><a class="J_menuItem" href="form_validate.html">微信查看</a>
+                        <li><a class="J_menuItem" href="form_validate.html">短信群发管理</a>
                         </li>
                     </ul>
                 </li>
@@ -237,9 +219,11 @@
                     <a href="#"><i class="glyphicon glyphicon-usd"></i> <span class="nav-label">财务管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_wizard.html">支出管理</a>
+                        <li><a class="J_menuItem" href="form_advanced.html">收入类型管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_advanced.html">收入管理</a>
+                        <li><a class="J_menuItem" href="form_wizard.html">支出类型管理</a>
+                        </li>
+                        <li><a class="J_menuItem" href="form_advanced.html">收支记录管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_basic.html">工资管理</a>
                         </li>
@@ -272,6 +256,8 @@
                         <span class="nav-label">系统管理</span><span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="form_wizard.html">管理员管理</a>
+                        </li>
                         <li><a class="J_menuItem" href="form_wizard.html">模块管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_advanced.html">权限管理</a>
