@@ -2,13 +2,13 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gs.dao.UserDAO">
+<mapper namespace="com.gs.dao.MaintainDetailDAO">
 
-	<resultMap id="userResultMap" type="user">
+	<resultMap id="maintainDetailResultMap" type="maintainDetail">
 
 	</resultMap>
 
-	<insert id="insert"  parameterType="user">
+	<insert id="insert"  parameterType="maintainDetail">
 		<![CDATA[
 
 		]]>
@@ -20,7 +20,7 @@
 		]]>
 	</insert>
 
-	<delete id="delete" parameterType="user">
+	<delete id="delete" parameterType="maintainDetail">
 		<![CDATA[
 
 		]]>
@@ -38,7 +38,7 @@
 		]]>
 	</delete>
 
-	<update id="update" parameterType="user">
+	<update id="update" parameterType="maintainDetail">
 		<![CDATA[
 
 		]]>
@@ -50,31 +50,31 @@
 		]]>
 	</update>
 
-	<select id="queryAll" resultMap="userResultMap">
+	<select id="queryAll" resultMap="maintainDetailResultMap">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryByStatus" resultMap="userResultMap" parameterType="string">
+	<select id="queryByStatus" resultMap="maintainDetailResultMap" parameterType="string">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="query" parameterType="user" resultType="user">
+	<select id="query" parameterType="maintainDetail" resultType="maintainDetail">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryById" parameterType="string" resultType="user">
+	<select id="queryById" parameterType="string" resultType="maintainDetail">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="maintainDetailResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 
 		]]>

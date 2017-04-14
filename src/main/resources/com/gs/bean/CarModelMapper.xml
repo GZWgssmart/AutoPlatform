@@ -2,13 +2,13 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.gs.dao.UserDAO">
+<mapper namespace="com.gs.dao.CarModelDAO">
 
-	<resultMap id="userResultMap" type="user">
+	<resultMap id="carModelResultMap" type="carModel">
 
 	</resultMap>
 
-	<insert id="insert"  parameterType="user">
+	<insert id="insert"  parameterType="carModel">
 		<![CDATA[
 
 		]]>
@@ -20,7 +20,7 @@
 		]]>
 	</insert>
 
-	<delete id="delete" parameterType="user">
+	<delete id="delete" parameterType="carModel">
 		<![CDATA[
 
 		]]>
@@ -38,7 +38,7 @@
 		]]>
 	</delete>
 
-	<update id="update" parameterType="user">
+	<update id="update" parameterType="carModel">
 		<![CDATA[
 
 		]]>
@@ -50,31 +50,31 @@
 		]]>
 	</update>
 
-	<select id="queryAll" resultMap="userResultMap">
+	<select id="queryAll" resultMap="carModelResultMap">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryByStatus" resultMap="userResultMap" parameterType="string">
+	<select id="queryByStatus" resultMap="carModelResultMap" parameterType="string">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="query" parameterType="user" resultType="user">
+	<select id="query" parameterType="carModel" resultType="carModel">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryById" parameterType="string" resultType="user">
+	<select id="queryById" parameterType="string" resultType="carModel">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="carModelResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 
 		]]>
