@@ -155,7 +155,7 @@
                     <a href="#"><i class="fa fa-hand-lizard-o"></i> <span class="nav-label">维修保养接待管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_wizard.html">接待登记管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/checkin/checkin_page">接待登记管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_advanced.html">维修保养明细管理</a>
                         </li>

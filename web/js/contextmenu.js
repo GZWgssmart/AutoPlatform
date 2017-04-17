@@ -1,6 +1,7 @@
 // 点击刷新按钮
 function itemOnclik1(){
     window.parent.refresh(window.name);
+    menu.style.display = "none";
 }
 
 // 点击关闭当前页
