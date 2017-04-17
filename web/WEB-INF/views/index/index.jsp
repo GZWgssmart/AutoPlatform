@@ -219,7 +219,7 @@
                     <a href="#"><i class="glyphicon glyphicon-usd"></i> <span class="nav-label">财务管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_advanced.html">收入类型管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/incomingType/show_incomingType">收入类型管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_wizard.html">支出类型管理</a>
                         </li>
