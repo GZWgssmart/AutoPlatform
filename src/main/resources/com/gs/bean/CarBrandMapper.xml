@@ -9,9 +9,7 @@
 	</resultMap>
 
 	<insert id="insert"  parameterType="carBrand">
-		<![CDATA[
-
-		]]>
+		insert into t_car_brand (brandId,brandName,brandDes,brandStatus) values (UUID(),#{brandName},#{brandDes},'Y');
 	</insert>
 
 	<insert id="batchInsert"  parameterType="list">
@@ -27,9 +25,7 @@
 	</delete>
 
 	<delete id="deleteById" parameterType="string">
-		<![CDATA[
-
-		]]>
+		delete from t_car_brand where brandId = #{brandId}
 	</delete>
 
 	<delete id="batchDelete" parameterType="list">
@@ -39,9 +35,7 @@
 	</delete>
 
 	<update id="update" parameterType="carBrand">
-		<![CDATA[
-
-		]]>
+		update t_car_brand set brandName = #{brandName} , brandDes = #{brandDes} where brandId = #{brandId}
 	</update>
 
 	<update id="batchUpdate" parameterType="list">
@@ -75,15 +69,11 @@
 	</select>
 
 	<select id="queryByPager" resultType="list" resultMap="carBrandResultMap" parameterType="com.gs.common.bean.Pager">
-		<![CDATA[
-
-		]]>
+		select * from t_car_brand  limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
-		<![CDATA[
-
-		]]>
+		select count(brandId) from t_car_brand
 	</select>
 
 	<update id="inactive" parameterType="string">
