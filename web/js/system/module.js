@@ -87,6 +87,7 @@ function addModule() {
                 $('#addWin').modal('hide');
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
+                $("input[type=reset]").trigger("click");
             } else if (data.result == "fail") {
                 swal(data.message, "", "error");
             }

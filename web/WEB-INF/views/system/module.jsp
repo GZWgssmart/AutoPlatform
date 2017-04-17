@@ -120,6 +120,7 @@
                                 </button>
                                 <input type="button" class="btn btn-primary" onclick="addModule()" value="添加">
                                 </input>
+                                <input type="reset" name="reset" style="display: none;" />
                             </div>
                         </form>
                     </div>
