@@ -50,9 +50,11 @@ $(document).ready(function () {
 /** 编辑数据 */
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
-    if (selectRow.length != 1) {
-        swal('编辑失败', "只能选择一条数据进行编辑", "error");
+    if (selectRow.length == 0) {
+        swal('编辑失败', "必须选择一条数据进行编辑", "error");
         return false;
+    } else if (selectRow.length > 1) {
+        swal('编辑失败', "只能选择一条数据进行编辑", "error");
     } else {
         var module = selectRow[0];
         $("#updateForm").fill(module);

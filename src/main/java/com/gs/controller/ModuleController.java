@@ -80,7 +80,6 @@ public class ModuleController {
     @ResponseBody
     @RequestMapping(value = "queryByStatus_module", method = RequestMethod.GET)
     private Pager4EasyUI<Module> queryByStatusModule(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        System.out.println(status + ", " + pageNumber + ", " + pageSize);
         logger.info("根据状态分页查询模块");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
