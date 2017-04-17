@@ -77,10 +77,10 @@
                             <a class="J_menuItem" href="<%=path %>/company/brand">汽车品牌管理</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="graph_morris.html">车型管理</a>
+                            <a class="J_menuItem" href="<%=path %>/company/model">车型管理</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="graph_rickshaw.html">汽车颜色管理</a>
+                            <a class="J_menuItem" href="<%=path %>/company/color">汽车颜色管理</a>
                         </li>
                         <li>
                             <a class="J_menuItem" href="graph_peity.html">车牌管理</a>

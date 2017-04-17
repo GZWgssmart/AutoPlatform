@@ -35,11 +35,23 @@ public class CarBrand {
 		this.brandDes=brandDes;
 	}
 
+	@Override
+	public String toString() {
+		return "CarBrand{" +
+				"brandId='" + brandId + '\'' +
+				", brandName='" + brandName + '\'' +
+				", brandDes='" + brandDes + '\'' +
+				", brandStatus='" + brandStatus + '\'' +
+				'}';
+	}
+
 	public String getBrandStatus(){
 		return this.brandStatus;
 	}
 	public void setBrandStatus(String brandStatus){
 		this.brandStatus=brandStatus;
 	}
+
+
 
 }

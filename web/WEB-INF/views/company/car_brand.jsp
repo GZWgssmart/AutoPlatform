@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>车牌管理</title>
+    <title>品牌管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -34,7 +34,7 @@
             <th data-field="brandDes" >
                 汽车品牌描述
             </th>
-            <th data-field="brandStatus">
+            <th data-field="brandStatus" data-formatter="operateFormatter">
                 汽车品牌状态
             </th>
         </tr>
@@ -47,8 +47,11 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
-            <a><button type="button" onclick="deleteProduct();" id="delete" class="btn btn-default">
-                <i class="glyphicon glyphicon-trash"></i> 删除
+            <a><button onclick="EditStatus();" type="button" id="status" class="btn btn-default">
+                <i class="glyphicon glyphicon-pencil"></i> 激活
+            </button></a>
+            <a><button onclick="StatusIncomeing();" type="button"  class="btn btn-default">
+                <i class="glyphicon glyphicon-pencil"></i> 冻结
             </button></a>
         </div>
         </tbody>
@@ -67,13 +70,14 @@
                         <h3 class="m-t-none m-b">修改汽车品牌</h3>
                         <form role="form" id="updateForm" >
                             <input type="hidden" attr="carBrand.brandId" name="brandId" id = "id"/>
+                            <input type="hidden" attr="carBrand.brandStatus" name="brandStatus"/>
                             <div class="form-group">
                                 <label>汽车品牌名称：</label>
                                 <input type="text"  name="brandName"  attr="carBrand.brandName" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>汽车品牌描述：</label>
-                                <textarea name="brandDes" cols="20" rows="5" class="form-control">${requestScope.carBrand.brandDes}</textarea>
+                                <textarea attr="carBrand.brandDes" name="brandDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
@@ -105,7 +109,7 @@
                             </div>
                             <div class="form-group">
                                 <label>汽车品牌描述：</label>
-                                <textarea name="brandDes" cols="20" rows="5" class="form-control"></textarea>
+                                <textarea name="brandDes" cols="20" rows="5" class="form-control" ></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
@@ -190,9 +194,10 @@
         }
     }
 
+
     /**提交编辑数据 */
     function updateProduct() {
-        $.post("/carBrand/updateCarBrand",
+        $.post("/carBrand/uploadCarBrand",
             $("#updateForm").serialize(),
             function(data){
                 if(data.result == "success"){
@@ -210,25 +215,32 @@
     function addProduct() {
         $.post("/carBrand/insertCarBrand",
             $("#addForm").serialize(),
-            function(data){
-                if(data.result == "success"){
+            function (data) {
+                if (data.result == "success") {
                     $('#addWin').modal('hide');
                     swal(data.message, "", "success");
                     $('#cusTable').bootstrapTable('refresh');
-                }else if(data.result == "fail"){
+                } else if (data.result == "fail") {
                     swal(data.message, "", "error");
                 }
-            },"json");
-
+            }, "json");
+    }
+    function operateFormatter(value, row, index) {
+        if (row.brandStatus == 'Y') {
+            return [
+                '可用'
+            ].join('');
+        }else{
+            return [
+                '不可用'
+            ].join('');
+        }
     }
 
-    /**
-     * 批量删除数据
-     */
-    function deleteProduct() {
+    function StatusIncomeing() {
         var rows = $("#cusTable").bootstrapTable('getSelections');
         if (rows.length < 1) {
-            swal('删除失败', "请选择一条或多条数据进行删除", "error");
+            swal('冻结失败', "请选择一条或多条数据进行冻结", "error");
         } else {
             var ids = "";
             for(var i = 0, len = rows.length; i < len; i++){
@@ -238,29 +250,16 @@
                     ids += ","+rows[i].id
                 }
                 if(ids != ""){
-                    swal({title: "确定要删除所选数据?",
-                            text: "删除后将无法恢复，请谨慎操作！",
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "是的，我要删除!",
-                            cancelButtonText: "让我在考虑一下...",
-                            closeOnConfirm: false },
-                        function(){
-                            alert(data+"8988989")
-                            $.get("/carBrand/deleteCarBrand"+rows[0].ids,
-                                function(data){
-                                    alert(data+"8988989")
-                                    swal(data.message, "您已经永久删除了这条信息。", "success");
-                                    $('#cusTable').bootstrapTable('refresh');
-                                },"json");
-                        });
+                    $.get(contextPath + "/carBrand/StatusInactive"+rows[0].ids,
+                        function(data){
+                            swal(data.message, "", "success");
+                            $('#cusTable').bootstrapTable('refresh');
+                        },"json");
                 }
             }
 
         }
     }
-
 </script>
 </body>
 </html>

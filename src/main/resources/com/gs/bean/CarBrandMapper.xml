@@ -35,7 +35,7 @@
 	</delete>
 
 	<update id="update" parameterType="carBrand">
-		update t_car_brand set brandName = #{brandName} , brandDes = #{brandDes} where brandId = #{brandId}
+		update t_car_brand set brandName = #{brandName} , brandDes = #{brandDes} , brandStatus= #{brandStatus} where brandId = #{brandId}
 	</update>
 
 	<update id="batchUpdate" parameterType="list">
@@ -75,15 +75,11 @@
 	</select>
 
 	<update id="inactive" parameterType="string">
-		<![CDATA[
-
-		]]>
+		update t_car_brand set brandStatus= #{brandStatus} where brandId = #{brandId}
 	</update>
 
 	<update id="active" parameterType="string">
-		<![CDATA[
-
-		]]>
+		update t_car_brand set brandStatus= #{brandStatus} where brandId = #{brandId}
 	</update>
 
 </mapper>

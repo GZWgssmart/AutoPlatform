@@ -58,4 +58,15 @@ public class CarColor {
 		this.colorStatus=colorStatus;
 	}
 
+	@Override
+	public String toString() {
+		return "CarColor{" +
+				"colorId='" + colorId + '\'' +
+				", colorName='" + colorName + '\'' +
+				", colorRGB='" + colorRGB + '\'' +
+				", colorHex='" + colorHex + '\'' +
+				", colorDes='" + colorDes + '\'' +
+				", colorStatus='" + colorStatus + '\'' +
+				'}';
+	}
 }

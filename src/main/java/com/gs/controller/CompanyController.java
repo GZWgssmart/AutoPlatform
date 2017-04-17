@@ -32,4 +32,16 @@ public class CompanyController {
         logger.info("显示汽车品牌");
         return "company/car_brand";
     }
+
+    @RequestMapping(value = "color", method = RequestMethod.GET)
+    private String showCarColor() {
+        logger.info("显示汽车颜色");
+        return "company/car_colour";
+    }
+
+    @RequestMapping(value = "model", method = RequestMethod.GET)
+    private String showCarModel() {
+        logger.info("显示汽车车型");
+        return "company/car_model";
+    }
 }
