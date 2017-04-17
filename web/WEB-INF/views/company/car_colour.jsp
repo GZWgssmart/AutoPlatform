@@ -120,11 +120,11 @@
                         <form role="form" id="addForm">
                             <div class="form-group">
                                 <label>汽车颜色名称：</label>
-                                <input type="text"   name="colorName" class="form-control"/>
+                                <input type="text"  name="colorName" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>汽车颜色RGB：</label>
-                                <input type="text"   name="colorRGB" class="form-control"/>
+                                <input type="text"  name="colorRGB" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>汽车颜色Hex：</label>

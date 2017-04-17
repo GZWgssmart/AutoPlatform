@@ -33,7 +33,8 @@ public class CarColorController {
     @ResponseBody
     @RequestMapping(value = "insertCarColor", method = RequestMethod.POST)
     public ControllerResult insertCarColor(CarColor carColor){
-
+        carColor.setColorStatus("Y");
+        System.out.println(carColor);
         logger.info("添加汽车颜色成功");
         carColorService.insert(carColor);
         return ControllerResult.getSuccessResult("添加汽车颜色成功");
@@ -68,7 +69,7 @@ public class CarColorController {
         return new Pager4EasyUI<CarColor>(pager.getTotalRecords(),carColorList);
     }
 
-
+    @ResponseBody
     @RequestMapping(value = "car_color_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarColorAll() {
         logger.info("查询汽车颜色");
