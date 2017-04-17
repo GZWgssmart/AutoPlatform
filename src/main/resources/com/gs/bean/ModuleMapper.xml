@@ -52,7 +52,7 @@
 
 	<select id="queryAll" resultMap="moduleResultMap">
 		<![CDATA[
-			select * from t_module
+
 		]]>
 	</select>
 
@@ -80,21 +80,33 @@
 		]]>
 	</select>
 
+	<select id="queryByStatusPager" resultType="list" resultMap="moduleResultMap">
+		<![CDATA[
+			select * from t_module where moduleStatus = #{moduleStatus} limit #{pager.beginIndex}, #{pager.pageSize}
+		]]>
+	</select>
+
 	<select id="count" resultType="int">
 		<![CDATA[
 			select count(moduleId) from t_module
 		]]>
 	</select>
 
+	<select id="countByStatus" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*) from t_module where moduleStatus = #{moduleStatus}
+		]]>
+	</select>
+
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_module set moduleStatus = 'N' where moduleId = #{moduleId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_module set moduleStatus = 'Y' where moduleId = #{moduleId}
 		]]>
 	</update>
 

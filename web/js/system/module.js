@@ -12,7 +12,7 @@ function initTable() {
         striped: false,  //表格显示条纹
         pagination: true, //启动分页
         pageSize: 5,  //每页显示的记录数
-        pageNumber:1, //当前第几页
+        pageNumber: 1, //当前第几页
         pageList: [5, 10, 15, 20, 25],  //记录数可选列表
         search: true,  //是否启用查询
         showColumns: true,  //显示下拉框勾选要显示的列
@@ -22,17 +22,17 @@ function initTable() {
         uniqueId: "id",                     //每一行的唯一标识，一般为主键列
         sortable: true,                     //是否启用排序
         sortOrder: "asc",                   //排序方式
-        toolbar : "#toolbar",// 指定工具栏
+        toolbar: "#toolbar",// 指定工具栏
         sidePagination: "server", //表示服务端请求
 
         //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
         //设置为limit可以获取limit, offset, search, sort, order
-        queryParamsType : "undefined",
+        queryParamsType: "undefined",
         queryParams: function queryParams(params) {   //设置查询参数
             var param = {
                 pageNumber: params.pageNumber,
                 pageSize: params.pageSize,
-                orderNum : $("#orderNum").val()
+                orderNum: $("#orderNum").val()
             };
             return param;
         },
@@ -64,15 +64,15 @@ function showEditWin() {
 function updateModule() {
     $.post(contextPath + "/module/update_module",
         $("#updateForm").serialize(),
-        function(data){
-            if(data.result == "success"){
+        function (data) {
+            if (data.result == "success") {
                 $('#editWin').modal('hide');
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
-            }else if(data.result == "fail"){
+            } else if (data.result == "fail") {
                 swal(data.message, "", "error");
             }
-        },"json");
+        }, "json");
 
 }
 
@@ -80,15 +80,15 @@ function updateModule() {
 function addModule() {
     $.post(contextPath + "/module/add_module",
         $("#addForm").serialize(),
-        function(data){
-            if(data.result == "success"){
+        function (data) {
+            if (data.result == "success") {
                 $('#addWin').modal('hide');
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
-            }else if(data.result == "fail"){
+            } else if (data.result == "fail") {
                 swal(data.message, "", "error");
             }
-        },"json");
+        }, "json");
 
 }
 
@@ -101,27 +101,29 @@ function deleteModule() {
         swal('删除失败', "请选择一条或多条数据进行删除", "error");
     } else {
         var ids = "";
-        for(var i = 0, len = rows.length; i < len; i++){
-            if(ids == ""){
+        for (var i = 0, len = rows.length; i < len; i++) {
+            if (ids == "") {
                 ids = rows[i].id;
-            }else{
-                ids += ","+rows[i].id
+            } else {
+                ids += "," + rows[i].id
             }
-            if(ids != ""){
-                swal({title: "确定要删除所选数据?",
+            if (ids != "") {
+                swal({
+                        title: "确定要删除所选数据?",
                         text: "删除后将无法恢复，请谨慎操作！",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
                         confirmButtonText: "是的，我要删除!",
                         cancelButtonText: "让我在考虑一下....",
-                        closeOnConfirm: false },
-                    function(){
-                        $.get(contextPath + "/module/deleteById/"+rows[0].ids,
-                            function(data){
+                        closeOnConfirm: false
+                    },
+                    function () {
+                        $.get(contextPath + "/module/deleteById/" + rows[0].ids,
+                            function (data) {
                                 swal(data.message, "您已经永久删除了这条信息。", "success");
                                 $('#cusTable').bootstrapTable('refresh');
-                            },"json");
+                            }, "json");
 
                     });
             }
@@ -130,17 +132,55 @@ function deleteModule() {
     }
 }
 
+function thisStatus(value, row, index) {
+    if (value == 'Y') {
+        return "可用";
+    } else {
+        return "不可用";
+    }
+}
+
 function operateFormatter(value, row, index) {
-    if (row.modulestatus == 'Y') {
+    if (row.moduleStatus == 'Y') {
         return [
-            '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">冻结</button>',
-            '<button type="button" class="RoleOfEdit btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>'
         ].join('');
-    }else{
+    } else {
         return [
-            '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">激活</button>',
-            '<button type="button" class="RoleOfEdit btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>'
         ].join('');
     }
+}
 
+window.operateEvents = {
+    'click .updateActive': function (e, value, row, index) {
+        var status = 'N';
+        $.get(contextPath + "/module/update_status?id=" + row.moduleId + "&status=" + status,
+            function (data) {
+                if (data.result == "success") {
+                    $('#addWin').modal('hide');
+                    // swal(data.message, "", "success");
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            }, "json");
+    },
+    'click .updateInactive': function (e, value, row, index) {
+        var status = 'Y';
+        $.get(contextPath + "/module/update_status?id=" + row.moduleId + "&status=" + status,
+            function (data) {
+                if (data.result == "success") {
+                    $('#addWin').modal('hide');
+                    // swal(data.message, "", "success");
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            }, "json");
+    }
+}
+
+function queryByStatusPager(status) {
+    $('#cusTable').bootstrapTable('refresh', {url: contextPath + '/module/queryByStatus_module?status=' + status});
 }

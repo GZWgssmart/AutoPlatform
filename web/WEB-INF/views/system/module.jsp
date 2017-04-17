@@ -34,7 +34,10 @@
             <th data-field="moduleDes" >
                 描述
             </th>
-            <th data-field="caozuo" data-formatter="operateFormatter" >
+            <th data-field="moduleStatus" data-formatter="thisStatus">
+                状态
+            </th>
+            <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
         </tr>
@@ -47,8 +50,11 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
-            <a><button type="button" onclick="deleteModule();" id="delete" class="btn btn-default">
-                <i class="glyphicon glyphicon-trash"></i> 删除
+            <a><button onclick="queryByStatusPager('Y');" type="button" class="btn btn-default" >
+                 查可用模块
+            </button></a>
+            <a><button onclick="queryByStatusPager('N');" type="button" class="btn btn-default" >
+                 查不可用模块
             </button></a>
         </div>
         </tbody>

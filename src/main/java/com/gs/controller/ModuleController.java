@@ -35,8 +35,8 @@ public class ModuleController {
     }
 
     @ResponseBody
-    @RequestMapping(value="query_pager",method= RequestMethod.GET)
-    public Pager4EasyUI<Module> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    @RequestMapping(value = "query_pager", method = RequestMethod.GET)
+    public Pager4EasyUI<Module> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         logger.info("分页查询所有模块");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -63,5 +63,30 @@ public class ModuleController {
         module.setModuleStatus("Y");
         moduleService.update(module);
         return ControllerResult.getSuccessResult("修改成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update_status", method = RequestMethod.GET)
+    public ControllerResult updateStatus(@Param("id") String id, @Param("status") String status) {
+        logger.info("更新支出类型状态");
+        if (status.equals("Y")) {
+            moduleService.active(id);
+        } else if (status.equals("N")) {
+            moduleService.inactive(id);
+        }
+        return ControllerResult.getSuccessResult("更新成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByStatus_module", method = RequestMethod.GET)
+    private Pager4EasyUI<Module> queryByStatusModule(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        System.out.println(status + ", " + pageNumber + ", " + pageSize);
+        logger.info("根据状态分页查询模块");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(moduleService.countByStatus(status));
+        List<Module> modules = moduleService.queryByStatusPager(status, pager);
+        return new Pager4EasyUI<Module>(pager.getTotalRecords(), modules);
     }
 }

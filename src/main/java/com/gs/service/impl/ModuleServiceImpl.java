@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Module;
+import com.gs.common.bean.Pager4EasyUI;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,5 +37,10 @@ public class ModuleServiceImpl implements ModuleService {
 	public int count() { return moduleDAO.count(); }
 	public int inactive(String id) { return moduleDAO.inactive(id); }
 	public int active(String id) { return moduleDAO.active(id); }
-
+	public List<Module> queryByStatusPager(String moduleStatus, Pager pager) {
+		return moduleDAO.queryByStatusPager(moduleStatus, pager);
+	}
+	public int countByStatus(String moduleStatus) {
+		return moduleDAO.countByStatus(moduleStatus);
+	}
 }
