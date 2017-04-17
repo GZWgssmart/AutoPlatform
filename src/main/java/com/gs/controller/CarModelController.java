@@ -24,9 +24,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/carModel")
 public class CarModelController {
+    private Logger logger = (Logger) LoggerFactory.getLogger(CarModelController.class);
     @Resource
     private CarModelService carModelService;
-    private Logger logger = (Logger) LoggerFactory.getLogger(CarModelController.class);
+
     @ResponseBody
     @RequestMapping(value = "car_model_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarModelAll() {
@@ -44,29 +45,29 @@ public class CarModelController {
 
     @ResponseBody
     @RequestMapping(value = "insertCarModel", method = RequestMethod.POST)
-    public ControllerResult insertCarModel(CarModel carmodel){
+    public ControllerResult insertCarModel(CarModel carmodel) {
         logger.info("添加汽车车型成功");
         carModelService.insert(carmodel);
         return ControllerResult.getSuccessResult("添加汽车车型成功");
     }
 
     @ResponseBody
-    @RequestMapping(value = "uploadCarModel",method = RequestMethod.POST)
-    public ControllerResult uploadCarModel(CarModel carmodel){
+    @RequestMapping(value = "uploadCarModel", method = RequestMethod.POST)
+    public ControllerResult uploadCarModel(CarModel carmodel) {
         carModelService.update(carmodel);
         logger.info("更新汽车车型成功");
         return ControllerResult.getSuccessResult("更新汽车车型成功");
     }
 
     @ResponseBody
-    @RequestMapping(value = "queryByPager" , method = RequestMethod.GET)
-    public Pager4EasyUI<CarModel> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
+    public Pager4EasyUI<CarModel> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         Pager pager = new Pager();
         logger.info("分页查询所有车型");
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(carModelService.count());
-        List<CarModel>carModelList = carModelService.queryByPager(pager);
-        return new Pager4EasyUI<CarModel>(pager.getTotalRecords(),carModelList);
+        List<CarModel> carModelList = carModelService.queryByPager(pager);
+        return new Pager4EasyUI<CarModel>(pager.getTotalRecords(), carModelList);
     }
 }
