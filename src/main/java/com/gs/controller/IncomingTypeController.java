@@ -35,7 +35,7 @@ public class IncomingTypeController {
     @RequestMapping(value = "show_incomingType", method = RequestMethod.GET)
     private String incomingType() {
         logger.info("显示支出类型页面");
-        return "financeManage/income_type";
+        return "financeManage/incoming_type";
     }
 
     @ResponseBody
@@ -61,18 +61,24 @@ public class IncomingTypeController {
 
     @ResponseBody
     @RequestMapping(value="update_incomingType", method=RequestMethod.POST)
-    public ControllerResult productUpdate(IncomingType incomingType){
+    public ControllerResult incomingUpdate(IncomingType incomingType){
         logger.info("更新支出类型");
         incomingTypeService.update(incomingType);
         return ControllerResult.getSuccessResult("更新成功");
     }
-  /*  @ResponseBody
-    @RequestMapping(value="deleteById/{id}", method=RequestMethod.GET)
-    public ControllerResult productDelete(@PathVariable("id") int id){
-        logger.info("删除支出类型");
-        incomingTypeService.deleteById(id);
-        return ControllerResult.getSuccessResult("删除成功");
-    }*/
+
+    @ResponseBody
+    @RequestMapping(value="update_status", method=RequestMethod.GET)
+    public ControllerResult updateStatus(@Param("id") String id, @Param("status")String status){
+        logger.info("更新支出类型状态");
+        if(status.equals("Y")){
+            incomingTypeService.active(id);
+        }else if(status.equals("N")){
+            incomingTypeService.inactive(id);
+        }
+        return ControllerResult.getSuccessResult("更新成功");
+    }
+
 
 
 }

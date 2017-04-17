@@ -40,7 +40,7 @@
 
 	<update id="update" parameterType="incomingType">
 		<![CDATA[
-		update t_incoming_type set inTypename = #{inTypeName} where inTypeId = #{inTypeId}
+		update t_incoming_type set inTypeName = #{inTypeName},inTypeStatus = 'Y' where inTypeId = #{inTypeId}
 		]]>
 	</update>
 
@@ -82,19 +82,19 @@
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(inTypeId) from t_incoming_type
+			select count(*) from t_incoming_type
 		]]>
 	</select>
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_incoming_type set inTypeStatus = 'N' where inTypeId = #{inTypeId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_incoming_type set inTypeStatus = 'Y' where inTypeId = #{inTypeId}
 		]]>
 	</update>
 

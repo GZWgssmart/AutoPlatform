@@ -24,14 +24,15 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+            data-height="500">
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
             <th data-field="inTypeName" >
                 名称
             </th>
-            <th data-field="caozuo" data-formatter="operateFormatter" >
+            <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
         </tr>
@@ -44,9 +45,7 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
-            <a><button type="button" onclick="deleteIncomeingType();" id="delete" class="btn btn-default">
-                <i class="glyphicon glyphicon-trash"></i> 删除
-            </button></a>
+
         </div>
         </tbody>
 
@@ -65,7 +64,7 @@
                         <form role="form" id="updateForm" >
                             <input type="hidden" attr="incomingType.inTypeId" name="inTypeId" />
                             <div class="form-group">
-                                <label>商品名称：</label>
+                                <label>支出类型名称：</label>
                                 <input type="text" attr="incomingType.inTypeName" name="inTypeName"  class="form-control"/>
                             </div>
 
@@ -94,7 +93,7 @@
                         <h3 class="m-t-none m-b">添加支出类型</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
-                                <label>商品名称：</label>
+                                <label>支出类型名称：</label>
                                 <input type="text"   name="inTypeName" class="form-control"/>
                             </div>
 
@@ -104,6 +103,7 @@
                                 </button>
                                 <input type="button" class="btn btn-primary" onclick="addIncomingType()" value="添加">
                                 </input>
+                                <input type="reset" name="reset" style="display: none;" />
                             </div>
                         </form>
                     </div>

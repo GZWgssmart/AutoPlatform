@@ -85,6 +85,7 @@ function addIncomingType() {
                 $('#addWin').modal('hide');
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
+                $("input[type=reset]").trigger("click");
             }else if(data.result == "fail"){
                 swal(data.message, "", "error");
             }
@@ -92,55 +93,53 @@ function addIncomingType() {
 
 }
 
-/**
- * 批量删除数据
- */
-function deleteIncomeingType() {
-    var rows = $("#cusTable").bootstrapTable('getSelections');
-    if (rows.length < 1) {
-        swal('删除失败', "请选择一条或多条数据进行删除", "error");
-    } else {
-        var ids = "";
-        for(var i = 0, len = rows.length; i < len; i++){
-            if(ids == ""){
-                ids = rows[i].id;
-            }else{
-                ids += ","+rows[i].id
-            }
-            if(ids != ""){
-                swal({title: "确定要删除所选数据?",
-                        text: "删除后将无法恢复，请谨慎操作！",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "是的，我要删除!",
-                        cancelButtonText: "让我在考虑一下....",
-                        closeOnConfirm: false },
-                    function(){
-                        $.get(contextPath + "/incomingType/deleteById/"+rows[0].ids,
-                            function(data){
-                                swal(data.message, "您已经永久删除了这条信息。", "success");
-                                $('#cusTable').bootstrapTable('refresh');
-                            },"json");
-
-                    });
-            }
-        }
-
-    }
-}
 
 function operateFormatter(value, row, index) {
     if (row.inTypeStatus == 'Y') {
         return [
-            '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">冻结</button>',
-            '<button type="button" class="RoleOfEdit btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>',
+            '<button type="button" class="showUpdateIncomingType1 btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     }else{
         return [
-            '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">激活</button>',
-            '<button type="button" class="RoleOfEdit btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>',
+            '<button type="button" class="showUpdateIncomingType1 btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>'
         ].join('');
     }
 
 }
+window.operateEvents = {
+         'click .updateActive': function (e, value, row, index) {
+             var status = 'N';
+             $.get(contextPath + "/incomingType/update_status?id=" + row.inTypeId + "&status=" + status,
+                 function(data){
+                     if(data.result == "success"){
+                         $('#addWin').modal('hide');
+                         swal(data.message, "", "success");
+                         $('#cusTable').bootstrapTable('refresh');
+                     }else if(data.result == "fail"){
+                         swal(data.message, "", "error");
+                     }
+                 },"json");
+         },
+          'click .updateInactive': function (e, value, row, index) {
+              var status = 'Y';
+              $.get(contextPath + "/incomingType/update_status?id=" + row.inTypeId + "&status=" + status,
+                  function(data){
+                      if(data.result == "success"){
+                          $('#addWin').modal('hide');
+                          swal(data.message, "", "success");
+                          $('#cusTable').bootstrapTable('refresh');
+                      }else if(data.result == "fail"){
+                          swal(data.message, "", "error");
+                      }
+                  },"json");
+          },
+          'click .showUpdateIncomingType1': function (e, value, row, index) {
+              var incomingType = row;
+              $("#updateForm").fill(incomingType);
+              $("#editWin").modal('show');
+         }
+}
+
+
