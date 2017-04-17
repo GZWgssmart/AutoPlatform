@@ -45,9 +45,7 @@
 	</update>
 
 	<select id="queryAll" resultMap="carBrandResultMap">
-		<![CDATA[
-
-		]]>
+		select * from t_car_brand
 	</select>
 
 	<select id="queryByStatus" resultMap="carBrandResultMap" parameterType="string">
