@@ -22,7 +22,7 @@ public class Checkin {
     private String plateId; // 汽车车牌
     private String carPlate; // 车牌号码
     private Date arriveTime; // 到店时间
-    private String carMileage; // 汽车行驶里程
+    private double carMileage; // 汽车行驶里程
     private String carThings; // 车上物品描述信息
     private String intactDegrees; // 汽车完好度描述
     private String userRequests; // 车主要求描述
@@ -119,11 +119,11 @@ public class Checkin {
         this.arriveTime = arriveTime;
     }
 
-    public String getCarMileage() {
-        return this.carMileage;
+    public double getCarMileage() {
+        return carMileage;
     }
 
-    public void setCarMileage(String carMileage) {
+    public void setCarMileage(double carMileage) {
         this.carMileage = carMileage;
     }
 

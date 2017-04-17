@@ -501,8 +501,11 @@ public class MySQLToBean extends JFrame {
                 || type.contains("datetime") || type.contains("timestamp")) {
             dateFlag = true;
             return "Date";
-        }
-        else if (type.contains("binary") || type.contains("blob")) {
+        } else if (type.contains("double")) {
+            return "double";
+        } else if (type.contains("float")) {
+            return "float";
+        } else if (type.contains("binary") || type.contains("blob")) {
             return "byte[]";
         } else {
             return "String";

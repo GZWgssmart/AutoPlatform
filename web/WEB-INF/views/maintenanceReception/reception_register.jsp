@@ -153,7 +153,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="updateProduct()">
+                                <input type="button" class="btn btn-primary" value="修改" onclick="updateCheckin()">
                                 </input>
                             </div>
                         </form>
@@ -173,6 +173,18 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加记录</h3>
                         <form role="form" id="addForm">
+                            <div class="form-group">
+                                <label>是否预约：</label>
+                                <select class="js-example-tags form-control" name="appointment" onchange="checkAppointment(this)">
+                                    <option value="N">否</option>
+                                    <option value="Y">是</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="appointmentDiv" style="display: none;">
+                                <label>预约记录：</label>
+                                <select class="js-example-tags form-control appointmentRecord" onchange="appointmentRecord(this)" name="appointmentRecord">
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label>车主姓名：</label>
                                 <input type="text" name="userName" class="form-control"/>
@@ -240,7 +252,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>标识：</label>
+                                <label>保养&nbsp;|&nbsp;维修：</label>
                                 <select class="js-example-tags form-control" name="maintainOrFix">
                                     <option value="保养">保养</option>
                                     <option value="维修">维修</option>

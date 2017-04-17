@@ -55,6 +55,8 @@ function showAddWin() {
         // enable tagging
         tags: true,
         language: 'zh-CN',
+        placeholder: "请选择品牌",
+        minimumResultsForSearch: -1,
         // loading remote data
         // see https://select2.github.io/options.html#ajax
         ajax: {
@@ -78,6 +80,8 @@ function showAddWin() {
         // enable tagging
         tags: true,
         language: 'zh-CN',
+        placeholder: "请选择颜色",
+        minimumResultsForSearch: -1,
         // loading remote data
         // see https://select2.github.io/options.html#ajax
         ajax: {
@@ -100,6 +104,8 @@ function showAddWin() {
         // enable tagging
         tags: true,
         language: 'zh-CN',
+        placeholder: "请选择车型",
+        minimumResultsForSearch: -1,
         // loading remote data
         // see https://select2.github.io/options.html#ajax
         ajax: {
@@ -122,6 +128,8 @@ function showAddWin() {
         // enable tagging
         tags: true,
         language: 'zh-CN',
+        minimumResultsForSearch: -1,
+        placeholder: "请选择车牌",
         // loading remote data
         // see https://select2.github.io/options.html#ajax
         ajax: {
@@ -170,8 +178,61 @@ function addCheckin() {
 
 }
 
+/** 给datetimepicker添加默认值 */
 function getDate(){
     $("#addDatetimepicker").val(new Date());
+}
+
+/** 判断是否选中 */
+function checkAppointment(combox) {
+    var val = combox.value;
+    if (val == "Y") {
+        $('#appointmentDiv').show();
+        $(".appointmentRecord").select2({
+            // enable tagging
+            tags: true,
+            language: 'zh-CN',
+            minimumResultsForSearch: -1,
+            placeholder: "请选择预约记录",
+            // loading remote data
+            // see https://select2.github.io/options.html#ajax
+            ajax: {
+                url: "/carPlate/car_plate_all",
+                processResults: function (data, page) {
+                    console.log(data);
+                    var parsed = data;
+                    var arr = [];
+                    for(var x in parsed){
+                        arr.push(parsed[x]); //这个应该是个json对象
+                    }
+                    console.log(arr);
+                    return {
+                        results: arr
+                    };
+                }
+            },
+
+        });
+    } else {
+        $('#appointmentDiv').hide();
+        $("input[type=reset]").trigger("click");
+    }
+}
+
+function appointmentRecord(combo) {
+    var val = combo.value;
+    if (val != "" && val != null && val != undefined) {
+        $.get("/product/update",
+            function(data){
+                if(data.result == "success"){
+                    $('#editWin').modal('hide');
+                    swal(data.message, "", "success");
+                    $('#cusTable').bootstrapTable('refresh');
+                }else if(data.result == "fail"){
+                    swal(data.message, "", "error");
+                }
+            },"json");
+    }
 }
 
 /** 编辑数据 */
@@ -188,7 +249,7 @@ function showEditWin() {
 }
 
 /**提交编辑数据 */
-function updateProduct() {
+function updateCheckin() {
     $.post("/product/update",
         $("#updateForm").serialize(),
         function(data){

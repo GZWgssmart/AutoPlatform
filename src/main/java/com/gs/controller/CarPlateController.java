@@ -18,6 +18,7 @@ import java.util.List;
  * Created by root on 2017/4/17.
  */
 @Controller
+@RequestMapping("/carPlate")
 public class CarPlateController {
     private Logger logger = (Logger) LoggerFactory.getLogger(CarPlateController.class);
 
