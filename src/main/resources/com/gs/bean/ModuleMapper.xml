@@ -1,6 +1,6 @@
 <!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gs.dao.ModuleDAO">
 
@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="module">
 		<![CDATA[
-
+			insert into t_module(moduleId, moduleName, moduleDes, moduleStatus) values(uuid(), #{moduleName}, #{moduleDes}, #{moduleStatus})
 		]]>
 	</insert>
 
@@ -40,7 +40,7 @@
 
 	<update id="update" parameterType="module">
 		<![CDATA[
-
+			update t_module set moduleName = #{moduleName}, moduleDes = #{moduleDes}, moduleStatus = #{moduleStatus} where moduleId = #{moduleId}
 		]]>
 	</update>
 
@@ -52,7 +52,7 @@
 
 	<select id="queryAll" resultMap="moduleResultMap">
 		<![CDATA[
-
+			select * from t_module
 		]]>
 	</select>
 
@@ -76,13 +76,13 @@
 
 	<select id="queryByPager" resultType="list" resultMap="moduleResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			select  * from t_module  limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(moduleId) from t_module
 		]]>
 	</select>
 
