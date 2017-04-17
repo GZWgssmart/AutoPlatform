@@ -166,11 +166,11 @@
                     <a href="#"><i class="fa fa-odnoklassniki"></i> <span class="nav-label">派工领料</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_wizard.html">物料清单</a>
+                        <li><a class="J_menuItem" href="<%=path %>/materialList/info">物料清单</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_basic.html">领料管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/materialUse/info">领料管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">退料管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/materialReturn/info">退料管理</a>
                         </li>
                     </ul>
                 </li>
@@ -256,13 +256,13 @@
                         <span class="nav-label">系统管理</span><span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_wizard.html">管理员管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/admin/info">管理员管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_wizard.html">模块管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/module/info">模块管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_advanced.html">权限管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/permission/info">权限管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_basic.html">流程管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/process/info">流程管理</a>
                         </li>
                     </ul>
                 </li>
