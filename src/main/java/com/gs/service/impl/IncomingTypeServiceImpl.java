@@ -32,8 +32,12 @@ public class IncomingTypeServiceImpl implements IncomingTypeService {
 	public List<IncomingType> queryByStatus(String status) { return incomingTypeDAO.queryByStatus(status); }
 	public IncomingType query(IncomingType incomingType) { return incomingTypeDAO.query(incomingType); }
 	public IncomingType queryById(String id) { return incomingTypeDAO.queryById(id); }
-	public List<IncomingType> queryByPager(Pager pager) { return incomingTypeDAO.queryByPager(pager); }
-	public int count() { return incomingTypeDAO.count(); }
+	public List<IncomingType> queryByPager(Pager pager) {
+		return incomingTypeDAO.queryByPager(pager);
+	}
+	public int count() {
+		return incomingTypeDAO.count();
+	}
 	public int inactive(String id) { return incomingTypeDAO.inactive(id); }
 	public int active(String id) { return incomingTypeDAO.active(id); }
 

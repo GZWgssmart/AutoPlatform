@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="incomingType">
 		<![CDATA[
-
+			insert into t_incoming_type(inTypeId, inTypeName,inTypeStatus) values(uuid(), #{inTypeName},#{inTypeStatus})
 		]]>
 	</insert>
 
@@ -40,7 +40,7 @@
 
 	<update id="update" parameterType="incomingType">
 		<![CDATA[
-
+		update t_incoming_type set inTypename = #{inTypeName} where inTypeId = #{inTypeId}
 		]]>
 	</update>
 
@@ -76,13 +76,13 @@
 
 	<select id="queryByPager" resultType="list" resultMap="incomingTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			select  * from t_incoming_type  limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(inTypeId) from t_incoming_type
 		]]>
 	</select>
 

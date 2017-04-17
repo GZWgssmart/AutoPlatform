@@ -9,9 +9,9 @@ import java.util.Date;
 *@since 2017-04-14 16:16:21
 */
 public class IncomingType {
-	private String inTypeId;
-	private String inTypeName;
-	private String inTypeStatus;
+	private String inTypeId;  	// 支出类型编号
+	private String inTypeName;	// 支出类型名称
+	private String inTypeStatus;	// 支出类型状态
 
 	public String getInTypeId(){
 		return this.inTypeId;

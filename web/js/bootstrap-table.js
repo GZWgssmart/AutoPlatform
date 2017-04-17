@@ -1068,7 +1068,7 @@
             html.push(sprintf('<button class="btn' +
                     sprintf(' btn-%s', this.options.buttonsClass) +
                     sprintf(' btn-%s', this.options.iconSize) +
-                    '" type="button" name="refresh" style = "width:52px; height:30px;" title="%s">',
+                    '" type="button" name="refresh" style = "width:52px; height:34px;" title="%s">',
                     this.options.formatRefresh()),
                 sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.refresh),
                 '</button>');
@@ -1078,7 +1078,7 @@
             html.push(sprintf('<button class="btn' +
                     sprintf(' btn-%s', this.options.buttonsClass) +
                     sprintf(' btn-%s', this.options.iconSize) +
-                    '" type="button" name="toggle" style = "width:52px; height:30px;" title="%s">',
+                    '" type="button" name="toggle" style = "width:52px; height:34px;" title="%s">',
                     this.options.formatToggle()),
                 sprintf('<i class="%s %s"></i>', this.options.iconsPrefix, this.options.icons.toggle),
                 '</button>');
