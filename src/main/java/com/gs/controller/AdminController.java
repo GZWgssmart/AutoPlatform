@@ -28,7 +28,7 @@ public class AdminController {
     private UserService userService;
 
     @RequestMapping(value = "info", method = RequestMethod.GET)
-    private String showAdminInfo() {
+    public String showAdminInfo() {
         logger.info("显示管理员信息");
         return "system/admin";
     }

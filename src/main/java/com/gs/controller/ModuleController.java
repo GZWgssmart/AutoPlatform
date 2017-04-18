@@ -29,7 +29,7 @@ public class ModuleController {
     private ModuleService moduleService;
 
     @RequestMapping(value = "info", method = RequestMethod.GET)
-    private String showModuleInfo() {
+    public String showModuleInfo() {
         logger.info("显示模块信息");
         return "system/module";
     }
@@ -49,7 +49,7 @@ public class ModuleController {
 
     @ResponseBody
     @RequestMapping(value = "add_module", method = RequestMethod.POST)
-    private ControllerResult addModule(Module module) {
+    public ControllerResult addModule(Module module) {
         logger.info("添加模块");
         module.setModuleStatus("Y");
         moduleService.insert(module);
@@ -58,7 +58,7 @@ public class ModuleController {
 
     @ResponseBody
     @RequestMapping(value = "update_module", method = RequestMethod.POST)
-    private ControllerResult updateModule(Module module) {
+    public ControllerResult updateModule(Module module) {
         logger.info("更新模块");
         module.setModuleStatus("Y");
         moduleService.update(module);
@@ -68,7 +68,7 @@ public class ModuleController {
     @ResponseBody
     @RequestMapping(value = "update_status", method = RequestMethod.GET)
     public ControllerResult updateStatus(@Param("id") String id, @Param("status") String status) {
-        logger.info("更新支出类型状态");
+        logger.info("更新模块状态");
         if (status.equals("Y")) {
             moduleService.active(id);
         } else if (status.equals("N")) {
@@ -79,7 +79,7 @@ public class ModuleController {
 
     @ResponseBody
     @RequestMapping(value = "queryByStatus_module", method = RequestMethod.GET)
-    private Pager4EasyUI<Module> queryByStatusModule(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+    public Pager4EasyUI<Module> queryByStatusModule(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         logger.info("根据状态分页查询模块");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
