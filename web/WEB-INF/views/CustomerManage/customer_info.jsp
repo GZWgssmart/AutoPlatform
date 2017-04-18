@@ -21,7 +21,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" style="width: 100%">
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
            data-show-refresh="true"
@@ -215,6 +215,7 @@
                                 </button>
                                 <input type="button" class="btn btn-primary" onclick="addProduct()" value="添加">
                                 </input>
+                                <input type="reset" name="reset" style="display: none"/>
                             </div>
                         </form>
                     </div>

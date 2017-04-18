@@ -17,6 +17,7 @@
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -188,6 +189,7 @@
                                 </button>
                                 <input type="button" class="btn btn-primary" onclick="addProduct()" value="添加">
                                 </input>
+                                <input type="reset" name="reset" style="display: none"/>
                             </div>
                         </form>
                     </div>
@@ -205,6 +207,8 @@
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
 <script src="<%=path %>/js/peopleManage/peopleInfo.js"></script>
+<script src="<%=path %>/js/select2.full.min.js"></script>
+<script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 </body>
 </html>

@@ -29,11 +29,11 @@ function gender(value, row, index) {
 function operating(value, row, index) {
     if (row.userStatus == 'Y') {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" >激活</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" >冻结</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm" >冻结</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm" >激活</button>'
         ].join('');
     }
 }
@@ -116,6 +116,7 @@ function addProduct() {
                 $('#addWin').modal('hide');
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
+                $("input[type=reset]").trigger("click");
             }else if(data.result == "fail"){
                 swal(data.message, "", "error");
             }

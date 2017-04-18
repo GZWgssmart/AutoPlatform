@@ -2,10 +2,14 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.IncomingType;
+import com.gs.bean.Role;
 import com.gs.bean.User;
+import com.gs.bean.UserRole;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.service.RoleService;
+import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -31,6 +35,10 @@ public class PeopleInfoController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private RoleService roleService;
+
 
     @RequestMapping(value = "people_info", method = RequestMethod.GET)
     private String peopleInfo() {

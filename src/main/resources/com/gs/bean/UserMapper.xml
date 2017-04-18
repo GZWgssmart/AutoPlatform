@@ -14,6 +14,7 @@
 		]]>
 	</insert>
 
+
 	<insert id="batchInsert"  parameterType="list">
 		<![CDATA[
 
