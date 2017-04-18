@@ -52,13 +52,13 @@
 
 	<select id="queryAll" resultMap="appointmentResultMap">
 		<![CDATA[
-
+			select * from t_appointment
 		]]>
 	</select>
 
 	<select id="queryByStatus" resultMap="appointmentResultMap" parameterType="string">
 		<![CDATA[
-
+			select  * from t_appointment  limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
@@ -70,7 +70,7 @@
 
 	<select id="queryById" parameterType="string" resultType="appointment">
 		<![CDATA[
-
+			select * from t_appointment where appointmentId = #{id}
 		]]>
 	</select>
 
