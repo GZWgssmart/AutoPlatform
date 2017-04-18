@@ -6,17 +6,17 @@ import java.util.Date;
 *由Wjhsmart技术支持
 *
 *@author Wjhsmart
-*@since 2017-04-14 16:16:21
+*@since 2017-04-14 16:16:21  保养提醒记录表
 */
 public class MaintainRemind {
-	private String remindId;
-	private String userId;
-	private Date lastMaintainTime;
-	private String lastMaintainMileage;
-	private String remindMsg;
-	private Date remindTime;
-	private String remindType;
-	private Date remindCreatedTime;
+	private String remindId; //保养提醒记录Id
+	private String userId;  //用户编号 来源于t_user表
+	private Date lastMaintainTime;  //上次保养时间
+	private String lastMaintainMileage;  //上次保养行驶里程
+	private String remindMsg;  //保养提醒消息
+	private Date remindTime;  //保养提醒时间
+	private String remindType;  //保养提醒方式
+	private Date remindCreatedTime;  //保养提醒记录创建时间
 
 	public String getRemindId(){
 		return this.remindId;

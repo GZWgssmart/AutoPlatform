@@ -6,18 +6,18 @@ import java.util.Date;
 *由Wjhsmart技术支持
 *
 *@author Wjhsmart
-*@since 2017-04-14 16:16:21
+*@since 2017-04-14 16:16:21 维修保养项目表
 */
 public class MaintainFix {
-	private String maintainId;
-	private String maintainName;
-	private String maintainHour;
-	private String maintainMoney;
-	private String maintainManHourFee;
-	private String maintainOrFix;
-	private String maintainDes;
-	private String companyId;
-	private String maintainStatus;
+	private String maintainId; //保养项目Id
+	private String maintainName; //保养项目名称
+	private String maintainHour; //保养工时
+	private String maintainMoney; //保养项目基础费用
+	private String maintainManHourFee; //保养项目工时费
+	private String maintainOrFix; //标识保养还是维修
+	private String maintainDes; //维修保养描述
+	private String companyId; //维修保养所属Id t_company
+	private String maintainStatus; //维修保养状态 Y N
 
 	public String getMaintainId(){
 		return this.maintainId;

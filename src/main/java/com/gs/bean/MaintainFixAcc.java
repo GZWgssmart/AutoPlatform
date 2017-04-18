@@ -6,13 +6,13 @@ import java.util.Date;
 *由Wjhsmart技术支持
 *
 *@author Wjhsmart
-*@since 2017-04-14 16:16:21
+*@since 2017-04-14 16:16:21 维修保养项目配件关联表
 */
 public class MaintainFixAcc {
-	private String mainAccId;
-	private String maintainId;
-	private String accId;
-	private int accCount;
+	private String mainAccId; //保养项目配件编号 UUID
+	private String maintainId;  //保养项目编号 fix表
+	private String accId;  //配件编号  accessories表
+	private int accCount;  //配件个数
 
 	public String getMainAccId(){
 		return this.mainAccId;
