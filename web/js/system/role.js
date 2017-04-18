@@ -16,21 +16,21 @@ function thisStatus(value, row, index) {
 }
 
 function operateFormatter(value, row, index) {
-    if (row.moduleStatus == 'Y') {
+    if (row.roleStatus == 'Y') {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>'
         ].join('');
     }
 }
 
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
-        var roleStatus = 'N';
-        $.get("/role/update_status?id=" + row.roleId + "&status=" + roleStatus,
+        var status = 'N';
+        $.get("/role/update_status?id=" + row.roleId + "&status=" + status,
             function (data) {
                 if (data.result == "success") {
 
@@ -41,8 +41,8 @@ window.operateEvents = {
             }, "json");
     },
     'click .updateInactive': function (e, value, row, index) {
-        var roleStatus = 'Y';
-        $.get("/role/update_status?id=" + row.roleId + "&status=" + roleStatus,
+        var status = 'Y';
+        $.get("/role/update_status?id=" + row.roleId + "&status=" + status,
             function (data) {
                 if (data.result == "success") {
                     $('#addWin').modal('hide');

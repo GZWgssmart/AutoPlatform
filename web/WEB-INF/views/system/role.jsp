@@ -26,7 +26,8 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+           data-height="610">
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
