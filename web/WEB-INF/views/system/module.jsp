@@ -24,7 +24,8 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+           data-height="610">
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
@@ -50,10 +51,13 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
-            <a><button onclick="queryByStatusPager('Y');" type="button" class="btn btn-default" >
+            <a><button onclick="initTable('cusTable', '/module/query_pager');" type="button" class="btn btn-default" >
+                查询全部
+            </button></a>
+            <a><button onclick="initTable('cusTable', '/module/queryByStatus_module?status=Y');" type="button" class="btn btn-default" >
                  查可用模块
             </button></a>
-            <a><button onclick="queryByStatusPager('N');" type="button" class="btn btn-default" >
+            <a><button onclick="initTable('cusTable', '/module/queryByStatus_module?status=N');" type="button" class="btn btn-default" >
                  查不可用模块
             </button></a>
         </div>
@@ -140,6 +144,7 @@
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
 <script src="<%=path %>/js/system/module.js"></script>
+<script src="<%=path %>/js/main.js"></script>
 
 </body>
 </html>
