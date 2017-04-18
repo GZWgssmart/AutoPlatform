@@ -5,12 +5,11 @@
 <mapper namespace="com.gs.dao.RoleDAO">
 
 	<resultMap id="roleResultMap" type="role">
-
 	</resultMap>
 
 	<insert id="insert"  parameterType="role">
 		<![CDATA[
-
+			INSERT INTO t_role(roleId, roleName, roleDes) VALUES (uuid(), #{roleName}, #{roleDes})
 		]]>
 	</insert>
 
@@ -40,7 +39,7 @@
 
 	<update id="update" parameterType="role">
 		<![CDATA[
-
+			UPDATE t_role SET roleName = #{roleName}, roleDes = #{roleDes}  WHERE roleId = #{roleId}
 		]]>
 	</update>
 
@@ -52,7 +51,6 @@
 
 	<select id="queryAll" resultMap="roleResultMap">
 		<![CDATA[
-
 		]]>
 	</select>
 
@@ -76,25 +74,25 @@
 
 	<select id="queryByPager" resultType="list" resultMap="roleResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			SELECT * FROM t_role limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			SELECT COUNT(*) FROM t_role
 		]]>
 	</select>
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			UPDATE t_role set roleStatus = 'N' where roleId = #{roleId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			  UPDATE t_role set roleStatus = 'Y' where roleId = #{roleId}
 		]]>
 	</update>
 
