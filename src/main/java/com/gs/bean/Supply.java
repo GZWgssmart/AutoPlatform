@@ -9,20 +9,20 @@ import java.util.Date;
 *@since 2017-04-14 16:16:21
 */
 public class Supply{
-	private String supplyId;
-	private String supplyName;
-	private String supplyTel;
-	private String supplyPricipal;
-	private String supplyAddress;
-	private String supplyBank;
-	private String supplyBankAccount;
-	private String supplyBankNo;
-	private String supplyAlipay;
-	private String supplyWechat;
-	private Date supplyCreatedTime;
-	private String supplyTypeId;
-	private String companyId;
-	private String supplyStatus;
+	private String supplyId; //供应商编号
+	private String supplyName; //供应商名称
+	private String supplyTel; //供应商联系电话
+	private String supplyPricipal; //供应商负责人
+	private String supplyAddress; //供应商地址
+	private String supplyBank; //供应商开户银行全称
+	private String supplyBankAccount; //供应商开户人姓名
+	private String supplyBankNo; //供应商开户卡号
+	private String supplyAlipay; //供应商支付宝
+	private String supplyWechat; //供应商微信
+	private Date supplyCreatedTime; //供应商创建时间
+	private String supplyTypeId; //供应商分类编号
+	private String companyId; //供应商所属公司
+	private String supplyStatus; //供应商状态，Y表示可用，N表示不可用
 
 	public String getSupplyId(){
 		return this.supplyId;

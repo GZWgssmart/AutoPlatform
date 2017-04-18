@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="supply">
 		<![CDATA[
-
+		insert into t_supply(supplyId, supplyName, supplyTel, supplyPricipal, supplyAddress, supplyBank, supplyBankAccount, supplyBankNo, supplyAlipay, supplyWechat, supplyCreatedTime, supplyTypeId companyId, supplyStatus) values(#{supplyId}, #{supplyName}, #{supplyTel}, #{supplyPricipal}, #{supplyAddress}, #{supplyBank}, #{supplyBankAccount}, #{supplyBankNo}, #{supplyAlipay}, #{supplyWechat}, #{supplyCreatedTime}, #{supplyTypeId}, #{companyId}, #{supplyStatus})
 		]]>
 	</insert>
 

@@ -124,9 +124,9 @@
                     <a href="#"><i class="glyphicon glyphicon-bishop"></i> <span class="nav-label">供应商管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_basic.html">供应商分类管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/supplyType/type">供应商分类管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">供应商信息管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/supply/info">供应商信息管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_advanced.html">下单统计</a>
                         </li>

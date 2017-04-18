@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="supplyType">
 		<![CDATA[
-
+ 			insert into t_supply_type(supplyTypeId, supplyTypeName, supplyTypeDes, companyId, supplyTypeStatus) values(uuid(), #{supplyTypeName}, #{supplyTypeDes}, #{companyId}, #{supplyTypeStatus})
 		]]>
 	</insert>
 
@@ -40,7 +40,7 @@
 
 	<update id="update" parameterType="supplyType">
 		<![CDATA[
-
+		update t_supply_type set supplyTypeName = #{supplyTypeName}, supplyTypeDes = #{supplyTypeDes}, supplyTypeStatus = 'Y' where supplyTypeId = #{supplyTypeId}
 		]]>
 	</update>
 
@@ -76,25 +76,26 @@
 
 	<select id="queryByPager" resultType="list" resultMap="supplyTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
-		]]>
+		select * from t_supply_type where 1 = 1
+        ]]>
+		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+		select count(supplyTypeId) from t_supply_type where 1 = 1
 		]]>
 	</select>
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+		update t_supply_type set supplyTypeStatus = 'N' where supplyTypeId = #{supplyTypeId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+		update t_supply_type set supplyTypeStatus = 'Y' where supplyTypeId = #{supplyTypeId}
 		]]>
 	</update>
 
