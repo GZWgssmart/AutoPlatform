@@ -1,101 +1,102 @@
 <!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gs.dao.AccessoriesDAO">
 
-	<resultMap id="accessoriesResultMap" type="accessories">
+    <resultMap id="accessoriesResultMap" type="accessories">
+        
+    </resultMap>
 
-	</resultMap>
-
-	<insert id="insert"  parameterType="accessories">
+    <insert id="insert" parameterType="accessories">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</insert>
 
-	<insert id="batchInsert"  parameterType="list">
+    <insert id="batchInsert" parameterType="list">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</insert>
 
-	<delete id="delete" parameterType="accessories">
+    <delete id="delete" parameterType="accessories">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</delete>
 
-	<delete id="deleteById" parameterType="string">
+    <delete id="deleteById" parameterType="string">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</delete>
 
-	<delete id="batchDelete" parameterType="list">
+    <delete id="batchDelete" parameterType="list">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</delete>
 
-	<update id="update" parameterType="accessories">
+    <update id="update" parameterType="accessories">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</update>
 
-	<update id="batchUpdate" parameterType="list">
+    <update id="batchUpdate" parameterType="list">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</update>
 
-	<select id="queryAll" resultMap="accessoriesResultMap">
+    <select id="queryAll" resultMap="accessoriesResultMap">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</select>
 
-	<select id="queryByStatus" resultMap="accessoriesResultMap" parameterType="string">
+    <select id="queryByStatus" resultMap="accessoriesResultMap" parameterType="string">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</select>
 
-	<select id="query" parameterType="accessories" resultType="accessories">
+    <select id="query" parameterType="accessories" resultType="accessories">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</select>
 
-	<select id="queryById" parameterType="string" resultType="accessories">
+    <select id="queryById" parameterType="string" resultType="accessories">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="accessoriesResultMap" parameterType="com.gs.common.bean.Pager">
+    <select id="queryByPager" resultType="list" resultMap="accessoriesResultMap"
+            parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</select>
 
-	<select id="count" resultType="int">
+    <select id="count" resultType="int">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</select>
 
-	<update id="inactive" parameterType="string">
+    <update id="inactive" parameterType="string">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</update>
 
-	<update id="active" parameterType="string">
+    <update id="active" parameterType="string">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</update>
 
 </mapper>

@@ -3,99 +3,126 @@ package com.gs.bean;
 import java.util.Date;
 
 /**
-*由Wjhsmart技术支持
-*
-*@author Wjhsmart
-*@since 2017-04-14 16:16:20
-*/
+ * 由Wjhsmart技术支持
+ *
+ * @author Wjhsmart
+ * @since 2017-04-14 16:16:20
+ */
 public class AccessoriesSale {
-	private String accSaleId;
-	private String accId;
-	private Date accSaledTime;
-	private int accSaleCount;
-	private String accSalePrice;
-	private String accSaleTotal;
-	private String accSaleDiscount;
-	private String accSaleMoney;
-	private Date accSaleCreatedTime;
-	private String companyId;
-	private String accSaleStatus;
+    private String accSaleId; // 配件销售编号
+    private String accId; // 配件编号，来源于t_accessories表
+    private Date accSaledTime; // 配件销售时间
+    private int accSaleCount; // 配件销售数量
+    private double accSalePrice; // 配件销售单价
+    private double accSaleTotal; // 配件销售总价
+    private double accSaleDiscount; // 配件销售折扣
+    private double accSaleMoney; // 配件销售最终价
+    private Date accSaleCreatedTime; // 配件销售记录创建时间
+    private String companyId; // 配件销售记录所属公司，来源于t_company表
+    private String accSaleStatus; // 配件销售记录状态
 
-	public String getAccSaleId(){
-		return this.accSaleId;
-	}
-	public void setAccSaleId(String accSaleId){
-		this.accSaleId=accSaleId;
-	}
+    public String getAccSaleId() {
+        return accSaleId;
+    }
 
-	public String getAccId(){
-		return this.accId;
-	}
-	public void setAccId(String accId){
-		this.accId=accId;
-	}
+    public void setAccSaleId(String accSaleId) {
+        this.accSaleId = accSaleId;
+    }
 
-	public Date getAccSaledTime(){
-		return this.accSaledTime;
-	}
-	public void setAccSaledTime(Date accSaledTime){
-		this.accSaledTime=accSaledTime;
-	}
+    public String getAccId() {
+        return accId;
+    }
 
-	public int getAccSaleCount(){
-		return this.accSaleCount;
-	}
-	public void setAccSaleCount(int accSaleCount){
-		this.accSaleCount=accSaleCount;
-	}
+    public void setAccId(String accId) {
+        this.accId = accId;
+    }
 
-	public String getAccSalePrice(){
-		return this.accSalePrice;
-	}
-	public void setAccSalePrice(String accSalePrice){
-		this.accSalePrice=accSalePrice;
-	}
+    public Date getAccSaledTime() {
+        return accSaledTime;
+    }
 
-	public String getAccSaleTotal(){
-		return this.accSaleTotal;
-	}
-	public void setAccSaleTotal(String accSaleTotal){
-		this.accSaleTotal=accSaleTotal;
-	}
+    public void setAccSaledTime(Date accSaledTime) {
+        this.accSaledTime = accSaledTime;
+    }
 
-	public String getAccSaleDiscount(){
-		return this.accSaleDiscount;
-	}
-	public void setAccSaleDiscount(String accSaleDiscount){
-		this.accSaleDiscount=accSaleDiscount;
-	}
+    public int getAccSaleCount() {
+        return accSaleCount;
+    }
 
-	public String getAccSaleMoney(){
-		return this.accSaleMoney;
-	}
-	public void setAccSaleMoney(String accSaleMoney){
-		this.accSaleMoney=accSaleMoney;
-	}
+    public void setAccSaleCount(int accSaleCount) {
+        this.accSaleCount = accSaleCount;
+    }
 
-	public Date getAccSaleCreatedTime(){
-		return this.accSaleCreatedTime;
-	}
-	public void setAccSaleCreatedTime(Date accSaleCreatedTime){
-		this.accSaleCreatedTime=accSaleCreatedTime;
-	}
+    public double getAccSalePrice() {
+        return accSalePrice;
+    }
 
-	public String getCompanyId(){
-		return this.companyId;
-	}
-	public void setCompanyId(String companyId){
-		this.companyId=companyId;
-	}
+    public void setAccSalePrice(double accSalePrice) {
+        this.accSalePrice = accSalePrice;
+    }
 
-	public String getAccSaleStatus(){
-		return this.accSaleStatus;
-	}
-	public void setAccSaleStatus(String accSaleStatus){
-		this.accSaleStatus=accSaleStatus;
-	}
+    public double getAccSaleTotal() {
+        return accSaleTotal;
+    }
 
+    public void setAccSaleTotal(double accSaleTotal) {
+        this.accSaleTotal = accSaleTotal;
+    }
+
+    public double getAccSaleDiscount() {
+        return accSaleDiscount;
+    }
+
+    public void setAccSaleDiscount(double accSaleDiscount) {
+        this.accSaleDiscount = accSaleDiscount;
+    }
+
+    public double getAccSaleMoney() {
+        return accSaleMoney;
+    }
+
+    public void setAccSaleMoney(double accSaleMoney) {
+        this.accSaleMoney = accSaleMoney;
+    }
+
+    public Date getAccSaleCreatedTime() {
+        return accSaleCreatedTime;
+    }
+
+    public void setAccSaleCreatedTime(Date accSaleCreatedTime) {
+        this.accSaleCreatedTime = accSaleCreatedTime;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
+
+    public String getAccSaleStatus() {
+        return accSaleStatus;
+    }
+
+    public void setAccSaleStatus(String accSaleStatus) {
+        this.accSaleStatus = accSaleStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "AccessoriesSale{" +
+                "accSaleId='" + accSaleId + '\'' +
+                ", accId='" + accId + '\'' +
+                ", accSaledTime=" + accSaledTime +
+                ", accSaleCount=" + accSaleCount +
+                ", accSalePrice=" + accSalePrice +
+                ", accSaleTotal=" + accSaleTotal +
+                ", accSaleDiscount=" + accSaleDiscount +
+                ", accSaleMoney=" + accSaleMoney +
+                ", accSaleCreatedTime=" + accSaleCreatedTime +
+                ", companyId='" + companyId + '\'' +
+                ", accSaleStatus='" + accSaleStatus + '\'' +
+                '}';
+    }
 }

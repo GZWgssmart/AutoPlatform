@@ -1,101 +1,98 @@
 <!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gs.dao.AccessoriesSaleDAO">
 
-	<resultMap id="accessoriesSaleResultMap" type="accessoriesSale">
+    <resultMap id="accessoriesSaleResultMap" type="accessoriesSale">
 
-	</resultMap>
+    </resultMap>
 
-	<insert id="insert"  parameterType="accessoriesSale">
-		<![CDATA[
-
-		]]>
+    <insert id="insert" parameterType="accessoriesSale">
+		insert into
+		auto_platform.t_accessories_sale(accSaleId, accId, accSaledTime, accSaleCount, accSalePrice, accSaleTotal, accSaleDiscount, accSaleMoney, accSaleCreatedTime, companyId, accSaleStatus)
+		values (#{accSaleId}, #{accId}, #{accSaledTime}, #{accSaleCount}, #{accSalePrice}, #{accSaleTotal}, #{accSaleDiscount}, #{accSaleMoney}, #{accSaleCreatedTime}, #{companyId}, #{accSaleStatus})
 	</insert>
 
-	<insert id="batchInsert"  parameterType="list">
+    <insert id="batchInsert" parameterType="list">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</insert>
 
-	<delete id="delete" parameterType="accessoriesSale">
+    <delete id="delete" parameterType="accessoriesSale">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</delete>
 
-	<delete id="deleteById" parameterType="string">
+    <delete id="deleteById" parameterType="string">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</delete>
 
-	<delete id="batchDelete" parameterType="list">
+    <delete id="batchDelete" parameterType="list">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</delete>
 
-	<update id="update" parameterType="accessoriesSale">
+    <update id="update" parameterType="accessoriesSale">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</update>
 
-	<update id="batchUpdate" parameterType="list">
+    <update id="batchUpdate" parameterType="list">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</update>
 
-	<select id="queryAll" resultMap="accessoriesSaleResultMap">
+    <select id="queryAll" resultMap="accessoriesSaleResultMap">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</select>
 
-	<select id="queryByStatus" resultMap="accessoriesSaleResultMap" parameterType="string">
+    <select id="queryByStatus" resultMap="accessoriesSaleResultMap" parameterType="string">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</select>
 
-	<select id="query" parameterType="accessoriesSale" resultType="accessoriesSale">
+    <select id="query" parameterType="accessoriesSale" resultType="accessoriesSale">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</select>
 
-	<select id="queryById" parameterType="string" resultType="accessoriesSale">
+    <select id="queryById" parameterType="string" resultType="accessoriesSale">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="accessoriesSaleResultMap" parameterType="com.gs.common.bean.Pager">
-		<![CDATA[
-
-		]]>
+    <select id="queryByPager" resultType="list" resultMap="accessoriesSaleResultMap"
+            parameterType="com.gs.common.bean.Pager">
+		select * from auto_platform.t_accessories_sale limit #{beginIndex}, #{pageSize}
 	</select>
 
-	<select id="count" resultType="int">
-		<![CDATA[
-
-		]]>
+    <select id="count" resultType="int">
+		select count(*) from auto_platform.t_accessories_sale
 	</select>
 
-	<update id="inactive" parameterType="string">
+    <update id="inactive" parameterType="string">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</update>
 
-	<update id="active" parameterType="string">
+    <update id="active" parameterType="string">
 		<![CDATA[
 
-		]]>
+        ]]>
 	</update>
 
 </mapper>
