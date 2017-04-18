@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,7 +43,6 @@ public class CustomerController {
     @RequestMapping(value = "customerInfo_insert", method = RequestMethod.POST)
     public ControllerResult infoInsert(User user){
         logger.info("信息添加");
-        System.out.println(user);
         userService.insert(user);
         return ControllerResult.getSuccessResult("添加成功");
     }

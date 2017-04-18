@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="user">
 		<![CDATA[
-			INSERT INTO t_user(userId, userName, userNickname, userEmail, userPwd, userGender, userAddress, userPhone, userIdentity) VALUES (uuid(), #{userName}, #{userNickname}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userIdentity})
+			INSERT INTO t_user(userId, userName, userNickname, userEmail, userPwd, userGender, userAddress, userPhone, userIdentity, userCreatedTime) VALUES (uuid(), #{userName}, #{userNickname}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userIdentity}, now())
 		]]>
 	</insert>
 

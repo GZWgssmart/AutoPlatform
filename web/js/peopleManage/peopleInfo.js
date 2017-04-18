@@ -29,7 +29,9 @@ function gender(value, row, index) {
 function operating(value, row, index) {
     if (row.userStatus == 'Y') {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" >冻结</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" >冻结</button>',
+            '<button onclick="showEditWin();" type="button" class="btn btn-default  btn-sm" >编辑</button>',
+            '<button onclick="showEditWin();" type="button" class="btn btn-default  btn-sm" >详细信息</button>'
         ].join('');
     } else {
         return [

@@ -21,7 +21,7 @@
 </head>
 <body>
 
-<div class="container" style="width: 100%">
+<div class="container" style="width: 100%;">
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
            data-show-refresh="true"
@@ -45,9 +45,6 @@
             <th data-field="userEmail" >
                 邮箱
             </th>
-            <th data-field="userPwd" >
-                密码
-            </th>
             <th data-field="userGender" data-formatter="gender" >
                 性别
             </th>
@@ -60,7 +57,7 @@
             <th data-field="userAddress" >
                 住址
             </th>
-            <th data-field="userCreatedTime" >
+            <th data-field="userCreatedTime" data-formatter="formatterDate">
                 创建时间
             </th>
             <th data-field="userStatus" data-formatter="operating" data-events="operateEvents">
@@ -112,11 +109,6 @@
                                 <input type="text" attr="user.userName" name="userName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>密码：</label>
-                                <input type="text"  name="userPwd" attr="user.userPwd"
-                                       class="form-control"/>
-                            </div>
-                            <div class="form-group">
                                 <label>描述：</label>
                                 <input type="text"  name="userDes" attr="user.userDes"
                                        class="form-control"/>
@@ -135,11 +127,6 @@
                             <div class="form-group">
                                 <label>住址：</label>
                                 <input type="text"  name="userAddress" attr="user.userAddress"
-                                       class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label>身份证：</label>
-                                <input type="text"  name="userIdentity" attr="user.userIdentity"
                                        class="form-control"/>
                             </div>
 
@@ -167,6 +154,10 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加员工</h3>
                         <form role="form" id="addForm">
+                            <div class="form-group">
+                                <label>头像：</label>
+                                <input type="text"  name="userIcon" class="form-control"/>
+                            </div>
                             <div class="form-group">
                                 <label>姓名：</label>
                                 <input type="text"  name="userName" class="form-control"/>
@@ -205,8 +196,8 @@
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>身份证：</label>
-                                <input type="text" name="userIdentity"
+                                <label>描述：</label>
+                                <input type="text" name="userDes"
                                        class="form-control"/>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
