@@ -3,7 +3,7 @@ function initTable(tableId, url) {
     //先销毁表格
     $('#' + tableId).bootstrapTable('destroy');
     //初始化表格,动态从服务器加载数据
-    $("#cusTable").bootstrapTable({
+    $("#" + tableId).bootstrapTable({
         method: "get",  //使用get请求到服务器获取数据
         url: contextPath + url, //获取数据的Servlet地址
         striped: false,  //表格显示条纹
