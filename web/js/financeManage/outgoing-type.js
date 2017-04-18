@@ -127,7 +127,7 @@ function statusFormatter(value, row, index) {
         return [
             '可用'
         ].join('');
-    }else if(row.inTypeStatus == 'N'){
+    }else if(row.outTypeStatus == 'N'){
         return [
             '不可用'
         ].join('');

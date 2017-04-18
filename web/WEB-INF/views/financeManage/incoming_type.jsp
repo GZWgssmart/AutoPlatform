@@ -130,6 +130,7 @@
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
 <script src="<%=path %>/js/financeManage/incoming-type.js"></script>
+<script src="<%=path%>/js/main.js"></script>
 
 </body>
 </html>
