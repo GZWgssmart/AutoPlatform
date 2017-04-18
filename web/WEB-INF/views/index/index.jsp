@@ -98,6 +98,14 @@
                 </li>
 
                 <li>
+                    <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">车主管理</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="<%=path%>/customerManage/customer_info">车主信息管理</a>
+                    </ul>
+                </li>
+
+                <li>
                     <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">人员管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
