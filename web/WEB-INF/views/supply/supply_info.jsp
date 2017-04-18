@@ -26,11 +26,11 @@
            data-showColumns="true">
         <thead>
         <tr>
-            <th data-field="state" data-checkbox="true">编号</th>
+            <th data-field="id" data-checkbox="true"></th>
             <th  data-field="supplyName" data-sortable="true">
                 名称
             </th>
-            <th data-field="suppleTel" >
+            <th data-field="supplyTel" >
                 电话
             </th>
             <th data-field="supplyPricipal" >
@@ -57,7 +57,7 @@
             <th data-field="sypplyCreatedTime" >
                 创建时间
             </th>
-            <th data-field="supplyType" >
+            <th data-field="supplyTypeId" >
                 类型
             </th>
             <th data-field="supplyStatus" >
@@ -92,46 +92,36 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改供应商</h3>
                         <form role="form" id="updateForm" >
-                            <input type="hidden" attr="product.id" name="id" id = "id"/>
+                            <input type="hidden" attr="supply.supplyId" name="supplyId" id = "supplyId"/>
                             <div class="form-group">
                                 <label>名称：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text" attr="supply.supplyName"  name="supplyName" class="form-control"/>
                                 <label>电话：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text"  attr="supply.supplyTel" name="supplyTel" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>负责人：</label>
-                                <input type="text"  name="price" class="form-control"/>
+                                <input type="text" attr="supply.supplyPricipal" name="supplyPricipal" class="form-control"/>
                                 <label>地址：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text" attr="supply.supplyAddress"  name="supplyAddress" class="form-control"/>
                             </div>
-
                             <div class="form-group">
                                 <label>开户银行全称：</label>
-                                <input type="text"  name="des" class="form-control"/>
+                                <input type="text" attr="supply.supplyBank" name="supplyBank" class="form-control"/>
                                 <label>开户人姓名：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text" attr="supply.supplyBankAccount" name="supplyBankAccount" class="form-control"/>
                             </div>
-
                             <div class="form-group">
                                 <label>开户卡号：</label>
-                                <input type="number"  name="des" class="form-control"/>
+                                <input type="text" attr="supply.supplyBankNo" name="supplyBankNo" class="form-control"/>
                                 <label>支付宝：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text" attr="supply.supplyAlipay"  name="supplyAlipay" class="form-control"/>
                             </div>
-
                             <div class="form-group">
                                 <label>微信：</label>
-                                <input type="text"  name="des" class="form-control"/>
+                                <input type="text" attr="supply.supplyWechat" name="supplyWechat" class="form-control"/>
                                 <label>供应商分类：</label>
-                                <input type="text"   name="name" class="form-control"/>
-                            </div>
-
-                            <div class="form-group">
-                                <label>创建时间：</label>
-                                <input type="date"  name="des" class="form-control"/>
-                                <label>所属公司：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text" attr="supply.supplyTypeId"  name="supplyTypeId" class="form-control"/>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
@@ -159,45 +149,32 @@
                         <form role="form" id="addForm">
                             <div class="form-group">
                                 <label>名称：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text"   name="supplyName" class="form-control"/>
                                 <label>电话：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text"   name="supplyTel" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>负责人：</label>
-                                <input type="text"  name="price" class="form-control"/>
+                                <input type="text"  name="supplyPricipal" class="form-control"/>
                                 <label>地址：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text"   name="supplyAddress" class="form-control"/>
                             </div>
-
                             <div class="form-group">
                                 <label>开户银行全称：</label>
-                                <input type="text"  name="des" class="form-control"/>
+                                <input type="text"  name="supplyBank" class="form-control"/>
                                 <label>开户人姓名：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text"   name="supplyBankAccount" class="form-control"/>
                             </div>
-
                             <div class="form-group">
                                 <label>开户卡号：</label>
-                                <input type="number"  name="des" class="form-control"/>
+                                <input type="text"  name="supplyBankNo" class="form-control"/>
                                 <label>支付宝：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text"   name="supplyAlipay" class="form-control"/>
                             </div>
-
                             <div class="form-group">
                                 <label>微信：</label>
-                                <input type="text"  name="des" class="form-control"/>
-                                <label>供应商分类：</label>
-                                <input type="text"   name="name" class="form-control"/>
+                                <input type="text"  name="supplyWechat" class="form-control"/>
                             </div>
-
-                            <div class="form-group">
-                                <label>创建时间：</label>
-                                <input type="date"  name="des" class="form-control"/>
-                                <label>所属公司：</label>
-                                <input type="text"   name="name" class="form-control"/>
-                            </div>
-
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
@@ -207,7 +184,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -222,47 +198,12 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
+<script src="<%=path %>/js/main.js"></script>
 <script type="text/javascript">
-    function initTable() {
-        //先销毁表格
-        $('#cusTable').bootstrapTable('destroy');
-        //初始化表格,动态从服务器加载数据
-        $("#cusTable").bootstrapTable({
-            method: "get",  //使用get请求到服务器获取数据
-            url: "/supply/queryByPager", //获取数据的Servlet地址
-            striped: false,  //表格显示条纹
-            pagination: true, //启动分页
-            pageSize: 5,  //每页显示的记录数
-            pageNumber:1, //当前第几页
-            pageList: [5, 10, 15, 20, 25],  //记录数可选列表
-            search: true,  //是否启用查询
-            showColumns: true,  //显示下拉框勾选要显示的列
-            showRefresh: true,  //显示刷新按钮
-            strictSearch: true,
-            clickToSelect: true,  //是否启用点击选中行
-            uniqueId: "id",                     //每一行的唯一标识，一般为主键列
-            sortable: true,                     //是否启用排序
-            sortOrder: "asc",                   //排序方式
-            toolbar : "#toolbar",// 指定工具栏
-            sidePagination: "server", //表示服务端请求
-
-            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
-            //设置为limit可以获取limit, offset, search, sort, order
-            queryParamsType : "undefined",
-            queryParams: function queryParams(params) {   //设置查询参数
-                var param = {
-                    pageNumber: params.pageNumber,
-                    pageSize: params.pageSize,
-                    orderNum : $("#orderNum").val()
-                };
-                return param;
-            },
-        });
-    }
 
     $(document).ready(function () {
         //调用函数，初始化表格
-        initTable();
+        initTable("cusTable", "/supply/queryByPager");
 
         //当点击查询按钮的时候执行
         $("#search").bind("click", initTable);

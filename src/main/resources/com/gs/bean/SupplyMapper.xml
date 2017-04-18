@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="supply">
 		<![CDATA[
-		insert into t_supply(supplyId, supplyName, supplyTel, supplyPricipal, supplyAddress, supplyBank, supplyBankAccount, supplyBankNo, supplyAlipay, supplyWechat, supplyCreatedTime, supplyTypeId companyId, supplyStatus) values(#{supplyId}, #{supplyName}, #{supplyTel}, #{supplyPricipal}, #{supplyAddress}, #{supplyBank}, #{supplyBankAccount}, #{supplyBankNo}, #{supplyAlipay}, #{supplyWechat}, #{supplyCreatedTime}, #{supplyTypeId}, #{companyId}, #{supplyStatus})
+		insert into t_supply(supplyId, supplyName, supplyTel, supplyPricipal, supplyAddress, supplyBank, supplyBankAccount, supplyBankNo, supplyAlipay, supplyWechat, supplyCreatedTime, supplyTypeId, companyId, supplyStatus) values(uuid(), #{supplyName}, #{supplyTel}, #{supplyPricipal}, #{supplyAddress}, #{supplyBank}, #{supplyBankAccount}, #{supplyBankNo}, #{supplyAlipay}, #{supplyWechat}, now(), #{supplyTypeId}, #{companyId}, #{supplyStatus})
 		]]>
 	</insert>
 
@@ -40,7 +40,7 @@
 
 	<update id="update" parameterType="supply">
 		<![CDATA[
-
+		update t_supply set supplyName = #{supplyName}, supplyTel = #{supplyTel}, supplyPricipal = #{supplyPricipal}, supplyAddress = #{supplyAddress}, supplyBank = #{supplyBank}, supplyBankAccount = #{supplyBankAccount}, supplyBankNo = #{supplyBankNo}, supplyAlipay = #{supplyAlipay}, supplyWechat = #{supplyWechat}, supplyTypeId = #{supplyTypeId}, supplyStatus = 'Y' where supplyId = #{supplyId}
 		]]>
 	</update>
 
@@ -76,13 +76,14 @@
 
 	<select id="queryByPager" resultType="list" resultMap="supplyResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+		select * from t_supply where 1 = 1
 		]]>
+		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+		select count(supplyId) from t_supply where 1 = 1
 		]]>
 	</select>
 
