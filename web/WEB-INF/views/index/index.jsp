@@ -221,7 +221,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path%>/incomingType/show_incomingType">收入类型管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_wizard.html">支出类型管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/outgoingType/show_outgoingType">支出类型管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_advanced.html">收支记录管理</a>
                         </li>

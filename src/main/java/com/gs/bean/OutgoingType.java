@@ -9,9 +9,9 @@ import java.util.Date;
 *@since 2017-04-14 16:16:21
 */
 public class OutgoingType {
-	private String outTypeId;
-	private String outTypeName;
-	private String outTypeStatus;
+	private String outTypeId; 	// 支出类型编号
+	private String outTypeName;  // 支出类型名称
+	private String outTypeStatus; // 支出类型状态
 
 	public String getOutTypeId(){
 		return this.outTypeId;

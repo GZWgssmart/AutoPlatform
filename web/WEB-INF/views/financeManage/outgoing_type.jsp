@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>收入类型管理</title>
+    <title>支出类型管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -25,14 +25,14 @@
            data-show-refresh="true"
            data-show-toggle="true"
            data-showColumns="true"
-            data-height="500">
+           data-height="500">
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="inTypeName" >
+            <th data-field="outTypeName" >
                 名称
             </th>
-            <th data-field="inTypeStatus" data-formatter="statusFormatter">
+            <th data-field="outTypeStatus" data-formatter="statusFormatter">
                 当前状态
             </th>
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
@@ -63,21 +63,20 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">修改收入类型</h3>
+                        <h3 class="m-t-none m-b">修改支出类型</h3>
                         <form role="form" id="updateForm" >
-                            <input type="hidden" attr="incomingType.inTypeId" name="inTypeId" />
+                            <input type="hidden" attr="outgoingType.outTypeId" name="outTypeId" />
                             <div class="form-group">
-                                <label>收入类型名称：</label>
-                                <input type="text"  id="name1" attr="incomingType.inTypeName" name="inTypeName"  class="form-control"/>
+                                <label>支出类型名称：</label>
+                                <input type="text" id="name1" attr="outgoingType.outTypeName" name="outTypeName"  class="form-control"/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error1" style="color: red;"></span>
-                                <br/>
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton1" class="btn btn-primary" value="修改" onclick="updateIncomingType()">
+                                <input type="button" id="addButton1" class="btn btn-primary" value="修改" onclick="updateOutgoingType()">
                                 </input>
                             </div>
                         </form>
@@ -95,20 +94,19 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">添加收入类型</h3>
-                        <form role="form" id="addForm" >
+                        <h3 class="m-t-none m-b">添加支出类型</h3>
+                        <form role="form" id="addForm">
                             <div class="form-group">
-                                <label>收入类型名称：</label>
-                                <input type="text"  id="name" name="inTypeName" class="form-control"/>
+                                <label>支出类型名称：</label>
+                                <input type="text"  id="name" name="outTypeName" class="form-control"/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error" style="color: red;"></span>
-                                <br/>
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton" class="btn btn-primary" onclick="addIncomingType()" value="添加">
+                                <input type="button" id="addButton" class="btn btn-primary" onclick="addOutgoingType()" value="添加">
                                 </input>
                                 <input type="reset" name="reset" style="display: none;" />
                             </div>
@@ -129,7 +127,7 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
-<script src="<%=path %>/js/financeManage/incoming-type.js"></script>
+<script src="<%=path %>/js/financeManage/outgoing-type.js"></script>
 
 </body>
 </html>

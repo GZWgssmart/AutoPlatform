@@ -9,17 +9,19 @@ import java.util.Date;
 *@since 2017-04-14 16:16:21
 */
 public class IncomingOutgoing {
-	private String inOutId;
-	private String inTypeId;
-	private String outTypeId;
-	private String inOutMoney;
-	private String inOutCreatedUser;
-	private Date inOutCreatedTime;
-	private String inOutStatus;
+	private String inOutId;			// 收支编号
+    
+	private String inTypeId;		// 收入类型编号
+	private String outTypeId;		//  支出类型编号
+	private double inOutMoney;		//  收支金额
+	private String inOutCreatedUser; 	// 收支记录创建人
+	private Date inOutCreatedTime;		// 收支记录创建时间
+	private String inOutStatus;			// 收支记录状态
 
 	public String getInOutId(){
 		return this.inOutId;
 	}
+
 	public void setInOutId(String inOutId){
 		this.inOutId=inOutId;
 	}
@@ -27,6 +29,7 @@ public class IncomingOutgoing {
 	public String getInTypeId(){
 		return this.inTypeId;
 	}
+
 	public void setInTypeId(String inTypeId){
 		this.inTypeId=inTypeId;
 	}
@@ -34,20 +37,23 @@ public class IncomingOutgoing {
 	public String getOutTypeId(){
 		return this.outTypeId;
 	}
+
 	public void setOutTypeId(String outTypeId){
 		this.outTypeId=outTypeId;
 	}
 
-	public String getInOutMoney(){
+	public double getInOutMoney(){
 		return this.inOutMoney;
 	}
-	public void setInOutMoney(String inOutMoney){
+
+	public void setInOutMoney(double inOutMoney){
 		this.inOutMoney=inOutMoney;
 	}
 
 	public String getInOutCreatedUser(){
 		return this.inOutCreatedUser;
 	}
+
 	public void setInOutCreatedUser(String inOutCreatedUser){
 		this.inOutCreatedUser=inOutCreatedUser;
 	}
@@ -55,6 +61,7 @@ public class IncomingOutgoing {
 	public Date getInOutCreatedTime(){
 		return this.inOutCreatedTime;
 	}
+
 	public void setInOutCreatedTime(Date inOutCreatedTime){
 		this.inOutCreatedTime=inOutCreatedTime;
 	}
@@ -62,6 +69,7 @@ public class IncomingOutgoing {
 	public String getInOutStatus(){
 		return this.inOutStatus;
 	}
+
 	public void setInOutStatus(String inOutStatus){
 		this.inOutStatus=inOutStatus;
 	}

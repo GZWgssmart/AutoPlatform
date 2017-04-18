@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="outgoingType">
 		<![CDATA[
-
+			insert into t_outgoing_type(outTypeId, outTypeName,outTypeStatus) values(uuid(), #{outTypeName},#{outTypeStatus})
 		]]>
 	</insert>
 
@@ -40,7 +40,7 @@
 
 	<update id="update" parameterType="outgoingType">
 		<![CDATA[
-
+			update t_outgoing_type set outTypeName = #{outTypeName},outTypeStatus = 'Y' where outTypeId = #{outTypeId}
 		]]>
 	</update>
 
@@ -76,25 +76,25 @@
 
 	<select id="queryByPager" resultType="list" resultMap="outgoingTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			select  * from t_outgoing_type  limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(*) from t_outgoing_type
 		]]>
 	</select>
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_outgoing_type set outTypeStatus = 'N' where outTypeId = #{outTypeId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_outgoing_type set outTypeStatus = 'Y' where outTypeId = #{outTypeId}
 		]]>
 	</update>
 
