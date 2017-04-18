@@ -28,6 +28,32 @@ public class User{
 	private Date userLoginedTime; // 用户最近一次登录时
 	private String userStatus; // 用户状态
 
+	@Override
+	public String toString() {
+		return "User{" +
+				"userId='" + userId + '\'' +
+				", userEmail='" + userEmail + '\'' +
+				", userPhone='" + userPhone + '\'' +
+				", userPwd='" + userPwd + '\'' +
+				", userNickname='" + userNickname + '\'' +
+				", userIdentity='" + userIdentity + '\'' +
+				", userName='" + userName + '\'' +
+				", userGender='" + userGender + '\'' +
+				", userBirthday=" + userBirthday +
+				", userAddress='" + userAddress + '\'' +
+				", qqOpenId='" + qqOpenId + '\'' +
+				", weiboOpenId='" + weiboOpenId + '\'' +
+				", wechatOpenId='" + wechatOpenId + '\'' +
+				", userIcon='" + userIcon + '\'' +
+				", userDes='" + userDes + '\'' +
+				", companyId='" + companyId + '\'' +
+				", userSalary='" + userSalary + '\'' +
+				", userCreatedTime=" + userCreatedTime +
+				", userLoginedTime=" + userLoginedTime +
+				", userStatus='" + userStatus + '\'' +
+				'}';
+	}
+
 	public String getUserId(){
 		return this.userId;
 	}

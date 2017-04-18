@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable", "/peopleManage/peopleInfo_pager");
+    initTable("cusTable", "/customerManage/customerInfo_pager");
 
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
@@ -41,7 +41,7 @@ function operating(value, row, index) {
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
         var userStatus = 'N';
-        $.get("/peopleManage/peopleInfo_status?id=" + row.userId + "&status=" + userStatus,
+        $.get("/customerManage/customerInfo_status?id=" + row.userId + "&status=" + userStatus,
             function (data) {
                 if (data.result == "success") {
 
@@ -53,7 +53,7 @@ window.operateEvents = {
     },
     'click .updateInactive': function (e, value, row, index) {
         var userStatus = 'Y';
-        $.get("/peopleManage/peopleInfo_status?id=" + row.userId + "&status=" + userStatus,
+        $.get("/customerManage/customerInfo_status?id=" + row.userId + "&status=" + userStatus,
             function (data) {
                 if (data.result == "success") {
                     $('#addWin').modal('hide');
@@ -93,7 +93,7 @@ function showEditWin() {
 
 /**提交编辑数据 */
 function updateProduct() {
-    $.post("/peopleManage/peopleInfo_update",
+    $.post("/customerManage/customerInfo_update",
         $("#updateForm").serialize(),
         function(data){
             if(data.result == "success"){
@@ -109,7 +109,7 @@ function updateProduct() {
 
 /**提交添加数据 */
 function addProduct() {
-    $.post("/peopleManage/peopleInfo_insert",
+    $.post("/customerManage/customerInfo_insert",
         $("#addForm").serialize(),
         function(data){
             if(data.result == "success"){
