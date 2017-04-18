@@ -25,22 +25,22 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping("peopleManage")
-public class peopleRoleController {
+@RequestMapping("role")
+public class RoleController {
 
     @Resource
     private RoleService roleService;
 
     private Logger logger = (Logger) LoggerFactory.getLogger(IncomingTypeController.class);
 
-    @RequestMapping(value = "people_role", method = RequestMethod.GET)
-    private String peopleRole() {
+    @RequestMapping(value = "info", method = RequestMethod.GET)
+    private String showRoleInfo() {
         logger.info(" 人员角色管理页面");
-        return "peopleManage/people_role";
+        return "system/role";
     }
     @ResponseBody
-    @RequestMapping(value = "peopleRole_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(Role role){
+    @RequestMapping(value = "add_role", method = RequestMethod.POST)
+    public ControllerResult addRole(Role role){
         logger.info("角色添加");
         roleService.insert(role);
         return ControllerResult.getSuccessResult("添加成功");
@@ -48,8 +48,8 @@ public class peopleRoleController {
 
 
     @ResponseBody
-    @RequestMapping(value = "peopleRole_pager", method= RequestMethod.GET)
-    public Pager4EasyUI<Role> info_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    @RequestMapping(value = "query_pager", method= RequestMethod.GET)
+    public Pager4EasyUI<Role> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         logger.info("分页查询所有角色");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -60,16 +60,16 @@ public class peopleRoleController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "peopleRole_update", method = RequestMethod.POST)
-    public ControllerResult info_update(Role role){
+    @RequestMapping(value = "update_role", method = RequestMethod.POST)
+    public ControllerResult updateRole(Role role){
         logger.info("角色修改");
         roleService.update(role);
         return ControllerResult.getSuccessResult(" 修改成功");
     }
 
     @ResponseBody
-    @RequestMapping(value = "peopleRole_status", method = RequestMethod.GET)
-    public ControllerResult info_status(@Param("id")String id, @Param("status")String status){
+    @RequestMapping(value = "update_status", method = RequestMethod.GET)
+    public ControllerResult updateStatus(@Param("id")String id, @Param("status")String status){
         logger.info("状态修改");
         if(status.equals("Y")){
             roleService.inactive(id);

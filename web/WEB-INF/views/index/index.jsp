@@ -109,8 +109,6 @@
                     <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">人员管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path%>/peopleManage/people_role">人员角色管理</a>
-                        </li>
                         <li><a class="J_menuItem" href="<%=path%>/peopleManage/people_info">人员基本信息管理</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/peopleManage/salary">工资管理</a>
@@ -264,6 +262,8 @@
                         <span class="nav-label">系统管理</span><span
                                 class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="<%=path%>/role/info">角色管理</a>
+                        </li>
                         <li><a class="J_menuItem" href="<%=path %>/admin/info">管理员管理</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path %>/module/info">模块管理</a>

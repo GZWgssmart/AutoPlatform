@@ -30,33 +30,36 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="roleName" >
-                角色名称
+            <th data-field="roleName">
+                名称
             </th>
-            <th data-field="roleDes" >
-                角色描述
+            <th data-field="roleDes">
+                描述
             </th>
-            <th data-field="roleStatus" data-formatter="operating" data-events="operateEvents">
+            <th data-field="roleStatus" data-formatter="thisStatus">
+                状态
+            </th>
+            <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a href="#addWin" data-toggle="modal"><button type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
-            <a><button type="button" onclick="deleteProduct();" id="delete" class="btn btn-default">
-                <i class="glyphicon glyphicon-trash"></i> 删除
-            </button></a>
+            <a href="#addWin" data-toggle="modal">
+                <button type="button" id="add" class="btn btn-default">
+                    <i class="glyphicon glyphicon-plus"></i> 添加
+                </button>
+            </a>
+            <a>
+                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-pencil"></i> 修改
+                </button>
+            </a>
         </div>
         </tbody>
     </table>
 </div>
-
 
 
 <div id="editWin" class="modal fade" aria-hidden="true">
@@ -66,15 +69,15 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改信息</h3>
-                        <form role="form" id="updateForm" >
-                            <input type="hidden" attr="role.roleId" name="roleId" />
+                        <form role="form" id="updateForm">
+                            <input type="hidden" attr="role.roleId" name="roleId"/>
                             <div class="form-group">
                                 <label>角色名称：</label>
                                 <input type="text" attr="role.roleName" name="roleName" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>角色描述：</label>
-                                <input type="text"  name="roleDes" attr="role.roleDes"
+                                <input type="text" name="roleDes" attr="role.roleDes"
                                        class="form-control"/>
                             </div>
 
@@ -82,7 +85,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="updateProduct()">
+                                <input type="button" class="btn btn-primary" value="修改" onclick="updateRole()">
                                 </input>
                             </div>
                         </form>
@@ -104,7 +107,7 @@
                         <form role="form" id="addForm">
                             <div class="form-group">
                                 <label>角色名称：</label>
-                                <input type="text"  name="roleName" class="form-control"/>
+                                <input type="text" name="roleName" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>角色描述：</label>
@@ -115,7 +118,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="addProduct()" value="添加">
+                                <input type="button" class="btn btn-primary" onclick="addRole()" value="添加">
                                 </input>
                                 <input type="reset" name="reset" style="display: none"/>
                             </div>
@@ -134,7 +137,7 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
-<script src="<%=path %>/js/peopleManage/peopleRole.js"></script>
+<script src="<%=path %>/js/system/role.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 </body>
 </html>
