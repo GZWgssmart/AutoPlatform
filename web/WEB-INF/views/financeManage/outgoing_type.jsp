@@ -32,6 +32,9 @@
             <th data-field="outTypeName" >
                 名称
             </th>
+            <th data-field="outTypeCreatedTime" data-formatter="formatterDate">
+                创建时间
+            </th>
             <th data-field="outTypeStatus" data-formatter="statusFormatter">
                 当前状态
             </th>
@@ -42,7 +45,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a href="#addWin" data-toggle="modal"><button type="button" id="add" class="btn btn-default" >
+            <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">

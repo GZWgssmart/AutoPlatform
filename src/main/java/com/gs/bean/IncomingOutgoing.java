@@ -10,11 +10,16 @@ import java.util.Date;
 */
 public class IncomingOutgoing {
 	private String inOutId;			// 收支编号
-    
 	private String inTypeId;		// 收入类型编号
 	private String outTypeId;		//  支出类型编号
-	private double inOutMoney;		//  收支金额
 	private String inOutCreatedUser; 	// 收支记录创建人
+
+	private IncomingType incomingType;
+	private OutgoingType outgoingType;
+	private User user;
+
+	private double inOutMoney;		//  收支金额
+
 	private Date inOutCreatedTime;		// 收支记录创建时间
 	private String inOutStatus;			// 收支记录状态
 
@@ -74,4 +79,27 @@ public class IncomingOutgoing {
 		this.inOutStatus=inOutStatus;
 	}
 
+	public IncomingType getIncomingType() {
+		return incomingType;
+	}
+
+	public void setIncomingType(IncomingType incomingType) {
+		this.incomingType = incomingType;
+	}
+
+	public OutgoingType getOutgoingType() {
+		return outgoingType;
+	}
+
+	public void setOutgoingType(OutgoingType outgoingType) {
+		this.outgoingType = outgoingType;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

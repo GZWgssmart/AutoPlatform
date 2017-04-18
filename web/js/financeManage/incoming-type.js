@@ -20,13 +20,13 @@ function showEditWin() {
     } else {
         var incomingType = selectRow[0];
         $("#updateForm").fill(incomingType);
+        $("#addButton1").removeAttr("disabled");
         $("#editWin").modal('show');
     }
 }
 
 /**提交编辑数据 */
 function updateIncomingType() {
-    $("#addButton1").attr('disabled','disabled');
     var name = $("#name1").val();
     var error = document.getElementById("error1");
     if(name != ''){
@@ -41,6 +41,7 @@ function updateIncomingType() {
                     swal(data.message, "", "error");
                 }
             },"json");
+        $("#addButton1").attr('disabled','disabled');
     }else{
         error.innerHTML = "请输入正确的数据";
         $("#addButton1").removeAttr("disabled");
@@ -49,9 +50,13 @@ function updateIncomingType() {
 
 }
 
+function showAddWin(){
+    $("#addButton").removeAttr("disabled");
+    $("#addWin").modal('show');
+}
 /**提交添加数据 */
 function addIncomingType() {
-    $("#addButton").attr('disabled','disabled');
+
     var name = $("#name").val();
     var error = document.getElementById("error");
     if (name != "") {
@@ -67,6 +72,7 @@ function addIncomingType() {
                     swal(data.message, "", "error");
                 }
             }, "json");
+        $("#addButton").attr('disabled','disabled');
     }else{
         error.innerHTML = "请输入正确的数据";
         $("#addButton").removeAttr("disabled");
@@ -95,8 +101,6 @@ window.operateEvents = {
              $.get(contextPath + "/incomingType/update_status?id=" + row.inTypeId + "&status=" + status,
                  function(data){
                      if(data.result == "success"){
-                         $('#addWin').modal('hide');
-                         swal(data.message, "", "success");
                          $('#cusTable').bootstrapTable('refresh');
                      }else if(data.result == "fail"){
                          swal(data.message, "", "error");
@@ -108,8 +112,6 @@ window.operateEvents = {
               $.get(contextPath + "/incomingType/update_status?id=" + row.inTypeId + "&status=" + status,
                   function(data){
                       if(data.result == "success"){
-                          $('#addWin').modal('hide');
-                          swal(data.message, "", "success");
                           $('#cusTable').bootstrapTable('refresh');
                       }else if(data.result == "fail"){
                           swal(data.message, "", "error");
@@ -119,6 +121,7 @@ window.operateEvents = {
           'click .showUpdateIncomingType1': function (e, value, row, index) {
               var incomingType = row;
               $("#updateForm").fill(incomingType);
+              $("#addButton1").removeAttr("disabled");
               $("#editWin").modal('show');
          }
 }

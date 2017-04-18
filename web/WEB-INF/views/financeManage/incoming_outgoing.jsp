@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>收入类型管理</title>
+    <title>收支管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -25,14 +25,23 @@
            data-show-refresh="true"
            data-show-toggle="true"
            data-showColumns="true"
-            data-height="500">
+           data-height="500">
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="inTypeName" >
-                名称
+            <th data-field="incomingType.inTypeName" >
+                收入类型
             </th>
-            <th data-field="inTypeCreatedTime" data-formatter="formatterDate">
+            <th data-field="outgoingType.outTypeName" >
+                支出类型
+            </th>
+            <th data-field="inOutMoney" >
+                收支金额
+            </th>
+            <%--<th data-field="user" data-formatter="showUserName">
+                创建人
+            </th>--%>
+            <th data-field="inOutCreatedTime" data-formatter="formatterDate">
                 创建时间
             </th>
             <th data-field="inTypeStatus" data-formatter="statusFormatter">
@@ -45,9 +54,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
+
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
@@ -132,7 +139,7 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
-<script src="<%=path %>/js/financeManage/incoming-type.js"></script>
+<script src="<%=path %>/js/financeManage/incoming-outgoing.js"></script>
 <script src="<%=path%>/js/main.js"></script>
 
 </body>

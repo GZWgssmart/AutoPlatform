@@ -32,7 +32,7 @@ public class OutgoingTypeController {
 
 
     @RequestMapping(value = "show_outgoingType", method = RequestMethod.GET)
-    private String outgoingType() {
+    public String outgoingType() {
         logger.info("显示收入类型页面");
         return "financeManage/outgoing_type";
     }

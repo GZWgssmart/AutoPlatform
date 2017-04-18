@@ -231,7 +231,7 @@
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/outgoingType/show_outgoingType">支出类型管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_advanced.html">收支记录管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/incomingOutgoing/show_incomingOutgoing">收支记录管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_basic.html">工资管理</a>
                         </li>

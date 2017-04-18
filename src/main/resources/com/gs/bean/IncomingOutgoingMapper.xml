@@ -5,6 +5,24 @@
 <mapper namespace="com.gs.dao.IncomingOutgoingDAO">
 
 	<resultMap id="incomingOutgoingResultMap" type="incomingOutgoing">
+		<id column="inOutId" property="inOutId"></id>
+		<result column="inOutMoney" property="inOutMoney"></result>
+		<result column="inOutCreatedTime" property="inOutCreatedTime"></result>
+		<result column="inOutStatus" property="inOutStatus"></result>
+		<association property="incomingType" javaType="com.gs.bean.IncomingType">
+			<id column="inType_id" property="inTypeId"/>
+			<result column="inTypeName" property="inTypeName"/>
+		</association>
+
+		<association property="outgoingType" javaType="com.gs.bean.OutgoingType">
+			<id column="outType_id" property="outTypeId"/>
+			<result column="outTypeName" property="outTypeName"/>
+		</association>
+
+		<association property="user" javaType="com.gs.bean.User">
+			<id column="userId" property="userId"/>
+			<result column="userName" property="userName"/>
+		</association>
 
 	</resultMap>
 
@@ -76,13 +94,17 @@
 
 	<select id="queryByPager" resultType="list" resultMap="incomingOutgoingResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
+				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
+				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
+				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
+				limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(*) from t_incoming_outgoing
 		]]>
 	</select>
 
