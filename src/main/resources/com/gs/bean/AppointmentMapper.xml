@@ -58,7 +58,7 @@
 
 	<select id="queryByStatus" resultMap="appointmentResultMap" parameterType="string">
 		<![CDATA[
-			select  * from t_appointment  limit #{beginIndex}, #{pageSize}
+			select  * from t_appointment where status = #{appointmentStatus}  limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
@@ -76,7 +76,7 @@
 
 	<select id="queryByPager" resultType="list" resultMap="appointmentResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			select  * from t_appointment  limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
