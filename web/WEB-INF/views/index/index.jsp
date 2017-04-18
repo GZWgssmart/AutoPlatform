@@ -101,13 +101,13 @@
                     <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">人员管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_basic.html">人员角色管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/peopleManage/people_role">人员角色管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">人员基本信息管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/peopleManage/people_info">人员基本信息管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_advanced.html">工资管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/peopleManage/salary">工资管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_wizard.html">工单查询</a>
+                        <li><a class="J_menuItem" href="<%=path%>/peopleManage/work">工单查询</a>
                         </li>
                     </ul>
                 </li>

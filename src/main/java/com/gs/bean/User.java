@@ -3,32 +3,30 @@ package com.gs.bean;
 import java.util.Date;
 
 /**
-*由Wjhsmart技术支持
-*
-*@author Wjhsmart
+*@author 温鑫
 *@since 2017-04-14 16:16:21
 */
 public class User{
-	private String userId;
-	private String userEmail;
-	private String userPhone;
-	private String userPwd;
-	private String userNickname;
-	private String userIdentity;
-	private String userName;
-	private String userGender;
-	private Date userBirthday;
-	private String userAddress;
-	private String qqOpenId;
-	private String weiboOpenId;
-	private String wechatOpenId;
-	private String userIcon;
-	private String userDes;
-	private String companyId;
-	private String userSalary;
-	private Date userCreatedTime;
-	private Date userLoginedTime;
-	private String userStatus;
+	private String userId; // 用户编号
+	private String userEmail; // 用户邮箱
+	private String userPhone; // 用户手机号
+	private String userPwd; // 用户登录密码
+	private String userNickname; // 用户昵称
+	private String userIdentity; // 用户身份证号
+	private String userName; // 用户真实姓名
+	private String userGender; // 用户性别
+	private Date userBirthday; // 用户生日
+	private String userAddress; // 用户地址
+	private String qqOpenId; // QQ
+	private String weiboOpenId; // 微博
+	private String wechatOpenId; // 微信
+	private String userIcon; // 用户头像
+	private String userDes; // 用户描述
+	private String companyId; // 用户所属公司
+	private String userSalary; // 用户基本工资
+	private Date userCreatedTime; // 用户创建时间
+	private Date userLoginedTime; // 用户最近一次登录时
+	private String userStatus; // 用户状态
 
 	public String getUserId(){
 		return this.userId;

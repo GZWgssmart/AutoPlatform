@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="user">
 		<![CDATA[
-
+			INSERT INTO t_user(userId, userName, userEmail, userPwd, userGender, userAddress, userPhone, userIdentity) VALUES (uuid(), #{userName}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userIdentity})
 		]]>
 	</insert>
 
@@ -40,7 +40,7 @@
 
 	<update id="update" parameterType="user">
 		<![CDATA[
-
+			UPDATE t_user SET userName = #{userName}, userEmail = #{userEmail}, userPwd = #{userPwd}, userPhone = #{userPhone}, userAddress = #{userAddress} WHERE userId = #{userId}
 		]]>
 	</update>
 
@@ -76,25 +76,25 @@
 
 	<select id="queryByPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			SELECT * FROM t_user limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			SELECT COUNT(*) FROM t_user
 		]]>
 	</select>
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			UPDATE t_user set userStatus = 'N' where userId = #{userId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			UPDATE t_user set userStatus = 'Y' where userId = #{userId}
 		]]>
 	</update>
 
