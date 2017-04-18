@@ -76,13 +76,13 @@
 
 	<select id="queryByPager" resultType="list" resultMap="appointmentResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select  * from t_appointment  limit #{beginIndex}, #{pageSize}
+			select * from t_appointment limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(*) from t_appointment
 		]]>
 	</select>
 
