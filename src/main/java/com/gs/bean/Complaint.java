@@ -6,16 +6,32 @@ import java.util.Date;
 *由Wjhsmart技术支持
 *
 *@author Wjhsmart
-*@since 2017-04-14 16:16:21
+*@since 2017-04-14 16:16:21  投诉表
 */
 public class Complaint{
-	private String complaintId;
-	private String userId;
-	private String complaintContent;
-	private Date complaintCreatedTime;
-	private String complaintReply;
-	private Date complaintReplyTime;
-	private String complaintReplyUser;
+	private String complaintId; 		//投诉编号
+	private String userId;  			//用户编号
+	private String complaintContent; 	//投诉内容
+	private Date complaintCreatedTime; 	//投诉时间
+	private String complaintReply; 		//投诉回复内容
+	private Date complaintReplyTime; 	//投诉回复时间
+	private String complaintReplyUser;  //投诉回复人
+	private User user; //传递User
+	private User customer;
+
+	public User getCustomer() {
+		return customer;
+	}
+	public void setCustomer(User customer) {
+		this.customer = customer;
+	}
+
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public String getComplaintId(){
 		return this.complaintId;
