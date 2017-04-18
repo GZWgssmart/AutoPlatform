@@ -175,14 +175,10 @@
                         <form role="form" id="addForm">
                             <div class="form-group">
                                 <label>是否预约：</label>
-                                <select class="js-example-tags form-control" name="appointment" onchange="checkAppointment(this)">
+                                <select class="js-example-tags form-control" id="app" name="appointment"
+                                        onchange="checkAppointment(this)">
                                     <option value="N">否</option>
                                     <option value="Y">是</option>
-                                </select>
-                            </div>
-                            <div class="form-group" id="appointmentDiv" style="display: none;">
-                                <label>预约记录：</label>
-                                <select class="js-example-tags form-control appointmentRecord" onchange="appointmentRecord(this)" name="appointmentRecord">
                                 </select>
                             </div>
                             <div class="form-group">
@@ -225,7 +221,8 @@
 
                             <div class="form-group">
                                 <label>到店时间：</label>
-                                <input id="addDatetimepicker" onclick="getDate()" type="text" name="arriveTime" class="form-control"/>
+                                <input id="addDatetimepicker" onclick="getDate()" type="text" name="arriveTime"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -268,6 +265,82 @@
                                 <input type="reset" name="reset" style="display: none;"/>
                             </div>
                         </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="appWin" class="modal fade" aria-hidden="true" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">选择预约记录</h3>
+                        <table class="table table-hover" id="appTable"
+                               data-pagination="true"
+                               data-show-refresh="true"
+                               data-show-toggle="true"
+                               data-showColumns="true"
+                               data-height="550">
+                            <thead>
+                            <tr>
+                                <th data-field="appointmentId" data-checkbox="true"></th>
+                                <th data-field="userName">
+                                    车主姓名
+                                </th>
+                                <th data-field="userPhone">
+                                    车主电话
+                                </th>
+                                <th data-field="brandId">
+                                    汽车品牌
+                                </th>
+                                <th data-field="colorId">
+                                    汽车颜色
+                                </th>
+                                <th data-field="modelId">
+                                    汽车车型
+                                </th>
+                                <th data-field="plateId">
+                                    汽车车牌
+                                </th>
+                                <th data-field="carPlate">
+                                    车牌号码
+                                </th>
+                                <th data-field="arriveTime" data-formatter="formatterDate">
+                                    预计到店时间
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </th>
+                                <th data-field="maintainOrFix">
+                                    维修&nbsp;|&nbsp;保养
+                                </th>
+                                <th data-field="appCreatedTime" data-formatter="formatterDate">
+                                    预约创建时间
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </th>
+                                <th data-field="companyId">
+                                    汽修公司
+                                </th>
+                                <th data-field="appoitmentStatus">
+                                    预约状态
+                                </th>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                        <div style="height: 100px;"></div>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
+                            </input>
+                        </div>
                     </div>
 
                 </div>
