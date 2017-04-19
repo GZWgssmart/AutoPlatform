@@ -1,101 +1,113 @@
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gs.dao.AccessoriesDAO">
 
-    <resultMap id="accessoriesResultMap" type="accessories">
-        
-    </resultMap>
+	<resultMap id="accessoriesResultMap" type="accessories">
 
-    <insert id="insert" parameterType="accessories">
+	</resultMap>
+
+	<insert id="insert" parameterType="accessories">
+		<![CDATA[
+			insert into t_accessories(accId, accName, accCommodityCode, accDes, accPrice, accSalePrice, accUnit, accTotal, accIdle, accUsedTime, accBuyedTime, supplyId, accCreatedTime, accTypeId, companyId, accStatus) value (uuid(), #{accName}, #{accCommodityCode}, #{accDes}, #{accPrice}, #{accSalePrice}, #{accUnit}, #{accTotal}, #{accIdle}, #{accUsedTime}, #{accBuyedTime}, #{supplyId}, now(), #{accTypeId}, #{companyId}, #{accStatus})
+        ]]>
+	</insert>
+
+	<insert id="batchInsert" parameterType="list">
 		<![CDATA[
 
         ]]>
 	</insert>
 
-    <insert id="batchInsert" parameterType="list">
-		<![CDATA[
-
-        ]]>
-	</insert>
-
-    <delete id="delete" parameterType="accessories">
+	<delete id="delete" parameterType="accessories">
 		<![CDATA[
 
         ]]>
 	</delete>
 
-    <delete id="deleteById" parameterType="string">
+	<delete id="deleteById" parameterType="string">
 		<![CDATA[
 
         ]]>
 	</delete>
 
-    <delete id="batchDelete" parameterType="list">
+	<delete id="batchDelete" parameterType="list">
 		<![CDATA[
 
         ]]>
 	</delete>
 
-    <update id="update" parameterType="accessories">
+	<update id="update" parameterType="accessories">
+		<![CDATA[
+			update t_accessories set accName = #{accName}, accCommodityCode = #{accCommodityCode}, accDes = #{accDes}, accPrice = #{accPrice}, accSalePrice = #{accSalePrice}, accUnit = #{accUnit}, accTotal = #{accTotal}, accIdle = #{accIdle}, accUsedTime = #{accUsedTime}, accBuyedTime = #{accBuyedTime}, supplyId = #{supplyId}, accCreatedTime = #{accCreatedTime}, accTypeId = #{accTypeId}, companyId = #{companyId}, accStatus = #{accStatus} where accId = #{accId}
+        ]]>
+	</update>
+
+	<update id="batchUpdate" parameterType="list">
 		<![CDATA[
 
         ]]>
 	</update>
 
-    <update id="batchUpdate" parameterType="list">
+	<select id="queryAll" resultMap="accessoriesResultMap">
 		<![CDATA[
 
+        ]]>
+	</select>
+
+	<select id="queryByStatus" resultMap="accessoriesResultMap" parameterType="string">
+		<![CDATA[
+
+        ]]>
+	</select>
+
+	<select id="query" parameterType="accessories" resultType="accessories">
+		<![CDATA[
+
+        ]]>
+	</select>
+
+	<select id="queryById" parameterType="string" resultType="accessories">
+		<![CDATA[
+
+        ]]>
+	</select>
+
+	<select id="queryByPager" resultType="list" resultMap="accessoriesResultMap"
+			parameterType="com.gs.common.bean.Pager">
+		<![CDATA[
+			select * from t_accessories limit #{beginIndex}, #{pageSize}
+        ]]>
+	</select>
+
+	<select id="queryByStatusPager" resultType="list" resultMap="accessoriesResultMap">
+		<![CDATA[
+			select * from t_accessories where accStatus = #{accStatus} limit #{pager.beginIndex}, #{pager.pageSize}
+		]]>
+	</select>
+
+	<select id="count" resultType="int">
+		<![CDATA[
+			select count(accId) from t_accessories
+        ]]>
+	</select>
+
+	<select id="countByStatus" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*) from t_accessories where accStatus = #{accStatus}
+		]]>
+	</select>
+
+	<update id="inactive" parameterType="string">
+		<![CDATA[
+			update t_accessories set accStatus = 'N' where accId = #{accId}
         ]]>
 	</update>
 
-    <select id="queryAll" resultMap="accessoriesResultMap">
+	<update id="active" parameterType="string">
 		<![CDATA[
-
-        ]]>
-	</select>
-
-    <select id="queryByStatus" resultMap="accessoriesResultMap" parameterType="string">
-		<![CDATA[
-
-        ]]>
-	</select>
-
-    <select id="query" parameterType="accessories" resultType="accessories">
-		<![CDATA[
-
-        ]]>
-	</select>
-
-    <select id="queryById" parameterType="string" resultType="accessories">
-		<![CDATA[
-
-        ]]>
-	</select>
-
-    <select id="queryByPager" resultType="list" resultMap="accessoriesResultMap"
-            parameterType="com.gs.common.bean.Pager">
-		<![CDATA[
-
-        ]]>
-	</select>
-
-    <select id="count" resultType="int">
-		<![CDATA[
-
-        ]]>
-	</select>
-
-    <update id="inactive" parameterType="string">
-		<![CDATA[
-
-        ]]>
-	</update>
-
-    <update id="active" parameterType="string">
-		<![CDATA[
-
+			update t_accessories set accStatus = 'Y' where accId = #{accId}
         ]]>
 	</update>
 
