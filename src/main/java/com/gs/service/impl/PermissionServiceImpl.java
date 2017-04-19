@@ -36,5 +36,7 @@ public class PermissionServiceImpl implements PermissionService {
 	public int count() { return permissionDAO.count(); }
 	public int inactive(String id) { return permissionDAO.inactive(id); }
 	public int active(String id) { return permissionDAO.active(id); }
-
+	public List<Permission> queryByModuleId(String moduleId) {
+		return permissionDAO.queryByModuleId(moduleId);
+	}
 }

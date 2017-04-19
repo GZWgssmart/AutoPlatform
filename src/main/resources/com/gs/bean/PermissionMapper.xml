@@ -56,6 +56,12 @@
 		]]>
 	</select>
 
+	<select id="queryByModuleId" parameterType="string" resultMap="permissionResultMap">
+		<![CDATA[
+			select * from t_permission where moduleId = #{moduleId}
+		]]>
+	</select>
+
 	<select id="queryByStatus" resultMap="permissionResultMap" parameterType="string">
 		<![CDATA[
 

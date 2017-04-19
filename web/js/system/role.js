@@ -1,6 +1,10 @@
+/**
+ * Created by xiao-qiang 2017/4/18.
+ */
+var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable", "/role/query_pager");
+    initTable("cusTable", contextPath + "/role/query_pager");
 
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
@@ -30,7 +34,7 @@ function operateFormatter(value, row, index) {
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
         var status = 'N';
-        $.get("/role/update_status?id=" + row.roleId + "&status=" + status,
+        $.get(contextPath + "/role/update_status?id=" + row.roleId + "&status=" + status,
             function (data) {
                 if (data.result == "success") {
 
@@ -42,7 +46,7 @@ window.operateEvents = {
     },
     'click .updateInactive': function (e, value, row, index) {
         var status = 'Y';
-        $.get("/role/update_status?id=" + row.roleId + "&status=" + status,
+        $.get(contextPath + "/role/update_status?id=" + row.roleId + "&status=" + status,
             function (data) {
                 if (data.result == "success") {
                     $('#addWin').modal('hide');
@@ -72,7 +76,7 @@ function showEditWin() {
 
 /**提交编辑数据 */
 function updateRole() {
-    $.post("/role/update_role",
+    $.post(contextPath + "/role/update_role",
         $("#updateForm").serialize(),
         function(data){
             if(data.result == "success"){
@@ -88,7 +92,7 @@ function updateRole() {
 
 /**提交添加数据 */
 function addRole() {
-    $.post("/role/add_role",
+    $.post(contextPath + "/role/add_role",
         $("#addForm").serialize(),
         function(data){
             if(data.result == "success"){
