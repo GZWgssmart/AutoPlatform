@@ -9,19 +9,25 @@ import com.gs.dao.CompanyDAO;
 import com.gs.service.CompanyService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/4/1.
  */
 @Controller
-@RequestMapping("company")
+@RequestMapping("/company")
 public class CompanyController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CompanyController.class);
@@ -65,9 +71,12 @@ public class CompanyController {
         return "company/car_plate";
     }
 
+    @ResponseBody
     @RequestMapping(value ="InsertCompany",method = RequestMethod.POST)
     public ControllerResult InsetCompany(Company company){
+        System.out.println(company);
         logger.info("添加公司");
+        company.setCompanyLogo("/upload/logo.jsp");
         companyService.insert(company);
         return ControllerResult.getSuccessResult("添加公司成功");
     }
@@ -91,4 +100,13 @@ public class CompanyController {
         List<Company> carModelList = companyService.queryByPager(pager);
         return new Pager4EasyUI<Company>(pager.getTotalRecords(), carModelList);
     }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 }
+
+

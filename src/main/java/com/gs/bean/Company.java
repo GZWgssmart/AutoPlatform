@@ -9,19 +9,19 @@ import java.util.Date;
 *@since 2017-04-14 16:16:21
 */
 public class Company{
-	private String companyId;
-	private String companyName;
-	private String companyAddress;
-	private String companyTel;
-	private String companyPricipal;
-	private String companyWebsite;
-	private String companyLogo;
-	private Date companyOpenDate;
-	private String companySize;
-	private String companyLongitude;
-	private String companyLatitude;
-	private String companyDes;
-	private String companyStatus;
+	private String companyId;//公司编号
+	private String companyName;//公司名称
+	private String companyAddress;//公司地址
+	private String companyTel;//公司联系方式
+	private String companyPricipal;//公司负责人
+	private String companyWebsite;//公司官方网址
+	private String companyLogo;//公司头像
+	private Date companyOpenDate;//公司创建时间
+	private String companySize;//公司规模
+	private String companyLongitude;//纬度
+	private String companyLatitude;//经度
+	private String companyDes;//公司描述
+	private String companyStatus;//公司状态
 
 	public String getCompanyId(){
 		return this.companyId;
@@ -114,4 +114,22 @@ public class Company{
 		this.companyStatus=companyStatus;
 	}
 
+	@Override
+	public String toString() {
+		return "Company{" +
+				"companyId='" + companyId + '\'' +
+				", companyName='" + companyName + '\'' +
+				", companyAddress='" + companyAddress + '\'' +
+				", companyTel='" + companyTel + '\'' +
+				", companyPricipal='" + companyPricipal + '\'' +
+				", companyWebsite='" + companyWebsite + '\'' +
+				", companyLogo='" + companyLogo + '\'' +
+				", companyOpenDate=" + companyOpenDate +
+				", companySize='" + companySize + '\'' +
+				", companyLongitude='" + companyLongitude + '\'' +
+				", companyLatitude='" + companyLatitude + '\'' +
+				", companyDes='" + companyDes + '\'' +
+				", companyStatus='" + companyStatus + '\'' +
+				'}';
+	}
 }

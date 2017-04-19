@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="company">
 		<![CDATA[
-
+			insert into t_company (companyId,companyName,companyAddress,companyTel,companyPricipal,companyWebsite,companyLogo,companyOpenDate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus) values (UUID(),#{companyName},#{companyAddress},#{companyTel},#{companyPricipal},#{companyWebsite},#{companyLogo},#{companyOpenDate},#{companySize},#{companyLongitude},#{companyLatitude},#{companyDes},'Y')
 		]]>
 	</insert>
 
@@ -76,13 +76,13 @@
 
 	<select id="queryByPager" resultType="list" resultMap="companyResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			select * from t_company  limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(companyId) from t_company
 		]]>
 	</select>
 
