@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.RolePermission;
 import com.gs.dao.RolePermissionDAO;
 import com.gs.service.RolePermissionService;
 import org.apache.shiro.authz.Permission;
@@ -17,7 +18,6 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 	@Resource
 	private RolePermissionDAO rolePermissionDAO;
 	
-	@Override
 	public Collection<Permission> queryAllPermissionByRoleName(String roleName) {
 		List<String> p = rolePermissionDAO.queryAllPermissionByRoleName(roleName);
 		List<Permission> permissions = new ArrayList<Permission>();
@@ -27,5 +27,14 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 		}
 		return permissions;
 	}
-	
+	public List<String> queryByRoleIdOrMeduleId(String roleId, String moduleId) {
+		return rolePermissionDAO.queryByRoleIdOrMeduleId(roleId, moduleId);
+	}
+	public void delByRoleIdAndPermissionId(String[] permissionIds, String roleId) {
+		rolePermissionDAO.delByRoleIdAndPermissionId(permissionIds, roleId);
+	}
+	public void addByRoleIdAndPermissionId(List<RolePermission> rps) {
+		rolePermissionDAO.addByRoleIdAndPermissionId(rps);
+	}
+
 }
