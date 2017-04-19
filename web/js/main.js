@@ -11,7 +11,7 @@ function initTable(tableId, url) {
         pageSize: 10,  //每页显示的记录数
         pageNumber:1, //当前第几页
         pageList: [10, 15, 20, 25, 30],  //记录数可选列表
-        search: true,  //是否启用查询
+        search: false,  //是否启用查询
         showColumns: true,  //显示下拉框勾选要显示的列
         showRefresh: true,  //显示刷新按钮
         strictSearch: true,
@@ -48,7 +48,7 @@ function initTableNotTollbar(tableId, url) {
         pageSize: 10,  //每页显示的记录数
         pageNumber:1, //当前第几页
         pageList: [10, 15, 20, 25, 30],  //记录数可选列表
-        search: true,  //是否启用查询
+        search: false,  //是否启用查询
         showColumns: true,  //显示下拉框勾选要显示的列
         showRefresh: true,  //显示刷新按钮
         strictSearch: true,

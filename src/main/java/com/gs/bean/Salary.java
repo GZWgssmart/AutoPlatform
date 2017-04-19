@@ -9,14 +9,17 @@ import java.util.Date;
 *@since 2017-04-14 16:16:21
 */
 public class Salary{
-	private String salaryId;
-	private String userId;
+	private String salaryId; // 工资发放编号
 	private String prizeSalary;
 	private String minusSalary;
 	private String totalSalary;
 	private String salaryDes;
 	private Date salaryTime;
 	private Date salaryCreatedTime;
+
+	private String userId;		//
+
+
 
 	public String getSalaryId(){
 		return this.salaryId;

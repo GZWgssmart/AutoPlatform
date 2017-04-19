@@ -1,6 +1,9 @@
 package com.gs.service;
 
 import com.gs.bean.IncomingOutgoing;
+import com.gs.common.bean.Pager;
+
+import java.util.List;
 
 /**
 *由Wjhsmart技术支持
@@ -10,4 +13,7 @@ import com.gs.bean.IncomingOutgoing;
 */
 public interface IncomingOutgoingService extends BaseService<String, IncomingOutgoing>{
 
+    public List<IncomingOutgoing> queryByInOutType(Pager pager, IncomingOutgoing incomingOutgoing);
+
+    public int countByInOutType(IncomingOutgoing incomingOutgoing);
 }

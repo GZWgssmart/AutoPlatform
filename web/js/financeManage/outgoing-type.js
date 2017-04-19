@@ -6,9 +6,6 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/outgoingType/query_pager");
-
-    //当点击查询按钮的时候执行
-    $("#search").bind("click", initTable);
 });
 
 /** 编辑数据 */

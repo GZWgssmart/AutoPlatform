@@ -13,15 +13,19 @@ public class IncomingOutgoing {
 	private String inTypeId;		// 收入类型编号
 	private String outTypeId;		//  支出类型编号
 	private String inOutCreatedUser; 	// 收支记录创建人
+	private double inOutMoney;		//  收支金额
+	private Date inOutCreatedTime;		// 收支记录创建时间
+	private String inOutStatus;			// 收支记录状态
 
+	private String inOutType;		// 用来区分查询时候是支出还是收入
+	/*
+	* 关联表
+	* */
 	private IncomingType incomingType;
 	private OutgoingType outgoingType;
 	private User user;
 
-	private double inOutMoney;		//  收支金额
 
-	private Date inOutCreatedTime;		// 收支记录创建时间
-	private String inOutStatus;			// 收支记录状态
 
 	public String getInOutId(){
 		return this.inOutId;
@@ -77,6 +81,14 @@ public class IncomingOutgoing {
 
 	public void setInOutStatus(String inOutStatus){
 		this.inOutStatus=inOutStatus;
+	}
+
+	public String getInOutType() {
+		return inOutType;
+	}
+
+	public void setInOutType(String inOutType) {
+		this.inOutType = inOutType;
 	}
 
 	public IncomingType getIncomingType() {

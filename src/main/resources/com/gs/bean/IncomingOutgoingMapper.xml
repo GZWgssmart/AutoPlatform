@@ -28,7 +28,8 @@
 
 	<insert id="insert"  parameterType="incomingOutgoing">
 		<![CDATA[
-
+			insert into t_incoming_outgoing(inOutId, inTypeId,outTypeId,inOutMoney,inOutCreatedUser,inOutCreatedTime,inOutStatus)
+			 values(uuid(), #{incomingType.inTypeId},#{outgoingType.outTypeId},#{inOutMoney},#{user.userId},now(),#{inOutStatus})
 		]]>
 	</insert>
 
@@ -58,7 +59,7 @@
 
 	<update id="update" parameterType="incomingOutgoing">
 		<![CDATA[
-
+			update t_incoming_outgoing set inOutMoney = #{inOutMoney},inOutStatus = 'Y' where inOutId = #{inOutId}
 		]]>
 	</update>
 
@@ -98,7 +99,7 @@
 				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
 				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
-				limit #{beginIndex}, #{pageSize}
+				order by io.inOutCreatedTime Desc limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
@@ -108,15 +109,44 @@
 		]]>
 	</select>
 
+	<select id="queryByInOutType" resultType="list" resultMap="incomingOutgoingResultMap">
+		<![CDATA[
+			select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
+				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
+				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
+				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId where 1 = 1
+		]]>
+		<if test="incomingOutgoing.inOutType ==1">
+			and io.outTypeId is null
+		</if>
+		<if test="incomingOutgoing.inOutType ==2">
+			and io.inTypeId is null
+		</if>
+        order by io.inOutCreatedTime Desc
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="countByInOutType" resultType="int">
+		<![CDATA[
+			select count(*) from t_incoming_outgoing where 1 = 1
+		]]>
+		<if test="inOutType ==1">
+			and outTypeId is  null
+		</if>
+		<if test="inOutType ==2">
+			and inTypeId is  null
+		</if>
+	</select>
+
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_incoming_outgoing set inOutStatus = 'N' where inOutId = #{inOutId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_incoming_outgoing set inOutStatus = 'Y' where inOutId = #{inOutId}
 		]]>
 	</update>
 
