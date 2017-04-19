@@ -128,9 +128,17 @@ function showAddWin() {
 
 /**提交添加数据 */
 function addCheckin() {
-    $.post("/checkin/add",
-        $("#addForm").serialize(),
-        function(data){
+    var appFlag = $("#app").val();
+    $.ajax({
+        cache: true,
+        type: "POST",
+        url:"/checkin/add",
+        data:$('#addForm').serialize(),// 你的formid
+        async: false,
+        error: function(request) {
+            swal("请求错误", "", "error");
+        },
+        success: function(data) {
             if(data.result == "success"){
                 $('#addWin').modal('hide');
                 swal(data.message, "", "success");
@@ -138,13 +146,16 @@ function addCheckin() {
             }else if(data.result == "fail"){
                 swal(data.message, "", "error");
             }
-        },"json");
+        }
+    });
 
 }
 
 /** 给datetimepicker添加默认值 */
 function getDate(){
-    $("#addDatetimepicker").val(new Date());
+    if ($("#app").val() == "N") {
+        $("#addDatetimepicker").val(new Date());
+    }
 }
 
 /** 判断是否选中 */
@@ -156,9 +167,11 @@ function checkAppointment(combox) {
 
         //当点击查询按钮的时候执行
         $("#search").bind("click", initTable);
+        $("#addWin").modal('hide');
         $("#appWin").modal('show');
     } else {
         $("#appWin").modal('hide');
+        $("#addWin").modal('show');
         $("input[type=reset]").trigger("click");
     }
 }
@@ -166,8 +179,34 @@ function checkAppointment(combox) {
 /** 关闭预约 */
 function closeAppWin() {
     $("#appWin").modal('hide');
+    $("#addWin").modal('show')
     $("#app").val("N");
+}
 
+/** 选择预约记录 */
+function checkApp() {
+    var selectRow = $("#appTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一条数据", "error");
+        return false;
+    } else {
+        $("#appWin").modal('hide');
+        var appointment = selectRow[0];
+        $("#addUserName").val(appointment.userName);
+        $("#addUserPhone").val(appointment.userPhone);
+        $("#addDatetimepicker").val(formatterDate(appointment.arriveTime));
+        $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
+        $("#addMaintainOrFix").val(appointment.maintainOrFix);
+        $("#addWin").modal('show');
+    }
+}
+
+function checkinStatus(value, row, index) {
+    if (value == "Y") {
+        return "可用";
+    } else {
+        return "不可用";
+    }
 }
 
 /** 编辑数据 */

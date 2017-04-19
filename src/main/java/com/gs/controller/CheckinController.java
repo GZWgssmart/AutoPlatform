@@ -3,6 +3,7 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.CarBrand;
 import com.gs.bean.Checkin;
+import com.gs.bean.Company;
 import com.gs.bean.IncomingType;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
@@ -56,10 +57,13 @@ public class CheckinController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @RequestMapping("add")
     public ControllerResult addCheckin(Checkin checkin) {
+
         logger.info("添加登记记录");
-        checkin.setCompanyId("abc");
+        Company company = new Company();
+        company.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+        checkin.setCompany(company);
         checkin.setCheckinStatus("Y");
         checkinService.insert(checkin);
         return ControllerResult.getSuccessResult("添加成功");

@@ -45,20 +45,23 @@
             <th data-field="userPhone">
                 车主电话
             </th>
-            <th data-field="brandId">
+            <th data-field="brand.brandName">
                 汽车品牌
             </th>
-            <th data-field="colorId">
+            <th data-field="color.colorName">
                 汽车颜色
             </th>
-            <th data-field="modelId">
+            <th data-field="model.modelName">
                 汽车车型
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
-            <th data-field="plateId">
+            <th data-field="plate.plateName">
                 汽车车牌
             </th>
             <th data-field="carPlate">
                 车牌号码
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th data-field="arriveTime" data-formatter="formatterDate">
                 到店时间
@@ -84,17 +87,19 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th data-hide="all" data-field="maintainOrFix">
-                标识
+                保养&nbsp;|&nbsp;维修
             </th>
             <th data-hide="all" data-field="checkinCreatedTime" data-formatter="formatterDate">
                 登记时间
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
-            <th data-hide="all" data-field="companyId">
+            <th data-hide="all" data-field="company.companyName">
                 汽修公司
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
-            <th data-hide="all" data-field="checkinStatus">
+            <th data-hide="all" data-field="checkinStatus" data-formatter="checkinStatus">
                 记录状态
             </th>
         </tr>
@@ -123,7 +128,7 @@
 </div>
 
 
-<div id="editWin" class="modal fade" aria-hidden="true">
+<div id="editWin" style="overflow:scroll" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -165,7 +170,7 @@
     </div>
 </div>
 
-<div id="addWin" class="modal fade" aria-hidden="true">
+<div id="addWin" class="modal fade" style="overflow:scroll" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -173,84 +178,84 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加记录</h3>
                         <form role="form" id="addForm">
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label>是否预约：</label>
-                                <select class="js-example-tags form-control" id="app" name="appointment"
+                                <select class="js-example-tags form-control" id="app"
                                         onchange="checkAppointment(this)">
                                     <option value="N">否</option>
                                     <option value="Y">是</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label>车主姓名：</label>
-                                <input type="text" name="userName" class="form-control"/>
+                                <input type="text" id="addUserName" name="userName" class="form-control"/>
                             </div>
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label>车主电话：</label>
-                                <input type="text" name="userPhone" class="form-control"/>
+                                <input type="text" id="addUserPhone" name="userPhone" class="form-control"/>
                             </div>
 
                             <div class="col-md-6 form-group">
                                 <label>汽车品牌：</label>
-                                <select class="js-example-tags form-control car_brand" name="brandId">
+                                <select id="addCarBrand" class="js-example-tags form-control car_brand" name="brand.brandId">
                                 </select>
                             </div>
 
                             <div class="col-md-6 form-group">
                                 <label>汽车颜色：</label>
-                                <select class="js-example-tags form-control car_color" name="colorId">
+                                <select class="js-example-tags form-control car_color" name="color.colorId">
                                 </select>
                             </div>
 
                             <div class="col-md-6 form-group">
                                 <label>汽车车型：</label>
-                                <select class="js-example-tags form-control car_model" name="modelId">
+                                <select class="js-example-tags form-control car_model" name="model.modelId">
                                 </select>
                             </div>
 
                             <div class="col-md-6 form-group">
                                 <label>汽车车牌：</label>
-                                <select class="js-example-tags form-control car_plate" name="plateId">
+                                <select class="js-example-tags form-control car_plate" name="plate.plateId">
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label>车牌号码：</label>
                                 <input type="text" name="carPlate" class="form-control"/>
                             </div>
 
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label>到店时间：</label>
                                 <input id="addDatetimepicker" onclick="getDate()" type="text" name="arriveTime"
                                        class="form-control"/>
                             </div>
 
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label>汽车行驶里程：</label>
                                 <input type="text" name="carMileage" class="form-control"/>
                             </div>
 
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label>车上物品描述：</label>
-                                <textarea class="form-control" name="carThings" onchange="clearError()"
+                                <textarea class="form-control" name="carThings"
                                           rows="3"></textarea>
                             </div>
 
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label>汽车完好度描述：</label>
-                                <textarea class="form-control" name="intactDegrees" onchange="clearError()"
+                                <textarea class="form-control" name="intactDegrees"
                                           rows="3"></textarea>
                             </div>
 
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label>用户要求描述：</label>
-                                <textarea class="form-control" name="userRequests" onchange="clearError()"
+                                <textarea class="form-control" name="userRequests"
                                           rows="3"></textarea>
                             </div>
 
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label>保养&nbsp;|&nbsp;维修：</label>
-                                <select class="js-example-tags form-control" name="maintainOrFix">
+                                <select id="addMaintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
                                     <option value="保养">保养</option>
                                     <option value="维修">维修</option>
                                 </select>
@@ -273,7 +278,7 @@
     </div>
 </div>
 
-<div id="appWin" class="modal fade" aria-hidden="true" data-backdrop="static" keyboard:false>
+<div id="appWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">

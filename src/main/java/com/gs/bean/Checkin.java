@@ -1,5 +1,7 @@
 package com.gs.bean;
 
+import com.gs.common.util.DateParseUtil;
+
 import java.util.Date;
 
 /**
@@ -16,10 +18,7 @@ public class Checkin {
     private String appointmentId; // 预约ID
     private String userName; // 车主姓名
     private String userPhone; // 车主电话
-    private String brandId; // 汽车品牌
-    private String colorId; // 汽车颜色
-    private String modelId; // 汽车车型
-    private String plateId; // 汽车车牌
+
     private String carPlate; // 车牌号码
     private Date arriveTime; // 到店时间
     private double carMileage; // 汽车行驶里程
@@ -28,8 +27,14 @@ public class Checkin {
     private String userRequests; // 车主要求描述
     private String maintainOrFix; // 标识，标识是维修该是保养
     private Date checkinCreatedTime; // 记录创建时间
-    private String companyId; // 汽修公司
     private String checkinStatus; // 记录的状态
+
+    private CarBrand brand; // 汽车品牌
+    private CarColor color; // 汽车颜色
+    private CarModel model; // 汽车车型
+    private CarPlate plate; // 汽车车牌
+
+    private Company company; // 汽修公司
 
     public String getCheckinId() {
         return this.checkinId;
@@ -71,38 +76,6 @@ public class Checkin {
         this.userPhone = userPhone;
     }
 
-    public String getBrandId() {
-        return this.brandId;
-    }
-
-    public void setBrandId(String brandId) {
-        this.brandId = brandId;
-    }
-
-    public String getColorId() {
-        return this.colorId;
-    }
-
-    public void setColorId(String colorId) {
-        this.colorId = colorId;
-    }
-
-    public String getModelId() {
-        return this.modelId;
-    }
-
-    public void setModelId(String modelId) {
-        this.modelId = modelId;
-    }
-
-    public String getPlateId() {
-        return this.plateId;
-    }
-
-    public void setPlateId(String plateId) {
-        this.plateId = plateId;
-    }
-
     public String getCarPlate() {
         return this.carPlate;
     }
@@ -115,16 +88,20 @@ public class Checkin {
         return this.arriveTime;
     }
 
-    public void setArriveTime(Date arriveTime) {
-        this.arriveTime = arriveTime;
+    public void setArriveTime(String arriveTime) {
+        this.arriveTime = DateParseUtil.parseDate(arriveTime, "yyyy-MM-dd HH:mm");
     }
 
     public double getCarMileage() {
         return carMileage;
     }
 
-    public void setCarMileage(double carMileage) {
-        this.carMileage = carMileage;
+    public void setCarMileage(String carMileage) {
+        try {
+            this.carMileage = Double.valueOf(carMileage);
+        } catch (NumberFormatException e) {
+            this.carMileage = 0;
+        }
     }
 
     public String getCarThings() {
@@ -167,14 +144,6 @@ public class Checkin {
         this.checkinCreatedTime = checkinCreatedTime;
     }
 
-    public String getCompanyId() {
-        return this.companyId;
-    }
-
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
-    }
-
     public String getCheckinStatus() {
         return this.checkinStatus;
     }
@@ -183,4 +152,68 @@ public class Checkin {
         this.checkinStatus = checkinStatus;
     }
 
+    public CarBrand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(CarBrand brand) {
+        this.brand = brand;
+    }
+
+    public CarColor getColor() {
+        return color;
+    }
+
+    public void setColor(CarColor color) {
+        this.color = color;
+    }
+
+    public CarModel getModel() {
+        return model;
+    }
+
+    public void setModel(CarModel model) {
+        this.model = model;
+    }
+
+    public CarPlate getPlate() {
+        return plate;
+    }
+
+    public void setPlate(CarPlate plate) {
+        this.plate = plate;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    @Override
+    public String toString() {
+        return "Checkin{" +
+                "checkinId='" + checkinId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", appointmentId='" + appointmentId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", carPlate='" + carPlate + '\'' +
+                ", arriveTime=" + arriveTime +
+                ", carMileage=" + carMileage +
+                ", carThings='" + carThings + '\'' +
+                ", intactDegrees='" + intactDegrees + '\'' +
+                ", userRequests='" + userRequests + '\'' +
+                ", maintainOrFix='" + maintainOrFix + '\'' +
+                ", checkinCreatedTime=" + checkinCreatedTime +
+                ", checkinStatus='" + checkinStatus + '\'' +
+                ", brand=" + brand +
+                ", color=" + color +
+                ", model=" + model +
+                ", plate=" + plate +
+                ", company=" + company +
+                '}';
+    }
 }
