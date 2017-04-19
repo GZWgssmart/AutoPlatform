@@ -59,6 +59,9 @@
             <th data-field="companyDes" >
                 公司描述
             </th>
+            <th data-field="companyStatus" data-formatter="status">
+                公司状态
+            </th>
         </tr>
         </thead>
         <tbody>

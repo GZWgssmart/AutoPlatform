@@ -97,8 +97,11 @@ public class CompanyController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(companyService.count());
-        List<Company> carModelList = companyService.queryByPager(pager);
-        return new Pager4EasyUI<Company>(pager.getTotalRecords(), carModelList);
+        List<Company> companyList = companyService.queryByPager(pager);
+        for(Company c : companyList){
+            System.out.println(c);
+        }
+        return new Pager4EasyUI<Company>(pager.getTotalRecords(), companyList);
     }
 
     @InitBinder
