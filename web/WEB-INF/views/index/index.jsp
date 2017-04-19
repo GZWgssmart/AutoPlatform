@@ -206,7 +206,7 @@
                     <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">客户关系管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_wizard.html">维修保养记录管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/record/show_record">维修保养记录管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_advanced.html">维修保养提醒管理</a>
                         </li>

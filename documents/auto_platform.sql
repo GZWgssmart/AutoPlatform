@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS auto_platform DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+﻿CREATE DATABASE IF NOT EXISTS auto_platform DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 use auto_platform;
 /**
 	配件表
@@ -312,6 +312,7 @@ CREATE TABLE `t_maintain_record` (
   `actualEndTime` datetime DEFAULT NULL COMMENT '维修保养实际结束时间',
   `recordCreatedTime` datetime DEFAULT NULL COMMENT '维修保养记录创建时间',
   `pickupTime` datetime DEFAULT NULL COMMENT '维修保养结束车主提车时间',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '来源于t_company表公司Id',
   `recordDes` varchar(500) DEFAULT NULL COMMENT '维修保养记录描述',
   `recordStatus` varchar(2) DEFAULT NULL COMMENT '维修保养记录状态，Y表示可用，N表示不可用'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

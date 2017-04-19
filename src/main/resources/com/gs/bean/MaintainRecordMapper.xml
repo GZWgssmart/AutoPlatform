@@ -3,11 +3,22 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gs.dao.MaintainRecordDAO">
-
 	<resultMap id="maintainRecordResultMap" type="maintainRecord">
-
+		<id column="recordId" property="recordId"/>
+		<result column="startTime" property="startTime"/>
+		<result column="endTime" property="endTime"/>
+		<result column="actualEndTime" property="actualEndTime"/>
+		<result column="recordCreatedTime" property="recordCreatedTime"/>
+		<result column="pickupTime" property="pickupTime"/>
+		<result column="recordDes" property="recordDes"/>
+		<result column="recordStatus" property="recordStatus"/>
+	<!--接待表Id-->
+	<association property="checkin" javaType="com.gs.bean.Checkin">
+		<id column="checkinId" property="checkinId"/>
+		<result column="userName" property="userName"/>
+		<result column="carPlate" property="carPlate"/>
+	</association>
 	</resultMap>
-
 	<insert id="insert"  parameterType="maintainRecord">
 		<![CDATA[
 
@@ -76,25 +87,25 @@
 
 	<select id="queryByPager" resultType="list" resultMap="maintainRecordResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+		select * from t_maintain_record r,  t_checkin c where c.checkinId=r.checkinId  limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+		select count(*) from t_maintain_record m
 		]]>
 	</select>
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+		update t_maintain_record set recordStatus = 'N' where recordId = #{recordId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+		update t_maintain_record set recordStatus = 'Y' where recordId = #{recordId}
 		]]>
 	</update>
 
