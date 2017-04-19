@@ -212,7 +212,7 @@
                         </li>
                         <li><a class="J_menuItem" href="form_basic.html">消费统计管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">投诉管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_validate.html">跟踪回访管理</a>
                         </li>

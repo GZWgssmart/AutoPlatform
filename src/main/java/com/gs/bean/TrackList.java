@@ -6,15 +6,15 @@ import java.util.Date;
 *由Wjhsmart技术支持
 *
 *@author Wjhsmart
-*@since 2017-04-14 16:16:21
+*@since 2017-04-14 16:16:21  跟踪回访表
 */
 public class TrackList {
-	private String trackId;
-	private String userId;
-	private String trackContent;
-	private int serviceEvaluate;
-	private String trackUser;
-	private Date trackCreatedTime;
+	private String trackId; //跟踪回访编号Id
+	private String userId; //用户编号 user表
+	private String trackContent; //回访问题
+	private int serviceEvaluate; //本次服务评价 1-10分
+	private String trackUser; //跟踪回访用户 来源t_user表
+	private Date trackCreatedTime;  //回访时间
 
 	public String getTrackId(){
 		return this.trackId;

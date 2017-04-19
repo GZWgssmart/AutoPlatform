@@ -6,18 +6,18 @@ import java.util.Date;
 *由Wjhsmart技术支持
 *
 *@author Wjhsmart
-*@since 2017-04-14 16:16:21
+*@since 2017-04-14 16:16:21  维修保养记录表
 */
 public class MaintainRecord {
-	private String recordId;
-	private String checkinId;
-	private Date startTime;
-	private Date endTime;
-	private Date actualEndTime;
-	private Date recordCreatedTime;
-	private Date pickupTime;
-	private String recordDes;
-	private String recordStatus;
+	private String recordId;  //维修保养记录编号
+	private String checkinId; //维修保养登记编号 来源于chechin表
+	private Date startTime;  // 维修保养开始时间
+	private Date endTime;  //维修保养预估结束时间
+	private Date actualEndTime; //维修保养实际结束时间
+	private Date recordCreatedTime; //维修保养创建时间
+	private Date pickupTime;  //车主提车时间
+	private String recordDes;  //维修保养记录描述
+	private String recordStatus;  //维修保养记录状态
 
 	public String getRecordId(){
 		return this.recordId;
