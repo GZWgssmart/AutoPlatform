@@ -82,7 +82,7 @@
 
 	<select id="queryByPager" resultType="list" resultMap="permissionResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			select  * from t_permission  limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 

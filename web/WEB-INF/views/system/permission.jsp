@@ -1,7 +1,7 @@
 <%--
   Created by IntelliJ IDEA.
   User: xiao-qiang
-  Date: 2017/4/13
+  Date: 2017/4/17
   Time: 14:51
   To change this template use File | Settings | File Templates.
 --%>
@@ -13,9 +13,11 @@
 <html>
 <head>
     <title>权限管理</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="/css/style.min862f.css" rel="stylesheet" type="text/css">
-    <link href="/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/style.min862f.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/font-awesome.min93e3.css" rel="stylesheet">
 
     <style>
         .ibox-content span {
@@ -37,7 +39,92 @@
     </style>
 </head>
 <body class="gray-bg">
+
 <div class="wrapper wrapper-content">
+    <div class="ibox-title">
+        <button onclick="showAduqPermission();" type="button" class="btn btn-primary" data-toggle="button">
+            管理权限
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button onclick="showAllotPermission();" type="button" class="btn btn-primary" data-toggle="button">
+            分配权限
+        </button>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content" id="aduqPermission" style="display: none">
+    <div class="ibox-title">
+        <h2>管理权限</h2>
+        <div class="container">
+            <table class="table table-hover" id="cusTable"
+                   data-pagination="true"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-showColumns="true"
+                   data-height="610">
+                <thead>
+                <tr>
+                    <th data-field="state" data-checkbox="true"></th>
+                    <th data-field="permissionName">
+                        名称
+                    </th>
+                    <th data-field="permissionZHName">
+                        中文名称
+                    </th>
+                    <th data-field="permissionDes">
+                        描述
+                    </th>
+                    <th data-field="moduleId">
+                        所属模块
+                    </th>
+                    <th data-field="permissionStatus" data-formatter="thisStatus">
+                        状态
+                    </th>
+                    <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
+                        操作
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <div id="toolbar" class="btn-group">
+                    <a href="#addWin" data-toggle="modal">
+                        <button type="button" id="add" class="btn btn-default">
+                            <i class="glyphicon glyphicon-plus"></i> 添加
+                        </button>
+                    </a>
+                    <a>
+                        <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                            修改
+                        </button>
+                    </a>
+                    <a>
+                        <button onclick="queryAll()" type="button" class="btn btn-default">
+                            <i class="glyphicon glyphicon-search"></i>
+                            查询全部
+                        </button>
+                    </a>
+                    <a>
+                        <button onclick="queryStatus('Y')" type="button" class="btn btn-default">
+                            <i class="glyphicon glyphicon-search"></i>
+                            查可用
+                        </button>
+                    </a>
+                    <a>
+                        <button onclick="queryStatus('N')" type="button" class="btn btn-default">
+                            <i class="glyphicon glyphicon-search"></i>
+                            查不可用
+                        </button>
+                    </a>
+                </div>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content" id="allotPermission" style="display: none">
     <div class="ibox-title">
         <h2>分配权限</h2>
         <div class="input-group">
@@ -56,7 +143,7 @@
 
         </br>
 
-        <div  class="input-group" id="selectModule" style="display: none">
+        <div class="input-group" id="selectModule" style="display: none">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">模块类型
                     <span class="caret"></span>
@@ -88,20 +175,24 @@
              title="未有的权限">
         </div>
         <div id="btnDiv" style="display: none;">
-            <button onclick="addAll();" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <button onclick="addAll();" type="button" class="btn btn-primary" data-toggle="button">
                 添加所有
             </button>
-            <button onclick="delAll();" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <button onclick="delAll();" type="button" class="btn btn-primary" data-toggle="button">
                 删除所有
             </button>
         </div>
     </div>
 </div>
-
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
+<script src="<%=path %>/js/bootstrap-table.js"></script>
+<script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
+<script src="<%=path %>/js/sweet-alert.min.js"></script>
+<script src="<%=path %>/js/jquery.formFill.js"></script>
 <script src="<%=path %>/js/system/permission.js"></script>
+<script src="<%=path %>/js/main.js"></script>
 </body>
 </html>

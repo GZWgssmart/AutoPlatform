@@ -1,3 +1,6 @@
+/**
+ * Created by xiao-qiang 2017/4/19.
+ */
 var contextPath = '';
 var ypAll = new Array();
 var npAll = new Array();
@@ -5,6 +8,19 @@ var roleId2;
 var roleObj2;
 var moduleId2;
 var moduleObj2;
+
+function showAduqPermission() {
+    $("#allotPermission").hide();
+    initTable("cusTable", "/permission/query_pager");
+
+    $("#search").bind("click", initTable);
+    $("#aduqPermission").show();
+}
+
+function showAllotPermission() {
+    $("#aduqPermission").hide();
+    $("#allotPermission").show();
+}
 
 function selectRole(roleObj, roleId) {
     roleObj2 = roleObj;

@@ -53,6 +53,13 @@ public class PermissionController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "query_pager", method = RequestMethod.GET)
+    public Pager4EasyUI<Permission> queryPermissionPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+
+        return null;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "roleIdOrModuleId_permission", method = RequestMethod.GET)
     public List<PermissionInfo> queryByRoleIdOrModuleId(@Param("roleId") String roleId, @Param("moduleId") String moduleId) {
         logger.info("根据角色和模块查询拥有的权限");
