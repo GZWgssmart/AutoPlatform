@@ -37,7 +37,7 @@
            data-height="550">
         <thead>
         <tr>
-            <th data-field="checkinId" data-checkbox="true"></th>
+            <th data-field="state" data-checkbox="true"></th>
             <th data-field="userName">
                 车主姓名
             </th>
@@ -54,6 +54,7 @@
                 汽车车型
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th data-field="plate.plateName">
                 汽车车牌
@@ -67,39 +68,44 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
-            <th data-hide="all" data-field="carMileage">
+            <th data-field="carMileage">
                 汽车行驶里程
             </th>
-            <th data-hide="all" data-field="carThings">
+            <th data-field="carThings">
                 车上物品描述
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
-            <th data-hide="all" data-field="intactDegrees">
+            <th data-field="intactDegrees">
                 汽车完好度描述
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
-            <th data-hide="all" data-field="userRequests">
+            <th data-field="userRequests">
                 用户要求描述
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
-            <th data-hide="all" data-field="maintainOrFix">
+            <th data-field="maintainOrFix">
                 保养&nbsp;|&nbsp;维修
             </th>
-            <th data-hide="all" data-field="checkinCreatedTime" data-formatter="formatterDate">
+            <th data-field="checkinCreatedTime" data-formatter="formatterDate">
                 登记时间
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
-            <th data-hide="all" data-field="company.companyName">
+            <th data-field="company.companyName">
                 汽修公司
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
-            <th data-hide="all" data-field="checkinStatus" data-formatter="checkinStatus">
+            <th data-field="checkinStatus" data-formatter="status">
                 记录状态
+            </th>
+            <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
+                操作
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
         </tr>
         </thead>
@@ -115,11 +121,6 @@
                     <i class="glyphicon glyphicon-pencil"></i> 修改
                 </button>
             </a>
-            <a>
-                <button type="button" onclick="deleteProduct();" id="delete" class="btn btn-default">
-                    <i class="glyphicon glyphicon-trash"></i> 删除
-                </button>
-            </a>
         </div>
         </tbody>
 
@@ -133,31 +134,89 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">修改商品</h3>
-                        <form role="form" id="updateForm">
-                            <input type="hidden" attr="product.id" name="id" id="id"/>
-                            <div class="form-group">
-                                <label>商品名称：</label>
-                                <input type="text" attr="product.name" name="name" id="name" class="form-control"/>
+                        <h3 class="m-t-none m-b">修改登记</h3>
+                        <form role="form" id="editForm">
+                            <input type="hidden" attr="checkin.checkinId" name="checkinId" class="form-control"/>
+                            <div class="col-md-12 form-group">
+                                <label>车主姓名：</label>
+                                <input type="text" attr="checkin.userName" name="userName" class="form-control"/>
                             </div>
-                            <div class="form-group">
-                                <label>商品价格：</label>
-                                <input type="text" name="price" attr="product.price" id="price"
-                                       class="form-control"/>
-
+                            <div class="col-md-12 form-group">
+                                <label>车主电话：</label>
+                                <input type="text" attr="checkin.userPhone" name="userPhone" class="form-control"/>
                             </div>
 
-                            <div class="form-group">
-                                <label>商品描述：</label>
-                                <input type="text" name="des" id="des" attr="product.des"
-                                       class="form-control"/>
+                            <div class="col-md-6 form-group">
+                                <label>汽车品牌：</label>
+                                <select id="editCarBrand" class="js-example-tags form-control car_brand" name="brand.brandId">
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <label>汽车颜色：</label>
+                                <select id="editCarColor" class="js-example-tags form-control car_color" name="color.colorId">
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <label>汽车车型：</label>
+                                <select id="editCarModel" class="js-example-tags form-control car_model" name="model.modelId">
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <label>汽车车牌：</label>
+                                <select id="editCarPlate" class="js-example-tags form-control car_plate" name="plate.plateId">
+                                </select>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label>车牌号码：</label>
+                                <input type="text" attr="checkin.carPlate" name="carPlate" class="form-control"/>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label>到店时间：</label>
+                                <input id="editDatetimepicker" type="text" name="arriveTime"
+                                       class="form-control datetimepicker"/>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label>汽车行驶里程：</label>
+                                <input type="text" attr="checkin.carMileage" name="carMileage" class="form-control"/>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label>车上物品描述：</label>
+                                <textarea class="form-control" attr="checkin.carThings" type="textarea" name="carThings"
+                                          rows="3"></textarea>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label>汽车完好度描述：</label>
+                                <textarea class="form-control" attr="checkin.intactDegrees" type="textarea" name="intactDegrees"
+                                          rows="3"></textarea>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label>用户要求描述：</label>
+                                <textarea class="form-control" attr="checkin.userRequests" type="textarea" name="userRequests"
+                                          rows="3"></textarea>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label>保养&nbsp;|&nbsp;维修：</label>
+                                <select id="editMaintainOrFix" attr="checkin.maintainOrFix" type="select-one" class="js-example-tags form-control" name="maintainOrFix">
+                                    <option value="保养">保养</option>
+                                    <option value="维修">维修</option>
+                                </select>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="updateCheckin()">
+                                <input type="button" class="btn btn-primary" onclick="editCheckin()" value="修改">
                                 </input>
                             </div>
                         </form>
@@ -202,19 +261,19 @@
 
                             <div class="col-md-6 form-group">
                                 <label>汽车颜色：</label>
-                                <select class="js-example-tags form-control car_color" name="color.colorId">
+                                <select id="addCarColor" class="js-example-tags form-control car_color" name="color.colorId">
                                 </select>
                             </div>
 
                             <div class="col-md-6 form-group">
                                 <label>汽车车型：</label>
-                                <select class="js-example-tags form-control car_model" name="model.modelId">
+                                <select id="addCarModel" class="js-example-tags form-control car_model" name="model.modelId">
                                 </select>
                             </div>
 
                             <div class="col-md-6 form-group">
                                 <label>汽车车牌：</label>
-                                <select class="js-example-tags form-control car_plate" name="plate.plateId">
+                                <select id="addCarPlate" class="js-example-tags form-control car_plate" name="plate.plateId">
                                 </select>
                             </div>
 
@@ -299,16 +358,18 @@
                                 <th data-field="userPhone">
                                     车主电话
                                 </th>
-                                <th data-field="brandId">
+                                <th data-field="brand.brandName">
                                     汽车品牌
                                 </th>
-                                <th data-field="colorId">
+                                <th data-field="color.colorName">
                                     汽车颜色
                                 </th>
-                                <th data-field="modelId">
+                                <th data-field="model.modelName">
                                     汽车车型
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </th>
-                                <th data-field="plateId">
+                                <th data-field="plate.plateName">
                                     汽车车牌
                                 </th>
                                 <th data-field="carPlate">
@@ -327,10 +388,12 @@
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </th>
-                                <th data-field="companyId">
+                                <th data-field="company.companyName">
                                     汽修公司
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </th>
-                                <th data-field="appoitmentStatus">
+                                <th data-field="appoitmentStatus" data-formatter="status">
                                     预约状态
                                 </th>
                             </thead>

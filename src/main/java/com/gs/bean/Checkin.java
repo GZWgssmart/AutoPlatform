@@ -85,23 +85,19 @@ public class Checkin {
     }
 
     public Date getArriveTime() {
-        return this.arriveTime;
+        return arriveTime;
     }
 
-    public void setArriveTime(String arriveTime) {
-        this.arriveTime = DateParseUtil.parseDate(arriveTime, "yyyy-MM-dd HH:mm");
+    public void setArriveTime(Date arriveTime) {
+        this.arriveTime = arriveTime;
     }
 
     public double getCarMileage() {
         return carMileage;
     }
 
-    public void setCarMileage(String carMileage) {
-        try {
-            this.carMileage = Double.valueOf(carMileage);
-        } catch (NumberFormatException e) {
-            this.carMileage = 0;
-        }
+    public void setCarMileage(double carMileage) {
+        this.carMileage = carMileage;
     }
 
     public String getCarThings() {
@@ -192,28 +188,5 @@ public class Checkin {
         this.company = company;
     }
 
-    @Override
-    public String toString() {
-        return "Checkin{" +
-                "checkinId='" + checkinId + '\'' +
-                ", userId='" + userId + '\'' +
-                ", appointmentId='" + appointmentId + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userPhone='" + userPhone + '\'' +
-                ", carPlate='" + carPlate + '\'' +
-                ", arriveTime=" + arriveTime +
-                ", carMileage=" + carMileage +
-                ", carThings='" + carThings + '\'' +
-                ", intactDegrees='" + intactDegrees + '\'' +
-                ", userRequests='" + userRequests + '\'' +
-                ", maintainOrFix='" + maintainOrFix + '\'' +
-                ", checkinCreatedTime=" + checkinCreatedTime +
-                ", checkinStatus='" + checkinStatus + '\'' +
-                ", brand=" + brand +
-                ", color=" + color +
-                ", model=" + model +
-                ", plate=" + plate +
-                ", company=" + company +
-                '}';
-    }
+
 }

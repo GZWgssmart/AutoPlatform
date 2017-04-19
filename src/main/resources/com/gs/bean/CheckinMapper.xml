@@ -77,7 +77,10 @@
 
 	<update id="update" parameterType="checkin">
 		<![CDATA[
-
+			update t_checkin set userId = #{userId}, appointmentId = #{appointmentId}, userName = #{userName}, userPhone = #{userPhone},
+				brandId = #{brand.brandId}, colorId = #{color.colorId}, modelId = #{model.modelId}, plateId = #{plate.plateId}, carPlate = #{carPlate},
+				arriveTime = #{arriveTime}, carMileage = #{carMileage}, carThings = #{carThings}, intactDegrees = #{intactDegrees}, userRequests = #{userRequests},
+				maintainOrFix = #{maintainOrFix}, checkinCreatedTime = now(), companyId = #{company.companyId}, checkinStatus = #{checkinStatus} where checkinId = #{checkinId}
 		]]>
 	</update>
 
@@ -116,7 +119,7 @@
 			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
 				from t_checkin c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
 				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId
-
+				order by c.checkinCreatedTime desc, c.companyId
 		]]>
 		limit #{beginIndex}, #{pageSize}
 	</select>
@@ -129,13 +132,13 @@
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_checkin set checkinStatus = 'N' where checkinId = #{id}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_checkin set checkinStatus = 'Y' where checkinId = #{id}
 		]]>
 	</update>
 

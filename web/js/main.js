@@ -150,3 +150,11 @@ function showDate(id) {
     var date = year + "-" + month + "-" + day + " " + mytime;
     return date;
 }
+/** 返回状态 */
+function status(value, row, index) {
+    if (value == "Y") {
+        return "可用";
+    } else {
+        return "不可用";
+    }
+}
