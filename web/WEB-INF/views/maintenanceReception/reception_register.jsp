@@ -24,6 +24,7 @@
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 
+    <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/maintenanceReception/reception_register.css" rel="stylesheet" type="text/css">
 
 </head>

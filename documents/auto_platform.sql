@@ -186,6 +186,8 @@ CREATE TABLE `t_checkin` (
   `plateId` varchar(36) DEFAULT NULL COMMENT '汽车车牌编号',
   `carPlate` varchar(20) NOT NULL COMMENT '汽车车牌，not null',
   `arriveTime` datetime NOT NULL COMMENT '到店时间，not null',
+  `oilCount` double(255,0) DEFAULT NULL COMMENT '油量',
+  `carWash` varchar(2) DEFAULT NULL COMMENT '用于标识是否需要洗车，默认是N，需要则是Y',
   `carMileage` double DEFAULT NULL COMMENT '汽车行驶里程',
   `carThings` varchar(500) DEFAULT NULL COMMENT '车上物品描述',
   `intactDegrees` varchar(500) DEFAULT NULL COMMENT '汽车完好度描述',

@@ -34,7 +34,7 @@ public class RecordController {
     @RequestMapping(value = "show_record", method = RequestMethod.GET)
     public String incomingType() {
         logger.info("显示维修保养记录管理页面");
-        return "customer/maintenance_record";
+        return "maintenanceRecetion/maintenance_record";
     }
 
     @ResponseBody

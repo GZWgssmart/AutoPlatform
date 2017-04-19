@@ -17,16 +17,18 @@ public class MaintainRecord {
 	private Date recordCreatedTime; //维修保养创建时间
 	private Date pickupTime;  //车主提车时间
 	private String recordDes;  //维修保养记录描述
-	private String companyId; //公司Id
+
 	private String recordStatus;  //维修保养记录状态
 	private Checkin checkin; //传checkin表
 
-	public String getCompanyId() {
-		return companyId;
+	private Company company; //公司
+
+	public Company getCompany() {
+		return company;
 	}
 
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	public Checkin getCheckin() {

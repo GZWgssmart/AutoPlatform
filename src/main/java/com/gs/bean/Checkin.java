@@ -28,6 +28,8 @@ public class Checkin {
     private String maintainOrFix; // 标识，标识是维修该是保养
     private Date checkinCreatedTime; // 记录创建时间
     private String checkinStatus; // 记录的状态
+    private String carWash; // 标识是否需要洗车
+    private double oilCount; // 油量
 
     private CarBrand brand; // 汽车品牌
     private CarColor color; // 汽车颜色
@@ -146,6 +148,22 @@ public class Checkin {
 
     public void setCheckinStatus(String checkinStatus) {
         this.checkinStatus = checkinStatus;
+    }
+
+    public String getCarWash() {
+        return carWash;
+    }
+
+    public void setCarWash(String carWash) {
+        this.carWash = carWash;
+    }
+
+    public double getOilCount() {
+        return oilCount;
+    }
+
+    public void setOilCount(double oilCount) {
+        this.oilCount = oilCount;
     }
 
     public CarBrand getBrand() {
