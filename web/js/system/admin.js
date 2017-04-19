@@ -2,7 +2,6 @@
  * Created by xiao-kang on 2017/4/17.
  */
 var contextPath = '';
-var path = "";
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/admin/query_pager");

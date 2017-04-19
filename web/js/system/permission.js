@@ -13,7 +13,7 @@ function selectRole(roleObj, roleId) {
     if (moduleId2 != null && moduleId2 != "") {
         queryByRoleIdOrModuleId(roleId2, moduleId2);
     }
-$("#selectModule").show();
+    $("#selectModule").show();
 }
 
 function selectModule(moduleObj, moduleId) {
@@ -46,7 +46,7 @@ function drawPermission(data) {
     var count1 = 0;
     var count2 = 0;
     $.each(data, function (index, item) {
-        var str = "'"+ data[index].permissionId + "'";
+        var str = "'" + data[index].permissionId + "'";
         if (data[index].status == 1) {
             npAll[count1] = data[index].permissionId;
             yStr += '<span onclick="delById(' + str + ',this);" class="label label-success">' + data[index].permissionName + '&nbsp;&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></span>';
@@ -59,8 +59,8 @@ function drawPermission(data) {
     });
     yStr += "<p style='clear:both'></p>";
     nStr += "<p style='clear:both'></p>";
-        /*ypAll = ypAll.substring(0, ypAll.length - 1);
-        npAll = npAll.substring(0, npAll.length - 1);*/
+    /*ypAll = ypAll.substring(0, ypAll.length - 1);
+     npAll = npAll.substring(0, npAll.length - 1);*/
     $("#permissionY").html(yStr);
     $("#permissionN").html(nStr);
     $("#btnDiv").show();
@@ -86,11 +86,11 @@ function delById(permissionId, obj) {
 
 /*function commonAdd(permissionIds) {
 
-}
+ }
 
-function commonDel(permissionIds) {
+ function commonDel(permissionIds) {
 
-}*/
+ }*/
 
 function addAll() {
     $.get(contextPath + "/permission/addByRole_permission?permissionIds=" + ypAll + "&roleId=" + roleId2,

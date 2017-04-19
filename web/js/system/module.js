@@ -1,14 +1,13 @@
 /**
- * Created by xiao-kang on 2017/4/17.
+ * Created by xiao-qiang 2017/4/18.
  */
 var contextPath = '';
-var path = "";
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/module/query_pager");
 
     //当点击查询按钮的时候执行
-    $("#search").bind("click", initTable(path));
+    $("#search").bind("click", initTable);
 });
 
 /** 编辑数据 */
@@ -146,4 +145,12 @@ window.operateEvents = {
                 }
             }, "json");
     }
+}
+
+function queryAll() {
+    initTable(contextPath + "cusTable", "/module/query_pager");
+}
+
+function queryStatus(status) {
+    initTable('cusTable', contextPath + '/module/queryByStatus_module?status=' + status);
 }

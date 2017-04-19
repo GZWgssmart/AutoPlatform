@@ -42,6 +42,7 @@ public class PermissionController {
     public ModelAndView showPermissionInfo() {
         logger.info("显示权限信息");
         logger.info("查询所有角色");
+        logger.info("查询所有模块");
         ModelAndView mav = new ModelAndView();
         mav.setViewName("system/permission");
         List<Role> roles = roleService.queryAll();
@@ -54,6 +55,7 @@ public class PermissionController {
     @ResponseBody
     @RequestMapping(value = "roleIdOrModuleId_permission", method = RequestMethod.GET)
     public List<PermissionInfo> queryByRoleIdOrModuleId(@Param("roleId") String roleId, @Param("moduleId") String moduleId) {
+        logger.info("根据角色和模块查询拥有的权限");
         List<Permission> permissions = permissionService.queryByModuleId(moduleId);
         List<String> str = rolePermissionService.queryByRoleIdOrMeduleId(roleId, moduleId);
         List<PermissionInfo> pis = new ArrayList<PermissionInfo>();
@@ -79,6 +81,11 @@ public class PermissionController {
     @ResponseBody
     @RequestMapping(value = "addByRole_permission", method = RequestMethod.GET)
     public ControllerResult addPermission(@Param("permissionIds") String[] permissionIds, @Param("roleId") String roleId) {
+        if (permissionIds.length == 1) {
+            logger.info("添加单个权限");
+        } else if (permissionIds.length > 1) {
+            logger.info("添加所有权限");
+        }
         List<RolePermission> rps = new ArrayList<RolePermission>();
         for (int i = 0; i < permissionIds.length; i++) {
             RolePermission rp = new RolePermission();
@@ -93,9 +100,12 @@ public class PermissionController {
     @ResponseBody
     @RequestMapping(value = "delByRole_permission", method = RequestMethod.GET)
     public ControllerResult delPermission(@Param("permissionIds") String[] permissionIds, @Param("roleId") String roleId) {
+        if (permissionIds.length == 1) {
+            logger.info("删除单个权限");
+        } else if (permissionIds.length > 1) {
+            logger.info("删除所有权限");
+        }
         rolePermissionService.delByRoleIdAndPermissionId(permissionIds, roleId);
         return ControllerResult.getSuccessResult("成功移除");
     }
-
-
 }
