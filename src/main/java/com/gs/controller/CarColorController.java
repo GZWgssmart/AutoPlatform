@@ -26,14 +26,15 @@ import java.util.List;
 @RequestMapping("/carColor")
 public class CarColorController {
 
+    private Logger logger = (Logger) LoggerFactory.getLogger(CarColorController.class);
+
     @Resource
     private CarColorService carColorService;
-    private Logger logger = (Logger) LoggerFactory.getLogger(CarColorController.class);
+
 
     @ResponseBody
     @RequestMapping(value = "insertCarColor", method = RequestMethod.POST)
     public ControllerResult insertCarColor(CarColor carColor){
-        carColor.setColorStatus("Y");
         System.out.println(carColor);
         logger.info("添加汽车颜色成功");
         carColorService.insert(carColor);

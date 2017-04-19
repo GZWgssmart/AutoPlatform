@@ -47,6 +47,7 @@ public class CarModelController {
     @RequestMapping(value = "insertCarModel", method = RequestMethod.POST)
     public ControllerResult insertCarModel(CarModel carmodel) {
         logger.info("添加汽车车型成功");
+        System.out.println(carmodel);
         carModelService.insert(carmodel);
         return ControllerResult.getSuccessResult("添加汽车车型成功");
     }

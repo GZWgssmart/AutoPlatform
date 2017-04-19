@@ -81,5 +81,9 @@
 	<update id="active" parameterType="string">
 		update t_car_brand set brandStatus= #{brandStatus} where brandId = #{brandId}
 	</update>
-
+	<select id="queryNameById" parameterType="string" resultType="String">
+		<![CDATA[
+			select brandName from t_car_brand where brandId = #{brandId}
+		]]>
+	</select>
 </mapper>

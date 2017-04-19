@@ -81,4 +81,11 @@ public class CarBrandController {
         }
         return comboBox4EasyUIs;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "name", method = RequestMethod.GET)
+    public String queryName(String brandId) {
+        logger.info("根据id查询品牌名称");
+        return carBrandService.queryNameById(brandId);
+    }
 }

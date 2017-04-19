@@ -9,7 +9,7 @@
 	</resultMap>
 
 	<insert id="insert"  parameterType="carColor">
-		insert into t_car_color (colorId,colorName,colorRGB,colorHex,colorDes,colorStatus) values (UUID() , colorName = #{colorName} , colorRGB = #{colorRGB},colorHex = #{colorHex},colorDes = #{colorDes},'Y')
+		insert into t_car_color (colorId,colorName,colorRGB,colorHex,colorDes,colorStatus) values (UUID(),#{colorName},#{colorRGB},#{colorHex},#{colorDes},'Y')
 	</insert>
 
 	<insert id="batchInsert"  parameterType="list">

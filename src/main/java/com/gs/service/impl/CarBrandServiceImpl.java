@@ -37,4 +37,7 @@ public class CarBrandServiceImpl implements CarBrandService {
 	public int inactive(String id) { return carBrandDAO.inactive(id); }
 	public int active(String id) { return carBrandDAO.active(id); }
 
+	public String queryNameById(String brandId) {
+		return carBrandDAO.queryNameById(brandId);
+	}
 }

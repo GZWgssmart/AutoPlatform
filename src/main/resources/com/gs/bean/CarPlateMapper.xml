@@ -9,9 +9,7 @@
 	</resultMap>
 
 	<insert id="insert"  parameterType="carPlate">
-		<![CDATA[
-
-		]]>
+		insert into t_car_plate (plateId,plateName,plateDes,plateStatus) values (UUID(),#{plateName},#{plateDes},'Y')
 	</insert>
 
 	<insert id="batchInsert"  parameterType="list">
@@ -39,9 +37,7 @@
 	</delete>
 
 	<update id="update" parameterType="carPlate">
-		<![CDATA[
-
-		]]>
+		update t_car_plate set plateName=#{plateName},plateDes=#{plateDes},plateStatus=#{plateStatus} where plateId = #{plateId}
 	</update>
 
 	<update id="batchUpdate" parameterType="list">
@@ -73,14 +69,12 @@
 	</select>
 
 	<select id="queryByPager" resultType="list" resultMap="carPlateResultMap" parameterType="com.gs.common.bean.Pager">
-		<![CDATA[
-
-		]]>
+		select * from t_car_plate  limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+		select count(plateId) from t_car_plate
 		]]>
 	</select>
 

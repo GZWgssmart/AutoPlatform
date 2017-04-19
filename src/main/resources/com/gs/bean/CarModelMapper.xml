@@ -9,9 +9,7 @@
 	</resultMap>
 
 	<insert id="insert"  parameterType="carModel">
-		<![CDATA[
-
-		]]>
+		insert into t_car_model (modelId,modelName,modelDes,brandId,modelStatus) values (UUID(),#{modelName},#{modelDes},#{brandId},'Y')
 	</insert>
 
 	<insert id="batchInsert"  parameterType="list">
@@ -74,13 +72,13 @@
 
 	<select id="queryByPager" resultType="list" resultMap="carModelResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+		select * from t_car_model  limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(modelId) from t_car_model
 		]]>
 	</select>
 

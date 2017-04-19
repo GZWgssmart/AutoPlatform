@@ -9,5 +9,5 @@ import com.gs.bean.CarBrand;
 *@since 2017-04-14 16:36:51
 */
 public interface CarBrandService extends BaseService<String, CarBrand>{
-
+    public String queryNameById(String brandId);
 }

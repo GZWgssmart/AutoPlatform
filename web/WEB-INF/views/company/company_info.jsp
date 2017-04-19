@@ -28,16 +28,24 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th  data-field="id" data-sortable="true">
-                销售记录id
+            <th data-field="name" >
+                公司名称
             </th>
             <th data-field="name" >
-                销售名称
+                公司地址
             </th>
             <th data-field="name" >
-                销售名称
+                公司负责人
             </th>
-
+            <th data-field="name" >
+                公司名称
+            </th>
+            <th data-field="name" >
+                公司地址
+            </th>
+            <th data-field="name" >
+                公司地址
+            </th>
             <!-- 在此省略表格列的代码，代码和上面差不多 -->
             <th class="col-xs-2" data-field="price" >价格</th>
             <th data-field="des" >

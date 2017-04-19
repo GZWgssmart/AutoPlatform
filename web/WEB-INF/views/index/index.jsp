@@ -83,7 +83,7 @@
                             <a class="J_menuItem" href="<%=path %>/company/color">汽车颜色管理</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="graph_peity.html">车牌管理</a>
+                            <a class="J_menuItem" href="<%=path %>/company/plate">车牌管理</a>
                         </li>
                         <li>
                             <a class="J_menuItem" href="graph_sparkline.html">保养项目管理</a>

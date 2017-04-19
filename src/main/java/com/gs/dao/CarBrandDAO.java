@@ -10,6 +10,5 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface CarBrandDAO extends BaseDAO<String, CarBrand>{
-
-
+    public String queryNameById(String brandId);
 }

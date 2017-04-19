@@ -50,4 +50,14 @@ public class CarModel {
 		this.modelStatus=modelStatus;
 	}
 
+	@Override
+	public String toString() {
+		return "CarModel{" +
+				"modelId='" + modelId + '\'' +
+				", modelName='" + modelName + '\'' +
+				", modelDes='" + modelDes + '\'' +
+				", brandId='" + brandId + '\'' +
+				", modelStatus='" + modelStatus + '\'' +
+				'}';
+	}
 }
