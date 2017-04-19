@@ -5,12 +5,40 @@
 <mapper namespace="com.gs.dao.AppointmentDAO">
 
 	<resultMap id="appointmentResultMap" type="appointment">
+		<id property="appointmentId" column="appointmentId" />
+		<result property="userName" column="userName" />
+		<result property="userPhone" column="userPhone" />
+		<result property="carPlate" column="carPlate" />
+		<result property="arriveTime" column="arriveTime" />
+		<result property="maintainOrFix" column="maintainOrFix" />
+		<result property="appCreatedTime" column="appCreatedTime" />
+		<result property="appoitmentStatus" column="appoitmentStatus" />
 
+		<association property="brand" javaType="com.gs.bean.CarBrand">
+			<id property="brandId" column="brandId"/>
+			<id property="brandName" column="brandName"/>
+		</association>
+		<association property="color" javaType="com.gs.bean.CarColor">
+			<id property="colorId" column="colorId"/>
+			<id property="colorName" column="colorName"/>
+		</association>
+		<association property="plate" javaType="com.gs.bean.CarPlate">
+			<id property="plateId" column="plateId"/>
+			<id property="plateName" column="plateName"/>
+		</association>
+		<association property="model" javaType="com.gs.bean.CarModel">
+			<id property="modelId" column="modelId"/>
+			<id property="modelName" column="modelName"/>
+		</association>
+		<association property="company" javaType="com.gs.bean.Company">
+			<id property="companyId" column="companyId"/>
+			<id property="companyName" column="companyName"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="appointment">
 		<![CDATA[
-
+			insert into t_appointment(appointmentId,userId, userName,userPhone,brandId,colorId,modelId,plateId,carPlate,arriveTime,maintainOrFix,appCreatedTime,companyId,appoitmentStatus) values(uuid(), #{userId},#{userName},#{userPhone},#{brandId},#{colorId},#{modelId},#{plateId},#{carPlate},#{arriveTime},#{maintainOrFix},#{appCreatedTime},#{companyId},#{appoitmentStatus})
 		]]>
 	</insert>
 
@@ -40,7 +68,7 @@
 
 	<update id="update" parameterType="appointment">
 		<![CDATA[
-
+			update t_appointment set userId = #{userId},userName = #{userName},userPhone = #{userPhone},brandId = #{brandId},colorId = #{colorId},modelId = #{modelId},plateId = #{plateId},carPlate = #{carPlate},arriveTime = #{arriveTime},maintainOrFix = #{maintainOrFix},companyId = #{companyId},appoitmentStatus = #{appoitmentStatus} where appointmentId = #{appointmentId}
 		]]>
 	</update>
 
@@ -76,8 +104,11 @@
 
 	<select id="queryByPager" resultType="list" resultMap="appointmentResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select * from t_appointment limit #{beginIndex}, #{pageSize}
+			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
+				from t_appointment c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
+				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId
 		]]>
+		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">

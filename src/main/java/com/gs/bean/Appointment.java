@@ -13,16 +13,19 @@ public class Appointment{
 	private String userId;
 	private String userName;
 	private String userPhone;
-	private String brandId;
-	private String colorId;
-	private String modelId;
-	private String plateId;
+
 	private String carPlate;
 	private Date arriveTime;
 	private String maintainOrFix;
 	private Date appCreatedTime;
-	private String companyId;
 	private String appoitmentStatus;
+
+	private CarBrand brand;
+	private CarColor color;
+	private CarModel model;
+	private CarPlate plate;
+
+	private Company company;
 
 	public String getAppointmentId(){
 		return this.appointmentId;
@@ -50,34 +53,6 @@ public class Appointment{
 	}
 	public void setUserPhone(String userPhone){
 		this.userPhone=userPhone;
-	}
-
-	public String getBrandId(){
-		return this.brandId;
-	}
-	public void setBrandId(String brandId){
-		this.brandId=brandId;
-	}
-
-	public String getColorId(){
-		return this.colorId;
-	}
-	public void setColorId(String colorId){
-		this.colorId=colorId;
-	}
-
-	public String getModelId(){
-		return this.modelId;
-	}
-	public void setModelId(String modelId){
-		this.modelId=modelId;
-	}
-
-	public String getPlateId(){
-		return this.plateId;
-	}
-	public void setPlateId(String plateId){
-		this.plateId=plateId;
 	}
 
 	public String getCarPlate(){
@@ -108,13 +83,6 @@ public class Appointment{
 		this.appCreatedTime=appCreatedTime;
 	}
 
-	public String getCompanyId(){
-		return this.companyId;
-	}
-	public void setCompanyId(String companyId){
-		this.companyId=companyId;
-	}
-
 	public String getAppoitmentStatus(){
 		return this.appoitmentStatus;
 	}
@@ -122,4 +90,43 @@ public class Appointment{
 		this.appoitmentStatus=appoitmentStatus;
 	}
 
+	public CarBrand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(CarBrand brand) {
+		this.brand = brand;
+	}
+
+	public CarColor getColor() {
+		return color;
+	}
+
+	public void setColor(CarColor color) {
+		this.color = color;
+	}
+
+	public CarModel getModel() {
+		return model;
+	}
+
+	public void setModel(CarModel model) {
+		this.model = model;
+	}
+
+	public CarPlate getPlate() {
+		return plate;
+	}
+
+	public void setPlate(CarPlate plate) {
+		this.plate = plate;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 }
