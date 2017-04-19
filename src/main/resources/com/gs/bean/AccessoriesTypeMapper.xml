@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="accessoriesType">
 		<![CDATA[
-
+			INSERT into t_accessories_type(accTypeId, accTypeName, accTypeDes, companyId, accTypeStatus) values(uuid(), #{accTypeName}, #{accTypeDes}, #{companyId}, #{accTypeStatus})
 		]]>
 	</insert>
 
@@ -40,7 +40,7 @@
 
 	<update id="update" parameterType="accessoriesType">
 		<![CDATA[
-
+			update t_accessories_type set accTypeName = #{accTypeName}, accTypeDes = #{accTypeDes}, companyId = #{companyId}, accTypeStatus = #{accTypeStatus} where accTypeId = #{accTypeId}
 		]]>
 	</update>
 
@@ -76,25 +76,37 @@
 
 	<select id="queryByPager" resultType="list" resultMap="accessoriesTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
+			select * from t_accessories_type limit #{beginIndex}, #{pageSize}
+		]]>
+	</select>
 
+	<select id="queryByStatusPager" resultType="list" resultMap="accessoriesTypeResultMap">
+		<![CDATA[
+			select * from t_accessories_type where accTypeStatus = #{accTypeStatus} limit #{pager.beginIndex}, #{pager.pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
-		<![CDATA[
+	<![CDATA[
+ 			select count(accTypeId) from t_accessories_type
+		]]>
+</select>
 
+	<select id="countByStatus" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*) from t_accessories_type where accTypeStatus = #{accTypeStatus}
 		]]>
 	</select>
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_accessories_type set accTypeStatus = 'N' where accTypeId = #{accTypeId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_accessories_type set accTypeStatus = 'Y' where accTypeId = #{accTypeId}
 		]]>
 	</update>
 

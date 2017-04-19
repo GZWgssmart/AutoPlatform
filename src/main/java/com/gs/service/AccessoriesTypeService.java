@@ -10,4 +10,6 @@ import com.gs.bean.AccessoriesType;
 */
 public interface AccessoriesTypeService extends BaseService<String, AccessoriesType>{
 
+    public int countByStatus(String accTypeStatus);
+
 }

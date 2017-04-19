@@ -137,13 +137,13 @@
                     <a href="#"><i class="glyphicon glyphicon-wrench"></i> <span class="nav-label">配件管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_basic.html">配件分类管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/accessoriesType/type">配件分类管理</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/accessoriesBuy/showAccessoriesBuyHome">配件采购管理</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/accessoriesSale/showAccessoriesSaleHome">配件销售管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">库存管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/accessoriesType/stock">库存管理</a>
                         </li>
                     </ul>
                 </li>

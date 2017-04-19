@@ -15,6 +15,17 @@ public class AccessoriesType {
 	private String companyId;
 	private String accTypeStatus;
 
+	@Override
+	public String toString() {
+		return "AccessoriesType{" +
+				"accTypeId='" + accTypeId + '\'' +
+				", accTypeName='" + accTypeName + '\'' +
+				", accTypeDes='" + accTypeDes + '\'' +
+				", companyId='" + companyId + '\'' +
+				", accTypeStatus='" + accTypeStatus + '\'' +
+				'}';
+	}
+
 	public String getAccTypeId(){
 		return this.accTypeId;
 	}

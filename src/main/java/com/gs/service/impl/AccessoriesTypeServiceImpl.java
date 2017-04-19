@@ -36,5 +36,8 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
 	public int count() { return accessoriesTypeDAO.count(); }
 	public int inactive(String id) { return accessoriesTypeDAO.inactive(id); }
 	public int active(String id) { return accessoriesTypeDAO.active(id); }
+	public int countByStatus(String accTypeStatus) {
+		return accessoriesTypeDAO.countByStatus(accTypeStatus);
+	}
 
 }

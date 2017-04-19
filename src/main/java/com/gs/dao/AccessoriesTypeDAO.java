@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccessoriesTypeDAO extends BaseDAO<String, AccessoriesType>{
 
+    public int countByStatus(String accTypeStatus);
+
 }
