@@ -16,7 +16,17 @@ $(document).ready(function () {
     initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all");
     initDateTimePicker("datetimepicker");
 
+
 });
+
+/** 是否需要洗车 */
+function carWash(value, row, index) {
+    if (value == "Y") {
+        return "是";
+    } else {
+        return "否";
+    }
+}
 
 /** 添加数据 */
 function showAddWin() {

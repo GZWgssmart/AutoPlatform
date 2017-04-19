@@ -198,3 +198,17 @@ function status(value, row, index) {
         return "不可用";
     }
 }
+
+function resizeTableTh() {
+    $("th[data-field]").each(function (idx, th) {
+        var space = $(th).attr("data-space");
+        if (space != undefined && space != null && space != "") {
+            var str = "";
+            for (i = 0; i < space; i++) {
+                str += "&nbsp;";
+            }
+            alert($(th).text() + str);
+            $(th).text($(th).text() + str);
+        }
+    });
+}

@@ -14,6 +14,8 @@
 		<result property="carThings" column="carThings" />
 		<result property="intactDegrees" column="intactDegrees" />
 		<result property="userRequests" column="userRequests" />
+		<result property="carWash" column="carWash" />
+		<result property="oilCount" column="oilCount" />
 		<result property="maintainOrFix" column="maintainOrFix" />
 		<result property="checkinCreatedTime" column="checkinCreatedTime" />
 		<result property="checkinStatus" column="checkinStatus" />
@@ -44,10 +46,10 @@
 		<![CDATA[
 			insert into t_checkin(checkinId, userId, appointmentId, userName, userPhone, brandId, colorId,
 				modelId, plateId, carPlate, arriveTime, carMileage, carThings, intactDegrees, userRequests,
-				maintainOrFix, checkinCreatedTime, companyId, checkinStatus)
+				maintainOrFix, checkinCreatedTime, companyId, checkinStatus, carWash, oilCount)
 				values(uuid(), #{userId}, #{appointmentId}, #{userName}, #{userPhone}, #{brand.brandId}, #{color.colorId},
 				#{model.modelId}, #{plate.plateId}, #{carPlate}, #{arriveTime}, #{carMileage}, #{carThings}, #{intactDegrees}, #{userRequests},
-				#{maintainOrFix}, now(), #{company.companyId}, #{checkinStatus})
+				#{maintainOrFix}, now(), #{company.companyId}, #{checkinStatus}, #{carWash}, #{oilCount})
 		]]>
 	</insert>
 
@@ -80,7 +82,7 @@
 			update t_checkin set userId = #{userId}, appointmentId = #{appointmentId}, userName = #{userName}, userPhone = #{userPhone},
 				brandId = #{brand.brandId}, colorId = #{color.colorId}, modelId = #{model.modelId}, plateId = #{plate.plateId}, carPlate = #{carPlate},
 				arriveTime = #{arriveTime}, carMileage = #{carMileage}, carThings = #{carThings}, intactDegrees = #{intactDegrees}, userRequests = #{userRequests},
-				maintainOrFix = #{maintainOrFix}, checkinCreatedTime = now(), companyId = #{company.companyId}, checkinStatus = #{checkinStatus} where checkinId = #{checkinId}
+				maintainOrFix = #{maintainOrFix}, checkinCreatedTime = now(), companyId = #{company.companyId}, checkinStatus = #{checkinStatus}, carWash = #{carWash}, oilCount = #{oilCount} where checkinId = #{checkinId}
 		]]>
 	</update>
 

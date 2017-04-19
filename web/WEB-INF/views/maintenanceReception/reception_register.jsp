@@ -39,7 +39,7 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="userName">
+            <th data-field="userName" data-space="10">
                 车主姓名
             </th>
             <th data-field="userPhone">
@@ -59,6 +59,12 @@
             </th>
             <th data-field="plate.plateName">
                 汽车车牌
+            </th>
+            <th data-field="oilCount">
+                汽车油量
+            </th>
+            <th data-field="carWash" data-formatter="carWash">
+                是否洗车
             </th>
             <th data-field="carPlate">
                 车牌号码
@@ -181,7 +187,17 @@
                                 <input id="editDatetimepicker" readonly type="text" name="arriveTime"
                                        class="form-control datetimepicker"/>
                             </div>
-
+                            <div class="col-md-12 form-group">
+                                <label>是否需要洗车：</label>
+                                <select class="js-example-tags form-control" attr="checkin.carWash" type="select-one" name="carWash">
+                                    <option value="N">否</option>
+                                    <option value="Y">是</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>汽车油量：</label>
+                                <input type="text" attr="checkin.oilCount" name="oilCount" class="form-control"/>
+                            </div>
                             <div class="col-md-12 form-group">
                                 <label>汽车行驶里程：</label>
                                 <input type="text" attr="checkin.carMileage" name="carMileage" class="form-control"/>
@@ -288,7 +304,17 @@
                                 <input id="addDatetimepicker" readonly onclick="getDate()" type="text" name="arriveTime"
                                        class="form-control datetimepicker"/>
                             </div>
-
+                            <div class="col-md-12 form-group">
+                                <label>是否需要洗车：</label>
+                                <select class="js-example-tags form-control" name="carWash">
+                                    <option value="N">否</option>
+                                    <option value="Y">是</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>汽车油量：</label>
+                                <input type="text" name="oilCount" class="form-control"/>
+                            </div>
                             <div class="col-md-12 form-group">
                                 <label>汽车行驶里程：</label>
                                 <input type="text" name="carMileage" class="form-control"/>
