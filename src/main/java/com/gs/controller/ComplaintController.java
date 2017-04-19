@@ -2,6 +2,7 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Complaint;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.ComplaintService;
@@ -46,6 +47,16 @@ public class ComplaintController {
         List<Complaint> complaintList = complaintService.queryByPager(pager);
         return new Pager4EasyUI<Complaint>(pager.getTotalRecords(), complaintList);
     }
+
+    @ResponseBody
+    @RequestMapping(value="add_complaint", method=RequestMethod.POST)
+    public ControllerResult ConplaintAdd(Complaint complaint){
+        logger.info("添加回复");
+        complaintService.insert(complaint);
+        return ControllerResult.getSuccessResult("添加成功");
+    }
+
+
 
 
 }

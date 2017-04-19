@@ -10,8 +10,6 @@ $(document).ready(function () {
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 
-
-
 });
 
 /** 添加数据 */

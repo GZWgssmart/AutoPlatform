@@ -11,6 +11,33 @@ $(document).ready(function () {
     $("#search").bind("click", initTable);
 });
 
+
+
+$('#complaintCreatedTime').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii',
+    initialDate: new Date(),
+    autoclose: true,
+    todayHighlight: true,
+    todayBtn: true//显示今日按钮
+});
+$('#complaintReplyTime').datetimepicker({
+    language: 'zh-CN',
+    format: 'yyyy-mm-dd hh:ii',
+    initialDate: new Date(),
+    autoclose: true,
+    todayHighlight: true,
+    todayBtn: true//显示今日按钮
+});
+
+
+
+/** 添加数据 */
+function showAddWin() {
+    $("#addWin").modal('show');
+
+}
+
 /** 编辑数据 */
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
@@ -50,9 +77,9 @@ function updateIncomingType() {
 }
 
 /**提交添加数据 */
-function addIncomingType() {
+function addCompaint() {
     $("#addButton").attr('disabled','disabled');
-    var name = $("#name").val();
+    var name = $("#complaintReply").val();
     var error = document.getElementById("error");
     if (name != "") {
         $.post(contextPath + "/complaint/add_complaint",

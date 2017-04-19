@@ -13,9 +13,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
     <title>投诉管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -52,7 +56,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a href="#addWin" data-toggle="modal"><button type="button" id="add" class="btn btn-default" >
+            <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
@@ -106,30 +110,29 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">添加投诉</h3>
+                        <h3 class="m-t-none m-b">添加回复</h3>
                         <form role="form" id="addForm" >
-                            <div class="form-group">
-                                <label>投诉人：</label>
-                                <select class="js-example-tags form-control com_name" name="user.userName">
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>投诉内容：</label>
-                                <input type="text" attr="complaintContent" name="des" id="des" class="form-control"/>
-                            </div>
                             <div class="form-group">
                                 <label>受理人：</label>
                                 <select class="js-example-tags form-control com_name" name="user.userName">
                                 </select>
                             </div>
-
+                            <div class="form-group">
+                                <label>受理时间：</label>
+                                <input id="complaintReplyTime" type="text" name="complaintReplyTime"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>回复内容：</label>
+                                <textarea class="form-control" name="complaintReply" id="complaintReply"></textarea>
+                            </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error" style="color: #ff0000;"></span>
                                 <br/>
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton" class="btn btn-primary" onclick="addIncomingType()" value="添加">
+                                <input type="button" id="addButton" class="btn btn-primary" onclick="addCompaint()" value="添加">
                                 </input>
                                 <input type="reset" name="reset" style="display: none;" />
                             </div>
@@ -150,7 +153,12 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
+<script src="<%=path %>/js/select2.full.min.js"></script>
+<script src="<%=path %>/js/zh-CN.js"></script>
+<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
+<script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
+<script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/customerRelations/complaint.js"></script>
-<script src="<%=path%>/js/main.js"></script>
 </body>
 </html>
