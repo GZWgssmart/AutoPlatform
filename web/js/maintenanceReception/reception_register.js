@@ -10,112 +10,11 @@ $(document).ready(function () {
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 
-    $(".car_brand").select2({
-        // enable tagging
-        tags: true,
-        language: 'zh-CN',
-        placeholder: "请选择品牌",
-        minimumResultsForSearch: -1,
-        // loading remote data
-        // see https://select2.github.io/options.html#ajax
-        ajax: {
-            url: "/carBrand/car_brand_all",
-            processResults: function (data, page) {
-                console.log(data);
-                var parsed = data;
-                var arr = [];
-                for(var x in parsed){
-                    arr.push(parsed[x]); //这个应该是个json对象
-                }
-                console.log(arr);
-                return {
-                    results: arr
-                };
-            }
-        },
-
-    });
-    $(".car_color").select2({
-        // enable tagging
-        tags: true,
-        language: 'zh-CN',
-        placeholder: "请选择颜色",
-        minimumResultsForSearch: -1,
-        // loading remote data
-        // see https://select2.github.io/options.html#ajax
-        ajax: {
-            url: "/carColor/car_color_all",
-            processResults: function (data, page) {
-                console.log(data);
-                var parsed = data;
-                var arr = [];
-                for(var x in parsed){
-                    arr.push(parsed[x]); //这个应该是个json对象
-                }
-                console.log(arr);
-                return {
-                    results: arr
-                };
-            }
-        }
-    });
-    $(".car_model").select2({
-        // enable tagging
-        tags: true,
-        language: 'zh-CN',
-        placeholder: "请选择车型",
-        minimumResultsForSearch: -1,
-        // loading remote data
-        // see https://select2.github.io/options.html#ajax
-        ajax: {
-            url: "/carModel/car_model_all",
-            processResults: function (data, page) {
-                console.log(data);
-                var parsed = data;
-                var arr = [];
-                for(var x in parsed){
-                    arr.push(parsed[x]); //这个应该是个json对象
-                }
-                console.log(arr);
-                return {
-                    results: arr
-                };
-            }
-        }
-    });
-    $(".car_plate").select2({
-        // enable tagging
-        tags: true,
-        language: 'zh-CN',
-        minimumResultsForSearch: -1,
-        placeholder: "请选择车牌",
-        // loading remote data
-        // see https://select2.github.io/options.html#ajax
-        ajax: {
-            url: "/carPlate/car_plate_all",
-            processResults: function (data, page) {
-                console.log(data);
-                var parsed = data;
-                var arr = [];
-                for(var x in parsed){
-                    arr.push(parsed[x]); //这个应该是个json对象
-                }
-                console.log(arr);
-                return {
-                    results: arr
-                };
-            }
-        },
-
-    });
-    $('.datetimepicker').datetimepicker({
-        language: 'zh-CN',
-        format: 'yyyy-mm-dd hh:ii',
-        initialDate: new Date(),
-        autoclose: true,
-        todayHighlight: true,
-        todayBtn: true//显示今日按钮
-    });
+    initSelect2("car_brand", "请选择品牌", "/carBrand/car_brand_all");
+    initSelect2("car_color", "请选择颜色", "/carColor/car_color_all");
+    initSelect2("car_model", "请选择车型", "/carModel/car_model_all");
+    initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all");
+    initDateTimePicker("datetimepicker");
 
 });
 

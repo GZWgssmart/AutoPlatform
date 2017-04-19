@@ -1,3 +1,43 @@
+
+function initSelect2(clazz, title, url) {
+    $("." + clazz).select2({
+        // enable tagging
+        tags: true,
+        language: 'zh-CN',
+        minimumResultsForSearch: -1,
+        placeholder: title,
+        // loading remote data
+        // see https://select2.github.io/options.html#ajax
+        ajax: {
+            url: url,
+            processResults: function (data, page) {
+                console.log(data);
+                var parsed = data;
+                var arr = [];
+                for(var x in parsed){
+                    arr.push(parsed[x]); //这个应该是个json对象
+                }
+                console.log(arr);
+                return {
+                    results: arr
+                };
+            }
+        },
+
+    });
+}
+
+function initDateTimePicker(clazz) {
+    $('.' + clazz).datetimepicker({
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd hh:ii',
+        initialDate: new Date(),
+        autoclose: true,
+        todayHighlight: true,
+        todayBtn: true//显示今日按钮
+    });
+}
+
 var contextPath = '';
 function initTable(tableId, url) {
     //先销毁表格

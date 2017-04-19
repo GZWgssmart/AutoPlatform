@@ -177,7 +177,7 @@
 
                             <div class="col-md-12 form-group">
                                 <label>到店时间：</label>
-                                <input id="editDatetimepicker" type="text" name="arriveTime"
+                                <input id="editDatetimepicker" readonly type="text" name="arriveTime"
                                        class="form-control datetimepicker"/>
                             </div>
 
@@ -284,8 +284,8 @@
 
                             <div class="col-md-12 form-group">
                                 <label>到店时间：</label>
-                                <input id="addDatetimepicker" onclick="getDate()" type="text" name="arriveTime"
-                                       class="form-control"/>
+                                <input id="addDatetimepicker" readonly onclick="getDate()" type="text" name="arriveTime"
+                                       class="form-control datetimepicker"/>
                             </div>
 
                             <div class="col-md-12 form-group">
