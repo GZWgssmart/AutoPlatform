@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SalaryDAO extends BaseDAO<String, Salary>{
 
+    public Salary queryByUserId(String userId);
 }

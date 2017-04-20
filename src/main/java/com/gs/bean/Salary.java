@@ -10,14 +10,16 @@ import java.util.Date;
 */
 public class Salary{
 	private String salaryId; // 工资发放编号
-	private String prizeSalary;
-	private String minusSalary;
-	private String totalSalary;
-	private String salaryDes;
-	private Date salaryTime;
-	private Date salaryCreatedTime;
+	private double prizeSalary;  // 奖金
+	private double minusSalary;   // 罚金
+	private double totalSalary;   // 总工资
+	private String salaryDes;	// 工资描述
+	private Date salaryTime;    // 发放时间
+	private Date salaryCreatedTime; // 创建时间
 
 	private String userId;		//
+
+	private User user;
 
 
 
@@ -35,25 +37,36 @@ public class Salary{
 		this.userId=userId;
 	}
 
-	public String getPrizeSalary(){
-		return this.prizeSalary;
-	}
-	public void setPrizeSalary(String prizeSalary){
-		this.prizeSalary=prizeSalary;
+	public double getPrizeSalary() {
+		return prizeSalary;
 	}
 
-	public String getMinusSalary(){
-		return this.minusSalary;
-	}
-	public void setMinusSalary(String minusSalary){
-		this.minusSalary=minusSalary;
+	public void setPrizeSalary(double prizeSalary) {
+		this.prizeSalary = prizeSalary;
 	}
 
-	public String getTotalSalary(){
-		return this.totalSalary;
+	public double getMinusSalary() {
+		return minusSalary;
 	}
-	public void setTotalSalary(String totalSalary){
-		this.totalSalary=totalSalary;
+
+	public void setMinusSalary(double minusSalary) {
+		this.minusSalary = minusSalary;
+	}
+
+	public double getTotalSalary() {
+		return totalSalary;
+	}
+
+	public void setTotalSalary(double totalSalary) {
+		this.totalSalary = totalSalary;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public String getSalaryDes(){

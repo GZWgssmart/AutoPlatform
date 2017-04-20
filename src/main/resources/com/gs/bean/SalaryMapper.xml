@@ -5,12 +5,23 @@
 <mapper namespace="com.gs.dao.SalaryDAO">
 
 	<resultMap id="salaryResultMap" type="salary">
-
+		<id column="salaryId" property="salaryId"></id>
+		<result column="prizeSalary" property="prizeSalary"></result>
+		<result column="minusSalary" property="minusSalary"></result>
+		<result column="totalSalary" property="totalSalary"></result>
+		<result column="salaryDes" property="salaryDes"></result>
+		<result column="salaryTime" property="salaryTime"></result>
+		<result column="salaryCreatedTime" property="salaryCreatedTime"></result>
+		<association property="user" javaType="com.gs.bean.User">
+			<id column="user_id" property="userId"/>
+			<result column="userName" property="userName"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="salary">
 		<![CDATA[
-
+			insert into t_salary values(uuid(),#{user.userId},#{prizeSalary},#{minusSalary},
+			#{totalSalary},#{salaryDes},#{salaryTime},now())
 		]]>
 	</insert>
 
@@ -74,15 +85,22 @@
 		]]>
 	</select>
 
+	<select id="queryByUserId" parameterType="string" resultType="salary">
+		<![CDATA[
+			select * from t_salary where userId = #{userId}
+		]]>
+	</select>
+
 	<select id="queryByPager" resultType="list" resultMap="salaryResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			select s.*,u.userId as user_id,u.userName from t_salary s ,t_user u where s.userId = u.userId
+			order by u.salaryCreatedTime Desc limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(*) t_salary
 		]]>
 	</select>
 

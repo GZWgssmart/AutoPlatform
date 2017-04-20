@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OutgoingTypeDAO extends BaseDAO<String, OutgoingType>{
 
+    public OutgoingType queryByName(String outTypeName);
 }

@@ -10,4 +10,5 @@ import com.gs.bean.Salary;
 */
 public interface SalaryService extends BaseService<String, Salary>{
 
+    public Salary queryByUserId(String userId);
 }

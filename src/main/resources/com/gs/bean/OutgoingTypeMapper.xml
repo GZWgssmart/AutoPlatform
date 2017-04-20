@@ -74,6 +74,12 @@
 		]]>
 	</select>
 
+	<select id="queryByName" parameterType="string" resultType="outgoingType">
+		<![CDATA[
+			  select * from t_outgoingType where outTypeName = #{outTypeName}
+		]]>
+	</select>
+
 	<select id="queryByPager" resultType="list" resultMap="outgoingTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 			select  * from t_outgoing_type order by outTypeCreatedTime Desc limit #{beginIndex}, #{pageSize}

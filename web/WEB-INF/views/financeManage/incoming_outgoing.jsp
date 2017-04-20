@@ -25,7 +25,7 @@
            data-show-refresh="true"
            data-show-toggle="true"
            data-showColumns="true"
-           data-height="500">
+           data-height="450">
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
@@ -52,6 +52,22 @@
             </th>
         </tr>
         </thead>
+        <form id="formSearch" class="form-horizontal">
+            <div class="form-group" style="margin-top:15px">
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" placeholder="请在输入类型" >
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" placeholder="请在输入类型" >
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" placeholder="请在输入类型">
+                </div>
+                <div class="col-sm-3">
+                    <button type="button"   class="btn btn-primary">查询</button>
+                </div>
+            </div>
+        </form>
         <tbody>
 
         <div id="toolbar" class="btn-group">
@@ -71,21 +87,7 @@
             <a><button onclick="queryByInOutType(3);" type="button" class="btn btn-default">
                 <i class="glyphicon glyphicon-search"></i> 查看收支
             </button></a>
-                <form id="formSearch" class="form-horizontal">
-                    <div class="form-group" style="margin-top:15px">
-                        <label class="control-label col-sm-1" for="txt_search_departmentname">名称</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="txt_search_departmentname">
-                        </div>
-                        <label class="control-label col-sm-1" for="txt_search_statu">状态</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="txt_search_statu">
-                        </div>
-                        <div class="col-sm-4" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                        </div>
-                    </div>
-                </form>
+
             </div>
         </tbody>
 

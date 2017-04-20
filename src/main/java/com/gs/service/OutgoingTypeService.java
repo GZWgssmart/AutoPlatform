@@ -10,4 +10,5 @@ import com.gs.bean.OutgoingType;
 */
 public interface OutgoingTypeService extends BaseService<String, OutgoingType>{
 
+    public OutgoingType queryByName(String outTypeName);
 }

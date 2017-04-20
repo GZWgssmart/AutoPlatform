@@ -93,6 +93,8 @@
 		]]>
 	</select>
 
+
+
 	<select id="queryByPager" resultType="list" resultMap="incomingOutgoingResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 			select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io

@@ -3,6 +3,7 @@ function initSelect2(clazz, title, url) {
     $("." + clazz).select2({
         // enable tagging
         tags: true,
+        width: '570px',
         language: 'zh-CN',
         minimumResultsForSearch: -1,
         placeholder: title,
@@ -222,3 +223,20 @@ $("#addForm").submit(function(){
 $("#editForm").submit(function(){
     $(":submit",this).attr("disabled","disabled");// 当修改表单提交时, 按钮不可点击
 });
+
+function formSubmit(url, formId, winId) {
+    $.post(url,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#' + winId).modal('hide');
+                swal(data.message, "", "success");
+                $('#cusTable').bootstrapTable('refresh');
+                if (formId == "addForm") {
+                    $('#input[type=reset]').data('bootstrapValidator').resetForm(true);
+                }
+            } else if (data.result == "fail") {
+                swal(data.message, "", "error");
+            }
+        }, "json");
+}
