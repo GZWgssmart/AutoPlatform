@@ -31,7 +31,6 @@ function carWash(value, row, index) {
 /** 添加数据 */
 function showAddWin() {
     validator("addForm");
-    $("#addButton").removeAttr("disabled");
     $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }
@@ -92,7 +91,6 @@ function checkApp() {
 /** 编辑数据 */
 function showEditWin() {
     validator("editForm");
-    $("#editButton").removeAttr("disabled");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
@@ -154,13 +152,15 @@ window.operateEvents = {
         $('#editCarModel').html('<option value="' + checkin.model.modelId + '">' + checkin.model.modelName + '</option>').trigger("change");
         $('#editCarPlate').html('<option value="' + checkin.plate.plateId + '">' + checkin.plate.plateName + '</option>').trigger("change");
         $('#editDatetimepicker').val(formatterDate(checkin.arriveTime));
+        validator("editForm");
         $("#editWin").modal('show');
     }
 }
 
 /** 表单验证 */
 function validator(formId) {
-
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
