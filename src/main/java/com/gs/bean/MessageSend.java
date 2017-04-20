@@ -9,11 +9,19 @@ import java.util.Date;
 *@since 2017-04-14 16:16:21
 */
 public class MessageSend {
-	private String messageId;
-	private String userId;
-	private String sendMsg;
-	private Date sendTime;
-	private Date sendCreatedTime;
+	private String messageId; //短信发送记录
+	private String userId;  //用户Id
+	private String sendMsg;  //发送内容
+	private Date sendTime; //预计发送时间
+	private Date sendCreatedTime; //发送记录创建创建时间
+	private User user; //用户对象
+
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public String getMessageId(){
 		return this.messageId;

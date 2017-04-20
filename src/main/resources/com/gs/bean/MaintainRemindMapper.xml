@@ -3,8 +3,19 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gs.dao.MaintainRemindDAO">
-
 	<resultMap id="maintainRemindResultMap" type="maintainRemind">
+		<id property="remindId" column="remindId" />
+		<result property="lastMaintainTime" column="lastMaintainTime" />
+		<result property="lastMaintainMileage" column="lastMaintainMileage" />
+		<result property="remindMsg" column="remindMsg" />
+		<result property="remindTime" column="remindTime" />
+		<result property="remindType" column="remindType" />
+		<result property="remindCreatedTime" column="remindCreatedTime" />
+
+		<association property="user" javaType="com.gs.bean.User">
+			<id property="userId" column="userId"/>
+			<id property="userName" column="userName"/>
+		</association>
 
 	</resultMap>
 
@@ -76,13 +87,14 @@
 
 	<select id="queryByPager" resultType="list" resultMap="maintainRemindResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+		  select * from t_maintain_remind r, t_user u where r.userId=u.userId
 		]]>
+		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(*) from t_maintain_remind
 		]]>
 	</select>
 

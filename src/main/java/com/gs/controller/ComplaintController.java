@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("/complaint")
 public class ComplaintController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(IncomingTypeController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(ComplaintController.class);
 
 
     @Resource
@@ -31,7 +31,7 @@ public class ComplaintController {
 
 
     @RequestMapping(value = "show_complaint", method = RequestMethod.GET)
-    public String incomingType() {
+    public String complaint() {
         logger.info("显示投诉页面");
         return "customer/complaint";
     }

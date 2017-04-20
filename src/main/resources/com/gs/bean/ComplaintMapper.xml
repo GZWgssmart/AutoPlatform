@@ -102,7 +102,7 @@
 
 	<select id="count" resultType="int">
 		<![CDATA[
-		select count(*) from t_complaint c
+		select count(*) from t_complaint c, t_user u where c.userId=u.userId
 		]]>
 	</select>
 

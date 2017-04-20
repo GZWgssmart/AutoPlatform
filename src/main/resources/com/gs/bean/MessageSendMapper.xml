@@ -5,7 +5,15 @@
 <mapper namespace="com.gs.dao.MessageSendDAO">
 
 	<resultMap id="messageSendResultMap" type="messageSend">
-
+		<id property="messageId" column="messageId" />
+		<result property="sendMsg" column="sendMsg" />
+		<result property="sendTime" column="sendTime" />
+		<result property="sendCreatedTime" column="sendCreatedTime" />
+		<association property="user" javaType="com.gs.bean.User">
+			<id property="userId" column="userId"/>
+			<id property="userName" column="userName"/>
+			<id property="userPhone" column="userPhone"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="messageSend">
@@ -76,13 +84,14 @@
 
 	<select id="queryByPager" resultType="list" resultMap="messageSendResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+		select * from t_message_send s, t_user u where s.userId=u.userId
 		]]>
+		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+		select count(*) from t_message_send s, t_user u where s.userId=u.userId
 		]]>
 	</select>
 

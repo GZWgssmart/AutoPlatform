@@ -17,6 +17,14 @@ public class MaintainRemind {
 	private Date remindTime;  //保养提醒时间
 	private String remindType;  //保养提醒方式
 	private Date remindCreatedTime;  //保养提醒记录创建时间
+	private User user;//传递user对象
+
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public String getRemindId(){
 		return this.remindId;

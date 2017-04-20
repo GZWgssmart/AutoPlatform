@@ -206,15 +206,15 @@
                     <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">客户关系管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_advanced.html">维修保养提醒管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养提醒管理</a>
                         </li>
                         <li><a class="J_menuItem" href="form_basic.html">消费统计管理</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">跟踪回访管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/trackVisit/show_trackVisit">跟踪回访管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">短信群发管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/MessageSend/show_MessageSend">短信群发管理</a>
                         </li>
                     </ul>
                 </li>
