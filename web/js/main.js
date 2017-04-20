@@ -216,6 +216,7 @@ function resizeTableTh() {
     });
 }
 
+/** form表单提交 */
 function formSubmit(url, formId, winId) {
     $.post(url,
         $("#" + formId).serialize(),
@@ -231,6 +232,7 @@ function formSubmit(url, formId, winId) {
         }, "json");
 }
 
+/** 修改提交 */
 function edit() {
     $("#editForm").data('bootstrapValidator').validate();
     if ($("#editForm").data('bootstrapValidator').isValid()) {
@@ -239,6 +241,7 @@ function edit() {
         $("#editButton").removeAttr("disabled");
     }
 }
+/** 添加提交 */
 function add() {
     $("#addForm").data('bootstrapValidator').validate();
     if ($("#addForm").data('bootstrapValidator').isValid()) {

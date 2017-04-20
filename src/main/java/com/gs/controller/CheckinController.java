@@ -1,10 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.CarBrand;
-import com.gs.bean.Checkin;
-import com.gs.bean.Company;
-import com.gs.bean.IncomingType;
+import com.gs.bean.*;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -12,6 +9,7 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.CarBrandService;
 import com.gs.service.CheckinService;
+import com.gs.service.MaintainRecordService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -43,6 +41,9 @@ public class CheckinController {
     @Resource
     private CheckinService checkinService;
 
+    @Resource
+    private MaintainRecordService maintainRecordService;
+
     @RequestMapping(value = "checkin_page", method = RequestMethod.GET)
     public String checkinPage() {
         logger.info("访问登记页面");
@@ -64,11 +65,18 @@ public class CheckinController {
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addCheckin(Checkin checkin) {
-
         logger.info("添加登记记录");
+        String checkinId = UUIDUtil.uuid();
+        checkin.setCheckinId(checkinId);
         checkin.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+
+        MaintainRecord maintainRecord = new MaintainRecord();
+        maintainRecord.setCheckinId(checkinId);
+        maintainRecord.setStartTime(new Date());
+        maintainRecord.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+        maintainRecordService.insert(maintainRecord);
         checkinService.insert(checkin);
-        return ControllerResult.getSuccessResult("添加成功");
+        return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录已经自动生成");
     }
 
     @ResponseBody

@@ -26,7 +26,7 @@
     <insert id="insert" parameterType="maintainRecord">
 		<![CDATA[
           insert into t_maintain_record(recordId, checkinId, startTime, endTime, actualEndTime, recordCreatedTime, pickupTime, companyId, recordDes, recordStatus)
-            values(uuid(), #{checkin.checkinId}, #{startTime}, #{endTime}, #{actualEndTime}, now(), #{pickupTime}, #{company.companyId}, #{recordDes}, 'Y')
+            values(uuid(), #{checkinId}, #{startTime}, #{endTime}, #{actualEndTime}, now(), #{pickupTime}, #{companyId}, #{recordDes}, 'Y')
         ]]>
 	</insert>
 
@@ -56,7 +56,8 @@
 
     <update id="update" parameterType="maintainRecord">
 		<![CDATA[
-
+          update t_maintain_record
+            set checkinId = #{checkinId}, startTime = #{startTime}, endTime = #{endTime}, actualEndTime = #{actualEndTime}, recordCreatedTime = now(), pickupTime = #{pickupTime}, recordDes = #{recordDes}, recordStatus = 'Y' where recordId = #{recordId}
         ]]>
 	</update>
 
@@ -94,7 +95,7 @@
             parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 
-		  select * from t_maintain_record r,  t_checkin c, t_company cpy where c.checkinId=r.checkinId and c.companyId = cpy.companyId
+		  select r.*, c.checkinId, c.userName, c.carPlate, cpy.companyId, cpy.companyName from t_maintain_record r,  t_checkin c, t_company cpy where c.checkinId=r.checkinId and c.companyId = cpy.companyId
 
         ]]>
         limit #{beginIndex}, #{pageSize}
@@ -111,7 +112,7 @@
     <update id="inactive" parameterType="string">
 		<![CDATA[
 
-		update t_maintain_record set recordStatus = 'N' where recordId = #{id}
+		  update t_maintain_record set recordStatus = 'N' where recordId = #{id}
 
         ]]>
 	</update>
@@ -119,7 +120,7 @@
     <update id="active" parameterType="string">
 		<![CDATA[
 
-		update t_maintain_record set recordStatus = 'Y' where recordId = #{id}
+		  update t_maintain_record set recordStatus = 'Y' where recordId = #{id}
 
         ]]>
 	</update>
