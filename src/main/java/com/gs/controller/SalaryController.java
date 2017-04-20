@@ -1,4 +1,4 @@
-package com.gs.controller;
+﻿package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.IncomingOutgoing;
@@ -85,7 +85,8 @@ public class SalaryController {
         incomingOutgoing.setInOutMoney(salary.getTotalSalary());
         incomingOutgoing.setInOutStatus("Y");
         incomingOutgoingService.insert(incomingOutgoing);
-        return ControllerResult.getSuccessResult("添加成功");
+        return ControllerResult.getSuccessResult("添加成功。。");
+
     }
 
     @InitBinder
