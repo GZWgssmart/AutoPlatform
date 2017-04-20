@@ -3,6 +3,7 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.*;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.ModuleService;
 import com.gs.service.PermissionService;
@@ -54,9 +55,26 @@ public class PermissionController {
 
     @ResponseBody
     @RequestMapping(value = "query_pager", method = RequestMethod.GET)
-    public Pager4EasyUI<Permission> queryPermissionPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+    public Pager4EasyUI<Permission> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        logger.info("分页查询所有权限");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(permissionService.count());
+        List<Permission> permissions = permissionService.queryByPager(pager);
+        return new Pager4EasyUI<Permission>(pager.getTotalRecords(), permissions);
+    }
 
-        return null;
+    @ResponseBody
+    @RequestMapping(value = "module_pager", method = RequestMethod.GET)
+    public Pager4EasyUI<Permission> queryByModulePager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("moduleId") String moduleId) {
+        logger.info("根据模块来分页查询权限");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(permissionService.countModule(moduleId));
+        List<Permission> permissions = permissionService.queryByModulePager(moduleId, pager);
+        return new Pager4EasyUI<Permission>(pager.getTotalRecords(), permissions);
     }
 
     @ResponseBody

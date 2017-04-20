@@ -16,6 +16,7 @@
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/style.min862f.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/font-awesome.min93e3.css" rel="stylesheet">
 
@@ -74,13 +75,13 @@
                     <th data-field="permissionDes">
                         描述
                     </th>
-                    <th data-field="moduleId">
+                    <th data-field="module.moduleName">
                         所属模块
                     </th>
-                    <th data-field="permissionStatus" data-formatter="thisStatus">
+                    <th data-field="permissionStatus" data-formatter="status">
                         状态
                     </th>
-                    <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
+                    <th data-field="permissionStatus" data-formatter="operateFormatter" data-events="operateEvents">
                         操作
                     </th>
                 </tr>
@@ -116,6 +117,8 @@
                             查不可用
                         </button>
                     </a>
+                    <select id="moduleSelect" onchange="selectModule(this);" class="js-example-tags form-control module_all" name="brandId">
+                    </select>
                 </div>
                 </tbody>
 
@@ -192,6 +195,8 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
+<script src="<%=path %>/js/select2.full.min.js"></script>
+<script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/system/permission.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 </body>

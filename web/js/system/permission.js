@@ -11,10 +11,12 @@ var moduleObj2;
 
 function showAduqPermission() {
     $("#allotPermission").hide();
-    initTable("cusTable", "/permission/query_pager");
+    initTable("cusTable", contextPath + "/permission/query_pager");
 
-    $("#search").bind("click", initTable);
+    initSelect2("module_all", "选择模块查询", contextPath + "/module/query_all", "150");
     $("#aduqPermission").show();
+    var aa = $("#moduleSelect").id();
+    alert(aa);
 }
 
 function showAllotPermission() {
@@ -108,6 +110,18 @@ function delById(permissionId, obj) {
 
  }*/
 
+function operateFormatter(value, row, index) {
+    if (row.permissionStatus == 'Y') {
+        return [
+            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>'
+        ].join('');
+    } else {
+        return [
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>'
+        ].join('');
+    }
+}
+
 function addAll() {
     $.get(contextPath + "/permission/addByRole_permission?permissionIds=" + ypAll + "&roleId=" + roleId2,
         function (data) {
@@ -122,4 +136,8 @@ function delAll() {
         }, "json");
     selectRole(roleObj2, roleId2);
     selectModule(moduleObj2, moduleId2);
+}
+
+function selectModule(combox) {
+    initTable("cusTable", contextPath + "/permission/module_pager?moduleId=" + combox.value);
 }

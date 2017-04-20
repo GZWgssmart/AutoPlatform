@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.Permission;
+import com.gs.common.bean.Pager;
 
 import java.util.List;
 
@@ -12,4 +13,8 @@ import java.util.List;
  */
 public interface PermissionService extends BaseService<String, Permission> {
     public List<Permission> queryByModuleId(String moduleId);
+
+    public List<Permission> queryByModulePager(String moduleId, Pager pager);
+
+    public int countModule(String moduleId);
 }
