@@ -64,7 +64,7 @@
 
 	<select id="query" parameterType="company" resultType="company">
 		<![CDATA[
-
+			select * from t_company 
 		]]>
 	</select>
 

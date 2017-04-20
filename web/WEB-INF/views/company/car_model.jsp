@@ -33,7 +33,7 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th  data-field="brandId" data-sortable="true" data-formatter="showFormatter">
+            <th  data-field="brand.brandName" data-sortable="true">
                 汽车品牌
             </th>
             <th  data-field="modelName" data-sortable="true">

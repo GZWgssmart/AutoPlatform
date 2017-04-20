@@ -14,6 +14,15 @@ public class CarModel {
 	private String modelDes;
 	private String brandId;
 	private String modelStatus;
+	private CarBrand brand;
+
+	public CarBrand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(CarBrand brand) {
+		this.brand = brand;
+	}
 
 	public String getModelId(){
 		return this.modelId;
@@ -58,6 +67,7 @@ public class CarModel {
 				", modelDes='" + modelDes + '\'' +
 				", brandId='" + brandId + '\'' +
 				", modelStatus='" + modelStatus + '\'' +
+				", brand=" + brand +
 				'}';
 	}
 }

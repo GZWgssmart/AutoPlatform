@@ -72,7 +72,7 @@
 
 	<select id="queryByPager" resultType="list" resultMap="carModelResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-		select * from t_car_model  limit #{beginIndex}, #{pageSize}
+			select brand.brandName,brand.brandId,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 

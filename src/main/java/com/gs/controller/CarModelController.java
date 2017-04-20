@@ -69,6 +69,9 @@ public class CarModelController {
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(carModelService.count());
         List<CarModel> carModelList = carModelService.queryByPager(pager);
+        for(CarModel model :carModelList){
+            System.out.println(model.getBrand().getBrandName());
+        }
         return new Pager4EasyUI<CarModel>(pager.getTotalRecords(), carModelList);
     }
 }

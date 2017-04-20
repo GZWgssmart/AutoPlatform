@@ -249,4 +249,5 @@ public class Checkin {
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
     }
+
 }
