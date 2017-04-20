@@ -7,9 +7,6 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/checkin/checkin_pager");
 
-    //当点击查询按钮的时候执行
-    $("#search").bind("click", initTable);
-
     initSelect2("car_brand", "请选择品牌", "/carBrand/car_brand_all", "540");
     initSelect2("car_color", "请选择颜色", "/carColor/car_color_all", "540");
     initSelect2("car_model", "请选择车型", "/carModel/car_model_all", "540");
@@ -265,6 +262,14 @@ function validator(formId) {
                     regexp: {
                         regexp: /^[0-9]+$/,
                         message: '行驶里程只能是数字'
+                    }
+
+                }
+            },
+            carMileage: {
+                arriveTime: {
+                    notEmpty: {
+                        message: '选择到店时间'
                     }
 
                 }
