@@ -88,7 +88,7 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改供应商</h3>
-                        <form role="form" id="updateForm" >
+                        <form role="form" id="editForm" >
                             <input type="hidden" attr="supply.supplyId" name="supplyId" id = "supplyId"/>
                             <div class="form-group">
                                 <label>名称：</label>

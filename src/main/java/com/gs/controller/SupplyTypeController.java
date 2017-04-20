@@ -60,8 +60,8 @@ public class SupplyTypeController {
     }
 
     @ResponseBody
-    @RequestMapping("update")
-    public ControllerResult update(SupplyType supplyType) {
+    @RequestMapping("edit")
+    public ControllerResult edit(SupplyType supplyType) {
         logger.info("修改供应商分类");
         supplyTypeService.update(supplyType);
         return ControllerResult.getSuccessResult("修改成功");

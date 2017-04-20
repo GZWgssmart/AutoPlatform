@@ -15,6 +15,7 @@
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -46,12 +47,16 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
+            <a>
+                <button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-plus"></i> 添加
+                </button>
+            </a>
+            <a>
+                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-pencil"></i> 修改
+                </button>
+            </a>
         </div>
         </tbody>
 
@@ -75,8 +80,8 @@
                             </div>
                             <div class="form-group">
                                 <label>供应商分类描述：</label>
-                                <input type="text"  name="supplyTypeDes" attr="supplyType.supplyTypeDes" id ="supplyTypeDes"
-                                       class="form-control"/>
+                                <textarea class="form-control" attr="supplyType.supplyTypeDes" type="textarea" name="supplyTypeDes"
+                                          rows="3"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error1" style="color: red;"></span>
@@ -84,7 +89,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="submit" id="addButton1" class="btn btn-primary" value="修改">
+                                <input type="button" id="editButton" onclick="edit()" class="btn btn-primary" value="修改">
                                 </input>
                             </div>
                         </form>
@@ -110,13 +115,14 @@
                             </div>
                             <div class="form-group">
                                 <label>供应商分类描述：</label>
-                                <input type="text" name="supplyTypeDes" class="form-control"/>
+                                <textarea class="form-control" type="textarea" name="supplyTypeDes"
+                                          rows="3"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                     关闭
                                 </button>
-                                <input type="submit" class="btn btn-primary" id="addButton"  value="添加">
+                                <input type="button" class="btn btn-primary" id="addButton" onclick="add()" value="添加">
                                 </input>
                             </div>
                         </form>
@@ -130,6 +136,7 @@
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
