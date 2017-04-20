@@ -1,10 +1,8 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.IncomingType;
-import com.gs.bean.Role;
-import com.gs.bean.User;
-import com.gs.bean.UserRole;
+import com.gs.bean.*;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,6 +48,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "peopleInfo_insert", method = RequestMethod.POST)
     public ControllerResult infoInsert(User user){
         logger.info("信息添加");
+        user.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
         userService.insert(user);
         return ControllerResult.getSuccessResult("添加成功");
     }
@@ -69,6 +69,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "peopleInfo_update", method = RequestMethod.POST)
     public ControllerResult info_update(User user){
         logger.info("信息修改");
+        user.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
         userService.update(user);
         return ControllerResult.getSuccessResult(" 修改成功");
     }
@@ -79,10 +80,25 @@ public class PeopleInfoController {
         logger.info("状态修改");
         if(status.equals("Y")){
             userService.inactive(id);
-        }else if (status.equals("N")){
+        } else {
             userService.active(id);
         }
         return ControllerResult.getSuccessResult(" 修改成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "user_all", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryUserAll() {
+        logger.info("查询员工");
+        List<User> users = userService.queryAll();
+        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+        for (User user : users) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(user.getUserId());
+            comboBox4EasyUI.setText(user.getUserName());
+            comboBox4EasyUIs.add(comboBox4EasyUI);
+        }
+        return comboBox4EasyUIs;
     }
 }
 

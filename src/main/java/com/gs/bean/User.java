@@ -23,10 +23,12 @@ public class User{
 	private String userIcon; // 用户头像
 	private String userDes; // 用户描述
 	private String companyId; // 用户所属公司
-	private String userSalary; // 用户基本工资
+	private double userSalary; // 用户基本工资
 	private Date userCreatedTime; // 用户创建时间
 	private Date userLoginedTime; // 用户最近一次登录时
 	private String userStatus; // 用户状态
+
+	private Company company;
 
 	@Override
 	public String toString() {
@@ -166,10 +168,10 @@ public class User{
 		this.companyId=companyId;
 	}
 
-	public String getUserSalary(){
+	public double getUserSalary(){
 		return this.userSalary;
 	}
-	public void setUserSalary(String userSalary){
+	public void setUserSalary(double userSalary){
 		this.userSalary=userSalary;
 	}
 
@@ -194,4 +196,12 @@ public class User{
 		this.userStatus=userStatus;
 	}
 
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 }
