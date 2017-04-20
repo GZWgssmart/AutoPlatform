@@ -1,9 +1,9 @@
 
-function initSelect2(clazz, title, url, width) {
+function initSelect2(clazz, title, url) {
     $("." + clazz).select2({
         // enable tagging
         tags: true,
-        width: width + 'px',
+        width: '570px',
         language: 'zh-CN',
         minimumResultsForSearch: -1,
         placeholder: title,
@@ -216,14 +216,6 @@ function resizeTableTh() {
     });
 }
 
-$("#addForm").submit(function(){
-    $(":submit",this).attr("disabled","disabled");// 当添加表单提交时, 按钮不可点击
-});
-
-$("#editForm").submit(function(){
-    $(":submit",this).attr("disabled","disabled");// 当修改表单提交时, 按钮不可点击
-});
-
 function formSubmit(url, formId, winId) {
     $.post(url,
         $("#" + formId).serialize(),
@@ -240,3 +232,5 @@ function formSubmit(url, formId, winId) {
             }
         }, "json");
 }
+
+

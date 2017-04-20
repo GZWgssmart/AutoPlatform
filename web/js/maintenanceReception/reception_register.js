@@ -30,41 +30,14 @@ function carWash(value, row, index) {
 
 /** 添加数据 */
 function showAddWin() {
+    validator("addForm");
     $("#addButton").removeAttr("disabled");
     $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }
 
-/**提交添加数据 */
-function addCheckin() {
-
-    var appFlag = $("#app").val();
-    $.ajax({
-        cache: true,
-        type: "POST",
-        url:"/checkin/add",
-        data:$('#addForm').serialize(),// 你的formid
-        async: false,
-        error: function(request) {
-            $("#addButton").removeAttr("disabled");
-            swal("请求错误", "", "error");
-        },
-        success: function(data) {
-            if(data.result == "success"){
-                $('#addWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            }else if(data.result == "fail"){
-                $("#addButton").removeAttr("disabled");
-                swal(data.message, "", "error");
-            }
-        }
-    });
-
-}
-
 /** 给datetimepicker添加默认值 */
-function getDate(){
+function getDate() {
     if ($("#app").val() == "N") {
         $("#addDatetimepicker").val(new Date());
     }
@@ -118,6 +91,7 @@ function checkApp() {
 
 /** 编辑数据 */
 function showEditWin() {
+    validator("editForm");
     $("#editButton").removeAttr("disabled");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
@@ -135,22 +109,6 @@ function showEditWin() {
     }
 }
 
-/**提交编辑数据 */
-function editCheckin() {
-    $.post("/checkin/edit",
-        $("#editForm").serialize(),
-        function(data){
-            if(data.result == "success"){
-                $('#editWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            }else if(data.result == "fail"){
-                $("#editButton").removeAttr("disabled");
-                swal(data.message, "", "error");
-            }
-        },"json");
-
-}
 /** 返回按钮 */
 function operateFormatter(value, row, index) {
     if (row.checkinStatus == 'Y') {
@@ -158,7 +116,7 @@ function operateFormatter(value, row, index) {
             '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>',
             '<button type="button" class="showUpdateIncomingType1 btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
-    }else{
+    } else {
         return [
             '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>',
             '<button type="button" class="showUpdateIncomingType1 btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>'
@@ -170,23 +128,23 @@ function operateFormatter(value, row, index) {
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
         $.get("/checkin/update_status?checkinId=" + row.checkinId + "&status=" + row.checkinStatus,
-            function(data){
-                if(data.result == "success"){
+            function (data) {
+                if (data.result == "success") {
                     $('#cusTable').bootstrapTable('refresh');
-                }else if(data.result == "fail"){
+                } else if (data.result == "fail") {
                     swal(data.message, "", "error");
                 }
-            },"json");
+            }, "json");
     },
     'click .updateInactive': function (e, value, row, index) {
         $.get("/checkin/update_status?checkinId=" + row.checkinId + "&status=" + row.checkinStatus,
-            function(data){
-                if(data.result == "success"){
+            function (data) {
+                if (data.result == "success") {
                     $('#cusTable').bootstrapTable('refresh');
-                }else if(data.result == "fail"){
+                } else if (data.result == "fail") {
                     swal(data.message, "", "error");
                 }
-            },"json");
+            }, "json");
     },
     'click .showUpdateIncomingType1': function (e, value, row, index) {
         var checkin = row;
@@ -199,3 +157,145 @@ window.operateEvents = {
         $("#editWin").modal('show');
     }
 }
+
+/** 表单验证 */
+function validator(formId) {
+
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            userName: {
+                message: '车主验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '车主姓名不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 4,
+                        message: '车主长度必须在2到4位之间'
+                    }
+                }
+            },
+            userPhone: {
+                validators: {
+                    notEmpty: {
+                        message: '手机号不能为空'
+                    },
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: '手机号只能是11位'
+                    }
+                }
+            },
+            brandId: {
+                validators: {
+                    notEmpty: {
+                        message: '品牌不能为空'
+                    }
+
+                }
+            },
+            colorId: {
+                validators: {
+                    notEmpty: {
+                        message: '颜色不能为空'
+                    }
+
+                }
+            },
+            modelId: {
+                validators: {
+                    notEmpty: {
+                        message: '车型不能为空'
+                    }
+
+                }
+            },
+            plateId: {
+                validators: {
+                    notEmpty: {
+                        message: '车牌不能为空'
+                    }
+
+                }
+            },
+            carPlate: {
+                validators: {
+                    notEmpty: {
+                        message: '车牌号码不能为空'
+                    },
+                    stringLength: {
+                        min: 5,
+                        max: 5,
+                        message: '车牌号码只能是5位'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z0-9]+$/,
+                        message: '车牌不能是中文'
+                    }
+                }
+            },
+            oilCount: {
+                validators: {
+                    notEmpty: {
+                        message: '汽车油量不能为空'
+                    },
+                    regexp: {
+                        regexp: /^[0-9]+$/,
+                        message: '油量只能是数字'
+                    }
+
+                }
+            },
+            carMileage: {
+                validators: {
+                    notEmpty: {
+                        message: '汽车行驶里程不能为空'
+                    },
+                    regexp: {
+                        regexp: /^[0-9]+$/,
+                        message: '行驶里程只能是数字'
+                    }
+
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/checkin/add", formId, "addWin");
+
+            } else if (formId == "editForm") {
+                formSubmit("/checkin/edit", formId, "editWin");
+            }
+
+
+        })
+
+}
+
+function edit() {
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+function add() {
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
+}
+
+

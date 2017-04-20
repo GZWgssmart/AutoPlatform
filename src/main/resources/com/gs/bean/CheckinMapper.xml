@@ -47,9 +47,9 @@
 			insert into t_checkin(checkinId, userId, appointmentId, userName, userPhone, brandId, colorId,
 				modelId, plateId, carPlate, arriveTime, carMileage, carThings, intactDegrees, userRequests,
 				maintainOrFix, checkinCreatedTime, companyId, checkinStatus, carWash, oilCount)
-				values(uuid(), #{userId}, #{appointmentId}, #{userName}, #{userPhone}, #{brand.brandId}, #{color.colorId},
-				#{model.modelId}, #{plate.plateId}, #{carPlate}, #{arriveTime}, #{carMileage}, #{carThings}, #{intactDegrees}, #{userRequests},
-				#{maintainOrFix}, now(), #{company.companyId}, 'Y', #{carWash}, #{oilCount})
+				values(uuid(), #{userId}, #{appointmentId}, #{userName}, #{userPhone}, #{brandId}, #{colorId},
+				#{modelId}, #{plateId}, #{carPlate}, #{arriveTime}, #{carMileage}, #{carThings}, #{intactDegrees}, #{userRequests},
+				#{maintainOrFix}, now(), #{companyId}, 'Y', #{carWash}, #{oilCount})
 		]]>
 	</insert>
 
@@ -80,9 +80,9 @@
 	<update id="update" parameterType="checkin">
 		<![CDATA[
 			update t_checkin set userId = #{userId}, appointmentId = #{appointmentId}, userName = #{userName}, userPhone = #{userPhone},
-				brandId = #{brand.brandId}, colorId = #{color.colorId}, modelId = #{model.modelId}, plateId = #{plate.plateId}, carPlate = #{carPlate},
+				brandId = #{brandId}, colorId = #{colorId}, modelId = #{modelId}, plateId = #{plateId}, carPlate = #{carPlate},
 				arriveTime = #{arriveTime}, carMileage = #{carMileage}, carThings = #{carThings}, intactDegrees = #{intactDegrees}, userRequests = #{userRequests},
-				maintainOrFix = #{maintainOrFix}, checkinCreatedTime = now(), companyId = #{company.companyId}, checkinStatus = 'Y', carWash = #{carWash}, oilCount = #{oilCount} where checkinId = #{checkinId}
+				maintainOrFix = #{maintainOrFix}, checkinCreatedTime = now(), companyId = #{companyId}, checkinStatus = 'Y', carWash = #{carWash}, oilCount = #{oilCount} where checkinId = #{checkinId}
 		]]>
 	</update>
 

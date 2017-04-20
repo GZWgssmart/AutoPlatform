@@ -66,9 +66,7 @@ public class CheckinController {
     public ControllerResult addCheckin(Checkin checkin) {
 
         logger.info("添加登记记录");
-        Company company = new Company();
-        company.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
-        checkin.setCompany(company);
+        checkin.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
         checkinService.insert(checkin);
         return ControllerResult.getSuccessResult("添加成功");
     }
@@ -77,9 +75,7 @@ public class CheckinController {
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public ControllerResult editCheckin(Checkin checkin) {
         logger.info("修改登记记录");
-        Company company = new Company();
-        company.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
-        checkin.setCompany(company);
+        checkin.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
         checkinService.update(checkin);
         return ControllerResult.getSuccessResult("修改成功");
     }

@@ -20,6 +20,7 @@
     <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
@@ -155,25 +156,25 @@
 
                             <div class="col-md-12 form-group">
                                 <label>汽车品牌：</label>
-                                <select id="editCarBrand" class="js-example-tags form-control car_brand" name="brand.brandId">
+                                <select id="editCarBrand" class="js-example-tags form-control car_brand" name="brandId">
                                 </select>
                             </div>
 
                             <div class="col-md-12 form-group">
                                 <label>汽车颜色：</label>
-                                <select id="editCarColor" class="js-example-tags form-control car_color" name="color.colorId">
+                                <select id="editCarColor" class="js-example-tags form-control car_color" name="colorId">
                                 </select>
                             </div>
 
                             <div class="col-md-12 form-group">
                                 <label>汽车车型：</label>
-                                <select id="editCarModel" class="js-example-tags form-control car_model" name="model.modelId">
+                                <select id="editCarModel" class="js-example-tags form-control car_model" name="modelId">
                                 </select>
                             </div>
 
                             <div class="col-md-12 form-group">
                                 <label>汽车车牌：</label>
-                                <select id="editCarPlate" class="js-example-tags form-control car_plate" name="plate.plateId">
+                                <select id="editCarPlate" class="js-example-tags form-control car_plate" name="plateId">
                                 </select>
                             </div>
 
@@ -233,7 +234,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="submit" id="editButton" class="btn btn-primary" value="修改">
+                                <input type="button" onclick="edit()" id="editButton" class="btn btn-primary" value="修改">
                                 </input>
                             </div>
                         </form>
@@ -272,25 +273,25 @@
 
                             <div class="col-md-12 form-group">
                                 <label>汽车品牌：</label>
-                                <select id="addCarBrand" class="js-example-tags form-control car_brand" name="brand.brandId">
+                                <select id="addCarBrand" class="js-example-tags form-control car_brand" name="brandId">
                                 </select>
                             </div>
 
                             <div class="col-md-12 form-group">
                                 <label>汽车颜色：</label>
-                                <select id="addCarColor" class="js-example-tags form-control car_color" name="color.colorId">
+                                <select id="addCarColor" class="js-example-tags form-control car_color" name="colorId">
                                 </select>
                             </div>
 
                             <div class="col-md-12 form-group">
                                 <label>汽车车型：</label>
-                                <select id="addCarModel" class="js-example-tags form-control car_model" name="model.modelId">
+                                <select id="addCarModel" class="js-example-tags form-control car_model" name="modelId">
                                 </select>
                             </div>
 
                             <div class="col-md-12 form-group">
                                 <label>汽车车牌：</label>
-                                <select id="addCarPlate" class="js-example-tags form-control car_plate" name="plate.plateId">
+                                <select id="addCarPlate" class="js-example-tags form-control car_plate" name="plateId">
                                 </select>
                             </div>
 
@@ -350,7 +351,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="submit" class="btn btn-primary" value="添加">
+                                <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="添加">
                                 </input>
                                 <input id="addButton" type="reset" name="reset" style="display: none;"/>
                             </div>
@@ -364,7 +365,7 @@
 </div>
 
 <div id="appWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 800px;">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
@@ -446,6 +447,7 @@
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>

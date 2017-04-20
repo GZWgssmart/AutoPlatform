@@ -18,7 +18,10 @@ public class Checkin {
     private String appointmentId; // 预约ID
     private String userName; // 车主姓名
     private String userPhone; // 车主电话
-
+    private String brandId; // 品牌ID
+    private String modelId; // 车型ID
+    private String plateId; // 车牌ID
+    private String colorId; // 颜色的ID
     private String carPlate; // 车牌号码
     private Date arriveTime; // 到店时间
     private double carMileage; // 汽车行驶里程
@@ -29,6 +32,7 @@ public class Checkin {
     private Date checkinCreatedTime; // 记录创建时间
     private String checkinStatus; // 记录的状态
     private String carWash; // 标识是否需要洗车
+    private String companyId; // 公司ID
     private double oilCount; // 油量
 
     private CarBrand brand; // 汽车品牌
@@ -206,5 +210,43 @@ public class Checkin {
         this.company = company;
     }
 
+    public String getBrandId() {
+        return brandId;
+    }
 
+    public void setBrandId(String brandId) {
+        this.brandId = brandId;
+    }
+
+    public String getModelId() {
+        return modelId;
+    }
+
+    public void setModelId(String modelId) {
+        this.modelId = modelId;
+    }
+
+    public String getPlateId() {
+        return plateId;
+    }
+
+    public void setPlateId(String plateId) {
+        this.plateId = plateId;
+    }
+
+    public String getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(String colorId) {
+        this.colorId = colorId;
+    }
+
+    public String getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(String companyId) {
+        this.companyId = companyId;
+    }
 }
