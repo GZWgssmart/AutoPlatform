@@ -18,6 +18,7 @@ function showEditWin() {
     } else {
         var product = selectRow[0];
         $("#updateForm").fill(product);
+        $("#addButton1").removeAttr("disabled");
         $("#editWin").modal('show');
     }
 }

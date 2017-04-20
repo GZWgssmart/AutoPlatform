@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -98,10 +99,22 @@ public class CompanyController {
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(companyService.count());
         List<Company> companyList = companyService.queryByPager(pager);
-        for(Company c : companyList){
-            System.out.println(c);
-        }
         return new Pager4EasyUI<Company>(pager.getTotalRecords(), companyList);
+    }
+
+    @ResponseBody
+    @RequestMapping(value="companyStatusModify",method = RequestMethod.GET)
+    public ControllerResult companyStatusModify(@Param("id") String id,@Param("status") String status){
+        System.out.println("id:"+id+"status" + status);
+        if(status.equals("Y")){
+            logger.info("公司冻结成功");
+            companyService.inactive(id);
+            return ControllerResult.getSuccessResult("公司冻结成功");
+        }else if(status.equals("N")){
+            companyService.active(id);
+            return ControllerResult.getSuccessResult("公司激活成功");
+        }
+        return ControllerResult.getFailResult("公司修改失败");
     }
 
     @InitBinder

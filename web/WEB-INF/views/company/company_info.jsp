@@ -56,11 +56,14 @@
             <th data-field="companyLatitude" >
                 公司纬度
             </th>
-            <th data-field="companyDes" >
+            <th data-field="companyDes">
                 公司描述
             </th>
             <th data-field="companyStatus" data-formatter="status">
                 公司状态
+            </th>
+            <th data-field="co" data-formatter="operating" data-events="operateEvents">
+                操作
             </th>
         </tr>
         </thead>
@@ -100,7 +103,6 @@
                                 <label>商品价格：</label>
                                 <input type="text"  name="price" attr="product.price" id ="price"
                                        class="form-control"/>
-
                             </div>
 
                             <div class="form-group">
