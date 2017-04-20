@@ -96,8 +96,9 @@
 	<select id="queryByPager" resultType="list" resultMap="complaintResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 		select c.*,u.userId as adminId,u.userName as adminName,u1.* from t_complaint c LEFT JOIN  t_user u on c.userId=u.userId  LEFT JOIN t_user u1 on
- 		c.complaintReplyUser= u1.userId  limit #{beginIndex}, #{pageSize}
+ 		c.complaintReplyUser= u1.userId
 		]]>
+ 		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">

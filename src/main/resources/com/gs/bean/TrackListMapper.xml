@@ -5,7 +5,22 @@
 <mapper namespace="com.gs.dao.TrackListDAO">
 
 	<resultMap id="trackListResultMap" type="trackList">
-
+		<id column="trackId" property="trackId"/>
+		<result column="userId" property="userId"/>
+		<result column="trackContent" property="trackContent"/>
+		<result column="serviceEvaluate" property="serviceEvaluate"/>
+		<result column="trackUser" property="trackUser"/>
+		<result column="trackCreatedTime" property="trackCreatedTime"/>
+		<!--管理员Id-->
+		<association property="admin" javaType="com.gs.bean.User">
+			<id column="adminId" property="userId"/>
+			<result column="adminName" property="userName"/>
+		</association>
+		<!--客户Id-->
+		<association property="customer" javaType="com.gs.bean.User">
+			<id column="customerId" property="userId"/>
+			<result column="customerName" property="userName"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="trackList">
@@ -76,13 +91,16 @@
 
 	<select id="queryByPager" resultType="list" resultMap="trackListResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			select l.*,u.userId as customerId,u.userName as customerName,u1.userId as adminId,u1.userName as adminName
+			from t_track_list l LEFT JOIN  t_user u on l.userId=u.userId
+			LEFT JOIN t_user u1 on l.trackUser= u1.userId
 		]]>
+		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(*) from t_track_list l, t_user u where l.userId=u.userId
 		]]>
 	</select>
 

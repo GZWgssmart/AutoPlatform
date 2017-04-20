@@ -15,13 +15,21 @@ public class TrackList {
 	private int serviceEvaluate; //本次服务评价 1-10分
 	private String trackUser; //跟踪回访用户 来源t_user表
 	private Date trackCreatedTime;  //回访时间
-	private User user;//传递User对象
+	private User admin;//管理员
+	private User customer;//顾客
 
-	public User getUser() {
-		return user;
+	public User getAdmin() {
+		return admin;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setAdmin(User admin) {
+		this.admin = admin;
+	}
+
+	public User getCustomer() {
+		return customer;
+	}
+	public void setCustomer(User customer) {
+		this.customer = customer;
 	}
 
 	public String getTrackId(){

@@ -92,7 +92,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton1" class="btn btn-primary" value="修改" onclick="updateIncomingType()">
+                                <input type="submit" id="addButton1" class="btn btn-primary" value="修改" >
                                 </input>
                             </div>
                         </form>
@@ -132,7 +132,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton" class="btn btn-primary" onclick="addCompaint()" value="添加">
+                                <input type="submit" id="addButton" class="btn btn-primary" value="添加">
                                 </input>
                                 <input type="reset" name="reset" style="display: none;" />
                             </div>
