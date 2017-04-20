@@ -1,9 +1,9 @@
 
-function initSelect2(clazz, title, url) {
+function initSelect2(clazz, title, url, width) {
     $("." + clazz).select2({
         // enable tagging
         tags: true,
-        width: '570px',
+        width: width + 'px',
         language: 'zh-CN',
         minimumResultsForSearch: -1,
         placeholder: title,

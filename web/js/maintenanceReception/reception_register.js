@@ -10,10 +10,10 @@ $(document).ready(function () {
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 
-    initSelect2("car_brand", "请选择品牌", "/carBrand/car_brand_all");
-    initSelect2("car_color", "请选择颜色", "/carColor/car_color_all");
-    initSelect2("car_model", "请选择车型", "/carModel/car_model_all");
-    initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all");
+    initSelect2("car_brand", "请选择品牌", "/carBrand/car_brand_all", "540");
+    initSelect2("car_color", "请选择颜色", "/carColor/car_color_all", "540");
+    initSelect2("car_model", "请选择车型", "/carModel/car_model_all", "540");
+    initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "540");
     initDateTimePicker("datetimepicker");
 
 

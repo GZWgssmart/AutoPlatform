@@ -153,25 +153,25 @@
                                 <input type="text" attr="checkin.userPhone" name="userPhone" class="form-control"/>
                             </div>
 
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-12 form-group">
                                 <label>汽车品牌：</label>
                                 <select id="editCarBrand" class="js-example-tags form-control car_brand" name="brand.brandId">
                                 </select>
                             </div>
 
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-12 form-group">
                                 <label>汽车颜色：</label>
                                 <select id="editCarColor" class="js-example-tags form-control car_color" name="color.colorId">
                                 </select>
                             </div>
 
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-12 form-group">
                                 <label>汽车车型：</label>
                                 <select id="editCarModel" class="js-example-tags form-control car_model" name="model.modelId">
                                 </select>
                             </div>
 
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-12 form-group">
                                 <label>汽车车牌：</label>
                                 <select id="editCarPlate" class="js-example-tags form-control car_plate" name="plate.plateId">
                                 </select>
@@ -270,25 +270,25 @@
                                 <input type="text" id="addUserPhone" name="userPhone" class="form-control"/>
                             </div>
 
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-12 form-group">
                                 <label>汽车品牌：</label>
                                 <select id="addCarBrand" class="js-example-tags form-control car_brand" name="brand.brandId">
                                 </select>
                             </div>
 
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-12 form-group">
                                 <label>汽车颜色：</label>
                                 <select id="addCarColor" class="js-example-tags form-control car_color" name="color.colorId">
                                 </select>
                             </div>
 
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-12 form-group">
                                 <label>汽车车型：</label>
                                 <select id="addCarModel" class="js-example-tags form-control car_model" name="model.modelId">
                                 </select>
                             </div>
 
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-12 form-group">
                                 <label>汽车车牌：</label>
                                 <select id="addCarPlate" class="js-example-tags form-control car_plate" name="plate.plateId">
                                 </select>
