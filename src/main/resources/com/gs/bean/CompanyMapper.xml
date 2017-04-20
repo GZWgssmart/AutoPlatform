@@ -52,7 +52,7 @@
 
 	<select id="queryAll" resultMap="companyResultMap">
 		<![CDATA[
-
+			select * from t_company
 		]]>
 	</select>
 
@@ -64,7 +64,7 @@
 
 	<select id="query" parameterType="company" resultType="company">
 		<![CDATA[
-			select * from t_company 
+			select * from t_company
 		]]>
 	</select>
 
