@@ -31,6 +31,10 @@ function carWash(value, row, index) {
 /** 添加数据 */
 function showAddWin() {
     validator("addForm");
+    $('#addCarBrand').html('').trigger("change");
+    $('#addCarColor').html('').trigger("change");
+    $('#addCarModel').html('').trigger("change");
+    $('#addCarPlate').html('').trigger("change");
     $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }

@@ -224,9 +224,7 @@ function formSubmit(url, formId, winId) {
                 $('#' + winId).modal('hide');
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
-                if (formId == "addForm") {
-                    $('#input[type=reset]').data('bootstrapValidator').resetForm(true);
-                }
+                $('#' + formId).data('bootstrapValidator').resetForm(true);
             } else if (data.result == "fail") {
                 swal(data.message, "", "error");
             }
