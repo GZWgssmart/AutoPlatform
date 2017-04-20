@@ -132,7 +132,7 @@
 
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
-                                        data-dismiss="modal">  关闭
+                                        data-dismiss="modal">关闭
                                 </button>
                                 <input type="button" class="btn btn-primary" value="修改" onclick="updateProduct()">
                                 </input>

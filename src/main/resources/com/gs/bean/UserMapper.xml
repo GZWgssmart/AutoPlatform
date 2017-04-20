@@ -5,40 +5,12 @@
 <mapper namespace="com.gs.dao.UserDAO">
 
 	<resultMap id="userResultMap" type="user">
-		<id property="userId" column="userId" />
-		<result property="userEmail" column="userEmail" />
-		<result property="userPhone" column="userPhone" />
-		<result property="userPwd" column="userPwd" />
-		<result property="userNickname" column="userNickname" />
-		<result property="userIdentity" column="userIdentity" />
-		<result property="userName" column="userName" />
-		<result property="userGender" column="userGender" />
-		<result property="userBirthday" column="userBirthday" />
-		<result property="userAddress" column="userAddress" />
-		<result property="qqOpenId" column="qqOpenId" />
-		<result property="weiboOpenId" column="weiboOpenId" />
-		<result property="wechatOpenId" column="wechatOpenId" />
-		<result property="userIcon" column="userIcon" />
-		<result property="userDes" column="userDes" />
-		<result property="companyId" column="companyId" />
-		<result property="userSalary" column="userSalary" />
-		<result property="userCreatedTime" column="userCreatedTime" />
-		<result property="userLoginedTime" column="userLoginedTime" />
-		<result property="userStatus" column="userStatus" />
-
-		<association property="company" javaType="com.gs.bean.Company">
-			<id property="companyId" column="companyId"/>
-			<id property="companyName" column="companyName"/>
-		</association>
 
 	</resultMap>
 
 	<insert id="insert"  parameterType="user">
 		<![CDATA[
-			INSERT INTO t_user
-				(userId, userName, userNickname, userEmail, userPwd, userGender, userAddress, userPhone, userSalary, userIdentity, userCreatedTime, companyId, userStatus)
-			VALUES
-				(uuid(), #{userName}, #{userNickname}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userSalary}, #{userIdentity}, now(), #{companyId}, 'Y')
+			INSERT INTO t_user(userId, userName, userNickname, userEmail, userPwd, userGender, userAddress, userPhone, userIdentity, userCreatedTime) VALUES (uuid(), #{userName}, #{userNickname}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userIdentity}, now())
 		]]>
 	</insert>
 
@@ -69,8 +41,7 @@
 
 	<update id="update" parameterType="user">
 		<![CDATA[
-			UPDATE t_user SET
-				userName = #{userName}, userIcon = #{userIcon}, userEmail = #{userEmail}, userNickname = #{userNickname}, userDes = #{userDes}, userPwd = #{userPwd}, userGender = #{userGender}, userPhone = #{userPhone}, userAddress = #{userAddress}, userStatus = 'Y', companyId = #{companyId}  WHERE userId = #{userId}
+			UPDATE t_user SET userName = #{userName}, userNickname = #{userNickname}, userDes = #{userDes}, userPwd = #{userPwd}, userPhone = #{userPhone}, userAddress = #{userAddress} WHERE userId = #{userId}
 		]]>
 	</update>
 
@@ -82,7 +53,7 @@
 
 	<select id="queryAll" resultMap="userResultMap">
 		<![CDATA[
-			SELECT * FROM t_user
+
 		]]>
 	</select>
 
@@ -105,12 +76,9 @@
 	</select>
 
 	<select id="queryByPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
-
 		<![CDATA[
-			SELECT u.*, c.companyId, c.companyName FROM t_user u,t_company c where 1=1 and c.companyId = u.companyId
-				order by userCreatedTime Desc, u.companyId
-		]]>limit #{beginIndex}, #{pageSize}
-
+			SELECT * FROM t_user limit #{beginIndex}, #{pageSize}
+		]]>
 	</select>
 
 	<select id="count" resultType="int">

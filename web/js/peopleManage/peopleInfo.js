@@ -1,10 +1,9 @@
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/peopleManage/peopleInfo_pager");
+
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
-
-    initSelect2("user_company", "请选择公司", "/company/company_all", "565");
 });
 
 
@@ -27,16 +26,16 @@ function gender(value, row, index) {
     }
 }
 
-function operateFormatter(value, row, index) {
+function operating(value, row, index) {
     if (row.userStatus == 'Y') {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm">冻结</button>',
-            '<button type="button" class="showUpdateInfo btn btn-default  btn-sm">编辑</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" >冻结</button>',
+            '<button onclick="showEditWin();" type="button" class="btn btn-default  btn-sm" >编辑</button>',
+            '<button onclick="showEditWin();" type="button" class="btn btn-default  btn-sm" >详细信息</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm">激活</button>',
-            '<button type="button" class="showUpdateInfo btn btn-default  btn-sm">编辑</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm" >激活</button>'
         ].join('');
     }
 }
@@ -60,178 +59,107 @@ window.operateEvents = {
             function (data) {
                 if (data.result == "success") {
                     $('#addWin').modal('hide');
+                    // swal(data.message, "", "success");
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
                 }
             }, "json");
-    },
-    'click .showUpdateInfo': function (e, value, row, index) {
-        var checkin = row;
-        $("#editForm").fill(checkin);
-        $('#editCarBrand').html('<option value="' + checkin.company.companyId + '">' + checkin.company.companyName + '</option>').trigger("change");
-        validator("editForm");
-        $("#editWin").modal('show');
     }
 }
 
-function statusFormatter(value, row, index) {
-    if (row.userStatus == 'Y') {
-        return [
-            '可用'
-        ].join('');
-    }else if(row.userStatus == 'N'){
-        return [
-            '不可用'
-        ].join('');
-    }
+// function queryByStatusPager(status) {
+//     $('#cusTable').bootstrapTable('refresh', {url: '/peopleManage/peopleInfo_status?status=' + status});
+// }
 
-}
+$(document).ready(function () {
+    //调用函数，初始化表格
+    initTable();
 
+    //当点击查询按钮的时候执行
+    $("#search").bind("click", initTable);
+});
 
-/**编辑数据 */
+/** 编辑数据 */
 function showEditWin() {
-    validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
-        var checkin = selectRow[0];
-        $("#editForm").fill(checkin);
-        $('#editCompany').html('<option value="' + checkin.company.companyId + '">' + checkin.company.companyName + '</option>').trigger("change");
+        var product = selectRow[0];
+        $("#updateForm").fill(product);
         $("#editWin").modal('show');
     }
 }
 
-/**提交添加数据 */
-function showAddWin() {
-    validator("addForm");
-    $('#addCompany').html('').trigger("change");
-    $("input[type=reset]").trigger("click");
-    $("#addWin").modal('show');
+/**提交编辑数据 */
+function updateProduct() {
+    $.post("/peopleManage/peopleInfo_update",
+        $("#updateForm").serialize(),
+        function(data){
+            if(data.result == "success"){
+                $('#editWin').modal('hide');
+                swal(data.message, "", "success");
+                $('#cusTable').bootstrapTable('refresh');
+            }else if(data.result == "fail"){
+                swal(data.message, "", "error");
+            }
+        },"json");
+
 }
 
-/** 表单验证 */
-function validator(formId) {
-    $("#addButton").removeAttr("disabled");
-    $("#editButton").removeAttr("disabled");
-    $('#' + formId).bootstrapValidator({
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            userName: {
-                message: '车主验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '车主姓名不能为空'
-                    },
-                    stringLength: {
-                        min: 2,
-                        max: 4,
-                        message: '车主长度必须在2到4位之间'
-                    }
-                }
-            },
-            userPhone: {
-                validators: {
-                    notEmpty: {
-                        message: '手机号不能为空'
-                    },
-                    stringLength: {
-                        min: 11,
-                        max: 11,
-                        message: '手机号只能是11位'
-                    }
-                }
-            },
-            brandId: {
-                validators: {
-                    notEmpty: {
-                        message: '品牌不能为空'
-                    }
+/**提交添加数据 */
+function addProduct() {
+    $.post("/peopleManage/peopleInfo_insert",
+        $("#addForm").serialize(),
+        function(data){
+            if(data.result == "success"){
+                $('#addWin').modal('hide');
+                swal(data.message, "", "success");
+                $('#cusTable').bootstrapTable('refresh');
+                $("input[type=reset]").trigger("click");
+            }else if(data.result == "fail"){
+                swal(data.message, "", "error");
+            }
+        },"json");
 
-                }
-            },
-            colorId: {
-                validators: {
-                    notEmpty: {
-                        message: '颜色不能为空'
-                    }
+}
 
-                }
-            },
-            modelId: {
-                validators: {
-                    notEmpty: {
-                        message: '车型不能为空'
-                    }
+/**
+ * 批量删除数据
+ */
+function deleteProduct() {
+    var rows = $("#cusTable").bootstrapTable('getSelections');
+    if (rows.length < 1) {
+        swal('删除失败', "请选择一条或多条数据进行删除", "error");
+    } else {
+        var ids = "";
+        for(var i = 0, len = rows.length; i < len; i++){
+            if(ids == ""){
+                ids = rows[i].id;
+            }else{
+                ids += ","+rows[i].id
+            }
+            if(ids != ""){
+                swal({title: "确定要删除所选数据?",
+                        text: "删除后将无法恢复，请谨慎操作！",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "是的，我要删除!",
+                        cancelButtonText: "让我在考虑一下....",
+                        closeOnConfirm: false },
+                    function(){
+                        $.get("/product/deleteById/"+rows[0].ids,
+                            function(data){
+                                swal(data.message, "您已经永久删除了这条信息。", "success");
+                                $('#cusTable').bootstrapTable('refresh');
+                            },"json");
 
-                }
-            },
-            plateId: {
-                validators: {
-                    notEmpty: {
-                        message: '车牌不能为空'
-                    }
-
-                }
-            },
-            carPlate: {
-                validators: {
-                    notEmpty: {
-                        message: '车牌号码不能为空'
-                    },
-                    stringLength: {
-                        min: 5,
-                        max: 5,
-                        message: '车牌号码只能是5位'
-                    },
-                    regexp: {
-                        regexp: /^[a-zA-Z0-9]+$/,
-                        message: '车牌不能是中文'
-                    }
-                }
-            },
-            oilCount: {
-                validators: {
-                    notEmpty: {
-                        message: '汽车油量不能为空'
-                    },
-                    regexp: {
-                        regexp: /^[0-9]+$/,
-                        message: '油量只能是数字'
-                    }
-
-                }
-            },
-            carMileage: {
-                validators: {
-                    notEmpty: {
-                        message: '汽车行驶里程不能为空'
-                    },
-                    regexp: {
-                        regexp: /^[0-9]+$/,
-                        message: '行驶里程只能是数字'
-                    }
-
-                }
+                    });
             }
         }
-    })
 
-        .on('success.form.bv', function (e) {
-            if (formId == "addForm") {
-                formSubmit("/peopleManage/peopleInfo_insert", formId, "addWin");
-
-            } else if (formId == "editForm") {
-                formSubmit("/peopleManage/peopleInfo_update", formId, "editWin");
-            }
-
-
-        })
-
+    }
 }
