@@ -281,21 +281,6 @@ function validator(formId) {
 
 }
 
-function edit() {
-    $("#editForm").data('bootstrapValidator').validate();
-    if ($("#editForm").data('bootstrapValidator').isValid()) {
-        $("#editButton").attr("disabled","disabled");
-    } else {
-        $("#editButton").removeAttr("disabled");
-    }
-}
-function add() {
-    $("#addForm").data('bootstrapValidator').validate();
-    if ($("#addForm").data('bootstrapValidator').isValid()) {
-        $("#addButton").attr("disabled","disabled");
-    } else {
-        $("#addButton").removeAttr("disabled");
-    }
-}
+
 
 

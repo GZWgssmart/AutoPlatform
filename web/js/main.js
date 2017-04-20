@@ -1,9 +1,9 @@
 
-function initSelect2(clazz, title, url) {
+function initSelect2(clazz, title, url, width) {
     $("." + clazz).select2({
         // enable tagging
         tags: true,
-        width: '570px',
+        width: width + 'px',
         language: 'zh-CN',
         minimumResultsForSearch: -1,
         placeholder: title,
@@ -231,6 +231,23 @@ function formSubmit(url, formId, winId) {
                 swal(data.message, "", "error");
             }
         }, "json");
+}
+
+function edit() {
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+        $("#editButton").attr("disabled","disabled");
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+function add() {
+    $("#addForm").data('bootstrapValidator').validate();
+    if ($("#addForm").data('bootstrapValidator').isValid()) {
+        $("#addButton").attr("disabled","disabled");
+    } else {
+        $("#addButton").removeAttr("disabled");
+    }
 }
 
 

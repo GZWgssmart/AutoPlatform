@@ -353,7 +353,7 @@
                                 </button>
                                 <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="添加">
                                 </input>
-                                <input id="addButton" type="reset" name="reset" style="display: none;"/>
+                                <input type="reset" name="reset" style="display: none;"/>
                             </div>
                         </form>
                     </div>
