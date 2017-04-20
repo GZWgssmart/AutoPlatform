@@ -3,6 +3,8 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesType;
+import com.gs.bean.CarBrand;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +86,21 @@ public class AccessoriesController {
             accessoriesService.inactive(id);
         }
         return ControllerResult.getSuccessResult("更新成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "accessories_All", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryaccessoriesAll() {
+        logger.info("查询配件");
+        List<Accessories> accessoriess = accessoriesService.queryAll();
+        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+        for (Accessories accessories : accessoriess) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(accessories.getAccId());
+            comboBox4EasyUI.setText(accessories.getAccName());
+            comboBox4EasyUIs.add(comboBox4EasyUI);
+        }
+        return comboBox4EasyUIs;
     }
 
     @InitBinder
