@@ -12,11 +12,9 @@ var moduleObj2;
 function showAduqPermission() {
     $("#allotPermission").hide();
     initTable("cusTable", contextPath + "/permission/query_pager");
-
     initSelect2("module_all", "选择模块查询", contextPath + "/module/query_all", "150");
+    initSelect2("module_alll", "选择所属模块", contextPath + "/module/query_all", "540");
     $("#aduqPermission").show();
-    var aa = $("#moduleSelect").id();
-    alert(aa);
 }
 
 function showAllotPermission() {
@@ -70,6 +68,7 @@ function drawPermission(data) {
             yStr += '<span onclick="delById(' + str + ',this);" class="label label-success">' + data[index].permissionName + '&nbsp;&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></span>';
             count1++;
         } else if (data[index].status == 0) {
+            alert(count2 + ":" + data[index].permissionId);
             ypAll[count2] = data[index].permissionId;
             nStr += '<span onclick="addById(' + str + ',this);" class="label label-warning">' + data[index].permissionName + '&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle"></i></span>';
             count2++;
@@ -91,6 +90,8 @@ function addById(permissionId, obj) {
         }, "json");
     selectRole(roleObj2, roleId2);
     selectModule(moduleObj2, moduleId2);
+    npAll = new Array();
+    ypAll = new Array();
 }
 
 function delById(permissionId, obj) {
@@ -100,15 +101,45 @@ function delById(permissionId, obj) {
         }, "json");
     selectRole(roleObj2, roleId2);
     selectModule(moduleObj2, moduleId2);
+    npAll = new Array();
+    ypAll = new Array();
 }
 
-/*function commonAdd(permissionIds) {
+function addAll() {
+    if (ypAll.length > 0) {
+        $.get(contextPath + "/permission/addByRole_permission?permissionIds=" + ypAll + "&roleId=" + roleId2,
+            function (data) {
+            }, "json");
+        selectRole(roleObj2, roleId2);
+        selectModule(moduleObj2, moduleId2);
+        npAll = new Array();
+        ypAll = new Array();
+    }
+}
 
- }
+function delAll() {
+    if (npAll.length > 0) {
+        $.get(contextPath + "/permission/delByRole_permission?permissionIds=" + npAll + "&roleId=" + roleId2,
+            function (data) {
+            }, "json");
+        selectRole(roleObj2, roleId2);
+        selectModule(moduleObj2, moduleId2);
+        npAll = new Array();
+        ypAll = new Array();
+    }
+}
 
- function commonDel(permissionIds) {
+function queryAll() {
+    initTable("cusTable", contextPath + "/permission/query_pager");
+}
 
- }*/
+function moduleSelect(combox) {
+    initTable("cusTable", contextPath + "/permission/module_pager?moduleId=" + combox.value);
+}
+
+function queryByStatus(status) {
+    initTable("cusTable", contextPath + "/permission/status_pager?status=" + status);
+}
 
 function operateFormatter(value, row, index) {
     if (row.permissionStatus == 'Y') {
@@ -122,22 +153,42 @@ function operateFormatter(value, row, index) {
     }
 }
 
-function addAll() {
-    $.get(contextPath + "/permission/addByRole_permission?permissionIds=" + ypAll + "&roleId=" + roleId2,
-        function (data) {
-        }, "json");
-    selectRole(roleObj2, roleId2);
-    selectModule(moduleObj2, moduleId2);
+window.operateEvents = {
+    'click .updateActive': function (e, value, row, index) {
+        var status = 'N';
+        $.get(contextPath + "/permission/update_status?id=" + row.permissionId + "&status=" + status,
+            function (data) {
+                if (data.result == "success") {
+                    $('#addWin').modal('hide');
+                    // swal(data.message, "", "success");
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            }, "json");
+    },
+    'click .updateInactive': function (e, value, row, index) {
+        var status = 'Y';
+        $.get(contextPath + "/permission/update_status?id=" + row.permissionId + "&status=" + status,
+            function (data) {
+                if (data.result == "success") {
+                    $('#addWin').modal('hide');
+                    // swal(data.message, "", "success");
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            }, "json");
+    }
 }
 
-function delAll() {
-    $.get(contextPath + "/permission/delByRole_permission?permissionIds=" + npAll + "&roleId=" + roleId2,
-        function (data) {
-        }, "json");
-    selectRole(roleObj2, roleId2);
-    selectModule(moduleObj2, moduleId2);
+function showAddWin() {
+    /*validator("addForm");*/
+    $('#moduleSelect2').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
+    $("#addWin").modal('show');
 }
 
-function selectModule(combox) {
-    initTable("cusTable", contextPath + "/permission/module_pager?moduleId=" + combox.value);
+function showEditWin() {
+    $("#editWin").modal('show');
 }

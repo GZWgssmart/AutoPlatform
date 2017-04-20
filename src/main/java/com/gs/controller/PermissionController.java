@@ -78,6 +78,30 @@ public class PermissionController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "status_pager", method = RequestMethod.GET)
+    public Pager4EasyUI<Permission> queryByStatusPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("moduleId") String status) {
+        logger.info("根据状态来分页查询权限");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(permissionService.countStatus(status));
+        List<Permission> permissions = permissionService.queryByStatusPager(status, pager);
+        return new Pager4EasyUI<Permission>(pager.getTotalRecords(), permissions);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update_status", method = RequestMethod.GET)
+    public ControllerResult updateStatus(@Param("id") String id, @Param("status") String status) {
+        logger.info("更新权限状态");
+        if (status.equals("Y")) {
+            permissionService.active(id);
+        } else if (status.equals("N")) {
+            permissionService.inactive(id);
+        }
+        return ControllerResult.getSuccessResult("更新成功");
+    }
+
+    @ResponseBody
     @RequestMapping(value = "roleIdOrModuleId_permission", method = RequestMethod.GET)
     public List<PermissionInfo> queryByRoleIdOrModuleId(@Param("roleId") String roleId, @Param("moduleId") String moduleId) {
         logger.info("根据角色和模块查询拥有的权限");
@@ -106,6 +130,9 @@ public class PermissionController {
     @ResponseBody
     @RequestMapping(value = "addByRole_permission", method = RequestMethod.GET)
     public ControllerResult addPermission(@Param("permissionIds") String[] permissionIds, @Param("roleId") String roleId) {
+        for (String s : permissionIds) {
+            System.out.println(s);
+        }
         if (permissionIds.length == 1) {
             logger.info("添加单个权限");
         } else if (permissionIds.length > 1) {

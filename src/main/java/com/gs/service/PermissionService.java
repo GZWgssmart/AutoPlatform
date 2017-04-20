@@ -16,5 +16,9 @@ public interface PermissionService extends BaseService<String, Permission> {
 
     public List<Permission> queryByModulePager(String moduleId, Pager pager);
 
+    public List<Permission> queryByStatusPager(String status, Pager pager);
+
     public int countModule(String moduleId);
+
+    public int countStatus(String status);
 }

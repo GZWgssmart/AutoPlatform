@@ -19,5 +19,9 @@ public interface PermissionDAO extends BaseDAO<String, Permission> {
 
     public List<Permission> queryByModulePager(@Param("moduleId")String moduleId, @Param("pager")Pager pager);
 
+    public List<Permission> queryByStatusPager(@Param("status")String status, @Param("pager")Pager pager);
+
     public int countModule(String moduleId);
+
+    public int countStatus(String status);
 }

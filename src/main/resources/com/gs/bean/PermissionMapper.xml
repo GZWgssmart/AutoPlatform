@@ -85,6 +85,13 @@
         ]]>
 	</select>
 
+	<select id="queryByStatusPager" resultMap="permissionResultMap">
+		<![CDATA[
+			select * from t_permission where permissionStatus = #{status}
+        ]]>
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
     <select id="query" parameterType="permission" resultType="permission">
 		<![CDATA[
 
@@ -114,6 +121,13 @@
         ]]>
 	</select>
 
+	<select id="countStatus" parameterType="String" resultType="int">
+		<![CDATA[
+			select count(*) from t_permission where permissionStatus = #{status}
+        ]]>
+
+	</select>
+
 	<select id="countModule" parameterType="String" resultType="int">
 		<![CDATA[
 			select count(*) from t_permission where moduleId = #{moduleId}
@@ -122,13 +136,13 @@
 
     <update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_permission set permissionStatus = 'N' where permissionId = #{id}
         ]]>
 	</update>
 
     <update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_permission set permissionStatus = 'Y' where permissionId = #{id}
         ]]>
 	</update>
 

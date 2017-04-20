@@ -42,7 +42,13 @@ public class PermissionServiceImpl implements PermissionService {
 	public List<Permission> queryByModulePager(String moduleId, Pager pager) {
 		return permissionDAO.queryByModulePager(moduleId, pager);
 	}
-    public int countModule(String moduleId) {
+	public List<Permission> queryByStatusPager(String status, Pager pager) {
+		return permissionDAO.queryByStatusPager(status, pager);
+	}
+	public int countModule(String moduleId) {
         return permissionDAO.countModule(moduleId);
     }
+	public int countStatus(String status) {
+		return permissionDAO.countStatus(status);
+	}
 }

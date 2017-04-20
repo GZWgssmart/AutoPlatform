@@ -17,7 +17,6 @@
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/style.min862f.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/font-awesome.min93e3.css" rel="stylesheet">
 
     <style>
@@ -40,22 +39,20 @@
     </style>
 </head>
 <body class="gray-bg">
-
 <div class="wrapper wrapper-content">
-    <div class="ibox-title">
-        <button onclick="showAduqPermission();" type="button" class="btn btn-primary" data-toggle="button">
-            管理权限
-        </button>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <button onclick="showAllotPermission();" type="button" class="btn btn-primary" data-toggle="button">
-            分配权限
-        </button>
+    <div class="wrapper wrapper-content">
+        <div class="ibox-title">
+            <button onclick="showAduqPermission();" type="button" class="btn btn-primary" data-toggle="button">
+                管理权限
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button onclick="showAllotPermission();" type="button" class="btn btn-primary" data-toggle="button">
+                分配权限
+            </button>
+        </div>
     </div>
-</div>
 
-<div class="wrapper wrapper-content" id="aduqPermission" style="display: none">
-    <div class="ibox-title">
-        <h2>管理权限</h2>
+    <div class="wrapper wrapper-content" id="aduqPermission" style="display: none">
         <div class="container">
             <table class="table table-hover" id="cusTable"
                    data-pagination="true"
@@ -81,20 +78,20 @@
                     <th data-field="permissionStatus" data-formatter="status">
                         状态
                     </th>
-                    <th data-field="permissionStatus" data-formatter="operateFormatter" data-events="operateEvents">
+                    <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                         操作
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 <div id="toolbar" class="btn-group">
-                    <a href="#addWin" data-toggle="modal">
-                        <button type="button" id="add" class="btn btn-default">
+                    <a>
+                        <button onclick="showAddWin()" type="button" id="add" class="btn btn-default">
                             <i class="glyphicon glyphicon-plus"></i> 添加
                         </button>
                     </a>
                     <a>
-                        <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                        <button onclick="showEditWin()" type="button" id="edit" class="btn btn-default">
                             <i class="glyphicon glyphicon-pencil"></i>
                             修改
                         </button>
@@ -106,30 +103,112 @@
                         </button>
                     </a>
                     <a>
-                        <button onclick="queryStatus('Y')" type="button" class="btn btn-default">
+                        <button onclick="queryByStatus('Y')" type="button" class="btn btn-default">
                             <i class="glyphicon glyphicon-search"></i>
                             查可用
                         </button>
                     </a>
                     <a>
-                        <button onclick="queryStatus('N')" type="button" class="btn btn-default">
+                        <button onclick="queryByStatus('N')" type="button" class="btn btn-default">
                             <i class="glyphicon glyphicon-search"></i>
                             查不可用
                         </button>
                     </a>
-                    <select id="moduleSelect" onchange="selectModule(this);" class="js-example-tags form-control module_all" name="brandId">
+                    <select id="moduleSelect" onchange="moduleSelect(this);"
+                            class="js-example-tags form-control module_all"
+                            name="moduleId">
                     </select>
                 </div>
                 </tbody>
 
             </table>
         </div>
-    </div>
-</div>
 
-<div class="wrapper wrapper-content" id="allotPermission" style="display: none">
-    <div class="ibox-title">
-        <h2>分配权限</h2>
+        <div id="editWin" class="modal fade" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12 b-r">
+                                <h3 class="m-t-none m-b">修改模块信息</h3>
+                                <form role="form" id="editForm">
+                                    <input type="hidden" attr="module.moduleId" name="moduleId"/>
+                                    <div class="form-group">
+                                        <label>模块名称：</label>
+                                        <input type="text" attr="module.moduleName" name="moduleName"
+                                               class="form-control"/>
+
+                                        <label>模块描述：</label>
+                                        <textarea attr="module.moduleDes" type="textarea" name="moduleDes"
+                                                  class="form-control"></textarea>
+                                    </div>
+
+                                    <div class="modal-footer" style="overflow:hidden;">
+                                        <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">关闭
+                                        </button>
+                                        <input type="button" onclick="edit()" id="editButton" class="btn btn-primary"
+                                               value="修改">
+                                        </input>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="addWin" class="modal fade" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12 b-r">
+                                <h3 class="m-t-none m-b">添加权限</h3>
+                                <form role="form" id="addForm">
+                                    <div class="form-group">
+                                        <label>所属模块：</label>
+                                        <select id="moduleSelect2" class="js-example-tags form-control module_alll"
+                                                name="moduleId">
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>权限名称：</label>
+                                        <input type="text" name="permissionName" class="form-control"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>权限中文名称：</label>
+                                        <input type="text" name="permissionZHName" class="form-control"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>权限描述：</label>
+                                        <textarea name="permissionDes" class="form-control"></textarea>
+                                    </div>
+
+                                    <div class="modal-footer" style="overflow:hidden;">
+                                        <button type="button" class="btn btn-default"
+                                                data-dismiss="modal">关闭
+                                        </button>
+                                        <input type="button" class="btn btn-primary" onclick="addModule()" value="添加">
+                                        </input>
+                                        <input type="reset" name="reset" style="display: none;"/>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content" id="allotPermission" style="display: none">
         <div class="input-group">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">角色类型
@@ -160,30 +239,30 @@
             </div>
             <input id="moduleType" type="text" disabled="disabled" placeholder="请选择一个模块" class="form-control">
         </div>
-    </div>
 
-    <div class="ibox-content" id="permissionDes" style="display: none">
+        <div class="ibox-content" id="permissionDes" style="display: none">
 
-        <div class="ibox-title">
-            <h4>已有的权限</h4>
-        </div>
-        <div id="permissionY" class="ibox-content" style="height: 170px; OVERFLOW-Y: auto; OVERFLOW-X:hidden;"
-             title="已有的权限">
-        </div>
+            <div class="ibox-title">
+                <h4>已有的权限</h4>
+            </div>
+            <div id="permissionY" class="ibox-content" style="height: 170px; OVERFLOW-Y: auto; OVERFLOW-X:hidden;"
+                 title="已有的权限">
+            </div>
 
-        <div class="ibox-title">
-            <h4>未有的权限</h4>
-        </div>
-        <div id="permissionN" class="ibox-content" style="height: 170px; OVERFLOW-Y: auto; OVERFLOW-X:hidden;"
-             title="未有的权限">
-        </div>
-        <div id="btnDiv" style="display: none;">
-            <button onclick="addAll();" type="button" class="btn btn-primary" data-toggle="button">
-                添加所有
-            </button>
-            <button onclick="delAll();" type="button" class="btn btn-primary" data-toggle="button">
-                删除所有
-            </button>
+            <div class="ibox-title">
+                <h4>未有的权限</h4>
+            </div>
+            <div id="permissionN" class="ibox-content" style="height: 170px; OVERFLOW-Y: auto; OVERFLOW-X:hidden;"
+                 title="未有的权限">
+            </div>
+            <div id="btnDiv" style="display: none;">
+                <button onclick="addAll();" type="button" class="btn btn-primary" data-toggle="button">
+                    添加所有
+                </button>
+                <button onclick="delAll();" type="button" class="btn btn-primary" data-toggle="button">
+                    删除所有
+                </button>
+            </div>
         </div>
     </div>
 </div>
