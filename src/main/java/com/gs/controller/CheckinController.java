@@ -69,7 +69,6 @@ public class CheckinController {
         Company company = new Company();
         company.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
         checkin.setCompany(company);
-        checkin.setCheckinStatus("Y");
         checkinService.insert(checkin);
         return ControllerResult.getSuccessResult("添加成功");
     }
@@ -81,7 +80,6 @@ public class CheckinController {
         Company company = new Company();
         company.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
         checkin.setCompany(company);
-        checkin.setCheckinStatus("Y");
         checkinService.update(checkin);
         return ControllerResult.getSuccessResult("修改成功");
     }

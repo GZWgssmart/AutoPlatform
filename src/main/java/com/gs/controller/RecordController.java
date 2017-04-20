@@ -21,24 +21,24 @@ import java.util.List;
  * Created by JangoGuo on 2017/4/18.
  */
 @Controller
-@RequestMapping("/record")
+@RequestMapping("record")
 public class RecordController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(IncomingTypeController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(RecordController.class);
 
 
     @Resource
     private MaintainRecordService maintainRecordService;
 
 
-    @RequestMapping(value = "show_record", method = RequestMethod.GET)
-    public String incomingType() {
+    @RequestMapping(value = "record_page", method = RequestMethod.GET)
+    public String recordPage() {
         logger.info("显示维修保养记录管理页面");
-        return "maintenanceRecetion/maintenance_record";
+        return "maintenanceReception/mainterance_record";
     }
 
     @ResponseBody
-    @RequestMapping(value="query_pager",method= RequestMethod.GET)
+    @RequestMapping(value="pager",method= RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         logger.info("分页查询所有维修保养记录管理");
         Pager pager = new Pager();
@@ -47,14 +47,6 @@ public class RecordController {
         pager.setTotalRecords(maintainRecordService.count());
         List<MaintainRecord> maintainRecordList = maintainRecordService.queryByPager(pager);
         return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
-    }
-
-    @ResponseBody
-    @RequestMapping(value="add_complaint", method=RequestMethod.POST)
-    public ControllerResult ConplaintAdd(MaintainRecord maintainRecord){
-        logger.info("添加回复");
-        maintainRecordService.insert(maintainRecord);
-        return ControllerResult.getSuccessResult("添加成功");
     }
 
     @ResponseBody

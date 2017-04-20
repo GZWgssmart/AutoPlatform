@@ -30,12 +30,14 @@ function carWash(value, row, index) {
 
 /** 添加数据 */
 function showAddWin() {
+    $("#addButton").removeAttr("disabled");
     $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }
 
 /**提交添加数据 */
 function addCheckin() {
+
     var appFlag = $("#app").val();
     $.ajax({
         cache: true,
@@ -44,6 +46,7 @@ function addCheckin() {
         data:$('#addForm').serialize(),// 你的formid
         async: false,
         error: function(request) {
+            $("#addButton").removeAttr("disabled");
             swal("请求错误", "", "error");
         },
         success: function(data) {
@@ -52,6 +55,7 @@ function addCheckin() {
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
             }else if(data.result == "fail"){
+                $("#addButton").removeAttr("disabled");
                 swal(data.message, "", "error");
             }
         }
@@ -114,6 +118,7 @@ function checkApp() {
 
 /** 编辑数据 */
 function showEditWin() {
+    $("#editButton").removeAttr("disabled");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
@@ -140,6 +145,7 @@ function editCheckin() {
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
             }else if(data.result == "fail"){
+                $("#editButton").removeAttr("disabled");
                 swal(data.message, "", "error");
             }
         },"json");

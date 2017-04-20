@@ -233,7 +233,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="editCheckin()" value="修改">
+                                <input type="submit" id="editButton" class="btn btn-primary" value="修改">
                                 </input>
                             </div>
                         </form>
@@ -350,9 +350,9 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="addCheckin()" value="添加">
+                                <input type="submit" class="btn btn-primary" value="添加">
                                 </input>
-                                <input type="reset" name="reset" style="display: none;"/>
+                                <input id="addButton" type="reset" name="reset" style="display: none;"/>
                             </div>
                         </form>
                     </div>

@@ -44,7 +44,7 @@
                 开始时间
             </th>
             <th data-field="endTime" data-formatter="formatterDate">
-                估结束时间
+                预估结束时间
             </th>
             <th data-field="actualEndTime" data-formatter="formatterDate">
                 实际结束时间
@@ -68,9 +68,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
+
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
@@ -97,4 +95,4 @@
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/maintenanceReception/record.js"></script>
 </body>
-</html
+</html>

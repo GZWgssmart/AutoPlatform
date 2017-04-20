@@ -1,41 +1,17 @@
 
-
-
 var contextPath = '';
 
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable", "/record/query_pager");
+    initTable("cusTable", "/record/pager");
 
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 });
 
-
-
-$('#complaintCreatedTime').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii',
-    initialDate: new Date(),
-    autoclose: true,
-    todayHighlight: true,
-    todayBtn: true//显示今日按钮
-});
-$('#complaintReplyTime').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii',
-    initialDate: new Date(),
-    autoclose: true,
-    todayHighlight: true,
-    todayBtn: true//显示今日按钮
-});
-
-
-
 /** 添加数据 */
 function showAddWin() {
     $("#addWin").modal('show');
-
 }
 
 /** 编辑数据 */

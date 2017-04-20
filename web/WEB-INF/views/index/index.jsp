@@ -163,7 +163,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path %>/checkin/checkin_page">接待登记管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path%>/record/show_record">维修保养记录管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/record/record_page">维修保养记录管理</a>
                         </li>
                     </ul>
                 </li>

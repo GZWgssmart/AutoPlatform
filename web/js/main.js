@@ -113,10 +113,7 @@ function initTableNotTollbar(tableId, url) {
 }
 
 /**
- * Created by Administrator on 2017-04-17.
- */
-/**
- * 时间格式化，传递进来的时间
+ * 时间格式化，传递进来的时间,返回yyyy-MM-dd HH:mm
  * @param value
  * @returns
  */
@@ -150,6 +147,11 @@ function formatterDate(value) {
         return year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds;
     }
 }
+/**
+ * 时间格式化，传递进来的时间,返回yyyy-MM-dd
+ * @param value
+ * @returns
+ */
 function formatterDate1(value) {
     if (value == undefined || value == null || value == '') {
         return "";
@@ -212,3 +214,11 @@ function resizeTableTh() {
         }
     });
 }
+
+$("#addForm").submit(function(){
+    $(":submit",this).attr("disabled","disabled");// 当添加表单提交时, 按钮不可点击
+});
+
+$("#editForm").submit(function(){
+    $(":submit",this).attr("disabled","disabled");// 当修改表单提交时, 按钮不可点击
+});
