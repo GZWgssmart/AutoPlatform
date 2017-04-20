@@ -36,21 +36,21 @@
             <th data-field="companyId" >
                 公司
             </th>
-            <th data-field="supplyTypeStatus" >
+            <th data-field="supplyTypeStatus" data-formatter="status" >
                 状态
+            </th>
+            <th data-field="operation" data-formatter="operateFormatter" data-events="operateEvents">
+                操作
             </th>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a href="#addWin" data-toggle="modal"><button type="button" id="add" class="btn btn-default" >
+            <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
-            <a><button type="button" onclick="deleteSupplyType();" id="delete" class="btn btn-default">
-                <i class="glyphicon glyphicon-trash"></i> 删除
             </button></a>
         </div>
         </tbody>
@@ -67,7 +67,7 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改供应商分类</h3>
-                        <form role="form" id="updateForm" >
+                        <form role="form" id="editForm" >
                             <input type="hidden" attr="supplyType.supplyTypeId" name="supplyTypeId" id = "supplyTypeId"/>
                             <div class="form-group">
                                 <label>供应商分类名称：</label>
@@ -79,10 +79,12 @@
                                        class="form-control"/>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
+                                <span id="error1" style="color: red;"></span>
+                                <br/>
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="updateSupplyType()">
+                                <input type="submit" id="addButton1" class="btn btn-primary" value="修改">
                                 </input>
                             </div>
                         </form>
@@ -114,12 +116,11 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                     关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="addSupplyType()" value="添加">
+                                <input type="submit" class="btn btn-primary" id="addButton"  value="添加">
                                 </input>
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -134,47 +135,9 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
-<script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/supply/supply_type.js"></script>
+<script src="<%=path %>/js/main.js"></script>
 <script type="text/javascript">
-
-    /**
-     * 批量删除数据
-     */
-    function deleteSupplyType() {
-        var rows = $("#cusTable").bootstrapTable('getSelections');
-        if (rows.length < 1) {
-            swal('删除失败', "请选择一条或多条数据进行删除", "error");
-        } else {
-            var ids = "";
-            for(var i = 0, len = rows.length; i < len; i++){
-                if(ids == ""){
-                    ids = rows[i].id;
-                }else{
-                    ids += ","+rows[i].id
-                }
-                if(ids != ""){
-                    swal({title: "确定要删除所选数据?",
-                                text: "删除后将无法恢复，请谨慎操作！",
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "#DD6B55",
-                                confirmButtonText: "是的，我要删除!",
-                                cancelButtonText: "让我在考虑一下....",
-                                closeOnConfirm: false },
-                            function(){
-                                $.get("/supplyType/deleteById/"+rows[0].ids,
-                                        function(data){
-                                            swal(data.message, "您已经永久删除了这条信息。", "success");
-                                            $('#cusTable').bootstrapTable('refresh');
-                                        },"json");
-
-                            });
-                }
-            }
-
-        }
-    }
 
 </script>
 </body>

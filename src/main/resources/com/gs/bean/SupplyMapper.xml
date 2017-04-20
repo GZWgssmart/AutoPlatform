@@ -89,13 +89,13 @@
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+		update t_supply set supplyStatus = 'N' where supplyId = #{supplyId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+		update t_supply set supplyStatus = 'Y' where supplyId = #{supplyId}
 		]]>
 	</update>
 

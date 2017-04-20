@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -66,5 +67,16 @@ public class SupplyController {
             return ControllerResult.getSuccessResult("修改成功");
         }
 
+        @ResponseBody
+        @RequestMapping(value = "updateStatus", method = RequestMethod.GET)
+        public ControllerResult updateStatus(@Param("id")String id, @Param("status")String status) {
+            logger.info("更新供应商状态");
+            if (status.equals("Y")) {
+                supplyService.active(id);
+            }else if (status.equals("N")) {
+                supplyService.inactive(id);
+            }
+            return ControllerResult.getSuccessResult("更新成功");
+        }
 
 }
