@@ -10,7 +10,7 @@
 
 	<insert id="insert" parameterType="accessories">
 		<![CDATA[
-			insert into t_accessories(accId, accName, accCommodityCode, accDes, accPrice, accSalePrice, accUnit, accTotal, accIdle, accUsedTime, accBuyedTime, supplyId, accCreatedTime, accTypeId, companyId, accStatus) value (uuid(), #{accName}, #{accCommodityCode}, #{accDes}, #{accPrice}, #{accSalePrice}, #{accUnit}, #{accTotal}, #{accIdle}, #{accUsedTime}, #{accBuyedTime}, #{supplyId}, now(), #{accTypeId}, #{companyId}, #{accStatus})
+			insert into t_accessories(accId, accName, accCommodityCode, accDes, accPrice, accSalePrice, accUnit, accTotal, accIdle, accUsedTime, accBuyedTime, supplyId, accCreatedTime, accTypeId, companyId, accStatus) value (#{accId}, #{accName}, #{accCommodityCode}, #{accDes}, #{accPrice}, #{accSalePrice}, #{accUnit}, #{accTotal}, #{accIdle}, #{accUsedTime}, #{accBuyedTime}, #{supplyId}, now(), #{accTypeId}, #{companyId}, #{accStatus})
         ]]>
 	</insert>
 

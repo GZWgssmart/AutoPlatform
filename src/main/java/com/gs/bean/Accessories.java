@@ -14,8 +14,8 @@ public class Accessories {
     private String accName;
     private String accCommodityCode;
     private String accDes;
-    private String accPrice;
-    private String accSalePrice;
+    private double accPrice;
+    private double accSalePrice;
     private String accUnit;
     private int accTotal;
     private int accIdle;
@@ -69,19 +69,19 @@ public class Accessories {
         this.accDes = accDes;
     }
 
-    public String getAccPrice() {
+    public double getAccPrice() {
         return this.accPrice;
     }
 
-    public void setAccPrice(String accPrice) {
+    public void setAccPrice(double accPrice) {
         this.accPrice = accPrice;
     }
 
-    public String getAccSalePrice() {
+    public double getAccSalePrice() {
         return this.accSalePrice;
     }
 
-    public void setAccSalePrice(String accSalePrice) {
+    public void setAccSalePrice(double accSalePrice) {
         this.accSalePrice = accSalePrice;
     }
 

@@ -8,6 +8,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.AccessoriesService;
 import com.gs.service.AccessoriesTypeService;
 import org.apache.ibatis.annotations.Param;
@@ -62,6 +63,7 @@ public class AccessoriesController {
     public ControllerResult addAcc(Accessories accessories) {
         logger.info("添加");
         System.out.println(accessories);
+        accessories.setAccId(UUIDUtil.uuid());
         accessories.setAccStatus("Y");
         accessoriesService.insert(accessories);
         return ControllerResult.getSuccessResult("添加成功");
