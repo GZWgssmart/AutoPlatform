@@ -100,7 +100,7 @@
 
 	<select id="queryById" parameterType="string" resultType="user">
 		<![CDATA[
-
+			  SELECT * FROM t_user WHERE userId = #{userId}
 		]]>
 	</select>
 
