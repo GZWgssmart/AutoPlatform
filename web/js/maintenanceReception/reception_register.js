@@ -11,7 +11,7 @@ $(document).ready(function () {
     initSelect2("car_color", "请选择颜色", "/carColor/car_color_all", "540");
     initSelect2("car_model", "请选择车型", "/carModel/car_model_all", "540");
     initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "540");
-    initDateTimePicker("datetimepicker");
+    initDateTimePicker("datetimepicker", "arriveTime");
 
 
 });
@@ -39,8 +39,6 @@ function showAddWin() {
 /** 给datetimepicker添加默认值 */
 function getDate() {
     if ($("#app").val() == "N") {
-        $("#addButton").removeAttr("disabled");
-        $("#error").html('');
         $("#addDatetimepicker").val(new Date());
     }
 }
@@ -267,18 +265,21 @@ function validator(formId) {
                     }
 
                 }
+            },
+            arriveTime: {
+                validators: {
+                    notEmpty: {
+                        message: '到店时间不能为空'
+                    }
+
+                }
             }
         }
     })
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                var arriveTime = $("#addDatetimepicker").val();
-                if (arriveTime != undefined && arriveTime != null && arriveTime != "") {
-                    formSubmit("/checkin/add", formId, "addWin");
-                } else {
-                    $("#error").html('到店时间不能为空');
-                }
+                formSubmit("/checkin/add", formId, "addWin");
 
 
             } else if (formId == "editForm") {

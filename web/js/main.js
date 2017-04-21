@@ -28,7 +28,7 @@ function initSelect2(clazz, title, url, width) {
     });
 }
 
-function initDateTimePicker(clazz) {
+function initDateTimePicker(clazz, name) {
     $('.' + clazz).datetimepicker({
         language: 'zh-CN',
         format: 'yyyy-mm-dd hh:ii',
@@ -36,7 +36,11 @@ function initDateTimePicker(clazz) {
         autoclose: true,
         todayHighlight: true,
         todayBtn: true//显示今日按钮
-    });
+    }).on('hide',function(e) {
+        $('#addForm').data('bootstrapValidator')
+            .updateStatus(name, 'NOT_VALIDATED',null)
+            .validateField(name);
+    });;
 }
 
 var contextPath = '';

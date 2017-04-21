@@ -5,6 +5,8 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/record/pager");
 
+    initDateTimePicker("datetimepicker", "");
+
 });
 
 function operateFormatter(value, row, index) {
@@ -92,6 +94,7 @@ function validator(formId) {
     })
 
         .on('success.form.bv', function (e) {
+
             formSubmit("/record/edit", formId, "editWin");
 
 
