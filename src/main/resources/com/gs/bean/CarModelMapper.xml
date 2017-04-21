@@ -78,7 +78,7 @@
 		]]>
 	</select>
 
-	<select id="queryByBrandId" parameterType="string" resultType="list">
+	<select id="queryByBrandId" parameterType="string" resultMap="carModelResultMap">
 		<![CDATA[
 			select * from t_car_model where brandId = #{brandId}
 		]]>

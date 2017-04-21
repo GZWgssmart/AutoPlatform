@@ -78,13 +78,13 @@
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_car_color set colorStatus = "N" where colorId = #{colorId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_car_color set colorStatus = "Y" where colorId = #{colorId}
 		]]>
 	</update>
 
