@@ -5,7 +5,15 @@
 <mapper namespace="com.gs.dao.CarModelDAO">
 
 	<resultMap id="carModelResultMap" type="carModel">
-
+		<id property="modelId" column="modelId"></id>
+		<result property="modelName" column="modelName"></result>
+		<result property="brandId" column="brandId"></result>
+		<result property="modelDes" column="modelDes"></result>
+		<result property="modelStatus" column="modelStatus"></result>
+		<association property="brand" javaType="com.gs.bean.CarBrand">
+			<id property="brandId" column="brandId"/>
+			<id property="brandName" column="brandName"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="carModel">
@@ -72,7 +80,7 @@
 
 	<select id="queryByPager" resultType="list" resultMap="carModelResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select brand.brandName,brand.brandId,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId limit #{beginIndex}, #{pageSize}
+			select brand.brandName,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
@@ -84,13 +92,13 @@
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_car_model set modelStatus = "N" where modelId = #{modelId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_car_model set modelStatus = "Y" where modelId = #{modelId}
 		]]>
 	</update>
 

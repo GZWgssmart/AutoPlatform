@@ -69,9 +69,20 @@ public class CarModelController {
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(carModelService.count());
         List<CarModel> carModelList = carModelService.queryByPager(pager);
-        for(CarModel model :carModelList){
-            System.out.println(model.getBrand().getBrandName());
+        return new Pager4EasyUI<CarModel>(pager.getTotalRecords(),carModelList);
+    }
+
+    @ResponseBody
+    @RequestMapping(value="modelStatusModify",method = RequestMethod.GET)
+    public ControllerResult modelStatusModify(@Param("id") String id,@Param("status") String status){
+        if(status.equals("Y")){
+            logger.info("冻结成功");
+            carModelService.inactive(id);
+            return ControllerResult.getSuccessResult("冻结成功");
+        }else if(status.equals("N")){
+            carModelService.active(id);
+            return ControllerResult.getSuccessResult("激活成功");
         }
-        return new Pager4EasyUI<CarModel>(pager.getTotalRecords(), carModelList);
+        return ControllerResult.getFailResult("修改失败");
     }
 }

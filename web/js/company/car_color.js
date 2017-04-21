@@ -88,3 +88,33 @@ function StatusIncomeing() {
 
     }
 }
+
+/**
+ * 十六进制颜色转换为RGB颜色
+ * @param color 要转换的十六进制颜色
+ * @return RGB颜色
+ */
+function colorHexToRGB(color){
+    color=color.toUpperCase();
+    var regexpHex=/^#[0-9a-fA-F]{3,6}$/;//Hex
+    if(regexpHex.test(color)){
+        var hexArray=new Array();
+        var count=1;
+        for(var i=1;i<=3;i++){
+            if(color.length-2*i>3-i){
+                hexArray.push(Number("0x"+color.substring(count,count+2)));
+                count+=2;
+            }else{
+                hexArray.push(Number("0x"+color.charAt(count)+color.charAt(count)));
+                count+=1;
+            }
+        }
+        return hexArray.join(",");
+    }else{
+        return color;
+    }
+}
+
+function colorFormatter(value, row, index) {
+    return "<span style='display: inline-block; width: 25px; height: 25px; background-color: " + value + ";'></span>";
+}

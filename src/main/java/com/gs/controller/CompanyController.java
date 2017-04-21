@@ -107,7 +107,6 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value="companyStatusModify",method = RequestMethod.GET)
     public ControllerResult companyStatusModify(@Param("id") String id,@Param("status") String status){
-        System.out.println("id:"+id+"status" + status);
         if(status.equals("Y")){
             logger.info("公司冻结成功");
             companyService.inactive(id);

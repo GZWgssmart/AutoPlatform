@@ -45,6 +45,9 @@
             <th data-field="modelStatus" data-formatter="operateFormatter">
                 汽车车型状态
             </th>
+            <th data-field="co" data-formatter="operating" data-events="operateEvents">
+                操作
+            </th>
         </tr>
         </thead>
         <tbody>
