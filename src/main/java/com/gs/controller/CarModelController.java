@@ -30,9 +30,9 @@ public class CarModelController {
 
     @ResponseBody
     @RequestMapping(value = "car_model_all", method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryCarModelAll() {
+    public List<ComboBox4EasyUI> queryCarModelAll(String brandId) {
         logger.info("查询汽车车型");
-        List<CarModel> CarModels = carModelService.queryAll();
+        List<CarModel> CarModels = carModelService.queryByBrandId(brandId);
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
         for (CarModel carModel : CarModels) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();

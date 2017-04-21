@@ -2,6 +2,8 @@ package com.gs.service;
 
 import com.gs.bean.CarModel;
 
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -10,4 +12,5 @@ import com.gs.bean.CarModel;
 */
 public interface CarModelService extends BaseService<String, CarModel>{
 
+    public List<CarModel> queryByBrandId(String brandId);
 }

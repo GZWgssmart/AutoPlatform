@@ -37,4 +37,7 @@ public class CarModelServiceImpl implements CarModelService {
 	public int inactive(String id) { return carModelDAO.inactive(id); }
 	public int active(String id) { return carModelDAO.active(id); }
 
+	public List<CarModel> queryByBrandId(String brandId) {
+		return carModelDAO.queryByBrandId(brandId);
+	}
 }

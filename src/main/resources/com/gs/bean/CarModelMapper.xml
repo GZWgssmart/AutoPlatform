@@ -74,7 +74,13 @@
 
 	<select id="queryById" parameterType="string" resultType="carModel">
 		<![CDATA[
+			select * from t_car_model where modelId = #{id}
+		]]>
+	</select>
 
+	<select id="queryByBrandId" parameterType="string" resultType="list">
+		<![CDATA[
+			select * from t_car_model where brandId = #{brandId}
 		]]>
 	</select>
 
