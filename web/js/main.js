@@ -255,7 +255,6 @@ function add() {
     }
 }
 
-
 /** 显示搜索的form */
 function showSearchForm() {
     $("#searchDiv").show();

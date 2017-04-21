@@ -60,9 +60,10 @@ public class RecordController {
     public ControllerResult updateStatus(@Param("id") String id, @Param("status")String status){
         logger.info("更新维修保养记录状态");
         if(status.equals("Y")){
-            maintainRecordService.active(id);
-        }else if(status.equals("N")){
             maintainRecordService.inactive(id);
+        }else if(status.equals("N")){
+            maintainRecordService.active(id);
+
         }
         return ControllerResult.getSuccessResult("更新成功");
     }

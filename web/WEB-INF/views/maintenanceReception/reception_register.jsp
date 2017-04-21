@@ -209,19 +209,19 @@
 
                             <div class="form-group">
                                 <label class="control-label">汽车品牌：</label>
-                                <select id="editCarBrand" class="js-example-tags form-control car_brand" name="brandId">
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label">汽车颜色：</label>
-                                <select id="editCarColor" class="js-example-tags form-control car_color" name="colorId">
+                                <select id="editCarBrand" class="js-example-tags form-control car_brand" onchange="editCheckBrand(this)" name="brandId">
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">汽车车型：</label>
                                 <select id="editCarModel" class="js-example-tags form-control car_model" name="modelId">
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">汽车颜色：</label>
+                                <select id="editCarColor" class="js-example-tags form-control car_color" name="colorId">
                                 </select>
                             </div>
 
@@ -328,19 +328,19 @@
 
                             <div class="form-group">
                                 <label class="control-label">汽车品牌：</label>
-                                <select id="addCarBrand" class="js-example-tags form-control car_brand" name="brandId">
+                                <select id="addCarBrand" class="js-example-tags form-control car_brand" onchange="checkBrand(this)" name="brandId">
+                                </select>
+                            </div>
+
+                            <div class="form-group" id="carModelDiv" style="display: none;">
+                                <label class="control-label">汽车车型：</label>
+                                <select id="addCarModel" class="js-example-tags form-control car_model" name="modelId">
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">汽车颜色：</label>
                                 <select id="addCarColor" class="js-example-tags form-control car_color" name="colorId">
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label">汽车车型：</label>
-                                <select id="addCarModel" class="js-example-tags form-control car_model" name="modelId">
                                 </select>
                             </div>
 
