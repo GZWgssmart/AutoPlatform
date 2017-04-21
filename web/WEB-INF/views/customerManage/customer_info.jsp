@@ -33,7 +33,7 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th  data-field="userId" data-sortable="true" data-formatter="random">
+            <th data-field="userId" data-sortable="true" data-formatter="random">
                 车主编号
             </th>
             <th data-field="userIcon" >
@@ -54,19 +54,37 @@
             <th data-field="userGender" data-formatter="gender" >
                 性别
             </th>
+            <th data-field="userIdentity" >
+                身份证号
+            </th>
+            <th data-field="userBirthday" >
+                生日
+            </th>
             <th data-field="userPhone" >
                 手机号
             </th>
+            <th data-field="qqOpenId" >
+                QQ
+            </th>
+            <th data-field="weiboOpenId" >
+                微博
+            </th>
+            <th data-field="wechatOpenId" >
+                微信
+            </th>
             <th data-field="userAddress" >
-                住址
+                居住地址
             </th>
             <th data-field="company.companyName" >
                 入驻公司
             </th>
-            <th data-field="userCreatedTime" data-formatter="formatterDate" >
+            <th data-field="userCreatedTime" data-formatter="formatterDate">
                 入驻时间
             </th>
-            <th data-field="userStatus" data-formatter="statusFormatter">
+            <th  data-field="userLoginedTime">
+                最近登录
+            </th>
+            <th data-field="userStatus" data-formatter="status">
                 当前状态
             </th>
             <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
@@ -131,12 +149,36 @@
                                 <input type="text"  name="userPhone" attr="user.userPhone"
                                        class="form-control"/>
                             </div>
-
                             <div class="form-group">
-                                <label class="control-label">住址：</label>
+                                <label class="control-label">QQ：</label>
+                                <input type="text" name="qqOpenId" attr="user.qqOpenId"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">微博：</label>
+                                <input type="text" name="weiboOpenId" attr="user.weiboOpenId"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">微信：</label>
+                                <input type="text" name="wechatOpenId" attr="user.wechatOpenId"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">身份证：</label>
+                                <input type="text"  name="userIdentity" attr="user.userIdentity"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">居住地址：</label>
                                 <div style="position: relative;">
                                     <input data-toggle="city-picker" class="address" name="userAddress" attr="user.userAddress">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">描述：</label>
+                                <textarea type="text" name="userDes" attr="user.userDes"
+                                          class="form-control"></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">入驻公司：</label>
@@ -187,8 +229,10 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">密码：</label>
-                                <input type="password" name="userPwd"
+                                <input type="password" id="pwd" name="userPwd"
                                        class="form-control"/>
+                                <button type="button" onclick="defaultPwd()" class="btn btn-default">使用默认密码</button>
+
                             </div>
                             <div class="form-group">
                                 <label class="control-label">性别：</label>
@@ -204,10 +248,30 @@
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">住址：</label>
+                                <label class="control-label">QQ：</label>
+                                <input type="text" name="qqOpenId"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">微博：</label>
+                                <input type="text" name="weiboOpenId"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">微信：</label>
+                                <input type="text" name="wechatOpenId"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">居住地址：</label>
                                 <div style="position: relative;">
                                     <input data-toggle="city-picker" class="address" name="userAddress">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">描述：</label>
+                                <textarea type="text" name="userDes"
+                                          class="form-control"></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">入驻公司：</label>

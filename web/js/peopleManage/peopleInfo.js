@@ -23,12 +23,13 @@ function gender(value, row, index) {
 function operateFormatter(value, row, index) {
     if (row.userStatus == 'Y') {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm">冻结</button>',
-            '<button type="button" class="showUpdateInfo btn btn-default  btn-sm">编辑</button>'
+            '<button type="button" class="updateInactive btn btn-danger  btn-sm">冻结</button>',
+            '<button type="button" class="showUpdateInfo btn btn-primary  btn-sm">编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm">激活</button>',
+            '<button type="button" class="updateActive btn btn-success  btn-sm">激活</button>',
+            '<button type="button" class="showUpdateInfo btn btn-primary  btn-sm">编辑</button>'
         ].join('');
     }
 }
@@ -59,26 +60,15 @@ window.operateEvents = {
             }, "json");
     },
     'click .showUpdateInfo': function (e, value, row, index) {
-        var checkin = row;
-        $("#editForm").fill(checkin);
-        $('#editCarBrand').html('<option value="' + checkin.company.companyId + '">' + checkin.company.companyName + '</option>').trigger("change");
+        var user = row;
+        $("#editForm").fill(user);
+        $('#editCarBrand').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
         validator("editForm");
         $("#editWin").modal('show');
     }
 }
 
-function statusFormatter(value, row, index) {
-    if (row.userStatus == 'Y') {
-        return [
-            '可用'
-        ].join('');
-    }else if(row.userStatus == 'N'){
-        return [
-            '不可用'
-        ].join('');
-    }
 
-}
 
 
 /**编辑数据 */
@@ -89,11 +79,16 @@ function showEditWin() {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
-        var checkin = selectRow[0];
-        $("#editForm").fill(checkin);
-        $('#editCompany').html('<option value="' + checkin.company.companyId + '">' + checkin.company.companyName + '</option>').trigger("change");
+        var user = selectRow[0];
+        $("#editForm").fill(user);
+        $('#editCompany').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
+}
+
+function defaultPwd() {
+    var password = "123456";
+    $("#pwd").val(password);
 }
 
 /**提交添加数据 */
