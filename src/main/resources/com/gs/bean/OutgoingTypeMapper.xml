@@ -76,7 +76,7 @@
 
 	<select id="queryByName" parameterType="string" resultType="outgoingType">
 		<![CDATA[
-			  select * from t_outgoingType where outTypeName = #{outTypeName}
+			  select * from t_outgoing_type where outTypeName = #{outTypeName}
 		]]>
 	</select>
 

@@ -14,6 +14,7 @@
 
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -35,7 +36,7 @@
             <th data-field="inTypeCreatedTime" data-formatter="formatterDate">
                 创建时间
             </th>
-            <th data-field="inTypeStatus" data-formatter="statusFormatter">
+            <th data-field="inTypeStatus" data-formatter="status">
                 当前状态
             </th>
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
@@ -67,7 +68,7 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改收入类型</h3>
-                        <form role="form" id="updateForm" >
+                        <form role="form" id="editForm" >
                             <input type="hidden" attr="incomingType.inTypeId" name="inTypeId" />
                             <div class="form-group">
                                 <label>收入类型名称：</label>
@@ -75,12 +76,10 @@
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
-                                <span id="error1" style="color: red;"></span>
-                                <br/>
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton1" class="btn btn-primary" value="修改" onclick="updateIncomingType()">
+                                <input type="button" id="editButton" onclick="edit()" class="btn btn-primary" value="修改" >
                                 </input>
                             </div>
                         </form>
@@ -101,17 +100,15 @@
                         <h3 class="m-t-none m-b">添加收入类型</h3>
                         <form role="form" id="addForm" >
                             <div class="form-group">
-                                <label>收入类型名称：</label>
+                                <label class="control-label">收入类型名称：</label>
                                 <input type="text"  id="name" name="inTypeName" class="form-control"/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
-                                <span id="error" style="color: red;"></span>
-                                <br/>
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton" class="btn btn-primary" onclick="addIncomingType()" value="添加">
+                                <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="添加">
                                 </input>
                                 <input type="reset" name="reset" style="display: none;" />
                             </div>
@@ -128,6 +125,7 @@
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
+<script src="<%=path%>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>

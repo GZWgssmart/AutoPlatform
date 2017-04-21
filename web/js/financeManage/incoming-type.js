@@ -17,67 +17,17 @@ function showEditWin() {
         return false;
     } else {
         var incomingType = selectRow[0];
-        $("#updateForm").fill(incomingType);
-        $("#addButton1").removeAttr("disabled");
+        validator("editForm");
+        $("#editForm").fill(incomingType);
         $("#editWin").modal('show');
     }
 }
 
-/**提交编辑数据 */
-function updateIncomingType() {
-    var name = $("#name1").val();
-    var error = document.getElementById("error1");
-    if(name != ''){
-        $.post(contextPath + "/incomingType/update_incomingType",
-            $("#updateForm").serialize(),
-            function(data){
-                if(data.result == "success"){
-                    $('#editWin').modal('hide');
-                    swal(data.message, "", "success");
-                    $('#cusTable').bootstrapTable('refresh');
-                }else if(data.result == "fail"){
-                    swal(data.message, "", "error");
-                }
-            },"json");
-        $("#addButton1").attr('disabled','disabled');
-    }else{
-        error.innerHTML = "请输入正确的数据";
-        $("#addButton1").removeAttr("disabled");
-    }
-
-
-}
 
 function showAddWin(){
-    $("#addButton").removeAttr("disabled");
+   validator("addForm");
     $("#addWin").modal('show');
 }
-/**提交添加数据 */
-function addIncomingType() {
-
-    var name = $("#name").val();
-    var error = document.getElementById("error");
-    if (name != "") {
-        $.post(contextPath + "/incomingType/add_incomingType",
-            $("#addForm").serialize(),
-            function (data) {
-                if (data.result == "success") {
-                    $('#addWin').modal('hide');
-                    swal(data.message, "", "success");
-                    $('#cusTable').bootstrapTable('refresh');
-                    $("input[type=reset]").trigger("click");
-                } else if (data.result == "fail") {
-                    swal(data.message, "", "error");
-                }
-            }, "json");
-        $("#addButton").attr('disabled','disabled');
-    }else{
-        error.innerHTML = "请输入正确的数据";
-        $("#addButton").removeAttr("disabled");
-    }
-
-}
-
 
 function operateFormatter(value, row, index) {
     if (row.inTypeStatus == 'Y') {
@@ -118,22 +68,46 @@ window.operateEvents = {
           },
           'click .showUpdateIncomingType1': function (e, value, row, index) {
               var incomingType = row;
-              $("#updateForm").fill(incomingType);
-              $("#addButton1").removeAttr("disabled");
+              validator("editForm");
+              $("#editForm").fill(incomingType);
               $("#editWin").modal('show');
          }
 }
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            inTypeName: {
+                message: '收入类型名称失败',
+                validators: {
+                    notEmpty: {
+                        message: '收入类型名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 20,
+                        message: '收入类型名称长度必须在2到20位之间'
+                    }
+                }
+            }
 
-function statusFormatter(value, row, index) {
-    if (row.inTypeStatus == 'Y') {
-        return [
-            '可用'
-        ].join('');
-    }else if(row.inTypeStatus == 'N'){
-        return [
-            '不可用'
-        ].join('');
-    }
+
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/incomingType/add_incomingType", formId, "addWin");
+            } else if (formId == "editForm") {
+                formSubmit("/incomingType/update_incomingType", formId, "editWin");
+
+            }
+        })
 
 }
-

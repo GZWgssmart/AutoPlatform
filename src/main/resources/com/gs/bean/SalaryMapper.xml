@@ -11,6 +11,7 @@
 		<result column="totalSalary" property="totalSalary"></result>
 		<result column="salaryDes" property="salaryDes"></result>
 		<result column="salaryTime" property="salaryTime"></result>
+		<result column="userId"  property="userId"></result>
 		<result column="salaryCreatedTime" property="salaryCreatedTime"></result>
 		<association property="user" javaType="com.gs.bean.User">
 			<id column="user_id" property="userId"/>
@@ -20,7 +21,7 @@
 
 	<insert id="insert"  parameterType="salary">
 		<![CDATA[
-			insert into t_salary values(uuid(),#{user.userId},#{prizeSalary},#{minusSalary},
+			insert into t_salary values(uuid(),#{userId},#{prizeSalary},#{minusSalary},
 			#{totalSalary},#{salaryDes},#{salaryTime},now())
 		]]>
 	</insert>
@@ -94,8 +95,8 @@
 	<select id="queryByPager" resultType="list" resultMap="salaryResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 			select s.*,u.userId as user_id,u.userName from t_salary s ,t_user u where s.userId = u.userId
-			order by u.salaryCreatedTime Desc limit #{beginIndex}, #{pageSize}
 		]]>
+		order by s.salaryCreatedTime Desc limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
