@@ -118,7 +118,7 @@
         </tr>
         </thead>
         <form id="formSearch" class="form-horizontal">
-            <div class="form-group" style="margin-top:15px">
+            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
                 <div class="col-sm-2" style="margin-left: -15px;">
                     <input type="text" class="form-control" placeholder="请输入车主姓名" >
                 </div>
@@ -140,8 +140,9 @@
                     </select>
                 </div>
 
-                <div class="col-sm-1">
-                    <button type="button"   class="btn btn-primary">查询</button>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-primary">查询</button>
+                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">关闭</button>
                 </div>
             </div>
         </form>
@@ -171,6 +172,11 @@
             <a>
                 <button onclick="searchStatus('ALL');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部
+                </button>
+            </a>
+            <a>
+                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-search"></i> 查询
                 </button>
             </a>
 

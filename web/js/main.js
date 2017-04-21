@@ -256,3 +256,16 @@ function add() {
 }
 
 
+/** 显示搜索的form */
+function showSearchForm() {
+    $("#searchDiv").show();
+    $("#showButton").hide();
+}
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
+
+
