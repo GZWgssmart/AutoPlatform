@@ -6,6 +6,8 @@
 
 	<resultMap id="checkinResultMap" type="checkin">
 		<id property="checkinId" column="checkinId" />
+		<result property="userId" column="userId" />
+		<result property="appointmentId" column="appointmentId" />
 		<result property="userName" column="userName" />
 		<result property="userPhone" column="userPhone" />
 		<result property="carPlate" column="carPlate" />

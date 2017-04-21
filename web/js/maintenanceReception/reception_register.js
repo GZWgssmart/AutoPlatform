@@ -50,8 +50,6 @@ function checkAppointment(combox) {
         //调用函数，初始化表格
         initTableNotTollbar("appTable", "/appointment/query_pager");
 
-        //当点击查询按钮的时候执行
-        $("#search").bind("click", initTable);
         $("#addWin").modal('hide');
         $("#appWin").modal('show');
     } else {
@@ -79,6 +77,8 @@ function checkApp() {
         var appointment = selectRow[0];
         $("#addUserName").val(appointment.userName);
         $("#addUserPhone").val(appointment.userPhone);
+        $("#addUserId").val(appointment.userId);
+        $("#addAppointmentId").val(appointment.appointmentId);
         $("#addDatetimepicker").val(formatterDate(appointment.arriveTime));
         $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
         $('#addCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");

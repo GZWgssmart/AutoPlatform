@@ -145,85 +145,87 @@
                         <h3 class="m-t-none m-b">修改登记</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" attr="checkin.checkinId" name="checkinId" class="form-control"/>
-                            <div class="col-md-12 form-group">
-                                <label>车主姓名：</label>
+                            <input type="hidden" attr="checkin.userId" name="userId" class="form-control"/>
+                            <input type="hidden" attr="checkin.appointmentId" name="appointmentId" class="form-control"/>
+                            <div class="form-group">
+                                <label class="control-label">车主姓名：</label>
                                 <input type="text" attr="checkin.userName" name="userName" class="form-control"/>
                             </div>
-                            <div class="col-md-12 form-group">
-                                <label>车主电话：</label>
+                            <div class="form-group">
+                                <label class="control-label">车主电话：</label>
                                 <input type="text" attr="checkin.userPhone" name="userPhone" class="form-control"/>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>汽车品牌：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车品牌：</label>
                                 <select id="editCarBrand" class="js-example-tags form-control car_brand" name="brandId">
                                 </select>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>汽车颜色：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车颜色：</label>
                                 <select id="editCarColor" class="js-example-tags form-control car_color" name="colorId">
                                 </select>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>汽车车型：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车车型：</label>
                                 <select id="editCarModel" class="js-example-tags form-control car_model" name="modelId">
                                 </select>
                             </div>
 
-                            <div class="col-md-12 form-group">
+                            <div class="form-group">
                                 <label>汽车车牌：</label>
                                 <select id="editCarPlate" class="js-example-tags form-control car_plate" name="plateId">
                                 </select>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>车牌号码：</label>
+                            <div class="form-group">
+                                <label class="control-label">车牌号码：</label>
                                 <input type="text" attr="checkin.carPlate" name="carPlate" class="form-control"/>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>到店时间：</label>
+                            <div class="form-group">
+                                <label class="control-label">到店时间：</label>
                                 <input id="editDatetimepicker" readonly type="text" name="arriveTime"
                                        class="form-control datetimepicker"/>
                             </div>
-                            <div class="col-md-12 form-group">
-                                <label>是否需要洗车：</label>
+                            <div class="form-group">
+                                <label class="control-label">是否需要洗车：</label>
                                 <select class="js-example-tags form-control" attr="checkin.carWash" type="select-one" name="carWash">
                                     <option value="N">否</option>
                                     <option value="Y">是</option>
                                 </select>
                             </div>
-                            <div class="col-md-12 form-group">
-                                <label>汽车油量：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车油量：</label>
                                 <input type="text" attr="checkin.oilCount" name="oilCount" class="form-control"/>
                             </div>
-                            <div class="col-md-12 form-group">
-                                <label>汽车行驶里程：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车行驶里程：</label>
                                 <input type="text" attr="checkin.carMileage" name="carMileage" class="form-control"/>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>车上物品描述：</label>
+                            <div class="form-group">
+                                <label class="control-label">车上物品描述：</label>
                                 <textarea class="form-control" attr="checkin.carThings" type="textarea" name="carThings"
                                           rows="3"></textarea>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>汽车完好度描述：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车完好度描述：</label>
                                 <textarea class="form-control" attr="checkin.intactDegrees" type="textarea" name="intactDegrees"
                                           rows="3"></textarea>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>用户要求描述：</label>
+                            <div class="form-group">
+                                <label class="control-label">用户要求描述：</label>
                                 <textarea class="form-control" attr="checkin.userRequests" type="textarea" name="userRequests"
                                           rows="3"></textarea>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>保养&nbsp;|&nbsp;维修：</label>
+                            <div class="form-group">
+                                <label class="control-label">保养&nbsp;|&nbsp;维修：</label>
                                 <select id="editMaintainOrFix" attr="checkin.maintainOrFix" type="select-one" class="js-example-tags form-control" name="maintainOrFix">
                                     <option value="保养">保养</option>
                                     <option value="维修">维修</option>
@@ -254,95 +256,97 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加记录</h3>
                         <form role="form" id="addForm">
-                            <div class="col-md-12 form-group">
-                                <label>是否预约：</label>
+                            <input type="hidden" id="addUserId" name="userId" class="form-control"/>
+                            <input type="hidden" id="addAppointmentId" name="appointmentId" class="form-control"/>
+                            <div class="form-group">
+                                <label class="control-label">是否预约：</label>
                                 <select class="js-example-tags form-control" id="app"
                                         onchange="checkAppointment(this)">
                                     <option value="N">否</option>
                                     <option value="Y">是</option>
                                 </select>
                             </div>
-                            <div class="col-md-12 form-group">
-                                <label>车主姓名：</label>
+                            <div class="form-group">
+                                <label class="control-label">车主姓名：</label>
                                 <input type="text" id="addUserName" name="userName" class="form-control"/>
                             </div>
-                            <div class="col-md-12 form-group">
-                                <label>车主电话：</label>
+                            <div class="form-group">
+                                <label class="control-label">车主电话：</label>
                                 <input type="text" id="addUserPhone" name="userPhone" class="form-control"/>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>汽车品牌：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车品牌：</label>
                                 <select id="addCarBrand" class="js-example-tags form-control car_brand" name="brandId">
                                 </select>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>汽车颜色：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车颜色：</label>
                                 <select id="addCarColor" class="js-example-tags form-control car_color" name="colorId">
                                 </select>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>汽车车型：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车车型：</label>
                                 <select id="addCarModel" class="js-example-tags form-control car_model" name="modelId">
                                 </select>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>汽车车牌：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车车牌：</label>
                                 <select id="addCarPlate" class="js-example-tags form-control car_plate" name="plateId">
                                 </select>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>车牌号码：</label>
+                            <div class="form-group">
+                                <label class="control-label">车牌号码：</label>
                                 <input type="text" name="carPlate" class="form-control"/>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>到店时间：</label>
+                            <div class="form-group">
+                                <label class="control-label">到店时间：</label>
                                 <input id="addDatetimepicker" readonly onclick="getDate()" type="text" name="arriveTime"
                                        class="form-control datetimepicker"/>
 
                             </div>
-                            <div class="col-md-12 form-group">
-                                <label>是否需要洗车：</label>
+                            <div class="form-group">
+                                <label class="control-label">是否需要洗车：</label>
                                 <select class="js-example-tags form-control" name="carWash">
                                     <option value="N">否</option>
                                     <option value="Y">是</option>
                                 </select>
 
                             </div>
-                            <div class="col-md-12 form-group">
-                                <label>汽车油量：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车油量：</label>
                                 <input type="text" name="oilCount" class="form-control"/>
                             </div>
-                            <div class="col-md-12 form-group">
-                                <label>汽车行驶里程：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车行驶里程：</label>
                                 <input type="text" name="carMileage" class="form-control"/>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>车上物品描述：</label>
+                            <div class="form-group">
+                                <label class="control-label">车上物品描述：</label>
                                 <textarea class="form-control" name="carThings"
                                           rows="3"></textarea>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>汽车完好度描述：</label>
+                            <div class="form-group">
+                                <label class="control-label">汽车完好度描述：</label>
                                 <textarea class="form-control" name="intactDegrees"
                                           rows="3"></textarea>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>用户要求描述：</label>
+                            <div class="form-group">
+                                <label class="control-label">用户要求描述：</label>
                                 <textarea class="form-control" name="userRequests"
                                           rows="3"></textarea>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label>保养&nbsp;|&nbsp;维修：</label>
+                            <div class="form-group">
+                                <label class="control-label">保养&nbsp;|&nbsp;维修：</label>
                                 <select id="addMaintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
                                     <option value="保养">保养</option>
                                     <option value="维修">维修</option>
@@ -381,7 +385,7 @@
                                data-height="550">
                             <thead>
                             <tr>
-                                <th data-field="appointmentId" data-checkbox="true"></th>
+                                <th data-field="state" data-checkbox="true"></th>
                                 <th data-field="userName">
                                     车主姓名
                                 </th>

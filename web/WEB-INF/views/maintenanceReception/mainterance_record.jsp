@@ -108,7 +108,7 @@
                         <h3 class="m-t-none m-b">修改保养记录</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" attr="record.recordId" name="recordId" class="form-control"/>
-
+                            <input type="hidden" attr="record.checkin.checkinId" name="checkinId" class="form-control"/>
                             <div class="col-md-12 form-group">
                                 <label>开始时间：</label>
                                 <input id="editStartTime" readonly type="text" name="startTime"
