@@ -117,8 +117,37 @@
             </th>
         </tr>
         </thead>
+        <form id="formSearch" class="form-horizontal">
+            <div class="form-group" style="margin-top:15px">
+                <div class="col-sm-2" style="margin-left: -15px;">
+                    <input type="text" class="form-control" placeholder="请输入车主姓名" >
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" placeholder="请输入车主电话" >
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" placeholder="请输入车牌号码">
+                </div>
+                <div class="col-sm-2">
+                    <select class="js-example-tags form-control">
+                        <option value="">维修&nbsp;&&nbsp;保养</option>
+                        <option value="维修">维修</option>
+                        <option value="保养">保养</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="js-example-tags form-control company">
+                    </select>
+                </div>
+
+                <div class="col-sm-1">
+                    <button type="button"   class="btn btn-primary">查询</button>
+                </div>
+            </div>
+        </form>
         <tbody>
         <div id="toolbar" class="btn-group">
+
             <a>
                 <button onclick="showAddWin();" type="button" id="add" class="btn btn-default">
                     <i class="glyphicon glyphicon-plus"></i> 添加
@@ -129,6 +158,22 @@
                     <i class="glyphicon glyphicon-pencil"></i> 修改
                 </button>
             </a>
+            <a>
+                <button onclick="showEditWin();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看可用记录
+                </button>
+            </a>
+            <a>
+                <button onclick="showEditWin();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看不可用记录
+                </button>
+            </a>
+            <a>
+                <button onclick="showEditWin();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看全部
+                </button>
+            </a>
+
         </div>
         </tbody>
 

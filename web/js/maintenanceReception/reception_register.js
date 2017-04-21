@@ -11,6 +11,7 @@ $(document).ready(function () {
     initSelect2("car_color", "请选择颜色", "/carColor/car_color_all", "540");
     initSelect2("car_model", "请选择车型", "/carModel/car_model_all", "540");
     initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "540");
+    initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
     initDateTimePicker("datetimepicker", "arriveTime");
 
 
