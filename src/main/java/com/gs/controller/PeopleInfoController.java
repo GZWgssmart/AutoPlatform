@@ -48,6 +48,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "peopleInfo_insert", method = RequestMethod.POST)
     public ControllerResult infoInsert(User user){
         logger.info("信息添加");
+
         user.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
         userService.insert(user);
         return ControllerResult.getSuccessResult("添加成功");
@@ -91,6 +92,22 @@ public class PeopleInfoController {
     public List<ComboBox4EasyUI> queryUserAll() {
         logger.info("查询员工");
         List<User> users = userService.queryAll();
+        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+        for (User user : users) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(user.getUserId());
+            comboBox4EasyUI.setText(user.getUserName());
+            comboBox4EasyUIs.add(comboBox4EasyUI);
+        }
+        return comboBox4EasyUIs;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "query_user", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryByUser(String companyId) {
+        logger.info("查询自己公司所有员工");
+        List<User> users = userService.queryByUser("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a"); // session里面的companyId
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
         for (User user : users) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();

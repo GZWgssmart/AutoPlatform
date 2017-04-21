@@ -104,6 +104,12 @@
 		]]>
 	</select>
 
+	<select id="queryByUser" parameterType="string" resultMap="userResultMap">
+		<![CDATA[
+			  SELECT * FROM t_user WHERE companyId = #{companyId}
+		]]>
+	</select>
+
 	<select id="queryByPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
 
 		<![CDATA[

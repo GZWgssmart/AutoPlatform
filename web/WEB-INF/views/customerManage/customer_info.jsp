@@ -98,27 +98,27 @@
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="user.userId" name="userId" />
                             <div class="form-group">
-                                <label>头像：</label>
+                                <label class="control-label">头像：</label>
                                 <input type="text" attr="user.userIcon" name="userIcon" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>邮箱：</label>
+                                <label class="control-label">邮箱：</label>
                                 <input type="text" attr="user.userEmail" name="userEmail" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>密码：</label>
+                                <label class="control-label">密码：</label>
                                 <input type="text" attr="user.userPwd" name="userPwd" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>昵称：</label>
+                                <label class="control-label">昵称：</label>
                                 <input type="text" attr="user.userNickname" name="userNickname" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>姓名：</label>
+                                <label class="control-label">姓名：</label>
                                 <input type="text" attr="user.userName" name="userName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>性别：</label>
+                                <label class="control-label">性别：</label>
                                 <select attr="user.userGender" name="userGender" class="form-control">
                                     <option value="N" selected = "selected">未知</option>
                                     <option value="M">男</option>
@@ -126,18 +126,18 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>手机号：</label>
+                                <label class="control-label">手机号：</label>
                                 <input type="text"  name="userPhone" attr="user.userPhone"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
-                                <label>住址：</label>
+                                <label class="control-label">住址：</label>
                                 <input type="text"  name="userAddress" attr="user.userAddress"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>入驻公司：</label>
+                                <label class="control-label">入驻公司：</label>
                                 <select id="editCompany" class="js-example-tags form-control user_company" name="companyId"></select>
                             </div>
 
@@ -166,30 +166,30 @@
                         <h3 class="m-t-none m-b">添加车主</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
-                                <label>头像：</label>
+                                <label class="control-label">头像：</label>
                                 <input type="text"  name="userIcon" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>姓名：</label>
+                                <label class="control-label">姓名：</label>
                                 <input type="text"  name="userName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>邮箱：</label>
+                                <label class="control-label">邮箱：</label>
                                 <input type="email" name="userEmail"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>昵称：</label>
+                                <label class="control-label">昵称：</label>
                                 <input type="text" name="userNickname"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>密码：</label>
+                                <label class="control-label">密码：</label>
                                 <input type="password" name="userPwd"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>性别：</label>
+                                <label class="control-label">性别：</label>
                                 <select class="form-control" name="userGender">
                                     <option value="N" selected = "selected">未知</option>
                                     <option value="M">男</option>
@@ -197,17 +197,17 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>手机号：</label>
+                                <label class="control-label">手机号：</label>
                                 <input type="text" name="userPhone"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>住址：</label>
+                                <label class="control-label">住址：</label>
                                 <input type="text" name="userAddress"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>入驻公司：</label>
+                                <label class="control-label">入驻公司：</label>
                                 <select id="addCompany" class="js-example-tags form-control user_company" name="companyId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">

@@ -60,7 +60,7 @@ public class SupplyController {
         }
 
         @ResponseBody
-        @RequestMapping("update")
+        @RequestMapping("edit")
         public ControllerResult update(Supply supply) {
             logger.info("修改供应商");
             supplyService.update(supply);

@@ -67,12 +67,16 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a href="#addWin" data-toggle="modal"><button type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
+            <a>
+                <button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-plus"></i> 添加
+                </button>
+            </a>
+            <a>
+                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-pencil"></i> 修改
+                </button>
+            </a>
         </div>
         </tbody>
 
@@ -126,7 +130,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton1" class="btn btn-primary" value="修改" onclick="updateSupply()">
+                                <input type="button" id="addButton" class="btn btn-primary" value="修改" onclick="edit()">
                                 </input>
                             </div>
                         </form>
@@ -178,7 +182,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="addSupply()" value="添加">
+                                <input type="button" class="btn btn-primary" onclick="add()" value="添加">
                                 </input>
                             </div>
                         </form>
@@ -192,6 +196,7 @@
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
