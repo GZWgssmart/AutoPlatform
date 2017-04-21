@@ -134,18 +134,18 @@
                                 <form role="form" id="editForm">
                                     <input type="hidden" attr="permission.permissionId" name="permissionId" />
                                     <div class="form-group">
-                                        <label>所属模块：</label>
+                                        <label class="control-label">所属模块：</label>
                                         <select id="moduleSelect3" class="js-example-tags form-control module_all_2"
                                                 name="moduleId">
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>权限名称：</label>
+                                        <label class="control-label">权限名称：</label>
                                         <input attr="permission.permissionName" type="text" name="permissionName" class="form-control"/>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>权限中文名称：</label>
+                                        <label class="control-label">权限中文名称：</label>
                                         <input attr="permission.permissionZHName" type="text" name="permissionZHName" class="form-control"/>
                                     </div>
 
@@ -179,18 +179,18 @@
                                 <h3 class="m-t-none m-b">添加权限信息</h3>
                                 <form role="form" id="addForm">
                                     <div class="form-group">
-                                        <label>所属模块：</label>
+                                        <label class="control-label">所属模块：</label>
                                         <select id="moduleSelect2" class="js-example-tags form-control module_all_2"
                                                 name="moduleId">
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label>权限名称：</label>
+                                        <label class="control-label">权限名称：</label>
                                         <input type="text" name="permissionName" class="form-control"/>
                                     </div>
 
                                     <div class="form-group">
-                                        <label>权限中文名称：</label>
+                                        <label class="control-label">权限中文名称：</label>
                                         <input type="text" name="permissionZHName" class="form-control"/>
                                     </div>
 

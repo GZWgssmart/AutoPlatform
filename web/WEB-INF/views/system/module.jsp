@@ -79,7 +79,7 @@
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="module.moduleId" name="moduleId" />
                             <div class="form-group">
-                                <label>模块名称：</label>
+                                <label class="control-label">模块名称：</label>
                                 <input type="text" attr="module.moduleName" name="moduleName"  class="form-control"/>
 
                                 <label>模块描述：</label>
@@ -111,7 +111,7 @@
                         <h3 class="m-t-none m-b">添加模块</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
-                                <label>模块名称：</label>
+                                <label class="control-label">模块名称：</label>
                                 <input type="text"   name="moduleName" class="form-control"/>
                             </div>
 

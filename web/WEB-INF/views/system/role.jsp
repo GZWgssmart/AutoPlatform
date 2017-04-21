@@ -70,7 +70,7 @@
                         <form role="form" id="editForm">
                             <input type="hidden" attr="role.roleId" name="roleId"/>
                             <div class="form-group">
-                                <label>角色名称：</label>
+                                <label class="control-label">角色名称：</label>
                                 <input type="text" attr="role.roleName" name="roleName"  class="form-control"/>
 
                                 <label>角色描述：</label>
@@ -103,7 +103,7 @@
                         <h3 class="m-t-none m-b">添加员工</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
-                                <label>角色名称：</label>
+                                <label class="control-label">角色名称：</label>
                                 <input type="text" name="roleName" class="form-control"/>
                             </div>
                             <div class="form-group">
