@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Checkin;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,4 +38,11 @@ public class CheckinServiceImpl implements CheckinService {
 	public int inactive(String id) { return checkinDAO.inactive(id); }
 	public int active(String id) { return checkinDAO.active(id); }
 
+	public int countByStatus(String status) {
+		return checkinDAO.countByStatus(status);
+	}
+
+	public List<Checkin> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status) {
+		return checkinDAO.queryPagerByStatus(pager, status);
+	}
 }

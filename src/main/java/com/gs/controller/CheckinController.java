@@ -52,13 +52,20 @@ public class CheckinController {
 
     @ResponseBody
     @RequestMapping(value = "checkin_pager", method = RequestMethod.GET)
-    public Pager4EasyUI<Checkin> checkinPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+    public Pager4EasyUI<Checkin> checkinPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("status") String status) {
         logger.info("分页查询登记记录");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(checkinService.count());
-        List<Checkin> checkins = checkinService.queryByPager(pager);
+        List<Checkin> checkins = new ArrayList<Checkin>();
+        if (status.equals("all")) {
+            pager.setTotalRecords(checkinService.count());
+            checkins = checkinService.queryByPager(pager);
+        } else {
+            pager.setTotalRecords(checkinService.countByStatus(status));
+            checkins = checkinService.queryPagerByStatus(pager, status);
+        }
+
         return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
     }
 

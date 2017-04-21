@@ -159,17 +159,17 @@
                 </button>
             </a>
             <a>
-                <button onclick="showEditWin();" type="button" class="btn btn-default">
+                <button onclick="searchStatus('Y');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看可用记录
                 </button>
             </a>
             <a>
-                <button onclick="showEditWin();" type="button" class="btn btn-default">
+                <button onclick="searchStatus('N');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看不可用记录
                 </button>
             </a>
             <a>
-                <button onclick="showEditWin();" type="button" class="btn btn-default">
+                <button onclick="searchStatus('ALL');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部
                 </button>
             </a>
