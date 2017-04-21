@@ -1,11 +1,12 @@
 <!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gs.dao.AppointmentDAO">
 
 	<resultMap id="appointmentResultMap" type="appointment">
 		<id property="appointmentId" column="appointmentId" />
+		<result property="userId" column="userId" />
 		<result property="userName" column="userName" />
 		<result property="userPhone" column="userPhone" />
 		<result property="carPlate" column="carPlate" />
@@ -38,7 +39,10 @@
 
 	<insert id="insert"  parameterType="appointment">
 		<![CDATA[
-			insert into t_appointment(appointmentId,userId, userName,userPhone,brandId,colorId,modelId,plateId,carPlate,arriveTime,maintainOrFix,appCreatedTime,companyId,appoitmentStatus) values(uuid(), #{userId},#{userName},#{userPhone},#{brandId},#{colorId},#{modelId},#{plateId},#{carPlate},#{arriveTime},#{maintainOrFix},#{appCreatedTime},#{companyId},#{appoitmentStatus})
+			insert into t_appointment(appointmentId,userId, userName,userPhone,brandId,colorId,modelId,plateId,carPlate,
+			arriveTime,maintainOrFix,appCreatedTime,companyId,appoitmentStatus) values(uuid(),
+			#{userId},#{userName},#{userPhone},#{brandId},#{colorId},#{modelId},
+			#{plateId},#{carPlate},#{arriveTime},#{maintainOrFix},now(),#{companyId},'Y')
 		]]>
 	</insert>
 
@@ -68,7 +72,19 @@
 
 	<update id="update" parameterType="appointment">
 		<![CDATA[
-			update t_appointment set userId = #{userId},userName = #{userName},userPhone = #{userPhone},brandId = #{brandId},colorId = #{colorId},modelId = #{modelId},plateId = #{plateId},carPlate = #{carPlate},arriveTime = #{arriveTime},maintainOrFix = #{maintainOrFix},companyId = #{companyId},appoitmentStatus = #{appoitmentStatus} where appointmentId = #{appointmentId}
+			update t_appointment set userId = #{userId},
+			userName = #{userName},
+			userPhone = #{userPhone},
+			brandId = #{brandId},
+			colorId = #{colorId},
+			modelId = #{modelId},
+			plateId = #{plateId},
+			carPlate = #{carPlate},
+			arriveTime = #{arriveTime},
+			maintainOrFix = #{maintainOrFix},
+			appCreatedTime = #{appCreatedTime},
+			companyId = #{companyId},
+			appoitmentStatus = 'Y' where appointmentId = #{appointmentId}
 		]]>
 	</update>
 
