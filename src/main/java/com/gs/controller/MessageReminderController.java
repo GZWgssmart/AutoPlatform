@@ -3,18 +3,25 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.MaintainRemind;
 import com.gs.bean.MessageSend;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.MaintainRemindService;
 import com.gs.service.MessageSendService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,7 +56,21 @@ public class MessageReminderController {
         return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), maintainRemindList);
     }
 
+    @ResponseBody
+    @RequestMapping(value="edit", method=RequestMethod.POST)
+    public ControllerResult editMainteranceRecord(MaintainRemind maintainRemind){
+        logger.info("更新维修保养提醒");
+        maintainRemind.setRemindId("1e8f6410-24f5-11e7-8ee3-00909e9aaeb9");
+        maintainRemindService.update(maintainRemind);
+        return ControllerResult.getSuccessResult("更新成功");
+    }
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
 }
 

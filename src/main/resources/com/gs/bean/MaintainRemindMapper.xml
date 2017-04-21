@@ -5,6 +5,7 @@
 <mapper namespace="com.gs.dao.MaintainRemindDAO">
 	<resultMap id="maintainRemindResultMap" type="maintainRemind">
 		<id property="remindId" column="remindId" />
+		<result property="userId" column="userId" />
 		<result property="lastMaintainTime" column="lastMaintainTime" />
 		<result property="lastMaintainMileage" column="lastMaintainMileage" />
 		<result property="remindMsg" column="remindMsg" />
@@ -51,7 +52,10 @@
 
 	<update id="update" parameterType="maintainRemind">
 		<![CDATA[
-
+		update t_maintain_remind
+		set lastMaintainTime = #{lastMaintainTime},lastMaintainMileage = #{lastMaintainMileage},remindMsg= #{remindMsg},
+				remindTime=#{remindTime},remindType=#{remindType},remindCreatedTime=#{remindCreatedTime}
+		where remindId = #{remindId}
 		]]>
 	</update>
 

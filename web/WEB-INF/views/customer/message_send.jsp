@@ -12,7 +12,7 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-    <title>短信发送记录</title>
+    <title>短信发送</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -44,7 +44,7 @@
                 短信发送内容:
             </th>
             <th data-field="sendTime" data-formatter="formatterDate">
-                保养提醒时间:
+                短信发送时间:
             </th>
             <th data-field="sendCreatedTime" data-formatter="formatterDate">
                 短信发出时间:
