@@ -6,8 +6,8 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/salary/query_pager");
-    initSelect2("car_model", "请选择员工", "/carBrand/car_brand_all");
-    initDateTimePicker("datatimepicker");
+    initSelect2("car_model", "请选择员工", "/peopleManage/query_user","570");
+    initDateTimePicker("datatimepicker","salaryTime");
 
 });
 
@@ -19,20 +19,19 @@ function showEditWin() {
         return false;
     } else {
         var incomingType = selectRow[0];
-
-        $("#updateForm").fill(incomingType);
+        validator("editForm");
+        $("#editForm").fill(incomingType);
         $("#addButton1").removeAttr("disabled");
         $("#editWin").modal('show');
     }
 }
 
 function getDate() {
-    $("#addDatetimepicker").val(new Date());
+    $("#datatimepicker").val(new Date());
 }
 
 function showAddWin() {
     validator("addForm");
-    $("#addButton").removeAttr("disabled");
     $("#addWin").modal('show');
 }
 
@@ -45,14 +44,14 @@ function operateFormatter(value, row, index) {
 window.operateEvents = {
     'click .showUpdateIncomingType1': function (e, value, row, index) {
         var incomingType = row;
-        $("#updateForm").fill(incomingType);
-        $("#addButton1").removeAttr("disabled");
+        $("#editForm").fill(incomingType);
         $("#editWin").modal('show');
     }
 }
 
 function validator(formId) {
-
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -60,39 +59,54 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            prizeSalary: {
-                message: '用户名验证失败',
+            userId: {
+                message: '验证失败',
                 validators: {
                     notEmpty: {
-                        message: '用户名不能为空'
-                    },
-                    stringLength: {
-                        min: 6,
-                        max: 18,
-                        message: '用户名长度必须在6到18位之间'
+                        message: '必须选择员工'
+                    }
+                }
+            },
+            prizeSalary: {
+                validators: {
+                    notEmpty: {
+                        message: '奖金不能为空'
                     },
                     regexp: {
-                        regexp: /^[a-zA-Z0-9_]+$/,
-                        message: '用户名只能包含大写、小写、数字和下划线'
+                        regexp: /^[0-9]*$/,
+                        message: '奖金只能是数字'
                     }
                 }
             },
             minusSalary: {
                 validators: {
                     notEmpty: {
-                        message: '邮箱不能为空'
+                        message: '罚金不能为空'
                     },
-                    emailAddress: {
-                        message: '邮箱地址格式有误'
+                    regexp: {
+                        regexp: /^[0-9]*$/,
+                        message: '罚金只能是数字'
                     }
                 }
             },
-            brandId: {
+            salaryTime: {
                 validators: {
-                    notEmpty: {
-                        message: '邮箱不能为空'
-                    },
+                    notEmpty:{
+                        message: '发放时间不能为空'
+                    }
+                }
 
+            },
+            salaryDes:{
+                validators:{
+                    notEmpty:{
+                        message: '工作描述不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 500,
+                        message: '收入类型名称长度必须在2到500位之间'
+                    }
                 }
             }
         }

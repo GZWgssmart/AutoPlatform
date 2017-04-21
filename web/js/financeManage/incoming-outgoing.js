@@ -16,35 +16,11 @@ function showEditWin() {
         return false;
     } else {
         var incomingOutgoing = selectRow[0];
-        $("#updateForm").fill(incomingOutgoing);
+        validator("editForm");
+        $("#editForm").fill(incomingOutgoing);
         $("#addButton1").removeAttr("disabled");
         $("#editWin").modal('show');
     }
-}
-
-/**提交编辑数据 */
-function update() {
-    var name = $("#name1").val();
-    var error = document.getElementById("error1");
-    if(name != ''){
-        $.post(contextPath + "/incomingOutgoing/update_inOut",
-            $("#updateForm").serialize(),
-            function(data){
-                if(data.result == "success"){
-                    $('#editWin').modal('hide');
-                    swal(data.message, "", "success");
-                    $('#cusTable').bootstrapTable('refresh');
-                }else if(data.result == "fail"){
-                    swal(data.message, "", "error");
-                }
-            },"json");
-        $("#addButton1").attr('disabled','disabled');
-    }else{
-        error.innerHTML = "请输入正确的数据";
-        $("#addButton1").removeAttr("disabled");
-    }
-
-
 }
 
 
@@ -88,7 +64,8 @@ window.operateEvents = {
           },
           'click .showUpdateIncomingType1': function (e, value, row, index) {
               var incomingType = row;
-              $("#updateForm").fill(incomingType);
+              validator("editForm");
+              $("#editForm").fill(incomingType);
               $("#addButton1").removeAttr("disabled");
               $("#editWin").modal('show');
          }
@@ -106,17 +83,40 @@ function queryByInOutType(type){
     }
 }
 
-function statusFormatter(value, row, index) {
-    if (row.inOutStatus == 'Y') {
-        return [
-            '可用'
-        ].join('');
-    }else if(row.inOutStatus == 'N'){
-        return [
-            '不可用'
-        ].join('');
-    }
+
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            inOutMoney: {
+                message: '收支金额失败',
+                validators: {
+                    notEmpty: {
+                        message: '收支金额不能为空'
+                    },
+                    regexp: {
+                        regexp: /^[0-9]*$/,
+                        message: '收支金额只能是数字'
+                    }
+                }
+            }
+
+
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+            } else if (formId == "editForm") {
+                formSubmit("/incomingOutgoing/update_inOut", formId, "editWin");
+
+            }
+        })
 
 }
-
-

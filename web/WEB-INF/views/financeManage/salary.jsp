@@ -76,7 +76,7 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改收入类型</h3>
-                        <form role="form" id="updateForm" >
+                        <form role="form" id="editForm" >
                             <input type="hidden" attr="incomingType.inTypeId" name="inTypeId" />
                             <div class="form-group">
                                 <label>收入类型名称：</label>
@@ -84,12 +84,11 @@
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
-                                <span id="error1" style="color: red;"></span>
-                                <br/>
+
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="submit" id="addButton1" class="btn btn-primary" value="修改">
+                                <input type="button" id="editButton" onclick="edit()" class="btn btn-primary" value="修改">
                                 </input>
                             </div>
                         </form>
@@ -110,28 +109,28 @@
                         <h3 class="m-t-none m-b">添加工资</h3>
                         <form role="form" id="addForm" >
                             <div class="form-group">
-                                <label>员工：</label>
-                                <select class="js-example-tags col-sm-12 form-control car_model" name="brandId">
+                                <label  class="control-label">员工：</label>
+                                <select class="js-example-tags col-sm-12 form-control car_model" name="userId">
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>奖金：</label>
+                                <label  class="control-label">奖金：</label>
                                 <input type="text"   name="prizeSalary" class="form-control"/>
                             </div>
 
                             <div class="form-group">
-                                <label>罚金：</label>
-                                <input type="text"  id="" name="minusSalary" class="form-control"/>
+                                <label class="control-label">罚金：</label>
+                                <input type="text"   name="minusSalary" class="form-control"/>
                             </div>
 
                             <div class="form-group">
-                                <label>发放时间：</label>
-                                <input type="text"   onclick="getDate()" id="addDatetimepicker" name="salaryTime" class="form-control datetimepicker"/>
+                                <label class="control-label">发放时间：</label>
+                                <input type="text"  readonly  id="datatimepicker" onclick="getDate()" name="salaryTime" class="form-control datatimepicker"/>
                             </div>
 
                             <div class="form-group">
-                                <label>描述：</label>
-                                <textarea class="form-control" name="salaryDes"
+                                <label class="control-label">描述：</label>
+                                <textarea class="form-control" name="salaryDes" maxlength="400"
                                           rows="3"></textarea>
                             </div>
 
@@ -139,7 +138,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="submit" id="addButton" class="btn btn-primary" value="添加">
+                                <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="添加">
                                 </input>
                                 <input type="reset" name="reset" style="display: none;" />
                             </div>

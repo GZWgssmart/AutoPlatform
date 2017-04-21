@@ -70,7 +70,7 @@ public class IncomingOutgoingController {
     @ResponseBody
     @RequestMapping(value="query_inOutType",method= RequestMethod.GET)
     public Pager4EasyUI<IncomingOutgoing> queryByInOutType(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,@Param("type")String type){
-        logger.info("分页查询所有收支记录");
+        logger.info("根据类型分页查询所有收支记录");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));

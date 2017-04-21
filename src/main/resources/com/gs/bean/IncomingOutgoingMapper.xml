@@ -9,6 +9,9 @@
 		<result column="inOutMoney" property="inOutMoney"></result>
 		<result column="inOutCreatedTime" property="inOutCreatedTime"></result>
 		<result column="inOutStatus" property="inOutStatus"></result>
+		<result column="inOutCreatedUser" property="inOutCreatedUser"></result>
+		<result column="inTypeId" property="inTypeId"></result>
+		<result column="outTypeId" property="outTypeId"></result>
 		<association property="incomingType" javaType="com.gs.bean.IncomingType">
 			<id column="inType_id" property="inTypeId"/>
 			<result column="inTypeName" property="inTypeName"/>
@@ -29,7 +32,7 @@
 	<insert id="insert"  parameterType="incomingOutgoing">
 		<![CDATA[
 			insert into t_incoming_outgoing(inOutId, inTypeId,outTypeId,inOutMoney,inOutCreatedUser,inOutCreatedTime,inOutStatus)
-			 values(uuid(), #{incomingType.inTypeId},#{outgoingType.outTypeId},#{inOutMoney},#{user.userId},now(),#{inOutStatus})
+			 values(uuid(), #{inTypeId},#{outTypeId},#{inOutMoney},#{inOutCreatedUser},now(),#{inOutStatus})
 		]]>
 	</insert>
 
@@ -92,7 +95,6 @@
 
 		]]>
 	</select>
-
 
 
 	<select id="queryByPager" resultType="list" resultMap="incomingOutgoingResultMap" parameterType="com.gs.common.bean.Pager">
