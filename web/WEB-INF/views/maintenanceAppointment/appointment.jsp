@@ -100,8 +100,8 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改预约</h3>
                         <form role="form" id="editForm">
-                            <input type="hidden" attr="product.id" name="id" id="id"/>
                             <div class="col-md-12 form-group">
+                                <input type="hidden" attr="appointment.appointmentId" name="appointmentId" class="form-control"/>
                                 <label>车主姓名：</label>
                                 <input type="text" attr="appointment.userName" name="userName" class="form-control"/>
                             </div>
@@ -219,9 +219,9 @@
                                        class="form-control datetimepicker"/>
                             </div>
 
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label>保养&nbsp;|&nbsp;维修：</label>
-                                <select class="js-example-tags form-control" id="addMaintainOrFix" name="maintainOrFix">
+                                <select id="addMaintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
                                     <option value="保养">保养</option>
                                     <option value="维修">维修</option>
                                 </select>

@@ -72,19 +72,11 @@
 
 	<update id="update" parameterType="appointment">
 		<![CDATA[
-			update t_appointment set userId = #{userId},
-			userName = #{userName},
-			userPhone = #{userPhone},
-			brandId = #{brandId},
-			colorId = #{colorId},
-			modelId = #{modelId},
-			plateId = #{plateId},
-			carPlate = #{carPlate},
-			arriveTime = #{arriveTime},
-			maintainOrFix = #{maintainOrFix},
-			appCreatedTime = #{appCreatedTime},
-			companyId = #{companyId},
-			appoitmentStatus = 'Y' where appointmentId = #{appointmentId}
+			update t_appointment set userId = #{userId},userName = #{userName},
+				userPhone = #{userPhone},brandId = #{brandId},colorId = #{colorId},modelId = #{modelId},plateId = #{plateId},
+				carPlate = #{carPlate},arriveTime = #{arriveTime},maintainOrFix = #{maintainOrFix},
+				appCreatedTime = now(),companyId = #{companyId},appoitmentStatus = 'Y' where appointmentId = #{appointmentId}
+
 		]]>
 	</update>
 
