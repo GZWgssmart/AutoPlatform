@@ -2,6 +2,9 @@ package com.gs.dao;
 
 import com.gs.bean.User;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -11,4 +14,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserDAO extends BaseDAO<String, User>{
 
+    public List<User> queryByUser(String companyId);
 }

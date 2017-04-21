@@ -8,14 +8,7 @@ $(document).ready(function () {
 });
 
 
-function random() {
-    var arr = ['0','1','2','3','4','5','6','7','8','9'];
-    var str = '';
-    for(var i = 0 ; i < 4 ; i ++ ){
-        str += ''+arr[Math.floor(Math.random() * arr.length)];
-    }
-    return str;
-}
+
 
 function gender(value, row, index) {
     if (row.userGender == 'M') {
@@ -226,6 +219,18 @@ function validator(formId) {
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/peopleManage/peopleInfo_insert", formId, "addWin");
+                $.post(url,
+                    $("#" + formId).serialize(),
+                    function (data) {
+                        if (data.result == "success") {
+                            $('#' + winId).modal('hide');
+                            swal(data.message, "默认密码为123456", "success");
+                            $('#cusTable').bootstrapTable('refresh');
+                            $('#' + formId).data('bootstrapValidator').resetForm(true);
+                        } else if (data.result == "fail") {
+                            swal(data.message, "", "error");
+                        }
+                    }, "json");
 
             } else if (formId == "editForm") {
                 formSubmit("/peopleManage/peopleInfo_update", formId, "editWin");
