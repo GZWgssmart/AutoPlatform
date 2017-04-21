@@ -152,7 +152,7 @@
                     <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span class="nav-label">维修保养预约</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_basic.html">预约管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/appointment/appointment">预约管理</a>
                         </li>
                     </ul>
                 </li>

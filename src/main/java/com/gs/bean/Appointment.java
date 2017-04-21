@@ -3,29 +3,34 @@ package com.gs.bean;
 import java.util.Date;
 
 /**
-*由Wjhsmart技术支持
-*
-*@author Wjhsmart
-*@since 2017-04-14 16:16:20
-*/
+ *由Wjhsmart技术支持
+ *
+ *@author Wjhsmart
+ *@since 2017-04-14 16:16:20
+ */
 public class Appointment{
-	private String appointmentId;
-	private String userId;
-	private String userName;
-	private String userPhone;
+	private String appointmentId; //主键 预约编号
+	private String userId; //车主编号
+	private String userName; //车主名
+	private String userPhone; //车主电话
 
-	private String carPlate;
-	private Date arriveTime;
-	private String maintainOrFix;
-	private Date appCreatedTime;
-	private String appoitmentStatus;
+	private String brandId;  //品牌编号
+	private String colorId;   //颜色编号
+	private String modelId;   //车型编号
+	private String plateId;   //车牌编号
+	private String carPlate;  //车牌号
+	private String companyId;  //公司编号
+	private Date arriveTime;  //预估到店时间
+	private String maintainOrFix; //维修或保养
+	private Date appCreatedTime;  //预约创建时间
+	private String appoitmentStatus; //预约状态
 
-	private CarBrand brand;
-	private CarColor color;
-	private CarModel model;
-	private CarPlate plate;
+	private CarBrand brand;  //品牌
+	private CarColor color;  //颜色
+	private CarModel model;  //车型
+	private CarPlate plate;  //车牌
 
-	private Company company;
+	private Company company;//公司
 
 	public String getAppointmentId(){
 		return this.appointmentId;
@@ -128,5 +133,45 @@ public class Appointment{
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	public String getColorId() {
+		return colorId;
+	}
+
+	public void setColorId(String colorId) {
+		this.colorId = colorId;
+	}
+
+	public String getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
+
+	public String getBrandId() {
+		return brandId;
+	}
+
+	public void setBrandId(String brandId) {
+		this.brandId = brandId;
+	}
+
+	public String getPlateId() {
+		return plateId;
+	}
+
+	public void setPlateId(String plateId) {
+		this.plateId = plateId;
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
 	}
 }
