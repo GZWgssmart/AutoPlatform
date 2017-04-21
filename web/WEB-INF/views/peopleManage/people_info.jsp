@@ -19,6 +19,7 @@
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
 
 
 </head>
@@ -134,8 +135,9 @@
 
                             <div class="form-group">
                                 <label class="control-label">住址：</label>
-                                <input type="text"  name="userAddress" attr="user.userAddress"
-                                       class="form-control"/>
+                                <div style="position: relative;">
+                                    <input data-toggle="city-picker" class="address" name="userAddress" attr="user.userAddress">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">基本工资：</label>
@@ -214,8 +216,9 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">住址：</label>
-                                <input type="text" name="userAddress"
-                                       class="form-control"/>
+                                <div style="position: relative;">
+                                    <input data-toggle="city-picker" class="address" name="userAddress">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">身份证：</label>
@@ -230,7 +233,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton" class="btn btn-primary" onclick="add()" value="添加"/>
+                                <input type="button" id="addButton"id="destroy" class="btn btn-primary" onclick="add()" value="添加"/>
                                 </input>
                                 <input type="reset" name="reset" style="display: none"/>
                             </div>
@@ -241,6 +244,8 @@
         </div>
     </div>
 </div>
+
+
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
@@ -254,6 +259,9 @@
 <script src="<%=path %>/js/select2.full.min.js"></script>
 <script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/main.js"></script>
+<script src="<%=path %>/js/city-picker.data.js"></script>
+<script src="<%=path %>/js/city-picker.js"></script>
+
 
 </body>
 </html>

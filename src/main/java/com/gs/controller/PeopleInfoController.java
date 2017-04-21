@@ -103,19 +103,17 @@ public class PeopleInfoController {
     }
 
 
+
     @ResponseBody
     @RequestMapping(value = "query_user", method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryByUser(String companyId) {
-        logger.info("查询自己公司所有员工");
-        List<User> users = userService.queryByUser("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a"); // session里面的companyId
-        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
-        for (User user : users) {
-            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(user.getUserId());
-            comboBox4EasyUI.setText(user.getUserName());
-            comboBox4EasyUIs.add(comboBox4EasyUI);
-        }
-        return comboBox4EasyUIs;
+    public Pager4EasyUI<User> queryByUser(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        logger.info("分页查询所有员工");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(userService.countByUser("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a"));
+        List<User> users =  userService.queryByUser("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+        return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
     }
 }
 

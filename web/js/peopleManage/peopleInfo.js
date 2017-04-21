@@ -29,7 +29,6 @@ function operateFormatter(value, row, index) {
     } else {
         return [
             '<button type="button" class="updateActive btn btn-default  btn-sm">激活</button>',
-            '<button type="button" class="showUpdateInfo btn btn-default  btn-sm">编辑</button>'
         ].join('');
     }
 }
@@ -219,18 +218,6 @@ function validator(formId) {
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/peopleManage/peopleInfo_insert", formId, "addWin");
-                $.post(url,
-                    $("#" + formId).serialize(),
-                    function (data) {
-                        if (data.result == "success") {
-                            $('#' + winId).modal('hide');
-                            swal(data.message, "默认密码为123456", "success");
-                            $('#cusTable').bootstrapTable('refresh');
-                            $('#' + formId).data('bootstrapValidator').resetForm(true);
-                        } else if (data.result == "fail") {
-                            swal(data.message, "", "error");
-                        }
-                    }, "json");
 
             } else if (formId == "editForm") {
                 formSubmit("/peopleManage/peopleInfo_update", formId, "editWin");

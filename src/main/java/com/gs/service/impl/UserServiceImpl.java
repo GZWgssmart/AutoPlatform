@@ -40,4 +40,8 @@ public class UserServiceImpl implements UserService {
 	public List<User> queryByUser(String companyId) {
 		return userDAO.queryByUser(companyId);
 	}
+
+	public int countByUser(String companyId) {
+		return userDAO.countByUser(companyId);
+	}
 }

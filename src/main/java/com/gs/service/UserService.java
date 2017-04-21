@@ -13,4 +13,6 @@ import java.util.List;
 public interface UserService extends BaseService<String, User>{
 
     public List<User> queryByUser(String companyId);
+
+    public int countByUser(String companyId);
 }

@@ -19,6 +19,7 @@
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -133,8 +134,9 @@
 
                             <div class="form-group">
                                 <label class="control-label">住址：</label>
-                                <input type="text"  name="userAddress" attr="user.userAddress"
-                                       class="form-control"/>
+                                <div style="position: relative;">
+                                    <input data-toggle="city-picker" class="address" name="userAddress" attr="user.userAddress">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">入驻公司：</label>
@@ -203,8 +205,9 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">住址：</label>
-                                <input type="text" name="userAddress"
-                                       class="form-control"/>
+                                <div style="position: relative;">
+                                    <input data-toggle="city-picker" class="address" name="userAddress">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">入驻公司：</label>
@@ -238,5 +241,7 @@
 <script src="<%=path %>/js/select2.full.min.js"></script>
 <script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/main.js"></script>
+<script src="<%=path %>/js/city-picker.data.js"></script>
+<script src="<%=path %>/js/city-picker.js"></script>
 </body>
 </html>

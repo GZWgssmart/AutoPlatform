@@ -15,4 +15,6 @@ import java.util.List;
 public interface UserDAO extends BaseDAO<String, User>{
 
     public List<User> queryByUser(String companyId);
+
+    public int countByUser(String companyId);
 }

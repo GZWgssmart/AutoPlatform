@@ -110,6 +110,12 @@
 		]]>
 	</select>
 
+
+	<select id="countByUser" resultType="int" parameterType="string">
+		<![CDATA[
+			SELECT COUNT(*) FROM t_user WHERE companyId = #{companyId}
+		]]>
+	</select>
 	<select id="queryByPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
 
 		<![CDATA[
