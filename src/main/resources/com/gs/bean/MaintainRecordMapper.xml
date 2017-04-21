@@ -26,7 +26,7 @@
     <insert id="insert" parameterType="maintainRecord">
 		<![CDATA[
           insert into t_maintain_record(recordId, checkinId, startTime, endTime, actualEndTime, recordCreatedTime, pickupTime, companyId, recordDes, recordStatus)
-            values(uuid(), #{checkinId}, #{startTime}, #{endTime}, #{actualEndTime}, now(), #{pickupTime}, #{companyId}, #{recordDes}, 'Y')
+            values(#{recordId}, #{checkinId}, #{startTime}, #{endTime}, #{actualEndTime}, now(), #{pickupTime}, #{companyId}, #{recordDes}, 'Y')
         ]]>
 	</insert>
 

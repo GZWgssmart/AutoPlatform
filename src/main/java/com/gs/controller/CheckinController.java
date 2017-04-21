@@ -10,6 +10,7 @@ import com.gs.common.util.UUIDUtil;
 import com.gs.service.CarBrandService;
 import com.gs.service.CheckinService;
 import com.gs.service.MaintainRecordService;
+import com.gs.service.WorkInfoService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Administrator on 2017-04-16.
@@ -43,6 +45,9 @@ public class CheckinController {
 
     @Resource
     private MaintainRecordService maintainRecordService;
+
+    @Resource
+    private WorkInfoService workInfoService;
 
     @RequestMapping(value = "checkin_page", method = RequestMethod.GET)
     public String checkinPage() {
@@ -72,18 +77,24 @@ public class CheckinController {
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addCheckin(Checkin checkin) {
-        logger.info("添加登记记录");
+        logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录和工单信息");
         String checkinId = UUIDUtil.uuid();
         checkin.setCheckinId(checkinId);
         checkin.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
 
         MaintainRecord maintainRecord = new MaintainRecord();
+        String recordId = UUIDUtil.uuid();
+        maintainRecord.setRecordId(recordId);
         maintainRecord.setCheckinId(checkinId);
         maintainRecord.setStartTime(new Date());
         maintainRecord.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+
+        WorkInfo workInfo = new WorkInfo();
+        workInfo.setRecordId(recordId);
+        workInfoService.insert(workInfo);
         maintainRecordService.insert(maintainRecord);
         checkinService.insert(checkin);
-        return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录已经自动生成");
+        return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录和工单信息已经自动生成");
     }
 
     @ResponseBody
