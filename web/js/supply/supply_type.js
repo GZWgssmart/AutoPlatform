@@ -88,12 +88,12 @@ function validator(formId) {
                 message: '验证失败',
                 validators: {
                     notEmpty: {
-                        message: '供应商姓名不能为空'
+                        message: '供应商分类姓名不能为空'
                     },
                     stringLength: {
                         min: 2,
                         max: 20,
-                        message: '供应商长度必须在2到20位之间'
+                        message: '供应商分类长度必须在2到20位之间'
                     }
                 }
             }
@@ -107,7 +107,6 @@ function validator(formId) {
             } else if (formId == "editForm") {
                 formSubmit("/supplyType/edit", formId, "editWin");
             }
-
 
         })
 

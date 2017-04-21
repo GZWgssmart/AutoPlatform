@@ -8,47 +8,22 @@ $(document).ready(function () {
 
 /** 编辑数据 */
 function showEditWin() {
+    validator("editForm")
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
         var product = selectRow[0];
-        $("#updateForm").fill(product);
+        $("#editForm").fill(product);
         $("#editWin").modal('show');
     }
 }
 
-/**提交编辑数据 */
-function updateSupply() {
-    $.post("/supply/update",
-        $("#updateForm").serialize(),
-        function(data){
-            if(data.result == "success"){
-                $('#editWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            }else if(data.result == "fail"){
-                swal(data.message, "", "error");
-            }
-        },"json");
-
-}
-
-/**提交添加数据 */
-function addSupply() {
-    $.post("/supply/add",
-        $("#addForm").serialize(),
-        function(data){
-            if(data.result == "success"){
-                $('#addWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            }else if(data.result == "fail"){
-                swal(data.message, "", "error");
-            }
-        },"json");
-
+function showAddWin() {
+    validator("addForm");
+    $("#addButton").removeAttr("disabled");
+    $("#addWin").modal('show');
 }
 
 function operateFormatter(value, row, index) {
@@ -89,9 +64,49 @@ window.operateEvents = {
             },"json");
     },
     'click .showUpdateSupplyType1': function (e, value, row, index) {
+        validator("editForm");
         var supply = row;
-        $("#updateForm").fill(supply);
-        $("#addButton1").removeAttr("disabled");
+        $("#editForm").fill(supply);
+        $("#addButton").removeAttr("disabled");
         $("#editWin").modal('show');
     }
+}
+
+/** 表单验证 */
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            supplyTypeName: {
+                message: '验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '供应商姓名不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 20,
+                        message: '供应商长度必须在2到20位之间'
+                    }
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/supply/add", formId, "addWin");
+
+            } else if (formId == "editForm") {
+                formSubmit("/supply/edit", formId, "editWin");
+            }
+
+        })
+
 }
