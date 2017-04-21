@@ -1,7 +1,5 @@
 package com.gs.bean;
 
-import java.util.Date;
-
 /**
 *由Wjhsmart技术支持
 *
@@ -14,6 +12,7 @@ public class AccessoriesType {
 	private String accTypeDes;
 	private String companyId;
 	private String accTypeStatus;
+	private Company company;
 
 	@Override
 	public String toString() {
@@ -24,6 +23,13 @@ public class AccessoriesType {
 				", companyId='" + companyId + '\'' +
 				", accTypeStatus='" + accTypeStatus + '\'' +
 				'}';
+	}
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	public String getAccTypeId(){

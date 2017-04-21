@@ -5,12 +5,20 @@
 <mapper namespace="com.gs.dao.AccessoriesTypeDAO">
 
 	<resultMap id="accessoriesTypeResultMap" type="accessoriesType">
+		<id property="accTypeId" column="accTypeId" />
+		<result property="accTypeName" column="accTypeName" />
+		<result property="accTypeDes" column="accTypeDes" />
+		<result property="accTypeStatus" column="accTypeStatus" />
 
+		<association property="company" javaType="com.gs.bean.Company">
+			<id property="companyId" column="companyId" />
+			<id property="companyName" column="companyName" />
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="accessoriesType">
 		<![CDATA[
-			INSERT into t_accessories_type(accTypeId, accTypeName, accTypeDes, companyId, accTypeStatus) values(uuid(), #{accTypeName}, #{accTypeDes}, #{companyId}, #{accTypeStatus})
+			INSERT into t_accessories_type(accTypeId, accTypeName, accTypeDes, companyId, accTypeStatus) values(uuid(), #{accTypeName}, #{accTypeDes}, #{companyId}, 'Y')
 		]]>
 	</insert>
 
@@ -76,7 +84,8 @@
 
 	<select id="queryByPager" resultType="list" resultMap="accessoriesTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select * from t_accessories_type limit #{beginIndex}, #{pageSize}
+			select u.*, c.companyId, c.companyName from t_accessories_type u, t_company c where 1=1 and c.companyId = u.companyId
+						order by accTypeDes Desc, u.companyId
 		]]>
 	</select>
 
@@ -88,7 +97,7 @@
 
 	<select id="count" resultType="int">
 	<![CDATA[
- 			select count(accTypeId) from t_accessories_type
+ 			select count(*) from t_accessories_type
 		]]>
 </select>
 

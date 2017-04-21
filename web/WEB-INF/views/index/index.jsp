@@ -143,7 +143,7 @@
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/accessoriesSale/showAccessoriesSaleHome">配件销售管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path %>/accessoriesType/stock">库存管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/accessories/stock">库存管理</a>
                         </li>
                     </ul>
                 </li>
