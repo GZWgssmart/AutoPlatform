@@ -6,21 +6,33 @@ import java.util.Date;
  * 由Wjhsmart技术支持
  *
  * @author Wjhsmart
- * @since 2017-04-14 16:16:20
+ * @since 2017-04
+ * 14 16:16:20
  */
 public class AccessoriesBuy {
-    private String accBuyId;
-    private String accUnit;
-    private int accBuyCount;
-    private double accBuyPrice;
-    private double accBuyTotal;
-    private double accBuyDiscount;
-    private double accBuyMoney;
-    private Date accBuyTime;
-    private Date accBuyCreatedTime;
-    private String companyId;
-    private String accBuyStatus;
-    private String accId;
+    private String accBuyId; // 购买ID
+    private String accUnit; // 配件计量单位
+    private int accBuyCount; // 配件购买数量
+    private double accBuyPrice; // 配件购买单价
+    private double accBuyTotal; // 配件购买总价
+    private double accBuyDiscount; // 配件购买折扣
+    private double accBuyMoney; // 配件购买最终价
+    private Date accBuyTime; // 配件购买时间
+    private Date accBuyCreatedTime; // 配件购买记录创建时间
+    private String accBuyStatus; // 购买状态
+    private String accId; // 配件ID
+    private String companyId; // 公司ID
+
+    private Accessories accessories; // 关联配件表
+    private Company company; // 关联公司表
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
     public String getAccId() {
         return accId;
@@ -30,7 +42,6 @@ public class AccessoriesBuy {
         this.accId = accId;
     }
 
-    private Accessories accessories;
 
     public Accessories getAccessories() {
         return accessories;
@@ -140,8 +151,11 @@ public class AccessoriesBuy {
                 ", accBuyMoney=" + accBuyMoney +
                 ", accBuyTime=" + accBuyTime +
                 ", accBuyCreatedTime=" + accBuyCreatedTime +
-                ", companyId='" + companyId + '\'' +
                 ", accBuyStatus='" + accBuyStatus + '\'' +
+                ", accId='" + accId + '\'' +
+                ", companyId='" + companyId + '\'' +
+                ", accessories=" + accessories +
+                ", company=" + company +
                 '}';
     }
 }

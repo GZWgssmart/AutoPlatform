@@ -4,17 +4,46 @@
 
 <mapper namespace="com.gs.dao.AccessoriesBuyDAO">
 
-    <resultMap id="accessoriesBuyResultMap" type="accessoriesBuy">
+    <resultMap id="accessoriesBuyResultMap" type="com.gs.bean.AccessoriesBuy">
+        <id property="accBuyId" column="accBuyId"/>
+        <result property="accUnit" column="accUnit"/>
+        <result property="accBuyCount" column="accBuyCount"/>
+        <result property="accBuyPrice" column="accBuyPrice"/>
+        <result property="accBuyTotal" column="accBuyTotal"/>
+        <result property="accBuyDiscount" column="accBuyDiscount"/>
+        <result property="accBuyMoney" column="accBuyMoney"/>
+        <result property="accBuyTime" column="accBuyTime"/>
+        <result property="accBuyCreatedTime" column="accBuyCreatedTime"/>
+        <result property="companyId" column="companyId"/>
+        <result property="accBuyStatus" column="accBuyStatus"/>
+
         <association property="accessories" javaType="com.gs.bean.Accessories">
-            <id column="accId" property="accessories"></id>
+            <id property="accId" column="accId"/>
+            <result property="accName" column="accName"/>
+            <result property="accCommodityCode" column="accCommodityCode"/>
+            <result property="accDes" column="accDes"/>
+            <result property="accPrice" column="accPrice"/>
+            <result property="accSalePrice" column="accSalePrice"/>
+            <result property="accUnit" column="accUnit"/>
+            <result property="accTotal" column="accTotal"/>
+            <result property="accIdle" column="accIdle"/>
+            <result property="accUsedTime" column="accUsedTime"/>
+            <result property="accBuyedTime" column="accBuyedTime"/>
+            <result property="supplyId" column="supplyId"/>
+            <result property="accCreatedTime" column="accCreatedTime"/>
+            <result property="accTypeId" column="accTypeId"/>
+            <result property="companyId" column="companyId"/>
+            <result property="accStatus" column="accStatus"/>
         </association>
+
+
     </resultMap>
 
     <insert id="insert" parameterType="accessoriesBuy">
 		insert into
 		auto_platform.t_accessories_buy(accBuyId, accId, accUnit, accBuyCount, accBuyPrice, accBuyTotal, accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime, companyId, accBuyStatus)
 		values
-		(#{accBuyId},#{accId},#{accUnit},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},now(),now(),#{companyId},#{accBuyStatus})
+		(uuid(),#{accId},#{accUnit},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},now(),#{companyId},#{accBuyStatus})
 
 	</insert>
 
@@ -43,9 +72,12 @@
 	</delete>
 
     <update id="update" parameterType="accessoriesBuy">
-		<![CDATA[
-
-        ]]>
+		update
+		auto_platform.t_accessories_buy
+		set
+		accUnit = #{accUnit}, accBuyCount = #{accBuyCount}, accBuyPrice = #{accBuyPrice}, accBuyTotal = #{accBuyTotal},
+		accBuyDiscount = #{accBuyDiscount}, accBuyMoney = #{accBuyMoney}, accBuyTime = #{accBuyTime}, accBuyStatus = #{accBuyStatus}
+		where accBuyId = #{accBuyId}
 	</update>
 
     <update id="batchUpdate" parameterType="list">
@@ -55,15 +87,11 @@
 	</update>
 
     <select id="queryAll" resultMap="accessoriesBuyResultMap">
-		<![CDATA[
-
-        ]]>
+		select * from auto_platform.t_accessories_buy
 	</select>
 
     <select id="queryByStatus" resultMap="accessoriesBuyResultMap" parameterType="string">
-		<![CDATA[
-
-        ]]>
+		select * from auto_platform.t_accessories_buy where accBuyStatus = #{status}
 	</select>
 
     <select id="query" parameterType="accessoriesBuy" resultType="accessoriesBuy">
@@ -73,13 +101,18 @@
 	</select>
 
     <select id="queryById" parameterType="string" resultType="accessoriesBuy">
-		<![CDATA[
-
-        ]]>
+		select * from auto_platform.t_accessories_buy where accBuyId = #{id}
 	</select>
 
     <select id="queryByPager" resultType="list" resultMap="accessoriesBuyResultMap" parameterType="com.gs.common.bean.Pager">
-		select * from auto_platform.t_accessories_buy limit #{beginIndex},#{pageSize}
+		select * from
+		auto_platform.t_accessories_buy ab
+		left join
+		auto_platform.t_accessories ac
+		on
+		ab.accId = ac.accId
+		limit
+		#{beginIndex},#{pageSize}
     </select>
 
     <select id="count" resultType="int">
@@ -87,15 +120,11 @@
 	</select>
 
     <update id="inactive" parameterType="string">
-		<![CDATA[
-
-        ]]>
+		update auto_platform.t_accessories_buy set accBuyStatus = 'N' WHERE accBuyId = #{id}
 	</update>
 
     <update id="active" parameterType="string">
-		<![CDATA[
-
-        ]]>
+		update auto_platform.t_accessories_buy set accBuyStatus = 'Y' WHERE accBuyId = #{id}
 	</update>
 
 </mapper>

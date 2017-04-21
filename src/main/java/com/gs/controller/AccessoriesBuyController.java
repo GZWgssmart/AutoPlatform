@@ -1,21 +1,27 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesBuy;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.util.UUIDUtil;
 import com.gs.service.AccessoriesBuyService;
+import com.gs.service.AccessoriesService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.text.ParseException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +35,8 @@ public class AccessoriesBuyController {
 
     @Resource
     AccessoriesBuyService accessoriesBuyService;
+    @Resource
+    AccessoriesService accessoriesService;
 
     /**
      * 显示配件采购管理
@@ -42,22 +50,28 @@ public class AccessoriesBuyController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "addAccessoriesBuyInfo", method = RequestMethod.POST)
-    private ControllerResult addAccessoriesBuyInfo(AccessoriesBuy accessoriesBuy, String accName, String accTypeName, String companyId) throws ParseException {
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    private ControllerResult addAccessoriesBuyInfo(AccessoriesBuy accessoriesBuy, String accTypeName, String companyId) {
         logger.info("添加采购信息");
-        AccessoriesBuy ab = new AccessoriesBuy();
-        if (accessoriesBuy.getAccBuyMoney() != 0 && accessoriesBuy.getAccBuyCount() >= 1 && accessoriesBuy.getAccBuyPrice() >= 0
-                && accessoriesBuy.getAccBuyTotal() >= 0 && accessoriesBuy.getAccBuyDiscount() > 0 && accessoriesBuy.getAccBuyMoney() > 0
-                && !accName.equals("") && !accTypeName.equals("")) {
-            ab.setAccBuyCount(accessoriesBuy.getAccBuyCount());
-            ab.setAccBuyPrice(accessoriesBuy.getAccBuyPrice());
-            ab.setAccBuyTotal(accessoriesBuy.getAccBuyTotal());
-            ab.setAccBuyDiscount(accessoriesBuy.getAccBuyDiscount());
-            ab.setAccBuyMoney(accessoriesBuy.getAccBuyMoney());
-            ab.setAccBuyId(UUIDUtil.uuid());
-            accessoriesBuyService.insert(ab);
-            return ControllerResult.getSuccessResult("添加成功");
-        } else return ControllerResult.getFailResult("添加失败");
+
+        Accessories accessories = accessoriesService.queryById(accessoriesBuy.getAccId());
+        accessories.setAccIdle(accessories.getAccIdle() + accessoriesBuy.getAccBuyCount());
+        accessoriesService.update(accessories);
+   /*
+        Accessories accessories = new Accessories();
+        accessories.setAccId(accessoriesBuy.getAccId());
+        accessories.setAccUnit(accessoriesBuy.getAccUnit());
+        accessories.setAccName(accessoriesBuy.getAccessories().getAccName());
+        accessories.setAccBuyedTime(accessoriesBuy.getAccBuyTime());
+        accessories.setAccPrice(accessoriesBuy.getAccBuyPrice());
+        accessoriesService.insert(accessories);*/
+
+
+
+
+        accessoriesBuyService.insert(accessoriesBuy);
+
+        return ControllerResult.getFailResult("添加失败");
     }
 
     @ResponseBody
@@ -71,4 +85,34 @@ public class AccessoriesBuyController {
         List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByPager(pager);
         return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
     }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "updateStatus", method = RequestMethod.GET)
+    public ControllerResult updateStatus(@Param("id") String id, @Param("status") String status) {
+        logger.info("更新收入类型状态");
+        if (status.equals("Y")) {
+            accessoriesBuyService.active(id);
+        } else if (status.equals("N")) {
+            accessoriesBuyService.inactive(id);
+        }
+        return ControllerResult.getSuccessResult("更新成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public ControllerResult updateAccessoriesBuyInfo(AccessoriesBuy accessoriesBuy) {
+        Accessories acc = new Accessories();
+        accessoriesBuyService.update(accessoriesBuy);
+        acc.setAccUnit(accessoriesBuy.getAccUnit());
+        accessoriesService.update(acc);
+        return ControllerResult.getSuccessResult("更新成功");
+    }
+
 }
