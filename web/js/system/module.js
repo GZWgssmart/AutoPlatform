@@ -10,110 +10,39 @@ $(document).ready(function () {
     $("#search").bind("click", initTable);
 });
 
+function showAddWin() {
+    validator("addForm");
+    $("input[type=reset]").trigger("click");
+    $("#addWin").modal('show');
+}
+
 /** 编辑数据 */
 function showEditWin() {
+    validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
-    if (selectRow.length == 0) {
+    if (selectRow.length < 1) {
         swal('编辑失败', "必须选择一条数据进行编辑", "error");
         return false;
     } else if (selectRow.length > 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
+        return false;
     } else {
         var module = selectRow[0];
-        $("#updateForm").fill(module);
+        $("#editForm").fill(module);
         $("#editWin").modal('show');
-    }
-}
-
-/**提交编辑数据 */
-function updateModule() {
-    $.post(contextPath + "/module/update_module",
-        $("#updateForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#editWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            } else if (data.result == "fail") {
-                swal(data.message, "", "error");
-            }
-        }, "json");
-
-}
-
-/**提交添加数据 */
-function addModule() {
-    $.post(contextPath + "/module/add_module",
-        $("#addForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#addWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-                $("input[type=reset]").trigger("click");
-            } else if (data.result == "fail") {
-                swal(data.message, "", "error");
-            }
-        }, "json");
-
-}
-
-/**
- * 批量删除数据
- */
-function deleteModule() {
-    var rows = $("#cusTable").bootstrapTable('getSelections');
-    if (rows.length < 1) {
-        swal('删除失败', "请选择一条或多条数据进行删除", "error");
-    } else {
-        var ids = "";
-        for (var i = 0, len = rows.length; i < len; i++) {
-            if (ids == "") {
-                ids = rows[i].id;
-            } else {
-                ids += "," + rows[i].id
-            }
-            if (ids != "") {
-                swal({
-                        title: "确定要删除所选数据?",
-                        text: "删除后将无法恢复，请谨慎操作！",
-                        type: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "是的，我要删除!",
-                        cancelButtonText: "让我在考虑一下....",
-                        closeOnConfirm: false
-                    },
-                    function () {
-                        $.get(contextPath + "/module/deleteById/" + rows[0].ids,
-                            function (data) {
-                                swal(data.message, "您已经永久删除了这条信息。", "success");
-                                $('#cusTable').bootstrapTable('refresh');
-                            }, "json");
-
-                    });
-            }
-        }
-
-    }
-}
-
-function thisStatus(value, row, index) {
-    if (value == 'Y') {
-        return "可用";
-    } else {
-        return "不可用";
     }
 }
 
 function operateFormatter(value, row, index) {
     if (row.moduleStatus == 'Y') {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>',
+            '<button type="button" class="showEditModule btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>',
+            '<button type="button" class="showEditModule btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     }
 }
@@ -125,7 +54,6 @@ window.operateEvents = {
             function (data) {
                 if (data.result == "success") {
                     $('#addWin').modal('hide');
-                    // swal(data.message, "", "success");
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
@@ -144,6 +72,12 @@ window.operateEvents = {
                     swal(data.message, "", "error");
                 }
             }, "json");
+    },
+    'click .showEditModule': function (e, value, row, index) {
+        var module = row;
+        $("#editForm").fill(module);
+        validator("editForm");
+        $("#editWin").modal('show');
     }
 }
 
@@ -153,4 +87,41 @@ function queryAll() {
 
 function queryStatus(status) {
     initTable('cusTable', contextPath + '/module/queryByStatus_module?status=' + status);
+}
+
+/** 表单验证 */
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            moduleName: {
+                message: '模块名称验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '模块名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 30,
+                        message: '模块名称长度必须在2到30位之间'
+                    }
+                }
+            }
+        }
+    })
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit(contextPath + "/module/add_module", formId, "addWin");
+
+            } else if (formId == "editForm") {
+                formSubmit(contextPath + "/module/update_module", formId, "editWin");
+            }
+        })
+
 }

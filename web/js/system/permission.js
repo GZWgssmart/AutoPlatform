@@ -13,7 +13,7 @@ function showAduqPermission() {
     $("#allotPermission").hide();
     initTable("cusTable", contextPath + "/permission/query_pager");
     initSelect2("module_all", "选择模块查询", contextPath + "/module/query_all", "150");
-    initSelect2("module_alll", "选择所属模块", contextPath + "/module/query_all", "540");
+    initSelect2("module_all_2", "选择所属模块", contextPath + "/module/query_all", "540");
     $("#aduqPermission").show();
 }
 
@@ -68,7 +68,6 @@ function drawPermission(data) {
             yStr += '<span onclick="delById(' + str + ',this);" class="label label-success">' + data[index].permissionName + '&nbsp;&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></span>';
             count1++;
         } else if (data[index].status == 0) {
-            alert(count2 + ":" + data[index].permissionId);
             ypAll[count2] = data[index].permissionId;
             nStr += '<span onclick="addById(' + str + ',this);" class="label label-warning">' + data[index].permissionName + '&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle"></i></span>';
             count2++;
@@ -144,11 +143,13 @@ function queryByStatus(status) {
 function operateFormatter(value, row, index) {
     if (row.permissionStatus == 'Y') {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>',
+            '<button type="button" class="showEditPermission btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>',
+            '<button type="button" class="showEditPermission btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     }
 }
@@ -179,16 +180,95 @@ window.operateEvents = {
                     swal(data.message, "", "error");
                 }
             }, "json");
+    },
+    'click .showEditPermission': function (e, value, row, index) {
+        var permission = row;
+        $("#editForm").fill(permission);
+        $('#moduleSelect3').html('<option value="' + permission.module.moduleId + '">' + permission.module.moduleName + '</option>').trigger("change");
+        validator("editForm");
+        $("#editWin").modal('show');
     }
 }
 
 function showAddWin() {
-    /*validator("addForm");*/
+    validator("addForm");
     $('#moduleSelect2').html('').trigger("change");
     $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }
 
 function showEditWin() {
-    $("#editWin").modal('show');
+    validator("editForm");
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length < 1) {
+        swal('编辑失败', "必须选择一条数据进行编辑", "error");
+        return false;
+    } else if (selectRow.length > 1) {
+        swal('编辑失败', "只能选择一条数据进行编辑", "error");
+        return false;
+    } else {
+        var permission = selectRow[0];
+        $("#editForm").fill(permission);
+        $('#moduleSelect3').html('<option value="' + permission.module.moduleId + '">' + permission.module.moduleName + '</option>').trigger("change");
+        $("#editWin").modal('show');
+    }
+}
+
+/** 表单验证 */
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            moduleId: {
+                message: '所属模块验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '所属模块不能为空'
+                    }
+                }
+            },
+            permissionName: {
+                message: '权限名称验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '权限名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 40,
+                        message: '权限名称长度必须在2到40位之间'
+                    }
+                }
+            }
+            ,
+            permissionZHName: {
+                message: '权限中文名称验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '权限中文名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 30,
+                        message: '权限中文名称长度必须在2到30位之间'
+                    }
+                }
+            }
+        }
+    })
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit(contextPath + "/permission/add_permission", formId, "addWin");
+
+            } else if (formId == "editForm") {
+                formSubmit(contextPath + "/permission/update_permission", formId, "editWin");
+            }
+        })
+
 }

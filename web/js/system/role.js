@@ -11,22 +11,16 @@ $(document).ready(function () {
 
 });
 
-function thisStatus(value, row, index) {
-    if (value == 'Y') {
-        return "可用";
-    } else {
-        return "不可用";
-    }
-}
-
 function operateFormatter(value, row, index) {
     if (row.roleStatus == 'Y') {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>',
+            '<button type="button" class="showEditRole btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>',
+            '<button type="button" class="showEditRole btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     }
 }
@@ -56,53 +50,71 @@ window.operateEvents = {
                     swal(data.message, "", "error");
                 }
             }, "json");
-    }
-}
-
-/** 编辑数据 */
-function showEditWin() {
-    var selectRow = $("#cusTable").bootstrapTable('getSelections');
-    if (selectRow.length == 0) {
-        swal('编辑失败', "必须选择一条数据进行编辑", "error");
-        return false;
-    } else if (selectRow.length > 1) {
-        swal('编辑失败', "只能选择一条数据进行编辑", "error");
-    } else {
-        var product = selectRow[0];
-        $("#updateForm").fill(product);
+    },
+    'click .showEditRole': function (e, value, row, index) {
+        var role = row;
+        $("#editForm").fill(role);
+        validator("editForm");
         $("#editWin").modal('show');
     }
 }
 
-/**提交编辑数据 */
-function updateRole() {
-    $.post(contextPath + "/role/update_role",
-        $("#updateForm").serialize(),
-        function(data){
-            if(data.result == "success"){
-                $('#editWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            }else if(data.result == "fail"){
-                swal(data.message, "", "error");
-            }
-        },"json");
-
+function showAddWin() {
+    validator("addForm");
+    $("input[type=reset]").trigger("click");
+    $("#addWin").modal('show');
 }
 
-/**提交添加数据 */
-function addRole() {
-    $.post(contextPath + "/role/add_role",
-        $("#addForm").serialize(),
-        function(data){
-            if(data.result == "success"){
-                $('#addWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-                $("input[type=reset]").trigger("click");
-            }else if(data.result == "fail"){
-                swal(data.message, "", "error");
+/** 编辑数据 */
+function showEditWin() {
+    validator("editForm");
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length < 1) {
+        swal('编辑失败', "必须选择一条数据进行编辑", "error");
+        return false;
+    } else if (selectRow.length > 1) {
+        swal('编辑失败', "只能选择一条数据进行编辑", "error");
+        return false;
+    } else {
+        var role = selectRow[0];
+        $("#editForm").fill(role);
+        $("#editWin").modal('show');
+    }
+}
+
+/** 表单验证 */
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            roleName: {
+                message: '角色名称验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '角色名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 30,
+                        message: '角色名称长度必须在2到20位之间'
+                    }
+                }
             }
-        },"json");
+        }
+    })
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit(contextPath + "/role/add_role", formId, "addWin");
+
+            } else if (formId == "editForm") {
+                formSubmit(contextPath + "/role/update_role", formId, "editWin");
+            }
+        })
 
 }

@@ -96,7 +96,11 @@ public class ModuleController {
     @ResponseBody
     @RequestMapping(value = "queryByStatus_module", method = RequestMethod.GET)
     public Pager4EasyUI<Module> queryByStatusModule(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        logger.info("根据状态分页查询模块");
+        if (status.equals("Y")) {
+            logger.info("分页查询可用的模块");
+        } else {
+            logger.info("分页查询不可用的模块");
+        }
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));

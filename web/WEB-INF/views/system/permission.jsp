@@ -39,21 +39,21 @@
     </style>
 </head>
 <body class="gray-bg">
-<div class="wrapper wrapper-content">
+<div class="container">
     <div class="wrapper wrapper-content">
-        <div class="ibox-title">
-            <button onclick="showAduqPermission();" type="button" class="btn btn-primary" data-toggle="button">
-                管理权限
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <button onclick="showAllotPermission();" type="button" class="btn btn-primary" data-toggle="button">
-                分配权限
-            </button>
+        <div class="wrapper wrapper-content">
+            <div class="ibox-title">
+                <button onclick="showAduqPermission();" type="button" class="btn btn-primary" data-toggle="button">
+                    管理权限
+                </button>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button onclick="showAllotPermission();" type="button" class="btn btn-primary" data-toggle="button">
+                    分配权限
+                </button>
+            </div>
         </div>
-    </div>
 
-    <div class="wrapper wrapper-content" id="aduqPermission" style="display: none">
-        <div class="container">
+        <div class="wrapper wrapper-content" id="aduqPermission" style="display: none">
             <table class="table table-hover" id="cusTable"
                    data-pagination="true"
                    data-show-refresh="true"
@@ -64,13 +64,13 @@
                 <tr>
                     <th data-field="state" data-checkbox="true"></th>
                     <th data-field="permissionName">
-                        名称
+                        权限名称
                     </th>
                     <th data-field="permissionZHName">
-                        中文名称
+                        权限中文名称
                     </th>
                     <th data-field="permissionDes">
-                        描述
+                        权限描述
                     </th>
                     <th data-field="module.moduleName">
                         所属模块
@@ -130,25 +130,35 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-sm-12 b-r">
-                                <h3 class="m-t-none m-b">修改模块信息</h3>
+                                <h3 class="m-t-none m-b">修改权限信息</h3>
                                 <form role="form" id="editForm">
-                                    <input type="hidden" attr="module.moduleId" name="moduleId"/>
+                                    <input type="hidden" attr="permission.permissionId" name="permissionId" />
                                     <div class="form-group">
-                                        <label>模块名称：</label>
-                                        <input type="text" attr="module.moduleName" name="moduleName"
-                                               class="form-control"/>
+                                        <label>所属模块：</label>
+                                        <select id="moduleSelect3" class="js-example-tags form-control module_all_2"
+                                                name="moduleId">
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>权限名称：</label>
+                                        <input attr="permission.permissionName" type="text" name="permissionName" class="form-control"/>
+                                    </div>
 
-                                        <label>模块描述：</label>
-                                        <textarea attr="module.moduleDes" type="textarea" name="moduleDes"
-                                                  class="form-control"></textarea>
+                                    <div class="form-group">
+                                        <label>权限中文名称：</label>
+                                        <input attr="permission.permissionZHName" type="text" name="permissionZHName" class="form-control"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>权限描述：</label>
+                                        <textarea type="textarea" attr="permission.permissionDes" name="permissionDes" class="form-control"></textarea>
                                     </div>
 
                                     <div class="modal-footer" style="overflow:hidden;">
                                         <button type="button" class="btn btn-default"
                                                 data-dismiss="modal">关闭
                                         </button>
-                                        <input type="button" onclick="edit()" id="editButton" class="btn btn-primary"
-                                               value="修改">
+                                        <input type="button" onclick="edit()" id="editButton" class="btn btn-primary" value="修改">
                                         </input>
                                     </div>
                                 </form>
@@ -166,11 +176,11 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-sm-12 b-r">
-                                <h3 class="m-t-none m-b">添加权限</h3>
+                                <h3 class="m-t-none m-b">添加权限信息</h3>
                                 <form role="form" id="addForm">
                                     <div class="form-group">
                                         <label>所属模块：</label>
-                                        <select id="moduleSelect2" class="js-example-tags form-control module_alll"
+                                        <select id="moduleSelect2" class="js-example-tags form-control module_all_2"
                                                 name="moduleId">
                                         </select>
                                     </div>
@@ -193,12 +203,10 @@
                                         <button type="button" class="btn btn-default"
                                                 data-dismiss="modal">关闭
                                         </button>
-                                        <input type="button" class="btn btn-primary" onclick="addModule()" value="添加">
+                                        <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="添加">
                                         </input>
                                         <input type="reset" name="reset" style="display: none;"/>
                                     </div>
-
-
                                 </form>
                             </div>
                         </div>
@@ -209,6 +217,7 @@
     </div>
 
     <div class="wrapper wrapper-content" id="allotPermission" style="display: none">
+        <p>&nbsp;</p>
         <div class="input-group">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">角色类型
@@ -266,9 +275,11 @@
         </div>
     </div>
 </div>
+</div>
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>

@@ -15,6 +15,7 @@
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/font-awesome.min93e3.css" rel="stylesheet">
 
 </head>
 <body>
@@ -35,7 +36,7 @@
             <th data-field="moduleDes" >
                 描述
             </th>
-            <th data-field="moduleStatus" data-formatter="thisStatus">
+            <th data-field="moduleStatus" data-formatter="status">
                 状态
             </th>
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
@@ -45,7 +46,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a href="#addWin" data-toggle="modal"><button type="button" id="add" class="btn btn-default" >
+            <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
@@ -75,7 +76,7 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改模块信息</h3>
-                        <form role="form" id="updateForm" >
+                        <form role="form" id="editForm" >
                             <input type="hidden" attr="module.moduleId" name="moduleId" />
                             <div class="form-group">
                                 <label>模块名称：</label>
@@ -89,7 +90,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="updateModule()">
+                                <input type="button" onclick="edit()" id="editButton" class="btn btn-primary" value="修改">
                                 </input>
                             </div>
                         </form>
@@ -122,13 +123,12 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="addModule()" value="添加">
+                                <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="添加">
                                 </input>
                                 <input type="reset" name="reset" style="display: none;" />
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -138,6 +138,7 @@
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>

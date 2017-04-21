@@ -80,7 +80,11 @@ public class PermissionController {
     @ResponseBody
     @RequestMapping(value = "status_pager", method = RequestMethod.GET)
     public Pager4EasyUI<Permission> queryByStatusPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("moduleId") String status) {
-        logger.info("根据状态来分页查询权限");
+        if (status.equals("Y")) {
+            logger.info("分页查询可用的权限");
+        } else {
+            logger.info("分页查询不可用的权限");
+        }
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
@@ -99,6 +103,27 @@ public class PermissionController {
             permissionService.inactive(id);
         }
         return ControllerResult.getSuccessResult("更新成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "add_permission", method = RequestMethod.POST)
+    public ControllerResult addPermission(Permission permission) {
+        logger.info("添加权限信息");
+        permissionService.insert(permission);
+        return ControllerResult.getSuccessResult("添加成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update_permission", method = RequestMethod.POST)
+    public ControllerResult updatePermission(Permission permission) {
+        logger.info("修改权限信息");
+        System.out.println("" + permission.getPermissionName() +
+                ", " + permission.getPermissionZHName() +
+                ", " + permission.getModuleId() +
+                ", " + permission.getPermissionDes()
+        );
+        permissionService.update(permission);
+        return ControllerResult.getSuccessResult("修改成功");
     }
 
     @ResponseBody
@@ -130,9 +155,6 @@ public class PermissionController {
     @ResponseBody
     @RequestMapping(value = "addByRole_permission", method = RequestMethod.GET)
     public ControllerResult addPermission(@Param("permissionIds") String[] permissionIds, @Param("roleId") String roleId) {
-        for (String s : permissionIds) {
-            System.out.println(s);
-        }
         if (permissionIds.length == 1) {
             logger.info("添加单个权限");
         } else if (permissionIds.length > 1) {

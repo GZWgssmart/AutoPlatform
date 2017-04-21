@@ -12,12 +12,10 @@
 <html>
 <head>
     <title>人员角色管理</title>
-
-
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
-
+    <link href="<%=path %>/css/font-awesome.min93e3.css" rel="stylesheet">
 </head>
 <body>
 
@@ -37,7 +35,7 @@
             <th data-field="roleDes">
                 描述
             </th>
-            <th data-field="roleStatus" data-formatter="thisStatus">
+            <th data-field="roleStatus" data-formatter="status">
                 状态
             </th>
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
@@ -47,8 +45,8 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a href="#addWin" data-toggle="modal">
-                <button type="button" id="add" class="btn btn-default">
+            <a>
+                <button onclick="showAddWin()" type="button" id="add" class="btn btn-default">
                     <i class="glyphicon glyphicon-plus"></i> 添加
                 </button>
             </a>
@@ -62,7 +60,6 @@
     </table>
 </div>
 
-
 <div id="editWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -70,23 +67,22 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改信息</h3>
-                        <form role="form" id="updateForm">
+                        <form role="form" id="editForm">
                             <input type="hidden" attr="role.roleId" name="roleId"/>
                             <div class="form-group">
                                 <label>角色名称：</label>
-                                <input type="text" attr="role.roleName" name="roleName" class="form-control"/>
-                            </div>
-                            <div class="form-group">
+                                <input type="text" attr="role.roleName" name="roleName"  class="form-control"/>
+
                                 <label>角色描述：</label>
-                                <input type="text" name="roleDes" attr="role.roleDes"
-                                       class="form-control"/>
+                                <textarea attr="role.roleDes"  type="textarea" name="roleDes" class="form-control"></textarea>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="updateRole()">
+                                <input type="button" onclick="edit()" id="editButton" class="btn btn-primary"
+                                       value="修改">
                                 </input>
                             </div>
                         </form>
@@ -112,16 +108,15 @@
                             </div>
                             <div class="form-group">
                                 <label>角色描述：</label>
-                                <input type="email" name="roleDes"
-                                       class="form-control"/>
+                                <textarea name="roleDes" class="form-control"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="addRole()" value="添加">
+                                <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="添加">
                                 </input>
-                                <input type="reset" name="reset" style="display: none"/>
+                                <input type="reset" name="reset" style="display: none;"/>
                             </div>
                         </form>
                     </div>
@@ -133,6 +128,7 @@
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>

@@ -20,7 +20,8 @@
 
     <insert id="insert" parameterType="permission">
 		<![CDATA[
-
+			insert into t_permission(permissionId, permissionName, permissionZHName, permissionDes, moduleId, permissionStatus)
+			values(uuid(), #{permissionName}, #{permissionZHName}, #{permissionDes}, #{moduleId}, 'Y')
         ]]>
 	</insert>
 
@@ -50,7 +51,8 @@
 
     <update id="update" parameterType="permission">
 		<![CDATA[
-
+			update t_permission set permissionName = #{permissionName}, permissionZHName = #{permissionZHName}, permissionDes = #{permissionDes},
+			moduleId = #{moduleId}, permissionStatus = 'Y' where permissionId = #{permissionId};
         ]]>
 	</update>
 
@@ -66,6 +68,15 @@
         ]]>
 	</select>
 
+	<select id="queryByPager" resultType="list" resultMap="permissionResultMap"
+			parameterType="com.gs.common.bean.Pager">
+		<![CDATA[
+			select  p.*, m.moduleId, m.moduleName from t_permission p, t_module m
+			where p.moduleId = m.moduleId
+		]]>
+		limit #{beginIndex}, #{pageSize}
+	</select>
+
     <select id="queryByModuleId" parameterType="string" resultMap="permissionResultMap">
 		<![CDATA[
 			select * from t_permission where moduleId = #{moduleId}
@@ -74,7 +85,8 @@
 
 	<select id="queryByModulePager" resultMap="permissionResultMap">
 		<![CDATA[
-			select * from t_permission where moduleId = #{moduleId}
+			select  p.*, m.moduleId, m.moduleName from t_permission p, t_module m
+			where p.moduleId = m.moduleId and p.moduleId = #{moduleId}
         ]]>
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
@@ -87,7 +99,8 @@
 
 	<select id="queryByStatusPager" resultMap="permissionResultMap">
 		<![CDATA[
-			select * from t_permission where permissionStatus = #{status}
+			select  p.*, m.moduleId, m.moduleName from t_permission p, t_module m
+			where p.moduleId = m.moduleId and permissionStatus = #{status}
         ]]>
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
@@ -102,15 +115,6 @@
 		<![CDATA[
 
         ]]>
-	</select>
-
-    <select id="queryByPager" resultType="list" resultMap="permissionResultMap"
-            parameterType="com.gs.common.bean.Pager">
-        <![CDATA[
-
-			select  p.*, m.moduleId, m.moduleName from t_permission p, t_module m where p.moduleId = m.moduleId
-		]]>
-		limit #{beginIndex}, #{pageSize}
 	</select>
 
     <select id="count" resultType="int">
