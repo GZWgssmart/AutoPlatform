@@ -34,7 +34,7 @@
             <th data-field="supplyTypeDes" >
                 分类描述
             </th>
-            <th data-field="companyId" >
+            <th data-field="company.companyName" >
                 公司
             </th>
             <th data-field="supplyTypeStatus" data-formatter="status" >

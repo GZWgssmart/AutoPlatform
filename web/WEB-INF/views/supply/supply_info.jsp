@@ -177,6 +177,8 @@
                             <div class="form-group">
                                 <label>微信：</label>
                                 <input type="text"  name="supplyWechat" class="form-control"/>
+                                <label>供应商分类：</label>
+                                <input type="text" attr="supply.supplyTypeId"  name="supplyTypeId" class="form-control"/>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"

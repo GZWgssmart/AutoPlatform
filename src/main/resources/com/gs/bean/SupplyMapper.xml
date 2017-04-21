@@ -52,7 +52,7 @@
 
 	<select id="queryAll" resultMap="supplyResultMap">
 		<![CDATA[
-
+		select * from t_supply
 		]]>
 	</select>
 

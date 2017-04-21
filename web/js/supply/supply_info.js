@@ -83,17 +83,103 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            supplyTypeName: {
-                message: '验证失败',
+            supplyName: {
+                message: '供应商验证失败',
                 validators: {
                     notEmpty: {
-                        message: '供应商姓名不能为空'
+                        message: '供应商名称不能为空'
                     },
                     stringLength: {
                         min: 2,
-                        max: 20,
-                        message: '供应商长度必须在2到20位之间'
+                        max: 4,
+                        message: '供应商名称长度必须在2到30位之间'
                     }
+                }
+            },
+            supplyTel: {
+                validators: {
+                    notEmpty: {
+                        message: '联系电话不能为空'
+                    },
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: '手机号只能是11位'
+                    }
+                }
+            },
+            supplyPricipal: {
+                validators: {
+                    notEmpty: {
+                        message: '负责人不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 4,
+                        message: '负责人姓名在2到4位之间'
+                    }
+                }
+            },
+            supplyAddress: {
+                validators: {
+                    notEmpty: {
+                        message: '地址不能为空'
+                    }
+
+                }
+            },
+            supplyBank: {
+                validators: {
+                    notEmpty: {
+                        message: '开户银行不能为空'
+                    }
+                }
+            },
+            supplyBankAccount: {
+                validators: {
+                    notEmpty: {
+                        message: '开户人不能为空'
+                    }
+
+                }
+            },
+            supplyBankNo: {
+                validators: {
+                    notEmpty: {
+                        message: '开户卡号不能为空'
+                    },
+                    stringLength: {
+                        min: 16,
+                        max: 19,
+                        message: '卡号在16到19位之间'
+                    },
+                    regexp: {
+                        regexp: /^[0-9]+$/,
+                        message: '卡号不能是中文'
+                    }
+                }
+            },
+            supplyAlipay: {
+                validators: {
+                    notEmpty: {
+                        message: '支付宝不能为空'
+                    },
+                    regexp: {
+                        regexp: /^[A-Za-z0-9]+$/,
+                        message: '支付宝不能是中文'
+                    }
+                }
+            },
+            supplyWechat: {
+                validators: {
+                    notEmpty: {
+                        message: '微信不能为空'
+                    },
+                    regexp: {
+                        regexp: /^[A-Za-z0-9-]+$/,
+                        message: '微信不能是中文，微信是由数字字母中划线组成'
+                    }
+
                 }
             }
         }

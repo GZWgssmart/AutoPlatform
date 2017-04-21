@@ -79,4 +79,12 @@ public class SupplyController {
             return ControllerResult.getSuccessResult("更新成功");
         }
 
+        @ResponseBody
+        @RequestMapping("queryAll")
+        public List<Supply> queryAll() {
+            logger.info("查询所有供应商");
+            List<Supply> supplyList =  supplyService.queryAll();
+            return supplyList;
+        }
+
 }
