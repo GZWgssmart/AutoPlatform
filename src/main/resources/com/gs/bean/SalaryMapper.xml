@@ -52,6 +52,9 @@
 
 	<update id="update" parameterType="salary">
 		<![CDATA[
+			update t_salary set userId = #{userId},prizeSalary = #{prizeSalary},
+			minusSalary = #{minusSalary},totalSalary = #{totalSalary},salaryDes = #{salaryDes},
+			salaryTime = #{salaryTime} where salaryId = #{salaryId}
 
 		]]>
 	</update>

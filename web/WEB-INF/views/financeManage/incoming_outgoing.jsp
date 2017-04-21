@@ -39,9 +39,9 @@
             <th data-field="inOutMoney" >
                 收支金额
             </th>
-            <%--<th data-field="user" data-formatter="showUserName">
+            <th data-field="user.userName">
                 创建人
-            </th>--%>
+            </th>
             <th data-field="inOutCreatedTime" data-formatter="formatterDate">
                 创建时间
             </th>

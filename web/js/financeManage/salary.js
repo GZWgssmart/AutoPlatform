@@ -6,7 +6,7 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/salary/query_pager");
-    initSelect2("car_model", "请选择员工", "/peopleManage/query_user","570");
+
     initDateTimePicker("datatimepicker","salaryTime");
 
 });
@@ -18,10 +18,10 @@ function showEditWin() {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
-        var incomingType = selectRow[0];
+        var salary = selectRow[0];
         validator("editForm");
-        $("#editForm").fill(incomingType);
-        $("#addButton1").removeAttr("disabled");
+        $("#editForm").fill(salary);
+        $("#editTime").val(formatterDate(salary.salaryTime));
         $("#editWin").modal('show');
     }
 }
@@ -32,20 +32,57 @@ function getDate() {
 
 function showAddWin() {
     validator("addForm");
+    $(".userId").val("");
+    $(".userName").val("");
     $("#addWin").modal('show');
 }
 
+function showUserWin(){
+    initTableNotTollbar("userTable", "/peopleManage/query_user");
+    $("#userWin").modal('show');
+
+}
 
 function operateFormatter(value, row, index) {
     return [
-        '<button type="button" class="showUpdateIncomingType1 btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
+        '<button type="button" class="showUpdateIncomingType1 btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
     ].join('');
 }
 window.operateEvents = {
     'click .showUpdateIncomingType1': function (e, value, row, index) {
-        var incomingType = row;
-        $("#editForm").fill(incomingType);
+        var salary = row;
+        validator("editForm");
+        $("#editForm").fill(salary);
+        $("#editTime").val(formatterDate(salary.salaryTime));
         $("#editWin").modal('show');
+    }
+}
+
+function userFormatter(value, row, index) {
+    return [
+        '<button type="button" class="addUserName btn btn-primary  btn-sm" style="margin-right:15px;" >选择</button>'
+    ].join('');
+}
+
+window.userEvents = {
+    'click .addUserName': function (e, value, row, index) {
+        var user = row;
+        $(".userId").val(user.userId);
+        $(".userName").val(user.userName);
+        $("#userWin").modal('hide');
+    }
+}
+
+function addUserName(){
+    var selectRow = $("#userTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一个员工", "error");
+        return false;
+    } else {
+        var user = selectRow[0];
+        $(".userId").val(user.userId);
+        $(".userName").val(user.userName);
+        $("#userWin").modal('hide');
     }
 }
 
@@ -71,10 +108,6 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '奖金不能为空'
-                    },
-                    regexp: {
-                        regexp: /^[0-9]*$/,
-                        message: '奖金只能是数字'
                     }
                 }
             },
@@ -82,10 +115,6 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '罚金不能为空'
-                    },
-                    regexp: {
-                        regexp: /^[0-9]*$/,
-                        message: '罚金只能是数字'
                     }
                 }
             },
@@ -117,7 +146,7 @@ function validator(formId) {
                 formSubmit("/salary/add_salary", formId, "addWin");
 
             } else if (formId == "editForm") {
-                formSubmit("/incomingType/update_incomingType", formId, "editWin");
+                formSubmit("/salary/update_salary", formId, "editWin");
 
             }
 

@@ -77,14 +77,25 @@ public class SalaryController {
         OutgoingType outgoingType = outgoingTypeService.queryByName("工资支出");
         salary.setTotalSalary(user.getUserSalary() + salary.getPrizeSalary() - salary.getMinusSalary());
         salaryService.insert(salary);
+
         IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
         incomingOutgoing.setOutTypeId(outgoingType.getOutTypeId());
-        incomingOutgoing.setInOutCreatedUser("8d98f16b-24cf-11e7-a41a-507b9d3ffd38");
+        incomingOutgoing.setInOutCreatedUser("9fcd1df8-25c6-11e7-ba3e-708bcd91a73a");
         incomingOutgoing.setInOutMoney(salary.getTotalSalary());
         incomingOutgoing.setInOutStatus("Y");
         incomingOutgoingService.insert(incomingOutgoing);
         return ControllerResult.getSuccessResult("添加成功");
 
+    }
+
+    @ResponseBody
+    @RequestMapping(value="update_salary", method=RequestMethod.POST)
+    public ControllerResult incomingUpdate(Salary salary){
+        logger.info("更新工资");
+        User user = userService.queryById(salary.getUserId());
+        salary.setTotalSalary(user.getUserSalary() + salary.getPrizeSalary() - salary.getMinusSalary());
+        salaryService.update(salary);
+        return ControllerResult.getSuccessResult("更新成功");
     }
 
 

@@ -96,6 +96,11 @@
 										$(item).val(value);
 									}
 									break;
+								case "number":
+									if (value) {
+										$(item).val(value);
+									}
+									break;
 								case "radio":
 									$(item).each(function (i, radio) {
 										if ($(radio).val() == value) {
