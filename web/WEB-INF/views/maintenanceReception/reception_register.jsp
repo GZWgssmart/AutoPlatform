@@ -304,6 +304,7 @@
                                 <label>到店时间：</label>
                                 <input id="addDatetimepicker" readonly onclick="getDate()" type="text" name="arriveTime"
                                        class="form-control datetimepicker"/>
+                                <span id="error" style="color: #a94442; font-size: 85%;"></span>
                             </div>
                             <div class="col-md-12 form-group">
                                 <label>是否需要洗车：</label>
@@ -311,6 +312,7 @@
                                     <option value="N">否</option>
                                     <option value="Y">是</option>
                                 </select>
+
                             </div>
                             <div class="col-md-12 form-group">
                                 <label>汽车油量：</label>

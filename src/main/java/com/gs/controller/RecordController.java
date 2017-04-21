@@ -67,6 +67,15 @@ public class RecordController {
         return ControllerResult.getSuccessResult("更新成功");
     }
 
+    @ResponseBody
+    @RequestMapping(value="edit", method=RequestMethod.POST)
+    public ControllerResult editMainteranceRecord(MaintainRecord maintainRecord){
+        logger.info("更新维修保养记录");
+        maintainRecord.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+        maintainRecordService.update(maintainRecord);
+        return ControllerResult.getSuccessResult("更新成功");
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");

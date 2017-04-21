@@ -17,6 +17,7 @@
     <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
@@ -70,13 +71,13 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
-            <th data-field="recordStatus" data-formatter="status">
-                记录状态
-            </th>
             <th data-field="company.companyName">
                 汽修公司
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </th>
+            <th data-field="recordStatus" data-formatter="status">
+                记录状态
             </th>
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
@@ -98,9 +99,54 @@
     </table>
 </div>
 
+<div id="editWin" style="overflow:scroll" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">修改保养记录</h3>
+                        <form role="form" id="editForm">
+                            <input type="hidden" attr="record.recordId" name="recordId" class="form-control"/>
+
+                            <div class="col-md-12 form-group">
+                                <label>开始时间：</label>
+                                <input id="editStartTime" readonly type="text" name="startTime"
+                                       class="form-control datetimepicker"/>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label>预估结束时间：</label>
+                                <input id="editEndTime" readonly type="text" name="endTime"
+                                       class="form-control datetimepicker"/>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <label class="control-label">记录描述：</label>
+                                <textarea class="form-control" attr="record.recordDes" type="textarea" name="recordDes"
+                                          rows="3"></textarea>
+                            </div>
+
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" onclick="edit()" id="editButton" class="btn btn-primary" value="修改">
+                                </input>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>

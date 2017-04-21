@@ -39,6 +39,8 @@ function showAddWin() {
 /** 给datetimepicker添加默认值 */
 function getDate() {
     if ($("#app").val() == "N") {
+        $("#addButton").removeAttr("disabled");
+        $("#error").html('');
         $("#addDatetimepicker").val(new Date());
     }
 }
@@ -265,21 +267,19 @@ function validator(formId) {
                     }
 
                 }
-            },
-            carMileage: {
-                arriveTime: {
-                    notEmpty: {
-                        message: '选择到店时间'
-                    }
-
-                }
             }
         }
     })
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/checkin/add", formId, "addWin");
+                var arriveTime = $("#addDatetimepicker").val();
+                if (arriveTime != undefined && arriveTime != null && arriveTime != "") {
+                    formSubmit("/checkin/add", formId, "addWin");
+                } else {
+                    $("#error").html('到店时间不能为空');
+                }
+
 
             } else if (formId == "editForm") {
                 formSubmit("/checkin/edit", formId, "editWin");

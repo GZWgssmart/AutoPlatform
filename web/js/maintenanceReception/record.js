@@ -7,75 +7,6 @@ $(document).ready(function () {
 
 });
 
-/** 添加数据 */
-function showAddWin() {
-    $("#addWin").modal('show');
-}
-
-/** 编辑数据 */
-function showEditWin() {
-    var selectRow = $("#cusTable").bootstrapTable('getSelections');
-    if (selectRow.length != 1) {
-        swal('编辑失败', "只能选择一条数据进行编辑", "error");
-        return false;
-    } else {
-        var incomingType = selectRow[0];
-        $("#updateForm").fill(incomingType);
-        $("#editWin").modal('show');
-    }
-}
-
-/**提交编辑数据 */
-function updateIncomingType() {
-    $("#addButton1").attr('disabled','disabled');
-    var name = $("#name1").val();
-    var error = document.getElementById("error1");
-    if(name != ''){
-        $.post(contextPath + "/complaint/update_complaint",
-            $("#updateForm").serialize(),
-            function(data){
-                if(data.result == "success"){
-                    $('#editWin').modal('hide');
-                    swal(data.message, "", "success");
-                    $('#cusTable').bootstrapTable('refresh');
-                }else if(data.result == "fail"){
-                    swal(data.message, "", "error");
-                }
-            },"json");
-    }else{
-        error.innerHTML = "请输入正确的数据";
-        $("#addButton1").removeAttr("disabled");
-    }
-
-
-}
-
-/**提交添加数据 */
-function addCompaint() {
-    $("#addButton").attr('disabled','disabled');
-    var name = $("#complaintReply").val();
-    var error = document.getElementById("error");
-    if (name != "") {
-        $.post(contextPath + "/complaint/add_complaint",
-            $("#addForm").serialize(),
-            function (data) {
-                if (data.result == "success") {
-                    $('#addWin').modal('hide');
-                    swal(data.message, "", "success");
-                    $('#cusTable').bootstrapTable('refresh');
-                    $("input[type=reset]").trigger("click");
-                } else if (data.result == "fail") {
-                    swal(data.message, "", "error");
-                }
-            }, "json");
-    }else{
-        error.innerHTML = "请输入正确的数据";
-        $("#addButton").removeAttr("disabled");
-    }
-
-}
-
-
 function operateFormatter(value, row, index) {
     if (row.recordStatus == 'Y') {
         return [
@@ -92,12 +23,9 @@ function operateFormatter(value, row, index) {
 }
 window.operateEvents = {
          'click .updateActive': function (e, value, row, index) {
-             var status = 'N';
-             $.get(contextPath + "/record/update_status?id=" + row.recordId + "&status=" + status,
+             $.get(contextPath + "/record/update_status?id=" + row.recordId + "&status=" + row.recordStatus,
                  function(data){
                      if(data.result == "success"){
-                         $('#addWin').modal('hide');
-                         swal(data.message, "", "success");
                          $('#cusTable').bootstrapTable('refresh');
                      }else if(data.result == "fail"){
                          swal(data.message, "", "error");
@@ -105,23 +33,70 @@ window.operateEvents = {
                  },"json");
          },
           'click .updateInactive': function (e, value, row, index) {
-              var status = 'Y';
-              $.get(contextPath + "/record/update_status?id=" + row.recordId + "&status=" + status,
+              $.get(contextPath + "/record/update_status?id=" + row.recordId + "&status=" + row.recordStatus,
                   function(data){
                       if(data.result == "success"){
-                          $('#addWin').modal('hide');
-                          swal(data.message, "", "success");
                           $('#cusTable').bootstrapTable('refresh');
                       }else if(data.result == "fail"){
                           swal(data.message, "", "error");
                       }
                   },"json");
           },
-          'click .showUpdateIncomingType1': function (e, value, row, index) {
-              var incomingType = row;
-              $("#updateForm").fill(incomingType);
+          'click .showUpdate': function (e, value, row, index) {
+
+              var record = row;
+              $("#editForm").fill(record);
+              $('#editStartTime').val(formatterDate(record.startTime));
+              $('#editEndTime').val(formatterDate(record.endTime));
               $("#editWin").modal('show');
          }
+}
+
+/** 编辑数据 */
+function showEditWin() {
+    validator("editForm");
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('编辑失败', "只能选择一条数据进行编辑", "error");
+        return false;
+    } else {
+        var record = selectRow[0];
+        $("#editForm").fill(record);
+        $('#editStartTime').val(formatterDate(record.startTime));
+        $('#editEndTime').val(formatterDate(record.endTime));
+        $("#editWin").modal('show');
+    }
+}
+
+/** 表单验证 */
+function validator(formId) {
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            modelId: {
+                validators: {
+                    stringLength: {
+                        min: 0,
+                        max: 500,
+                        message: '描述不能超过500个字'
+                    }
+
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            formSubmit("/record/edit", formId, "editWin");
+
+
+        })
+
 }
 
 
