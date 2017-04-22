@@ -5,12 +5,39 @@
 <mapper namespace="com.gs.dao.AccessoriesDAO">
 
 	<resultMap id="accessoriesResultMap" type="accessories">
+			<id property="accId" column="accId"/>
+			<result property="accName" column="accName"/>
+			<result property="accCommodityCode" column="accCommodityCode"/>
+			<result property="accDes" column="accDes"/>
+			<result property="accPrice" column="accPrice"/>
+			<result property="accSalePrice" column="accSalePrice"/>
+			<result property="accUnit" column="accUnit"/>
+			<result property="accTotal" column="accTotal"/>
+			<result property="accIdle" column="accIdle"/>
+			<result property="accUsedTime" column="accUsedTime"/>
+			<result property="accBuyedTime" column="accBuyedTime"/>
+			<result property="accCreatedTime" column="accCreatedTime"/>
+			<result property="accStatus" column="accStatus"/>
 
+		<association property="supply" javaType="com.gs.bean.Supply">
+			<id property="supplyId" column="supplyId"/>
+			<id property="supplyName" column="supplyName"/>
+		</association>
+
+		<association property="accessoriesType" javaType="com.gs.bean.AccessoriesType">
+			<id property="accTypeId" column="accTypeId"/>
+			<id property="accTypeName" column="accTypeName"/>
+		</association>
+
+		<association property="company" javaType="com.gs.bean.Company">
+			<id property="companyId" column="companyId"/>
+			<id property="companyName" column="companyName"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert" parameterType="accessories">
 		<![CDATA[
-			insert into t_accessories(accId, accName, accCommodityCode, accDes, accPrice, accSalePrice, accUnit, accTotal, accIdle, accUsedTime, accBuyedTime, supplyId, accCreatedTime, accTypeId, companyId, accStatus) value (#{accId}, #{accName}, #{accCommodityCode}, #{accDes}, #{accPrice}, #{accSalePrice}, #{accUnit}, #{accTotal}, #{accIdle}, #{accUsedTime}, #{accBuyedTime}, #{supplyId}, now(), #{accTypeId}, #{companyId}, #{accStatus})
+			insert into t_accessories(accId, accName, accCommodityCode, accDes, accPrice, accSalePrice, accUnit, accTotal, accIdle, accUsedTime, accBuyedTime, supplyId, accCreatedTime, accTypeId, companyId, accStatus) value (#{accId}, #{accName}, #{accCommodityCode}, #{accDes}, #{accPrice}, #{accSalePrice}, #{accUnit}, #{accTotal}, #{accIdle}, #{accUsedTime}, #{accBuyedTime}, #{supplyId}, now(), #{accTypeId}, #{companyId}, 'Y')
         ]]>
 	</insert>
 
@@ -77,8 +104,12 @@
 	<select id="queryByPager" resultType="list" resultMap="accessoriesResultMap"
 			parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select * from t_accessories limit #{beginIndex}, #{pageSize}
+			select c.*, s.supplyId, s.supplyName, ac.accTypeId, ac.accTypeName, cpy.companyId, cpy.companyName
+			from t_accessories c, t_supply s, t_accessories_type ac, t_company cpy
+			where 1=1 and c.supplyId = s.supplyId and c.accTypeId = ac.accTypeId and c.companyId = cpy.companyId
+			order by c.accCreatedTime desc, c.companyId
         ]]>
+		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="queryByStatusPager" resultType="list" resultMap="accessoriesResultMap">

@@ -1,7 +1,10 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesType;
+import com.gs.bean.Supply;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Created by GOD on 2017/4/17.
@@ -31,12 +35,6 @@ public class AccessoriesTypeController {
     private String type() {
         logger.info("显示配件分类");
         return "accessories/accessories_type";
-    }
-
-    @RequestMapping(value = "stock", method = RequestMethod.GET)
-    private String stock() {
-        logger.info("显示配件信息");
-        return "accessories/stock";
     }
 
     @ResponseBody
@@ -80,5 +78,20 @@ public class AccessoriesTypeController {
             accessoriesTypeService.inactive(id);
         }
         return ControllerResult.getSuccessResult("更新成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "accessoriesType_All", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryUserAll() {
+        logger.info("查询配件分类");
+        List<AccessoriesType> accessoriesTypeList = accessoriesTypeService.queryAll();
+        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+        for (AccessoriesType accessoriesTypes : accessoriesTypeList) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(accessoriesTypes.getAccTypeId());
+            comboBox4EasyUI.setText(accessoriesTypes.getAccTypeName());
+            comboBox4EasyUIs.add(comboBox4EasyUI);
+        }
+        return comboBox4EasyUIs;
     }
 }

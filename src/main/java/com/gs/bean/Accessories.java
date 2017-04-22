@@ -27,6 +27,30 @@ public class Accessories {
     private String companyId;
     private String accStatus;
 
+    private Supply supply;
+    private AccessoriesType accessoriesType;
+    private Company company;
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Supply getSupply() {
+        return supply;
+    }
+
+    public void setSupply(Supply supply) {this.supply = supply;}
+
+    public AccessoriesType getAccessoriesType() {
+        return accessoriesType;
+    }
+
+    public void setAccessoriesType(AccessoriesType accessoriesType) {this.accessoriesType = accessoriesType;}
+
     private List<AccessoriesBuy> accessoriesBuys;
 
     public List<AccessoriesBuy> getAccessoriesBuys() {

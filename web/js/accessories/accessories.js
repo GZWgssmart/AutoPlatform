@@ -2,78 +2,49 @@
  * Created by GOD on 2017/4/18.
  */
 
-var contextPath = '';
-
-
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/accessories/pager");
 
-    initDateTimePicker("datetimepicker");
+    initDateTimePicker("datetimepicker", "accBuyedTime");
+    initDateTimePicker("datetimepicker1", "accUsedTime");
     $("#search").bind("click", initTable);
+    initSelect2("acc_supply", "请选择供应商", "/supply/queryAll", "565");
+    initSelect2("acc_company", "请选择公司", "/company/company_all", "565");
+    initSelect2("acc_accessoriesType", "请选择配件类别", "/accessoriesType/accessoriesType_All", "565");
 
 });
 
-/** 编辑数据 */
+/**编辑数据 */
 function showEditWin() {
+    validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
         var accessories = selectRow[0];
-        $("#updateForm").fill(accessories);
+        $("#editForm").fill(accessories);
+        $('#editCompany').html('<option value="' + accessories.company.companyId + '">' + accessories.company.companyName + '</option>').trigger("change");
+        $('#editSupply').html('<option value="' + accessories.supply.supplyId + '">' + accessories.supply.supplyName + '</option>').trigger("change");
+        $('#editAccessoriesType').html('<option value="' + accessories.accessoriesType.accTypeId + '">' + accessories.accessoriesType.accTypeName + '</option>').trigger("change");
+        $('#editBuyedTime').val(formatterDate(accessories.accBuyedTime));
+        $('#editUsedTime').val(formatterDate(accessories.accUsedTime));
         $("#editWin").modal('show');
     }
 }
 
-/**提交编辑数据 */
-function updateAcc() {
-    $.post(contextPath + "/accessories/update",
-        $("#updateForm").serialize(),
-        function(data){
-            if(data.result == "success"){
-                $('#editWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            }else if(data.result == "fail"){
-                swal(data.message, "", "error");
-            }
-        },"json");
 
-}
-
-function showAddWin(){
-
+/**提交添加数据 */
+function showAddWin() {
+    validator("addForm");
+    $('#addCompany').html('').trigger("change");
+    $('#addSupply').html('').trigger("change");
+    $('#addAccessoriesType').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }
 
-/**提交添加数据 */
-function addAccessories() {
-    $.post(contextPath + "/accessories/add",
-        $("#addForm").serialize(),
-        function(data){
-            if(data.result == "success"){
-                $('#addWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-                $("input[type=reset]").trigger("click");
-            }else if(data.result == "fail"){
-                swal(data.message, "", "error");
-            }
-        },"json");
-
-}
-
-
-
-function thisStatus(value, row, index) {
-    if (value == 'Y') {
-        return "可用";
-    } else {
-        return "不可用";
-    }
-}
 
 function operateFormatter(value, row, index) {
     if (row.accStatus == 'Y') {
@@ -113,7 +84,78 @@ window.operateEvents = {
                     swal(data.message, "", "error");
                 }
             }, "json");
+    },
+    'click .showUpdateInfo': function (e, value, row, index) {
+        var accessories = row;
+        $("#editForm").fill(accessories);
+        $('#editCarBrand').html('<option value="' + accessories.company.companyId + '">' + accessories.company.companyName + '</option>').trigger("change");
+        $('#editSupply').html('<option value="' + accessories.supply.supplyId + '">' + accessories.supply.supplyName + '</option>').trigger("change");
+        $('#editAccessoriesType').html('<option value="' + accessories.accessoriesType.accTypeId + '">' + accessories.accessoriesType.accTypeName + '</option>').trigger("change");
+        $('#editBuyedTime').val(formatterDate(accessories.accBuyedTime));
+        $('#editUsedTime').val(formatterDate(accessories.accUsedTime));
+        validator("editForm");
+        $("#editWin").modal('show');
     }
+}
+
+/** 表单验证 */
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            accName: {
+                message: '配件分类验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '配件分类名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 8,
+                        message: '配件分类名称长度必须在2到8位之间'
+                    }
+                }
+            },
+            accDes: {
+                validators: {
+                    notEmpty: {
+                        message: '配件分类描述不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 15,
+                        message: '配件分类描述长度必须在2到15位之间'
+                    }
+                }
+            },
+            companyId: {
+                validators: {
+                    notEmpty: {
+                        message: '公司不能为空'
+                    }
+
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/accessories/add", formId, "addWin");
+
+            } else if (formId == "editForm") {
+                formSubmit("/accessories/update", formId, "editWin");
+            }
+
+
+        })
+
 }
 
 
