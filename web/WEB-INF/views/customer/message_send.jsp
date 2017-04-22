@@ -19,6 +19,7 @@
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -74,23 +75,24 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">修改投诉信息</h3>
-                        <form role="form" id="updateForm" >
-                            <input type="hidden" attr="complaint.complaintId" name="complaintId" />
-                            <div class="col-md-6 form-group">
-                                <label>投诉人：</label>
-                                <select class="js-example-tags form-control com_name" name="user.userName">
-                                </select>
+                        <h3 class="m-t-none m-b">修改短信内容</h3>
+                        <form role="form" id="editForm" >
+                            <input type="hidden" attr="messageSend.messageId" name="messageId" />
+                            <div class="form-group">
+                                <label class="control-label">短信内容：</label>
+                                <textarea class="form-control" type="textarea" attr="messageSend.sendMsg" name="sendMsg"
+                                          maxlength="400"
+                                          rows="3"></textarea>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
-                                <span id="error1" style="color: red;"></span>
-                                <br/>
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton1" class="btn btn-primary" value="修改" onclick="updateIncomingType()">
+                                <input type="button" id="editButton" onclick="edit()" class="btn btn-primary"
+                                       value="修改">
                                 </input>
+                                <input type="reset" name="reset" style="display: none;"/>
                             </div>
                         </form>
                     </div>
@@ -126,6 +128,7 @@
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error" style="color: #ff0000;"></span>
                                 <br/>
+
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
@@ -147,6 +150,7 @@
 <script src="<%=path %>/js/jquery.min.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>

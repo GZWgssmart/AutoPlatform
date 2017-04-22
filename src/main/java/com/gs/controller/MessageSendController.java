@@ -50,6 +50,13 @@ public class MessageSendController {
         return new Pager4EasyUI<MessageSend>(pager.getTotalRecords(), complaintList);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "update_messageSend", method = RequestMethod.GET)
+    public ControllerResult updateMessageSend(MessageSend messageSend){
+        logger.info("更新工资");
+
+        return ControllerResult.getSuccessResult("更新成功");
+    }
 
 
 

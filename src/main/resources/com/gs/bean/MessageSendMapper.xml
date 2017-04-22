@@ -3,7 +3,6 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gs.dao.MessageSendDAO">
-
 	<resultMap id="messageSendResultMap" type="messageSend">
 		<id property="messageId" column="messageId" />
 		<result property="sendMsg" column="sendMsg" />

@@ -13,24 +13,6 @@ $(document).ready(function () {
 
 
 
-$('#complaintCreatedTime').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii',
-    initialDate: new Date(),
-    autoclose: true,
-    todayHighlight: true,
-    todayBtn: true//显示今日按钮
-});
-$('#complaintReplyTime').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii',
-    initialDate: new Date(),
-    autoclose: true,
-    todayHighlight: true,
-    todayBtn: true//显示今日按钮
-});
-
-
 
 /** 添加数据 */
 function showAddWin() {
@@ -41,14 +23,28 @@ function showAddWin() {
 /** 编辑数据 */
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
-    if (selectRow.length != 1) {
-        swal('编辑失败', "只能选择一条数据进行编辑", "error");
-        return false;
-    } else {
-        var incomingType = selectRow[0];
-        $("#updateForm").fill(incomingType);
-        $("#editWin").modal('show');
+    var ids ='';
+    if(selectRow.length > 0){
+    for(var i =0; i < selectRow.length; i++){
+        if(ids == ''){
+            ids = selectRow[i];
+        }else{
+            ids = ','+selectRow[i];
+        }
+            validator("editForm");
+            $.get("/ids="+ids,
+                function(data){
+                    if(data == 'success'){
+                        $("#editWin").modal('show');
+                        swal(data.message, "", "success");
+                        $('#cusTable').bootstrapTable('refresh');
+                    }
+            })
     }
+    }else{
+        swal('编辑失败', "至少选择一行数据", "error");
+    }
+
 }
 
 /**提交编辑数据 */
@@ -57,7 +53,7 @@ function updateIncomingType() {
     var name = $("#name1").val();
     var error = document.getElementById("error1");
     if(name != ''){
-        $.post(contextPath + "/complaint/update_complaint",
+        $.post(contextPath + "/MessageSend/update_messageSend",
             $("#updateForm").serialize(),
             function(data){
                 if(data.result == "success"){
@@ -117,37 +113,12 @@ function operateFormatter(value, row, index) {
 
 }
 window.operateEvents = {
-         'click .updateActive': function (e, value, row, index) {
-             var status = 'N';
-             $.get(contextPath + "/complaint/update_status?id=" + row.inTypeId + "&status=" + status,
-                 function(data){
-                     if(data.result == "success"){
-                         $('#addWin').modal('hide');
-                         swal(data.message, "", "success");
-                         $('#cusTable').bootstrapTable('refresh');
-                     }else if(data.result == "fail"){
-                         swal(data.message, "", "error");
-                     }
-                 },"json");
-         },
-          'click .updateInactive': function (e, value, row, index) {
-              var status = 'Y';
-              $.get(contextPath + "/complaint/update_status?id=" + row.inTypeId + "&status=" + status,
-                  function(data){
-                      if(data.result == "success"){
-                          $('#addWin').modal('hide');
-                          swal(data.message, "", "success");
-                          $('#cusTable').bootstrapTable('refresh');
-                      }else if(data.result == "fail"){
-                          swal(data.message, "", "error");
-                      }
-                  },"json");
-          },
-          'click .showUpdateIncomingType1': function (e, value, row, index) {
-              var incomingType = row;
-              $("#updateForm").fill(incomingType);
-              $("#editWin").modal('show');
-         }
+        'click .showUpdateIncomingType1': function (e, value, row, index) {
+        var message = row;
+        validator("editForm");
+        $("#editForm").fill(message);
+        $("#editWin").modal('show');
+    }
 }
 
 function statusFormatter(value, row, index) {
@@ -163,3 +134,40 @@ function statusFormatter(value, row, index) {
 
 }
 
+
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        sendMsg:{
+                validators:{
+                    notEmpty:{
+                        message: '短信内容不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 500,
+                        message: '短信内容不能超过500个字符'
+                    }
+                }
+            }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/salary/add_salary", formId, "addWin");
+
+            } else if (formId == "editForm") {
+                formSubmit("/MessageSend/update_MessageSend", formId, "editWin");
+
+            }
+
+
+        })
+
+}
