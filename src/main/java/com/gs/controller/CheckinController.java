@@ -75,6 +75,29 @@ public class CheckinController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "condition_pager", method = RequestMethod.GET)
+    public Pager4EasyUI<Checkin> queryPagerByCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
+                                                       @Param("userName")String userName, @Param("userPhone")String userPhone,
+                                                       @Param("carPlate")String carPlate, @Param("maintainOrFix")String maintainOrFix,
+                                                       @Param("companyId")String companyId) {
+        logger.info("根据条件分页查询登记记录");
+        Checkin checkin = new Checkin();
+        checkin.setUserName(userName);
+        checkin.setUserPhone(userPhone);
+        checkin.setCarPlate(carPlate);
+        checkin.setMaintainOrFix(maintainOrFix);
+        checkin.setCompanyId(companyId);
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<Checkin> checkins = new ArrayList<Checkin>();
+        pager.setTotalRecords(checkinService.countByCondition(checkin));
+        checkins = checkinService.queryPagerByCondition(pager, checkin);
+
+        return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addCheckin(Checkin checkin) {
         logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录和工单信息");

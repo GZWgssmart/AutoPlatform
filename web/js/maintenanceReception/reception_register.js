@@ -29,6 +29,7 @@ function checkBrand(combo) {
     }
 }
 
+/** 修改窗口选择车型 */
 function editCheckBrand(combo) {
     $('#editCarModel').html('').trigger("change");
     var brandId = combo.value;
@@ -321,6 +322,16 @@ function searchStatus(status) {
     } else {
         initTable("cusTable", "/checkin/checkin_pager?status=" + status);
     }
+}
+
+function searchCheckin() {
+    var userName = $("#searchUserName").val();
+    var userPhone = $("#searchUserPhone").val();
+    var carPlate = $("#searchCarPlate").val();
+    var maintainOrFix = $("#searchMaintainOrFix").val();
+    var companyId = $("#searchCompanyId").val();
+    initTable("cusTable", "/checkin/condition_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
+
 }
 
 

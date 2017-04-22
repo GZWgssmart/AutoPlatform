@@ -138,6 +138,31 @@
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
+	<select id="queryPagerByCondition" resultType="list" resultMap="checkinResultMap" parameterType="com.gs.common.bean.Pager">
+		<![CDATA[
+			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
+				from t_checkin c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
+				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId
+			<if test="checkin.userName != null and checkin.userName != ''">
+				and c.userName like concat('%', #{checkin.userName}, '%')
+			</if>
+			<if test="checkin.userPhone != null and checkin.userPhone != ''">
+				and c,userPhone like concat('%', #{checkin.userPhone}, '%')
+			</if>
+			<if test="checkin.carPlate != null and checkin.carPlate != ''">
+				and c.carPlate like concat('%', #{checkin.carPlate}, '%')
+			</if>
+			<if test="checkin.maintainOrFix != 'all'">
+				and c.maintainOrFix = #{checkin.maintainOrFix}
+			</if>
+			<if test="checkin.companyId != null and checkin.companyId != ''">
+				and c.companyId = #{checkin.companyId}
+			</if>
+				order by c.checkinCreatedTime desc, c.companyId
+		]]>
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
 	<select id="count" resultType="int">
 		<![CDATA[
 			select count(*) from t_checkin
@@ -148,6 +173,28 @@
 		<![CDATA[
 			select count(*) from t_checkin where checkinStatus = #{status}
 		]]>
+	</select>
+
+	<select id="countByCondition" resultType="int">
+		<![CDATA[
+			select count(1) from t_checkin where 1 = 1
+		]]>
+		<if test="userName != null and userName != ''">
+			and userName like concat('%', #{userName}, '%')
+		</if>
+		<if test="userPhone != null and userPhone != ''">
+			and userPhone like concat('%', #{userPhone}, '%')
+		</if>
+		<if test="carPlate != null and carPlate != ''">
+			and carPlate like concat('%', #{carPlate}, '%')
+		</if>
+		<if test="maintainOrFix != 'all'">
+			and maintainOrFix = #{maintainOrFix}
+		</if>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+		</if>
+
 	</select>
 
 	<update id="inactive" parameterType="string">

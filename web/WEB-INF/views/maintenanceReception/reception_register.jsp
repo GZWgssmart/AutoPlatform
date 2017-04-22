@@ -19,7 +19,7 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
@@ -54,9 +54,6 @@
             </th>
             <th data-field="model.modelName">
                 汽车车型
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th data-field="plate.plateName">
                 汽车车牌
@@ -69,79 +66,64 @@
             </th>
             <th data-field="carPlate">
                 车牌号码
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th data-field="arriveTime" data-formatter="formatterDate">
                 到店时间
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th data-field="carMileage">
                 汽车行驶里程
             </th>
             <th data-field="carThings">
                 车上物品描述
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th data-field="intactDegrees">
                 汽车完好度描述
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th data-field="userRequests">
                 用户要求描述
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th data-field="maintainOrFix">
                 保养&nbsp;|&nbsp;维修
             </th>
             <th data-field="checkinCreatedTime" data-formatter="formatterDate">
                 登记时间
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th data-field="company.companyName">
                 汽修公司
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
             <th data-field="checkinStatus" data-formatter="status">
                 记录状态
             </th>
             <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </th>
         </tr>
         </thead>
         <form id="formSearch" class="form-horizontal">
             <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
                 <div class="col-sm-2" style="margin-left: -15px;">
-                    <input type="text" class="form-control" placeholder="请输入车主姓名" >
+                    <input type="text" id="searchUserName" name="userName" class="form-control" placeholder="请输入车主姓名" >
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" placeholder="请输入车主电话" >
+                    <input type="text" id="searchUserPhone" name="userPhone" class="form-control" placeholder="请输入车主电话" >
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control" placeholder="请输入车牌号码">
+                    <input type="text" id="searchCarPlate" name="carPlate" class="form-control" placeholder="请输入车牌号码">
                 </div>
                 <div class="col-sm-2">
-                    <select class="js-example-tags form-control">
-                        <option value="">维修&nbsp;&&nbsp;保养</option>
+                    <select class="js-example-tags form-control" id="searchMaintainOrFix" name="maintainOrFix">
+                        <option value="all">维修&nbsp;&&nbsp;保养</option>
                         <option value="维修">维修</option>
                         <option value="保养">保养</option>
                     </select>
                 </div>
                 <div class="col-sm-2">
-                    <select class="js-example-tags form-control company">
+                    <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
                     </select>
                 </div>
 
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-primary">查询</button>
+                    <button type="button" onclick="searchCheckin()" class="btn btn-primary">查询</button>
                     <button type="button" onclick="closeSearchForm()" class="btn btn-default">关闭</button>
                 </div>
             </div>
