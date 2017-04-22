@@ -2,6 +2,7 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Supply;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -79,12 +81,19 @@ public class SupplyController {
             return ControllerResult.getSuccessResult("更新成功");
         }
 
-        @ResponseBody
-        @RequestMapping("queryAll")
-        public List<Supply> queryAll() {
-            logger.info("查询所有供应商");
-            List<Supply> supplyList =  supplyService.queryAll();
-            return supplyList;
+    @ResponseBody
+    @RequestMapping(value = "queryAll", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryUserAll() {
+        logger.info("查询供应商");
+        List<Supply> supplyList = supplyService.queryAll();
+        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+        for (Supply supplys : supplyList) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(supplys.getSupplyId());
+            comboBox4EasyUI.setText(supplys.getSupplyName());
+            comboBox4EasyUIs.add(comboBox4EasyUI);
         }
+        return comboBox4EasyUIs;
+    }
 
 }
