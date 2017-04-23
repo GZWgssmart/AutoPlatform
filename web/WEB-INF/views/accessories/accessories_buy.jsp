@@ -9,10 +9,11 @@
     <meta name="description" content="">
 
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -143,7 +144,7 @@
     </div>
 </div>
 
-<div id="addWin" class="modal fade" aria-hidden="true">
+<div id="addWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-keyboard="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -153,10 +154,13 @@
                         <form role="form" id="addForm">
                             <input type="hidden" attr="acc.accId" name="accId"/>
                             <div class="form-group">
+                                <label>是否从库存中添加：</label>
+                                <input type="checkbox" id="isAcc" name="isAcc">
+                                <input type="button" class="btn btn-primary" id="accSelect" value="从已有库存中选择"  onclick="showAccessories()">
+                            </div>
+                            <div class="form-group">
                                 <p><label>配件名称：</label></p>
-                                <input type="text" name="accessories.accName" class="form-control" id="accName" attr="acc.accName"
-                                       style="width:75%;display:initial;"/>
-                                <input type="button" class="btn btn-primary" value="从已有库存中选择" onclick="showAccessories()">
+                                <input type="text" name="accessories.accName" class="form-control" id="accName" attr="acc.accName"/>
                             </div>
 
                             <div class="form-group">
@@ -191,8 +195,7 @@
 
                             <div class="form-group">
                                 <label>采购时间：</label>
-                                <input size="16" type="text" id="accBuyTime" name="accBuyTime" readonly
-                                       class="form_datetime form-control ">
+                                <input size="16" type="text" id="accBuyTime" name="accBuyTime" readonly class="form_datetime form-control ">
                             </div>
 
                             <div class="form-group">
@@ -221,7 +224,7 @@
 </div>
 
 
-<div id="accWin" class="modal fade " data-backdrop="static" aria-hidden="true">
+<div id="accWin" class="modal fade " data-backdrop="static" aria-hidden="true" style="overflow:scroll" data-keyboard="true">
     <div class="modal-dialog" style="width: 90%;">
         <div class="modal-content">
             <div class="modal-body">
@@ -318,6 +321,7 @@
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
 <script src="<%=path %>/js/accessories/accessories_buy.js"></script>
+<script src="<%=path %>/js/accessories/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 
 </body>

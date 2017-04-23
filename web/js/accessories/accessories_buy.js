@@ -1,6 +1,28 @@
+var isAcc = false;
+
 $(document).ready(function () {
     initDateTimePicker("form_datetime");
     initTable("cusTable", "pager");
+
+    $("#accSelect").fadeToggle(225);
+
+    $("#isAcc").bootstrapSwitch({
+        onText: '是',
+        offText: '否',
+        onColor: 'success',
+        offColor: 'danger',
+        size: 'normal',
+
+        onSwitchChange: function (event, state) {
+            if (state == true) {
+                isAcc = true;
+                $("#accSelect").fadeIn(225);
+            } else if (state == false) {
+                isAcc = false;
+                $("#accSelect").fadeToggle(225);
+            }
+        }
+    });
 });
 
 /** 编辑数据 */
@@ -32,9 +54,9 @@ function updateAccessoriesBuyInfo() {
         }, "json");
 }
 
-/**提交添加数据 */
+/**添加采购信息 */
 function addAccessoriesBuyInfo() {
-    $.post(contextPath + "/accessoriesBuy/add",
+    $.post(contextPath + "/accessoriesBuy/isAccAdd?state=" + isAcc,
         $("#addForm").serialize(),
         function (data) {
             if (data.result == "success") {

@@ -6,6 +6,7 @@ import com.gs.bean.AccessoriesBuy;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.AccessoriesBuyService;
 import com.gs.service.AccessoriesService;
 import org.apache.ibatis.annotations.Param;
@@ -50,13 +51,29 @@ public class AccessoriesBuyController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "add", method = RequestMethod.POST)
-    private ControllerResult addAccessoriesBuyInfo(AccessoriesBuy accessoriesBuy, String accTypeName, String companyId) {
+    @RequestMapping(value = "isAccAdd", method = RequestMethod.POST)
+    private ControllerResult isAccAdd(AccessoriesBuy accessoriesBuy, @Param("state") String state) {
         logger.info("添加采购信息");
-
-        Accessories accessories = accessoriesService.queryById(accessoriesBuy.getAccId());
-        accessories.setAccIdle(accessories.getAccIdle() + accessoriesBuy.getAccBuyCount());
-        accessoriesService.update(accessories);
+        Accessories acc = new Accessories();
+        if (state.equals("true")) {  // 如果为 true 库存添加
+            System.out.println("库存添加");
+            acc.setAccName(accessoriesBuy.getAccessories().getAccName());
+            accessoriesBuy.setAccId(accessoriesBuy.getAccId());
+            accessoriesBuyService.insert(accessoriesBuy);
+            accessoriesService.insert(acc);
+        } else if (state.equals("false")) { // 如果为false采购添加
+            System.out.println("采购添加");
+            acc.setAccId(UUIDUtil.uuid());
+            acc.setAccName(accessoriesBuy.getAccessories().getAccName());
+            acc.setAccUnit(accessoriesBuy.getAccUnit());
+            accessoriesBuy.setAccessories(acc);
+            accessoriesBuy.setAccId(acc.getAccId());
+            accessoriesBuyService.insert(accessoriesBuy);
+            accessoriesService.insert(acc);
+        }
+//        Accessories accessories = accessoriesService.queryById(accessoriesBuy.getAccId());
+//        accessories.setAccIdle(accessories.getAccIdle() + accessoriesBuy.getAccBuyCount());
+//        accessoriesService.update(accessories);
    /*
         Accessories accessories = new Accessories();
         accessories.setAccId(accessoriesBuy.getAccId());
@@ -67,15 +84,14 @@ public class AccessoriesBuyController {
         accessoriesService.insert(accessories);*/
 
 
+//        accessoriesBuyService.insert(accessoriesBuy);
 
-
-        accessoriesBuyService.insert(accessoriesBuy);
-
-        return ControllerResult.getFailResult("添加失败");
+        return ControllerResult.getSuccessResult("添加成功");
     }
 
     @ResponseBody
     @RequestMapping(value = "pager", method = RequestMethod.GET)
+
     private Pager4EasyUI<AccessoriesBuy> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         logger.info("分页查询采购信息");
         Pager pager = new Pager();

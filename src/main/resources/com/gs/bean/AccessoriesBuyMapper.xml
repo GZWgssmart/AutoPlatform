@@ -43,7 +43,7 @@
 		insert into
 		auto_platform.t_accessories_buy(accBuyId, accId, accUnit, accBuyCount, accBuyPrice, accBuyTotal, accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime, companyId, accBuyStatus)
 		values
-		(uuid(),#{accId},#{accUnit},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},now(),#{companyId},#{accBuyStatus})
+		(uuid(),#{accId},#{accUnit},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},now(),#{companyId},'N')
 
 	</insert>
 
