@@ -21,6 +21,8 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+
+    <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -55,6 +57,9 @@
             </th>
             <th data-field="pickupTime" data-formatter="formatterDate">
                 提车时间
+            </th>
+            <th data-field="checkin.maintainOrFix">
+                保养&nbsp;|&nbsp;维修
             </th>
             <th data-field="recordDes">
                 记录描述

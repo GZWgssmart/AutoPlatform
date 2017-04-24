@@ -124,13 +124,17 @@
                 </div>
 
                 <div class="col-sm-2">
-                    <button type="button" onclick="searchCheckin()" class="btn btn-primary">查询</button>
-                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">关闭</button>
+                    <button type="button" onclick="searchCheckin()" class="btn btn-primary">
+                        查询
+                    </button>
+                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                        关闭
+                    </button>
                 </div>
             </div>
         </form>
         <tbody>
-        <div id="toolbar" class="btn-group" style="margin-top: 10px;">
+        <div id="toolbar" class="btn-group">
 
             <a>
                 <button onclick="showAddWin();" type="button" id="add" class="btn btn-default">
