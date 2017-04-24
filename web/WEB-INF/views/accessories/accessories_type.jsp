@@ -87,14 +87,12 @@
                             </div>
                             <div class="form-group">
                                 <label>配件所属公司：</label>
-                                <select id="addCompany" class="js-example-tags form-control accType_company" name="companyId"></select>
+                                <select id="addTypeCompany" class="js-example-tags form-control accType_company" name="companyId"></select>
                             </div>
                             <div class="form-group">
                                 <label>配件分类描述：</label>
-                                <input type="text"  name="accTypeDes"
-                                       class="form-control"/>
+                                <textarea name="accTypeDes" cols="20" rows="5" class="form-control" ></textarea>
                             </div>
-
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
@@ -131,10 +129,8 @@
                             </div>
                             <div class="form-group">
                                 <label>配件分类描述：</label>
-                                <input type="text"  name="accTypeDes" id = "accTypeDes" attr="accessoriesType.accTypeDes"
-                                       class="form-control"/>
+                                <textarea attr="accessoriesType.accTypeDes" name="accTypeDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>
                             </div>
-
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭

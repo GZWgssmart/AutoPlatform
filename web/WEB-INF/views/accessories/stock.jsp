@@ -128,8 +128,7 @@
                             </div>
                             <div class="form-group">
                                 <label>描述：</label>
-                                <input type="text" name="accDes"
-                                       class="form-control"/>
+                                <textarea name="accDes" cols="20" rows="5" class="form-control" ></textarea>
                             </div>
                             <div class="form-group">
                                 <label>商品条码：</label>
@@ -208,7 +207,7 @@
                                 <label>价格：</label>
                                 <input type="text" attr="accessories.accPrice" name="accPrice" class="form-control"/>
                                 <label>描述：</label>
-                                <input type="text" attr="accessories.accDes"  name="accDes" class="form-control"/>
+                                <textarea attr="accessories.accDes" name="accDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>
                             </div>
                             <div class="form-group">
                                 <label>商品条码：</label>
