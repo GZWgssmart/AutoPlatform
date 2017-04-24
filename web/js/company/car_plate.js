@@ -106,3 +106,42 @@ window.operateEvents = {
             }, "json");
     }
 }
+
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            plateName: {
+                message: '车牌名称失败',
+                validators: {
+                    notEmpty: {
+                        message: '车牌名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 20,
+                        message: '车牌名称长度必须在2到4位之间'
+                    }
+                }
+            }
+
+
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/incomingType/add_incomingType", formId, "addWin");
+            } else if (formId == "editForm") {
+                formSubmit("/incomingType/update_incomingType", formId, "editWin");
+
+            }
+        })
+
+}
