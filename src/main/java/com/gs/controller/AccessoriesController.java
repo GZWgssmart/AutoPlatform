@@ -92,11 +92,11 @@ public class AccessoriesController {
 
     @ResponseBody
     @RequestMapping(value = "accessories_All", method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryaccessoriesAll() {
+    public List<ComboBox4EasyUI> queryUserAll() {
         logger.info("查询配件");
-        List<Accessories> accessoriess = accessoriesService.queryAll();
+        List<Accessories> accessoriessList = accessoriesService.queryAll();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
-        for (Accessories accessories : accessoriess) {
+        for (Accessories accessories : accessoriessList) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
             comboBox4EasyUI.setId(accessories.getAccId());
             comboBox4EasyUI.setText(accessories.getAccName());
@@ -110,6 +110,22 @@ public class AccessoriesController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByStatus_Acc", method = RequestMethod.GET)
+    public Pager4EasyUI<Accessories> queryByStatusAcc(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (status.equals("Y")) {
+            logger.info("分页查询可用的配件");
+        } else {
+            logger.info("分页查询不可用的配件");
+        }
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesService.countByStatus(status));
+        List<Accessories> accessoriess = accessoriesService.queryByStatusPager(status, pager);
+        return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriess);
     }
 }
 

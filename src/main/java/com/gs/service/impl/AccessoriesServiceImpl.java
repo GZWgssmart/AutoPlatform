@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Accessories;
+import com.gs.bean.AccessoriesType;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -36,5 +37,11 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 	public int count() { return accessoriesDAO.count(); }
 	public int inactive(String id) { return accessoriesDAO.inactive(id); }
 	public int active(String id) { return accessoriesDAO.active(id); }
+	public List<Accessories> queryByStatusPager(String accStatus, Pager pager) {
+		return accessoriesDAO.queryByStatusPager(accStatus, pager);
+	}
+	public int countByStatus(String accStatus) {
+		return accessoriesDAO.countByStatus(accStatus);
+	}
 
 }

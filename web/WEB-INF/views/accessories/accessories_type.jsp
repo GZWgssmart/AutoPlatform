@@ -58,6 +58,15 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
+            <a><button onclick="queryAll()" type="button" class="btn btn-default" >
+                查询全部
+            </button></a>
+            <a><button onclick="queryStatus('Y')" type="button" class="btn btn-default" >
+                查可用模块
+            </button></a>
+            <a><button onclick="queryStatus('N')" type="button" class="btn btn-default" >
+                查不可用模块
+            </button></a>
         </div>
         </tbody>
 

@@ -19,9 +19,9 @@ function showEditWin() {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
-        var checkin = selectRow[0];
-        $("#editForm").fill(checkin);
-        $('#editCompany').html('<option value="' + checkin.company.companyId + '">' + checkin.company.companyName + '</option>').trigger("change");
+        var accessoriesType = selectRow[0];
+        $("#editForm").fill(accessoriesType);
+        $('#editCompany').html('<option value="' + accessoriesType.company.companyId + '">' + accessoriesType.company.companyName + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
 }
@@ -45,11 +45,13 @@ function thisStatus(value, row, index) {
 function operateFormatter(value, row, index) {
     if (row.accTypeStatus == 'Y') {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>',
+            '<button type="button" class="showUpdateInfo btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>',
+            '<button type="button" class="showUpdateInfo btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     }
 }
@@ -82,12 +84,20 @@ window.operateEvents = {
             }, "json");
     },
     'click .showUpdateInfo': function (e, value, row, index) {
-        var checkin = row;
-        $("#editForm").fill(checkin);
-        $('#editCarBrand').html('<option value="' + checkin.company.companyId + '">' + checkin.company.companyName + '</option>').trigger("change");
+        var accessoriesType = row;
+        $("#editForm").fill(accessoriesType);
+        $('#editCompany').html('<option value="' + accessoriesType.company.companyId + '">' + accessoriesType.company.companyName + '</option>').trigger("change");
         validator("editForm");
         $("#editWin").modal('show');
     }
+}
+
+function queryAll() {
+    initTable(contextPath + "cusTable", "/accessoriesType/pager");
+}
+
+function queryStatus(status) {
+    initTable('cusTable', contextPath + '/accessoriesType/queryByStatus_AccType?status=' + status);
 }
 
 /** 表单验证 */

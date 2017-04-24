@@ -49,11 +49,13 @@ function showAddWin() {
 function operateFormatter(value, row, index) {
     if (row.accStatus == 'Y') {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>',
+            '<button type="button" class="showUpdateInfo btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>',
+            '<button type="button" class="showUpdateInfo btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     }
 }
@@ -88,7 +90,7 @@ window.operateEvents = {
     'click .showUpdateInfo': function (e, value, row, index) {
         var accessories = row;
         $("#editForm").fill(accessories);
-        $('#editCarBrand').html('<option value="' + accessories.company.companyId + '">' + accessories.company.companyName + '</option>').trigger("change");
+        $('#editCompany').html('<option value="' + accessories.company.companyId + '">' + accessories.company.companyName + '</option>').trigger("change");
         $('#editSupply').html('<option value="' + accessories.supply.supplyId + '">' + accessories.supply.supplyName + '</option>').trigger("change");
         $('#editAccessoriesType').html('<option value="' + accessories.accessoriesType.accTypeId + '">' + accessories.accessoriesType.accTypeName + '</option>').trigger("change");
         $('#editBuyedTime').val(formatterDate(accessories.accBuyedTime));
@@ -96,6 +98,14 @@ window.operateEvents = {
         validator("editForm");
         $("#editWin").modal('show');
     }
+}
+
+function queryAll() {
+    initTable(contextPath + "cusTable", "/accessories/pager");
+}
+
+function queryStatus(status) {
+    initTable('cusTable', contextPath + '/accessories/queryByStatus_Acc?status=' + status);
 }
 
 /** 表单验证 */

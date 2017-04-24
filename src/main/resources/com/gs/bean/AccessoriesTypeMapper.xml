@@ -60,7 +60,7 @@
 
 	<select id="queryAll" resultMap="accessoriesTypeResultMap">
 		<![CDATA[
-
+			select * from t_accessories_type
 		]]>
 	</select>
 
@@ -97,7 +97,7 @@
 
 	<select id="count" resultType="int">
 	<![CDATA[
- 			select count(*) from t_accessories_type
+ 			select count(accTypeId) from t_accessories_type
 		]]>
 </select>
 

@@ -3,6 +3,7 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesType;
+import com.gs.bean.Module;
 import com.gs.bean.Supply;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
@@ -93,5 +94,21 @@ public class AccessoriesTypeController {
             comboBox4EasyUIs.add(comboBox4EasyUI);
         }
         return comboBox4EasyUIs;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByStatus_AccType", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesType> queryByStatusAccType(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (status.equals("Y")) {
+            logger.info("分页查询可用的配件分类");
+        } else {
+            logger.info("分页查询不可用的配件分类");
+        }
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesTypeService.countByStatus(status));
+        List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryByStatusPager(status, pager);
+        return new Pager4EasyUI<AccessoriesType>(pager.getTotalRecords(), accessoriesTypes);
     }
 }
