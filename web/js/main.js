@@ -230,6 +230,8 @@ function formSubmit(url, formId, winId) {
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
                 $('#' + formId).data('bootstrapValidator').resetForm(true);
+                $("#" + formId).data('bootstrapValidator').destroy();
+                $('#' + formId).data('bootstrapValidator', null);
             } else if (data.result == "fail") {
                 swal(data.message, "", "error");
             }
