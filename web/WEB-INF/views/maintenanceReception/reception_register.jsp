@@ -24,6 +24,7 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
 
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/maintenanceReception/reception_register.css" rel="stylesheet" type="text/css">
@@ -292,12 +293,9 @@
                             <input type="hidden" id="addUserId" name="userId" class="form-control"/>
                             <input type="hidden" id="addAppointmentId" name="appointmentId" class="form-control"/>
                             <div class="form-group">
-                                <label class="control-label">是否预约：</label>
-                                <select class="js-example-tags form-control" id="app"
-                                        onchange="checkAppointment(this)">
-                                    <option value="N">否</option>
-                                    <option value="Y">是</option>
-                                </select>
+                                <label>是否预约：</label>
+                                <input type="checkbox" id="isApp" name="isApp" onchange="isAppChoice()">
+
                             </div>
                             <div class="form-group">
                                 <label class="control-label">车主姓名：</label>
@@ -404,7 +402,7 @@
 </div>
 
 <div id="appWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
-    <div class="modal-dialog" style="width: 800px;">
+    <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
@@ -497,6 +495,7 @@
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="<%=path %>/js/accessories/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/maintenanceReception/reception_register.js"></script>
 

@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017-04-17.
  */
-
+var appointment;
 
 $(document).ready(function () {
     //调用函数，初始化表格
@@ -14,8 +14,49 @@ $(document).ready(function () {
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
     initDateTimePicker("datetimepicker", "arriveTime");
 
+    $("#isApp").bootstrapSwitch({
+        onText: '是',
+        offText: '否',
+        onColor: 'success',
+        offColor: 'danger',
+        size: 'normal',
+
+        onSwitchChange: function (event, state) {
+            if (state == true) {
+                isApp = true;
+                //调用函数，初始化表格
+                initTableNotTollbar("appTable", "/appointment/query_pager");
+
+                $("#appWin").modal('show');
+            } else if (state == false) {
+                isApp = false;
+            }
+        }
+    });
+
+    $("#appWin").on("hide.bs.modal", function () {
+
+        $("#addWin").modal('show')
+        $('#isApp').bootstrapSwitch('state', false);
+
+    });
+
 
 });
+
+/** 监听switch的监听事件 */
+function isAppChoice() {
+    if ($('#isApp').bootstrapSwitch('state')) {
+        if (appointment != null && appointment != "" && appointment != undefined) {
+            setData(appointment);
+        }
+    } else {
+        if (appointment != null && appointment != "" && appointment != undefined) {
+            clearAddForm();
+        }
+
+    }
+}
 
 /** 添加选择品牌 */
 function checkBrand(combo) {
@@ -49,37 +90,29 @@ function carWash(value, row, index) {
     }
 }
 
-/** 添加数据 */
+/** 显示添加数据的窗口 */
 function showAddWin() {
     validator("addForm");
+    clearAddForm();
+    $("#addWin").modal('show');
+}
+
+/** 清除添加的form表单信息 */
+function clearAddForm() {
     $('#addCarBrand').html('').trigger("change");
     $('#addCarColor').html('').trigger("change");
     $('#addCarModel').html('').trigger("change");
     $('#addCarPlate').html('').trigger("change");
     $("input[type=reset]").trigger("click");
-    $("#addWin").modal('show');
 }
 
 /** 给datetimepicker添加默认值 */
 function getDate() {
-    if ($("#app").val() == "N") {
-        $("#addDatetimepicker").val(new Date());
-    }
-}
 
-/** 判断是否选中 */
-function checkAppointment(combox) {
-    var val = combox.value;
-    if (val == "Y") {
-        //调用函数，初始化表格
-        initTableNotTollbar("appTable", "/appointment/query_pager");
+    if (appointment != null && appointment != "" && appointment != undefined) {
 
-        $("#addWin").modal('hide');
-        $("#appWin").modal('show');
     } else {
-        $("#appWin").modal('hide');
-        $("#addWin").modal('show');
-        $("input[type=reset]").trigger("click");
+        $("#addDatetimepicker").val(new Date());
     }
 }
 
@@ -87,7 +120,7 @@ function checkAppointment(combox) {
 function closeAppWin() {
     $("#appWin").modal('hide');
     $("#addWin").modal('show')
-    $("#app").val("N");
+    $('#isApp').bootstrapSwitch('state', false);
 }
 
 /** 选择预约记录 */
@@ -97,20 +130,28 @@ function checkApp() {
         swal('选择失败', "只能选择一条数据", "error");
         return false;
     } else {
+
+        appointment = selectRow[0];
+        setData(appointment);
+        $("#appWin").on("hide.bs.modal", function () {
+            $('#isApp').bootstrapSwitch('state', true);
+        });
         $("#appWin").modal('hide');
-        var appointment = selectRow[0];
-        $("#addUserName").val(appointment.userName);
-        $("#addUserPhone").val(appointment.userPhone);
-        $("#addUserId").val(appointment.userId);
-        $("#addAppointmentId").val(appointment.appointmentId);
-        $("#addDatetimepicker").val(formatterDate(appointment.arriveTime));
-        $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
-        $('#addCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
-        $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
-        $('#addCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
-        $("#addMaintainOrFix").val(appointment.maintainOrFix);
-        $("#addWin").modal('show');
     }
+}
+
+/** 给添加的form表单设置值 */
+function setData(appointment) {
+    $("#addUserName").val(appointment.userName);
+    $("#addUserPhone").val(appointment.userPhone);
+    $("#addUserId").val(appointment.userId);
+    $("#addAppointmentId").val(appointment.appointmentId);
+    $("#addDatetimepicker").val(formatterDate(appointment.arriveTime));
+    $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
+    $('#addCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
+    $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
+    $('#addCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
+    $("#addMaintainOrFix").val(appointment.maintainOrFix);
 }
 
 /** 编辑数据 */
@@ -121,6 +162,7 @@ function showEditWin() {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
+
         var checkin = selectRow[0];
         $("#editForm").fill(checkin);
         initSelect2("car_model", "请选择车型", "/carModel/car_model_all?brandId=" + checkin.brandId, "540");

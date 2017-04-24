@@ -13,12 +13,12 @@ function operateFormatter(value, row, index) {
     if (row.recordStatus == 'Y') {
         return [
             '<button type="button" class="updateActive btn btn-danger btn-sm" style="margin-right:15px;" >冻结</button>',
-            '<button type="button" class="showUpdateIncomingType1 btn btn-primary btn-sm" style="margin-right:15px;" >编辑</button>'
+            '<button type="button" class="showEditWin btn btn-primary btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     } else {
         return [
             '<button type="button" class="updateInactive btn btn-success btn-sm" style="margin-right:15px;" >激活</button>',
-            '<button type="button" class="showUpdateIncomingType1 btn btn-primary btn-sm" style="margin-right:15px;">编辑</button>'
+            '<button type="button" class="showEditWin btn btn-primary btn-sm" style="margin-right:15px;">编辑</button>'
         ].join('');
     }
 
@@ -44,7 +44,7 @@ window.operateEvents = {
                       }
                   },"json");
           },
-          'click .showUpdate': function (e, value, row, index) {
+          'click .showEditWin': function (e, value, row, index) {
 
               var record = row;
               $("#editForm").fill(record);
