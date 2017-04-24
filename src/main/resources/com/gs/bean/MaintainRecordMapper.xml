@@ -10,6 +10,7 @@
         <result column="actualEndTime" property="actualEndTime"/>
         <result column="recordCreatedTime" property="recordCreatedTime"/>
         <result column="pickupTime" property="pickupTime"/>
+        <result column="trackStatus" property="trackStatus"/>
         <result column="recordDes" property="recordDes"/>
         <result column="recordStatus" property="recordStatus"/>
         <!--接待表Id-->
@@ -26,8 +27,8 @@
     </resultMap>
     <insert id="insert" parameterType="maintainRecord">
 		<![CDATA[
-          insert into t_maintain_record(recordId, checkinId, startTime, endTime, actualEndTime, recordCreatedTime, pickupTime, companyId, recordDes, recordStatus)
-            values(#{recordId}, #{checkinId}, #{startTime}, #{endTime}, #{actualEndTime}, now(), #{pickupTime}, #{companyId}, #{recordDes}, 'Y')
+          insert into t_maintain_record(recordId, checkinId, startTime, endTime, actualEndTime, recordCreatedTime, pickupTime, companyId, recordDes, recordStatus, trackStatus)
+            values(#{recordId}, #{checkinId}, #{startTime}, #{endTime}, #{actualEndTime}, now(), #{pickupTime}, #{companyId}, #{recordDes}, 'Y', 'N')
         ]]>
 	</insert>
 
@@ -58,7 +59,7 @@
     <update id="update" parameterType="maintainRecord">
 		<![CDATA[
           update t_maintain_record
-            set checkinId = #{checkinId}, startTime = #{startTime}, endTime = #{endTime}, actualEndTime = #{actualEndTime}, recordCreatedTime = now(), pickupTime = #{pickupTime}, recordDes = #{recordDes}, recordStatus = 'Y' where recordId = #{recordId}
+            set checkinId = #{checkinId}, startTime = #{startTime}, endTime = #{endTime}, actualEndTime = #{actualEndTime}, recordCreatedTime = now(), pickupTime = #{pickupTime}, recordDes = #{recordDes}, recordStatus = 'Y', trackStatus = #{trackStatus} where recordId = #{recordId}
         ]]>
 	</update>
 
@@ -96,7 +97,7 @@
             parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 
-		  select r.*, c.checkinId, c.userName, c.carPlate, c.maintainOrFix, cpy.companyId, cpy.companyName from t_maintain_record r,  t_checkin c, t_company cpy where c.checkinId=r.checkinId and c.companyId = cpy.companyId
+		  select r.*, c.checkinId, c.userName, c.carPlate, c.maintainOrFix, cpy.companyId, cpy.companyName from t_maintain_record r,  t_checkin c, t_company cpy where c.checkinId = r.checkinId and c.companyId = cpy.companyId
 
         ]]>
         order by r.recordCreatedTime desc, r.companyId
@@ -106,7 +107,7 @@
     <select id="count" resultType="int">
 		<![CDATA[
 
-		select count(*) from t_maintain_record m
+		  select count(*) from t_maintain_record
 
         ]]>
 	</select>

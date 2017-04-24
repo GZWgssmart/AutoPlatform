@@ -340,6 +340,36 @@ function validator(formId) {
                     }
 
                 }
+            },
+            carThings: {
+                validators: {
+                    stringLength: {
+                        min: 0,
+                        max: 500,
+                        message: '描述不能超过500个字'
+                    }
+
+                }
+            },
+            intactDegrees: {
+                validators: {
+                    stringLength: {
+                        min: 0,
+                        max: 500,
+                        message: '描述不能超过500个字'
+                    }
+
+                }
+            },
+            userRequests: {
+                validators: {
+                    stringLength: {
+                        min: 0,
+                        max: 500,
+                        message: '描述不能超过500个字'
+                    }
+
+                }
             }
         }
     })

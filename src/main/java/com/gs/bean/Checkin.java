@@ -7,10 +7,8 @@ import java.util.Date;
 /**
  * 由Wjhsmart技术支持
  *
- * 登记表对应的Bean
- *
  * @author Wjhsmart
- * @since 2017-04-14 16:16:21
+ * @since 2017-04-14 16:16:21 维修保养登记表
  */
 public class Checkin {
     private String checkinId; // 登记ID

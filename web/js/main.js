@@ -202,7 +202,7 @@ function status(value, row, index) {
     if (value == "Y") {
         return "可用";
     } else {
-        return "不可用";
+        return "<span style='color: red;'>不可用</span>";
     }
 }
 
@@ -238,7 +238,7 @@ function formSubmit(url, formId, winId) {
         }, "json");
 }
 
-/** 修改提交 */
+/** 修改提交按钮 */
 function edit() {
     $("#editForm").data('bootstrapValidator').validate();
     if ($("#editForm").data('bootstrapValidator').isValid()) {
@@ -247,13 +247,22 @@ function edit() {
         $("#editButton").removeAttr("disabled");
     }
 }
-/** 添加提交 */
+/** 添加提交按钮 */
 function add() {
     $("#addForm").data('bootstrapValidator').validate();
     if ($("#addForm").data('bootstrapValidator').isValid()) {
         $("#addButton").attr("disabled","disabled");
     } else {
         $("#addButton").removeAttr("disabled");
+    }
+}
+/** 修改按钮状态 */
+function buttonStatus(formId, buttonId) {
+    $("#" + formId).data('bootstrapValidator').validate();
+    if ($("#" + formId).data('bootstrapValidator').isValid()) {
+        $("#" + buttonId).attr("disabled","disabled");
+    } else {
+        $("#" + buttonId).removeAttr("disabled");
     }
 }
 

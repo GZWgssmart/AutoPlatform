@@ -7,6 +7,8 @@ $(document).ready(function () {
 
     initDateTimePicker("datetimepicker", "");
 
+    initSelect2("maintain_fix", "请选择维修保养项目", "/maintainFix/maintain_all", "540");
+
 });
 
 function operateFormatter(value, row, index) {
@@ -54,7 +56,7 @@ window.operateEvents = {
          }
 }
 
-/** 编辑数据 */
+/** 显示编辑数据 */
 function showEditWin() {
     validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
@@ -80,12 +82,42 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            modelId: {
+            recordDes: {
                 validators: {
                     stringLength: {
                         min: 0,
                         max: 500,
                         message: '描述不能超过500个字'
+                    }
+
+                }
+            },
+            maintainDiscount: {
+                validators: {
+                    notEmpty: {
+                        message: '折扣或者减价不能为空'
+                    },
+                    numeric: {
+                        message: '折扣或者减价只能是数字'
+                    },
+                    callback: {
+                        message: '折扣或者减价不能小于等于0',
+                        callback: function(value, validator) {
+                            if (value <= 0) {
+                                return false;
+                            } else {
+                                return true;
+                            }
+
+                        }
+                    }
+
+                }
+            },
+            maintainId: {
+                validators: {
+                    notEmpty: {
+                        message: '维修保养项目不能为空'
                     }
 
                 }
@@ -95,12 +127,42 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
 
-            formSubmit("/record/edit", formId, "editWin");
 
+            if (formId == "editForm") {
+                formSubmit("/record/edit", formId, "editWin");
+            } else if (formId == "detailForm") {
+                alert("aa")
+            }
 
         })
 
 }
+
+function formatterTarck(value, row, index) {
+    if (value == "Y") {
+        return "是";
+    } else {
+        return "<span style='color: red'>否</span>";
+    }
+}
+
+/** 显示生成维修保养明细的窗口 */
+function showDetailWin() {
+    validator("detailForm");
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('错误提示', "只能选择一条数据生成维修保养明细", "error");
+        return false;
+    } else {
+        var record = selectRow[0];
+        $("#detailForm").fill(record);
+        $("#detailWin").modal('show');
+    }
+}
+
+
+
+
 
 
 

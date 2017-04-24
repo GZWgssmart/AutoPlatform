@@ -61,6 +61,9 @@
             <th data-field="checkin.maintainOrFix">
                 保养&nbsp;|&nbsp;维修
             </th>
+            <th data-field="trackStatus" data-formatter="formatterTarck">
+                是否回访
+            </th>
             <th data-field="recordDes">
                 记录描述
             </th>
@@ -78,9 +81,17 @@
         <tbody>
         <div id="toolbar" class="btn-group">
 
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
+            <a>
+                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-pencil"></i> 修改
+                </button>
+            </a>
+
+            <a>
+                <button onclick="showDetailWin();" type="button" id="generate" class="btn btn-default">
+                    <i class="glyphicon glyphicon-glass"></i> 生成明细
+                </button>
+            </a>
 
         </div>
         </tbody>
@@ -94,33 +105,35 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">修改保养记录</h3>
+                        <h3 class="m-t-none m-b">修改维修保养记录</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" attr="record.recordId" name="recordId" class="form-control"/>
                             <input type="hidden" attr="record.checkin.checkinId" name="checkinId" class="form-control"/>
-                            <div class="col-md-12 form-group">
+                            <input type="hidden" attr="record.trackStatus" name="trackStatus" class="form-control"/>
+                            <div class="form-group">
                                 <label>开始时间：</label>
                                 <input id="editStartTime" readonly type="text" name="startTime"
                                        class="form-control datetimepicker"/>
                             </div>
 
-                            <div class="col-md-12 form-group">
+                            <div class="form-group">
                                 <label>预估结束时间：</label>
                                 <input id="editEndTime" readonly type="text" name="endTime"
                                        class="form-control datetimepicker"/>
                             </div>
 
-                            <div class="col-md-12 form-group">
+                            <div class="form-group">
                                 <label class="control-label">记录描述：</label>
                                 <textarea class="form-control" attr="record.recordDes" type="textarea" name="recordDes"
                                           rows="3"></textarea>
                             </div>
 
+
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" onclick="edit()" id="editButton" class="btn btn-primary" value="修改">
+                                <input type="button" onclick="buttonStatus('editForm', 'editButton')" id="editButton" class="btn btn-primary" value="修改">
                                 </input>
                             </div>
                         </form>
@@ -130,6 +143,42 @@
             </div>
         </div>
     </div>
+</div>
+
+<div id="detailWin" style="overflow:scroll" class="modal fade" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12 b-r">
+                    <h3 class="m-t-none m-b">生成维修保养明细</h3>
+                    <form role="form" id="detailForm">
+                        <input type="hidden" attr="record.recordId" name="recordId" class="form-control"/>
+                        <div class="form-group">
+                            <label class="control-label">维修保养项目：</label>
+                            <select id="detailMaintainFix" class="js-example-tags form-control maintain_fix" name="maintainId">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">折扣&nbsp;|&nbsp;减价：</label>
+                            <input type="text" maxlength="4" name="maintainDiscount" class="form-control"/>
+                            <span style="font-size: 12px; color: green;">小于1大于0是折扣，大于等于1则是减价</span>
+                        </div>
+
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <input type="button" id="detailButton" onclick="buttonStatus('detailForm', 'detailButton')" class="btn btn-primary" value="添加">
+                            </input>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 
 <%@ include file="../common/rightMenu.jsp" %>

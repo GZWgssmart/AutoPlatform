@@ -9,19 +9,20 @@ import java.util.Date;
  * @since 2017-04-14 16:16:21  维修保养记录表
  */
 public class MaintainRecord {
-    private String recordId;  //维修保养记录编号
-    private String checkinId; //维修保养登记编号 来源于chechin表
+    private String recordId;  // 维修保养记录编号
+    private String checkinId; // 维修保养登记编号 来源于chechin表
     private Date startTime;  // 维修保养开始时间
-    private Date endTime;  //维修保养预估结束时间
-    private Date actualEndTime; //维修保养实际结束时间
-    private Date recordCreatedTime; //维修保养创建时间
-    private Date pickupTime;  //车主提车时间
-    private String recordDes;  //维修保养记录描述
+    private Date endTime;  // 维修保养预估结束时间
+    private Date actualEndTime; // 维修保养实际结束时间
+    private Date recordCreatedTime; // 维修保养创建时间
+    private Date pickupTime;  // 车主提车时间
+    private String recordDes;  // 维修保养记录描述
+    private String trackStatus; // 是否回访，默认是N，回访则改为Y
     private String companyId; // 公司的ID
-    private String recordStatus;  //维修保养记录状态
-    private Checkin checkin; //传checkin表
+    private String recordStatus;  // 维修保养记录状态
 
-    private Company company; //公司
+    private Checkin checkin; // 登记表
+    private Company company; // 公司
 
     public Company getCompany() {
         return company;
@@ -117,5 +118,13 @@ public class MaintainRecord {
 
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
+    }
+
+    public String getTrackStatus() {
+        return trackStatus;
+    }
+
+    public void setTrackStatus(String trackStatus) {
+        this.trackStatus = trackStatus;
     }
 }

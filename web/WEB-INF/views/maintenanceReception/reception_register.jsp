@@ -237,11 +237,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车油量：</label>
-                                <input type="text" attr="checkin.oilCount" name="oilCount" class="form-control"/>
+                                <input type="number" attr="checkin.oilCount" name="oilCount" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车行驶里程：</label>
-                                <input type="text" attr="checkin.carMileage" name="carMileage" class="form-control"/>
+                                <input type="number" attr="checkin.carMileage" name="carMileage" class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -355,11 +355,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车油量：</label>
-                                <input type="text" name="oilCount" class="form-control"/>
+                                <input type="number" name="oilCount" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车行驶里程：</label>
-                                <input type="text" name="carMileage" class="form-control"/>
+                                <input type="number" name="carMileage" class="form-control"/>
                             </div>
 
                             <div class="form-group">

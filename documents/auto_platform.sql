@@ -1,18 +1,4 @@
-﻿/*
-SQLyog Ultimate v12.09 (64 bit)
-MySQL - 5.7.15-log : Database - auto_platform
-*********************************************************************
-*/
-
-/*!40101 SET NAMES utf8 */;
-
-/*!40101 SET SQL_MODE=''*/;
-
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`auto_platform` /*!40100 DEFAULT CHARACTER SET utf8 */;
+﻿CREATE DATABASE IF NOT EXISTS auto_platform DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 
 USE `auto_platform`;
 
@@ -321,7 +307,6 @@ CREATE TABLE `t_maintain_fix_acc` (
 /*维修保养记录表*/
 
 DROP TABLE IF EXISTS `t_maintain_record`;
-
 CREATE TABLE `t_maintain_record` (
   `recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，UUID,主键',
   `checkinId` varchar(36) DEFAULT NULL COMMENT '维修保养登记编号，来源于t_checkin表',
@@ -329,6 +314,7 @@ CREATE TABLE `t_maintain_record` (
   `endTime` datetime DEFAULT NULL COMMENT '维修保养预估结束时间',
   `actualEndTime` datetime DEFAULT NULL COMMENT '维修保养实际结束时间',
   `recordCreatedTime` datetime DEFAULT NULL COMMENT '维修保养记录创建时间',
+  `trackStatus` varchar(2) DEFAULT NULL COMMENT '是否回访，默认是N，Y表示已经回访',
   `pickupTime` datetime DEFAULT NULL COMMENT '维修保养结束车主提车时间',
   `companyId` varchar(36) DEFAULT NULL COMMENT '来源于t_company表公司Id',
   `recordDes` varchar(500) DEFAULT NULL COMMENT '维修保养记录描述',
@@ -589,8 +575,3 @@ CREATE TABLE `t_work_info` (
   `workStatus` varchar(2) DEFAULT 'Y' COMMENT '当前状态,Y表示可用，N表示不可用',
   PRIMARY KEY (`workId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

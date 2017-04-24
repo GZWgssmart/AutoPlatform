@@ -5,12 +5,32 @@
 <mapper namespace="com.gs.dao.MaintainDetailDAO">
 
 	<resultMap id="maintainDetailResultMap" type="maintainDetail">
+		<id column="detailId" property="detailId"/>
+		<result column="maintainDiscount" property="maintainDiscount"/>
+		<result column="detailCreatedTime" property="detailCreatedTime"/>
+		<!--维修保养记录-->
+		<association property="record" javaType="com.gs.bean.MaintainRecord">
+			<id property="recordId" column="recordId"/>
+			<result property="checkinId" column="checkinId"/>
+			<association property="checkin" javaType="com.gs.bean.Checkin">
+				<id column="checkinId" property="checkinId"/>
+				<result column="userName" property="userName"/>
+				<result column="carPlate" property="carPlate"/>
+				<result column="maintainOrFix" property="maintainOrFix"/>
+			</association>
+		</association>
+		<!--维修保养项目-->
+		<association property="maintain" javaType="com.gs.bean.MaintainFix">
+			<id property="maintainId" column="maintainId"/>
+			<id property="maintainName" column="maintainName"/>
+		</association>
 
 	</resultMap>
 
 	<insert id="insert"  parameterType="maintainDetail">
 		<![CDATA[
-
+			insert into t_maintain_detail(detailId, recordId, maintainId, maintainDiscount, detailCreatedTime)
+            	values(uuid(), #{recordId}, #{maintainId}, #{maintainDiscount}, now())
 		]]>
 	</insert>
 
@@ -76,13 +96,17 @@
 
 	<select id="queryByPager" resultType="list" resultMap="maintainDetailResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			select d.*, r.recordId, r.checkinId, f.maintainId, f.maintainName, c.checkinId, c.userName, c.carPlate, c.maintainOrFix
+				from t_maintain_detail d, t_maintain_record r, t_maintain_fix f, t_checkin c
+				where d.recordId = r.recordId and d.maintainId = f.maintainId and r.checkinId = c.checkinId
 		]]>
+		order by d.detailCreatedTime desc
+        limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(*) from t_maintain_detail
 		]]>
 	</select>
 
