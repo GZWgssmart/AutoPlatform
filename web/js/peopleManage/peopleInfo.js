@@ -5,6 +5,7 @@ $(document).ready(function () {
     $("#search").bind("click", initTable);
 
     initSelect2("user_company", "请选择公司", "/company/company_all", "565");
+    initSelect2("userModal_company", "请选择公司", "/company/company_all", "130");
 });
 
 
@@ -20,16 +21,39 @@ function gender(value, row, index) {
     }
 }
 
+
+function fmtDate(){
+    var curLength = $("#chang").val().length;
+    var shu = 150-curLength;
+    $("#textShu").text(shu);
+
+    var textareaObj=document.getElementById("chang");
+    var remainObj=document.getElementById("textShu");
+    var num=0;
+    if(/msie/i.test()){
+        textareaObj.onpropertychange=function(){
+            num=150-this.value.length;
+            remainObj.innerHTML=num;
+        }
+    }else{
+        textareaObj.oninput=function(){
+            num=150-this.value.length;
+            remainObj.innerHTML=num;
+        }
+    }
+
+}
+
 function operateFormatter(value, row, index) {
     if (row.userStatus == 'Y') {
         return [
             '<button type="button" class="updateInactive btn btn-danger  btn-sm">冻结</button>',
-            '<button type="button" class="showUpdateInfo btn btn-primary  btn-sm">编辑</button>'
+            '<button style="margin-left: 10px" type="button" class="showUpdateInfo btn btn-primary">查看详情</button>'
         ].join('');
     } else {
         return [
             '<button type="button" class="updateActive btn btn-success  btn-sm">激活</button>',
-            '<button type="button" class="showUpdateInfo btn btn-primary  btn-sm">编辑</button>'
+            '<button style="margin-left: 10px" type="button"  class="showUpdateInfo btn btn-primary">查看详情</button>'
         ].join('');
     }
 }
@@ -61,12 +85,33 @@ window.operateEvents = {
     },
     'click .showUpdateInfo': function (e, value, row, index) {
         var user = row;
-        $("#editForm").fill(user);
-        $('#editCarBrand').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
-        validator("editForm");
-        $("#editWin").modal('show');
+        var selectGender = document.getElementById("gender");
+        selectGender.value = user.userGender;
+        $("#form_datetime").val(formatterDate(user.userCreatedTime));
+        $("#editModal").fill(user);
+        $('#editModalCompany').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
+        validator("editModal");
+        $("#myModal").modal('show');
+        if(user.userStatus == 'Y'){
+            $("#status").val("可用");
+        }else{
+            $("#status").val("不可用");
+        }
+        fmtDate();
+        formatterDate();
     }
 }
+
+/** 修改提交 */
+function editModal() {
+    $("#editModal").data('bootstrapValidator').validate();
+    if ($("#editModal").data('bootstrapValidator').isValid()) {
+        $("#editModalButton").attr("disabled","disabled");
+    } else {
+        $("#editModalButton").removeAttr("disabled");
+    }
+}
+
 
 
 
@@ -80,6 +125,8 @@ function showEditWin() {
         return false;
     } else {
         var user = selectRow[0];
+        var gender = document.getElementById("usergender");
+        gender.value = user.userGender;
         $("#editForm").fill(user);
         $('#editCompany').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
         $("#editWin").modal('show');
@@ -103,6 +150,7 @@ function showAddWin() {
 function validator(formId) {
     $("#addButton").removeAttr("disabled");
     $("#editButton").removeAttr("disabled");
+    $("#editModalButton").removeAttr("disabled");
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -216,9 +264,62 @@ function validator(formId) {
 
             } else if (formId == "editForm") {
                 formSubmit("/peopleManage/peopleInfo_update", formId, "editWin");
+            } else if(formId == 'editModal'){
+                formSubmit("/peopleManage/peopleInfo_update", formId, "myModal");
             }
 
 
         })
-
 }
+
+//图片上传预览    IE是用了滤镜。
+function previewImage(file)
+{
+    var MAXWIDTH  = 250;
+    var MAXHEIGHT = 250;
+    var div = document.getElementById('preview');
+    if (file.files && file.files[0])
+    {
+        div.innerHTML ='<img id=imghead onclick=$("#previewImg").click()>';
+        var img = document.getElementById('imghead');
+        img.onload = function(){
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            img.width  =  rect.width;
+            img.height =  rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+            img.style.marginTop = rect.top+'px';
+        }
+        var reader = new FileReader();
+        reader.onload = function(evt){img.src = evt.target.result;}
+        reader.readAsDataURL(file.files[0]);
+    }
+    else //兼容IE
+    {
+        var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+        file.select();
+        var src = document.selection.createRange().text;
+        div.innerHTML = '<img id=imghead>';
+        var img = document.getElementById('imghead');
+        img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+        status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+        div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+    }
+}
+function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+    var param = {top:0, left:0, width:width, height:height};
+    if( width>maxWidth || height>maxHeight ){
+        rateWidth = width / maxWidth;
+        rateHeight = height / maxHeight;
+
+        if( rateWidth > rateHeight ){
+            param.width =  maxWidth;
+            param.height = Math.round(height / rateWidth);
+        }else{
+            param.width = Math.round(width / rateHeight);
+            param.height = maxHeight;
+        }
+    }
+    return param;
+}
+

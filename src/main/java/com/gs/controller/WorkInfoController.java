@@ -57,4 +57,24 @@ public class WorkInfoController {
         List<WorkInfo> workInfos = workInfoService.queryByPager(pager);
         return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfos);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "workInfo_update", method = RequestMethod.POST)
+    public ControllerResult info_update(WorkInfo workInfo){
+        logger.info("信息修改");
+        workInfoService.update(workInfo);
+        return ControllerResult.getSuccessResult(" 修改成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "workInfo_status", method = RequestMethod.GET)
+    public ControllerResult info_status(@Param("id")String id, @Param("status")String status){
+        logger.info("状态修改");
+        if(status.equals("Y")){
+            workInfoService.inactive(id);
+        } else {
+            workInfoService.active(id);
+        }
+        return ControllerResult.getSuccessResult(" 修改成功");
+    }
 }

@@ -1,6 +1,8 @@
 package com.gs.dao;
 
 import com.gs.bean.User;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
 @Repository
 public interface UserDAO extends BaseDAO<String, User>{
 
-    public List<User> queryByUser(String companyId);
+    public List<User> queryByUser(@Param("pager")Pager pager, @Param("companyId")String companyId);
 
     public int countByUser(String companyId);
 }

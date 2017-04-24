@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.User;
+import com.gs.common.bean.Pager;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 */
 public interface UserService extends BaseService<String, User>{
 
-    public List<User> queryByUser(String companyId);
+    public List<User> queryByUser(Pager pager, String companyId);
 
     public int countByUser(String companyId);
 }

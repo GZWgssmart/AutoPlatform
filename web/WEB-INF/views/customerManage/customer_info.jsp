@@ -24,7 +24,7 @@
 </head>
 <body>
 
-<div class="container" style="width: 100%;">
+<div class="container">
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
            data-show-refresh="true"

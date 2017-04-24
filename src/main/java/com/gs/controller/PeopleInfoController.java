@@ -6,19 +6,33 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.FileUtil;
 import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 温鑫
@@ -68,8 +82,18 @@ public class PeopleInfoController {
 
     @ResponseBody
     @RequestMapping(value = "peopleInfo_update", method = RequestMethod.POST)
-    public ControllerResult info_update(User user){
+    public ControllerResult info_update(User user, MultipartFile file, HttpSession session, HttpServletRequest request) throws IOException {
         logger.info("信息修改");
+        if(file != null){
+            String filePath =  FileUtil.uploadPath(session, UUID.randomUUID().toString()+"/"+file);
+            System.out.println(filePath);
+            if(!file.isEmpty()){
+                file.transferTo(new File(filePath));
+                user.setUserIcon(filePath);
+            }
+        }else{
+            user.setUserIcon("img/default.png");
+        }
         user.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
         userService.update(user);
         return ControllerResult.getSuccessResult(" 修改成功");
@@ -112,8 +136,15 @@ public class PeopleInfoController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(userService.countByUser("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a"));
-        List<User> users =  userService.queryByUser("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+        List<User> users =  userService.queryByUser(pager,"65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
         return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }
 

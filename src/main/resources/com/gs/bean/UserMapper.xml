@@ -70,7 +70,7 @@
 	<update id="update" parameterType="user">
 		<![CDATA[
 			UPDATE t_user SET
-				userName = #{userName}, userIcon = #{userIcon}, userEmail = #{userEmail}, userNickname = #{userNickname}, userDes = #{userDes}, userPwd = #{userPwd}, userGender = #{userGender}, userPhone = #{userPhone}, userAddress = #{userAddress}, userStatus = 'Y', companyId = #{companyId}, qqOpenId = #{qqOpenId}, weiboOpenId = #{weiboOpenId}, wechatOpenId = #{wechatOpenId}, userDes = #{userDes},   WHERE userId = #{userId}
+				userName = #{userName}, userIcon = #{userIcon}, userNickname = #{userNickname}, userDes = #{userDes}, userGender = #{userGender}, userPhone = #{userPhone}, userAddress = #{userAddress}, userStatus = 'Y', companyId = #{companyId}, qqOpenId = #{qqOpenId}, weiboOpenId = #{weiboOpenId}, wechatOpenId = #{wechatOpenId}, userDes = #{userDes} WHERE userId = #{userId}
 		]]>
 	</update>
 
@@ -104,10 +104,11 @@
 		]]>
 	</select>
 
-	<select id="queryByUser" parameterType="string" resultMap="userResultMap">
+	<select id="queryByUser"  resultMap="userResultMap">
 		<![CDATA[
-			  SELECT * FROM t_user WHERE companyId = #{companyId}
+			  SELECT * FROM t_user WHERE companyId = #{companyId} order by userCreatedTime Desc
 		]]>
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 

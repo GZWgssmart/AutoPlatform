@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService {
 	public int inactive(String id) { return userDAO.inactive(id); }
 	public int active(String id) { return userDAO.active(id); }
 
-	public List<User> queryByUser(String companyId) {
-		return userDAO.queryByUser(companyId);
+	public List<User> queryByUser(Pager pager, String companyId) {
+		return userDAO.queryByUser(pager,companyId);
 	}
 
 	public int countByUser(String companyId) {

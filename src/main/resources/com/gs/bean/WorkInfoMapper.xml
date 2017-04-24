@@ -5,6 +5,17 @@
 <mapper namespace="com.gs.dao.WorkInfoDAO">
 
 	<resultMap id="workInfoResultMap" type="workInfo">
+		<id property="workId" column="workId"></id>
+		<result property="recordId" column="recordId"></result>
+		<result property="userId" column="userId"></result>
+		<result property="workAssignTi" column="workAssignTi"></result>
+		<result property="workCreatedTime" column="workCreatedTime"></result>
+		<result property="workStatus" column="workStatus"></result>
+
+		<association property="user" javaType="com.gs.bean.User">
+			<id property="userId" column="userId"/>
+			<id property="userName" column="userName"/>
+		</association>
 
 	</resultMap>
 
@@ -43,7 +54,8 @@
 
 	<update id="update" parameterType="workInfo">
 		<![CDATA[
-
+			UPDATE t_work_info SET
+				 workStatus = 'Y', userId = #{userId} WHERE workId = #{workId}
 		]]>
 	</update>
 
@@ -79,25 +91,26 @@
 
 	<select id="queryByPager" resultType="list" resultMap="workInfoResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			SELECT * FROM t_work_info limit #{beginIndex}, #{pageSize}
-		]]>
+			SELECT w.*, u.userId, u.userName FROM t_work_info w, t_user u where 1=1 and w.userId = u.userId
+				order by workCreatedTime Desc, w.userId
+		]]>limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			SELECT COUNT(*) FROM t_work_info
 		]]>
 	</select>
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			UPDATE t_work_info set workStatus = 'N' where workId = #{workId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			UPDATE t_work_info set workStatus = 'Y' where workId = #{workId}
 		]]>
 	</update>
 

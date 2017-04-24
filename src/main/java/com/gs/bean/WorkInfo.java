@@ -16,6 +16,8 @@ public class WorkInfo {
 	private Date workCreatedTime;
 	private String workStatus;
 
+	private User user;
+
 	public String getWorkId(){
 		return this.workId;
 	}
@@ -58,4 +60,11 @@ public class WorkInfo {
 		this.workStatus=workStatus;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }
