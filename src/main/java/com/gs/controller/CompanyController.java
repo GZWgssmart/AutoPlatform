@@ -74,6 +74,18 @@ public class CompanyController {
         return "company/car_plate";
     }
 
+    @RequestMapping(value="maintainItem" , method = RequestMethod.GET)
+    private String showMaintainItem (){
+        logger.info("显示维修项目");
+        return "company/maintain_item";
+    }
+
+    @RequestMapping(value="maintenanceItem" , method = RequestMethod.GET)
+    private String showMaintainFix (){
+        logger.info("显示保养项目");
+        return "company/maintenance_item";
+    }
+
     @ResponseBody
     @RequestMapping(value ="InsertCompany",method = RequestMethod.POST)
     public ControllerResult InsetCompany(Company company){
@@ -128,7 +140,7 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "company_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
-        logger.info("查询员工");
+        logger.info("查询所有公司");
         List<Company> companyList = companyService.queryAll();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
         for (Company companys : companyList) {

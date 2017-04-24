@@ -86,13 +86,10 @@
                             <a class="J_menuItem" href="<%=path %>/company/plate">车牌管理</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="graph_sparkline.html">保养项目管理</a>
+                            <a class="J_menuItem" href="<%=path %>/company/maintenanceItem">保养项目管理</a>
                         </li>
                         <li>
-                            <a class="J_menuItem" href="graph_metrics.html">维修项目管理</a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="graph_metrics.html">常见故障管理</a>
+                            <a class="J_menuItem" href="<%=path %>/company/maintainItem">维修项目管理</a>
                         </li>
                     </ul>
                 </li>

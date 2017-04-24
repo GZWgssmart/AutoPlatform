@@ -93,16 +93,17 @@ function deleteProduct() {
 
     }
 }
+
 function operating(value, row, index) {
     if (row.companyStatus == 'Y') {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" >冻结</button>',
-            '<button onclick="showEditWin();" type="button" class="btn btn-default  btn-sm" >编辑</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm btn-danger" >冻结</button>',
+            '<button onclick="showEditWin();" type="button" class="btn btn-default  btn-sm btn-primary" >编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm" >激活</button>',
-            '<button onclick="showEditWin();" type="button" class="btn btn-default  btn-sm" >编辑</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm btn-success" >激活</button>',
+            '<button onclick="showEditWin();" type="button" class="btn btn-default  btn-sm btn-primary" >编辑</button>'
         ].join('');
     }
 }

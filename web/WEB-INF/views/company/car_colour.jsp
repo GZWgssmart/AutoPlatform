@@ -14,6 +14,7 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/example.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-colorpalette.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -39,12 +40,15 @@
             <th data-field="colorStatus" data-formatter="operateFormatter">
                 汽车颜色状态
             </th>
+            <th data-field="co" data-formatter="operating" data-events="operateEvents">
+                操作
+            </th>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a href="#addWin" data-toggle="modal">
-                <button type="button" id="add" class="btn btn-default">
+            <a data-toggle="modal">
+                <button type="button" id="add" onclick="showAddWin()" class="btn btn-default">
                     <i class="glyphicon glyphicon-plus"></i> 添加
                 </button>
             </a>
@@ -69,54 +73,6 @@
     </table>
 </div>
 
-
-<div id="editWin" class="modal fade" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">修改汽车品牌</h3>
-                        <form role="form" id="updateForm">
-                            <input type="hidden" attr="carColor.colorId" name="colorId" id="id"/>
-                            <input type="hidden" attr="carColor.colorStatus" name="colorStatus"/>
-                            <div class="form-group">
-                                <label class="control-label">汽车颜色名称：</label>
-                                <input type="text" name="colorName" attr="carColor.colorName" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">汽车颜色RGB：</label>
-                                <input id="selected-color1" class="form-control">
-                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">Color</a>
-                                <ul class="dropdown-menu">
-                                    <li><div id="colorpalette1"></div></li>
-                                </ul>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">汽车颜色Hex：</label>
-                                <input type="text" name="colorHex" attr="carColor.colorHex" class="form-control"/>
-
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">汽车颜色描述：</label>
-                                <textarea name="colorDes" cols="20" rows="5" class="form-control"
-                                          attr="carColor.colorDes" type="textarea"></textarea>
-                            </div>
-                            <div class="modal-footer" style="overflow:hidden;">
-                                <button type="button" class="btn btn-default"
-                                        data-dismiss="modal">关闭
-                                </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="updateProduct()">
-                                </input>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="addWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
@@ -148,7 +104,6 @@
                                     <li><div id="colorpalette"></div></li>
                                 </ul>
                             </div>
-
                             <div class="form-group">
                                 <label class="control-label">汽车颜色描述：</label>
                                 <textarea name="colorDes" cols="20" rows="5" class="form-control"></textarea>
@@ -159,15 +114,65 @@
                                 </button>
                                 <input type="button" class="btn btn-primary" onclick="addProduct()" value="添加">
                                 </input>
+                                </input>
+                                <input type="reset" name="reset" style="display: none;" />
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div id="editWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">添加汽车颜色</h3>
+                        <form role="form" id="editForm">
+                            <div class="form-group">
+                                <label class="control-label">汽车颜色名称：</label>
+                                <br />
+                                <input type="text" name="colorName" class="form-control" attr="carColor.colorName"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">汽车颜色：</label>
+                                <span id="spans" style='display: inline-block; width: 25px; height: 25px;'></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">汽车颜色RGB：</label>
+                                <input id="selected-colorRGB1" readonly class="form-control" name="colorRGB" attr="carColor.colorRGB">
+                            </div>
+                            <div class="form-group btn-group">
+                                <label class="control-label">汽车颜色Hex：</label>
+                                <input id="selected-color1" readonly class="form-control" name="colorHex" attr="carColor.colorHex">
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">点击选择颜色</a>
+                                <ul class="dropdown-menu">
+                                    <li><div id="colorpalette1"></div></li>
+                                </ul>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">汽车颜色描述：</label>
+                                <textarea name="colorDes" cols="20" rows="5" class="form-control" attr="carColor.colorDes" type="textarea"></textarea>
+                            </div>
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" class="btn btn-primary" onclick="updateProduct()" value="修改">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
@@ -186,8 +191,6 @@
             $('#selected-colorRGB').val(colorHexToRGB(e.color));
             $("#span").css("background-color", e.color);
         });
-
-
 </script>
 </body>
 </html>
