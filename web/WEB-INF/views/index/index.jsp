@@ -247,7 +247,7 @@
                         </li>
                         <li><a class="J_menuItem" href="form_validate.html">配件使用统计</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">财务统计</a>
+                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/finance_page">财务统计</a>
                         </li>
                     </ul>
                 </li>

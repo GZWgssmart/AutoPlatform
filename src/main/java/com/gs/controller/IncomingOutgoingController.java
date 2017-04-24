@@ -3,6 +3,7 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.IncomingOutgoing;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.bean.LineBasic;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.IncomingOutgoingService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -81,4 +83,31 @@ public class IncomingOutgoingController {
         return new Pager4EasyUI<IncomingOutgoing>(pager.getTotalRecords(), incomingTypes);
     }
 
+
+    @ResponseBody
+    @RequestMapping(value="query_all",method= RequestMethod.GET)
+    public List<LineBasic> queryAll(){
+        logger.info("查询所有收支记录报表显示");
+        List<LineBasic> lineBasics = new ArrayList<LineBasic>();
+        LineBasic lineBasic = new LineBasic();
+        LineBasic lineBasic1 = new LineBasic();
+        lineBasic.setName("支出");
+        lineBasic.setData(date());
+        lineBasic1.setName("收入");
+        lineBasic1.setData(new double[]{1200,2200,4200,6000,3200,1280});
+        lineBasics.add(lineBasic);
+        lineBasics.add(lineBasic1);
+        return lineBasics;
+    }
+
+    public double[] date(){
+        List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryAll();
+        double[] dobles = new double[incomingOutgoings.size()];
+        for(int i=0; i< incomingOutgoings.size();i++){
+            for(IncomingOutgoing io : incomingOutgoings){
+                dobles[i] = io.getInOutMoney();
+            }
+        }
+        return dobles;
+    }
 }

@@ -74,7 +74,10 @@
 
 	<select id="queryAll" resultMap="incomingOutgoingResultMap">
 		<![CDATA[
-
+            select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,u.userName from t_incoming_outgoing io
+				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
+				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
+				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
 		]]>
 	</select>
 

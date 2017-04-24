@@ -104,7 +104,7 @@
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(*) t_salary
+			select count(*) from t_salary
 		]]>
 	</select>
 
