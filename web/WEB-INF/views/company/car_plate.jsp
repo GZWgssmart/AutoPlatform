@@ -35,6 +35,9 @@
             <th data-field="plateStatus" data-formatter="operateFormatter">
                 车牌状态
             </th>
+            <th data-field="co" data-formatter="operating" data-events="operateEvents">
+                操作
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -44,12 +47,6 @@
             </button></a>
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
-            <a><button onclick="EditStatus();" type="button" id="status" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 激活
-            </button></a>
-            <a><button onclick="StatusIncomeing();" type="button"  class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 冻结
             </button></a>
         </div>
         </tbody>

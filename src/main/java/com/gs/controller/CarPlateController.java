@@ -72,4 +72,20 @@ public class CarPlateController {
         List<CarPlate> carModelList = carPlateService.queryByPager(pager);
         return new Pager4EasyUI<CarPlate>(pager.getTotalRecords(), carModelList);
     }
+
+    @ResponseBody
+    @RequestMapping(value="plateStatusModify",method = RequestMethod.GET)
+    public ControllerResult colorStatusModify(@Param("id") String id,@Param("status") String status){
+        if(status.equals("Y")){
+            logger.info("车牌冻结成功");
+            carPlateService.inactive(id);
+            return ControllerResult.getSuccessResult("车牌冻结成功");
+        }else if(status.equals("N")){
+            logger.info("车牌激活成功");
+            carPlateService.active(id);
+            return ControllerResult.getSuccessResult("车牌激活成功");
+        }
+        logger.info("车牌激活失败");
+        return ControllerResult.getFailResult("颜色修改失败");
+    }
 }

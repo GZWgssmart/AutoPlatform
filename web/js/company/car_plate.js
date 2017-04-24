@@ -63,3 +63,46 @@ function operateFormatter(value, row, index) {
         ].join('');
     }
 }
+
+function operating(value, row, index) {
+    if (row.plateStatus == 'Y') {
+        return [
+            '<button type="button" class="updateInactive btn btn-default  btn-sm btn-danger" >冻结</button>',
+            '<button type="button" onclick="showEditWin()" class="btn btn-default btn-sm btn-primary ">编辑</button>'
+        ].join('');
+    } else {
+        return [
+            '<button type="button" class="updateActive btn btn-default  btn-sm btn-success" >激活</button>',
+            '<button type="button" onclick="showEditWin()" class="btn btn-default btn-sm btn-primary ">编辑</button>'
+        ].join('');
+    }
+}
+
+
+
+window.operateEvents = {
+    'click .updateActive': function (e, value, row, index) {
+        var Status = 'N';
+        $.get("/carPlate/plateStatusModify?id=" + row.plateId + "&status=" + Status,
+            function (data) {
+                if (data.result == "success") {
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            }, "json");
+    },
+    'click .updateInactive': function (e, value, row, index) {
+        var Status = 'Y';
+        $.get("/carPlate/plateStatusModify?id=" + row.plateId + "&status=" + Status,
+            function (data) {
+                if (data.result == "success") {
+                    // $('#addWin').modal('hide');
+                    // swal(data.message, "", "success");
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            }, "json");
+    }
+}

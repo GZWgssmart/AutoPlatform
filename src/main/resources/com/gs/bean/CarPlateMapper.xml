@@ -37,7 +37,7 @@
 	</delete>
 
 	<update id="update" parameterType="carPlate">
-		update t_car_plate set plateName=#{plateName},plateDes=#{plateDes},plateStatus=#{plateStatus} where plateId = #{plateId}
+		update t_car_plate set plateName=#{plateName},plateDes=#{plateDes},plateStatus="Y" where plateId = #{plateId}
 	</update>
 
 	<update id="batchUpdate" parameterType="list">
@@ -80,13 +80,13 @@
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_car_plate set plateStatus = "N" where plateId = #{plateId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_car_plate set plateStatus = "Y" where plateId = #{plateId}
 		]]>
 	</update>
 

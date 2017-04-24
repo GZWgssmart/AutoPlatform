@@ -1,7 +1,11 @@
 package com.gs.dao;
 
 import com.gs.bean.MaintainFix;
+import com.gs.common.bean.Pager;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -10,5 +14,5 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
-
+    public List<MaintainFix> queryBymaintainPager(Pager pager);
 }

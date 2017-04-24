@@ -63,7 +63,7 @@
 
 	<select id="queryAll" resultMap="maintainFixResultMap">
 		<![CDATA[
-
+			select * from t_maintian_fix
 		]]>
 	</select>
 
@@ -90,7 +90,11 @@
 			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = 'Y' limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
-
+	<select id="queryBymaintainPager" resultType="list" resultMap="maintainFixResultMap" parameterType="com.gs.common.bean.Pager">
+		<![CDATA[
+			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = 'N' limit #{beginIndex}, #{pageSize}
+		]]>
+	</select>
 	<select id="count" resultType="int">
 		<![CDATA[
 			select count(*) from t_maintain_fix
