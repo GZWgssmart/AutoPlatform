@@ -151,6 +151,42 @@
     </div>
 </div>
 
+<div id="detailWin" style="overflow:scroll" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">生成维修保养明细</h3>
+                        <form role="form" id="detailForm">
+                            <input type="hidden" attr="record.recordId" name="recordId" class="form-control"/>
+                            <div class="form-group">
+                                <label class="control-label">维修保养项目：</label>
+                                <select id="detailMaintainFix" class="js-example-tags form-control maintain_fix" name="maintainId">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">折扣&nbsp;|&nbsp;减价：</label>
+                                <input type="text" maxlength="4" name="maintainDiscount" class="form-control"/>
+                                <span style="font-size: 12px; color: green;">小于1大于0是折扣，大于等于1则是减价</span>
+                            </div>
+
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" id="detailButton" onclick="buttonStatus('detailForm', 'detailButton')" class="btn btn-primary" value="添加">
+                                </input>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="searchDetailWin" class="modal fade" aria-hidden="true" style="overflow:scroll">
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
@@ -163,7 +199,7 @@
                                data-show-refresh="true"
                                data-show-toggle="true"
                                data-showColumns="true"
-                               data-height="550">
+                               data-height="500">
                             <thead>
                             <tr>
                                 <th data-field="state" data-checkbox="true"></th>
@@ -199,7 +235,7 @@
                             </tbody>
 
                         </table>
-                        <div style="height: 100px;"></div>
+                        <div style="height: 40px;"></div>
                         <div class="modal-footer" style="overflow:hidden;">
                             <button type="button" class="btn btn-default"
                                     data-dismiss="modal">关闭
@@ -213,40 +249,49 @@
     </div>
 </div>
 
-<div id="detailWin" style="overflow:scroll" class="modal fade" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-sm-12 b-r">
-                    <h3 class="m-t-none m-b">生成维修保养明细</h3>
-                    <form role="form" id="detailForm">
-                        <input type="hidden" attr="record.recordId" name="recordId" class="form-control"/>
-                        <div class="form-group">
-                            <label class="control-label">维修保养项目：</label>
-                            <select id="detailMaintainFix" class="js-example-tags form-control maintain_fix" name="maintainId">
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">折扣&nbsp;|&nbsp;减价：</label>
-                            <input type="text" maxlength="4" name="maintainDiscount" class="form-control"/>
-                            <span style="font-size: 12px; color: green;">小于1大于0是折扣，大于等于1则是减价</span>
-                        </div>
+<div id="editDetailWin" style="overflow:scroll" class="modal fade" aria-hidden="true" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">修改维修保养记录</h3>
+                        <form role="form" id="editDetailForm">
+                            <input type="hidden" attr="detail.detailId" name="detailId" class="form-control"/>
+                            <div class="form-group">
+                                <label>车主姓名：</label>
+                                <input readonly type="text" attr="detail.record.checkin.userName" class="form-control"/>
+                            </div>
 
-                        <div class="modal-footer" style="overflow:hidden;">
-                            <button type="button" class="btn btn-default"
-                                    data-dismiss="modal">关闭
-                            </button>
-                            <input type="button" id="detailButton" onclick="buttonStatus('detailForm', 'detailButton')" class="btn btn-primary" value="添加">
-                            </input>
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <label>车主电话：</label>
+                                <input readonly type="text" attr="detail.record.checkin.userPhone" class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">维修保养项目：</label>
+                                <select id="editDetailMaintain" class="js-example-tags form-control maintain_fix" name="maintainId">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">折扣&nbsp;|&nbsp;减价：</label>
+                                <input type="text" maxlength="4" attr="detail.maintainDiscount" name="maintainDiscount" class="form-control"/>
+                                <span style="font-size: 12px; color: green;">小于1大于0是折扣，大于等于1则是减价</span>
+                            </div>
+
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default" onclick="closeEditDetailWin()">关闭
+                                </button>
+                                <input type="button" onclick="buttonStatus('editDetailForm', 'editDetailButton')" id="editDetailButton" class="btn btn-primary" value="修改">
+                                </input>
+                            </div>
+                        </form>
+                    </div>
+
                 </div>
-
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <%@ include file="../common/rightMenu.jsp" %>

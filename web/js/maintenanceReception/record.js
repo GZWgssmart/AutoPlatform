@@ -185,9 +185,17 @@ function showEditDetailWin() {
         return false;
     } else {
         var detail = selectRow[0];
-        initTable("cusTable", "/detail/pager?recordId=" + recordId, "toolbar1");
-        $("#searchDetailWin").modal('show');
+        $("#editDetailForm").fill(detail);
+        $('#editDetailMaintain').html('<option value="' + detail.maintainId + '">' + detail.maintain.maintainName + '</option>').trigger("change");
+        $("#searchDetailWin").modal('hide');
+        $("#editDetailWin").modal('show');
     }
+}
+
+/** 关闭修改维修保养明细的窗口 */
+function closeEditDetailWin() {
+    $("#editDetailWin").modal('hide');
+    $("#searchDetailWin").modal('show');
 }
 
 

@@ -120,7 +120,6 @@ function getDate() {
 function closeAppWin() {
     $("#appWin").modal('hide');
     $("#addWin").modal('show')
-    $('#isApp').bootstrapSwitch('state', false);
 }
 
 /** 选择预约记录 */
