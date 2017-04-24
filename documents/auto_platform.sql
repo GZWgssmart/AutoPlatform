@@ -1,9 +1,25 @@
-﻿CREATE DATABASE IF NOT EXISTS auto_platform DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
-use auto_platform;
-/**
-	配件表
-*/
+﻿/*
+SQLyog Ultimate v12.09 (64 bit)
+MySQL - 5.7.15-log : Database - auto_platform
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`auto_platform` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `auto_platform`;
+
+/*配件表*/
+
 DROP TABLE IF EXISTS `t_accessories`;
+
 CREATE TABLE `t_accessories` (
   `accId` varchar(36) NOT NULL,
   `accName` varchar(100) NOT NULL COMMENT '配件名称',
@@ -24,10 +40,10 @@ CREATE TABLE `t_accessories` (
   PRIMARY KEY (`accId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/**
-	配件采购表
-*/
+/*配件采购表*/
+
 DROP TABLE IF EXISTS `t_accessories_buy`;
+
 CREATE TABLE `t_accessories_buy` (
   `accBuyId` varchar(36) NOT NULL COMMENT '配件采购编号',
   `accId` varchar(36) DEFAULT NULL COMMENT '配件编号',
@@ -44,10 +60,10 @@ CREATE TABLE `t_accessories_buy` (
   PRIMARY KEY (`accBuyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	配件销售表
-*/
+/*配件销售表*/
+
 DROP TABLE IF EXISTS `t_accessories_sale`;
+
 CREATE TABLE `t_accessories_sale` (
   `accSaleId` varchar(36) NOT NULL COMMENT '配件销售编号',
   `accId` varchar(36) DEFAULT NULL COMMENT '配件编号',
@@ -63,10 +79,10 @@ CREATE TABLE `t_accessories_sale` (
   PRIMARY KEY (`accSaleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	配件分类表
-*/
+/*配件分类表*/
+
 DROP TABLE IF EXISTS `t_accessories_type`;
+
 CREATE TABLE `t_accessories_type` (
   `accTypeId` varchar(36) NOT NULL COMMENT '配件分类编号，UUID,主键',
   `accTypeName` varchar(50) DEFAULT NULL COMMENT '配件分类名称',
@@ -76,10 +92,10 @@ CREATE TABLE `t_accessories_type` (
   PRIMARY KEY (`accTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/**
-	预约表
-*/
+/*预约表*/
+
 DROP TABLE IF EXISTS `t_appointment`;
+
 CREATE TABLE `t_appointment` (
   `appointmentId` varchar(36) NOT NULL DEFAULT '主键',
   `userId` varchar(36) DEFAULT NULL COMMENT '用户编号',
@@ -98,10 +114,10 @@ CREATE TABLE `t_appointment` (
   PRIMARY KEY (`appointmentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	汽车品牌表
-*/
+/*汽车品牌表*/
+
 DROP TABLE IF EXISTS `t_car_brand`;
+
 CREATE TABLE `t_car_brand` (
   `brandId` varchar(36) NOT NULL COMMENT '汽车品牌编号',
   `brandName` varchar(20) NOT NULL COMMENT '汽车品牌名称',
@@ -111,10 +127,10 @@ CREATE TABLE `t_car_brand` (
   UNIQUE KEY `brandName` (`brandName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	汽车颜色表
-*/
+/*汽车颜色表*/
+
 DROP TABLE IF EXISTS `t_car_color`;
+
 CREATE TABLE `t_car_color` (
   `colorId` varchar(36) NOT NULL COMMENT '颜色编号',
   `colorName` varchar(20) NOT NULL COMMENT '颜色名称',
@@ -126,10 +142,10 @@ CREATE TABLE `t_car_color` (
   UNIQUE KEY `colorName` (`colorName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	汽车车型表
-*/
+/*汽车车型表*/
+
 DROP TABLE IF EXISTS `t_car_model`;
+
 CREATE TABLE `t_car_model` (
   `modelId` varchar(36) NOT NULL COMMENT '车型ID',
   `modelName` varchar(50) NOT NULL COMMENT '车型名称',
@@ -140,10 +156,10 @@ CREATE TABLE `t_car_model` (
   UNIQUE KEY `modelName` (`modelName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	汽车车牌表
-*/
+/*汽车车牌表*/
+
 DROP TABLE IF EXISTS `t_car_plate`;
+
 CREATE TABLE `t_car_plate` (
   `plateId` varchar(36) NOT NULL COMMENT '车牌编号',
   `plateName` varchar(10) NOT NULL COMMENT '车牌名称',
@@ -153,13 +169,13 @@ CREATE TABLE `t_car_plate` (
   UNIQUE KEY `plateName` (`plateName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	收费单据表
-*/
+/*收费单据表*/
+
 DROP TABLE IF EXISTS `t_charge_bill`;
+
 CREATE TABLE `t_charge_bill` (
   `chargeBillId` varchar(36) NOT NULL COMMENT '收费单据编号，UUID,主键',
-  `maintainRecordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
+  `recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
   `chargeBillMoney` double(255,0) DEFAULT NULL COMMENT '收费总金额',
   `paymentMethod` varchar(20) DEFAULT NULL COMMENT '付款方式',
   `actualPayment` double(255,0) DEFAULT NULL COMMENT '实付款',
@@ -170,10 +186,10 @@ CREATE TABLE `t_charge_bill` (
   PRIMARY KEY (`chargeBillId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	登记表
-*/
+/*登记表*/
+
 DROP TABLE IF EXISTS `t_checkin`;
+
 CREATE TABLE `t_checkin` (
   `checkinId` varchar(36) NOT NULL COMMENT '登记编号，UUID,主键',
   `userId` varchar(36) DEFAULT NULL COMMENT '用户编号，来源于t_user表，可为空，当为空时，表示非注册车主用户登记',
@@ -199,10 +215,10 @@ CREATE TABLE `t_checkin` (
   PRIMARY KEY (`checkinId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	公司表
-*/
+/*公司表*/
+
 DROP TABLE IF EXISTS `t_company`;
+
 CREATE TABLE `t_company` (
   `companyId` varchar(36) NOT NULL COMMENT '公司id',
   `companyName` varchar(100) NOT NULL COMMENT '公司名称',
@@ -221,10 +237,10 @@ CREATE TABLE `t_company` (
   UNIQUE KEY `companyName` (`companyName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	投诉表
-*/
+/*投诉表*/
+
 DROP TABLE IF EXISTS `t_complaint`;
+
 CREATE TABLE `t_complaint` (
   `complaintId` varchar(36) NOT NULL COMMENT '投诉编号，UUID,主键',
   `userId` varchar(36) DEFAULT NULL COMMENT '用户编号，来源于t_user表',
@@ -236,47 +252,47 @@ CREATE TABLE `t_complaint` (
   PRIMARY KEY (`complaintId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	收支记录表
-*/
+/*收支记录表*/
+
 DROP TABLE IF EXISTS `t_incoming_outgoing`;
+
 CREATE TABLE `t_incoming_outgoing` (
   `inOutId` varchar(36) NOT NULL COMMENT '收支记录编号',
-  `inTypeId` varchar(36) NOT NULL COMMENT '收入类型编号，来源于t_incoming_type表',
-  `outTypeId` varchar(36) NOT NULL COMMENT '支出类型编号，来源于t_outgoing_type表',
+  `inTypeId` varchar(36) DEFAULT NULL COMMENT '收入类型编号，来源于t_incoming_type表',
+  `outTypeId` varchar(36) DEFAULT NULL COMMENT '支出类型编号，来源于t_outgoing_type表',
   `inOutMoney` double(255,0) DEFAULT NULL COMMENT '收支金额',
   `inOutCreatedUser` varchar(36) DEFAULT NULL COMMENT '收支记录创建人，来源于t_user表',
   `inOutCreatedTime` datetime DEFAULT NULL COMMENT '收支记录创建时间',
   `inOutStatus` varchar(2) DEFAULT NULL COMMENT '收支记录状态，Y表示可用，N表示不可用'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	收入类型表
-*/
+/*收入类型表*/
+
 DROP TABLE IF EXISTS `t_incoming_type`;
+
 CREATE TABLE `t_incoming_type` (
   `inTypeId` varchar(36) NOT NULL COMMENT '收入类型编号',
   `inTypeName` varchar(20) DEFAULT NULL COMMENT '收人类型名称',
   `inTypeStatus` varchar(2) DEFAULT NULL COMMENT '收人类型状态，Y表示可用，N表示不可用'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	维修保养明细表
-*/
+/*维修保养明细表*/
+
 DROP TABLE IF EXISTS `t_maintain_detail`;
+
 CREATE TABLE `t_maintain_detail` (
-  `maintainDetailId` varchar(36) NOT NULL COMMENT '维修保养明细编号，UUID,主键',
-  `maintainRecordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
-  `maintainItemId` varchar(36) DEFAULT NULL COMMENT '维修保养项目编号，来源于t_maintain_fix表，可为空',
+  `detailId` varchar(36) NOT NULL COMMENT '维修保养明细编号，UUID,主键',
+  `recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
+  `maintainId` varchar(36) DEFAULT NULL COMMENT '维修保养项目编号，来源于t_maintain_fix表，可为空',
   `maintainDiscount` double(255,0) DEFAULT NULL COMMENT '维修保养项目折扣，default 0,可选择折扣，也可选择减价',
   `mdCreatedTime` datetime DEFAULT NULL COMMENT '维修保养明细创建时间',
   PRIMARY KEY (`maintainDetailId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	维修保养项目表
-*/
+/*维修保养项目表*/
+
 DROP TABLE IF EXISTS `t_maintain_fix`;
+
 CREATE TABLE `t_maintain_fix` (
   `maintainId` varchar(36) NOT NULL COMMENT '维修保养项目编号',
   `maintainName` varchar(50) NOT NULL COMMENT '维修保养项目名称',
@@ -290,10 +306,10 @@ CREATE TABLE `t_maintain_fix` (
   PRIMARY KEY (`maintainId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	维修保养项目配件关联表
-*/
+/*维修保养项目配件关联表*/
+
 DROP TABLE IF EXISTS `t_maintain_fix_acc`;
+
 CREATE TABLE `t_maintain_fix_acc` (
   `mainAccId` varchar(36) NOT NULL COMMENT '保养项目配件编号',
   `maintainId` varchar(36) DEFAULT NULL COMMENT '保养项目编号',
@@ -302,10 +318,10 @@ CREATE TABLE `t_maintain_fix_acc` (
   PRIMARY KEY (`mainAccId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	维修保养记录表
-*/
+/*维修保养记录表*/
+
 DROP TABLE IF EXISTS `t_maintain_record`;
+
 CREATE TABLE `t_maintain_record` (
   `recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，UUID,主键',
   `checkinId` varchar(36) DEFAULT NULL COMMENT '维修保养登记编号，来源于t_checkin表',
@@ -319,10 +335,10 @@ CREATE TABLE `t_maintain_record` (
   `recordStatus` varchar(2) DEFAULT NULL COMMENT '维修保养记录状态，Y表示可用，N表示不可用'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	维修保养提醒记录表
-*/
+/*维修保养提醒记录表*/
+
 DROP TABLE IF EXISTS `t_maintain_remind`;
+
 CREATE TABLE `t_maintain_remind` (
   `remindId` varchar(36) NOT NULL COMMENT '保养提醒记录编号，UUID,主键',
   `userId` varchar(36) DEFAULT NULL COMMENT '用户编号，来源于t_user表',
@@ -335,13 +351,13 @@ CREATE TABLE `t_maintain_remind` (
   PRIMARY KEY (`remindId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	物料清单表
-*/
+/*物料清单表*/
+
 DROP TABLE IF EXISTS `t_material_list`;
+
 CREATE TABLE `t_material_list` (
   `materialId` varchar(36) NOT NULL COMMENT '物料清单记录编号，UUID,主键',
-  `maintainRecordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
+  `recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
   `accId` varchar(36) DEFAULT NULL COMMENT '配件编号，来源于t_accessories表',
   `materialCount` int(11) DEFAULT NULL COMMENT '物料数量',
   `materialCreatedTime` datetime DEFAULT NULL COMMENT '物料清单记录创建时间',
@@ -349,10 +365,10 @@ CREATE TABLE `t_material_list` (
   PRIMARY KEY (`materialId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	退料信息表
-*/
+/*退料信息表*/
+
 DROP TABLE IF EXISTS `t_material_return`;
+
 CREATE TABLE `t_material_return` (
   `materialReturnId` varchar(36) NOT NULL COMMENT '退料记录编号，UUID,主键',
   `matainRecordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
@@ -363,10 +379,10 @@ CREATE TABLE `t_material_return` (
   PRIMARY KEY (`materialReturnId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	领料信息表
-*/
+/*领料信息表*/
+
 DROP TABLE IF EXISTS `t_material_use`;
+
 CREATE TABLE `t_material_use` (
   `materialUseId` varchar(36) NOT NULL COMMENT '领料记录编号，UUID,主键',
   `matainRecordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
@@ -377,10 +393,10 @@ CREATE TABLE `t_material_use` (
   PRIMARY KEY (`materialUseId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	短信发送记录表
-*/
+/*短信发送记录表*/
+
 DROP TABLE IF EXISTS `t_message_send`;
+
 CREATE TABLE `t_message_send` (
   `messageId` varchar(36) NOT NULL COMMENT '短信发送记录编号，UUID,主键',
   `userId` varchar(36) DEFAULT NULL COMMENT '用户编号，来源于t_user表',
@@ -390,10 +406,10 @@ CREATE TABLE `t_message_send` (
   PRIMARY KEY (`messageId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	模块表
-*/
+/*模块表*/
+
 DROP TABLE IF EXISTS `t_module`;
+
 CREATE TABLE `t_module` (
   `moduleId` varchar(36) NOT NULL COMMENT '模块id',
   `moduleName` varchar(20) NOT NULL COMMENT '模块名称',
@@ -403,20 +419,21 @@ CREATE TABLE `t_module` (
   UNIQUE KEY `moduleName` (`moduleName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	支出类型表
-*/
+/*支出类型表*/
+
 DROP TABLE IF EXISTS `t_outgoing_type`;
+
 CREATE TABLE `t_outgoing_type` (
   `outTypeId` varchar(36) NOT NULL COMMENT '支出类型编号',
   `outTypeName` varchar(20) DEFAULT NULL COMMENT '支出类型名称',
-  `outTypeStatus` varchar(2) DEFAULT NULL COMMENT '支出状态，Y表示可用，N表示不可用'
+  `outTypeStatus` varchar(2) DEFAULT NULL COMMENT '支出状态，Y表示可用，N表示不可用',
+  `outTypeCreatedTime` datetime DEFAULT NULL COMMENT '支出类型创建时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	权限表
-*/
+/*权限表*/
+
 DROP TABLE IF EXISTS `t_permission`;
+
 CREATE TABLE `t_permission` (
   `permissionId` varchar(36) NOT NULL COMMENT '权限id',
   `permissionName` varchar(30) NOT NULL COMMENT '权限名称',
@@ -428,10 +445,10 @@ CREATE TABLE `t_permission` (
   UNIQUE KEY `permissionName` (`permissionName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	角色表
-*/
+/*角色表*/
+
 DROP TABLE IF EXISTS `t_role`;
+
 CREATE TABLE `t_role` (
   `roleId` varchar(36) NOT NULL COMMENT '角色id',
   `roleName` varchar(20) NOT NULL COMMENT '角色名称',
@@ -441,10 +458,10 @@ CREATE TABLE `t_role` (
   UNIQUE KEY `roleName` (`roleName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	权限角色表
-*/
+/*权限角色表*/
+
 DROP TABLE IF EXISTS `t_role_permission`;
+
 CREATE TABLE `t_role_permission` (
   `rpId` varchar(36) NOT NULL COMMENT '角色权限id',
   `roleId` varchar(36) DEFAULT NULL COMMENT '角色id',
@@ -453,10 +470,10 @@ CREATE TABLE `t_role_permission` (
   PRIMARY KEY (`rpId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	工资发放表
-*/
+/*工资发放表*/
+
 DROP TABLE IF EXISTS `t_salary`;
+
 CREATE TABLE `t_salary` (
   `salaryId` varchar(36) NOT NULL COMMENT '工资发放编号',
   `userId` varchar(36) NOT NULL COMMENT '用户编号，来源于t_user表',
@@ -468,10 +485,10 @@ CREATE TABLE `t_salary` (
   `salaryCreatedTime` datetime DEFAULT NULL COMMENT '工资发放创建时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	供应商表
-*/
+/*供应商表*/
+
 DROP TABLE IF EXISTS `t_supply`;
+
 CREATE TABLE `t_supply` (
   `supplyId` varchar(36) NOT NULL COMMENT '供应商编号',
   `supplyName` varchar(100) NOT NULL COMMENT '供应商名称',
@@ -490,10 +507,10 @@ CREATE TABLE `t_supply` (
   PRIMARY KEY (`supplyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	供应商分类表
-*/
+/*供应商分类表*/
+
 DROP TABLE IF EXISTS `t_supply_type`;
+
 CREATE TABLE `t_supply_type` (
   `supplyTypeId` varchar(36) NOT NULL COMMENT '供应商分类编号',
   `supplyTypeName` varchar(100) NOT NULL COMMENT '供应商分类名称',
@@ -503,10 +520,10 @@ CREATE TABLE `t_supply_type` (
   PRIMARY KEY (`supplyTypeId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	跟踪回访表
-*/
+/*跟踪回访表*/
+
 DROP TABLE IF EXISTS `t_track_list`;
+
 CREATE TABLE `t_track_list` (
   `trackId` varchar(36) NOT NULL COMMENT '跟踪回访编号，UUID,主键',
   `userId` varchar(36) DEFAULT NULL COMMENT '用户编号，来源于t_user表',
@@ -517,10 +534,10 @@ CREATE TABLE `t_track_list` (
   PRIMARY KEY (`trackId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	用户表
-*/
+/*用户表*/
+
 DROP TABLE IF EXISTS `t_user`;
+
 CREATE TABLE `t_user` (
   `userId` varchar(36) NOT NULL COMMENT '用户id',
   `userEmail` varchar(100) NOT NULL COMMENT '用户邮箱',
@@ -547,10 +564,10 @@ CREATE TABLE `t_user` (
   UNIQUE KEY `userPhone` (`userPhone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	用户角色表
-*/
+/*用户角色表*/
+
 DROP TABLE IF EXISTS `t_user_role`;
+
 CREATE TABLE `t_user_role` (
   `userRoleId` varchar(36) NOT NULL COMMENT '用户角色id',
   `userId` varchar(36) DEFAULT NULL COMMENT '用户id',
@@ -559,17 +576,21 @@ CREATE TABLE `t_user_role` (
   PRIMARY KEY (`userRoleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/**
-	工单信息表
-*/
+/*工单信息表*/
+
 DROP TABLE IF EXISTS `t_work_info`;
+
 CREATE TABLE `t_work_info` (
   `workId` varchar(36) NOT NULL COMMENT '工单编号，UUID,主键',
   `recordId` varchar(36) NOT NULL COMMENT '维修保养记录编号',
-  `userId` varchar(36) NOT NULL COMMENT '工单指派的用户编号，来源于t_user表',
+  `userId` varchar(36) DEFAULT NULL COMMENT '工单指派的用户编号，来源于t_user表',
   `workAssignTime` datetime DEFAULT NULL COMMENT '工单指派时间',
   `workCreatedTime` datetime DEFAULT NULL COMMENT '工单创建时间',
   `workStatus` varchar(2) DEFAULT 'Y' COMMENT '当前状态,Y表示可用，N表示不可用',
   PRIMARY KEY (`workId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
