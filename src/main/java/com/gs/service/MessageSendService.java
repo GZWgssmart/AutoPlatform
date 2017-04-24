@@ -10,4 +10,6 @@ import com.gs.bean.MessageSend;
 */
 public interface MessageSendService extends BaseService<String, MessageSend>{
 
+    public void batchUpdateBySendMsg( String[] idList, String sendMsg);
+
 }

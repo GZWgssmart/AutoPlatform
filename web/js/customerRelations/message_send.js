@@ -7,8 +7,6 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/MessageSend/query_pager");
 
-    //当点击查询按钮的时候执行
-    $("#search").bind("click", initTable);
 });
 
 
@@ -19,32 +17,37 @@ function showAddWin() {
     $("#addWin").modal('show');
 
 }
-
+var idList = new Array();
+var sendMsg = '';
 /** 编辑数据 */
-function showEditWin() {
+function showEditWin(str) {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
-    var ids ='';
-    if(selectRow.length > 0){
-    for(var i =0; i < selectRow.length; i++){
-        if(ids == ''){
-            ids = selectRow[i];
-        }else{
-            ids = ','+selectRow[i];
+    if(selectRow.length > 0 || str==2){
+        if(str==1){
+        idList = new Array();
+        for(var i =0; i < selectRow.length; i++){
+            idList[i] = selectRow[i].messageId;
         }
-            validator("editForm");
-            $.get("/ids="+ids,
-                function(data){
-                    if(data == 'success'){
-                        $("#editWin").modal('show');
-                        swal(data.message, "", "success");
-                        $('#cusTable').bootstrapTable('refresh');
-                    }
-            })
-    }
+        }else {
+            idList = queryAllId();
+        }
+        $("#editWin").modal('show');
+        validator("editForm");
     }else{
         swal('编辑失败', "至少选择一行数据", "error");
     }
 
+}
+
+function  queryAllId() {
+    var queryList = new Array();
+    $.get("/MessageSend/queryAllId",
+        function(data){
+            $.each(data, function (index, item) {
+                queryList[index] = data[index].messageId;
+            })
+        })
+    return queryList;
 }
 
 /**提交编辑数据 */
@@ -163,8 +166,15 @@ function validator(formId) {
                 formSubmit("/salary/add_salary", formId, "addWin");
 
             } else if (formId == "editForm") {
-                formSubmit("/MessageSend/update_MessageSend", formId, "editWin");
-
+                sendMsg = $("#sendMsg").val();
+                $.get("/MessageSend/update_messageSend?idList="+idList+"&sendMsg="+sendMsg,
+                    function(data){
+                        if(data.result == 'success'){
+                            $('#editWin').modal('hide');
+                            swal(data.message, "", "success");
+                            $('#cusTable').bootstrapTable('refresh');
+                        }
+                    })
             }
 
 

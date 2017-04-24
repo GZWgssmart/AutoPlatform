@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class MessageSendController {
     @ResponseBody
     @RequestMapping(value="query_pager",method= RequestMethod.GET)
     public Pager4EasyUI<MessageSend> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
-        logger.info("分页查询所有投诉");
+        logger.info("分页查询所有短信");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
@@ -50,16 +51,23 @@ public class MessageSendController {
         return new Pager4EasyUI<MessageSend>(pager.getTotalRecords(), complaintList);
     }
 
+    /*多条更新*/
     @ResponseBody
     @RequestMapping(value = "update_messageSend", method = RequestMethod.GET)
-    public ControllerResult updateMessageSend(MessageSend messageSend){
-        logger.info("更新工资");
-
+    public ControllerResult updateMessageSend(@Param("idList")String[] idList, @Param("sendMsg")String sendMsg){
+        logger.info("更新短信发送");
+        messageSendService.batchUpdateBySendMsg(idList, sendMsg);
         return ControllerResult.getSuccessResult("更新成功");
     }
 
-
-
+    /*提供所有Id号*/
+    @ResponseBody
+    @RequestMapping(value = "queryAllId", method = RequestMethod.GET)
+    public List<MessageSend> queryAllId(){
+        logger.info("提供所有Id号");
+        List<MessageSend> mesList  = messageSendService.queryAll();
+        return mesList;
+    }
 
 }
 

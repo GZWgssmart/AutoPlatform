@@ -57,9 +57,18 @@
 		]]>
 	</update>
 
+	<update id="batchUpdateBySendMsg" >
+		<![CDATA[
+		  update t_message_send s set s.sendMsg= #{sendMsg} where s.messageId in
+		]]>
+			<foreach collection="idList" item="str" open="(" separator="," close=")">
+				#{str}
+			</foreach>
+		</update>
+
 	<select id="queryAll" resultMap="messageSendResultMap">
 		<![CDATA[
-
+			 select * from t_message_send s, t_user u where s.userId=u.userId
 		]]>
 	</select>
 

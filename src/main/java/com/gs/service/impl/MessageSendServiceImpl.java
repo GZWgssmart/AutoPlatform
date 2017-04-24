@@ -16,6 +16,7 @@ import com.gs.common.bean.Pager;
 @Service
 public class MessageSendServiceImpl implements MessageSendService {
 
+
 	@Resource
 	private MessageSendDAO messageSendDAO;
 
@@ -37,4 +38,7 @@ public class MessageSendServiceImpl implements MessageSendService {
 	public int inactive(String id) { return messageSendDAO.inactive(id); }
 	public int active(String id) { return messageSendDAO.active(id); }
 
+	public void batchUpdateBySendMsg(String[] idList, String sendMsg) {
+		messageSendDAO.batchUpdateBySendMsg(idList, sendMsg);
+	}
 }

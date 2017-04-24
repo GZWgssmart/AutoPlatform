@@ -57,10 +57,12 @@
             <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+            <a><button onclick="showEditWin(1);" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
-
+            <a><button onclick="showEditWin(2);" type="button" id="All" class="btn btn-default">
+                <i class="glyphicon glyphicon-pencil"></i> 发送所有
+            </button></a>
         </div>
         </tbody>
 
@@ -80,7 +82,7 @@
                             <input type="hidden" attr="messageSend.messageId" name="messageId" />
                             <div class="form-group">
                                 <label class="control-label">短信内容：</label>
-                                <textarea class="form-control" type="textarea" attr="messageSend.sendMsg" name="sendMsg"
+                                <textarea class="form-control" type="textarea" attr="messageSend.sendMsg" id="sendMsg" name="sendMsg"
                                           maxlength="400"
                                           rows="3"></textarea>
                             </div>
@@ -99,7 +101,6 @@
 
                 </div>
             </div>
-        </div>
     </div>
 </div>
 
@@ -110,6 +111,7 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加回复</h3>
+                    </div>
                         <form role="form" id="addForm" >
                             <div class="form-group">
                                 <label>受理人：</label>
