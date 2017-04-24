@@ -84,4 +84,18 @@ public class CarColorController {
         }
         return comboBox4EasyUIs;
     }
+
+    @ResponseBody
+    @RequestMapping(value="colorStatusModify",method = RequestMethod.GET)
+    public ControllerResult colorStatusModify(@Param("id") String id,@Param("status") String status){
+        if(status.equals("Y")){
+            logger.info("颜色冻结成功");
+            carColorService.inactive(id);
+            return ControllerResult.getSuccessResult("颜色冻结成功");
+        }else if(status.equals("N")){
+            carColorService.active(id);
+            return ControllerResult.getSuccessResult("颜色激活成功");
+        }
+        return ControllerResult.getFailResult("颜色修改失败");
+    }
 }

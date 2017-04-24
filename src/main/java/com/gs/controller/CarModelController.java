@@ -44,6 +44,21 @@ public class CarModelController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "carModel_all", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryCarModelAlls() {
+        logger.info("查询汽车车型");
+        List<CarModel> CarModels = carModelService.queryAll();
+        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+        for (CarModel carModel : CarModels) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(carModel.getModelId());
+            comboBox4EasyUI.setText(carModel.getModelName());
+            comboBox4EasyUIs.add(comboBox4EasyUI);
+        }
+        return comboBox4EasyUIs;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "insertCarModel", method = RequestMethod.POST)
     public ControllerResult insertCarModel(CarModel carmodel) {
         logger.info("添加汽车车型成功");

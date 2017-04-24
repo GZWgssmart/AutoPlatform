@@ -5,12 +5,23 @@
 <mapper namespace="com.gs.dao.MaintainFixDAO">
 
 	<resultMap id="maintainFixResultMap" type="maintainFix">
-
+		<id property="maintainId" column="maintainId"></id>
+		<result property="maintainName" column="maintainName"></result>
+		<result property="maintainHour" column="maintainHour"></result>
+		<result property="maintainMoney" column="maintainMoney"></result>
+		<result property="maintainManHourFee" column="maintainManHourFee"></result>
+		<result property="maintainOrFix" column="maintainOrFix"></result>
+		<result property="maintainDes" column="maintainDes"></result>
+		<result property="maintainStatus" column="maintainStatus"></result>
+		<association property="company" javaType="com.gs.bean.Company">
+			<id property="companyId" column="companyId"></id>
+			<result property="companyName" column="companyName"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="maintainFix">
 		<![CDATA[
-
+			insert into t_maintain_fix (maintainId,maintainName,maintainHour,maintainMoney,maintainManHourFee,maintainOrFix,maintainDes,maintainStatus,companyId) values (UUID(),#{maintainName},#{maintainHour},#{maintainMoney},#{maintainManHourFee},#{maintainOrFix},#{maintainDes},'Y',#{companyId})
 		]]>
 	</insert>
 
@@ -76,13 +87,13 @@
 
 	<select id="queryByPager" resultType="list" resultMap="maintainFixResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
+			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = 'Y' limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-
+			select count(*) from t_maintain_fix
 		]]>
 	</select>
 

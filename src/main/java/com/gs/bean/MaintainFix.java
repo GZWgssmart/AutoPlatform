@@ -19,6 +19,16 @@ public class MaintainFix {
 	private String companyId; //维修保养所属Id t_company
 	private String maintainStatus; //维修保养状态 Y N
 
+	private Company company;
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
 	public String getMaintainId(){
 		return this.maintainId;
 	}
