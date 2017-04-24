@@ -67,7 +67,7 @@
 
 	<update id="update" parameterType="accessories">
 		<![CDATA[
-			update t_accessories set accName = #{accName}, accCommodityCode = #{accCommodityCode}, accDes = #{accDes}, accPrice = #{accPrice}, accSalePrice = #{accSalePrice}, accUnit = #{accUnit}, accTotal = #{accTotal}, accIdle = #{accIdle}, accUsedTime = #{accUsedTime}, accBuyedTime = #{accBuyedTime}, supplyId = #{supplyId}, accCreatedTime = #{accCreatedTime}, accTypeId = #{accTypeId}, companyId = #{companyId}, accStatus = #{accStatus} where accId = #{accId}
+			update t_accessories set accName = #{accName}, accCommodityCode = #{accCommodityCode}, accDes = #{accDes}, accPrice = #{accPrice}, accSalePrice = #{accSalePrice}, accUnit = #{accUnit}, accTotal = #{accTotal}, accIdle = #{accIdle}, accUsedTime = #{accUsedTime}, accBuyedTime = #{accBuyedTime}, supplyId = #{supplyId}, accTypeId = #{accTypeId}, companyId = #{companyId}, accStatus = #{accStatus} where accId = #{accId}
         ]]>
 	</update>
 
