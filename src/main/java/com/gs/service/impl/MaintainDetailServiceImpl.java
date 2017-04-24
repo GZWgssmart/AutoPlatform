@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaintainDetail;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,4 +38,13 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 	public int inactive(String id) { return maintainDetailDAO.inactive(id); }
 	public int active(String id) { return maintainDetailDAO.active(id); }
 
+	@Override
+	public int countByRecordId(String recordId) {
+		return maintainDetailDAO.countByRecordId(recordId);
+	}
+
+	@Override
+	public List<MaintainDetail> queryPagerByRecordId(@Param("pager") Pager pager, @Param("recordId") String recordId) {
+		return maintainDetailDAO.queryPagerByRecordId(pager, recordId);
+	}
 }

@@ -75,6 +75,7 @@ function showEditWin() {
 /** 表单验证 */
 function validator(formId) {
     $("#editButton").removeAttr("disabled");
+    $("#detailButton").removeAttr("disabled");
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -131,14 +132,15 @@ function validator(formId) {
             if (formId == "editForm") {
                 formSubmit("/record/edit", formId, "editWin");
             } else if (formId == "detailForm") {
-                alert("aa")
+                formSubmit("/detail/add", formId, "detailWin");
             }
 
         })
 
 }
 
-function formatterTarck(value, row, index) {
+/** 显示是否回访 */
+function formatterTrack(value, row, index) {
     if (value == "Y") {
         return "是";
     } else {
@@ -147,7 +149,7 @@ function formatterTarck(value, row, index) {
 }
 
 /** 显示生成维修保养明细的窗口 */
-function showDetailWin() {
+function showAddDetailWin() {
     validator("detailForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
@@ -155,10 +157,39 @@ function showDetailWin() {
         return false;
     } else {
         var record = selectRow[0];
+        $('#detailMaintainFix').html('').trigger("change");
         $("#detailForm").fill(record);
         $("#detailWin").modal('show');
     }
 }
+
+/** 显示查看保养明细详情 */
+function showDetailWin() {
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('错误提示', "只能选择一条数据查看维修保养明细", "error");
+        return false;
+    } else {
+        var record = selectRow[0];
+        var recordId = record.recordId;
+        initTableSetToolbar("detailTable", "/detail/pager?recordId=" + recordId, "toolbar1");
+        $("#searchDetailWin").modal('show');
+    }
+}
+
+/** 显示修改保养明细详情的窗口 */
+function showEditDetailWin() {
+    var selectRow = $("#detailTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('错误提示', "只能选择一条数据修改", "error");
+        return false;
+    } else {
+        var detail = selectRow[0];
+        initTable("cusTable", "/detail/pager?recordId=" + recordId, "toolbar1");
+        $("#searchDetailWin").modal('show');
+    }
+}
+
 
 
 

@@ -61,7 +61,7 @@
             <th data-field="checkin.maintainOrFix">
                 保养&nbsp;|&nbsp;维修
             </th>
-            <th data-field="trackStatus" data-formatter="formatterTarck">
+            <th data-field="trackStatus" data-formatter="formatterTrack">
                 是否回访
             </th>
             <th data-field="recordDes">
@@ -88,8 +88,14 @@
             </a>
 
             <a>
-                <button onclick="showDetailWin();" type="button" id="generate" class="btn btn-default">
+                <button onclick="showAddDetailWin();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-glass"></i> 生成明细
+                </button>
+            </a>
+
+            <a>
+                <button onclick="showDetailWin();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看明细
                 </button>
             </a>
 
@@ -137,6 +143,68 @@
                                 </input>
                             </div>
                         </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="searchDetailWin" class="modal fade" aria-hidden="true" style="overflow:scroll">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">查看维修保养明细</h3>
+                        <table class="table table-hover" id="detailTable"
+                               data-pagination="true"
+                               data-show-refresh="true"
+                               data-show-toggle="true"
+                               data-showColumns="true"
+                               data-height="550">
+                            <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th data-field="record.checkin.userName">
+                                    车主姓名
+                                </th>
+                                <th data-field="record.checkin.userPhone">
+                                    车主电话
+                                </th>
+                                <th data-field="record.checkin.maintainOrFix">
+                                    维修&nbsp;|&nbsp;保养
+                                </th>
+                                <th data-field="maintain.maintainName">
+                                    项目
+                                </th>
+                                <th data-field="maintainDiscount">
+                                    打折&nbsp;|&nbsp;减价
+                                </th>
+                                <th data-field="detailCreatedTime" data-formatter="formatterDate">
+                                    明细创建时间
+                                </th>
+                            </thead>
+                            <tbody>
+                            <div id="toolbar1" class="btn-group">
+
+                                <a>
+                                    <button onclick="showEditDetailWin();" type="button" id="editDetail" class="btn btn-default">
+                                        <i class="glyphicon glyphicon-pencil"></i> 修改
+                                    </button>
+                                </a>
+
+                            </div>
+                            </tbody>
+
+                        </table>
+                        <div style="height: 100px;"></div>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">关闭
+                            </button>
+                        </div>
                     </div>
 
                 </div>

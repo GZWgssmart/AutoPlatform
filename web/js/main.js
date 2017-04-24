@@ -1,4 +1,4 @@
-
+/** 初始化Select2 */
 function initSelect2(clazz, title, url, width) {
     $("." + clazz).select2({
         // enable tagging
@@ -28,6 +28,7 @@ function initSelect2(clazz, title, url, width) {
     });
 }
 
+/** 初始化DatatimePicker */
 function initDateTimePicker(clazz, name) {
     $('.' + clazz).datetimepicker({
         language: 'zh-CN',
@@ -43,14 +44,14 @@ function initDateTimePicker(clazz, name) {
     });;
 }
 
-var contextPath = '';
+/** 初始化表格，默认id为toolbar的为工具栏 */
 function initTable(tableId, url) {
     //先销毁表格
     $('#' + tableId).bootstrapTable('destroy');
     //初始化表格,动态从服务器加载数据
     $("#" + tableId).bootstrapTable({
         method: "get",  //使用get请求到服务器获取数据
-        url: contextPath + url, //获取数据的Servlet地址
+        url: url, //获取数据的Servlet地址
         striped: false,  //表格显示条纹
         pagination: true, //启动分页
         pageSize: 10,  //每页显示的记录数
@@ -81,13 +82,14 @@ function initTable(tableId, url) {
     });
 }
 
+/** 初始化没有工具栏的表格 */
 function initTableNotTollbar(tableId, url) {
     //先销毁表格
     $('#' + tableId).bootstrapTable('destroy');
     //初始化表格,动态从服务器加载数据
     $("#" + tableId).bootstrapTable({
         method: "get",  //使用get请求到服务器获取数据
-        url: contextPath + url, //获取数据的Servlet地址
+        url: url, //获取数据的Servlet地址
         striped: false,  //表格显示条纹
         pagination: true, //启动分页
         pageSize: 10,  //每页显示的记录数
@@ -101,6 +103,44 @@ function initTableNotTollbar(tableId, url) {
         uniqueId: "id",                     //每一行的唯一标识，一般为主键列
         sortable: true,                     //是否启用排序
         sortOrder: "asc",                   //排序方式
+        sidePagination: "server", //表示服务端请求
+
+        //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+        //设置为limit可以获取limit, offset, search, sort, order
+        queryParamsType : "undefined",
+        queryParams: function queryParams(params) {   //设置查询参数
+            var param = {
+                pageNumber: params.pageNumber,
+                pageSize: params.pageSize,
+                orderNum : $("#orderNum").val()
+            };
+            return param;
+        },
+    });
+}
+
+/** 初始化指定工具栏的表格 */
+function initTableSetToolbar(tableId, url, toolbarId) {
+    //先销毁表格
+    $('#' + tableId).bootstrapTable('destroy');
+    //初始化表格,动态从服务器加载数据
+    $("#" + tableId).bootstrapTable({
+        method: "get",  //使用get请求到服务器获取数据
+        url: url, //获取数据的Servlet地址
+        striped: false,  //表格显示条纹
+        pagination: true, //启动分页
+        pageSize: 10,  //每页显示的记录数
+        pageNumber:1, //当前第几页
+        pageList: [10, 15, 20, 25, 30],  //记录数可选列表
+        search: false,  //是否启用查询
+        showColumns: true,  //显示下拉框勾选要显示的列
+        showRefresh: true,  //显示刷新按钮
+        strictSearch: true,
+        clickToSelect: true,  //是否启用点击选中行
+        uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+        sortable: true,                     //是否启用排序
+        sortOrder: "asc",                   //排序方式
+        toolbar : "#" + toolbarId,// 指定工具栏
         sidePagination: "server", //表示服务端请求
 
         //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
@@ -188,15 +228,6 @@ function formatterDate1(value) {
     }
 }
 
-function showDate(id) {
-    var today = new Date();
-    var day = today.getDate();
-    var month = today.getMonth() + 1;
-    var year = today.getYear();
-    var mytime=today.toLocaleTimeString();
-    var date = year + "-" + month + "-" + day + " " + mytime;
-    return date;
-}
 /** 返回状态 */
 function status(value, row, index) {
     if (value == "Y") {
@@ -204,20 +235,6 @@ function status(value, row, index) {
     } else {
         return "<span style='color: red;'>不可用</span>";
     }
-}
-
-function resizeTableTh() {
-    $("th[data-field]").each(function (idx, th) {
-        var space = $(th).attr("data-space");
-        if (space != undefined && space != null && space != "") {
-            var str = "";
-            for (i = 0; i < space; i++) {
-                str += "&nbsp;";
-            }
-            alert($(th).text() + str);
-            $(th).text($(th).text() + str);
-        }
-    });
 }
 
 /** form表单提交 */

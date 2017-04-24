@@ -265,15 +265,15 @@ CREATE TABLE `t_incoming_type` (
 /*维修保养明细表*/
 
 DROP TABLE IF EXISTS `t_maintain_detail`;
-
 CREATE TABLE `t_maintain_detail` (
   `detailId` varchar(36) NOT NULL COMMENT '维修保养明细编号，UUID,主键',
   `recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
   `maintainId` varchar(36) DEFAULT NULL COMMENT '维修保养项目编号，来源于t_maintain_fix表，可为空',
-  `maintainDiscount` double(255,0) DEFAULT NULL COMMENT '维修保养项目折扣，default 0,可选择折扣，也可选择减价',
-  `mdCreatedTime` datetime DEFAULT NULL COMMENT '维修保养明细创建时间',
-  PRIMARY KEY (`maintainDetailId`)
+  `maintainDiscount` double(255,2) DEFAULT NULL COMMENT '维修保养项目折扣，default 0,可选择折扣，也可选择减价',
+  `detailCreatedTime` datetime DEFAULT NULL COMMENT '维修保养明细创建时间',
+  PRIMARY KEY (`detailId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 /*维修保养项目表*/
 

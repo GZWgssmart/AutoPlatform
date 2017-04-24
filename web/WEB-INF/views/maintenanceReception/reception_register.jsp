@@ -435,8 +435,6 @@
                                 </th>
                                 <th data-field="model.modelName">
                                     汽车车型
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </th>
                                 <th data-field="plate.plateName">
                                     汽车车牌
@@ -446,21 +444,15 @@
                                 </th>
                                 <th data-field="arriveTime" data-formatter="formatterDate">
                                     预计到店时间
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </th>
                                 <th data-field="maintainOrFix">
                                     维修&nbsp;|&nbsp;保养
                                 </th>
                                 <th data-field="appCreatedTime" data-formatter="formatterDate">
                                     预约创建时间
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </th>
                                 <th data-field="company.companyName">
                                     汽修公司
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </th>
                                 <th data-field="appoitmentStatus" data-formatter="status">
                                     预约状态
