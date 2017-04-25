@@ -34,7 +34,7 @@
         <tr>
             <th data-field="state" data-checkbox="true"></th>
             <th data-field="customer.userName">
-                用户名:
+                顾客名:
             </th>
             <th data-field="trackContent" >
                 回访问题:
@@ -106,22 +106,28 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">添加回复</h3>
+                        <h3 class="m-t-none m-b" style="text-align: center;">添加回访记录</h3>
+                        <input type="hidden" id="addUserId" name="userId" class="form-control"/>
                         <form role="form" id="addForm" >
                             <div class="form-group">
-                                <label>受理人：</label>
-                                <select class="js-example-tags form-control com_name" name="user.userName">
+                                <label class="control-label">回访顾客：</label>
+                                <select  id="addCustomer" class="js-example-tags form-control visit_user" name="customer.userName">
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>受理时间：</label>
-                                <input id="complaintReplyTime" type="text" name="complaintReplyTime"
-                                       class="form-control"/>
+                                <label>回访问题：</label>
+                                <textarea class="form-control" name="trackContent" id="trackContent"></textarea>
                             </div>
                             <div class="form-group">
-                                <label>回复内容：</label>
-                                <textarea class="form-control" name="complaintReply" id="complaintReply"></textarea>
+                                <label class="control-label">回访评分：</label>
+                                <input type="text" id="serviceEvaluate" name="serviceEvaluate" class="form-control"/>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label">回访客服：</label>
+                                <select id="addAdmin" class="js-example-tags form-control visit_admin" name="admin.userName">
+                                </select>
+                            </div>
+
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error" style="color: #ff0000;"></span>
                                 <br/>

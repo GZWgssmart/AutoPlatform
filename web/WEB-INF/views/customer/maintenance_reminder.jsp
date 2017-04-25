@@ -35,13 +35,13 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="user.userName">
+            <th data-field="checkin.userName">
                 用户名:
             </th>
-            <th data-field="lastMaintainTime" data-formatter="formatterDate">
+            <th data-field="maintainRecord.actualEndTime" data-formatter="formatterDate">
                 上次保养时间
             </th>
-            <th data-field="lastMaintainMileage">
+            <th data-field="checkin.carMileage">
                 上次保养汽车行驶里程
             </th>
             <th data-field="remindMsg">
@@ -69,7 +69,6 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
-
         </div>
         </tbody>
 
@@ -84,40 +83,27 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">修改维修保养提醒</h3>
+                        <h3 class="m-t-none m-b"style="text-align: center">修改维修保养提醒</h3>
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="reminder.remindId" name="remindId" />
-                            <div class="form-group">
-                                <label>用户名:</label>
-                                <input type="text" readonly="readonly" attr="reminder.user.userName" class="js-example-tags form-control com_name" name="user.userName">
-                                </input>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">上次保养时间：</label>
-                                <input type="text"  readonly="readonly" attr="reminder.lastMaintainTime"  id="editLastMaintainTime" onclick="getDate()" name="lastMaintainTime" class="form-control datatimepicker"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">上次保养汽车行驶里程：</label>
-                                <input type="text"  readonly="readonly"  name="lastMaintainMileage" attr="reminder.lastMaintainMileage" class="form-control"/>
-                            </div>
                             <div class="form-group">
                                 <label class="control-label">保养提醒时间：</label>
                                 <input type="text" readonly="readonly" attr="reminder.remindTime" id="editRemindTime" name="remindTime" class="form-control nowDatrtime"/>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">保养提醒记录创建时间：</label>
-                                <input type="text"  readonly="readonly"  attr="reminder.remindCreatedTime" id="editRemindCreatedTime" onclick="getDate()"  name="remindCreatedTime" class="form-control"/>
-                            </div>
-                            <div class="form-group">
                                 <label class="control-label">保养提醒方式：</label>
-                                <input type="text"   name="remindType" attr="reminder.remindType" class="form-control"/>
+                                <select class="js-example-tags form-control" name="remindType">
+                                    <option value="短信提醒" selected="selected">短信提醒</option>
+                                    <option value="邮箱提醒">邮箱提醒</option>
+                                    <option value="微信提醒">微信提醒</option>
+                                    <option value="QQ提醒">QQ提醒</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">保养提醒内容：</label>
                                 <textarea class="form-control" attr="reminder.remindMsg" type="textarea" name="remindMsg" maxlength="400"
                                           rows="3"></textarea>
                             </div>
-
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
