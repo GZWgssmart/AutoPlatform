@@ -61,9 +61,6 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
-            <a><button type="button" onclick="deleteProduct();" id="delete" class="btn btn-default">
-                <i class="glyphicon glyphicon-trash"></i> 删除
-            </button></a>
         </div>
         </tbody>
 
@@ -153,7 +150,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="addProduct()" value="添加">
+                                <input type="button" class="btn btn-primary" onclick="add()" value="添加">
                                 </input>
                             </div>
                         </form>

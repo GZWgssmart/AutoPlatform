@@ -37,7 +37,7 @@
             <th data-field="colorDes">
                 汽车颜色描述
             </th>
-            <th data-field="colorStatus" data-formatter="operateFormatter">
+            <th data-field="colorStatus" data-formatter="status">
                 汽车颜色状态
             </th>
             <th data-field="co" data-formatter="operating" data-events="operateEvents">

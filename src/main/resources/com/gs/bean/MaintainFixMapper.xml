@@ -87,12 +87,12 @@
 
 	<select id="queryByPager" resultType="list" resultMap="maintainFixResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = 'Y' limit #{beginIndex}, #{pageSize}
+			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '维修' limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 	<select id="queryBymaintainPager" resultType="list" resultMap="maintainFixResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = 'N' limit #{beginIndex}, #{pageSize}
+			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '保养' limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 	<select id="count" resultType="int">
@@ -103,13 +103,13 @@
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_maintain_fix set maintainStatus = 'N' where maintainId = #{maintainId}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_maintain_fix set maintainStatus = 'Y' where maintainId = #{maintainId}
 		]]>
 	</update>
 
