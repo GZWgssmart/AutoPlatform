@@ -38,7 +38,7 @@
 			INSERT INTO t_user
 				(userId, userName, userNickname, userEmail, userPwd, userGender, userAddress, userPhone, userSalary, userIdentity, userCreatedTime, companyId, userStatus, qqOpenId, weiboOpenId, wechatOpenId, userDes, userBirthday, userLoginedTime)
 			VALUES
-				(uuid(), #{userName}, #{userNickname}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userSalary}, #{userIdentity}, now(), #{companyId}, 'Y', #{qqOpenId}, #{weiboOpenId}, #{wechatOpenId}, #{userDes}, #{userBirthday}, #{userLoginedTime})
+				(#{userId}, #{userName}, #{userNickname}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userSalary}, #{userIdentity}, now(), #{companyId}, 'Y', #{qqOpenId}, #{weiboOpenId}, #{wechatOpenId}, #{userDes}, #{userBirthday}, #{userLoginedTime})
 		]]>
 	</insert>
 
