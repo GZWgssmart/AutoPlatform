@@ -23,6 +23,7 @@
 		<association property="maintain" javaType="com.gs.bean.MaintainFix">
 			<id property="maintainId" column="maintainId"/>
 			<id property="maintainName" column="maintainName"/>
+			<result property="maintainMoney" column="maintainMoney"></result>
 		</association>
 
 	</resultMap>
@@ -96,7 +97,7 @@
 
 	<select id="queryByPager" resultType="list" resultMap="maintainDetailResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select d.*, r.recordId, r.checkinId, f.maintainId, f.maintainName, c.checkinId, c.userName, c.maintainOrFix, c.userPhone
+			select d.*, r.recordId, r.checkinId, f.maintainId, f.maintainName, f.maintainMoney, c.checkinId, c.userName, c.maintainOrFix, c.userPhone
 				from t_maintain_detail d, t_maintain_record r, t_maintain_fix f, t_checkin c
 				where d.recordId = r.recordId and d.maintainId = f.maintainId and r.checkinId = c.checkinId
 		]]>
@@ -106,7 +107,7 @@
 
 	<select id="queryPagerByRecordId" resultType="list" resultMap="maintainDetailResultMap">
 		<![CDATA[
-			select d.*, r.recordId, r.checkinId, f.maintainId, f.maintainName, c.checkinId, c.userName, c.maintainOrFix, c.userPhone
+			select d.*, r.recordId, r.checkinId, f.maintainId, f.maintainName, f.maintainMoney, c.checkinId, c.userName, c.maintainOrFix, c.userPhone
 				from t_maintain_detail d, t_maintain_record r, t_maintain_fix f, t_checkin c
 				where d.recordId = r.recordId and d.maintainId = f.maintainId and r.checkinId = c.checkinId and d.recordId = #{recordId}
 		]]>

@@ -9,6 +9,10 @@ $(document).ready(function () {
 
     initSelect2("maintain_fix", "请选择维修保养项目", "/maintainFix/maintain_all", "540");
 
+    destoryValidator("editWin", "editForm");
+    destoryValidator("detailWin", "detailForm");
+    destoryValidator("editDetailWin", "editDetailForm");
+
 });
 
 function operateFormatter(value, row, index) {
@@ -123,6 +127,14 @@ function validator(formId) {
                     }
 
                 }
+            },
+            maintainName: {
+                validators: {
+                    notEmpty: {
+                        message: '请选择维修保养项目'
+                    }
+
+                }
             }
         }
     })
@@ -162,9 +174,10 @@ function showAddDetailWin() {
         return false;
     } else {
         var record = selectRow[0];
-        $('#detailMaintainFix').html('').trigger("change");
+        $("input[type=reset]").trigger("click");
         $("#detailForm").fill(record);
         $("#detailWin").modal('show');
+
     }
 }
 
@@ -204,6 +217,73 @@ function closeEditDetailWin() {
     $("#searchDetailWin").modal('show');
 }
 
+/** 格式化现价 */
+function formatterPrice(value, row, index) {
+    var maintainDiscount = parseFloat(row.maintainDiscount); // 折扣或减价
+    var maintainMoney = parseFloat(row.maintain.maintainMoney); // 原价
+    if (maintainDiscount < 1) {
+        return "$" + maintainMoney * maintainDiscount;
+    } else {
+        var temp = maintainMoney - maintainDiscount;
+        return temp > 0 ? "$" + temp : "$" + 0;
+    }
+}
+
+/** 格式化原价 */
+function formatterMoney(value, row, index) {
+    return "$" + value;
+}
+
+/** 格式化打折或减价 */
+function formatterDiscount(value, row, index) {
+    if (parseFloat(value) < 1) {
+        return value + "折";
+    } else {
+        return "$" + value;
+    }
+}
+
+/** 选择维修保养项目 */
+function choiseMaintain() {
+    var maintainOrFix = $("#maintainOrFix").val();
+    if (maintainOrFix == "维修") {
+        initTableNotTollbar("fixTable", "/maintainFix/queryByMaintenanceItemPager");
+        $("#fixWin").modal('show');
+    } else if (maintainOrFix == "保养") {
+        initTableNotTollbar("maintainTable", "/maintainFix/queryByPager");
+        $("#maintainWin").modal('show');
+    }
+}
+
+/** 确定选择的保养项目 */
+function determineMaintain() {
+    var selectRow = $("#maintainTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('错误提示', "只能选择一条保养项目", "error");
+        return false;
+    } else {
+        var maintain = selectRow[0];
+        $("#detailMaintainId").val(maintain.maintainId);
+        $("#detailMaintainName").val(maintain.maintainName);
+
+        $("#maintainWin").modal('hide');
+    }
+}
+
+/** 确定选择的维修项目 */
+function determineFix() {
+    var selectRow = $("#fixTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('错误提示', "只能选择一条保养项目", "error");
+        return false;
+    } else {
+        var maintain = selectRow[0];
+        $("#detailMaintainId").val(maintain.maintainId);
+        $("#detailMaintainName").val(maintain.maintainName);
+
+        $("#fixWin").modal('hide');
+    }
+}
 
 
 

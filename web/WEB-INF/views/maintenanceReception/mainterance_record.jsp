@@ -161,9 +161,19 @@
                         <form role="form" id="detailForm">
                             <input type="hidden" attr="record.recordId" name="recordId" class="form-control"/>
                             <div class="form-group">
+                                <label class="control-label">维修&nbsp;|&nbsp;保养：</label>
+                                <input type="text" id="maintainOrFix" attr="record.checkin.maintainOrFix" readonly class="form-control" />
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label">维修保养项目：</label>
-                                <select id="detailMaintainFix" class="js-example-tags form-control maintain_fix" name="maintainId">
-                                </select>
+                                <input type="hidden" id="detailMaintainId" name="maintainId" />
+                                <input type="text" onclick="choiseMaintain();" id="detailMaintainName" name="maintainName" readonly class="form-control" />
+                                <br />
+                                <a>
+                                    <button onclick="choiseMaintain();" type="button" class="btn btn-primary">
+                                        <i class="glyphicon glyphicon-plus"></i> 选择维修保养项目
+                                    </button>
+                                </a>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">折扣&nbsp;|&nbsp;减价：</label>
@@ -177,6 +187,7 @@
                                 </button>
                                 <input type="button" id="detailButton" onclick="buttonStatus('detailForm', 'detailButton')" class="btn btn-primary" value="添加">
                                 </input>
+                                <input type="reset" name="reset" style="display: none;"/>
                             </div>
                         </form>
                     </div>
@@ -215,12 +226,19 @@
                                 <th data-field="maintain.maintainName">
                                     项目
                                 </th>
-                                <th data-field="maintainDiscount">
+                                 <th data-field="maintain.maintainMoney" data-formatter="formatterMoney">
+                                    原价
+                                </th>
+                                <th data-field="maintainDiscount" data-formatter="formatterDiscount">
                                     打折&nbsp;|&nbsp;减价
+                                </th>
+                                 <th data-field="price" data-formatter="formatterPrice">
+                                    现价
                                 </th>
                                 <th data-field="detailCreatedTime" data-formatter="formatterDate">
                                     明细创建时间
                                 </th>
+                            </tr>
                             </thead>
                             <tbody>
                             <div id="toolbar1" class="btn-group">
@@ -258,7 +276,7 @@
                         <h3 class="m-t-none m-b">修改维修保养记录</h3>
                         <form role="form" id="editDetailForm">
                             <input type="hidden" attr="detail.detailId" name="detailId" class="form-control"/>
-                            <input type="text" attr="detail.record.recordId" name="recordId" class="form-control"/>
+                            <input type="hidden" attr="detail.record.recordId" name="recordId" class="form-control"/>
                             <div class="form-group">
                                 <label>车主姓名：</label>
                                 <input readonly type="text" attr="detail.record.checkin.userName" class="form-control"/>
@@ -287,6 +305,124 @@
                                 </input>
                             </div>
                         </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="maintainWin" class="modal fade" aria-hidden="true" style="overflow:scroll">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">选择保养项目</h3>
+                        <table class="table table-hover" id="maintainTable"
+                               data-pagination="true"
+                               data-show-refresh="true"
+                               data-show-toggle="true"
+                               data-showColumns="true"
+                               data-height="500">
+                            <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th data-field="maintainName" >
+                                    保养项目名称
+                                </th>
+                                <th data-field="maintainHour" >
+                                    保养所需工时
+                                </th>
+                                <th data-field="maintainMoney" >
+                                    保养基础费用
+                                </th>
+                                <th data-field="maintainManHourFee" >
+                                    保养工时费
+                                </th>
+                                <th data-field="maintainDes" >
+                                    保养描述
+                                </th>
+                                <th data-field="company.companyName">
+                                    公司名称
+                                </th>
+                                <th data-field="maintainStatus" data-formatter="status">
+                                    保养项目状态
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                        <div style="height: 40px;"></div>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="determineMaintain()" value="确定">
+                            </input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="fixWin" class="modal fade" aria-hidden="true" style="overflow:scroll">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">选择维修项目</h3>
+                        <table class="table table-hover" id="fixTable"
+                               data-pagination="true"
+                               data-show-refresh="true"
+                               data-show-toggle="true"
+                               data-showColumns="true"
+                               data-height="500">
+                            <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th data-field="maintainName" >
+                                    维修项目名称
+                                </th>
+                                <th data-field="maintainHour" >
+                                    维修所需工时
+                                </th>
+                                <th data-field="maintainMoney" >
+                                    维修基础费用
+                                </th>
+                                <th data-field="maintainManHourFee" >
+                                    维修工时费
+                                </th>
+                                <th data-field="maintainDes" >
+                                    维修描述
+                                </th>
+                                <th data-field="company.companyName">
+                                    公司名称
+                                </th>
+                                <th data-field="maintainStatus" data-formatter="status">
+                                    维修项目状态
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                        <div style="height: 40px;"></div>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="determineFix()" value="确定">
+                            </input>
+                        </div>
                     </div>
 
                 </div>
