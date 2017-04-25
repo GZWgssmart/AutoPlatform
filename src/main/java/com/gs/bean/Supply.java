@@ -23,6 +23,8 @@ public class Supply{
 	private String supplyTypeId; //供应商分类编号
 	private String companyId; //供应商所属公司
 	private String supplyStatus; //供应商状态，Y表示可用，N表示不可用
+	private SupplyType supplyType;
+	private Company company;
 
 	public String getSupplyId(){
 		return this.supplyId;
@@ -122,4 +124,19 @@ public class Supply{
 		this.supplyStatus=supplyStatus;
 	}
 
+	public SupplyType getSupplyType() {
+		return supplyType;
+	}
+
+	public void setSupplyType(SupplyType supplyType) {
+		this.supplyType = supplyType;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 }

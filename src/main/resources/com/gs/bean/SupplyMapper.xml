@@ -5,7 +5,27 @@
 <mapper namespace="com.gs.dao.SupplyDAO">
 
 	<resultMap id="supplyResultMap" type="supply">
+		<id property="supplyId" column="supplyId"></id>
+		<result property="supplyName" column="supplyName"></result>
+		<result property="supplyTel" column="supplyTel"></result>
+		<result property="supplyPricipal" column="suplyPricipal"></result>
+		<result property="supplyAddress" column="supplyAddress"></result>
+		<result property="supplyBank" column="supplyBank"></result>
+		<result property="supplyBankAccount" column="supplyBankAccount"></result>
+		<result property="supplyBankNo" column="supplyBankNo"></result>
+		<result property="supplyAlipay" column="supplyAlipay"></result>
+		<result property="supplyWechat" column="supplyWechat"></result>
+		<result property="supplyCreatedTime" column="supplyCreatedTime"></result>
+		<result property="supplyStatus" column="supplyStatus"></result>
 
+		<association property="supplyType" javaType="com.gs.bean.SupplyType">
+			<id property="supplyTypeId" column="supplyTypeId"></id>
+			<id property="supplyTypeName" column="supplyTypeName"></id>
+		</association>
+		<association property="company" javaType="com.gs.bean.Company">
+			<id property="companyId" column="companyId"/>
+			<id property="companyName" column="companyName"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="supply">
@@ -76,7 +96,8 @@
 
 	<select id="queryByPager" resultType="list" resultMap="supplyResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-		select * from t_supply where 1 = 1
+		select s.*, t.supplyTypeName, c.companyName from t_supply s, t_supply_type t, t_company c
+		where 1 = 1 and s.supplyTypeId = t.supplyTypeId and s.companyId = c.companyId
 		]]>
 		limit #{beginIndex}, #{pageSize}
 	</select>
