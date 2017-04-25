@@ -17,6 +17,8 @@ public class WorkInfo {
 	private String workStatus;
 
 	private User user;
+	private MaintainRecord maintainRecord;
+	private Checkin checkin;
 
 	public String getWorkId(){
 		return this.workId;
@@ -66,5 +68,21 @@ public class WorkInfo {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public MaintainRecord getMaintainRecord() {
+		return maintainRecord;
+	}
+
+	public void setMaintainRecord(MaintainRecord maintainRecord) {
+		this.maintainRecord = maintainRecord;
+	}
+
+	public Checkin getCheckin() {
+		return checkin;
+	}
+
+	public void setCheckin(Checkin checkin) {
+		this.checkin = checkin;
 	}
 }

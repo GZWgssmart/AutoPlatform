@@ -7,6 +7,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.FileUtil;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
@@ -60,10 +61,11 @@ public class PeopleInfoController {
     }
     @ResponseBody
     @RequestMapping(value = "peopleInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(User user){
+    public ControllerResult infoInsert(User user, Company company){
         logger.info("信息添加");
-
-        user.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+        String peopleId = UUIDUtil.uuid();
+        user.setUserId(peopleId);
+        user.setCompanyId(company.getCompanyId());
         userService.insert(user);
         return ControllerResult.getSuccessResult("添加成功");
     }
@@ -82,7 +84,7 @@ public class PeopleInfoController {
 
     @ResponseBody
     @RequestMapping(value = "peopleInfo_update", method = RequestMethod.POST)
-    public ControllerResult info_update(User user, MultipartFile file, HttpSession session, HttpServletRequest request) throws IOException {
+    public ControllerResult info_update(User user, MultipartFile file, HttpSession session, HttpServletRequest request, Company company) throws IOException {
         logger.info("信息修改");
         System.out.println(file);
         if(file != null){
@@ -95,7 +97,7 @@ public class PeopleInfoController {
         }else{
             user.setUserIcon("img/default.png");
         }
-        user.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+        user.setCompanyId(company.getCompanyId());
         userService.update(user);
         return ControllerResult.getSuccessResult(" 修改成功");
     }
@@ -131,13 +133,13 @@ public class PeopleInfoController {
 
     @ResponseBody
     @RequestMapping(value = "query_user", method = RequestMethod.GET)
-    public Pager4EasyUI<User> queryByUser(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    public Pager4EasyUI<User> queryByUser(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("company")Company company){
         logger.info("分页查询所有员工");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(userService.countByUser("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a"));
-        List<User> users =  userService.queryByUser(pager,"65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+        pager.setTotalRecords(userService.countByUser(company.getCompanyId()));
+        List<User> users =  userService.queryByUser(pager, company.getCompanyId());
         return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
     }
 

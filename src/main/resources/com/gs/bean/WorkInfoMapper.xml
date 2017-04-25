@@ -3,18 +3,26 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gs.dao.WorkInfoDAO">
-
 	<resultMap id="workInfoResultMap" type="workInfo">
 		<id property="workId" column="workId"></id>
 		<result property="recordId" column="recordId"></result>
 		<result property="userId" column="userId"></result>
-		<result property="workAssignTi" column="workAssignTi"></result>
+		<result property="workAssignTime" column="workAssignTime"></result>
 		<result property="workCreatedTime" column="workCreatedTime"></result>
 		<result property="workStatus" column="workStatus"></result>
 
 		<association property="user" javaType="com.gs.bean.User">
-			<id property="userId" column="userId"/>
-			<id property="userName" column="userName"/>
+			<id property="userId" column="u_userId"/>
+			<id property="userName" column="userName_emp"/>
+		</association>
+
+		<association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
+			<id property="recordId" column="recordId"/>
+			<association property="checkin" javaType="com.gs.bean.Checkin">
+				<id property="checkinId" column="checkinId" />
+				<id property="maintainOrFix" column="maintainOrFix" />
+				<id property="userName" column="userName_customer" />
+			</association>
 		</association>
 
 	</resultMap>
@@ -55,7 +63,7 @@
 	<update id="update" parameterType="workInfo">
 		<![CDATA[
 			UPDATE t_work_info SET
-				 workStatus = 'Y', userId = #{userId} WHERE workId = #{workId}
+				 workStatus = 'Y', workAssignTime = now(), userId = #{userId} WHERE workId = #{workId}
 		]]>
 	</update>
 
@@ -91,11 +99,12 @@
 
 	<select id="queryByPager" resultType="list" resultMap="workInfoResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			SELECT w.*, u.userId, u.userName FROM t_work_info w, t_user u where 1=1 and w.userId = u.userId
-				order by workCreatedTime Desc, w.userId
+			select wi.*, u.userId as u_userId, u.userName as userName_emp, mr.recordId,c.checkinId, c.userName as userName_customer, c.maintainOrFix from t_work_info wi
+			LEFT JOIN t_maintain_record  mr on wi.recordId = mr.recordId
+			LEFT JOIN t_checkin c on mr.checkinId = c.checkinId
+			LEFT JOIN t_user u on wi.userId = u.userId
 		]]>limit #{beginIndex}, #{pageSize}
 	</select>
-
 	<select id="count" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) FROM t_work_info

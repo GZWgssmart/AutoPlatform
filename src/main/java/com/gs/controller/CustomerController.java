@@ -1,12 +1,14 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Company;
 import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.FileUtil;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -54,9 +56,11 @@ public class CustomerController {
     }
     @ResponseBody
     @RequestMapping(value = "customerInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(User user){
+    public ControllerResult infoInsert(User user, Company company){
         logger.info("信息添加");
-        user.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+        String customerId = UUIDUtil.uuid();
+        user.setUserId(customerId);
+        user.setCompanyId(company.getCompanyId());
         userService.insert(user);
         return ControllerResult.getSuccessResult("添加成功");
     }
@@ -75,9 +79,9 @@ public class CustomerController {
 
     @ResponseBody
     @RequestMapping(value = "customerInfo_update", method = RequestMethod.POST)
-    public ControllerResult info_update(User user){
+    public ControllerResult info_update(User user, Company company){
         logger.info("信息修改");
-        user.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+        user.setCompanyId(company.getCompanyId());
         userService.update(user);
         return ControllerResult.getSuccessResult(" 修改成功");
     }

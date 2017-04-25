@@ -10,12 +10,18 @@ import com.gs.service.UserService;
 import com.gs.service.WorkInfoService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,8 +60,8 @@ public class WorkInfoController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(workInfoService.count());
-        List<WorkInfo> workInfos = workInfoService.queryByPager(pager);
-        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfos);
+        List<WorkInfo> workInfo = workInfoService.queryByPager(pager);
+        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfo);
     }
 
     @ResponseBody
@@ -76,5 +82,12 @@ public class WorkInfoController {
             workInfoService.active(id);
         }
         return ControllerResult.getSuccessResult(" 修改成功");
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }

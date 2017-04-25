@@ -34,20 +34,23 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th  data-field="workId" data-sortable="true" data-formatter="random">
+            <th  data-field="workCreatedTime" data-sortable="true">
                 工单编号
             </th>
-            <th data-field="recordId" >
-                维修保养
+            <th data-field="maintainRecord.checkin.maintainOrFix" >
+                维修或保养
             </th>
-            <th data-field="user.userName" >
-                指派员工
+            <th data-field="maintainRecord.checkin.userName" >
+                车主姓名
             </th>
-            <th data-field="workAssignTime" >
+            <th data-field="workCreatedTime" data-formatter="formatterDate" >
+                创建时间
+            </th>
+            <th data-field="workAssignTime"  data-formatter="formatterDate">
                 指派时间
             </th>
-            <th data-field="workCreatedTime" >
-                创建时间
+            <th data-field="user.userName">
+                指派员工
             </th>
             <th data-field="workStatus" data-formatter="status">
                 当前状态
@@ -80,7 +83,7 @@
                             <input type="hidden" attr="work.workId" name="workId" />
                             <div class="form-group">
                                 <label class="control-label">员工指派：</label>
-                                <select id="editCompany" class="js-example-tags form-control work_user" name="userId"></select>
+                                <select id="editUser" class="js-example-tags form-control work_user" name="userId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error1" style="color: red;"></span>
