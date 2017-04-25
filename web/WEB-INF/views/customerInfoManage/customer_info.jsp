@@ -109,7 +109,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">性别：</label>
-                                <select attr="user.userGender" name="userGender" class="form-control">
+                                <select attr="user.userGender" id="usergender" name="userGender" class="form-control">
                                     <option value="N" selected = "selected">未知</option>
                                     <option value="M">男</option>
                                     <option value="F">女</option>
