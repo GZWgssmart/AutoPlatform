@@ -98,6 +98,11 @@
 		select * from auto_platform.t_accessories_buy where accBuyStatus = #{status}
 	</select>
 
+    <select id="queryByCheckStatus" resultMap="accessoriesBuyResultMap" parameterType="string">
+        select * from auto_platform.t_accessories_buy where accBuyCheck = #{checkState}
+    </select>
+
+
     <select id="query" parameterType="accessoriesBuy" resultType="accessoriesBuy">
 		<![CDATA[
 
@@ -131,5 +136,27 @@
     <update id="active" parameterType="string">
 		update auto_platform.t_accessories_buy set accBuyStatus = 'Y' WHERE accBuyId = #{id}
 	</update>
+
+    <select id="queryByBuyStatePager" resultType="list" resultMap="accessoriesBuyResultMap"
+            parameterType="com.gs.common.bean.Pager">
+        select * from auto_platform.t_accessories_buy where accBuyStatus = 'Y' limit #{beginIndex},#{pageSize}
+    </select>
+
+    <select id="queryByCheckStatePager" resultType="list" resultMap="accessoriesBuyResultMap"
+            parameterType="com.gs.common.bean.Pager">
+        select * from auto_platform.t_accessories_buy where accBuyCheck = 'Y' limit #{beginIndex},#{pageSize}
+    </select>
+
+    <select id="countByBuyState" resultType="int">
+        select count(accBuyCount) from auto_platform.t_accessories_buy where accBuyStatus = 'Y'
+    </select>
+
+    <select id="countByCheckState" resultType="int">
+        select count(accBuyCheck) from auto_platform.t_accessories_buy where accBuyCheck = 'Y'
+    </select>
+
+    <select id="countByAccName" resultType="int">
+        select count(accName) from auto_platform.t_accessories_buy ac left join t_accessories acc on
+    </select>
 
 </mapper>

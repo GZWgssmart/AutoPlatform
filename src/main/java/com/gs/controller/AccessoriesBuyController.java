@@ -112,7 +112,9 @@ public class AccessoriesBuyController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateAccessoriesBuyInfo(AccessoriesBuy accessoriesBuy) {
         Accessories acc = accessoriesBuy.getAccessories();
-        acc.setAccIdle(accessoriesBuy.getAccBuyCount() + acc.getAccIdle());
+        int total = accessoriesBuy.getAccBuyCount() + acc.getAccIdle();
+        acc.setAccIdle(total);
+        accessoriesBuy.setAccBuyCount(total);
         acc.setAccUnit(accessoriesBuy.getAccUnit());
         accessoriesBuyService.update(accessoriesBuy);
         accessoriesService.update(acc);
@@ -135,5 +137,33 @@ public class AccessoriesBuyController {
     public ControllerResult batchDelete(@Param("accBuyArr") String[] accBuyArr) {
         accessoriesBuyService.batchDeleteAcc(accBuyArr);
         return ControllerResult.getSuccessResult("删除成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "onlyCheck", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesBuy> onlyCheck(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesBuyService.countByCheckState("Y"));
+        List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByCheckStatePager(pager);
+        return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "onlyBuy", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesBuy> onlyBuy(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesBuyService.countByBuyState("Y"));
+        List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByBuyStatePager(pager);
+        return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "byAccNameSearch", method = RequestMethod.POST)
+    public List<AccessoriesBuy> byAccNameSearch(@Param("accName") String accName) {
+
     }
 }

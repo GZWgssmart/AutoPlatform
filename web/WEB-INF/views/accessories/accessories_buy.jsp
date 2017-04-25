@@ -20,6 +20,22 @@
 <body>
 <div class="container">
 
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            搜索条件
+        </div>
+        <div class="panel-body">
+
+            <div class="input-group col-md-3" style="margin-top:0px; position:relative">
+                <input type="text" class="form-control" placeholder="请输入配件名" id="sAccName"/>
+                <span class="input-group-btn">
+                    <button class="btn btn-default btn-search" onclick="byAccNameSearch();">查找</button>
+                </span>
+            </div>
+
+        </div>
+    </div>
+
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
            data-show-refresh="true"
@@ -52,20 +68,29 @@
             </a>
 
             <a>
-                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                    <i class="glyphicon glyphicon-pencil"></i> 修改
-                </button>
-            </a>
-
-            <a>
                 <button onclick="delteleBuy();" type="button" id="remove" class="btn btn-danger">
                     <i class="glyphicon glyphicon-trash"></i> 删除
                 </button>
             </a>
 
+            <a>
+                <button onclick="onlyCheck();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-ok"></i> 只看已审核
+                </button>
+            </a>
+
+            <a>
+                <button onclick="onlyBuy();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-shopping-cart"></i> 只看已采购
+                </button>
+            </a>
+
+            <a>
+                <button onclick="allBuys();" type="button" class="btn btn-default">查看所有</button>
+            </a>
+
         </div>
         </tbody>
-
     </table>
 </div>
 
@@ -78,7 +103,7 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改采购信息</h3>
                         <form role="form" id="editForm">
-                            <input type="hidden" attr="accBuyId" name="accBuyId"/>
+                            <input type="hidden" attr="accessoriesBuy.accBuyId" name="accBuyId"/>
                             <input type="hidden" attr="accessoriesBuy.accessories.accId" name="accessories.accId"/>
                             <div class="form-group">
                                 <label>配件名称：</label>

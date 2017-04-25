@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesBuy;
 import com.gs.common.bean.Pager;
 import com.gs.dao.AccessoriesBuyDAO;
@@ -84,5 +85,33 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 
     public int batchDeleteAcc(String[] ids) {
         return accessoriesBuyDAO.batchDeleteAcc(ids);
+    }
+
+    public List<Accessories> queryByCheckStates(String checkState) {
+        return accessoriesBuyDAO.queryByCheckStates(checkState);
+    }
+
+    public int countByBuyState(String buyState) {
+        return accessoriesBuyDAO.countByBuyState(buyState);
+    }
+
+    public int countByCheckState(String checkState) {
+        return accessoriesBuyDAO.countByCheckState(checkState);
+    }
+
+    public List<AccessoriesBuy> queryByBuyStatePager(Pager pager) {
+        return accessoriesBuyDAO.queryByBuyStatePager(pager);
+    }
+
+    public List<AccessoriesBuy> queryByCheckStatePager(Pager pager) {
+        return accessoriesBuyDAO.queryByCheckStatePager(pager);
+    }
+
+    public int countByAccName(String accName) {
+        return accessoriesBuyDAO.countByAccName(accName);
+    }
+
+    public List<AccessoriesBuy> queryByAccNamePager(Pager pager) {
+        return accessoriesBuyDAO.queryByAccNamePager(pager);
     }
 }

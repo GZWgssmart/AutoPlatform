@@ -1,7 +1,7 @@
 var isAcc = false;
 
 $(document).ready(function () {
-    initDateTimePicker("form_datetime");
+    initDateTimePicker("form_datetime", "");
     initTable("cusTable", "pager");
 
     $("#isAcc").bootstrapSwitch({
@@ -71,6 +71,7 @@ function addAccessoriesBuyInfo() {
     $.post("/accessoriesBuy/isAccAdd?state=" + isAcc,
         $("#addForm").serialize(),
         function (data) {
+            alert(data.result);
             if (data.result == "success") {
                 $('#addWin').modal('hide');
                 swal(data.message, "", "success");
@@ -178,6 +179,32 @@ function delteleBuy() {
 
     } else {
         swal('删除失败', "请至少选择一条数据删除", "error");
+    }
+}
+
+function onlyCheck() {
+    initTable("cusTable", "/accessoriesBuy/onlyCheck");
+}
+
+function onlyBuy() {
+    initTable("cusTable", "/accessoriesBuy/onlyBuy");
+}
+
+function allBuys() {
+    initTable("cusTable", "/accessoriesBuy/pager");
+}
+
+function byAccNameSearch(accName) {
+    var accName = $("#sAccName").val();
+    if (accName != "") {
+        $.post("/accessoriesBuy/byAccNameSearch?accName=" + accName, function (data) {
+            if (data.result == "success") {
+                initTable("cusTable", "/accessoriesBuy/byAccNameSearch");
+                $("#cusTable").bootstrapTable("refresh");
+            }
+        });
+    } else {
+        swal("请输入查询字段", "", "warning");
     }
 }
 
