@@ -196,7 +196,7 @@
                                 <p><label class="control-label">密码：</label></p>
                                 <input type="password" id="pwd" name="userPwd"
                                        class="form-control" style="width: 75%; display: initial;"/>
-                                <input type="button" onclick="defaultPwd()"style="float: right" class="btn btn-default" value="使用默认密码"/>
+                                <button type="button" onclick="defaultPwd()"style="float: right" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="默认密码为123456">使用默认密码</button>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">性别：</label>
@@ -257,11 +257,11 @@
                     <div class="col-sm-12 b-r">
                         <h4 class="m-t-none m-b">管理员个人信息</h4>
                         <div class="form_info">
-                            <form role="form" id="editModal" class="form_form" modelAttribute="user" onkeydown="if(event.keyCode==13){return false;}" enctype="multipart/form-data">
+                            <form role="form" method="post" id="editModal" class="form_form" onkeydown="if(event.keyCode==13){return false;}" enctype="multipart/form-data">
                                 <input type="hidden" name="userId" attr="user.userId" />
                                 <div class="form_img">
                                     <div id="preview">
-                                        <img alt="image" attr="user.userIcon" name="file" style="border-radius: 50%;" />
+                                        <img alt="image" attr="user.userIcon" name="file" style="border-radius: 50%;"/>
                                     </div>
                                     <input type="file" name="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
                                 </div>
@@ -402,7 +402,6 @@
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/city-picker.data.js"></script>
 <script src="<%=path %>/js/city-picker.js"></script>
-
-
+<script src="<%=path %>/js/jquery.form.min.js"></script>
 </body>
 </html>

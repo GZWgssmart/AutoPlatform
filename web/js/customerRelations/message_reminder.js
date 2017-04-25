@@ -57,7 +57,7 @@ function updateIncomingType() {
     var name = $("#name1").val();
     var error = document.getElementById("error1");
     if(name != ''){
-        $.post(contextPath + "/complaint/update_complaint",
+        $.post(contextPath + "/MessageReminder/edit",
             $("#updateForm").serialize(),
             function(data){
                 if(data.result == "success"){
@@ -82,7 +82,7 @@ function addCompaint() {
     var name = $("#complaintReply").val();
     var error = document.getElementById("error");
     if (name != "") {
-        $.post(contextPath + "/complaint/add_complaint",
+        $.post(contextPath + "/MessageReminder/add_complaint",
             $("#addForm").serialize(),
             function (data) {
                 if (data.result == "success") {

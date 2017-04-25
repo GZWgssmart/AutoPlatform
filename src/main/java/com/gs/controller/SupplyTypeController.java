@@ -38,7 +38,7 @@ public class SupplyTypeController {
     }
 
     @ResponseBody
-    @RequestMapping("queryByPager")
+    @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<SupplyType> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         logger.info("分页查询供应商分类");
         Pager pager = new Pager();
@@ -54,7 +54,6 @@ public class SupplyTypeController {
     public ControllerResult add(SupplyType supplyType) {
         logger.info("添加供应商分类");
         supplyType.setCompanyId(UUIDUtil.uuid());
-        supplyType.setSupplyTypeStatus("Y");
         supplyTypeService.insert(supplyType);
         return ControllerResult.getSuccessResult("添加成功");
     }

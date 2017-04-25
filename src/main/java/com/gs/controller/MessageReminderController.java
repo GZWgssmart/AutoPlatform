@@ -60,7 +60,7 @@ public class MessageReminderController {
     @RequestMapping(value="edit", method=RequestMethod.POST)
     public ControllerResult editMainteranceRecord(MaintainRemind maintainRemind){
         logger.info("更新维修保养提醒");
-        maintainRemind.setRemindId("1e8f6410-24f5-11e7-8ee3-00909e9aaeb9");
+        /*maintainRemind.setRemindId("1e8f6410-24f5-11e7-8ee3-00909e9aaeb9");*/
         maintainRemindService.update(maintainRemind);
         return ControllerResult.getSuccessResult("更新成功");
     }

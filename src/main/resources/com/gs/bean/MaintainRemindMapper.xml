@@ -13,9 +13,15 @@
 		<result property="remindType" column="remindType" />
 		<result property="remindCreatedTime" column="remindCreatedTime" />
 
-		<association property="user" javaType="com.gs.bean.User">
+		<association property="checkin" javaType="com.gs.bean.Checkin">
+			<id property="checkinId" column="checkinId"></id>
 			<id property="userId" column="userId"/>
 			<id property="userName" column="userName"/>
+			<id property="carMileage" column="carMileage"/>
+		</association>
+		<association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
+			<id property="checkinId" column="checkinId"/>
+			<id property="actualEndTime" column="actualEndTime"/>
 		</association>
 
 	</resultMap>
@@ -52,9 +58,7 @@
 
 	<update id="update" parameterType="maintainRemind">
 		<![CDATA[
-		update t_maintain_remind
-		set lastMaintainTime = #{lastMaintainTime},lastMaintainMileage = #{lastMaintainMileage},remindMsg= #{remindMsg},
-				remindTime=#{remindTime},remindType=#{remindType},remindCreatedTime=#{remindCreatedTime}
+		update t_maintain_remind set remindMsg= #{remindMsg},remindTime=#{remindTime},remindType=#{remindType}
 		where remindId = #{remindId}
 		]]>
 	</update>
@@ -91,14 +95,14 @@
 
 	<select id="queryByPager" resultType="list" resultMap="maintainRemindResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-		  select * from t_maintain_remind r, t_user u where r.userId=u.userId
+		  select * from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
 		]]>
 		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(*) from t_maintain_remind
+		  select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
 		]]>
 	</select>
 

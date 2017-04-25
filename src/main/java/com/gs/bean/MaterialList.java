@@ -10,7 +10,7 @@ import java.util.Date;
 */
 public class MaterialList {
 	private String materialId;
-	private String maintainRecordId;
+	private String recordId;
 	private String accId;
 	private int materialCount;
 	private Date materialCreatedTime;
@@ -23,11 +23,11 @@ public class MaterialList {
 		this.materialId=materialId;
 	}
 
-	public String getMaintainRecordId(){
-		return this.maintainRecordId;
+	public String getRecordId(){
+		return this.recordId;
 	}
-	public void setMaintainRecordId(String maintainRecordId){
-		this.maintainRecordId=maintainRecordId;
+	public void setRecordId(String recordId){
+		this.recordId=recordId;
 	}
 
 	public String getAccId(){

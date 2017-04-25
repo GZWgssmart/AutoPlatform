@@ -11,15 +11,39 @@ import java.util.Date;
 public class MaintainFix {
 	private String maintainId; //保养项目Id
 	private String maintainName; //保养项目名称
-	private String maintainHour; //保养工时
-	private String maintainMoney; //保养项目基础费用
-	private String maintainManHourFee; //保养项目工时费
+	private double maintainHour; //保养工时
+	private double maintainMoney; //保养项目基础费用
+	private double maintainManHourFee; //保养项目工时费
 	private String maintainOrFix; //标识保养还是维修
 	private String maintainDes; //维修保养描述
 	private String companyId; //维修保养所属Id t_company
 	private String maintainStatus; //维修保养状态 Y N
 
 	private Company company;
+
+	public double getMaintainHour() {
+		return maintainHour;
+	}
+
+	public void setMaintainHour(double maintainHour) {
+		this.maintainHour = maintainHour;
+	}
+
+	public double getMaintainMoney() {
+		return maintainMoney;
+	}
+
+	public void setMaintainMoney(double maintainMoney) {
+		this.maintainMoney = maintainMoney;
+	}
+
+	public double getMaintainManHourFee() {
+		return maintainManHourFee;
+	}
+
+	public void setMaintainManHourFee(double maintainManHourFee) {
+		this.maintainManHourFee = maintainManHourFee;
+	}
 
 	public Company getCompany() {
 		return company;
@@ -41,27 +65,6 @@ public class MaintainFix {
 	}
 	public void setMaintainName(String maintainName){
 		this.maintainName=maintainName;
-	}
-
-	public String getMaintainHour(){
-		return this.maintainHour;
-	}
-	public void setMaintainHour(String maintainHour){
-		this.maintainHour=maintainHour;
-	}
-
-	public String getMaintainMoney(){
-		return this.maintainMoney;
-	}
-	public void setMaintainMoney(String maintainMoney){
-		this.maintainMoney=maintainMoney;
-	}
-
-	public String getMaintainManHourFee(){
-		return this.maintainManHourFee;
-	}
-	public void setMaintainManHourFee(String maintainManHourFee){
-		this.maintainManHourFee=maintainManHourFee;
 	}
 
 	public String getMaintainOrFix(){

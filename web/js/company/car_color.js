@@ -2,7 +2,7 @@
  * Created by root on 2017/4/18.
  */
 function showAddWin(){
-    // validator("addForm");
+    validator("addForm");
     $("#addWin").modal('show');
     $("input[type=reset]").trigger("click");
 }
@@ -52,42 +52,6 @@ function addProduct() {
         }, "json");
 }
 
-function operateFormatter(value, row, index) {
-    if (row.colorStatus == 'Y') {
-        return [
-            '可用'
-        ].join('');
-    } else {
-        return [
-            '不可用'
-        ].join('');
-    }
-}
-
-function StatusIncomeing() {
-    var rows = $("#cusTable").bootstrapTable('getSelections');
-    if (rows.length < 1) {
-        swal('冻结失败', "请选择一条或多条数据进行冻结", "error");
-    } else {
-        var ids = "";
-        for (var i = 0, len = rows.length; i < len; i++) {
-            if (ids == "") {
-                ids = rows[i].id;
-            } else {
-                ids += "," + rows[i].id
-            }
-            if (ids != "") {
-                $.get(contextPath + "/carBrand/StatusInactive" + rows[0].ids,
-                    function (data) {
-                        swal(data.message, "", "success");
-                        $('#cusTable').bootstrapTable('refresh');
-                    }, "json");
-            }
-        }
-
-    }
-}
-
 /**
  * 十六进制颜色转换为RGB颜色
  * @param color 要转换的十六进制颜色
@@ -122,12 +86,12 @@ function operating(value, row, index) {
     if (row.colorStatus == 'Y') {
         return [
             '<button type="button" class="updateInactive btn btn-default  btn-sm btn-danger" >冻结</button>',
-            '<button type="button" onclick="showEditWin()" class="btn btn-default btn-sm btn-primary ">编辑</button>'
+            '<button type="button" class="showUpdateIncomingType1 btn btn-default btn-sm btn-primary ">编辑</button>'
         ].join('');
     } else {
         return [
             '<button type="button" class="updateActive btn btn-default  btn-sm btn-success" >激活</button>',
-            '<button type="button" onclick="showEditWin()" class="btn btn-default btn-sm btn-primary ">编辑</button>'
+            '<button type="button" class="showUpdateIncomingType1 btn btn-default btn-sm btn-primary ">编辑</button>'
         ].join('');
     }
 }
@@ -157,6 +121,12 @@ window.operateEvents = {
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
                 }
-            }, "json");
+            }, "json")
+    },
+    'click .showUpdateIncomingType1': function (e, value, row, index) {
+        var incomingType = row;
+        validator("editForm");
+        $("#editForm").fill(incomingType);
+        $("#editWin").modal('show');
     }
 }

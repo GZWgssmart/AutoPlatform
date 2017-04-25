@@ -14,6 +14,9 @@ $(document).ready(function () {
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
     initDateTimePicker("datetimepicker", "arriveTime");
 
+    destoryValidator("addWin", "addForm");
+    destoryValidator("editWin", "editForm");
+
     $("#isApp").bootstrapSwitch({
         onText: '是',
         offText: '否',

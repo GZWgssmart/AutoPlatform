@@ -17,14 +17,23 @@ public class MaintainRemind {
 	private Date remindTime;  //保养提醒时间
 	private String remindType;  //保养提醒方式
 	private Date remindCreatedTime;  //保养提醒记录创建时间
-	private User user;//传递user对象
+	private Checkin checkin; //传递checkin对象
+	private MaintainRecord maintainRecord;//传递maintainRecord表
 
-	public User getUser() {
-		return user;
+	public Checkin getCheckin() {
+		return checkin;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setCheckin(Checkin checkin) {
+		this.checkin = checkin;
 	}
+
+	public MaintainRecord getMaintainRecord() {
+		return maintainRecord;
+	}
+	public void setMaintainRecord(MaintainRecord maintainRecord) {
+		this.maintainRecord = maintainRecord;
+	}
+
 
 	public String getRemindId(){
 		return this.remindId;

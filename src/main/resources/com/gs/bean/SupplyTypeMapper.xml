@@ -5,12 +5,20 @@
 <mapper namespace="com.gs.dao.SupplyTypeDAO">
 
 	<resultMap id="supplyTypeResultMap" type="supplyType">
+		<id property="supplyTypeId" column="supplyTypeId"></id>
+		<result property="supplyTypeName" column="supplyTypeName"></result>
+		<result property="supplyTypeDes" column="supplyTypeDes"></result>
+		<result property="supplyTypeStatus" column="supplyTypeStatus"></result>
 
+		<association property="company" javaType="com.gs.bean.Company">
+			<id property="companyId" column="companyId"/>
+			<id property="companyName" column="companyName"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="supplyType">
 		<![CDATA[
- 			insert into t_supply_type(supplyTypeId, supplyTypeName, supplyTypeDes, companyId, supplyTypeStatus) values(uuid(), #{supplyTypeName}, #{supplyTypeDes}, #{companyId}, #{supplyTypeStatus})
+ 			insert into t_supply_type(supplyTypeId, supplyTypeName, supplyTypeDes, companyId, supplyTypeStatus) values(uuid(), #{supplyTypeName}, #{supplyTypeDes}, #{companyId}, 'Y')
 		]]>
 	</insert>
 
@@ -76,7 +84,8 @@
 
 	<select id="queryByPager" resultType="list" resultMap="supplyTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-		select * from t_supply_type where 1 = 1
+		select t.*, c.companyName from t_supply_type type, t_company c
+		where 1 = 1 and
         ]]>
 		limit #{beginIndex}, #{pageSize}
 	</select>

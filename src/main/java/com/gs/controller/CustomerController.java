@@ -6,19 +6,30 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.FileUtil;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 温鑫
@@ -26,7 +37,7 @@ import java.util.List;
  * Created by xiao-kang on 2017/4/18.
  */
 @Controller
-@RequestMapping("customerManage")
+@RequestMapping("/customer")
 
 public class CustomerController {
 
@@ -36,10 +47,10 @@ public class CustomerController {
     @Resource
     private UserService userService;
 
-    @RequestMapping(value = "customer_info", method = RequestMethod.GET)
-    private String customerInfo() {
+    @RequestMapping(value = "customer_page", method = RequestMethod.GET)
+    public String customerInfo() {
         logger.info(" 车主基本信息页面");
-        return "CustomerManage/customer_info";
+        return "customerInfoManage/customer_info";
     }
     @ResponseBody
     @RequestMapping(value = "customerInfo_insert", method = RequestMethod.POST)
@@ -81,6 +92,13 @@ public class CustomerController {
             userService.active(id);
         }
         return ControllerResult.getSuccessResult(" 修改成功");
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
 }

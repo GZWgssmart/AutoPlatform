@@ -39,16 +39,16 @@
                 用户名:
             </th>
             <th data-field="user.userPhone" >
-                用户手机号
+                用户手机号:
             </th>
             <th data-field="sendMsg" >
                 短信发送内容:
             </th>
+            <th data-field="sendCreatedTime" data-formatter="formatterDate">
+                短信记录创建时间:
+            </th>
             <th data-field="sendTime" data-formatter="formatterDate">
                 短信发送时间:
-            </th>
-            <th data-field="sendCreatedTime" data-formatter="formatterDate">
-                短信发出时间:
             </th>
         </tr>
         </thead>

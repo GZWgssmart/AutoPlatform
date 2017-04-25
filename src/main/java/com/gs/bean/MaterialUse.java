@@ -10,7 +10,7 @@ import java.util.Date;
 */
 public class MaterialUse {
 	private String materialUseId;
-	private String matainRecordId;
+	private String recordId;
 	private String accId;
 	private int accCount;
 	private Date muCreatedTime;
@@ -23,11 +23,11 @@ public class MaterialUse {
 		this.materialUseId=materialUseId;
 	}
 
-	public String getMatainRecordId(){
-		return this.matainRecordId;
+	public String getRecordId(){
+		return this.recordId;
 	}
-	public void setMatainRecordId(String matainRecordId){
-		this.matainRecordId=matainRecordId;
+	public void setRecordId(String recordId){
+		this.recordId=recordId;
 	}
 
 	public String getAccId(){

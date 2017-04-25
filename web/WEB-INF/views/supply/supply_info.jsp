@@ -13,7 +13,8 @@
 <head>
     <title>供应商信息管理</title>
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -53,6 +54,12 @@
             </th>
             <th data-field="supplyWechat" >
                 微信
+            </th>
+            <th data-field="supplyType.supplyTypeName">
+                供应商分类
+            </th>
+            <th data-field="company.companyName">
+                所属公司
             </th>
             <th data-field="supplyCreatedTime" data-formatter="formatterDate" >
                 创建时间
@@ -97,30 +104,40 @@
                             <div class="form-group">
                                 <label>名称：</label>
                                 <input type="text" attr="supply.supplyName"  name="supplyName" class="form-control"/>
-                                <label>电话：</label>
+                            </div>
+                            <div class="form-group">
+                               <label>电话：</label>
                                 <input type="text"  attr="supply.supplyTel" name="supplyTel" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>负责人：</label>
                                 <input type="text" attr="supply.supplyPricipal" name="supplyPricipal" class="form-control"/>
+                            </div>
+                            <div class="form-group">
                                 <label>地址：</label>
                                 <input type="text" attr="supply.supplyAddress"  name="supplyAddress" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>开户银行全称：</label>
                                 <input type="text" attr="supply.supplyBank" name="supplyBank" class="form-control"/>
-                                <label>开户人姓名：</label>
-                                <input type="text" attr="supply.supplyBankAccount" name="supplyBankAccount" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>开户银行全称：</label>
+                                <input type="text" attr="supply.supplyBank" name="supplyBank" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>开户卡号：</label>
                                 <input type="text" attr="supply.supplyBankNo" name="supplyBankNo" class="form-control"/>
+                            </div>
+                            <div class="form-group">
                                 <label>支付宝：</label>
                                 <input type="text" attr="supply.supplyAlipay"  name="supplyAlipay" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>微信：</label>
                                 <input type="text" attr="supply.supplyWechat" name="supplyWechat" class="form-control"/>
+                            </div>
+                            <div class="form-group">
                                 <label>供应商分类：</label>
                                 <input type="text" attr="supply.supplyTypeId"  name="supplyTypeId" class="form-control"/>
                             </div>
@@ -152,33 +169,43 @@
                         <form role="form" id="addForm">
                             <div class="form-group">
                                 <label>名称：</label>
-                                <input type="text"   name="supplyName" class="form-control"/>
+                                <input type="text"  name="supplyName" class="form-control"/>
+                            </div>
+                            <div class="form-group">
                                 <label>电话：</label>
-                                <input type="text"   name="supplyTel" class="form-control"/>
+                                <input type="text"  name="supplyTel" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>负责人：</label>
-                                <input type="text"  name="supplyPricipal" class="form-control"/>
+                                <input type="text" name="supplyPricipal" class="form-control"/>
+                            </div>
+                            <div class="form-group">
                                 <label>地址：</label>
-                                <input type="text"   name="supplyAddress" class="form-control"/>
+                                <input type="text"  name="supplyAddress" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>开户银行全称：</label>
                                 <input type="text"  name="supplyBank" class="form-control"/>
-                                <label>开户人姓名：</label>
-                                <input type="text"   name="supplyBankAccount" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>开户银行全称：</label>
+                                <input type="text" name="supplyBank" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>开户卡号：</label>
-                                <input type="text"  name="supplyBankNo" class="form-control"/>
+                                <input type="text" name="supplyBankNo" class="form-control"/>
+                            </div>
+                            <div class="form-group">
                                 <label>支付宝：</label>
-                                <input type="text"   name="supplyAlipay" class="form-control"/>
+                                <input type="text"  name="supplyAlipay" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>微信：</label>
                                 <input type="text"  name="supplyWechat" class="form-control"/>
+                            </div>
+                            <div class="form-group">
                                 <label>供应商分类：</label>
-                                <input type="text" attr="supply.supplyTypeId"  name="supplyTypeId" class="form-control"/>
+                                <input type="text" name="supplyTypeId" class="form-control"/>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"

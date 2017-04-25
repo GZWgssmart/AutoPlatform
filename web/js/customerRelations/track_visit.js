@@ -11,25 +11,16 @@ $(document).ready(function () {
     $("#search").bind("click", initTable);
 });
 
-
-
-$('#complaintCreatedTime').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii',
-    initialDate: new Date(),
-    autoclose: true,
-    todayHighlight: true,
-    todayBtn: true//显示今日按钮
-});
-$('#complaintReplyTime').datetimepicker({
-    language: 'zh-CN',
-    format: 'yyyy-mm-dd hh:ii',
-    initialDate: new Date(),
-    autoclose: true,
-    todayHighlight: true,
-    todayBtn: true//显示今日按钮
-});
-
+/** 添加选择员工 */
+function checkAdmin(combo) {
+    $('#addAdmin').html('').trigger("change");
+    var adminId = combo.value;
+    if (adminId != null && adminId != undefined && adminId != "") {
+        initSelect2("visit_admin", "请选择员工", "/peopleManage/user_all", "540");
+    } else {
+        alert("操作有误！");
+    }
+}
 
 
 /** 添加数据 */
@@ -40,12 +31,15 @@ function showAddWin() {
 
 /** 编辑数据 */
 function showEditWin() {
+    validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
+        initSelect2("visit_admin", "请选择员工", "/peopleManage/user_all?brandId=" + checkin.brandId, "540");
         return false;
     } else {
         var incomingType = selectRow[0];
+        $("#editForm").fill(checkin);
         $("#updateForm").fill(incomingType);
         $("#editWin").modal('show');
     }
