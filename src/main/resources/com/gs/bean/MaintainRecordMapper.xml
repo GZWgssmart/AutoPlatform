@@ -125,8 +125,8 @@
         <if test="record.checkin.userName != null and record.checkin.userName != ''">
             and c.userName like concat('%',#{record.checkin.userName},'%')
         </if>
-        <if test="record.checkin.userPhone != null and record.checkin.userPhone != ''">
-            and c.userPhone like concat('%',#{record.checkin.userPhone},'%')
+        <if test="record.checkin.carPlate != null and record.checkin.carPlate != ''">
+            and c.carPlate like concat('%',#{record.checkin.carPlate},'%')
         </if>
         <if test="record.startTime != null and record.startTime != ''">
             and r.startTime = #{record.startTime}
@@ -137,7 +137,7 @@
         <if test="record.companyId != null and record.companyId != ''">
             and r.companyId = #{record.companyId}
         </if>
-        order by r.recordCreatedTime desc, r.companyId
+        order by r.recordCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -162,8 +162,8 @@
         <if test="checkin.userName != null and checkin.userName != ''">
             and c.userName like concat('%',#{checkin.userName},'%')
         </if>
-        <if test="checkin.userPhone != null and checkin.userPhone != ''">
-            and c.userPhone like concat('%',#{checkin.userPhone},'%')
+        <if test="checkin.carPlate != null and checkin.carPlate != ''">
+            and c.carPlate like concat('%',#{checkin.carPlate},'%')
         </if>
         <if test="startTime != null and startTime != ''">
             and r.startTime = #{startTime}

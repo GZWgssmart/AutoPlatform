@@ -87,9 +87,6 @@
                     <input type="text" id="searchCarPlate" name="carPlate" class="form-control" placeholder="请输入车牌号码">
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" id="searchStartTime" name="startTime" readonly class="form-control searchStartTime" placeholder="开始时间">
-                </div>
-                <div class="col-sm-2">
                     <select class="js-example-tags form-control" id="searchMaintainOrFix" name="maintainOrFix">
                         <option value="all">维修&nbsp;&&nbsp;保养</option>
                         <option value="维修">维修</option>
@@ -119,6 +116,19 @@
                     <i class="glyphicon glyphicon-pencil"></i> 修改
                 </button>
             </a>
+
+            <a>
+                <button onclick="showAddDetailWin();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-glass"></i> 生成明细
+                </button>
+            </a>
+
+            <a>
+                <button onclick="showDetailWin();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看明细
+                </button>
+            </a>
+
             <a>
                 <button onclick="searchStatus('/record/pager?status=Y');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看可用记录
@@ -137,18 +147,6 @@
             <a>
                 <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
                     <i class="glyphicon glyphicon-search"></i> 查询
-                </button>
-            </a>
-
-            <a>
-                <button onclick="showAddDetailWin();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-glass"></i> 生成明细
-                </button>
-            </a>
-
-            <a>
-                <button onclick="showDetailWin();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看明细
                 </button>
             </a>
 

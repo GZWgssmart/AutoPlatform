@@ -14,7 +14,6 @@ $(document).ready(function () {
     destoryValidator("editDetailWin", "editDetailForm");
 
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
-    initDateTimePicker("searchStartTime", "");
 
 });
 
@@ -300,12 +299,11 @@ function determineMaintainOrFix(tableId, winId, message) {
 /** 根据条件搜索 */
 function searchCondition() {
     var userName = $("#searchUserName").val();
-    var userPhone = $("#searchUserPhone").val();
-    var startTime = $("#searchStartTime").val();
+    var carPlate = $("#searchCarPlate").val();
     var maintainOrFix = $("#searchMaintainOrFix").val();
     var companyId = $("#searchCompanyId").val();
     if (companyId != null && companyId != "") {
-        initTable("cusTable", "/record/condition_pager?userName=" + userName + "&userPhone=" + userPhone + "&startTime=" + startTime + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
+        initTable("cusTable", "/record/condition_pager?userName=" + userName + "&carPlate=" + carPlate + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
     } else {
         swal("错误提示", "请选择一家汽修公司", "error");
     }

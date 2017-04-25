@@ -68,18 +68,17 @@ public class RecordController {
     @ResponseBody
     @RequestMapping(value = "condition_pager", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> queryPagerByCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
-                                                       @Param("userName")String userName, @Param("userPhone")String userPhone,
-                                                       @Param("startTime")Date startTime, @Param("maintainOrFix")String maintainOrFix,
+                                                       @Param("userName")String userName, @Param("carPlate")String carPlate,
+                                                       @Param("maintainOrFix")String maintainOrFix,
                                                        @Param("companyId")String companyId) {
         logger.info("根据条件分页查询维修保养记录");
         MaintainRecord record = new MaintainRecord();
         Checkin checkin = new Checkin();
         checkin.setUserName(userName);
-        checkin.setUserPhone(userPhone);
+        checkin.setCarPlate(carPlate);
         checkin.setMaintainOrFix(maintainOrFix);
         record.setCheckin(checkin);
         record.setCompanyId(companyId);
-        record.setStartTime(startTime);
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
