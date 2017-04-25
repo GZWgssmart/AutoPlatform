@@ -247,8 +247,6 @@ function formSubmit(url, formId, winId) {
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
                 $('#' + formId).data('bootstrapValidator').resetForm(true);
-                $("#" + formId).data('bootstrapValidator').destroy();
-                $('#' + formId).data('bootstrapValidator', null);
             } else if (data.result == "fail") {
                 swal(data.message, "", "error");
             }
@@ -293,6 +291,14 @@ function showSearchForm() {
 function closeSearchForm() {
     $("#searchDiv").hide();
     $("#showButton").show();
+}
+
+/** 当窗口隐藏时销毁验证 */
+function destoryValidator(winId, formId) {
+    $('#' + winId).on('hidden.bs.modal', function() {
+        $("#" + formId).data('bootstrapValidator').destroy();
+        $('#' + formId).data('bootstrapValidator', null);
+    });
 }
 
 
