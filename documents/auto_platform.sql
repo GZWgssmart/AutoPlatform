@@ -357,7 +357,7 @@ DROP TABLE IF EXISTS `t_material_return`;
 
 CREATE TABLE `t_material_return` (
   `materialReturnId` varchar(36) NOT NULL COMMENT '退料记录编号，UUID,主键',
-  `matainRecordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
+  `recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
   `accId` varchar(36) DEFAULT NULL COMMENT '配件编号，来源于t_accessories表',
   `accCount` int(11) DEFAULT NULL COMMENT '退料数量',
   `mrCreatedDate` datetime DEFAULT NULL COMMENT '退料记录创建时间',
@@ -371,7 +371,7 @@ DROP TABLE IF EXISTS `t_material_use`;
 
 CREATE TABLE `t_material_use` (
   `materialUseId` varchar(36) NOT NULL COMMENT '领料记录编号，UUID,主键',
-  `matainRecordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
+  `recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
   `accId` varchar(36) DEFAULT NULL COMMENT '配件编号，来源于t_accessories表',
   `accCount` int(11) DEFAULT NULL COMMENT '领料数量',
   `muCreatedTime` datetime DEFAULT NULL COMMENT '领料记录创建时间',
