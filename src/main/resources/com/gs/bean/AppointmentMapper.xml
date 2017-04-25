@@ -127,13 +127,13 @@
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
-
+			update t_appointment set appoitmentStatus = 'N' where appointmentId = #{id}
 		]]>
 	</update>
 
 	<update id="active" parameterType="string">
 		<![CDATA[
-
+			update t_appointment set appoitmentStatus = 'Y' where appointmentId = #{id}
 		]]>
 	</update>
 

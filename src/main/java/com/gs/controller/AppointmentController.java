@@ -71,21 +71,20 @@ public class AppointmentController {
         logger.info("更新预约");
         appointment.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
         appointmentService.update(appointment);
-        System.out.print(appointment);
         return ControllerResult.getSuccessResult("更新成功");
     }
 
     @ResponseBody
-    @RequestMapping(value="update_status", method=RequestMethod.POST)
-    public ControllerResult updateStatus(@Param("id") String id, @Param("status")String status){
-        logger.info("更新预约状态");
-        if(status.equals("Y")){
-            appointmentService.active(id);
-        }else if(status.equals("N")){
-            appointmentService.inactive(id);
+    @RequestMapping(value="update_status", method=RequestMethod.GET)
+    public ControllerResult updateAppointmentStatus(String appointmentId,String status){
+            logger.info("更新预约状态");
+            if (status.equals("Y")) {
+                appointmentService.inactive(appointmentId);
+            } else {
+                appointmentService.active(appointmentId);
+            }
+            return ControllerResult.getSuccessResult("更新成功");
         }
-        return ControllerResult.getSuccessResult("更新成功");
-    }
 
     @ResponseBody
     @RequestMapping(value = "appointment_all", method = RequestMethod.GET)
