@@ -156,7 +156,31 @@
     </select>
 
     <select id="countByAccName" resultType="int">
-        select count(accName) from auto_platform.t_accessories_buy ac left join t_accessories acc on
+        select count(*) from
+        auto_platform.t_accessories_buy ab
+        left join
+        auto_platform.t_accessories ac
+        on
+        ab.accId = ac.accId where 1 = 1
+        <if test="accName != null and accName  != '' ">
+            and ac.accName like concat(concat('%',#{accName}),'%')
+        </if>
     </select>
+
+    <select id="queryByAccNamePager" resultType="list" resultMap="accessoriesBuyResultMap">
+        select * from
+        auto_platform.t_accessories_buy ab
+        left join
+        auto_platform.t_accessories ac
+        on
+        ab.accId = ac.accId where 1= 1
+        <if test="accName != null and accName  != '' ">
+            and ac.accName like concat(concat('%',#{accName}),'%')
+        </if>
+        order by ac.accBuyedTime Desc
+        limit
+        #{pager.beginIndex},#{pager.pageSize}
+    </select>
+
 
 </mapper>

@@ -31,5 +31,6 @@ public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy> {
 
     public int countByAccName(@Param("accName") String accName);
 
-    public List<AccessoriesBuy> queryByAccNamePager(Pager pager);
+    public List<AccessoriesBuy> queryByAccNamePager(@Param("pager")Pager pager,@Param("accName")String accName );
+
 }

@@ -197,12 +197,7 @@ function allBuys() {
 function byAccNameSearch(accName) {
     var accName = $("#sAccName").val();
     if (accName != "") {
-        $.post("/accessoriesBuy/byAccNameSearch?accName=" + accName, function (data) {
-            if (data.result == "success") {
-                initTable("cusTable", "/accessoriesBuy/byAccNameSearch");
-                $("#cusTable").bootstrapTable("refresh");
-            }
-        });
+        initTable("cusTable", "/accessoriesBuy/byAccNameSearch?accName" + accName);
     } else {
         swal("请输入查询字段", "", "warning");
     }

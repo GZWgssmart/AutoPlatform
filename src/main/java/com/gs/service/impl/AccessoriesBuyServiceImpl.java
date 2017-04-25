@@ -111,7 +111,9 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
         return accessoriesBuyDAO.countByAccName(accName);
     }
 
-    public List<AccessoriesBuy> queryByAccNamePager(Pager pager) {
-        return accessoriesBuyDAO.queryByAccNamePager(pager);
+    public List<AccessoriesBuy> queryByAccNamePager(Pager pager, String accName) {
+        return accessoriesBuyDAO.queryByAccNamePager(pager, accName);
     }
+
+
 }
