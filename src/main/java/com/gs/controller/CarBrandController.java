@@ -88,4 +88,19 @@ public class CarBrandController {
         logger.info("根据id查询品牌名称");
         return carBrandService.queryNameById(brandId);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "brandStatusModify" , method = RequestMethod.GET)
+    public ControllerResult brandStatusModify(@Param("id") String id,@Param("status") String status){
+        if(status.equals("Y")){
+            logger.info("品牌冻结成功");
+            carBrandService.inactive(id);
+            return ControllerResult.getSuccessResult("品牌冻结成功");
+        }else if(status.equals("N")){
+            carBrandService.active(id);
+            return ControllerResult.getSuccessResult("品牌激活成功");
+        }
+        return ControllerResult.getFailResult("品牌冻结失败");
+    }
+
 }

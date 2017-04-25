@@ -32,24 +32,21 @@
             <th data-field="brandDes" >
                 汽车品牌描述
             </th>
-            <th data-field="brandStatus" data-formatter="operateFormatter">
+            <th data-field="brandStatus" data-formatter="status">
                 汽车品牌状态
+            </th>
+            <th data-field="co" data-formatter="operating" data-events="operateEvents">
+                操作
             </th>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a href="#addWin" data-toggle="modal"><button type="button" id="add" class="btn btn-default" >
+            <a><button type="button" onclick="showAddWin();" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
-            <a><button onclick="EditStatus();" type="button" id="status" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 激活
-            </button></a>
-            <a><button onclick="StatusIncomeing();" type="button"  class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 冻结
             </button></a>
         </div>
         </tbody>
@@ -66,7 +63,7 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改汽车品牌</h3>
-                        <form role="form" id="updateForm" >
+                        <form role="form" id="editForm" >
                             <input type="hidden" attr="carBrand.brandId" name="brandId" id = "id"/>
                             <input type="hidden" attr="carBrand.brandStatus" name="brandStatus"/>
                             <div class="form-group">
@@ -81,7 +78,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="updateProduct()">
+                                <input type="button" class="btn btn-primary" value="修改" onclick="edit()">
                                 </input>
                             </div>
                         </form>
@@ -113,8 +110,9 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="submit" class="btn btn-primary" value="添加">
+                                <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="添加">
                                 </input>
+                                <input type="reset" name="reset" style="display: none;" />
                             </div>
                         </form>
                     </div>

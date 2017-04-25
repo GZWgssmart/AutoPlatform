@@ -16,64 +16,29 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
-        $("#updateForm").fill(product);
+        validator("editForm");
+        $("#editForm").fill(product);
         $("#editWin").modal('show');
     }
 }
 
-
-/**提交编辑数据 */
-function updateProduct() {
-    $.post("/carPlate/uploadCarPlate",
-        $("#updateForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#editWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            } else if (data.result == "fail") {
-                swal(data.message, "", "error");
-            }
-        }, "json");
+function showAddWin(){
+    validator("addForm");
+    $("#addWin").modal('show');
 }
 
-/**提交添加数据 */
-function addProduct() {
-    $.post("/carPlate/insertCarPlate",
-        $("#addForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#addWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            } else if (data.result == "fail") {
-                swal(data.message, "", "error");
-            }
-        }, "json");
-}
 
-function operateFormatter(value, row, index) {
-    if (row.plateStatus == 'Y') {
-        return [
-            '可用'
-        ].join('');
-    } else {
-        return [
-            '不可用'
-        ].join('');
-    }
-}
 
 function operating(value, row, index) {
     if (row.plateStatus == 'Y') {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm btn-danger" >冻结</button>',
-            '<button type="button" onclick="showEditWin()" class="btn btn-default btn-sm btn-primary ">编辑</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm btn-danger" >冻结</button>&nbsp;&nbsp;',
+            '<button type="button" class="showUpdateIncomingType1 btn btn-default btn-sm btn-primary ">编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm btn-success" >激活</button>',
-            '<button type="button" onclick="showEditWin()" class="btn btn-default btn-sm btn-primary ">编辑</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm btn-success" >激活</button>&nbsp;&nbsp;',
+            '<button type="button" class="showUpdateIncomingType1 btn btn-default btn-sm btn-primary ">编辑</button>'
         ].join('');
     }
 }
@@ -104,6 +69,12 @@ window.operateEvents = {
                     swal(data.message, "", "error");
                 }
             }, "json");
+    },
+    'click .showUpdateIncomingType1': function (e, value, row, index) {
+        var incomingType = row;
+        validator("editForm");
+        $("#editForm").fill(incomingType);
+        $("#editWin").modal('show');
     }
 }
 
@@ -129,7 +100,21 @@ function validator(formId) {
                         message: '车牌名称长度必须在2到4位之间'
                     }
                 }
+            },
+            plateDes: {
+                message: '车牌描述失败',
+                validators: {
+                    notEmpty: {
+                        message: '车牌描述不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 500,
+                        message: '车牌描述长度必须在1到500位之间'
+                    }
+                }
             }
+
 
 
         }
@@ -137,9 +122,9 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/incomingType/add_incomingType", formId, "addWin");
+                formSubmit("/carPlate/insertCarPlate", formId, "addWin");
             } else if (formId == "editForm") {
-                formSubmit("/incomingType/update_incomingType", formId, "editWin");
+                formSubmit("/carPlate/uploadCarPlate", formId, "editWin");
 
             }
         })

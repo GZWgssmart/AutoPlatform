@@ -9,6 +9,12 @@ $(document).ready(function () {
     $("#search").bind("click", initTable);
 });
 
+
+function showAddWin(){
+    validator("addForm");
+    $("#addWin").modal('show');
+}
+
 /** 编辑数据 */
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
@@ -17,74 +23,105 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
-        $("#updateForm").fill(product);
-        $("#addButton1").removeAttr("disabled");
+        $("#editForm").fill(product);
         $("#editWin").modal('show');
     }
 }
 
-/**提交编辑数据 */
-function updateProduct() {
-    $.post("/carBrand/uploadCarBrand",
-        $("#updateForm").serialize(),
-        function(data){
-            if(data.result == "success"){
-                $('#editWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            }else if(data.result == "fail"){
-                swal(data.message, "", "error");
-            }
-        },"json");
-
-}
-
-/**提交添加数据 */
-function addProduct() {
-    $.post("/carBrand/insertCarBrand",
-        $("#addForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#addWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            } else if (data.result == "fail") {
-                swal(data.message, "", "error");
-            }
-        }, "json");
-}
-function operateFormatter(value, row, index) {
+function operating(value, row, index) {
     if (row.brandStatus == 'Y') {
         return [
-            '可用'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm btn-danger" >冻结</button>&nbsp;&nbsp;',
+            '<button type="button" class="showUpdateIncomingType1 btn btn-default btn-sm btn-primary ">编辑</button>'
         ].join('');
-    }else{
+    } else {
         return [
-            '不可用'
+            '<button type="button" class="updateActive btn btn-default  btn-sm btn-success" >激活</button>&nbsp;&nbsp;',
+            '<button type="button" class="showUpdateIncomingType1 btn btn-default btn-sm btn-primary ">编辑</button>'
         ].join('');
     }
 }
 
-function StatusIncomeing() {
-    var rows = $("#cusTable").bootstrapTable('getSelections');
-    if (rows.length < 1) {
-        swal('冻结失败', "请选择一条或多条数据进行冻结", "error");
-    } else {
-        var ids = "";
-        for(var i = 0, len = rows.length; i < len; i++){
-            if(ids == ""){
-                ids = rows[i].id;
-            }else{
-                ids += ","+rows[i].id
-            }
-            if(ids != ""){
-                $.get(contextPath + "/carBrand/StatusInactive"+rows[0].ids,
-                    function(data){
-                        swal(data.message, "", "success");
-                        $('#cusTable').bootstrapTable('refresh');
-                    },"json");
-            }
-        }
-
+window.operateEvents = {
+    'click .updateActive': function (e, value, row, index) {
+        var Status = 'N';
+        $.get("/carBrand/brandStatusModify?id=" + row.brandId + "&status=" + Status,
+            function (data) {
+                if (data.result == "success") {
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            }, "json");
+    },
+    'click .updateInactive': function (e, value, row, index) {
+        var Status = 'Y';
+        $.get("/carBrand/brandStatusModify?id=" + row.brandId + "&status=" + Status,
+            function (data) {
+                if (data.result == "success") {
+                    // $('#addWin').modal('hide');
+                    // swal(data.message, "", "success");
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            }, "json");
+    },
+    'click .showUpdateIncomingType1': function (e, value, row, index) {
+        var incomingType = row;
+        validator("editForm");
+        $("#editForm").fill(incomingType);
+        $("#editWin").modal('show');
     }
+}
+
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            brandName: {
+                message: '品牌名称失败',
+                validators: {
+                    notEmpty: {
+                        message: '品牌名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 20,
+                        message: '品牌名称长度必须在2到4位之间'
+                    }
+                }
+            },
+            brandDes: {
+                message: '品牌描述失败',
+                validators: {
+                    notEmpty: {
+                        message: '品牌描述不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 500,
+                        message: '品牌描述长度必须在1到500位之间'
+                    }
+                }
+            }
+
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/carBrand/insertCarBrand", formId, "addWin");
+            } else if (formId == "editForm") {
+                formSubmit("/carBrand/uploadCarBrand", formId, "editWin");
+
+            }
+        })
+
 }
