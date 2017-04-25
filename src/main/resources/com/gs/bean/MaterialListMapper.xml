@@ -11,16 +11,7 @@
 		<result column="serviceEvaluate" property="serviceEvaluate"/>
 		<result column="trackUser" property="trackUser"/>
 		<result column="trackCreatedTime" property="trackCreatedTime"/>
-		<!--管理员Id-->
-		<association property="admin" javaType="com.gs.bean.User">
-			<id column="adminId" property="userId"/>
-			<result column="adminName" property="userName"/>
-		</association>
-		<!--客户Id-->
-		<association property="customer" javaType="com.gs.bean.User">
-			<id column="customerId" property="userId"/>
-			<result column="customerName" property="userName"/>
-		</association>
+
 	</resultMap>
 
 	<insert id="insert"  parameterType="materialList">
