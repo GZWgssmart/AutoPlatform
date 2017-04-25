@@ -84,6 +84,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "peopleInfo_update", method = RequestMethod.POST)
     public ControllerResult info_update(User user, MultipartFile file, HttpSession session, HttpServletRequest request) throws IOException {
         logger.info("信息修改");
+        System.out.println(file);
         if(file != null){
             String filePath =  FileUtil.uploadPath(session, UUID.randomUUID().toString()+"/"+file);
             System.out.println(filePath);

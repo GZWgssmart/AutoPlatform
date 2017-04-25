@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable", "/peopleManage/peopleInfo_pager");
+    initTable("cusTable", "/customer/customerInfo_pager");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 
@@ -62,7 +62,7 @@ function operateFormatter(value, row, index) {
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
         var userStatus = 'N';
-        $.get("/peopleManage/peopleInfo_status?id=" + row.userId + "&status=" + userStatus,
+        $.get("/customer/customerInfo_status?id=" + row.userId + "&status=" + userStatus,
             function (data) {
                 if (data.result == "success") {
 
@@ -74,7 +74,7 @@ window.operateEvents = {
     },
     'click .updateInactive': function (e, value, row, index) {
         var userStatus = 'Y';
-        $.get("/peopleManage/peopleInfo_status?id=" + row.userId + "&status=" + userStatus,
+        $.get("/customer/customerInfo_status?id=" + row.userId + "&status=" + userStatus,
             function (data) {
                 if (data.result == "success") {
                     $('#addWin').modal('hide');
@@ -260,13 +260,13 @@ function validator(formId) {
     })
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/peopleManage/peopleInfo_insert", formId, "addWin");
+                formSubmit("/customer/customerInfo_insert", formId, "addWin");
 
             } else if (formId == "editForm") {
-                formSubmit("/peopleManage/peopleInfo_update", formId, "editWin");
+                formSubmit("/customer/customerInfo_update", formId, "editWin");
             } else if(formId == 'editModal'){
                // outFormData(document.getElementById('editModal'));
-                formSubmit("/peopleManage/peopleInfo_update", formId, "myModal");
+                formSubmit("/customer/customerInfo_update", formId, "myModal");
             }
 
 
