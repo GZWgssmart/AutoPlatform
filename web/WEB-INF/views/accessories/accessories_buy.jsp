@@ -13,11 +13,13 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
+          type="text/css">
 
 </head>
 <body>
 <div class="container">
+
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
            data-show-refresh="true"
@@ -36,8 +38,9 @@
             <th data-field="accBuyTotal">采购总价</th>
             <th data-field="accUnit">计量单位</th>
             <th data-field="accBuyMoney">采购最终价</th>
-            <th data-field="accBuyStatus" data-formatter="status">采购状态</th>
-            <th data-formatter="operateFormatter" data-events="operateEvents">操作</th>
+            <th data-field="accBuyCheck" data-formatter="fmtCheckState">审核状态</th>
+            <th data-field="accBuyStatus" data-formatter="fmtBuyState">采购状态</th>
+            <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
         </tr>
         </thead>
         <tbody>
@@ -47,9 +50,16 @@
                     <i class="glyphicon glyphicon-plus"></i> 添加
                 </button>
             </a>
+
             <a>
                 <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                     <i class="glyphicon glyphicon-pencil"></i> 修改
+                </button>
+            </a>
+
+            <a>
+                <button onclick="delteleBuy();" type="button" id="remove" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-trash"></i> 删除
                 </button>
             </a>
 
@@ -69,6 +79,7 @@
                         <h3 class="m-t-none m-b">修改采购信息</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" attr="accBuyId" name="accBuyId"/>
+                            <input type="hidden" attr="accessoriesBuy.accessories.accId" name="accessories.accId"/>
                             <div class="form-group">
                                 <label>配件名称：</label>
                                 <input type="text" name="accessories.accName" attr="accessoriesBuy.accessories.accName"
@@ -112,7 +123,8 @@
                             <div class="form-group">
                                 <label>采购时间：</label>
                                 <input size="16" type="text" name="accBuyTime" readonly
-                                       class="form_datetime form-control " attr="accessoriesBuy.accBuyTime" id="buyTime">
+                                       class="form_datetime form-control " attr="accessoriesBuy.accBuyTime"
+                                       id="buyTime">
                             </div>
 
                             <div class="form-group">
@@ -156,11 +168,11 @@
                             <div class="form-group">
                                 <label>是否从库存中添加：</label>
                                 <input type="checkbox" id="isAcc" name="isAcc">
-                                <input type="button" class="btn btn-primary" id="accSelect" value="从已有库存中选择"  onclick="showAccessories()">
                             </div>
                             <div class="form-group">
                                 <p><label>配件名称：</label></p>
-                                <input type="text" name="accessories.accName" class="form-control" id="accName" attr="acc.accName"/>
+                                <input type="text" name="accessories.accName" class="form-control" id="accName"
+                                       attr="acc.accName"/>
                             </div>
 
                             <div class="form-group">
@@ -175,12 +187,14 @@
 
                             <div class="form-group">
                                 <label>数量：</label>
-                                <input type="text" name="accBuyCount" id="accBuyCount" attr="acc.accTotal" class="form-control"/>
+                                <input type="text" name="accBuyCount" id="accBuyCount" attr="acc.accTotal"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>单价：</label>
-                                <input type="text" name="accBuyPrice" id="accBuyPrice" attr="acc.accPrice" class="form-control"/>
+                                <input type="text" name="accBuyPrice" id="accBuyPrice" attr="acc.accPrice"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -190,12 +204,13 @@
 
                             <div class="form-group">
                                 <label>配件供应商：</label>
-                                <input type="text" name=""  class="form-control"/>
+                                <input type="text" name="" class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>采购时间：</label>
-                                <input size="16" type="text" id="accBuyTime" name="accBuyTime" readonly class="form_datetime form-control ">
+                                <input size="16" type="text" id="accBuyTime" name="accBuyTime" readonly
+                                       class="form_datetime form-control ">
                             </div>
 
                             <div class="form-group">
@@ -207,7 +222,6 @@
                                 <label>最终价：</label>
                                 <input type="text" name="accBuyMoney" id="accBuyMoney" class="form-control"/>
                             </div>
-
 
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -224,7 +238,8 @@
 </div>
 
 
-<div id="accWin" class="modal fade " data-backdrop="static" aria-hidden="true" style="overflow:scroll" data-keyboard="true">
+<div id="accWin" class="modal fade " aria-hidden="true" style="overflow:scroll"
+     data-keyboard="true">
     <div class="modal-dialog" style="width: 90%;">
         <div class="modal-content">
             <div class="modal-body">

@@ -61,6 +61,7 @@ public class AccessoriesBuyController {
             accessoriesBuy.setAccId(accessoriesBuy.getAccId());
             accessoriesBuyService.insert(accessoriesBuy);
             accessoriesService.insert(acc);
+            return ControllerResult.getSuccessResult("添加成功");
         } else if (state.equals("false")) { // 如果为false采购添加
             System.out.println("采购添加");
             acc.setAccId(UUIDUtil.uuid());
@@ -70,22 +71,8 @@ public class AccessoriesBuyController {
             accessoriesBuy.setAccId(acc.getAccId());
             accessoriesBuyService.insert(accessoriesBuy);
             accessoriesService.insert(acc);
+            return ControllerResult.getSuccessResult("添加成功");
         }
-//        Accessories accessories = accessoriesService.queryById(accessoriesBuy.getAccId());
-//        accessories.setAccIdle(accessories.getAccIdle() + accessoriesBuy.getAccBuyCount());
-//        accessoriesService.update(accessories);
-   /*
-        Accessories accessories = new Accessories();
-        accessories.setAccId(accessoriesBuy.getAccId());
-        accessories.setAccUnit(accessoriesBuy.getAccUnit());
-        accessories.setAccName(accessoriesBuy.getAccessories().getAccName());
-        accessories.setAccBuyedTime(accessoriesBuy.getAccBuyTime());
-        accessories.setAccPrice(accessoriesBuy.getAccBuyPrice());
-        accessoriesService.insert(accessories);*/
-
-
-//        accessoriesBuyService.insert(accessoriesBuy);
-
         return ControllerResult.getSuccessResult("添加成功");
     }
 
@@ -124,11 +111,29 @@ public class AccessoriesBuyController {
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateAccessoriesBuyInfo(AccessoriesBuy accessoriesBuy) {
-        Accessories acc = new Accessories();
-        accessoriesBuyService.update(accessoriesBuy);
+        Accessories acc = accessoriesBuy.getAccessories();
+        acc.setAccIdle(accessoriesBuy.getAccBuyCount() + acc.getAccIdle());
         acc.setAccUnit(accessoriesBuy.getAccUnit());
+        accessoriesBuyService.update(accessoriesBuy);
         accessoriesService.update(acc);
         return ControllerResult.getSuccessResult("更新成功");
     }
 
+    @ResponseBody
+    @RequestMapping(value = "remove", method = RequestMethod.GET)
+    public ControllerResult remove(@Param("id") String id, @Param("status") String status) {
+        if (status.equals("N")) {
+            return ControllerResult.getFailResult("采购信息正在审核中，无法删除");
+        } else {
+            accessoriesBuyService.deleteById(id);
+            return ControllerResult.getSuccessResult("删除成功");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "batchDelete", method = RequestMethod.GET)
+    public ControllerResult batchDelete(@Param("accBuyArr") String[] accBuyArr) {
+        accessoriesBuyService.batchDeleteAcc(accBuyArr);
+        return ControllerResult.getSuccessResult("删除成功");
+    }
 }

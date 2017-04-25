@@ -22,34 +22,10 @@ public class AccessoriesBuy {
     private String accBuyStatus; // 购买状态
     private String accId; // 配件ID
     private String companyId; // 公司ID
+    private String accBuyCheck; // 审核状态
 
     private Accessories accessories; // 关联配件表
     private Company company; // 关联公司表
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public String getAccId() {
-        return accId;
-    }
-
-    public void setAccId(String accId) {
-        this.accId = accId;
-    }
-
-
-    public Accessories getAccessories() {
-        return accessories;
-    }
-
-    public void setAccessories(Accessories accessories) {
-        this.accessories = accessories;
-    }
 
     public String getAccBuyId() {
         return accBuyId;
@@ -123,6 +99,22 @@ public class AccessoriesBuy {
         this.accBuyCreatedTime = accBuyCreatedTime;
     }
 
+    public String getAccBuyStatus() {
+        return accBuyStatus;
+    }
+
+    public void setAccBuyStatus(String accBuyStatus) {
+        this.accBuyStatus = accBuyStatus;
+    }
+
+    public String getAccId() {
+        return accId;
+    }
+
+    public void setAccId(String accId) {
+        this.accId = accId;
+    }
+
     public String getCompanyId() {
         return companyId;
     }
@@ -131,12 +123,28 @@ public class AccessoriesBuy {
         this.companyId = companyId;
     }
 
-    public String getAccBuyStatus() {
-        return accBuyStatus;
+    public String getAccBuyCheck() {
+        return accBuyCheck;
     }
 
-    public void setAccBuyStatus(String accBuyStatus) {
-        this.accBuyStatus = accBuyStatus;
+    public void setAccBuyCheck(String accBuyCheck) {
+        this.accBuyCheck = accBuyCheck;
+    }
+
+    public Accessories getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(Accessories accessories) {
+        this.accessories = accessories;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     @Override
@@ -154,6 +162,7 @@ public class AccessoriesBuy {
                 ", accBuyStatus='" + accBuyStatus + '\'' +
                 ", accId='" + accId + '\'' +
                 ", companyId='" + companyId + '\'' +
+                ", accBuyCheck='" + accBuyCheck + '\'' +
                 ", accessories=" + accessories +
                 ", company=" + company +
                 '}';

@@ -16,6 +16,7 @@
         <result property="accBuyCreatedTime" column="accBuyCreatedTime"/>
         <result property="companyId" column="companyId"/>
         <result property="accBuyStatus" column="accBuyStatus"/>
+        <result property="accBuyCheck" column="accBuyCheck"/>
 
         <association property="accessories" javaType="com.gs.bean.Accessories">
             <id property="accId" column="accId"/>
@@ -60,16 +61,19 @@
 	</delete>
 
     <delete id="deleteById" parameterType="string">
-		<![CDATA[
-
-        ]]>
+		delete from auto_platform.t_accessories_buy where accBuyId = #{id}
 	</delete>
 
     <delete id="batchDelete" parameterType="list">
-		<![CDATA[
 
-        ]]>
-	</delete>
+    </delete>
+
+    <delete id="batchDeleteAcc">
+        delete from auto_platform.t_accessories_buy where accBuyId in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 
     <update id="update" parameterType="accessoriesBuy">
 		update
@@ -104,7 +108,8 @@
 		select * from auto_platform.t_accessories_buy where accBuyId = #{id}
 	</select>
 
-    <select id="queryByPager" resultType="list" resultMap="accessoriesBuyResultMap" parameterType="com.gs.common.bean.Pager">
+    <select id="queryByPager" resultType="list" resultMap="accessoriesBuyResultMap"
+            parameterType="com.gs.common.bean.Pager">
 		select * from
 		auto_platform.t_accessories_buy ab
 		left join
