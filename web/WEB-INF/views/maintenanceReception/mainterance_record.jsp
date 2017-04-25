@@ -97,7 +97,8 @@
                     <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
                     </select>
                 </div>
-
+                <div class="col-sm-2">
+                </div>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchCondition()" class="btn btn-primary">
                         查询

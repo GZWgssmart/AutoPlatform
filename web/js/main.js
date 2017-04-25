@@ -29,7 +29,7 @@ function initSelect2(clazz, title, url, width) {
 }
 
 /** 初始化DatatimePicker */
-function initDateTimePicker(clazz, name) {
+function initDateTimePicker(clazz, name, formId) {
     $('.' + clazz).datetimepicker({
         language: 'zh-CN',
         format: 'yyyy-mm-dd hh:ii',
@@ -38,7 +38,7 @@ function initDateTimePicker(clazz, name) {
         todayHighlight: true,
         todayBtn: true//显示今日按钮
     }).on('hide',function(e) {
-        $('#addForm').data('bootstrapValidator')
+        $('#' + formId).data('bootstrapValidator')
             .updateStatus(name, 'NOT_VALIDATED',null)
             .validateField(name);
     });;

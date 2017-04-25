@@ -12,7 +12,8 @@ $(document).ready(function () {
 
     initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "540");
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
-    initDateTimePicker("datetimepicker", "arriveTime");
+    initDateTimePicker("datetimepicker", "arriveTime", "addForm");
+    initDateTimePicker("datetimepicker", "arriveTime", "editForm");
 
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin", "editForm");
