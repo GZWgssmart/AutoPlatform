@@ -58,6 +58,14 @@ public class MaintainDetailController {
         return new Pager4EasyUI<MaintainDetail>(pager.getTotalRecords(), maintainDetails);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public ControllerResult editMaintainDetail(MaintainDetail detail) {
+        logger.info("修改维修保养明细记录");
+        detailService.update(detail);
+        return ControllerResult.getSuccessResult("修改成功");
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");

@@ -76,6 +76,7 @@ function showEditWin() {
 function validator(formId) {
     $("#editButton").removeAttr("disabled");
     $("#detailButton").removeAttr("disabled");
+    $("#editDetailButton").removeAttr("disabled");
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -133,6 +134,10 @@ function validator(formId) {
                 formSubmit("/record/edit", formId, "editWin");
             } else if (formId == "detailForm") {
                 formSubmit("/detail/add", formId, "detailWin");
+            } else if (formId == "editDetailForm") {
+                formSubmit("/detail/edit", formId, "editDetailWin");
+                $('#detailTable').bootstrapTable('refresh');
+                $("#searchDetailWin").modal('show');
             }
 
         })
@@ -179,6 +184,7 @@ function showDetailWin() {
 
 /** 显示修改保养明细详情的窗口 */
 function showEditDetailWin() {
+    validator("editDetailForm");
     var selectRow = $("#detailTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('错误提示', "只能选择一条数据修改", "error");
@@ -186,7 +192,7 @@ function showEditDetailWin() {
     } else {
         var detail = selectRow[0];
         $("#editDetailForm").fill(detail);
-        $('#editDetailMaintain').html('<option value="' + detail.maintainId + '">' + detail.maintain.maintainName + '</option>').trigger("change");
+        $('#editDetailMaintain').html('<option value="' + detail.maintain.maintainId + '">' + detail.maintain.maintainName + '</option>').trigger("change");
         $("#searchDetailWin").modal('hide');
         $("#editDetailWin").modal('show');
     }

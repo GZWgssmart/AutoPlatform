@@ -258,6 +258,7 @@
                         <h3 class="m-t-none m-b">修改维修保养记录</h3>
                         <form role="form" id="editDetailForm">
                             <input type="hidden" attr="detail.detailId" name="detailId" class="form-control"/>
+                            <input type="text" attr="detail.record.recordId" name="recordId" class="form-control"/>
                             <div class="form-group">
                                 <label>车主姓名：</label>
                                 <input readonly type="text" attr="detail.record.checkin.userName" class="form-control"/>

@@ -60,7 +60,7 @@
 
 	<update id="update" parameterType="maintainDetail">
 		<![CDATA[
-
+        	update t_maintain_detail set recordId = #{recordId}, maintainId = #{maintainId}, maintainDiscount = #{maintainDiscount}, detailCreatedTime = now() where detailId = #{detailId}
 		]]>
 	</update>
 
