@@ -278,13 +278,12 @@ CREATE TABLE `t_maintain_detail` (
 /*维修保养项目表*/
 
 DROP TABLE IF EXISTS `t_maintain_fix`;
-
 CREATE TABLE `t_maintain_fix` (
   `maintainId` varchar(36) NOT NULL COMMENT '维修保养项目编号',
   `maintainName` varchar(50) NOT NULL COMMENT '维修保养项目名称',
-  `maintainHour` double NOT NULL COMMENT '维修保养项目工时',
-  `maintainMoney` double NOT NULL COMMENT '维修保养项目基础费用',
-  `maintainManHourFee` double NOT NULL COMMENT '维修保养项目工时费',
+  `maintainHour` double(255,2) NOT NULL COMMENT '维修保养项目工时',
+  `maintainMoney` double(255,2) NOT NULL COMMENT '维修保养项目基础费用',
+  `maintainManHourFee` double(255,2) NOT NULL COMMENT '维修保养项目工时费',
   `maintainOrFix` varchar(20) DEFAULT NULL COMMENT '标识是保养还是维修',
   `maintainDes` varchar(500) DEFAULT NULL COMMENT '维修保养项目描述',
   `companyId` varchar(36) DEFAULT NULL COMMENT '维修保养项目所属公司，来源于t_company表',
