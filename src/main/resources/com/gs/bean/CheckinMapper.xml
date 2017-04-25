@@ -128,7 +128,7 @@
 		limit #{beginIndex}, #{pageSize}
 	</select>
 
-	<select id="queryPagerByStatus" resultType="list" resultMap="checkinResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryPagerByStatus" resultType="list" resultMap="checkinResultMap">
 		<![CDATA[
 			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
 				from t_checkin c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy

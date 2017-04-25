@@ -147,17 +147,17 @@
                 </button>
             </a>
             <a>
-                <button onclick="searchStatus('Y');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/checkin/checkin_pager?status=Y');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看可用记录
                 </button>
             </a>
             <a>
-                <button onclick="searchStatus('N');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/checkin/checkin_pager?status=N');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看不可用记录
                 </button>
             </a>
             <a>
-                <button onclick="searchStatus('ALL');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/checkin/checkin_pager?status=ALL');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部
                 </button>
             </a>

@@ -1,6 +1,7 @@
 package com.gs.common.util;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -59,4 +60,21 @@ public class DateFormatUtil {
         return format(millis, DEFAULT_PATTERN);
     }
 
+    /**
+     * 将时间字符串转换为Date类型
+     * @param dateStr 时间类型的字符串
+     * @param formatStr 格式化的字符串 如 yyyy-MM-dd HH:mm:ss
+     * @return Date
+     */
+    public static Date StrToDate(String dateStr, String formatStr) {
+        Date date = null;
+        SimpleDateFormat formater = new SimpleDateFormat();
+        formater.applyPattern(formatStr);
+        try {
+            date = formater.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
 }

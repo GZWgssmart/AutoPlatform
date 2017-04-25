@@ -82,4 +82,19 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.active(id);
     }
 
+    public int countByStatus(String status) {
+        return maintainRecordDAO.countByStatus(status);
+    }
+
+    public List<MaintainRecord> queryPagerByStatus(Pager pager, String status) {
+        return maintainRecordDAO.queryPagerByStatus(pager, status);
+    }
+
+    public int countByCondition(MaintainRecord record) {
+        return maintainRecordDAO.countByCondition(record);
+    }
+
+    public List<MaintainRecord> queryPagerByCondition(Pager pager, MaintainRecord record) {
+        return maintainRecordDAO.queryPagerByCondition(pager, record);
+    }
 }

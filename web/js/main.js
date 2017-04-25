@@ -44,6 +44,18 @@ function initDateTimePicker(clazz, name) {
     });;
 }
 
+/** 初始化DatatimePicker，不需要验证的 */
+function initDateTimePickerNotValitor(clazz) {
+    $('.' + clazz).datetimepicker({
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd hh:ii',
+        initialDate: new Date(),
+        autoclose: true,
+        todayHighlight: true,
+        todayBtn: true//显示今日按钮
+    });
+}
+
 /** 初始化表格，默认id为toolbar的为工具栏 */
 function initTable(tableId, url) {
     //先销毁表格
@@ -299,6 +311,11 @@ function destoryValidator(winId, formId) {
         $("#" + formId).data('bootstrapValidator').destroy();
         $('#' + formId).data('bootstrapValidator', null);
     });
+}
+
+/** 状态根据状态搜索 */
+function searchStatus(url) {
+    initTable("cusTable", url);
 }
 
 

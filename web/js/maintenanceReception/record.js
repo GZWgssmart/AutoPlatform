@@ -3,15 +3,18 @@ var contextPath = '';
 
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable", "/record/pager");
+    initTable("cusTable", "/record/pager?status=ALL");
 
-    initDateTimePicker("datetimepicker", "");
+    initDateTimePickerNotValitor("datetimepicker");
 
     initSelect2("maintain_fix", "请选择维修保养项目", "/maintainFix/maintain_all", "540");
 
     destoryValidator("editWin", "editForm");
     destoryValidator("detailWin", "detailForm");
     destoryValidator("editDetailWin", "editDetailForm");
+
+    initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
+    initDateTimePicker("searchStartTime", "");
 
 });
 
@@ -76,6 +79,7 @@ function showEditWin() {
     }
 }
 
+var maintainMoney;
 /** 表单验证 */
 function validator(formId) {
     $("#editButton").removeAttr("disabled");
@@ -106,13 +110,26 @@ function validator(formId) {
                     numeric: {
                         message: '折扣或者减价只能是数字'
                     },
+                    regexp: {
+                        regexp: /^[\.0-9]+$/,
+                        message: '折扣或者减价不能小于等于0'
+                    },
                     callback: {
-                        message: '折扣或者减价不能小于等于0',
+                        message: "减价不能高于维修或保养的原价",
                         callback: function(value, validator) {
                             if (value <= 0) {
                                 return false;
                             } else {
-                                return true;
+                                if (maintainMoney == null || maintainMoney == "" || maintainMoney == undefined || maintainMoney == 0) {
+                                    return false;
+                                } else {
+                                    if (value <= maintainMoney) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+
                             }
 
                         }
@@ -173,11 +190,11 @@ function showAddDetailWin() {
         swal('错误提示', "只能选择一条数据生成维修保养明细", "error");
         return false;
     } else {
+        maintainMoney = 0;
         var record = selectRow[0];
         $("input[type=reset]").trigger("click");
         $("#detailForm").fill(record);
         $("#detailWin").modal('show');
-
     }
 }
 
@@ -257,35 +274,43 @@ function choiseMaintain() {
 
 /** 确定选择的保养项目 */
 function determineMaintain() {
-    var selectRow = $("#maintainTable").bootstrapTable('getSelections');
-    if (selectRow.length != 1) {
-        swal('错误提示', "只能选择一条保养项目", "error");
-        return false;
-    } else {
-        var maintain = selectRow[0];
-        $("#detailMaintainId").val(maintain.maintainId);
-        $("#detailMaintainName").val(maintain.maintainName);
-
-        $("#maintainWin").modal('hide');
-    }
+    determineMaintainOrFix("maintainTable", "maintainWin", "只能选择一条保养项目");
 }
 
 /** 确定选择的维修项目 */
 function determineFix() {
-    var selectRow = $("#fixTable").bootstrapTable('getSelections');
+    determineMaintainOrFix("fixTable", "fixWin", "只能选择一条保养项目");
+}
+
+/** 选择维修保养项目的公共方法 */
+function determineMaintainOrFix(tableId, winId, message) {
+    var selectRow = $("#" + tableId).bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('错误提示', "只能选择一条保养项目", "error");
+        swal('错误提示', message, "error");
         return false;
     } else {
         var maintain = selectRow[0];
         $("#detailMaintainId").val(maintain.maintainId);
         $("#detailMaintainName").val(maintain.maintainName);
-
-        $("#fixWin").modal('hide');
+        maintainMoney = maintain.maintainMoney;
+        $("#" + winId).modal('hide');
     }
 }
 
+/** 根据条件搜索 */
+function searchCondition() {
+    var userName = $("#searchUserName").val();
+    var userPhone = $("#searchUserPhone").val();
+    var startTime = $("#searchStartTime").val();
+    var maintainOrFix = $("#searchMaintainOrFix").val();
+    var companyId = $("#searchCompanyId").val();
+    if (companyId != null && companyId != "") {
+        initTable("cusTable", "/record/condition_pager?userName=" + userName + "&userPhone=" + userPhone + "&startTime=" + startTime + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
+    } else {
+        swal("错误提示", "请选择一家汽修公司", "error");
+    }
 
+}
 
 
 

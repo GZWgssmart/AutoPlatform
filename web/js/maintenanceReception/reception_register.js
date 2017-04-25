@@ -5,7 +5,7 @@ var appointment;
 
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable", "/checkin/checkin_pager?status=all");
+    initTable("cusTable", "/checkin/checkin_pager?status=ALL");
 
     initSelect2("car_brand", "请选择品牌", "/carBrand/car_brand_all", "540");
     initSelect2("car_color", "请选择颜色", "/carColor/car_color_all", "540");
@@ -389,15 +389,7 @@ function validator(formId) {
         })
 }
 
-/** 搜索状态 */
-function searchStatus(status) {
-    if (status == "ALL") {
-        initTable("cusTable", "/checkin/checkin_pager?status=all");
-    } else {
-        initTable("cusTable", "/checkin/checkin_pager?status=" + status);
-    }
-}
-
+/** 根据条件搜索 */
 function searchCheckin() {
     var userName = $("#searchUserName").val();
     var userPhone = $("#searchUserPhone").val();

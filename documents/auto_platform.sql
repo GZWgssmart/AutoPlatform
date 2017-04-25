@@ -522,10 +522,9 @@ CREATE TABLE `t_track_list` (
 /*用户表*/
 
 DROP TABLE IF EXISTS `t_user`;
-
 CREATE TABLE `t_user` (
   `userId` varchar(36) NOT NULL COMMENT '用户id',
-  `userEmail` varchar(100) NOT NULL COMMENT '用户邮箱',
+  `userEmail` varchar(100) DEFAULT NULL COMMENT '用户邮箱',
   `userPhone` varchar(11) NOT NULL COMMENT '用户手机号',
   `userPwd` varchar(100) NOT NULL COMMENT '用户登录密码',
   `userNickname` varchar(20) DEFAULT NULL COMMENT '用户昵称',
@@ -545,9 +544,10 @@ CREATE TABLE `t_user` (
   `userLoginedTime` datetime DEFAULT NULL COMMENT '用户最近一次登录时间',
   `userStatus` varchar(2) DEFAULT 'Y' COMMENT '用户状态',
   PRIMARY KEY (`userId`),
-  UNIQUE KEY `userEmail` (`userEmail`),
-  UNIQUE KEY `userPhone` (`userPhone`)
+  UNIQUE KEY `userPhone` (`userPhone`),
+  UNIQUE KEY `userEmail` (`userEmail`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 /*用户角色表*/
 

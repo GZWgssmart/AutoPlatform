@@ -6,11 +6,9 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.UUIDUtil;
-import com.gs.service.CarBrandService;
-import com.gs.service.CheckinService;
-import com.gs.service.MaintainRecordService;
-import com.gs.service.WorkInfoService;
+import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -49,6 +47,9 @@ public class CheckinController {
     @Resource
     private WorkInfoService workInfoService;
 
+    @Resource
+    private UserService userService;
+
     @RequestMapping(value = "checkin_page", method = RequestMethod.GET)
     public String checkinPage() {
         logger.info("访问登记页面");
@@ -63,7 +64,7 @@ public class CheckinController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         List<Checkin> checkins = new ArrayList<Checkin>();
-        if (status.equals("all")) {
+        if (status.equals("ALL")) {
             pager.setTotalRecords(checkinService.count());
             checkins = checkinService.queryByPager(pager);
         } else {
@@ -102,7 +103,9 @@ public class CheckinController {
     public ControllerResult addCheckin(Checkin checkin) {
         logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录和工单信息");
         String checkinId = UUIDUtil.uuid();
+        String userId = UUIDUtil.uuid();
         checkin.setCheckinId(checkinId);
+        checkin.setUserId(userId);
         checkin.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
 
         MaintainRecord maintainRecord = new MaintainRecord();
@@ -114,6 +117,15 @@ public class CheckinController {
 
         WorkInfo workInfo = new WorkInfo();
         workInfo.setRecordId(recordId);
+
+
+        User user = new User();
+        user.setUserId(userId);
+        user.setUserPhone(checkin.getUserPhone());
+        user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+        user.setUserName(checkin.getUserName());
+
+        userService.insert(user);
         workInfoService.insert(workInfo);
         maintainRecordService.insert(maintainRecord);
         checkinService.insert(checkin);
