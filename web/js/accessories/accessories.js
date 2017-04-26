@@ -1,6 +1,7 @@
 /**
  * Created by GOD on 2017/4/18.
  */
+var contextPath="";
 
 $(document).ready(function () {
     //调用函数，初始化表格

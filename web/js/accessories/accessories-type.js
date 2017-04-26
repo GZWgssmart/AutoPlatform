@@ -1,6 +1,7 @@
 /**
  * Created by GOD on 2017/4/17.
  */
+var contextPath="";
 
 $(document).ready(function () {
     //调用函数，初始化表格
@@ -32,14 +33,6 @@ function showAddWin() {
     $('#addCompany').html('').trigger("change");
     $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
-}
-
-function thisStatus(value, row, index) {
-    if (value == 'Y') {
-        return "可用";
-    } else {
-        return "不可用";
-    }
 }
 
 function operateFormatter(value, row, index) {
