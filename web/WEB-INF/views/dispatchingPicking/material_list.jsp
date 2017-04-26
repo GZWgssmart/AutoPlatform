@@ -6,11 +6,194 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+%>
 <html>
 <head>
     <title>物料清单</title>
+    <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
+
 </head>
 <body>
+
+<div class="container">
+    <form id="formSearch" class="form-horizontal">
+        <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+            <div class="col-sm-2">
+                <input size="16" type="text" readonly
+                       class="form_datetime form-control " id="createTimeStart" placeholder="请选择开始时间">
+                <span class="add-on"><i class="icon-remove"></i></span>
+            </div>
+            <div class="col-sm-2">
+                <input size="16" type="text" readonly
+                       class="form_datetime form-control " id="createTimeEnd" placeholder="请选择结束时间">
+            </div>
+
+            <div class="col-sm-2" style="margin-left: -15px;">
+                <input type="text" id="userName" class="form-control" placeholder="请车主名">
+            </div>
+
+            <div class="col-sm-2">
+                <button type="button" onclick="bySelectSearch()" class="btn btn-primary">
+                    查询
+                </button>
+                <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-hover" id="cusTable"
+           data-pagination="true"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-showColumns="true"
+           data-height="610">
+        <thead>
+        <tr>
+            <th data-field="state" data-checkbox="true"></th>
+            <th data-field="userName" >
+                车主名
+            </th>
+            <th data-field="userRequests" >
+                车主要求
+            </th>
+            <th data-field="maintainName" >
+                项目名
+            </th>
+            <th data-field="accName" >
+                配件名
+            </th>
+            <th data-field="materialCount" >
+                物料数量
+            </th>
+            <th data-field="maintainMoney" >
+                基本费用
+            </th>
+            <th data-field="materialCreatedTime" data-formatter="formatterDate" >
+                创建时间
+            </th>
+            <th data-field="materialStatus" data-formatter="status">
+                状态
+            </th>
+            <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
+                操作
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <div id="toolbar" class="btn-group">
+            <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
+                <i class="glyphicon glyphicon-plus"></i> 添加
+            </button></a>
+            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                <i class="glyphicon glyphicon-pencil"></i> 修改
+            </button></a>
+            <a><button onclick="queryAll()" type="button" class="btn btn-default" >
+                查询全部
+            </button></a>
+            <a><button onclick="queryStatus('Y')" type="button" class="btn btn-default" >
+                可用清单
+            </button></a>
+            <a><button onclick="queryStatus('N')" type="button" class="btn btn-default" >
+                不可用清单
+            </button></a>
+            <a><button onclick="showSearchForm();" type="button" class="btn btn-default">
+                条件查询
+            </button></a>
+        </div>
+        </tbody>
+
+    </table>
+</div>
+
+
+
+<div id="editWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">修改模块信息</h3>
+                        <form role="form" id="editForm" >
+                            <input type="hidden" attr="module.moduleId" name="moduleId" />
+                            <div class="form-group">
+                                <label class="control-label">模块名称：</label>
+                                <input type="text" attr="module.moduleName" name="moduleName"  class="form-control"/>
+
+                                <label>模块描述：</label>
+                                <textarea attr="module.moduleDes"  type="textarea" name="moduleDes" class="form-control"></textarea>
+                            </div>
+
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" onclick="edit()" id="editButton" class="btn btn-primary" value="修改">
+                                </input>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">添加模块</h3>
+                        <form role="form" id="addForm">
+                            <div class="form-group">
+                                <label class="control-label">模块名称：</label>
+                                <input type="text"   name="moduleName" class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>模块描述：</label>
+                                <textarea name="moduleDes" class="form-control"></textarea>
+                            </div>
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="添加">
+                                </input>
+                                <input type="reset" name="reset" style="display: none;" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%@ include file="../common/rightMenu.jsp" %>
+<script src="<%=path %>/js/contextmenu.js"></script>
+<script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrap.min.js"></script>
+<script src="<%=path %>/js/bootstrap-table.js"></script>
+<script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
+<script src="<%=path %>/js/sweet-alert.min.js"></script>
+<script src="<%=path %>/js/jquery.formFill.js"></script>
+<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
+<script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+<script src="<%=path %>/js/dispatchingPicking/materialList.js"></script>
+<script src="<%=path %>/js/accessories/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="<%=path %>/js/main.js"></script>
 
 </body>
 </html>
