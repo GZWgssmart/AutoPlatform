@@ -14,6 +14,9 @@ $(document).ready(function () {
     initSelect2("acc_company", "请选择公司", "/company/company_all", "565");
     initSelect2("acc_accessoriesType", "请选择配件类别", "/accessoriesType/accessoriesType_All", "565");
 
+    destoryValidator("addWin", "addForm");
+    destoryValidator("editWin", "editForm");
+
 });
 
 /**编辑数据 */

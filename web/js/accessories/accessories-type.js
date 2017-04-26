@@ -10,6 +10,9 @@ $(document).ready(function () {
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
     initSelect2("accType_company", "请选择公司", "/company/company_all", "565");
+
+    destoryValidator("addWin", "addForm");
+    destoryValidator("editWin", "editForm");
 });
 
 /**编辑数据 */

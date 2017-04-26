@@ -42,7 +42,7 @@
             <th data-field="company.companyName" >
                 配件分类所属公司
             </th>
-            <th data-field="accTypeStatus" data-formatter="thisStatus">
+            <th data-field="accTypeStatus" data-formatter="status">
                 状态
             </th>
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
