@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,13 +40,19 @@ public class SupplyTypeController {
 
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
-    public Pager4EasyUI<SupplyType> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+    public Pager4EasyUI<SupplyType> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("status")String status) {
         logger.info("分页查询供应商分类");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(supplyTypeService.count());
-        List<SupplyType> supplyTypes = supplyTypeService.queryByPager(pager);
+        List<SupplyType> supplyTypes = new ArrayList<SupplyType>();
+        if (status.equals("ALL")) {
+            pager.setTotalRecords(supplyTypeService.count());
+            supplyTypes = supplyTypeService.queryByPager(pager);
+        } else {
+            pager.setTotalRecords(supplyTypeService.countByStatus(status));
+            supplyTypes = supplyTypeService.queryPagerByStatus(pager, status);
+        }
         return new Pager4EasyUI<SupplyType>(pager.getTotalRecords(), supplyTypes);
     }
 

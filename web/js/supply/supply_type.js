@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable", "/supplyType/queryByPager");
+    initTable("cusTable", "/supplyType/queryByPager?status=ALL");
 
 });
 

@@ -84,15 +84,29 @@
 
 	<select id="queryByPager" resultType="list" resultMap="supplyTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-		select t.*, c.companyName from t_supply_type type, t_company c
-		where 1 = 1 and
+		select t.*, c.companyName from t_supply_type t, t_company c
+		where 1 = 1 and t.companyId = c.companyId
         ]]>
 		limit #{beginIndex}, #{pageSize}
+	</select>
+
+	<select id="queryPagerByStatus" resultType="list" resultMap="supplyTypeResultMap">
+		<![CDATA[
+		select t.*, c.companyName from t_supply_type t, t_company c
+		where 1 = 1 and t.companyId = c.companyId and supplyTypeStatus = #{status}
+        ]]>
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
 		select count(supplyTypeId) from t_supply_type where 1 = 1
+		]]>
+	</select>
+
+	<select id="countByStatus" resultType="int">
+		<![CDATA[
+		select count(supplyTypeId) from t_supply_type where supplyTypeStatus = #{status}
 		]]>
 	</select>
 

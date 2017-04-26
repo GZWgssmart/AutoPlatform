@@ -102,9 +102,23 @@
 		limit #{beginIndex}, #{pageSize}
 	</select>
 
+	<select id="queryPagerByStatus" resultType="list" resultMap="supplyResultMap">
+		<![CDATA[
+		select s.*, t.supplyTypeName, c.companyName from t_supply s, t_supply_type t, t_company c
+		where 1 = 1 and s.supplyTypeId = t.supplyTypeId and s.companyId = c.companyId and supplyStatus = #{status}
+		]]>
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
 	<select id="count" resultType="int">
 		<![CDATA[
 		select count(supplyId) from t_supply where 1 = 1
+		]]>
+	</select>
+
+	<select id="countByStatus" resultType="int">
+		<![CDATA[
+		select count(supplyId) from t_supply where supplyStatus = #{status}
 		]]>
 	</select>
 

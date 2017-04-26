@@ -40,13 +40,19 @@ public class SupplyController {
 
         @ResponseBody
         @RequestMapping("queryByPager")
-        public Pager4EasyUI<Supply> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
+        public Pager4EasyUI<Supply> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("status")String status) {
             logger.info("分页查询供应商分类");
             Pager pager = new Pager();
             pager.setPageNo(Integer.valueOf(pageNumber));
             pager.setPageSize(Integer.valueOf(pageSize));
-            pager.setTotalRecords(supplyService.count());
-            List<Supply> supplys = supplyService.queryByPager(pager);
+            List<Supply> supplys = new ArrayList<Supply>();
+            if (status.equals("ALL")) {
+                pager.setTotalRecords(supplyService.count());
+                supplys = supplyService.queryByPager(pager);
+            } else {
+                pager.setTotalRecords(supplyService.countByStatus(status));
+                supplys = supplyService.queryPagerByStatus(pager, status);
+            }
             return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
         }
 

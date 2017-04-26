@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.SupplyType;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,4 +38,12 @@ public class SupplyTypeServiceImpl implements SupplyTypeService {
 	public int inactive(String id) { return supplyTypeDAO.inactive(id); }
 	public int active(String id) { return supplyTypeDAO.active(id); }
 
+
+	public int countByStatus(String status) {
+		return supplyTypeDAO.countByStatus(status);
+	}
+
+	public List<SupplyType> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status) {
+		return supplyTypeDAO.queryPagerByStatus(pager, status);
+	}
 }
