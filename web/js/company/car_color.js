@@ -1,9 +1,7 @@
-/**
- * Created by root on 2017/4/18.
- */
+
 function showAddWin(){
-    validator("addForm");
     $("#addWin").modal('show');
+    validator("addForm");
     $("input[type=reset]").trigger("click");
 }
 $(document).ready(function () {
@@ -17,39 +15,9 @@ $(document).ready(function () {
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     var product = selectRow[0];
+    validator("editForm");
     $("#editForm").fill(product);
     $("#editWin").modal('show');
-}
-
-
-/**提交编辑数据 */
-function updateProduct() {
-    $.post("/carColor/uploadCarColor",
-        $("#editForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#editWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            } else if (data.result == "fail") {
-                swal(data.message, "", "error");
-            }
-        }, "json");
-}
-
-/**提交添加数据 */
-function addProduct() {
-    $.post("/carColor/insertCarColor",
-        $("#addForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#addWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            } else if (data.result == "fail") {
-                swal(data.message, "", "error");
-            }
-        }, "json");
 }
 
 /**
@@ -85,12 +53,12 @@ function colorFormatter(value, row, index) {
 function operating(value, row, index) {
     if (row.colorStatus == 'Y') {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm btn-danger" >冻结</button>',
+            '<button type="button" class="updateInactive btn btn-default  btn-sm btn-danger" >冻结</button>&nbsp;&nbsp;',
             '<button type="button" class="showUpdateIncomingType1 btn btn-default btn-sm btn-primary ">编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm btn-success" >激活</button>',
+            '<button type="button" class="updateActive btn btn-default  btn-sm btn-success" >激活</button>&nbsp;&nbsp;',
             '<button type="button" class="showUpdateIncomingType1 btn btn-default btn-sm btn-primary ">编辑</button>'
         ].join('');
     }
@@ -130,3 +98,98 @@ window.operateEvents = {
         $("#editWin").modal('show');
     }
 }
+
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            colorName: {
+                message: '颜色名称失败',
+                validators: {
+                    notEmpty: {
+                        message: '颜色名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 20,
+                        message: '颜色名称长度必须在2到4位之间'
+                    }
+                }
+            },
+            colorDes: {
+                message: '颜色描述失败',
+                validators: {
+                    notEmpty: {
+                        message: '颜色描述不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 500,
+                        message: '颜色描述长度必须在1到500位之间'
+                    }
+                }
+            },
+            colorHex: {
+                message: '颜色Hex失败',
+                validators: {
+                    notEmpty: {
+                        message: '颜色Hex不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 500,
+                        message: '颜色Hex长度必须在1到500位之间'
+                    }
+
+                }
+            },
+            colorRGB: {
+                message: '颜色RGB失败',
+                validators: {
+                    notEmpty: {
+                        message: '颜色RGB不能为空'
+                    }
+
+                },
+                stringLength: {
+                    min: 1,
+                    max: 500,
+                    message: '颜色RGB长度必须在1到500位之间'
+                }
+            }
+
+
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/carColor/insertCarColor", formId, "addWin");
+            } else if (formId == "editForm") {
+                formSubmit("/carColor/uploadCarColor", formId, "editWin");
+
+            }
+        })
+
+}
+
+
+$('#colorpalette').colorPalette()
+    .on('selectColor', function(e) {
+        $('#selected-color').val(e.color);
+        $('#selected-colorRGB').val(colorHexToRGB(e.color));
+        $("#span").css("background-color", e.color);
+    });
+
+$('#colorpalette').colorPalette()
+    .on('selectColor', function(e) {
+        $('#selected-color1').val(e.color);
+        $('#selected-colorRGB1').val(colorHexToRGB(e.color));
+        $("#span").css("background-color", e.color);
+    });

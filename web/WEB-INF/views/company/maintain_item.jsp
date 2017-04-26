@@ -14,7 +14,9 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -45,7 +47,7 @@
             <th data-field="company.companyName">
                 公司名称
             </th>
-            <th data-field="maintainStatus" >
+            <th data-field="maintainStatus" data-formatter="status">
                 维修项目状态
             </th>
             <th data-field="coi" data-formatter="operating" data-events="operateEvents">
@@ -75,30 +77,43 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">修改商品</h3>
-                        <form role="form" id="updateForm" >
-                            <input type="hidden" attr="product.id" name="id" id = "id"/>
+                        <h3 class="m-t-none m-b">修改维修项目</h3>
+                        <form role="form" id="editForm">
+                            <input name="maintainId" attr="maintain.maintainId" type="hidden">
+                            <input name="maintainOrFix" attr="maintain.maintainOrFix" type="hidden">
                             <div class="form-group">
-                                <label>商品名称：</label>
-                                <input type="text" attr="product.name" name="name" id="name" class="form-control"/>
+                                <label>维修项目名称：</label>
+                                <input type="text"   name="maintainName" attr="maintain.maintainName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>商品价格：</label>
-                                <input type="text"  name="price" attr="product.price" id ="price"
+                                <label>维修所需工时：</label>
+                                <input type="text"  name="maintainHour" attr="maintain.maintainHour"
                                        class="form-control"/>
                             </div>
-
                             <div class="form-group">
-                                <label>商品描述：</label>
-                                <input type="text"  name="des" id = "des" attr="product.des"
+                                <label>维修基础费用：</label>
+                                <input type="text"  name="maintainMoney" attr="maintain.maintainMoney"
                                        class="form-control"/>
                             </div>
-
+                            <div class="form-group">
+                                <label>维修工时费用：</label>
+                                <input type="text"  name="maintainManHourFee" attr="maintain.maintainManHourFee"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group" >
+                                <label>公司名称</label>
+                                <select class="js-example-tags form-control company"  name="companyId" style="width:150px;">
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>维修项目描述:</label>
+                                <textarea  name="maintainDes" type="textarea" cols="20" rows="5" class="form-control" attr="maintain.maintainDes"></textarea>
+                            </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="updateProduct()">
+                                <input type="button" class="btn btn-primary" value="修改" onclick="edit();">
                                 </input>
                             </div>
                         </form>
@@ -171,21 +186,11 @@
 <script src="<%=path %>/js/select2.full.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
-
-
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
 <script src="<%=path %>/js/company/maintainItem.js"></script>
 <script src="<%=path %>/js/main.js"></script>
-<script>
-    $("#establishTime").datetimepicker({
-        format: "yyyy-mm-dd hh:ii",
-        autoclose: true,
-        language:'ZH_CN',
-        todayBtn: true,
-        pickerPosition: "bottom-left",
-    });
-</script>
 </body>
 </html>

@@ -13,8 +13,10 @@
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/example.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-colorpalette.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 
@@ -48,23 +50,13 @@
         <tbody>
         <div id="toolbar" class="btn-group">
             <a data-toggle="modal">
-                <button type="button" id="add" onclick="showAddWin()" class="btn btn-default">
+                <button type="button" id="add" onclick="showAddWin();" class="btn btn-default">
                     <i class="glyphicon glyphicon-plus"></i> 添加
                 </button>
             </a>
             <a>
                 <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                     <i class="glyphicon glyphicon-pencil"></i> 修改
-                </button>
-            </a>
-            <a>
-                <button onclick="EditStatus();" type="button" id="status" class="btn btn-default">
-                    <i class="glyphicon glyphicon-pencil"></i> 激活
-                </button>
-            </a>
-            <a>
-                <button onclick="StatusIncomeing();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-pencil"></i> 冻结
                 </button>
             </a>
         </div>
@@ -112,7 +104,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="addProduct()" value="添加">
+                                <input type="button" class="btn btn-primary" onclick="add();" value="添加">
                                 </input>
                                 </input>
                                 <input type="reset" name="reset" style="display: none;" />
@@ -131,7 +123,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">添加汽车颜色</h3>
+                        <h3 class="m-t-none m-b">修改汽车颜色</h3>
                         <form role="form" id="editForm">
                             <div class="form-group">
                                 <label class="control-label">汽车颜色名称：</label>
@@ -145,11 +137,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车颜色RGB：</label>
-                                <input id="selected-colorRGB1" readonly class="form-control" name="colorRGB" attr="carColor.colorRGB">
+                                <input id="selected-colorRGB1" readonly class="form-control" name="colorRGB" attr="carColor.colorRGB" type="text">
                             </div>
                             <div class="form-group btn-group">
                                 <label class="control-label">汽车颜色Hex：</label>
-                                <input id="selected-color1" readonly class="form-control" name="colorHex" attr="carColor.colorHex">
+                                <input id="selected-color1" readonly class="form-control" name="colorHex" attr="carColor.colorHex" type="text">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown">点击选择颜色</a>
                                 <ul class="dropdown-menu">
                                     <li><div id="colorpalette1"></div></li>
@@ -181,16 +173,9 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
+<script src="<%=path%>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-colorpalette.js"></script>
 <script src="<%=path%>/js/main.js"></script>
 <script src="<%=path%>/js/company/car_color.js"></script>
-<script>
-    $('#colorpalette').colorPalette()
-        .on('selectColor', function(e) {
-            $('#selected-color').val(e.color);
-            $('#selected-colorRGB').val(colorHexToRGB(e.color));
-            $("#span").css("background-color", e.color);
-        });
-</script>
 </body>
 </html>

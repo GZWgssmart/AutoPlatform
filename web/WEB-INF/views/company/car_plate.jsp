@@ -43,7 +43,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
+            <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">

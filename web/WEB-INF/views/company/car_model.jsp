@@ -14,7 +14,6 @@
     <title>车型管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>品牌管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -22,6 +21,8 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container">
@@ -42,7 +43,7 @@
             <th data-field="modelDes" >
                 汽车车型描述
             </th>
-            <th data-field="modelStatus" data-formatter="operateFormatter">
+            <th data-field="modelStatus" data-formatter="status">
                 汽车车型状态
             </th>
             <th data-field="co" data-formatter="operating" data-events="operateEvents">
@@ -57,12 +58,6 @@
             </button></a>
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
-            <a><button onclick="EditStatus();" type="button" id="status" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 激活
-            </button></a>
-            <a><button onclick="StatusIncomeing();" type="button"  class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 冻结
             </button></a>
         </div>
         </tbody>
@@ -79,12 +74,13 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改汽车品牌</h3>
-                        <form role="form" id="updateForm" >
+                        <form role="form" id="editForm" >
                             <input type="hidden" attr="carBrand.brandId" name="brandId" id = "id"/>
                             <input type="hidden" attr="carBrand.brandStatus" name="brandStatus"/>
                             <div class="form-group">
                                 <label>汽车品牌名称：</label>
-                                <input type="text"  name="brandName"  attr="carBrand.brandName" class="form-control"/>
+                                <select class="js-example-tags form-control car_brand" id="" name="brandId">
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>汽车品牌描述：</label>
@@ -94,7 +90,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="updateProduct()">
+                                <input type="button" class="btn btn-primary" value="修改" onclick="edit();">
                                 </input>
                             </div>
                         </form>
@@ -131,7 +127,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="addProduct()" value="添加">
+                                <input type="button" class="btn btn-primary" onclick="add()" value="添加">
                                 </input>
                             </div>
                         </form>
@@ -156,6 +152,7 @@
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="<%=path%>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path%>/js/company/car_model.js"></script>
 </body>

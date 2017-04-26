@@ -32,7 +32,7 @@ public class MaintainFixController {
     @ResponseBody
     @RequestMapping(value = "InsertMaintainItem",method = RequestMethod.POST)
     public ControllerResult InsertMaintainFix(MaintainFix maintainFix){
-        maintainFix.setMaintainOrFix("Y");//Y表示维修，N表示保养
+        maintainFix.setMaintainOrFix("维修");
         maintainFixService.insert(maintainFix);
         return ControllerResult.getSuccessResult("添加维修项目成功");
     }
@@ -40,16 +40,31 @@ public class MaintainFixController {
     @ResponseBody
     @RequestMapping(value = "InsertMaintain",method = RequestMethod.POST)
     public ControllerResult InsertMaintain(MaintainFix maintainFix){
-        maintainFix.setMaintainOrFix("N");//Y表示维修，N表示保养
+        maintainFix.setMaintainOrFix("保养");
         maintainFixService.insert(maintainFix);
-        return ControllerResult.getSuccessResult("添加维修项目成功");
+        return ControllerResult.getSuccessResult("添加保养项目成功");
     }
 
     @ResponseBody
     @RequestMapping(value = "update",method = RequestMethod.POST)
     public ControllerResult UpdateMaintainFix(MaintainFix maintainFix){
+        System.out.println(maintainFix);
         maintainFixService.update(maintainFix);
         return ControllerResult.getSuccessResult("更新保养项目成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value="StatusModify",method = RequestMethod.GET)
+    public ControllerResult companyStatusModify(@Param("id") String id,@Param("status") String status){
+        if(status.equals("Y")){
+            logger.info("冻结成功");
+            maintainFixService.inactive(id);
+            return ControllerResult.getSuccessResult("冻结成功");
+        }else if(status.equals("N")){
+            maintainFixService.active(id);
+            return ControllerResult.getSuccessResult("激活成功");
+        }
+        return ControllerResult.getFailResult("冻结失败");
     }
 
     @ResponseBody

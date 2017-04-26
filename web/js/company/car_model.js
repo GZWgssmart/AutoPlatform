@@ -1,35 +1,3 @@
-/**
- * Created by root on 2017/4/18.
- */
-function showAddWin() {
-    $(".car_brand").select2({
-        // enable tagging
-        tags: true,
-        language: 'zh-CN',
-        placeholder: "请选择品牌",
-        minimumResultsForSearch: -1,
-        // loading remote data
-        // see https://select2.github.io/options.html#ajax
-        ajax: {
-            url: "/carBrand/car_brand_all",
-            processResults: function (data, page) {
-                console.log(data);
-                var parsed = data;
-                var arr = [];
-                for(var x in parsed){
-                    arr.push(parsed[x]); //这个应该是个json对象
-                }
-                console.log(arr);
-                return {
-                    results: arr
-                };
-            }
-        }
-
-    });
-    $("input[type=reset]").trigger("click");
-    $("#addWin").modal('show');
-}
 
 /** 编辑数据 */
 function showEditWin() {
@@ -44,66 +12,32 @@ function showEditWin() {
     }
 }
 
+function showAddWin(){
+    validator("addForm");
+    $("#addWin").modal('show');
+    $("input[type=reset]").trigger("click");
+}
+
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/carModel/queryByPager");
+    initSelect2("car_brand", "请选择汽车品牌", "/carBrand/car_brand_all", "550");
+    destoryValidator("addWin","addForm");
+    destoryValidator("editWin","editForm");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 });
 
-/**提交编辑数据 */
-function updateProduct() {
-    $.post("/carModel/uploadCarModel",
-        $("#updateForm").serialize(),
-        function(data){
-            if(data.result == "success"){
-                $('#editWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            }else if(data.result == "fail"){
-                swal(data.message, "", "error");
-            }
-        },"json");
-
-}
-
-/**提交添加数据 */
-function addProduct() {
-    $.post("/carModel/insertCarModel",
-        $("#addForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#addWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-            } else if (data.result == "fail") {
-                swal(data.message, "", "error");
-            }
-        }, "json");
-}
-
-function operateFormatter(value, row, index) {
-    if (row.modelStatus == 'Y') {
-        return [
-            '可用'
-        ].join('');
-    }else if(row.modelStatus == 'N'){
-        return [
-            '不可用'
-        ].join('');
-    }
-}
-
 function operating(value, row, index) {
     if (row.modelStatus == 'Y') {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm btn-danger" >冻结</button>',
-            '<button onclick="showEditWin();" type="button" class="btn btn-default  btn-sm btn-primary" >编辑</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm btn-danger" >冻结</button>&nbsp;&nbsp;',
+            '<button type="button" class="showUpdateIncomingType1 btn btn-default  btn-sm btn-primary" >编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm btn-success" >激活</button>',
-            '<button onclick="showEditWin();" type="button" class="btn btn-default  btn-sm btn-primary" >编辑</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm btn-success" >激活</button>&nbsp;&nbsp;',
+            '<button type="button" class="showUpdateIncomingType1 btn btn-default  btn-sm btn-primary" >编辑</button>'
         ].join('');
     }
 }
@@ -132,5 +66,66 @@ window.operateEvents = {
                     swal(data.message, "", "error");
                 }
             }, "json");
+    },
+    'click .showUpdateIncomingType1': function (e, value, row, index) {
+        var incomingType = row;
+        validator("editForm");
+        $("#editForm").fill(incomingType);
+        $("#editWin").modal('show');
     }
 }
+
+
+
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            brandId: {
+                message: '品牌失败',
+                validators: {
+                    notEmpty: {
+                        message: '汽车品牌不能为空'
+                    }
+                }
+            },
+            modelName: {
+                message: '车型名称失败',
+                validators: {
+                    notEmpty: {
+                        message: '车型名称不能为空'
+                    }
+                }
+            },
+            modelDes: {
+                message: '车型描述失败',
+                validators: {
+                    notEmpty: {
+                        message: '车型描述不能为空'
+                    },
+                    stringLength: {
+                        min: 1,
+                        max: 10,
+                        message: '车型描述用字符长度必须在1~500字之间'
+                    }
+                }
+            }
+        }
+    })
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/carModel/insertCarModel", formId, "addWin");
+            } else if (formId == "editForm") {
+                formSubmit("/carModel/uploadCarModel", formId, "editWin");
+
+            }
+        })
+
+}
+
