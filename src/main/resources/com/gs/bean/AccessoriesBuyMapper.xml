@@ -182,5 +182,34 @@
         #{pager.beginIndex},#{pager.pageSize}
     </select>
 
+    <select id="queryByBuyTimeScopeByAccNamePager" resultType="list" resultMap="accessoriesBuyResultMap">
+        select
+        *
+        from
+        t_accessories_buy ab
+        left join t_accessories ac on ab.accId = ac.accId
+        where
+        (ab.accBuyTime &gt;= #{buyTimeStart} and ab.accBuyTime &lt;= #{buyTimeEnd})
+        <if test="accName != null and accName != '' ">
+            and ac.accName like concat(concat('%',#{accName}),'%')
+        </if>
+        order by
+        ab.accBuyTime desc
+        limit #{pager.beginIndex},#{pager.pageSize}
+    </select>
+
+    <select id="countByBuyTimeScope" resultType="int">
+        select
+        count(*)
+        from
+        t_accessories_buy ab
+        left join t_accessories ac on ab.accId = ac.accId
+        where
+        (ab.accBuyTime &gt;= #{buyTimeStart} and ab.accBuyTime &lt;= #{buyTimeEnd})
+        <if test="accName != null and accName != '' ">
+            and ac.accName like concat(concat('%',#{accName}),'%')
+        </if>
+    </select>
+
 
 </mapper>

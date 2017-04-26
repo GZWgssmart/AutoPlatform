@@ -163,12 +163,12 @@ public class AccessoriesBuyController {
 
     @ResponseBody
     @RequestMapping(value = "byAccNameSearch", method = RequestMethod.GET)
-    public Pager4EasyUI<AccessoriesBuy> byAccNameSearch( @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize ,@Param("accName") String accName) {
+    public Pager4EasyUI<AccessoriesBuy> byAccNameSearch(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("accName") String accName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd) {
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(accessoriesBuyService.countByAccName(accName));
-        List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByAccNamePager(pager, accName);
+        pager.setTotalRecords(accessoriesBuyService.countByBuyTimeScope(accName, buyTimeStart, buyTimeEnd));
+        List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByBuyTimeScopeByAccNamePager(pager, accName, buyTimeStart, buyTimeEnd);
         return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
     }
 }

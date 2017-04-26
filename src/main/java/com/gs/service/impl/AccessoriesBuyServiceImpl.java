@@ -115,5 +115,13 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
         return accessoriesBuyDAO.queryByAccNamePager(pager, accName);
     }
 
+    public List<AccessoriesBuy> queryByBuyTimeScopeByAccNamePager(Pager pager, String accName, String buyTimeStart, String buyTimeEnd) {
+        return accessoriesBuyDAO.queryByBuyTimeScopeByAccNamePager(pager, accName, buyTimeStart, buyTimeEnd);
+    }
+
+    public int countByBuyTimeScope(String accName, String buyTimeStart, String buyTimeEnd) {
+        return accessoriesBuyDAO.countByBuyTimeScope(accName, buyTimeStart, buyTimeEnd);
+    }
+
 
 }

@@ -31,6 +31,11 @@ public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy> {
 
     public int countByAccName(@Param("accName") String accName);
 
-    public List<AccessoriesBuy> queryByAccNamePager(@Param("pager")Pager pager,@Param("accName")String accName );
+    public List<AccessoriesBuy> queryByAccNamePager(@Param("pager") Pager pager, @Param("accName") String accName);
+
+    // 在选择购买时间范围内根据名称来查找
+    public List<AccessoriesBuy> queryByBuyTimeScopeByAccNamePager(@Param("pager") Pager pager, @Param("accName") String accName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd);
+
+    public int countByBuyTimeScope(@Param("accName") String accName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd);
 
 }

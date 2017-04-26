@@ -15,26 +15,35 @@
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
           type="text/css">
-
 </head>
 <body>
 <div class="container">
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            搜索条件
-        </div>
-        <div class="panel-body">
-
-            <div class="input-group col-md-3" style="margin-top:0px; position:relative">
-                <input type="text" class="form-control" placeholder="请输入配件名" id="sAccName"/>
-                <span class="input-group-btn">
-                    <button class="btn btn-default btn-search" onclick="byAccNameSearch();">查找</button>
-                </span>
+    <form id="formSearch" class="form-horizontal">
+        <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+            <div class="col-sm-2">
+                <input size="16" type="text" readonly
+                       class="form_datetime form-control " id="buyTimeStart" placeholder="请选择开始时间">
+                <span class="add-on"><i class="icon-remove"></i></span>
+            </div>
+            <div class="col-sm-2">
+                <input size="16" type="text" readonly
+                       class="form_datetime form-control " id="buyTimeEnd" placeholder="请选择结束时间">
             </div>
 
+            <div class="col-sm-2" style="margin-left: -15px;">
+                <input type="text" id="sAccName" class="form-control" placeholder="请输入配件名">
+            </div>
+
+            <div class="col-sm-2">
+                <button type="button" onclick="byAccNameSearch()" class="btn btn-primary">
+                    查询
+                </button>
+                <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                    关闭
+                </button>
+            </div>
         </div>
-    </div>
+    </form>
 
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
@@ -83,6 +92,11 @@
                 <button onclick="onlyBuy();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-shopping-cart"></i> 只看已采购
                 </button>
+            </a>
+
+
+            <a>
+                <button onclick="showSearchForm();" type="button" class="btn btn-default">条件查询</button>
             </a>
 
             <a>

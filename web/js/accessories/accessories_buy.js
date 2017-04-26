@@ -2,7 +2,7 @@ var isAcc = false;
 
 $(document).ready(function () {
     initDateTimePicker("form_datetime", "");
-    initTable("cusTable", "pager");
+    initTable("cusTable", "/accessoriesBuy/pager");
 
     $("#isAcc").bootstrapSwitch({
         onText: '是',
@@ -194,12 +194,10 @@ function allBuys() {
     initTable("cusTable", "/accessoriesBuy/pager");
 }
 
-function byAccNameSearch(accName) {
+function byAccNameSearch() {
     var accName = $("#sAccName").val();
-    if (accName != "") {
-        initTable("cusTable", "/accessoriesBuy/byAccNameSearch?accName" + accName);
-    } else {
-        swal("请输入查询字段", "", "warning");
-    }
-}
+    var buyTimeStart = $("#buyTimeStart").val();
+    var buyTimeEnd = $("#buyTimeEnd").val();
+    initTable("cusTable", "/accessoriesBuy/byAccNameSearch?accName=" + accName + "&buyTimeStart=" + buyTimeStart + "&buyTimeEnd=" + buyTimeEnd);
 
+}
