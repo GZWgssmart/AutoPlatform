@@ -22,6 +22,7 @@
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 
+    <link href="<%=path %>/css/maintenanceReception/record.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -300,6 +301,11 @@
                                         <i class="glyphicon glyphicon-pencil"></i> 修改
                                     </button>
                                 </a>
+                                <a>
+                                    <button onclick="generateDetail();" type="button" id="generateDetail" class="btn btn-default">
+                                        <i class="glyphicon glyphicon-list-alt"></i> 生成明细清单
+                                    </button>
+                                </a>
 
                             </div>
                             </tbody>
@@ -473,6 +479,151 @@
                                     data-dismiss="modal">关闭
                             </button>
                             <input type="button" class="btn btn-primary" onclick="determineFix()" value="确定">
+                            </input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="maintainFixWin" class="modal fade" aria-hidden="true" style="overflow:scroll">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">维修、保养清单</h3>
+                        <div class="content col-sm-12">
+                            <div class="title bootom_border">
+                                公司车辆维修、保养清单
+                            </div>
+                            <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">车牌号及车型</div>
+                                <div class="right_border col-sm-3 bootom_border">赣B-876567</div>
+                                <div class="right_border col-sm-2 bootom_border" style="font-weight: bold;">首保里程</div>
+                                <div class="col-sm-4 bootom_border">100km</div>
+                            </div>
+                            <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">保养里程（km）</div>
+                                <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">保养时间</div>
+                                <div class="col-sm-6 bootom_border" style="font-weight: bold;">保养项目</div>
+                            </div>
+                            <div class="bootom_border" style="height:280px;">
+                                <div class="right_border col-sm-3" style="float:left;height:280px;line-height:245px;">40411</div>
+                                <div class="right_border col-sm-3" style="float:left;height:280px;line-height:245px;">2017.06.12</div>
+                                <div class="text_left col-sm-6" style="float:left; padding: 0;">
+                                    <div class="bootom_border">&nbsp; 项目1 1200.00</div>
+                                    <div class="bootom_border">&nbsp;</div>
+                                    <div class="bootom_border">&nbsp;</div>
+                                    <div class="bootom_border">&nbsp;</div>
+                                    <div class="bootom_border">&nbsp;</div>
+                                    <div class="bootom_border">&nbsp;</div>
+                                    <div class="bootom_border">&nbsp;</div>
+                                    <div class="bootom_border">&nbsp;</div>
+                                    <div class="bootom_border">&nbsp;</div>
+                                    <div class="bootom_border">&nbsp;</div>
+                                    <div>合计：1200</div>
+                                </div>
+                                <p class="clear"></p>
+                            </div>
+                            <div class="bootom_border" style="font-weight: bold;">
+                                维修记录
+                            </div>
+                            <div class="bootom_border float_left" style="font-weight: bold;">
+                                <div class="right_border col-sm-3">维修项目</div>
+                                <div class="right_border col-sm-3">更换配件名称</div>
+                                <div class="right_border col-sm-2">里程（km）</div>
+                                <div class="right_border col-sm-2">经手人</div>
+                                <div class="col-sm-2">日期</div>
+                            </div>
+                            <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3">&nbsp;项目1</div>
+                                <div class="right_border col-sm-3">&nbsp;配件</div>
+                                <div class="right_border col-sm-2">&nbsp;123</div>
+                                <div class="right_border col-sm-2">&nbsp;张师傅</div>
+                                <div class="col-sm-2">&nbsp;2017.06.23</div>
+                            </div>
+                            <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="col-sm-2">&nbsp;</div>
+                                <p class="clear"></p>
+                            </div>
+                            <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="col-sm-2">&nbsp;</div>
+                                <p class="clear"></p>
+                            </div>
+                            <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="col-sm-2">&nbsp;</div>
+                                <p class="clear"></p>
+                            </div>
+                            <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="col-sm-2">&nbsp;</div>
+                                <p class="clear"></p>
+                            </div>
+                            <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="col-sm-2">&nbsp;</div>
+                                <p class="clear"></p>
+                            </div>
+                            <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="col-sm-2">&nbsp;</div>
+                                <p class="clear"></p>
+                            </div>
+                            <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="col-sm-2">&nbsp;</div>
+                                <p class="clear"></p>
+                            </div>
+                            <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-3">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="right_border col-sm-2">&nbsp;</div>
+                                <div class="col-sm-2">&nbsp;</div>
+                                <p class="clear"></p>
+                            </div>
+
+                            <div class="bootom_border" style="height: 40px;">
+                                备注：
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="margin-right: 100px;">车主签字：</div>
+                            </div>
+                        </div>
+                        <div style="height: 40px;"></div>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="determineMaintain()" value="确定">
                             </input>
                         </div>
                     </div>

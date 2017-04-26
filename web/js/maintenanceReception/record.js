@@ -17,6 +17,7 @@ $(document).ready(function () {
 
 });
 
+/** 格式化操作栏的按钮 */
 function operateFormatter(value, row, index) {
     if (row.recordStatus == 'Y') {
         return [
@@ -31,6 +32,7 @@ function operateFormatter(value, row, index) {
     }
 
 }
+/** 点击事件监听 */
 window.operateEvents = {
          'click .updateActive': function (e, value, row, index) {
              $.get(contextPath + "/record/update_status?id=" + row.recordId + "&status=" + row.recordStatus,
@@ -78,7 +80,7 @@ function showEditWin() {
     }
 }
 
-var maintainMoney;
+var maintainMoney; // 用于验证输入的减价是否合理
 /** 表单验证 */
 function validator(formId) {
     $("#editButton").removeAttr("disabled");
@@ -308,6 +310,17 @@ function searchCondition() {
         swal("错误提示", "请选择一家汽修公司", "error");
     }
 
+}
+
+/** 生成明细清单 */
+function generateDetail() {
+    var selectRow = $("#detailTable").bootstrapTable('getSelections');
+    if (selectRow.length < 1) {
+        swal('错误提示', "最少选择一条数据", "error");
+        return false;
+    } else {
+        $("#maintainFixWin").modal("show");
+    }
 }
 
 

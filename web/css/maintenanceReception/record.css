@@ -1,0 +1,32 @@
+.clear {
+    clear: both;
+}
+.float_left div {
+    float: left;
+}
+.float_right div {
+    float: right;
+}
+.text_left {
+    text-align: left;
+}
+.content {
+    border: 2px solid black;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0;
+}
+.title {
+    font-size: 23px;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+}
+.bootom_border {
+    border-bottom: 1px solid black;
+    padding: 10px auto;
+}
+.right_border {
+    border-right: 1px solid black;
+    margin: 0;
+}

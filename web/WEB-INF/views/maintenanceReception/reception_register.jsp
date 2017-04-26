@@ -60,7 +60,7 @@
                 汽车车牌
             </th>
             <th data-field="oilCount">
-                汽车油量
+                汽车油量（L）
             </th>
             <th data-field="carWash" data-formatter="carWash">
                 是否洗车
@@ -72,7 +72,7 @@
                 到店时间
             </th>
             <th data-field="carMileage">
-                汽车行驶里程
+                汽车行驶里程（km）
             </th>
             <th data-field="carThings">
                 车上物品描述
@@ -214,7 +214,7 @@
 
                             <div class="form-group">
                                 <label>汽车车牌：</label>
-                                <select id="editCarPlate" class="js-example-tags form-control car_plate" name="plateId">
+                                <select id="editCarPlate" maxlength="5" class="js-example-tags form-control car_plate" name="plateId">
                                 </select>
                             </div>
 
@@ -236,11 +236,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">汽车油量：</label>
+                                <label class="control-label">汽车油量（L）：</label>
                                 <input type="number" attr="checkin.oilCount" name="oilCount" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">汽车行驶里程：</label>
+                                <label class="control-label">汽车行驶里程（km）：</label>
                                 <input type="number" attr="checkin.carMileage" name="carMileage" class="form-control"/>
                             </div>
 
@@ -330,7 +330,7 @@
 
                             <div class="form-group">
                                 <label class="control-label">汽车车牌：</label>
-                                <select id="addCarPlate" class="js-example-tags form-control car_plate" name="plateId">
+                                <select id="addCarPlate" maxlength="5" class="js-example-tags form-control car_plate" name="plateId">
                                 </select>
                             </div>
 
@@ -354,11 +354,11 @@
 
                             </div>
                             <div class="form-group">
-                                <label class="control-label">汽车油量：</label>
+                                <label class="control-label">汽车油量（L）：</label>
                                 <input type="number" name="oilCount" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">汽车行驶里程：</label>
+                                <label class="control-label">汽车行驶里程（km）：</label>
                                 <input type="number" name="carMileage" class="form-control"/>
                             </div>
 

@@ -71,7 +71,7 @@
 
     <select id="queryAll" resultMap="maintainRecordResultMap">
 		<![CDATA[
-
+          select * from t_maintian_record
         ]]>
 	</select>
 
@@ -89,7 +89,7 @@
 
     <select id="queryById" parameterType="string" resultType="maintainRecord">
 		<![CDATA[
-
+          select * from t_maintain_record where recordId = #{id}
         ]]>
 	</select>
 
