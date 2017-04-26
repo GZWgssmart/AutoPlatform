@@ -113,34 +113,37 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="addWin" class="modal fade" aria-hidden="true">
+<div id="addWin" class="modal fade" style="overflow:scroll" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">添加回复</h3>
+                        <h3 class="m-t-none m-b">添加修改维修保养提醒</h3>
                         <form role="form" id="addForm" >
                             <div class="form-group">
-                                <label>受理人：</label>
-                                <select class="js-example-tags form-control com_name" name="user.userName">
+                                <label class="control-label">保养提醒时间：</label>
+                                <input type="text" readonly="readonly" id="addRemindTime" name="remindTime" class="form-control nowDatrtime"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">保养提醒方式：</label>
+                                <select class="js-example-tags form-control" name="remindType">
+                                    <option value="短信提醒" selected="selected">短信提醒</option>
+                                    <option value="邮箱提醒">邮箱提醒</option>
+                                    <option value="微信提醒">微信提醒</option>
+                                    <option value="QQ提醒">QQ提醒</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>受理时间：</label>
-                                <input id="complaintReplyTime" type="text" name="complaintReplyTime"
-                                       class="form-control datatimepicker"/>
-                            </div>
-                            <div class="form-group">
-                                <label>回复内容：</label>
-                                <textarea class="form-control" name="complaintReply" id="complaintReply"></textarea>
+                                <label class="control-label">保养提醒内容：</label>
+                                <textarea class="form-control" id="addMsg" type="textarea" name="remindMsg" maxlength="400"
+                                          rows="3"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error" style="color: #ff0000;"></span>

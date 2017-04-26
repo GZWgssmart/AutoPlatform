@@ -35,10 +35,10 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="user.userName">
+            <th data-field="checkin.userName">
                 用户名:
             </th>
-            <th data-field="user.userPhone" >
+            <th data-field="checkin.userPhone" >
                 用户手机号:
             </th>
             <th data-field="sendMsg" >
@@ -86,7 +86,6 @@
                                           maxlength="400"
                                           rows="3"></textarea>
                             </div>
-
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭

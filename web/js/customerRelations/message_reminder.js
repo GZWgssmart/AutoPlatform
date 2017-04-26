@@ -6,7 +6,6 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/MessageReminder/query_pager");
-    initSelect2("car_model", "请选择一条数据", "/MessageReminder/query_user","570");
     initDateTimePicker("nowDatrtime","remindTime");
     initDateTimePicker("nowDatrtime","remindCreatedTime");
 });
@@ -31,8 +30,17 @@ window.operateEvents = {
     }
 }
 
-
-
+/** 添加数据 */
+function showAddWin() {
+        validator("addForm");
+        clearAddForm();
+        $("#addForm").modal('show');
+}
+/** 清除添加的form表单信息 */
+function clearAddForm() {
+    $('#addRemindTime').html('').trigger("change");
+    $('#addMsg').html('').trigger("change");
+}
 
 /** 编辑数据 */
 function showEditWin() {

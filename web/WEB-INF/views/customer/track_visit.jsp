@@ -12,7 +12,7 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-    <title>跟踪回访记录</title>
+    <title>跟踪回访管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -33,8 +33,8 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="customer.userName">
-                顾客名:
+            <th data-field="checkin.userName">
+                车主名:
             </th>
             <th data-field="trackContent" >
                 回访问题:
@@ -48,15 +48,18 @@
             <th data-field="trackCreatedTime" data-formatter="formatterDate">
                 回访时间:
             </th>
+            <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
+                操作
+            </th>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
+            <%--<a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
+            </button></a>--%>
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
+                <i class="glyphicon glyphicon-pencil"></i> 回访
             </button></a>
 
         </div>
@@ -73,22 +76,29 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">修改投诉信息</h3>
-                        <form role="form" id="updateForm" >
-                            <input type="hidden" attr="complaint.complaintId" name="complaintId" />
-                            <div class="col-md-6 form-group">
-                                <label>投诉人：</label>
-                                <select class="js-example-tags form-control com_name" name="user.userName">
-                                </select>
+                        <h3 class="m-t-none m-b">跟踪回访</h3>
+                        <form role="form" id="editForm" >
+                            <input type="hidden" attr="vistit.checkin.userId" name="complaintId" />
+                            <div class="form-group">
+                                <label>回访车主：</label>
+                                <input type="text" readonly="readonly" attr="vistit.checkin.userName" name="userName"
+                                       class="form-control nowDatrtime"/>
                             </div>
-
+                            <div class="form-group">
+                                <label>回访问题：</label>
+                                <textarea class="form-control" name="trackContent" id="trackContent"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">回访评分：</label>
+                                <input type="text" id="serviceEvaluate" name="serviceEvaluate" class="form-control"/>
+                            </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error1" style="color: red;"></span>
                                 <br/>
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton1" class="btn btn-primary" value="修改" onclick="updateIncomingType()">
+                                <input type="button" id="addButton1" class="btn btn-primary" value="确定" onclick="updateIncomingType()">
                                 </input>
                             </div>
                         </form>
@@ -116,15 +126,15 @@
                             </div>
                             <div class="form-group">
                                 <label>回访问题：</label>
-                                <textarea class="form-control" name="trackContent" id="trackContent"></textarea>
+                                <textarea class="form-control" name="trackContent" id="trackContent1"></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">回访评分：</label>
-                                <input type="text" id="serviceEvaluate" name="serviceEvaluate" class="form-control"/>
+                                <input type="text" id="serviceEvaluate1" name="serviceEvaluate" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">回访客服：</label>
-                                <select id="addAdmin" class="js-example-tags form-control visit_admin" name="admin.userName">
+                                <select id="addAdmin1" class="js-example-tags form-control visit_admin" name="admin.userName">
                                 </select>
                             </div>
 

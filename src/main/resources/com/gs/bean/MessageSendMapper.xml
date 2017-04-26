@@ -8,7 +8,7 @@
 		<result property="sendMsg" column="sendMsg" />
 		<result property="sendTime" column="sendTime" />
 		<result property="sendCreatedTime" column="sendCreatedTime" />
-		<association property="user" javaType="com.gs.bean.User">
+		<association property="checkin" javaType="com.gs.bean.Checkin">
 			<id property="userId" column="userId"/>
 			<id property="userName" column="userName"/>
 			<id property="userPhone" column="userPhone"/>
@@ -68,7 +68,7 @@
 
 	<select id="queryAll" resultMap="messageSendResultMap">
 		<![CDATA[
-			 select * from t_message_send s, t_user u where s.userId=u.userId
+			 select * from t_message_send s, t_checkin c where s.userId=c.userId
 		]]>
 	</select>
 
@@ -92,14 +92,14 @@
 
 	<select id="queryByPager" resultType="list" resultMap="messageSendResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-		select * from t_message_send s, t_user u where s.userId=u.userId
+		select * from t_message_send s, t_checkin c where s.userId=c.userId
 		]]>
 		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-		select count(*) from t_message_send s, t_user u where s.userId=u.userId
+		select count(*) from t_message_send s, t_checkin c where s.userId=c.userId
 		]]>
 	</select>
 

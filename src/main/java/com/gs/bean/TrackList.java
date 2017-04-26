@@ -16,20 +16,28 @@ public class TrackList {
 	private String trackUser; //跟踪回访用户 来源t_user表
 	private Date trackCreatedTime;  //回访时间
 	private User admin;//管理员
-	private User customer;//顾客
+	private MaintainRecord maintainRecord; // 维修保养记录表
+	private Checkin checkin;//登记表
+
+	public MaintainRecord getMaintainRecord() {
+		return maintainRecord;
+	}
+	public void setMaintainRecord(MaintainRecord maintainRecord) {
+		this.maintainRecord = maintainRecord;
+	}
+
+	public Checkin getCheckin() {
+		return checkin;
+	}
+	public void setCheckin(Checkin checkin) {
+		this.checkin = checkin;
+	}
 
 	public User getAdmin() {
 		return admin;
 	}
 	public void setAdmin(User admin) {
 		this.admin = admin;
-	}
-
-	public User getCustomer() {
-		return customer;
-	}
-	public void setCustomer(User customer) {
-		this.customer = customer;
 	}
 
 	public String getTrackId(){

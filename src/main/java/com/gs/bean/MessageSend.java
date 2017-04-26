@@ -14,14 +14,15 @@ public class MessageSend {
 	private String sendMsg;  //发送内容
 	private Date sendTime; //预计发送时间
 	private Date sendCreatedTime; //发送记录创建创建时间
-	private User user; //用户对象
+	private Checkin checkin;//用户登记表
 
-	public User getUser() {
-		return user;
+	public Checkin getCheckin() {
+		return checkin;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setCheckin(Checkin checkin) {
+		this.checkin = checkin;
 	}
+
 
 	public String getMessageId(){
 		return this.messageId;

@@ -22,6 +22,21 @@ function checkAdmin(combo) {
     }
 }
 
+function operateFormatter(value, row, index) {
+    if (row.inTypeStatus == 'Y') {
+        return [
+            '<button type="button" class="updateActive btn btn-danger  btn-sm" style="margin-right:15px;" >已回访</button>',
+            '<button type="button" class="showUpdateIncomingType1 btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
+        ].join('');
+    }else{
+        return [
+            '<button type="button" class="updateInactive btn btn-success  btn-sm" style="margin-right:15px;" >未回访</button>',
+            '<button type="button" class="showUpdateIncomingType1 btn btn-primary  btn-sm" style="margin-right:15px;">编辑</button>'
+        ].join('');
+    }
+
+}
+
 
 /** 添加数据 */
 function showAddWin() {
@@ -35,12 +50,9 @@ function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
-        initSelect2("visit_admin", "请选择员工", "/peopleManage/user_all?brandId=" + checkin.brandId, "540");
-        return false;
     } else {
-        var incomingType = selectRow[0];
-        $("#editForm").fill(checkin);
-        $("#updateForm").fill(incomingType);
+        var vistit = selectRow[0];
+        $("#editForm").fill(vistit);
         $("#editWin").modal('show');
     }
 }
@@ -96,20 +108,6 @@ function addCompaint() {
 }
 
 
-function operateFormatter(value, row, index) {
-    if (row.inTypeStatus == 'Y') {
-        return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>',
-            '<button type="button" class="showUpdateIncomingType1 btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
-        ].join('');
-    }else{
-        return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>',
-            '<button type="button" class="showUpdateIncomingType1 btn btn-default  btn-sm" style="margin-right:15px;">编辑</button>'
-        ].join('');
-    }
-
-}
 window.operateEvents = {
          'click .updateActive': function (e, value, row, index) {
              var status = 'N';
