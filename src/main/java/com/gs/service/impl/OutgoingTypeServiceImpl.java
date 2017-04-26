@@ -40,4 +40,14 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
 	public OutgoingType queryByName(String outTypeName) {
 		return outgoingTypeDAO.queryByName(outTypeName);
 	}
+
+	@Override
+	public List<OutgoingType> queryPagerStatus(String status, Pager pager) {
+		return outgoingTypeDAO.queryPagerStatus(status,pager);
+	}
+
+	@Override
+	public int countStatus(String status) {
+		return outgoingTypeDAO.countStatus(status);
+	}
 }

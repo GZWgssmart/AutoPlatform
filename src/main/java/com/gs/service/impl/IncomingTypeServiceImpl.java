@@ -41,4 +41,13 @@ public class IncomingTypeServiceImpl implements IncomingTypeService {
 	public int inactive(String id) { return incomingTypeDAO.inactive(id); }
 	public int active(String id) { return incomingTypeDAO.active(id); }
 
+	@Override
+	public List<IncomingType> queryPagerStatus(String status, Pager pager) {
+		return incomingTypeDAO.queryPagerStatus(status,pager);
+	}
+
+	@Override
+	public int countStatus(String status) {
+		return incomingTypeDAO.countStatus(status);
+	}
 }

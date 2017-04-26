@@ -79,6 +79,24 @@ public class IncomingTypeController {
         return ControllerResult.getSuccessResult("更新成功");
     }
 
+    @ResponseBody
+    @RequestMapping(value="query_status", method=RequestMethod.GET)
+    public Pager4EasyUI<IncomingType> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,@Param("status")String status){
+        logger.info("根据收入类型状态查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<IncomingType> incomingTypes = null;
+        if(status.equals("Y")){
+            incomingTypes = incomingTypeService.queryPagerStatus(status,pager);
+            pager.setTotalRecords(incomingTypeService.countStatus(status));
+        }else if(status.equals("N")){
+            incomingTypes = incomingTypeService.queryPagerStatus(status,pager);
+            pager.setTotalRecords(incomingTypeService.countStatus(status));
+        }
+        return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
+    }
+
 
 
 }

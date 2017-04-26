@@ -52,7 +52,21 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
-
+            <a>
+                <button onclick="searchStatus('Y');" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看可用记录
+                </button>
+            </a>
+            <a>
+                <button onclick="searchStatus('N');" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看不可用记录
+                </button>
+            </a>
+            <a>
+                <button onclick="searchStatus('ALL');" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看全部
+                </button>
+            </a>
         </div>
         </tbody>
 

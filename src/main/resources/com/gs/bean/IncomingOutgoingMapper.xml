@@ -81,6 +81,48 @@
 		]]>
 	</select>
 
+	<select id="queryByDefault" parameterType="int" resultType="list" resultMap="incomingOutgoingResultMap">
+		<![CDATA[
+           SELECT sum(inOutMoney) as inOutMoney,inOutCreatedTime,inOutId from t_incoming_outgoing
+             WHERE DATE_FORMAT(inOutCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+		]]>
+        <if test="inOutType ==1">
+            and outTypeId is not null
+        </if>
+        <if test="inOutType ==2">
+            and inTypeId is not null
+        </if>
+            GROUP BY day(inOutCreatedTime);
+	</select>
+
+    <select id="queryByCondition"  resultType="list" resultMap="incomingOutgoingResultMap">
+        <![CDATA[
+           select sum(inOutMoney) as inOutMoney ,inOutCreatedTime from t_incoming_outgoing
+            where inOutCreatedTime >= #{startTime} and inOutCreatedTime <= #{endTime}
+		]]>
+        <if test="inOutType ==1">
+            and outTypeId is not null
+        </if>
+        <if test="inOutType ==2">
+            and inTypeId is not null
+        </if>
+        <if test="type =='year'">
+            GROUP BY year(inOutCreatedTime);
+        </if>
+        <if test="type =='quarter'">
+            GROUP BY quarter(inOutCreatedTime);
+        </if>
+        <if test="type =='month'">
+            GROUP BY month(inOutCreatedTime);
+        </if>
+        <if test="type =='week'">
+            GROUP BY week(inOutCreatedTime);
+        </if>
+        <if test="type =='day'">
+            GROUP BY day(inOutCreatedTime);
+        </if>
+    </select>
+
 	<select id="queryByStatus" resultMap="incomingOutgoingResultMap" parameterType="string">
 		<![CDATA[
 

@@ -8,6 +8,8 @@ $(document).ready(function () {
     initTable("cusTable", "/salary/query_pager");
 
     initDateTimePicker("datatimepicker","salaryTime");
+    destoryValidator("editWin","editForm");
+    destoryValidator("addWin","addForm");
 
 });
 

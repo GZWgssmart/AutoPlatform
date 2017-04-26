@@ -62,6 +62,18 @@
 		]]>
 	</select>
 
+	<select id="queryPagerStatus" resultType="list" resultMap="incomingTypeResultMap">
+		<![CDATA[
+			select  * from t_incoming_type where inTypeStatus = #{status} order by inTypeCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
+		]]>
+	</select>
+
+	<select id="countStatus" resultType="int">
+		<![CDATA[
+			select count(*) from t_incoming_type where inTypeStatus = #{status}
+		]]>
+	</select>
+
 	<select id="query" parameterType="incomingType" resultType="incomingType">
 		<![CDATA[
 

@@ -53,22 +53,7 @@
             </th>
         </tr>
         </thead>
-        <form id="formSearch" class="form-horizontal">
-            <div class="form-group" style="margin-top:15px">
-                <div class="col-sm-3">
-                    <input type="text" class="form-control" placeholder="请在输入类型" >
-                </div>
-                <div class="col-sm-3">
-                    <input type="text" class="form-control" placeholder="请在输入类型" >
-                </div>
-                <div class="col-sm-3">
-                    <input type="text" class="form-control" placeholder="请在输入类型">
-                </div>
-                <div class="col-sm-3">
-                    <button type="button"   class="btn btn-primary">查询</button>
-                </div>
-            </div>
-        </form>
+
         <tbody>
 
         <div id="toolbar" class="btn-group">

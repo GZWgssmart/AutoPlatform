@@ -1,6 +1,8 @@
 function getLineBasicChart(id, url, jsonData) {
 	$.get(url, function (data) {
 		jsonData.series = data;
+		jsonData.xAxis = data;
+		jsonData.title = data;
 		Highcharts.chart(id, jsonData);
 	}, "json");
 }

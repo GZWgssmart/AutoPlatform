@@ -6,6 +6,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.LineBasic;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.DateFormatUtil;
 import com.gs.service.IncomingOutgoingService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -84,30 +85,92 @@ public class IncomingOutgoingController {
     }
 
 
+
     @ResponseBody
-    @RequestMapping(value="query_all",method= RequestMethod.GET)
+    @RequestMapping(value="query_default",method= RequestMethod.GET)
     public List<LineBasic> queryAll(){
         logger.info("查询所有收支记录报表显示");
         List<LineBasic> lineBasics = new ArrayList<LineBasic>();
         LineBasic lineBasic = new LineBasic();
         LineBasic lineBasic1 = new LineBasic();
         lineBasic.setName("支出");
-        lineBasic.setData(date());
+        lineBasic.setText("本月收入");
+        lineBasic.setData(date(incomingOutgoingService.queryByDefault(1)));
         lineBasic1.setName("收入");
-        lineBasic1.setData(new double[]{1200,2200,4200,6000,3200,1280});
+        lineBasic1.setData(date(incomingOutgoingService.queryByDefault(2)));
+        lineBasic1.setText("本月收入");
+        lineBasic.setCategories(str(incomingOutgoingService.queryByDefault(1)));
+        lineBasic1.setCategories(str(incomingOutgoingService.queryByDefault(2)));
+        lineBasics.add(lineBasic);
+        lineBasics.add(lineBasic1);
+        return lineBasics;
+    }
+    @ResponseBody
+    @RequestMapping(value="query_condition",method= RequestMethod.GET)
+    public List<LineBasic> queryCondition(@Param("start")String start,@Param("end")String end,@Param("type")String type){
+        logger.info("根据年，月，季度，周，日查询所有收支记录报表显示");
+        List<LineBasic> lineBasics = new ArrayList<LineBasic>();
+        LineBasic lineBasic = new LineBasic();
+        LineBasic lineBasic1 = new LineBasic();
+        lineBasic.setName("支出");
+        lineBasic1.setName("收入");
+        if(start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")){
+            if(type.equals("year")){
+                lineBasic.setData(data(start,end,1,type));
+                lineBasic1.setData(data(start,end,2,type));
+            }else if(type.equals("quarter")){
+                lineBasic.setData(data(start,end,1,type));
+                lineBasic1.setData(data(start,end,2,type));
+            } else if(type.equals("month")){
+                lineBasic.setData(data(start,end,1,type));
+                lineBasic1.setData(data(start,end,2,type));
+            }else if(type.equals("week")){
+                lineBasic.setData(data(start,end,1,type));
+                lineBasic1.setData(data(start,end,2,type));
+            }else if(type.equals("day")){
+                lineBasic.setData(data(start,end,1,type));
+                lineBasic1.setData(data(start,end,2,type));
+            }
+        }
         lineBasics.add(lineBasic);
         lineBasics.add(lineBasic1);
         return lineBasics;
     }
 
-    public double[] date(){
-        List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryAll();
-        double[] dobles = new double[incomingOutgoings.size()];
-        for(int i=0; i< incomingOutgoings.size();i++){
-            for(IncomingOutgoing io : incomingOutgoings){
-                dobles[i] = io.getInOutMoney();
-            }
+
+
+
+    public double[] date(List<IncomingOutgoing> service){
+        List<IncomingOutgoing> incomingOutgoings = service;
+        int i = 0;
+        double[] doubles = new double[incomingOutgoings.size()];
+        for(IncomingOutgoing io: incomingOutgoings) {
+            doubles[i] = io.getInOutMoney();
+            i++;
         }
-        return dobles;
+        return doubles;
     }
+
+    public String[] str(List<IncomingOutgoing> service){
+        List<IncomingOutgoing> incomingOutgoings = service;
+        int i = 0;
+        String[] strs = new String[incomingOutgoings.size()];
+        for(IncomingOutgoing io: incomingOutgoings) {
+            strs[i] = DateFormatUtil.defaultFormat(io.getInOutCreatedTime());
+            i++;
+        }
+        return strs;
+    }
+
+    public double[] data(String start,String end,int inOutType,String type){
+        List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByCondition(start,end,inOutType,type);
+        int i = 0;
+        double[] doubles = new double[incomingOutgoings.size()];
+        for(IncomingOutgoing io: incomingOutgoings) {
+            doubles[i] = io.getInOutMoney();
+            i++;
+        }
+        return doubles;
+    }
+
 }

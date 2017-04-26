@@ -60,7 +60,7 @@ public class OutgoingTypeController {
 
     @ResponseBody
     @RequestMapping(value="update_outgoingType", method=RequestMethod.POST)
-    public ControllerResult incomingUpdate(OutgoingType outgoingType){
+    public ControllerResult outgoingUpdate(OutgoingType outgoingType){
         logger.info("更新收入类型");
         outgoingTypeService.update(outgoingType);
         return ControllerResult.getSuccessResult("更新成功");
@@ -78,6 +78,23 @@ public class OutgoingTypeController {
         return ControllerResult.getSuccessResult("更新成功");
     }
 
+    @ResponseBody
+    @RequestMapping(value="query_status", method=RequestMethod.GET)
+    public Pager4EasyUI<OutgoingType> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,@Param("status")String status){
+        logger.info("根据支出类型状态查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<OutgoingType> outgoingTypes = null;
+        if(status.equals("Y")){
+            outgoingTypes = outgoingTypeService.queryPagerStatus(status,pager);
+            pager.setTotalRecords(outgoingTypeService.countStatus(status));
+        }else if(status.equals("N")){
+            outgoingTypes = outgoingTypeService.queryPagerStatus(status,pager);
+            pager.setTotalRecords(outgoingTypeService.countStatus(status));
+        }
+        return new Pager4EasyUI<OutgoingType>(pager.getTotalRecords(), outgoingTypes);
+    }
 
 
 }

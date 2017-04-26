@@ -6,6 +6,8 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/outgoingType/query_pager");
+    destoryValidator("editWin","editForm");
+    destoryValidator("addWin","addForm");
 });
 
 /** 编辑数据 */
@@ -74,6 +76,18 @@ window.operateEvents = {
          }
 }
 
+
+function searchStatus(status){
+    if(status == 'Y'){
+        var status = 'Y';
+        initTable("cusTable", "/outgoingType/query_status?status="+status);
+    }else if(status == 'N'){
+        var status = 'N';
+        initTable("cusTable", "/outgoingType/query_status?status="+status);
+    }else if(status == 'ALL'){
+        initTable("cusTable", "/outgoingType/query_pager");
+    }
+}
 
 function validator(formId) {
     $("#addButton").removeAttr("disabled");
