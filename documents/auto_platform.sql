@@ -24,7 +24,7 @@ CREATE TABLE `t_accessories` (
   `companyId` varchar(36) DEFAULT NULL COMMENT '配件所属公司，来源于t_company表',
   `accStatus` varchar(2) DEFAULT NULL COMMENT '配件状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`accId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*配件采购表*/
 
@@ -76,7 +76,7 @@ CREATE TABLE `t_accessories_type` (
   `companyId` varchar(36) DEFAULT NULL COMMENT '配件分类所属公司，来源于t_company表',
   `accTypeStatus` varchar(2) DEFAULT NULL COMMENT '配件分类状态，Y表示可用，N表示不可用',
   PRIMARY KEY (`accTypeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*预约表*/
 
