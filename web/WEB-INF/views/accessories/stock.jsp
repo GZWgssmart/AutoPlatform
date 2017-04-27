@@ -114,61 +114,61 @@
                         <h3 class="m-t-none m-b">添加配件</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
-                                <label>名称：</label>
+                                <label class="control-label">名称：</label>
                                 <input type="text"  name="accName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>数量：</label>
+                                <label class="control-label">数量：</label>
                                 <input type="text"  name="accTotal" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>价格：</label>
+                                <label class="control-label">价格：</label>
                                 <input type="text" name="accPrice"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>描述：</label>
+                                <label class="control-label">描述：</label>
                                 <textarea name="accDes" cols="20" rows="5" class="form-control" ></textarea>
                             </div>
                             <div class="form-group">
-                                <label>商品条码：</label>
+                                <label class="control-label">商品条码：</label>
                                 <input type="text" name="accCommodityCode"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>计量单位：</label>
+                                <label class="control-label">计量单位：</label>
                                 <input type="text" name="accUnit"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>可用数量：</label>
+                                <label class="control-label">可用数量：</label>
                                 <input type="text" name="accIdle"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>售价：</label>
+                                <label class="control-label">售价：</label>
                                 <input type="text" name="accSalePrice"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>最近一次领料时间：</label>
+                                <label class="control-label">最近一次领料时间：</label>
                                 <input size="16" type="text" name="accUsedTime" readonly class="form_datetime form-control datetimepicker" id="accUsedTime">
                             </div>
                             <div class="form-group">
-                                <label>最近一次购买时间：</label>
+                                <label class="control-label">最近一次购买时间：</label>
                                 <input type="text" name="accBuyedTime" readonly id="accBuyedTime"
                                        class="form_datetime form-control datetimepicker"/>
                             </div>
                             <div class="form-group">
-                                <label>供应商：</label>
+                                <label class="control-label">供应商：</label>
                                 <select id="addSupply" class="js-example-tags form-control acc_supply" name="supplyId"></select>
                             </div>
                             <div class="form-group">
-                                <label>所属分类：</label>
+                                <label class="control-label">所属分类：</label>
                                 <select id="addAccessoriesType" class="js-example-tags form-control acc_accessoriesType" name="accTypeId"></select>
                             </div>
                             <div class="form-group">
-                                <label>所属公司：</label>
+                                <label class="control-label">所属公司：</label>
                                 <select id="addCompany" class="js-example-tags form-control acc_company" name="companyId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
@@ -198,46 +198,46 @@
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="accessories.accId" name="accId" id = "accId"/>
                             <div class="form-group">
-                                <label>名称：</label>
+                                <label class="control-label">名称：</label>
                                 <input type="text" attr="accessories.accName"  name="accName" class="form-control"/>
-                                <label>数量：</label>
+                                <label class="control-label">数量：</label>
                                 <input type="text"  attr="accessories.accTotal" name="accTotal" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>价格：</label>
+                                <label class="control-label">价格：</label>
                                 <input type="text" attr="accessories.accPrice" name="accPrice" class="form-control"/>
-                                <label>描述：</label>
+                                <label class="control-label">描述：</label>
                                 <textarea attr="accessories.accDes" name="accDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>
                             </div>
                             <div class="form-group">
-                                <label>商品条码：</label>
+                                <label class="control-label">商品条码：</label>
                                 <input type="text" attr="accessories.accCommodityCode" name="accCommodityCode" class="form-control"/>
-                                <label>计量单位：</label>
+                                <label class="control-label">计量单位：</label>
                                 <input type="text" attr="accessories.accUnit" name="accUnit" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>可用数量：</label>
+                                <label class="control-label">可用数量：</label>
                                 <input type="text" attr="accessories.accIdle" name="accIdle" class="form-control"/>
-                                <label>售价：</label>
+                                <label class="control-label">售价：</label>
                                 <input type="text" attr="accessories.accSalePrice"  name="accSalePrice" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>最近一次领料时间：</label>
+                                <label class="control-label">最近一次领料时间：</label>
                                 <input id="editUsedTime" attr="accessories.accUsedTime" name="accUsedTime" class="form_datetime form-control datetimepicker1"/>
 
-                                <label>最近一次购买：</label>
+                                <label class="control-label">最近一次购买：</label>
                                 <input id="editBuyedTime" attr="accessories.accBuyedTime"  name="accBuyedTime" class="form_datetime form-control datetimepicker"/>
                             </div>
                             <div class="form-group">
-                                <label>供应商：</label>
+                                <label class="control-label">供应商：</label>
                                 <select id="editSupply" class="js-example-tags form-control acc_supply" name="supplyId"></select>
                             </div>
                             <div class="form-group">
-                                <label>配件分类：</label>
+                                <label class="control-label">配件分类：</label>
                                 <select id="editAccessoriesType" class="js-example-tags form-control acc_accessoriesType" name="accTypeId"></select>
                             </div>
                             <div class="form-group">
-                                <label>所属公司：</label>
+                                <label class="control-label">所属公司：</label>
                                 <select id="editCompany" class="js-example-tags form-control acc_company" name="companyId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">

@@ -82,15 +82,15 @@
                         <h3 class="m-t-none m-b">添加配件分类</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
-                                <label>配件分类名称：</label>
+                                <label class="control-label">配件分类名称：</label>
                                 <input type="text"   name="accTypeName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>配件所属公司：</label>
+                                <label class="control-label">配件所属公司：</label>
                                 <select id="addTypeCompany" class="js-example-tags form-control accType_company" name="companyId"></select>
                             </div>
                             <div class="form-group">
-                                <label>配件分类描述：</label>
+                                <label class="control-label">配件分类描述：</label>
                                 <textarea name="accTypeDes" cols="20" rows="5" class="form-control" ></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
@@ -120,15 +120,15 @@
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="accessoriesType.accTypeId" name="accTypeId" id = "accTypeId"/>
                             <div class="form-group">
-                                <label>配件分类名称：</label>
+                                <label class="control-label">配件分类名称：</label>
                                 <input type="text" attr="accessoriesType.accTypeName" name="accTypeName" id="accTypeName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>配件所属公司：</label>
+                                <label class="control-label">配件所属公司：</label>
                                 <select id="editCompany" class="js-example-tags form-control accType_company" name="companyId"></select>
                             </div>
                             <div class="form-group">
-                                <label>配件分类描述：</label>
+                                <label class="control-label">配件分类描述：</label>
                                 <textarea attr="accessoriesType.accTypeDes" name="accTypeDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
