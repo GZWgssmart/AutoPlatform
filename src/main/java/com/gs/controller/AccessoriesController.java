@@ -91,18 +91,30 @@ public class AccessoriesController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "accessories_All", method = RequestMethod.GET)
+    @RequestMapping(value = "queryAll", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
         logger.info("查询配件");
-        List<Accessories> accessoriessList = accessoriesService.queryAll();
+        List<Accessories> accessoriesList = accessoriesService.queryAll();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
-        for (Accessories accessories : accessoriessList) {
+        for (Accessories accessoriess : accessoriesList) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(accessories.getAccId());
-            comboBox4EasyUI.setText(accessories.getAccName());
+            comboBox4EasyUI.setId(accessoriess.getAccId());
+            comboBox4EasyUI.setText(accessoriess.getAccName());
             comboBox4EasyUIs.add(comboBox4EasyUI);
         }
         return comboBox4EasyUIs;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByIdAcc", method = RequestMethod.GET)
+    public Pager4EasyUI<Accessories> queryByIdAccPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,@Param("id")String id) {
+        Pager pager = new Pager();
+        logger.info("分页查询所有配件");
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(accessoriesService.count());
+        List<Accessories> accessoriesList = accessoriesService.queryByIdPager(id,pager);
+        return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
     }
 
     @InitBinder

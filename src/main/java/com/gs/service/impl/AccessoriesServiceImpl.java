@@ -40,8 +40,12 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 	public List<Accessories> queryByStatusPager(String accStatus, Pager pager) {
 		return accessoriesDAO.queryByStatusPager(accStatus, pager);
 	}
-	public int countByStatus(String accStatus) {
-		return accessoriesDAO.countByStatus(accStatus);
+	public int countByStatus(String status) {
+		return accessoriesDAO.countByStatus(status);
+	}
+
+	public List<Accessories> queryByIdPager(String id, Pager pager) {
+		return accessoriesDAO.queryByIdPager(id,pager);
 	}
 
 }

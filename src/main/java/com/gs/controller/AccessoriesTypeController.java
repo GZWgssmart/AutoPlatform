@@ -104,6 +104,7 @@ public class AccessoriesTypeController {
         } else {
             logger.info("分页查询不可用的配件分类");
         }
+        System.out.printf(status + ", " + pageNumber + ", " + pageSize + ", " + accessoriesTypeService.countByStatus(status));
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));

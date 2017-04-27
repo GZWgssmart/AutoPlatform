@@ -15,6 +15,6 @@ import java.util.List;
 public interface AccessoriesTypeService extends BaseService<String, AccessoriesType>{
 
     public List<AccessoriesType> queryByStatusPager(String accTypeStatus, Pager pager);
-    public int countByStatus(String accTypeStatus);
+    public int countByStatus(String status);
 
 }

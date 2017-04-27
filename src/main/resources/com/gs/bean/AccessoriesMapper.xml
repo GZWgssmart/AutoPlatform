@@ -114,8 +114,12 @@
 
 	<select id="queryByStatusPager" resultType="list" resultMap="accessoriesResultMap">
 		<![CDATA[
-			select * from t_accessories where accStatus = #{accStatus} limit #{pager.beginIndex}, #{pager.pageSize}
+			select ac.*, s.supplyId, s.supplyName, at.accTypeId, at.accTypeName, cpy.companyId, cpy.companyName
+			from t_accessories ac, t_supply s, t_accessories_type at, t_company cpy
+			where s.supplyId = ac.supply and at.accTypeId = ac.accTypeId and cpy.companyId = ac.companyId and ac.accStatus = #{accStatus}
+			order by ac.accCreatedTime Desc, ac.companyId
 		]]>
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
