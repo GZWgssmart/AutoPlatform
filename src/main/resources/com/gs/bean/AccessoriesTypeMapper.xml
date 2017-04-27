@@ -18,7 +18,7 @@
 
 	<insert id="insert"  parameterType="accessoriesType">
 		<![CDATA[
-			INSERT into t_accessories_type(accTypeId, accTypeName, accTypeDes, companyId, accTypeStatus) values(uuid(), #{accTypeName}, #{accTypeDes}, #{companyId}, 'Y')
+			INSERT into t_accessories_type(accTypeId, accTypeName, accTypeDes, companyId, accTypeStatus) values (#{accTypeId}, #{accTypeName}, #{accTypeDes}, #{companyId}, 'Y')
 		]]>
 	</insert>
 
