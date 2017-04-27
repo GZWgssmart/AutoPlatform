@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaintainRecord;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -96,5 +97,13 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
 
     public List<MaintainRecord> queryPagerByCondition(Pager pager, MaintainRecord record) {
         return maintainRecordDAO.queryPagerByCondition(pager, record);
+    }
+
+    public int countByTrackStatus(String status) {
+        return maintainRecordDAO.countByTrackStatus(status);
+    }
+
+    public List<MaintainRecord> queryPagerByTrackStatus(@Param("pager") Pager pager, @Param("status") String status) {
+        return maintainRecordDAO.queryPagerByTrackStatus(pager, status);
     }
 }

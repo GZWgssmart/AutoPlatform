@@ -45,4 +45,19 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      */
     public List<MaintainRecord> queryPagerByCondition(@Param("pager") Pager pager, @Param("record") MaintainRecord record);
 
+    /**
+     * 根据状态计数
+     * @param status
+     * @return
+     */
+    public int countByTrackStatus(String status);
+
+    /**
+     * 根据状态分页查询
+     * @param pager
+     * @param status
+     * @return
+     */
+    public List<MaintainRecord> queryPagerByTrackStatus(@Param("pager") Pager pager, @Param("status") String status);
+
 }

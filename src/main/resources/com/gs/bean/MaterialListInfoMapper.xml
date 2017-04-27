@@ -8,20 +8,48 @@
         <result column="materialCount" property="materialCount"/>
         <result column="materialCreatedTime" property="materialCreatedTime"/>
         <result column="materialStatus" property="materialStatus"/>
-        <result column="userName" property="userName" />
-        <result column="userRequests" property="userRequests" />
-        <result column="maintainName" property="maintainName" />
-        <result column="maintainMoney" property="maintainMoney" />
-        <result column="accName" property="accName" />
+        <result column="userName" property="userName"/>
+        <result column="userRequests" property="userRequests"/>
+        <result column="maintainName" property="maintainName"/>
+        <result column="maintainMoney" property="maintainMoney"/>
+        <result column="accName" property="accName"/>
     </resultMap>
 
-    <select id="queryByPager"  resultMap="materialListInfoResultMap" parameterType="com.gs.common.bean.Pager">
+    <select id="queryByPager" resultMap="materialListInfoResultMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
 			SELECT ml.materialId, ml.materialCount, ml.materialCreatedTime, ml.materialStatus, c.userName, c.userRequests, mf.maintainName,
 			mf.maintainMoney, a.accName FROM t_material_list ml, t_maintain_record mr, t_maintain_detail md, t_maintain_fix mf, t_accessories a, t_checkin c
 			WHERE ml.accId = a.accId AND ml.recordId = mr.recordId AND mr.recordId = md.recordId
 			AND md.maintainId = mf.maintainId AND mr.checkinId = c.checkinId
+			order by ml.materialCreatedTime asc, c.userName
 		]]> limit #{beginIndex}, #{pageSize}
+    </select>
+
+    <select id="termQueryPager" resultMap="materialListInfoResultMap">
+        <![CDATA[
+			SELECT ml.materialId, ml.materialCount, ml.materialCreatedTime, ml.materialStatus, c.userName, c.userRequests, mf.maintainName,
+			mf.maintainMoney, a.accName FROM t_material_list ml, t_maintain_record mr, t_maintain_detail md, t_maintain_fix mf, t_accessories a, t_checkin c
+			WHERE ml.accId = a.accId AND ml.recordId = mr.recordId AND mr.recordId = md.recordId
+			AND md.maintainId = mf.maintainId AND mr.checkinId = c.checkinId
+		]]>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != '' ">
+            and (ml.materialCreatedTime &gt;= #{startTime} and ml.materialCreatedTime &lt;= #{endTime})
+        </if>
+        <if test="userName != null and userName != '' ">
+            and c.userName like concat('%',#{userName},'%')
+        </if>
+        order by ml.materialCreatedTime asc, c.userName
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="queryByStatus" resultMap="materialListInfoResultMap">
+        <![CDATA[
+			SELECT ml.materialId, ml.materialCount, ml.materialCreatedTime, ml.materialStatus, c.userName, c.userRequests, mf.maintainName,
+			mf.maintainMoney, a.accName FROM t_material_list ml, t_maintain_record mr, t_maintain_detail md, t_maintain_fix mf, t_accessories a, t_checkin c
+			WHERE ml.accId = a.accId AND ml.recordId = mr.recordId AND mr.recordId = md.recordId
+			AND md.maintainId = mf.maintainId AND mr.checkinId = c.checkinId AND ml.materialStatus = #{status}
+			order by ml.materialCreatedTime asc, c.userName
+		]]> limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
     <select id="count" resultType="int">
@@ -30,16 +58,44 @@
         ]]>
     </select>
 
+    <select id="statusCount" parameterType="string" resultType="int">
+        <![CDATA[
+            select count(*) from t_material_list
+        ]]>
+    </select>
+
+    <select id="termCount" resultType="int">
+        <![CDATA[
+            select count(*) from t_material_list ml, t_maintain_record mr, t_maintain_detail md, t_maintain_fix mf, t_accessories a, t_checkin c
+			WHERE ml.accId = a.accId AND ml.recordId = mr.recordId AND mr.recordId = md.recordId
+			AND md.maintainId = mf.maintainId AND mr.checkinId = c.checkinId
+        ]]>
+        <if test="startTime != null and startTime != '' and endTime != null and endTime != '' ">
+            and (ml.materialCreatedTime &gt;= #{startTime} and ml.materialCreatedTime &lt;= #{endTime})
+        </if>
+        <if test="userName != null and userName != '' ">
+            and c.userName like concat('%',#{userName},'%')
+        </if>
+    </select>
+
     <update id="inactive" parameterType="string">
         <![CDATA[
+
+
 			update t_material_list set materialStatus = 'N' where materialId = #{materialId}
-		]]>
+
+
+        ]]>
     </update>
 
     <update id="active" parameterType="string">
         <![CDATA[
+
+
 			update t_material_list set materialStatus = 'Y' where materialId = #{materialId}
-		]]>
+
+
+        ]]>
     </update>
 
 </mapper>

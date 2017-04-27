@@ -58,8 +58,8 @@
             <%--<a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>--%>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 回访
+            <a><button onclick="showCustomer();" type="button" id="edit" class="btn btn-default">
+                <i class="glyphicon glyphicon-pencil"></i> 添加回访
             </button></a>
 
         </div>
@@ -156,6 +156,50 @@
         </div>
     </div>
 </div>
+
+<div id="customerWin" class="modal fade" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 85%;height: 60%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">添加回访</h3>
+                        <table class="table table-hover" id="customerTable"
+                               data-pagination="true"
+                               data-show-refresh="true"
+                               data-show-toggle="true"
+                               data-showColumns="true"
+                               data-height="440">
+                            <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th data-field="checkin.userName">
+                                    车主名
+                                </th>
+                                <th data-field="checkin.userPhone">
+                                    车主手机号
+                                </th>
+                                <th data-field="operate" data-formatter="userFormatter" data-events="userEvents">
+                                    操作
+                                </th>
+                            </tr>
+                            </thead>
+                        </table>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <input type="button" onclick="addCustomer()" class="btn btn-primary" value="确定添加">
+                            </input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
