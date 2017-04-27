@@ -103,7 +103,19 @@ public class CheckinController {
     public ControllerResult addCheckin(Checkin checkin) {
         logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录和工单信息");
         String checkinId = UUIDUtil.uuid();
-        String userId = UUIDUtil.uuid();
+        String userId = "";
+        if (checkin.getUserId() != null && checkin.getUserId() != "") {
+            userId = checkin.getUserId();
+        } else {
+            userId = UUIDUtil.uuid();
+            User user = new User();
+            user.setUserId(userId);
+            user.setUserPhone(checkin.getUserPhone());
+            user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+            user.setUserName(checkin.getUserName());
+
+            userService.insert(user);
+        }
         checkin.setCheckinId(checkinId);
         checkin.setUserId(userId);
         checkin.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
@@ -118,14 +130,6 @@ public class CheckinController {
         WorkInfo workInfo = new WorkInfo();
         workInfo.setRecordId(recordId);
 
-
-        User user = new User();
-        user.setUserId(userId);
-        user.setUserPhone(checkin.getUserPhone());
-        user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
-        user.setUserName(checkin.getUserName());
-
-        userService.insert(user);
         workInfoService.insert(workInfo);
         maintainRecordService.insert(maintainRecord);
         checkinService.insert(checkin);

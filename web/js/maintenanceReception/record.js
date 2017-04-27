@@ -15,6 +15,25 @@ $(document).ready(function () {
 
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
 
+    $("#maintainFixWin").on("hide.bs.modal", function () {
+        $("#carPlate").html('&nbsp;');
+        $("#userName").html('&nbsp;');
+        $("#userPhone").html('&nbsp;');
+        $("#maintainCarMileage").html('&nbsp;');
+        $("#startTime").html('&nbsp;');
+
+        for (var i = 0; i < 10; i++) {
+            $("#maintainName" + i).html('&nbsp;');
+            $("#maintainPrice" + i).html('&nbsp;');
+
+            $("#fixName" + i).html('&nbsp;');
+            $("#fixAcc" + i).html('&nbsp;');
+            $("#fixCarMileage" + i).html('&nbsp;');
+            $("#fixUser" + i).html('&nbsp;');
+            $("#fixTime" + i).html('&nbsp;');
+        }
+    });
+
 });
 
 /** 格式化操作栏的按钮 */
@@ -308,13 +327,38 @@ function generateDetail() {
         return false;
     } else {
         var len = selectRow.length;
-        for (var i = 0; i < len; i++) {
-            var detail = selectRow[i];
-        }
         var detail1 = selectRow[0];
+        var maintainOrFix = detail1.record.checkin.maintainOrFix;
+        if (maintainOrFix == "保养") {
+            for (var i = 0; i < len; i++) {
+                var detail = selectRow[i];
+                $("#maintainName" + i).html(detail.maintain.maintainName);
+                $("#maintainPrice" + i).html(detail.price);
+            }
+        } else if (maintainOrFix == "维修") {
+            for (var i = 0; i < len; i++) {
+                var detail = selectRow[i];
+                $("#fixName" + i).html(detail.maintain.maintainName);
+                $("#fixAcc" + i).html("配件名");
+                $("#fixCarMileage" + i).html(detail.record.checkin.carMileage);
+                $("#fixUser" + i).html("张师傅");
+                $("#fixTime" + i).html(formatterDate1(detail.record.startTime));
+            }
+        }
 
-        var carPlate = detail.record.checkin.plate.plateName + "-" + detail1.record.checkin.carPlate;
+
+
+        var carPlate = detail1.record.checkin.plate.plateName + "-" + detail1.record.checkin.carPlate;
+        var userName = detail1.record.checkin.userName;
+        var userPhone = detail1.record.checkin.userPhone;
+        var maintainCarMileage = detail1.record.checkin.carMileage;
+        var startTime = detail1.record.startTime;
         $("#carPlate").html(carPlate);
+        $("#userName").html(userName);
+        $("#userPhone").html(userPhone);
+        $("#maintainCarMileage").html(maintainCarMileage);
+        $("#startTime").html(formatterDate1(startTime));
+
         $("#maintainFixWin").modal("show");
     }
 }

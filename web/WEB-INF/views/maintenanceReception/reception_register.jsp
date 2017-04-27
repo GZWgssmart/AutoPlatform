@@ -214,13 +214,13 @@
 
                             <div class="form-group">
                                 <label>汽车车牌：</label>
-                                <select id="editCarPlate" maxlength="5" class="js-example-tags form-control car_plate" name="plateId">
+                                <select id="editCarPlate" class="js-example-tags form-control car_plate" name="plateId">
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">车牌号码：</label>
-                                <input type="text" attr="checkin.carPlate" name="carPlate" class="form-control"/>
+                                <input type="text" attr="checkin.carPlate" maxlength="5" name="carPlate" class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -330,13 +330,13 @@
 
                             <div class="form-group">
                                 <label class="control-label">汽车车牌：</label>
-                                <select id="addCarPlate" maxlength="5" class="js-example-tags form-control car_plate" name="plateId">
+                                <select id="addCarPlate" class="js-example-tags form-control car_plate" name="plateId">
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">车牌号码：</label>
-                                <input type="text" name="carPlate" class="form-control"/>
+                                <input type="text" name="carPlate" maxlength="5" class="form-control"/>
                             </div>
 
                             <div class="form-group">

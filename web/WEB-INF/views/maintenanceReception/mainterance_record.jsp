@@ -505,6 +505,12 @@
                                 公司车辆维修、保养清单
                             </div>
                             <div class="bootom_border float_left">
+                                <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">车主姓名</div>
+                                <div id="userName" class="right_border col-sm-3 bootom_border">&nbsp;</div>
+                                <div class="right_border col-sm-2 bootom_border" style="font-weight: bold;">车主电话</div>
+                                <div id="userPhone" class="col-sm-4 bootom_border">&nbsp;</div>
+                            </div>
+                            <div class="bootom_border float_left">
                                 <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">车牌号及车型</div>
                                 <div id="carPlate" class="right_border col-sm-3 bootom_border">&nbsp;</div>
                                 <div class="right_border col-sm-2 bootom_border" style="font-weight: bold;">首保里程</div>
@@ -649,6 +655,13 @@
                                 <div id="fixCarMileage8" class="bootom_border right_border col-sm-2">&nbsp;</div>
                                 <div id="fixUser8" class="bootom_border right_border col-sm-2">&nbsp;</div>
                                 <div id="fixTime8" class="bootom_border col-sm-2">&nbsp;</div>
+                            </div>
+                            <div class="float_left">
+                                <div id="fixName9" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixAcc9" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixCarMileage9" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixUser9" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixTime9" class="bootom_border col-sm-2">&nbsp;</div>
                             </div>
 
 
