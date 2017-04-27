@@ -54,9 +54,16 @@ function showSearchForm() {
 }
 
 function bySelectSearch() {
-    var accName = $("#userName").val();
-    var buyTimeStart = $("#createTimeStart").val();
-    var buyTimeEnd = $("#createTimeEnd").val();
-    initTable("cusTable", "/accessoriesBuy/byAccNameSearch?accName=" + accName + "&buyTimeStart=" + buyTimeStart + "&buyTimeEnd=" + buyTimeEnd);
+    var userName = $("#userName").val();
+    var startTime = $("#createTimeStart").val();
+    var endTime = $("#createTimeEnd").val();
+    initTable("cusTable", "/materialList/select_query?userName=" + userName + "&startTime=" + startTime + "&endTime=" + endTime);
+}
 
+function queryStatus(status) {
+    initTable('cusTable', contextPath + '/materialList/queryByStatus_materialList?status=' + status);
+}
+
+function queryAll() {
+    initTable('cusTable', contextPath + '/materialList/query_pager');
 }

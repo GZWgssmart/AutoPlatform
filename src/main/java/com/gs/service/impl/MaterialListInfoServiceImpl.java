@@ -77,4 +77,16 @@ public class MaterialListInfoServiceImpl implements MaterialListInfoService {
     public int active(String id) {
         return materialListInfoDAO.active(id);
     }
+
+    public List<MaterialListInfo> queryByStatus(Pager pager, String status) {
+        return materialListInfoDAO.queryByStatus(pager, status);
+    }
+
+    public int termCount(String userName, String startTime, String endTime) {
+        return materialListInfoDAO.termCount(userName, startTime, endTime);
+    }
+
+    public List<MaterialListInfo> termQueryPager(Pager pager, String userName, String startTime, String endTime) {
+        return materialListInfoDAO.termQueryPager(pager, userName, startTime, endTime);
+    }
 }
