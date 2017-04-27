@@ -210,7 +210,7 @@
 
                             <div class="form-group">
                                 <label>预估到店时间：</label>
-                                <input id="editDatetimepicker" readonly type="text" name="arriveTime"
+                                <input id="addDatetimepicker" readonly type="text" name="arriveTime"
                                        class="form-control datetimepicker"/>
                             </div>
 

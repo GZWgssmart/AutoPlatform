@@ -9,7 +9,6 @@ $(document).ready(function () {
     initDateTimePicker("datetimepicker", "arriveTime");
     destoryValidator("addWin","addForm");
     destoryValidator("editWin","editForm");
-
 });
 /** 添加选择品牌 */
 function checkBrand(combo) {
@@ -212,7 +211,7 @@ function validator(formId) {
             }
         }
     })
-       .on('success.form.bv', function (e) {
+        .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/appointment/add", formId, "addWin");
             } else if (formId == "editForm") {

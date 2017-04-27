@@ -2,9 +2,13 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Company;
+import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
+import com.gs.common.util.EncryptUtil;
+import com.gs.common.util.UUIDUtil;
+import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -36,6 +40,8 @@ public class AppointmentController {
     @Resource
     private AppointmentService appointmentService;
 
+    @Resource
+    private UserService userService;
 
     @RequestMapping(value = "appointment", method = RequestMethod.GET)
     public String appointment() {
@@ -59,9 +65,19 @@ public class AppointmentController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult appointmentAdd(Appointment appointment){
         logger.info("添加预约");
+        String userId = UUIDUtil.uuid();
+
+        appointment.setUserId(userId);
         appointment.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+
+        User user = new User();
+        user.setUserId(userId);
+        user.setUserPhone(appointment.getUserPhone());
+        user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+        user.setUserName(appointment.getUserName());
+
+        userService.insert(user);
         appointmentService.insert(appointment);
-        System.out.print(appointment);
         return ControllerResult.getSuccessResult("添加成功");
     }
 
