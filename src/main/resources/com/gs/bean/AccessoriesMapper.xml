@@ -101,6 +101,13 @@
         ]]>
 	</select>
 
+	<select id="queryByIdPager" resultType="list" resultMap="accessoriesResultMap"
+			parameterType="com.gs.common.bean.Pager">
+		<![CDATA[
+			select * from t_accessories where accTypeId = #{id} limit #{beginIndex}, #{pageSize}
+        ]]>
+	</select>
+
 	<select id="queryByPager" resultType="list" resultMap="accessoriesResultMap"
 			parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
@@ -112,11 +119,11 @@
 		limit #{beginIndex}, #{pageSize}
 	</select>
 
-	<select id="queryByStatusPager" resultType="list" resultMap="accessoriesResultMap">
+	<select id="queryByStatusPager" resultMap="accessoriesResultMap">
 		<![CDATA[
 			select ac.*, s.supplyId, s.supplyName, at.accTypeId, at.accTypeName, cpy.companyId, cpy.companyName
 			from t_accessories ac, t_supply s, t_accessories_type at, t_company cpy
-			where s.supplyId = ac.supply and at.accTypeId = ac.accTypeId and cpy.companyId = ac.companyId and ac.accStatus = #{accStatus}
+			where s.supplyId = ac.supplyId and at.accTypeId = ac.accTypeId and cpy.companyId = ac.companyId and ac.accStatus = #{accStatus}
 			order by ac.accCreatedTime Desc, ac.companyId
 		]]>
 		limit #{pager.beginIndex}, #{pager.pageSize}

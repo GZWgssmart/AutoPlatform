@@ -15,7 +15,7 @@
     <title>库存管理</title>
 
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
