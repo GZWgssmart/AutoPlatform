@@ -21,6 +21,7 @@ $(document).ready(function () {
         $("#userPhone").html('&nbsp;');
         $("#maintainCarMileage").html('&nbsp;');
         $("#startTime").html('&nbsp;');
+        $("#count").html('&nbsp;');
 
         for (var i = 0; i < 10; i++) {
             $("#maintainName" + i).html('&nbsp;');
@@ -329,12 +330,15 @@ function generateDetail() {
         var len = selectRow.length;
         var detail1 = selectRow[0];
         var maintainOrFix = detail1.record.checkin.maintainOrFix;
+        var count = 0;
         if (maintainOrFix == "保养") {
             for (var i = 0; i < len; i++) {
                 var detail = selectRow[i];
                 $("#maintainName" + i).html(detail.maintain.maintainName);
                 $("#maintainPrice" + i).html(detail.price);
+                count += detail.price;
             }
+            $("#count").html(count);
         } else if (maintainOrFix == "维修") {
             for (var i = 0; i < len; i++) {
                 var detail = selectRow[i];

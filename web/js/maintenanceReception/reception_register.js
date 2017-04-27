@@ -148,6 +148,7 @@ function setData(appointment) {
     $("#addUserName").val(appointment.userName);
     $("#addUserPhone").val(appointment.userPhone);
     $("#addUserId").val(appointment.userId);
+    $("#addCarPlateNumber").val(appointment.carPlate);
     $("#addAppointmentId").val(appointment.appointmentId);
     $("#addDatetimepicker").val(formatterDate(appointment.arriveTime));
     $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");

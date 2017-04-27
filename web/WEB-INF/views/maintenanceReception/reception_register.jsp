@@ -336,7 +336,7 @@
 
                             <div class="form-group">
                                 <label class="control-label">车牌号码：</label>
-                                <input type="text" name="carPlate" maxlength="5" class="form-control"/>
+                                <input id="addCarPlateNumber" type="text" name="carPlate" maxlength="5" class="form-control"/>
                             </div>
 
                             <div class="form-group">
