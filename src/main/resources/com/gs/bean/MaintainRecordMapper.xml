@@ -20,6 +20,7 @@
             <result column="carPlate" property="carPlate"/>
             <result column="userPhone" property="userPhone"/>
             <result column="userId" property="userId"/>
+            <result column="userRequests" property="userRequests"/>
             <result column="maintainOrFix" property="maintainOrFix"/>
         </association>
         <association property="company" javaType="com.gs.bean.Company">
