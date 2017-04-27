@@ -29,12 +29,12 @@ function showAddWin() {
 function operateFormatter(value, row, index) {
     if (row.supplyStatus == 'Y') {
         return [
-            '<button type="button" class="updateActive btn btn-danger  btn-sm" style="margin-right:15px;" >冻结</button>',
+            '<button type="button" class="updateInactive btn btn-danger  btn-sm" style="margin-right:15px;" >冻结</button>',
             '<button type="button" class="showUpdateSupplyType1 btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     }else{
         return [
-            '<button type="button" class="updateInactive btn btn-success  btn-sm" style="margin-right:15px;" >激活</button>',
+            '<button type="button" class="updateActive btn btn-success  btn-sm" style="margin-right:15px;" >激活</button>',
             '<button type="button" class="showUpdateSupplyType1 btn btn-primary  btn-sm" style="margin-right:15px;">编辑</button>'
         ].join('');
     }
@@ -42,8 +42,7 @@ function operateFormatter(value, row, index) {
 }
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
-        var status = 'N';
-        $.get(contextPath + "/supply/updateStatus?id=" + row.supplyId + "&status=" + status,
+        $.get("/supply/updateStatus?id=" + row.supplyId + "&status=Y",
             function(data){
                 if(data.result == "success"){
                     $('#cusTable').bootstrapTable('refresh');
@@ -54,7 +53,7 @@ window.operateEvents = {
     },
     'click .updateInactive': function (e, value, row, index) {
         var status = 'Y';
-        $.get(contextPath + "/supply/updateStatus?id=" + row.supplyId + "&status=" + status,
+        $.get("/supply/updateStatus?id=" + row.supplyId + "&status=N",
             function(data){
                 if(data.result == "success"){
                     $('#cusTable').bootstrapTable('refresh');

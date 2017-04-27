@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/supplyType/queryByPager?status=ALL");
@@ -28,12 +29,12 @@ function showAddWin() {
 function operateFormatter(value, row, index) {
     if (row.supplyTypeStatus == 'Y') {
         return [
-            '<button type="button" class="updateActive btn btn-danger  btn-sm" style="margin-right:15px;" >冻结</button>',
+            '<button type="button" class="updateInActive btn btn-danger  btn-sm" style="margin-right:15px;" >冻结</button>',
             '<button type="button" class="showUpdateSupplyType1 btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     }else{
         return [
-            '<button type="button" class="updateInactive btn btn-success  btn-sm" style="margin-right:15px;" >激活</button>',
+            '<button type="button" class="updateActive btn btn-success  btn-sm" style="margin-right:15px;" >激活</button>',
             '<button type="button" class="showUpdateSupplyType1 btn btn-primary  btn-sm" style="margin-right:15px;">编辑</button>'
         ].join('');
     }
@@ -41,8 +42,7 @@ function operateFormatter(value, row, index) {
 }
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
-        var status = 'N';
-        $.get(contextPath + "/supplyType/updateStatus?id=" + row.supplyTypeId + "&status=" + status,
+        $.get("/supplyType/updateStatus?id=" + row.supplyTypeId + "&status=Y",
             function(data){
                 if(data.result == "success"){
                     $('#cusTable').bootstrapTable('refresh');
@@ -52,8 +52,7 @@ window.operateEvents = {
             },"json");
     },
     'click .updateInactive': function (e, value, row, index) {
-        var status = 'Y';
-        $.get(contextPath + "/supplyType/updateStatus?id=" + row.supplyTypeId + "&status=" + status,
+        $.get("/supplyType/updateStatus?id=" + row.supplyTypeId + "&status=N",
             function(data){
                 if(data.result == "success"){
                     $('#cusTable').bootstrapTable('refresh');
@@ -63,10 +62,9 @@ window.operateEvents = {
             },"json");
     },
     'click .showUpdateSupplyType1': function (e, value, row, index) {
-        validator("editForm");
         var supplyType = row;
+        validator("editForm");
         $("#editForm").fill(supplyType);
-        $("#addButton").removeAttr("disabled");
         $("#editWin").modal('show');
     }
 }
