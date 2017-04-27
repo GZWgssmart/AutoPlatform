@@ -235,18 +235,6 @@ function closeEditDetailWin() {
     $("#searchDetailWin").modal('show');
 }
 
-/** 格式化现价 */
-function formatterPrice(value, row, index) {
-    var maintainDiscount = parseFloat(row.maintainDiscount); // 折扣或减价
-    var maintainMoney = parseFloat(row.maintain.maintainMoney); // 原价
-    if (maintainDiscount < 1) {
-        return "$" + maintainMoney * maintainDiscount;
-    } else {
-        var temp = maintainMoney - maintainDiscount;
-        return temp > 0 ? "$" + temp : "$" + 0;
-    }
-}
-
 /** 格式化原价 */
 function formatterMoney(value, row, index) {
     return "$" + value;
@@ -319,6 +307,14 @@ function generateDetail() {
         swal('错误提示', "最少选择一条数据", "error");
         return false;
     } else {
+        var len = selectRow.length;
+        for (var i = 0; i < len; i++) {
+            var detail = selectRow[i];
+        }
+        var detail1 = selectRow[0];
+
+        var carPlate = detail.record.checkin.plate.plateName + "-" + detail1.record.checkin.carPlate;
+        $("#carPlate").html(carPlate);
         $("#maintainFixWin").modal("show");
     }
 }

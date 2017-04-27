@@ -285,7 +285,7 @@
                                 <th data-field="maintainDiscount" data-formatter="formatterDiscount">
                                     打折&nbsp;|&nbsp;减价
                                 </th>
-                                 <th data-field="price" data-formatter="formatterPrice">
+                                 <th data-field="price" data-formatter="formatterMoney">
                                     现价
                                 </th>
                                 <th data-field="detailCreatedTime" data-formatter="formatterDate">
@@ -495,126 +495,167 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">维修、保养清单</h3>
+                        <h3 class="m-t-none m-b">
+                            <button type="button" class="btn btn-info">
+                                <i class="glyphicon glyphicon-floppy-disk"></i> 打印
+                            </button>
+                        </h3>
                         <div class="content col-sm-12">
-                            <div class="title bootom_border">
+                            <div class="title">
                                 公司车辆维修、保养清单
                             </div>
                             <div class="bootom_border float_left">
                                 <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">车牌号及车型</div>
-                                <div class="right_border col-sm-3 bootom_border">赣B-876567</div>
+                                <div id="carPlate" class="right_border col-sm-3 bootom_border">&nbsp;</div>
                                 <div class="right_border col-sm-2 bootom_border" style="font-weight: bold;">首保里程</div>
-                                <div class="col-sm-4 bootom_border">100km</div>
+                                <div class="col-sm-4 bootom_border">&nbsp;</div>
                             </div>
                             <div class="bootom_border float_left">
                                 <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">保养里程（km）</div>
                                 <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">保养时间</div>
                                 <div class="col-sm-6 bootom_border" style="font-weight: bold;">保养项目</div>
                             </div>
-                            <div class="bootom_border" style="height:280px;">
-                                <div class="right_border col-sm-3" style="float:left;height:280px;line-height:245px;">40411</div>
-                                <div class="right_border col-sm-3" style="float:left;height:280px;line-height:245px;">2017.06.12</div>
-                                <div class="text_left col-sm-6" style="float:left; padding: 0;">
-                                    <div class="bootom_border">&nbsp; 项目1 1200.00</div>
-                                    <div class="bootom_border">&nbsp;</div>
-                                    <div class="bootom_border">&nbsp;</div>
-                                    <div class="bootom_border">&nbsp;</div>
-                                    <div class="bootom_border">&nbsp;</div>
-                                    <div class="bootom_border">&nbsp;</div>
-                                    <div class="bootom_border">&nbsp;</div>
-                                    <div class="bootom_border">&nbsp;</div>
-                                    <div class="bootom_border">&nbsp;</div>
-                                    <div class="bootom_border">&nbsp;</div>
-                                    <div>合计：1200</div>
+                            <div style="padding: 0;">
+                                <%--汽车保养里程--%>
+                                <div id="maintainCarMileage" class="right_border bootom_border col-sm-3" style="float:left;height:252px;line-height:250px;">
+                                    &nbsp;
+                                </div>
+                                <%--汽车保养时间--%>
+                                <div id="startTime" class="right_border bootom_border col-sm-3" style="float:left;height:252px;line-height:250px;">
+                                    &nbsp;
+                                </div>
+                                <div class="text_left col-sm-6" style="float:left;padding:0;">
+                                    <div style="font-weight: bold;">
+                                        <div class="bootom_border right_border col-sm-6">项目名</div>
+                                        <div class="bootom_border col-sm-6">价格</div>
+                                    </div>
+                                    <div>
+                                        <div id="maintainName0" class="bootom_border right_border col-sm-6">&nbsp;</div>
+                                        <div id="maintainPrice0" class="bootom_border col-sm-6">&nbsp;</div>
+                                    </div>
+                                    <div>
+                                        <div id="maintainName1" class="bootom_border right_border col-sm-6">&nbsp;</div>
+                                        <div id="maintainPrice1" class="bootom_border col-sm-6">&nbsp;</div>
+                                    </div>
+                                    <div>
+                                        <div id="maintainName2" class="bootom_border right_border col-sm-6">&nbsp;</div>
+                                        <div id="maintainPrice2" class="bootom_border col-sm-6">&nbsp;</div>
+                                    </div>
+                                    <div>
+                                        <div id="maintainName3" class="bootom_border right_border col-sm-6">&nbsp;</div>
+                                        <div id="maintainPrice3" class="bootom_border col-sm-6">&nbsp;</div>
+                                    </div>
+                                    <div>
+                                        <div id="maintainName4" class="bootom_border right_border col-sm-6">&nbsp;</div>
+                                        <div id="maintainPrice4" class="bootom_border col-sm-6">&nbsp;</div>
+                                    </div>
+                                    <div>
+                                        <div id="maintainName5" class="bootom_border right_border col-sm-6">&nbsp;</div>
+                                        <div id="maintainPrice5" class="bootom_border col-sm-6">&nbsp;</div>
+                                    </div>
+                                    <div>
+                                        <div id="maintainName6" class="bootom_border right_border col-sm-6">&nbsp;</div>
+                                        <div id="maintainPrice6" class="bootom_border col-sm-6">&nbsp;</div>
+                                    </div>
+                                    <div>
+                                        <div id="maintainName7" class="bootom_border right_border col-sm-6">&nbsp;</div>
+                                        <div id="maintainPrice7" class="bootom_border col-sm-6">&nbsp;</div>
+                                    </div>
+                                    <div>
+                                        <div id="maintainName8" class="bootom_border right_border col-sm-6">&nbsp;</div>
+                                        <div id="maintainPrice8" class="bootom_border col-sm-6">&nbsp;</div>
+                                    </div>
+                                    <div>
+                                        <div id="maintainName9" class="bootom_border right_border col-sm-6">&nbsp;</div>
+                                        <div id="maintainPrice9" class="bootom_border col-sm-6">&nbsp;</div>
+                                    </div>
+
+                                    <div>
+                                        <div class="bootom_border right_border col-sm-6">&nbsp;合计：</div>
+                                        <div id="count" class="bootom_border col-sm-6">&nbsp;</div>
+                                    </div>
                                 </div>
                                 <p class="clear"></p>
                             </div>
                             <div class="bootom_border" style="font-weight: bold;">
                                 维修记录
                             </div>
-                            <div class="bootom_border float_left" style="font-weight: bold;">
-                                <div class="right_border col-sm-3">维修项目</div>
-                                <div class="right_border col-sm-3">更换配件名称</div>
-                                <div class="right_border col-sm-2">里程（km）</div>
-                                <div class="right_border col-sm-2">经手人</div>
-                                <div class="col-sm-2">日期</div>
+                            <div class="float_left" style="font-weight: bold;">
+                                <div class="bootom_border right_border col-sm-3">维修项目</div>
+                                <div class="bootom_border right_border col-sm-3">更换配件名称</div>
+                                <div class="bootom_border right_border col-sm-2">里程（km）</div>
+                                <div class="bootom_border right_border col-sm-2">经手人</div>
+                                <div class="bootom_border col-sm-2">日期</div>
                             </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3">&nbsp;项目1</div>
-                                <div class="right_border col-sm-3">&nbsp;配件</div>
-                                <div class="right_border col-sm-2">&nbsp;123</div>
-                                <div class="right_border col-sm-2">&nbsp;张师傅</div>
-                                <div class="col-sm-2">&nbsp;2017.06.23</div>
+                            <div class="float_left">
+                                <div id="fixName0" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixAcc0" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixCarMileage0" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixUser0" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixTime0" class="bootom_border col-sm-2">&nbsp;</div>
                             </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="col-sm-2">&nbsp;</div>
-                                <p class="clear"></p>
+                            <div class="float_left">
+                                <div id="fixName1" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixAcc1" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixCarMileage1" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixUser1" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixTime1" class="bootom_border col-sm-2">&nbsp;</div>
                             </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="col-sm-2">&nbsp;</div>
-                                <p class="clear"></p>
+                            <div class="float_left">
+                                <div id="fixName2" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixAcc2" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixCarMileage2" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixUser2" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixTime2" class="bootom_border col-sm-2">&nbsp;</div>
                             </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="col-sm-2">&nbsp;</div>
-                                <p class="clear"></p>
+                            <div class="float_left">
+                                <div id="fixName3" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixAcc3" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixCarMileage3" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixUser3" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixTime3" class="bootom_border col-sm-2">&nbsp;</div>
                             </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="col-sm-2">&nbsp;</div>
-                                <p class="clear"></p>
+                            <div class="float_left">
+                                <div id="fixName4" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixAcc4" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixCarMileage4" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixUser4" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixTime4" class="bootom_border col-sm-2">&nbsp;</div>
                             </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="col-sm-2">&nbsp;</div>
-                                <p class="clear"></p>
+                            <div class="float_left">
+                                <div id="fixName5" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixAcc5" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixCarMileage5" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixUser5" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixTime5" class="bootom_border col-sm-2">&nbsp;</div>
                             </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="col-sm-2">&nbsp;</div>
-                                <p class="clear"></p>
+                            <div class="float_left">
+                                <div id="fixName6" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixAcc6" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixCarMileage6" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixUser6" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixTime6" class="bootom_border col-sm-2">&nbsp;</div>
                             </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="col-sm-2">&nbsp;</div>
-                                <p class="clear"></p>
+                            <div class="float_left">
+                                <div id="fixName7" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixAcc7" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixCarMileage7" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixUser7" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixTime7" class="bootom_border col-sm-2">&nbsp;</div>
                             </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-3">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="right_border col-sm-2">&nbsp;</div>
-                                <div class="col-sm-2">&nbsp;</div>
-                                <p class="clear"></p>
+                            <div class="float_left">
+                                <div id="fixName8" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixAcc8" class="bootom_border right_border col-sm-3">&nbsp;</div>
+                                <div id="fixCarMileage8" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixUser8" class="bootom_border right_border col-sm-2">&nbsp;</div>
+                                <div id="fixTime8" class="bootom_border col-sm-2">&nbsp;</div>
                             </div>
 
-                            <div class="bootom_border" style="height: 40px;">
+
+                            <div class="col-sm-12 bootom_border" style="height: 40px;">
                                 备注：
                             </div>
-                            <div style="text-align: right;">
+                            <div class="col-sm-12" style="text-align: right;">
                                 <div style="margin-right: 100px;">车主签字：</div>
                             </div>
                         </div>
@@ -623,8 +664,6 @@
                             <button type="button" class="btn btn-default"
                                     data-dismiss="modal">关闭
                             </button>
-                            <input type="button" class="btn btn-primary" onclick="determineMaintain()" value="确定">
-                            </input>
                         </div>
                     </div>
 

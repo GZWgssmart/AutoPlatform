@@ -17,6 +17,11 @@
 				<result column="userName" property="userName"/>
 				<result column="userPhone" property="userPhone"/>
 				<result column="maintainOrFix" property="maintainOrFix"/>
+				<result column="carPlate" property="carPlate"/>
+				<association property="plate" javaType="com.gs.bean.CarPlate">
+					<id column="plateId" property="plateId"/>
+					<result column="plateName" property="plateName"/>
+				</association>
 			</association>
 		</association>
 		<!--维修保养项目-->
@@ -107,9 +112,9 @@
 
 	<select id="queryPagerByRecordId" resultType="list" resultMap="maintainDetailResultMap">
 		<![CDATA[
-			select d.*, r.recordId, r.checkinId, f.maintainId, f.maintainName, f.maintainMoney, c.checkinId, c.userName, c.maintainOrFix, c.userPhone
-				from t_maintain_detail d, t_maintain_record r, t_maintain_fix f, t_checkin c
-				where d.recordId = r.recordId and d.maintainId = f.maintainId and r.checkinId = c.checkinId and d.recordId = #{recordId}
+			select d.*, r.recordId, r.checkinId, f.maintainId, f.maintainName, f.maintainMoney, c.checkinId, c.userName, c.maintainOrFix, c.userPhone, c.carPlate, p.plateId, p.plateName
+				from t_maintain_detail d, t_maintain_record r, t_maintain_fix f, t_checkin c, t_car_plate p
+				where d.recordId = r.recordId and d.maintainId = f.maintainId and r.checkinId = c.checkinId and c.plateId = p.plateId and d.recordId = #{recordId}
 		]]>
 		order by d.detailCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}

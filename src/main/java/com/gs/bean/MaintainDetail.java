@@ -14,6 +14,7 @@ public class MaintainDetail{
 	private String maintainId; // 项目id
 	private double maintainDiscount; // 维修保养折扣或减价，小于1，则是折扣，大于或等于1则是减价
 	private Date detailCreatedTime; // 明细创建时间
+	private double price; // 现价
 
 	private MaintainRecord record; // 记录
 	private MaintainFix maintain; // 项目
@@ -67,5 +68,18 @@ public class MaintainDetail{
 
 	public void setMaintain(MaintainFix maintain) {
 		this.maintain = maintain;
+	}
+
+	public double getPrice() {
+		if (maintainDiscount < 1) {
+			return maintain.getMaintainMoney() * maintainDiscount;
+		} else {
+			double temp = maintain.getMaintainMoney() - maintainDiscount;
+			return temp > 0 ? + temp : 0;
+		}
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 }
