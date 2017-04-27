@@ -367,6 +367,15 @@ function generateDetail() {
     }
 }
 
+/** 打印维修保养清单 */
+function printMaintainAndFix() {
+    var newstr = document.all.item('printDiv').innerHTML;// 拿打印div所有元素
+    var oldstr = document.body.innerHTML;// 原先页面所有元素
+    document.body.innerHTML = newstr; // 根据打印div绘制一个网页
+    window.print(); // 打印
+    document.body.innerHTML = oldstr; // 重新把网页变回原先页面
+    return false;
+}
 
 
 

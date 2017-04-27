@@ -22,7 +22,8 @@
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 
-    <link href="<%=path %>/css/maintenanceReception/record.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/maintenanceReception/record.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="<%=path %>/css/maintenanceReception/record.css" rel="stylesheet" type="text/css" media="print">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -496,11 +497,10 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">
-                            <button type="button" class="btn btn-info">
-                                <i class="glyphicon glyphicon-floppy-disk"></i> 打印
-                            </button>
+
                         </h3>
-                        <div class="content col-sm-12">
+                        <!--startprint-->
+                        <div id="printDiv" class="content col-sm-12">
                             <div class="title">
                                 公司车辆维修、保养清单
                             </div>
@@ -672,10 +672,14 @@
                                 <div style="margin-right: 100px;">车主签字：</div>
                             </div>
                         </div>
+                        <!--endprint-->
                         <div style="height: 40px;"></div>
                         <div class="modal-footer" style="overflow:hidden;">
                             <button type="button" class="btn btn-default"
                                     data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" class="btn btn-info" onclick="printMaintainAndFix()">
+                                <i class="glyphicon glyphicon-floppy-disk"></i> 打印
                             </button>
                         </div>
                     </div>
