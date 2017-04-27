@@ -21,7 +21,7 @@
 		<association property="checkin" javaType="com.gs.bean.Checkin">
 			<id column="customerId" property="userId"/>
 			<result column="customerName" property="userName"/>
-
+			<result column="customerPhone" property="userPhone"/>
 		</association>
 
 		<!--User表-->
@@ -101,7 +101,7 @@
 
 	<select id="queryByPager" resultType="list" resultMap="trackListResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-		select c.userName as customerName,l.*,u.userName as adminName from t_maintain_record r
+		select c.userName as customerName,c.userPhone as customerPhone,l.*,u.userName as adminName from t_maintain_record r
 		left join t_checkin c on r.checkinId= c.checkinId
 		left join t_track_list l on l.userId=c.userId
 		left join t_user u on u.userId = l.userId  where r.trackStatus ='N' and r.recordStatus ='Y' and c.checkinStatus ='y'

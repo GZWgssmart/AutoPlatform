@@ -155,3 +155,33 @@ function statusFormatter(value, row, index) {
 
 }
 
+/**添加回访记录*/
+function showCustomer(){
+    initTableNotTollbar("customerTable", "/record/pager_track");
+    $("#customerWin").modal('show');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

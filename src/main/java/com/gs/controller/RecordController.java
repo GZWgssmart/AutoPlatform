@@ -66,6 +66,20 @@ public class RecordController {
     }
 
     @ResponseBody
+    @RequestMapping(value="pager_track",method= RequestMethod.GET)
+    public Pager4EasyUI<MaintainRecord> queryPagerByTractStatus(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        logger.info("分页查询回访状态的维修保养记录管理");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<MaintainRecord> maintainRecordList = new ArrayList<MaintainRecord>();
+        pager.setTotalRecords(maintainRecordService.countByTrackStatus("N"));
+        maintainRecordList = maintainRecordService.queryPagerByTrackStatus(pager,"N");
+        return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
+    }
+
+
+    @ResponseBody
     @RequestMapping(value = "condition_pager", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> queryPagerByCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
                                                        @Param("userName")String userName, @Param("carPlate")String carPlate,
