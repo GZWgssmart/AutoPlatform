@@ -3,12 +3,16 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesBuy;
+import com.gs.bean.AccessoriesType;
+import com.gs.bean.Company;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.AccessoriesBuyService;
 import com.gs.service.AccessoriesService;
+import com.gs.service.AccessoriesTypeService;
+import com.gs.service.CompanyService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -24,6 +28,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Levc on 2017/4/17.
@@ -35,9 +40,16 @@ public class AccessoriesBuyController {
     private Logger logger = (Logger) LoggerFactory.getLogger(AccessoriesBuyController.class);
 
     @Resource
-    AccessoriesBuyService accessoriesBuyService;
+    private AccessoriesBuyService accessoriesBuyService;
+
     @Resource
-    AccessoriesService accessoriesService;
+    private AccessoriesService accessoriesService;
+
+    @Resource
+    private AccessoriesTypeService accessoriesTypeService;
+
+    @Resource
+    private CompanyService companyService;
 
     /**
      * 显示配件采购管理
@@ -54,8 +66,11 @@ public class AccessoriesBuyController {
     @RequestMapping(value = "isAccAdd", method = RequestMethod.POST)
     private ControllerResult isAccAdd(AccessoriesBuy accessoriesBuy, @Param("state") String state) {
         logger.info("添加采购信息");
-        Accessories acc = new Accessories();
+
+        Accessories acc = accessoriesBuy.getAccessories();
+
         if (state.equals("true")) {  // 如果为 true 库存添加
+            logger.info("库存添加");
             System.out.println("库存添加");
             acc.setAccName(accessoriesBuy.getAccessories().getAccName());
             accessoriesBuy.setAccId(accessoriesBuy.getAccId());
@@ -63,14 +78,25 @@ public class AccessoriesBuyController {
             accessoriesService.insert(acc);
             return ControllerResult.getSuccessResult("添加成功");
         } else if (state.equals("false")) { // 如果为false采购添加
+            logger.info("采购添加");
             System.out.println("采购添加");
+
             acc.setAccId(UUIDUtil.uuid());
             acc.setAccName(accessoriesBuy.getAccessories().getAccName());
             acc.setAccUnit(accessoriesBuy.getAccUnit());
+
+            AccessoriesType accessoriesType = accessoriesBuy.getAccessories().getAccessoriesType();
+            accessoriesType.setAccTypeName(accessoriesBuy.getAccessories().getAccessoriesType().getAccTypeName());
+            accessoriesType.setAccTypeId(UUIDUtil.uuid());
+
             accessoriesBuy.setAccessories(acc);
             accessoriesBuy.setAccId(acc.getAccId());
+            acc.setAccTypeId(accessoriesType.getAccTypeId());
+
             accessoriesBuyService.insert(accessoriesBuy);
             accessoriesService.insert(acc);
+            accessoriesTypeService.insert(accessoriesType);
+
             return ControllerResult.getSuccessResult("添加成功");
         }
         return ControllerResult.getSuccessResult("添加成功");
@@ -112,12 +138,19 @@ public class AccessoriesBuyController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateAccessoriesBuyInfo(AccessoriesBuy accessoriesBuy) {
         Accessories acc = accessoriesBuy.getAccessories();
+        AccessoriesType accessoriesType = acc.getAccessoriesType();
+
         int total = accessoriesBuy.getAccBuyCount() + acc.getAccIdle();
+
         acc.setAccIdle(total);
         accessoriesBuy.setAccBuyCount(total);
         acc.setAccUnit(accessoriesBuy.getAccUnit());
+        acc.setAccTypeId(accessoriesType.getAccTypeId());
+
         accessoriesBuyService.update(accessoriesBuy);
         accessoriesService.update(acc);
+        accessoriesTypeService.update(accessoriesType);
+
         return ControllerResult.getSuccessResult("更新成功");
     }
 

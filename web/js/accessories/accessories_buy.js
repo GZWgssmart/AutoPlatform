@@ -23,6 +23,11 @@ $(document).ready(function () {
     $("#accWin").on("hide.bs.modal", function () {
         $("#isAcc").bootstrapSwitch("state", false);
     });
+
+    destoryValidator("addWin", "addForm");
+    destoryValidator("accWin", "accForm");
+    destoryValidator("editWin", "editForm");
+
 });
 
 function disableInput() {
@@ -52,7 +57,7 @@ function showEditWin() {
 }
 
 /**更新数据 */
-function updateAccessoriesBuyInfo() {
+function updateAccessoriesBuyInfo(formId) {
     $.post("/accessoriesBuy/update",
         $("#editForm").serialize(),
         function (data) {
@@ -60,6 +65,8 @@ function updateAccessoriesBuyInfo() {
                 $('#editWin').modal('hide');
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
+                allBuys();
+                $(formId).data('bootstrapValidator').resetForm(true);
             } else if (data.result == "fail") {
                 swal(data.message, "", "error");
             }
@@ -67,16 +74,16 @@ function updateAccessoriesBuyInfo() {
 }
 
 /**添加采购信息 */
-function addAccessoriesBuyInfo() {
+function addAccessoriesBuyInfo(formId) {
     $.post("/accessoriesBuy/isAccAdd?state=" + isAcc,
         $("#addForm").serialize(),
         function (data) {
-            alert(data.result);
             if (data.result == "success") {
                 $('#addWin').modal('hide');
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
                 $("input[type=reset]").trigger("click");
+                $(formId).data('bootstrapValidator').resetForm(true);
             } else if (data.result == "fail") {
                 swal(data.message, "", "error");
             }
@@ -119,7 +126,7 @@ window.operateEvents = {
         var accessoriesBuy = row;
         $("#editForm").fill(accessoriesBuy);
         $("#buyTime").val(formatterDate(accessoriesBuy.accBuyTime));
-        $("#editWin").modal('show');
+        showAccEditWin();
     }
 }
 function showAccessories() {
@@ -199,5 +206,163 @@ function byAccNameSearch() {
     var buyTimeStart = $("#buyTimeStart").val();
     var buyTimeEnd = $("#buyTimeEnd").val();
     initTable("cusTable", "/accessoriesBuy/byAccNameSearch?accName=" + accName + "&buyTimeStart=" + buyTimeStart + "&buyTimeEnd=" + buyTimeEnd);
+}
 
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+
+        fields: {
+            'accessories.accName': {
+                validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    },
+                    stringLength: {
+                        min: 0,
+                        max: 15,
+                        message: '不能超过15个字符'
+                    }
+                }
+            },
+            accUnit: {
+                validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    },
+                    stringLength: {
+                        min: 0,
+                        max: 3,
+                        message: '字数不可以超过3个字符'
+                    },
+                }
+            },
+            'accessories.accessoriesType.accTypeName': {
+                validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    },
+                    stringLength: {
+                        min: 0,
+                        max: 8,
+                        message: '字数不可以超过8个字符'
+                    }
+                },
+
+            },
+            accBuyCount: {
+                validators: {
+                    notEmpty: {
+                        message: '不可以为空'
+                    },
+                    regexp: {
+                        regexp: /^[0-9]+$/,
+                        message: '只能是数字'
+                    }
+                }
+            },
+            accBuyPrice: {
+                validators: {
+                    notEmpty: {
+                        message: '不可以为空'
+                    },
+                    regexp: {
+                        regexp: /^([1-9][0-9]*)+(.[0-9]{1,2})?$/,
+                        message: '只接受小数点后两位'
+                    }
+                }
+            },
+            accBuyDiscount: {
+                validators: {
+                    regexp: {
+                        regexp: /^\d+(\.\d+)?$/,
+                        message: '折扣只能是数字'
+                    }
+                }
+            },
+            'accessories.company.companyName': {
+                validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    },
+                },
+                stringLength: {
+                    min: 0,
+                    max: 8,
+                    message: '字数不可以超过8个字符'
+                }
+            },
+            accBuyTime: {
+                validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    }
+                }
+            },
+            accBuyTotal: {
+                validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    }
+
+                },
+                regexp: {
+                    regexp: /^([1-9][0-9]*)+(.[0-9]{1,2})?$/,
+                    message: '只接受小数点后两位'
+                }
+            },
+            accBuyMoney: {
+                validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    }
+
+                },
+                regexp: {
+                    regexp: /^\d+(\.\d+)?$/,
+                    message: '只能是数字'
+                }
+            },
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                addAccessoriesBuyInfo("#addForm");
+            } else if (formId == "editForm") {
+                updateAccessoriesBuyInfo("#editForm");
+            }
+        })
+}
+
+function clearTempData() {
+    $('#aAccName').html('').trigger("change");
+    $('#aAccUnit').html('').trigger("change");
+    $('#addCarModel').html('').trigger("change");
+    $('#accBuyCount').html('').trigger("change");
+    $('#accBuyPrice').html('').trigger("change");
+    $('#accBuyDiscount').html('').trigger("change");
+    $('#aCompanyName').html('').trigger("change");
+    $('#accBuyTime').html('').trigger("change");
+    $('#accBuyTotal').html('').trigger("change");
+    $('#accBuyMoney').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
+}
+
+function showAccAddWin() {
+    clearTempData();
+    validator("addForm");
+    $("#addWin").modal('show');
+}
+
+function showAccEditWin() {
+    clearTempData();
+    validator("editForm");
+    $("#editWin").modal('show');
 }

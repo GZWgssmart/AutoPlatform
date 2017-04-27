@@ -13,11 +13,13 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
-          type="text/css">
+    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/accessories/accessoriesBuy.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
-<div class="container">
+<div class="container" style="width: 100%;">
     <form id="formSearch" class="form-horizontal">
         <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
             <div class="col-sm-2">
@@ -55,7 +57,8 @@
         <tr>
             <th data-field="state" data-checkbox="true"></th>
             <th data-field="accessories.accName">配件名称</th>
-            <th data-field="accTypeName">配件类别</th>
+            <th data-field="accessories.accessoriesType.accTypeName">配件类别</th>
+            <%--<th data-field="accessories.company.companyName">供应商</th>--%>
             <th data-field="accBuyCount">采购数量</th>
             <th data-field="accBuyPrice">采购单价</th>
             <th data-field="accBuyDiscount">采购折扣</th>
@@ -70,8 +73,8 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a href="#addWin" data-toggle="modal">
-                <button type="button" id="add" class="btn btn-default">
+            <a data-toggle="modal">
+                <button type="button" onclick="showAccAddWin()" id="add" class="btn btn-default">
                     <i class="glyphicon glyphicon-plus"></i> 添加
                 </button>
             </a>
@@ -119,6 +122,8 @@
                         <form role="form" id="editForm">
                             <input type="hidden" attr="accessoriesBuy.accBuyId" name="accBuyId"/>
                             <input type="hidden" attr="accessoriesBuy.accessories.accId" name="accessories.accId"/>
+                            <input type="hidden" attr="accessoriesBuy.accessories.accessoriesType.accTypeId"
+                                   name="accessories.accessoriesType.accTypeId"/>
                             <div class="form-group">
                                 <label>配件名称：</label>
                                 <input type="text" name="accessories.accName" attr="accessoriesBuy.accessories.accName"
@@ -132,7 +137,8 @@
 
                             <div class="form-group">
                                 <label>类别：</label>
-                                <input type="text" name="accTypeName" attr="accessoriesBuy.accTypeName"
+                                <input type="text" name="accessories.accessoriesType.accTypeName"
+                                       attr="accessoriesBuy.accessories.accessoriesType.accTypeName"
                                        class="form-control"/>
                             </div>
 
@@ -154,10 +160,10 @@
                                        class="form-control"/>
                             </div>
 
-                            <div class="form-group">
-                                <label>配件生产商：</label>
-                                <input type="text" name="" class="form-control"/>
-                            </div>
+                            <%--<div class="form-group">--%>
+                            <%--<label>供应商：</label>--%>
+                            <%--<input type="text" name="accessories.company.companyName" class="form-control"/>--%>
+                            <%--</div>--%>
 
                             <div class="form-group">
                                 <label>采购时间：</label>
@@ -182,8 +188,8 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改"
-                                       onclick="updateAccessoriesBuyInfo()">
+                                <input type="button" class="btn btn-primary" id="editButton" value="修改"
+                                       onclick="edit()">
                                 </input>
                             </div>
                         </form>
@@ -204,24 +210,26 @@
                         <h3 class="m-t-none m-b">添加配件采购信息</h3>
                         <form role="form" id="addForm">
                             <input type="hidden" attr="acc.accId" name="accId"/>
-                            <div class="form-group">
+                            <div class="form-group" style="width: auto; display: inherit;">
                                 <label>是否从库存中添加：</label>
                                 <input type="checkbox" id="isAcc" name="isAcc">
                             </div>
                             <div class="form-group">
-                                <p><label>配件名称：</label></p>
+                                <label>配件名称：</label>
                                 <input type="text" name="accessories.accName" class="form-control" id="accName"
                                        attr="acc.accName"/>
                             </div>
 
                             <div class="form-group">
                                 <label>计量单位：</label>
-                                <input type="text" name="accUnit" id="accUnit" attr="acc.accUnit" class="form-control"/>
+                                <input type="text" name="accUnit" id="aAccUnit" attr="acc.accUnit"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>类别：</label>
-                                <input type="text" name="accTypeName" id="accTypeName" class="form-control"/>
+                                <input type="text" name="accessories.accessoriesType.accTypeName" id="accTypeName"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -241,10 +249,11 @@
                                 <input type="text" name="accBuyDiscount" id="accBuyDiscount" class="form-control"/>
                             </div>
 
-                            <div class="form-group">
-                                <label>配件供应商：</label>
-                                <input type="text" name="" class="form-control"/>
-                            </div>
+                            <%--<div class="form-group">--%>
+                            <%--<label>配件供应商：</label>--%>
+                            <%--<input type="text" name="accessories.company.companyName" id="aCompanyName"--%>
+                            <%--class="form-control"/>--%>
+                            <%--</div>--%>
 
                             <div class="form-group">
                                 <label>采购时间：</label>
@@ -263,8 +272,10 @@
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
-                                <button type="submit" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                <input type="submit" class="btn btn-primary" onclick="addAccessoriesBuyInfo()"
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" id="addButton" class="btn btn-primary"
+                                       onclick="add()"
                                        value="添加"/>
                                 <input type="reset" name="reset" style="display: none;"/>
                             </div>
@@ -348,7 +359,7 @@
                                         data-dismiss="modal">关闭
                                 </button>
                                 <input type="button" class="btn btn-primary" value="添加"
-                                       onclick="addAccBuy()">
+                                       onclick="add()">
                                 </input>
                             </div>
                         </form>
@@ -373,6 +384,7 @@
 <script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 
 <script src="<%=path %>/js/accessories/accessories_buy.js"></script>
 <script src="<%=path %>/js/accessories/bootstrap-switch/js/bootstrap-switch.min.js"></script>
