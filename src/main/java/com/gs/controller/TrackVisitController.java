@@ -1,12 +1,17 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Checkin;
 import com.gs.bean.MessageSend;
 import com.gs.bean.TrackList;
+import com.gs.bean.User;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.service.CheckinService;
 import com.gs.service.MessageSendService;
 import com.gs.service.TrackListService;
+import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -30,6 +35,12 @@ public class TrackVisitController {
     @Resource
     private TrackListService trackListService;
 
+    @Resource
+    private CheckinService checkinService;
+
+    @Resource
+    private UserService userService;
+
 
     @RequestMapping(value = "show_trackVisit", method = RequestMethod.GET)
     public String messageSend() {
@@ -47,6 +58,17 @@ public class TrackVisitController {
         pager.setTotalRecords(trackListService.count());
         List<TrackList> trackListList = trackListService.queryByPager(pager);
         return new Pager4EasyUI<TrackList>(pager.getTotalRecords(), trackListList);
+    }
+
+    @ResponseBody
+    @RequestMapping(value="add_track", method=RequestMethod.POST)
+    public ControllerResult trackAdd(TrackList trackList){
+        logger.info("添加回访");
+        User user = userService.queryById(trackList.getUserId());
+        trackList.setUserId(user.getUserId());
+        trackListService.insert(trackList);
+        return ControllerResult.getSuccessResult("添加成功");
+
     }
 
 

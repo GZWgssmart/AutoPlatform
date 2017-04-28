@@ -35,7 +35,8 @@
 
 	<insert id="insert"  parameterType="trackList">
 		<![CDATA[
-
+		insert into t_track_list (trackId,userId,trackContent,serviceEvaluate,trackUser,trackCreatedTime,trackStatus)
+		values(UUID(),#{userId},#{trackContent},#{serviceEvaluate},#{trackUser},NOW(),'Y');
 		]]>
 	</insert>
 

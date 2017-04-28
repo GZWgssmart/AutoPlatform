@@ -11,16 +11,7 @@ $(document).ready(function () {
     $("#search").bind("click", initTable);
 });
 
-/** 添加选择员工 */
-function checkAdmin(combo) {
-    $('#addAdmin').html('').trigger("change");
-    var adminId = combo.value;
-    if (adminId != null && adminId != undefined && adminId != "") {
-        initSelect2("visit_admin", "请选择员工", "/peopleManage/user_all", "540");
-    } else {
-        alert("操作有误！");
-    }
-}
+
 
 function operateFormatter(value, row, index) {
     if (row.inTypeStatus == 'Y') {
@@ -57,55 +48,9 @@ function showEditWin() {
     }
 }
 
-/**提交编辑数据 */
-function updateIncomingType() {
-    $("#addButton1").attr('disabled','disabled');
-    var name = $("#name1").val();
-    var error = document.getElementById("error1");
-    if(name != ''){
-        $.post(contextPath + "/complaint/update_complaint",
-            $("#updateForm").serialize(),
-            function(data){
-                if(data.result == "success"){
-                    $('#editWin').modal('hide');
-                    swal(data.message, "", "success");
-                    $('#cusTable').bootstrapTable('refresh');
-                }else if(data.result == "fail"){
-                    swal(data.message, "", "error");
-                }
-            },"json");
-    }else{
-        error.innerHTML = "请输入正确的数据";
-        $("#addButton1").removeAttr("disabled");
-    }
 
 
-}
 
-/**提交添加数据 */
-function addCompaint() {
-    $("#addButton").attr('disabled','disabled');
-    var name = $("#complaintReply").val();
-    var error = document.getElementById("error");
-    if (name != "") {
-        $.post(contextPath + "/complaint/add_complaint",
-            $("#addForm").serialize(),
-            function (data) {
-                if (data.result == "success") {
-                    $('#addWin').modal('hide');
-                    swal(data.message, "", "success");
-                    $('#cusTable').bootstrapTable('refresh');
-                    $("input[type=reset]").trigger("click");
-                } else if (data.result == "fail") {
-                    swal(data.message, "", "error");
-                }
-            }, "json");
-    }else{
-        error.innerHTML = "请输入正确的数据";
-        $("#addButton").removeAttr("disabled");
-    }
-
-}
 
 
 window.operateEvents = {
@@ -161,10 +106,75 @@ function showCustomer(){
     $("#customerWin").modal('show');
 }
 
+function customerFormatter(value, row, index) {
+    return [
+        '<button type="button" class="addCustomer btn btn-primary  btn-sm" style="margin-right:15px;" >添加回访</button>'
+    ].join('');
+}
 
 
+function addCustomer(){
+    var selectRow = $("#customerTable").bootstrapTable('getSelections');
+    if (selectRow.length > 1) {
+        swal('操作错误', "只能选择一个车主", "error");
+        return false;
+    } else if(selectRow.length < 1){
+        swal('操作错误', "至少选择一个车主", "error");
+    }else  if(selectRow.length == 1){
+        var customer = selectRow[0];
+        $(".customerId").val(customer.checkin.userId);
+        $(".visit_user").val(customer.checkin.userName);
+        $("#addWin").modal('show');
+        $("#customerWin").modal('hide');
+
+    }
+}
 
 
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        serviceEvaluate: {
+                validators: {
+                    notEmpty:{
+                        message: '回访评分不能为空'
+                    }
+                }
+
+            },
+        trackContent:{
+                validators:{
+                    notEmpty:{
+                        message: '回访问题不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 500,
+                        message: '回访问题长度必须在2到500位之间'
+                    }
+                }
+            }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit("/trackVisit/add_track", formId, "addWin");
+
+            } else if (formId == "editForm") {
+                formSubmit("/salary/update_salary", formId, "editWin");
+
+            }
+
+
+        })
+
+}
 
 
 
