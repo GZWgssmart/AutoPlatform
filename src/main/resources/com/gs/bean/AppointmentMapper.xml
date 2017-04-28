@@ -46,6 +46,7 @@
 		]]>
 	</insert>
 
+
 	<insert id="batchInsert"  parameterType="list">
 		<![CDATA[
 
@@ -119,10 +120,72 @@
 		limit #{beginIndex}, #{pageSize}
 	</select>
 
+	<select id="queryPagerByStatus" resultType="list" resultMap="appointmentResultMap">
+		<![CDATA[
+			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
+				from t_appointment c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
+				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId and appoitmentStatus = #{status}
+				order by c.appCreatedTime desc, c.companyId
+		]]>
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="queryPagerByCondition" resultType="list" resultMap="appointmentResultMap">
+		<![CDATA[
+			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
+				from t_appointment c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
+				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and c.companyId = cpy.companyId
+		]]>
+		<if test="appointment.userName != null and appointment.userName != ''">
+			and c.userName like concat('%',#{appointment.userName},'%')
+		</if>
+		<if test="appointment.userPhone != null and appointment.userPhone != ''">
+			and c.userPhone like concat('%',#{appointment.userPhone},'%')
+		</if>
+		<if test="appointment.carPlate != null and appointment.carPlate != ''">
+			and c.carPlate like concat('%',#{appointment.carPlate},'%')
+		</if>
+		<if test="appointment.maintainOrFix != 'all'">
+			and c.maintainOrFix = #{appointment.maintainOrFix}
+		</if>
+		<if test="appointment.companyId != null and appointment.companyId != ''">
+			and c.companyId = #{appointment.companyId}
+		</if>
+		order by c.appCreatedTime desc, c.companyId
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
 	<select id="count" resultType="int">
 		<![CDATA[
 			select count(*) from t_appointment
 		]]>
+	</select>
+
+	<select id="countByStatus" resultType="int">
+		<![CDATA[
+			select count(*) from t_appointment where appoitmentStatus = #{status}
+		]]>
+	</select>
+
+	<select id="countByCondition" resultType="int">
+		<![CDATA[
+			select count(*) from t_appointment where 1 = 1
+		]]>
+		<if test="userName != null and userName != ''">
+			and userName like concat('%',#{userName},'%')
+		</if>
+		<if test="userPhone != null and userPhone != ''">
+			and userPhone like concat('%',#{userPhone},'%')
+		</if>
+		<if test="carPlate != null and carPlate != ''">
+			and carPlate like concat('%',#{carPlate},'%')
+		</if>
+		<if test="maintainOrFix != 'all'">
+			and maintainOrFix = #{maintainOrFix}
+		</if>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+		</if>
 	</select>
 
 	<update id="inactive" parameterType="string">

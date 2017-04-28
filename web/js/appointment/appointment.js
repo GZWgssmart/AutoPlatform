@@ -1,7 +1,7 @@
 var appointment;
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable", "/appointment/query_pager");
+    initTable("cusTable", "/appointment/query_pager?status=ALL");
     initSelect2("car_brand", "请选择品牌", "/carBrand/car_brand_all", "540");
     initSelect2("car_color", "请选择颜色", "/carColor/car_color_all", "540");
     initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "540");
@@ -218,4 +218,16 @@ function validator(formId) {
                 formSubmit("/appointment/update", formId, "editWin");
             }
         })
+}
+function searchCheckin() {
+    var userName = $("#searchUserName").val();
+    var userPhone = $("#searchUserPhone").val();
+    var carPlate = $("#searchCarPlate").val();
+    var maintainOrFix = $("#searchMaintainOrFix").val();
+    var companyId = $("#searchCompanyId").val();
+    if (companyId != null && companyId != "") {
+        initTable("cusTable", "/appointment/appointment_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate +  "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
+    } else {
+        swal("错误提示", "请选择一家汽修公司", "error");
+    }
 }

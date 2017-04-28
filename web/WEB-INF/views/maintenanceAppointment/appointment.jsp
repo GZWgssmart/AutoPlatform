@@ -68,7 +68,39 @@
                 操作
             </th>
         </thead>
+        <form id="formSearch" class="form-horizontal">
+            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+                <div class="col-sm-2" style="margin-left: -15px;">
+                    <input type="text" id="searchUserName" name="userName" class="form-control" placeholder="请输入车主姓名" >
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" id="searchUserPhone" name="userPhone" class="form-control" placeholder="请输入车主电话" >
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" id="searchCarPlate" name="carPlate" class="form-control" placeholder="请输入车牌号码">
+                </div>
+                <div class="col-sm-2">
+                    <select class="js-example-tags form-control" id="searchMaintainOrFix" name="maintainOrFix">
+                        <option value="all">维修&nbsp;&&nbsp;保养</option>
+                        <option value="维修">维修</option>
+                        <option value="保养">保养</option>
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
+                    </select>
+                </div>
 
+                <div class="col-sm-2">
+                    <button type="button" onclick="searchCheckin()" class="btn btn-primary">
+                        查询
+                    </button>
+                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </form>
         <div id="toolbar" class="btn-group">
             <a>
                 <button onclick="showAddWin();" type="button" id="add" class="btn btn-default">
@@ -81,17 +113,17 @@
                 </button>
             </a>
             <a>
-                <button onclick="searchStatus('/appointment/appointment_pager?status=Y');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/appointment/query_pager?status=Y');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看可用记录
                 </button>
             </a>
             <a>
-                <button onclick="searchStatus('/appointment/appointment_pager?status=N');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/appointment/query_pager?status=N');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看不可用记录
                 </button>
             </a>
             <a>
-                <button onclick="searchStatus('/appointment/appointment_pager?status=ALL');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/appointment/query_pager?status=ALL');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部
                 </button>
             </a>

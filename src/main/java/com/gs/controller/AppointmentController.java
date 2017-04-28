@@ -43,6 +43,8 @@ public class AppointmentController {
     @Resource
     private UserService userService;
 
+
+
     @RequestMapping(value = "appointment", method = RequestMethod.GET)
     public String appointment() {
         logger.info("预约管理");
@@ -51,14 +53,43 @@ public class AppointmentController {
 
     @ResponseBody
     @RequestMapping(value = "query_pager", method = RequestMethod.GET)
-    public Pager4EasyUI<Appointment> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    public Pager4EasyUI<Appointment> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("status") String status){
         logger.info("分页查询预约");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(appointmentService.count());
-        List<Appointment> appointments = appointmentService.queryByPager(pager);
+        List<Appointment> appointments = new ArrayList<Appointment>();
+        if (status.equals("ALL")) {
+            pager.setTotalRecords(appointmentService.count());
+            appointments = appointmentService.queryByPager(pager);
+        } else {
+            pager.setTotalRecords(appointmentService.countByStatus(status));
+            appointments = appointmentService.queryPagerByStatus(pager, status);
+        }
         return new Pager4EasyUI<Appointment>(pager.getTotalRecords(),appointments);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "appointment_pager", method = RequestMethod.GET)
+    public Pager4EasyUI<Appointment> queryPagerByAppointment(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
+                                                       @Param("userName")String userName, @Param("userPhone")String userPhone,
+                                                       @Param("carPlate")String carPlate, @Param("maintainOrFix")String maintainOrFix,
+                                                       @Param("companyId")String companyId) {
+        logger.info("根据条件分页查询预约记录");
+        Appointment appointment = new Appointment();
+        appointment.setUserName(userName);
+        appointment.setUserPhone(userPhone);
+        appointment.setCarPlate(carPlate);
+        appointment.setMaintainOrFix(maintainOrFix);
+        appointment.setCompanyId(companyId);
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<Appointment> appointments = new ArrayList<Appointment>();
+        pager.setTotalRecords(appointmentService.countByCondition(appointment));
+        appointments = appointmentService.queryPagerByCondition(pager, appointment);
+
+        return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
     }
 
     @ResponseBody
@@ -101,6 +132,8 @@ public class AppointmentController {
             }
             return ControllerResult.getSuccessResult("更新成功");
         }
+
+
 
     @ResponseBody
     @RequestMapping(value = "appointment_all", method = RequestMethod.GET)
