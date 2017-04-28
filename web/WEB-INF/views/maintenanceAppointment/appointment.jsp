@@ -80,6 +80,26 @@
                     <i class="glyphicon glyphicon-pencil"></i> 修改
                 </button>
             </a>
+            <a>
+                <button onclick="searchStatus('/appointment/appointment_pager?status=Y');" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看可用记录
+                </button>
+            </a>
+            <a>
+                <button onclick="searchStatus('/appointment/appointment_pager?status=N');" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看不可用记录
+                </button>
+            </a>
+            <a>
+                <button onclick="searchStatus('/appointment/appointment_pager?status=ALL');" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看全部
+                </button>
+            </a>
+            <a>
+                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-search"></i> 查询
+                </button>
+            </a>
         </div>
     </table>
 </div>
@@ -95,13 +115,14 @@
 
                             <div class="form-group">
                                 <input type="hidden" attr="appointment.appointmentId" name="appointmentId" class="form-control"/>
+                                <input type="hidden" attr="appointment.userId" name="userId" class="form-control"/>
                                 <label>车主姓名：</label>
                                 <input type="text" attr="appointment.userName" name="userName" class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>车主电话：</label>
-                                <input type="text" attr="appointment.userPhone" name="userPhone" class="form-control"/>
+                                <input type="text" readonly attr="appointment.userPhone" name="userPhone" class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -130,7 +151,7 @@
 
                             <div class="form-group">
                                 <label>车牌号码：</label>
-                                <input type="text" attr="appointment.carPlate" name="carPlate" class="form-control"/>
+                                <input type="text" attr="appointment.carPlate" maxlength="5"  name="carPlate" class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -205,7 +226,7 @@
 
                             <div class="form-group">
                                 <label>车牌号码：</label>
-                                <input type="text" name="carPlate" class="form-control"/>
+                                <input type="text" maxlength="5" name="carPlate" class="form-control"/>
                             </div>
 
                             <div class="form-group">
