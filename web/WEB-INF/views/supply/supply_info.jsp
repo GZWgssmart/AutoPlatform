@@ -138,7 +138,7 @@
                                 <input type="text" attr="supply.supplyBank" name="supplyBank" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>开户银行全称：</label>
+                                <label>开户人：</label>
                                 <input type="text" attr="supply.supplyBank" name="supplyBank" class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -204,7 +204,7 @@
                                 <input type="text"  name="supplyBank" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>开户银行全称：</label>
+                                <label>开户人：</label>
                                 <input type="text" name="supplyBank" class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -229,6 +229,7 @@
                                 </button>
                                 <input type="button" class="btn btn-primary" onclick="add()" value="添加">
                                 </input>
+                                <input type="reset" name="reset" style="display: none;"/>
                             </div>
                         </form>
                     </div>

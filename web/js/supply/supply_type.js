@@ -3,6 +3,9 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/supplyType/queryByPager?status=ALL");
 
+    destoryValidator("addWin", "addForm");
+    destoryValidator("editWin", "editForm");
+
 });
 
 /** 编辑数据 */
@@ -21,6 +24,7 @@ function showEditWin() {
 
 function showAddWin() {
     validator("addForm");
+    $("input[type=reset]").trigger("click");
     $("#addButton").removeAttr("disabled");
     $("#addWin").modal('show');
 }

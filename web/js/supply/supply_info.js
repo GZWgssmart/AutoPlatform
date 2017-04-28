@@ -2,6 +2,9 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/supply/queryByPager?status=ALL");
 
+    destoryValidator("addWin", "addForm");
+    destoryValidator("editWin", "editForm");
+
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 });
@@ -22,9 +25,10 @@ function showEditWin() {
 
 function showAddWin() {
     validator("addForm");
-    $("#addButton").removeAttr("disabled");
+    $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }
+
 
 function operateFormatter(value, row, index) {
     if (row.supplyStatus == 'Y') {
