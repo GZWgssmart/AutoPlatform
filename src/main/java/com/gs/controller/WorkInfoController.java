@@ -32,7 +32,7 @@ import java.util.List;
 @RequestMapping("peopleManage")
 public class WorkInfoController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(IncomingTypeController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(WorkInfoController.class);
 
     @Resource
     private WorkInfoService workInfoService;

@@ -45,7 +45,7 @@ import java.util.UUID;
 @RequestMapping("peopleManage")
 public class PeopleInfoController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(IncomingTypeController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(PeopleInfoController.class);
 
     @Resource
     private UserService userService;

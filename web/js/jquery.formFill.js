@@ -101,6 +101,11 @@
 										$(item).val(value);
 									}
 									break;
+                                case "email":
+                                    if (value) {
+                                        $(item).val(value);
+                                    }
+                                    break;
 								case "radio":
 									$(item).each(function (i, radio) {
 										if ($(radio).val() == value) {

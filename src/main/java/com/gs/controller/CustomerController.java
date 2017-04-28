@@ -39,12 +39,12 @@ import java.util.UUID;
  * Created by xiao-kang on 2017/4/18.
  */
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("customer")
 
 public class CustomerController {
 
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(IncomingTypeController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(CustomerController.class);
 
     @Resource
     private UserService userService;

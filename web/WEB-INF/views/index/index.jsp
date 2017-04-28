@@ -182,7 +182,7 @@
                     <a href="#"><i class="fa fa-hourglass-half"></i> <span class="nav-label">维修保养进度</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_wizard.html">车辆维修保养进度管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/progress/progress_page">车辆维修保养进度管理</a>
                         </li>
                     </ul>
                 </li>

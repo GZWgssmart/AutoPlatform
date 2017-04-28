@@ -160,15 +160,13 @@ function validator(formId) {
         },
         fields: {
             userName: {
-                message: '车主验证失败',
                 validators: {
                     notEmpty: {
-                        message: '车主姓名不能为空'
+                        message: '姓名不能为空'
                     },
-                    stringLength: {
-                        min: 2,
-                        max: 4,
-                        message: '车主长度必须在2到4位之间'
+                    regexp: {
+                        regexp: /^[\u4e00-\u9fa5]{2,4}$/,
+                        message: '姓名格式错误'
                     }
                 }
             },
@@ -177,83 +175,67 @@ function validator(formId) {
                     notEmpty: {
                         message: '手机号不能为空'
                     },
-                    stringLength: {
-                        min: 11,
-                        max: 11,
-                        message: '手机号只能是11位'
+                    regexp: {
+                        regexp: /^1(3|4|5|7|8)\d{9}$/,
+                        message: '手机号格式错误'
                     }
                 }
             },
-            brandId: {
+            userEmail: {
                 validators: {
                     notEmpty: {
-                        message: '品牌不能为空'
-                    }
-
-                }
-            },
-            colorId: {
-                validators: {
-                    notEmpty: {
-                        message: '颜色不能为空'
-                    }
-
-                }
-            },
-            modelId: {
-                validators: {
-                    notEmpty: {
-                        message: '车型不能为空'
-                    }
-
-                }
-            },
-            plateId: {
-                validators: {
-                    notEmpty: {
-                        message: '车牌不能为空'
-                    }
-
-                }
-            },
-            carPlate: {
-                validators: {
-                    notEmpty: {
-                        message: '车牌号码不能为空'
-                    },
-                    stringLength: {
-                        min: 5,
-                        max: 5,
-                        message: '车牌号码只能是5位'
+                        message: '邮箱不能为空'
                     },
                     regexp: {
-                        regexp: /^[a-zA-Z0-9]+$/,
-                        message: '车牌不能是中文'
+                        regexp: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
+                            message: '邮箱格式错误'
                     }
                 }
             },
-            oilCount: {
+            userIdentity: {
                 validators: {
                     notEmpty: {
-                        message: '汽车油量不能为空'
+                        message: '身份证不能为空'
                     },
                     regexp: {
-                        regexp: /^[0-9]+$/,
-                        message: '油量只能是数字'
+                        regexp: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
+                        message: '身份证格式错误'
                     }
-
                 }
             },
-            carMileage: {
+            wechatOpenId: {
+                validators: {
+                    regexp: {
+                        regexp: /^[a-zA-Z\d_]{5,}$/,
+                        message: '微信号格式错误'
+                    }
+                }
+            },
+            qqOpenId: {
+                validators: {
+                regexp: {
+                    regexp: /[1-9][0-9]{4,}/,
+                        message: 'QQ号格式错误'
+                    }
+                }
+            },
+            weiboOpenId: {
+                validators: {
+                    regexp: {
+                        regexp: /@([a-zA-z0-9_]+)/,
+                            message: '微博号格式错误'
+                    }
+                }
+            },
+            userSalary: {
                 validators: {
                     notEmpty: {
-                        message: '汽车行驶里程不能为空'
+                        message: '工资不能为空'
                     },
                     regexp: {
-                        regexp: /^[0-9]+$/,
-                        message: '行驶里程只能是数字'
+                        regexp: /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/,
+                            message: '工资格式错误'
                     }
-
                 }
             }
         }

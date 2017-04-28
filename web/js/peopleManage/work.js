@@ -49,7 +49,7 @@ window.operateEvents = {
     'click .showUpdateInfo': function (e, value, row, index) {
         var work = row;
         $("#editForm").fill(work);
-        $('#editCarBrand').html('<option value="' + work.user.userId + '">' + work.user.userName + '</option>').trigger("change");
+        // $('#editCarBrand').html('<option value="' + work.user.userId + '">' + work.user.userName + '</option>').trigger("change");
         validator("editForm");
         $("#editWin").modal('show');
     }

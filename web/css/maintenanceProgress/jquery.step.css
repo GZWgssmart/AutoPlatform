@@ -1,0 +1,46 @@
+*{
+	margin: 0px;
+	padding: 0px;
+	list-style:none;
+}
+.step-header ul{
+	text-align: center;
+	display:flex;
+}
+
+.sk-spinner .sk-spinner-three-bounce{
+	float: left;
+	margin: 40px auto;
+}
+
+.load div {
+	width: 18px;
+	height: 8px;
+	background-color: rgba(158, 158, 158, 0.54);
+	border-radius: 100%;
+	display: inline-block;
+}
+
+.step-header .des {
+	line-height: 30px;
+	font-weight: bold;
+	color: gray;
+}
+
+.clear{
+	clear: both;
+}
+
+.step-header ul li{
+	float: left;
+}
+
+.step-header ul li img{
+	margin-top: 15px;
+}
+
+.step-header .app{
+	line-height: 30px;
+	font-weight: bold;
+	color: #1a7bb9;
+}
