@@ -49,7 +49,7 @@
                 回访时间:
             </th>
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
-                操作
+                是否回访
             </th>
         </tr>
         </thead>
@@ -61,7 +61,6 @@
             <a><button onclick="showCustomer();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 添加回访
             </button></a>
-
         </div>
         </tbody>
 
@@ -117,12 +116,11 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b" style="text-align: center;">添加回访记录</h3>
-                        <input type="hidden" id="addUserId" name="userId" class="form-control"/>
+                        <input type="hidden" id="addCustomerId" name="userId" class="form-control customerId"/>
                         <form role="form" id="addForm" >
                             <div class="form-group">
-                                <label class="control-label">回访顾客：</label>
-                                <select  id="addCustomer" class="js-example-tags form-control visit_user" name="customer.userName">
-                                </select>
+                                <label class="control-label">回访车主名：</label>
+                                <input  type="text" id="addCustomer" class="form-control visit_user"/>
                             </div>
                             <div class="form-group">
                                 <label>回访问题：</label>
@@ -134,18 +132,16 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">回访客服：</label>
-                                <select id="addAdmin1" class="js-example-tags form-control visit_admin" name="admin.userName">
-                                </select>
+                                <input  type="text" id="addAdmin1" class="form-control visit_admin" name="trackUser"/>
                             </div>
-
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error" style="color: #ff0000;"></span>
                                 <br/>
+                                <input type="button" id="addButton" class="btn btn-primary" onclick="add()" value="添加">
+                                </input>
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton" class="btn btn-primary" onclick="addCompaint()" value="添加">
-                                </input>
                                 <input type="reset" name="reset" style="display: none;" />
                             </div>
                         </form>
@@ -179,18 +175,21 @@
                                 <th data-field="checkin.userPhone">
                                     车主手机号
                                 </th>
-                                <th data-field="operate" data-formatter="userFormatter" data-events="userEvents">
+                                <th data-field="checkin.userRequests">
+                                    车主维保要求
+                                </th>
+                                <th data-field="operate" data-formatter="customerFormatter" data-events="customerEvents">
                                     操作
                                 </th>
                             </tr>
                             </thead>
                         </table>
-                        <div class="modal-footer" style="overflow:hidden;">
-                            <button type="button" class="btn btn-default"
+                        <div class="modal-footer" >
+                            <input type="button"  style="margin-top: 15px;" onclick="addCustomer()" class="btn btn-primary" value="确定添加">
+                            </input>
+                            <button type="button" style="margin-top: 15px;" class="btn btn-default"
                                     data-dismiss="modal">关闭
                             </button>
-                            <input type="button" onclick="addCustomer()" class="btn btn-primary" value="确定添加">
-                            </input>
                         </div>
                     </div>
                 </div>

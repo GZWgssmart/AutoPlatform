@@ -516,7 +516,6 @@ CREATE TABLE `t_track_list` (
   `serviceEvaluate` int(255) DEFAULT NULL COMMENT '本次服务评价,1-10分',
   `trackUser` varchar(36) DEFAULT NULL COMMENT '跟踪回访用户，来源于t_user表',
   `trackCreatedTime` datetime DEFAULT NULL COMMENT '跟踪回访创建时间',
-  `trackStatus` varchar(2) DEFAULT NULL COMMENT '是否回访，默认是N，Y表示已经回访',
   PRIMARY KEY (`trackId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
