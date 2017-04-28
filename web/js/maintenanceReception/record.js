@@ -16,22 +16,23 @@ $(document).ready(function () {
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
 
     $("#maintainFixWin").on("hide.bs.modal", function () {
-        $("#carPlate").html('&nbsp;');
-        $("#userName").html('&nbsp;');
-        $("#userPhone").html('&nbsp;');
-        $("#maintainCarMileage").html('&nbsp;');
-        $("#startTime").html('&nbsp;');
-        $("#count").html('&nbsp;');
+        $("#carPlate").html('');
+        $("#userName").html('');
+        $("#userPhone").html('');
+        $("#maintainCarMileage").html('');
+        $("#startTime").html('');
+        $("#count").html('');
 
         for (var i = 0; i < 10; i++) {
-            $("#maintainName" + i).html('&nbsp;');
-            $("#maintainPrice" + i).html('&nbsp;');
+            $("#maintainName" + i).html('');
+            $("#maintainMoney" + i).html('');
+            $("#maintainPrice" + i).html('');
 
-            $("#fixName" + i).html('&nbsp;');
-            $("#fixAcc" + i).html('&nbsp;');
-            $("#fixCarMileage" + i).html('&nbsp;');
-            $("#fixUser" + i).html('&nbsp;');
-            $("#fixTime" + i).html('&nbsp;');
+            $("#fixName" + i).html('');
+            $("#fixAcc" + i).html('');
+            $("#fixCarMileage" + i).html('');
+            $("#fixUser" + i).html('');
+            $("#fixTime" + i).html('');
         }
     });
 
@@ -335,7 +336,8 @@ function generateDetail() {
             for (var i = 0; i < len; i++) {
                 var detail = selectRow[i];
                 $("#maintainName" + i).html(detail.maintain.maintainName);
-                $("#maintainPrice" + i).html(detail.price);
+                $("#maintainMoney" + i).html('$' + detail.maintain.maintainMoney);
+                $("#maintainPrice" + i).html('$' + detail.price);
                 count += detail.price;
             }
             $("#count").html(count);
@@ -364,17 +366,20 @@ function generateDetail() {
         $("#startTime").html(formatterDate1(startTime));
 
         $("#maintainFixWin").modal("show");
+
+
     }
 }
 
 /** 打印维修保养清单 */
 function printMaintainAndFix() {
-    var newstr = document.all.item('printDiv').innerHTML;// 拿打印div所有元素
-    var oldstr = document.body.innerHTML;// 原先页面所有元素
-    document.body.innerHTML = newstr; // 根据打印div绘制一个网页
-    window.print(); // 打印
-    document.body.innerHTML = oldstr; // 重新把网页变回原先页面
-    return false;
+    $("#maintainFixWin").modal("hide");
+    var newWin=window.open('about:blank', '', '');
+    var titleHTML = document.all.item('printDiv').innerHTML;// 拿打印div所有元素
+    newWin.document.write("<html><head><title></title><link rel='stylesheet' type ='text/css' href='/css/my-table.css'></head><body>" + titleHTML + "</body></html>");
+    newWin.document.location.reload();
+    newWin.print();
+    newWin.close();
 }
 
 

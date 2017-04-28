@@ -22,8 +22,8 @@
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 
-    <link href="<%=path %>/css/maintenanceReception/record.css" rel="stylesheet" type="text/css" media="screen">
-    <link href="<%=path %>/css/maintenanceReception/record.css" rel="stylesheet" type="text/css" media="print">
+    <link href="<%=path %>/css/maintenanceReception/record.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/my-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -83,7 +83,7 @@
         <form id="formSearch" class="form-horizontal">
             <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
                 <div class="col-sm-2" style="margin-left: -15px;">
-                    <input type="text" id="searchUserName" name="userName" class="form-control" placeholder="请输入车主姓名" >
+                    <input type="text" id="searchUserName" name="userName" class="form-control" placeholder="请输入车主姓名">
                 </div>
                 <div class="col-sm-2">
                     <input type="text" id="searchCarPlate" name="carPlate" class="form-control" placeholder="请输入车牌号码">
@@ -193,7 +193,8 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" onclick="buttonStatus('editForm', 'editButton')" id="editButton" class="btn btn-primary" value="修改">
+                                <input type="button" onclick="buttonStatus('editForm', 'editButton')" id="editButton"
+                                       class="btn btn-primary" value="修改">
                                 </input>
                             </div>
                         </form>
@@ -216,13 +217,15 @@
                             <input type="hidden" attr="record.recordId" name="recordId" class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">维修&nbsp;|&nbsp;保养：</label>
-                                <input type="text" id="maintainOrFix" attr="record.checkin.maintainOrFix" readonly class="form-control" />
+                                <input type="text" id="maintainOrFix" attr="record.checkin.maintainOrFix" readonly
+                                       class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">维修保养项目：</label>
-                                <input type="hidden" id="detailMaintainId" name="maintainId" />
-                                <input type="text" onclick="choiseMaintain();" id="detailMaintainName" name="maintainName" readonly class="form-control" />
-                                <br />
+                                <input type="hidden" id="detailMaintainId" name="maintainId"/>
+                                <input type="text" onclick="choiseMaintain();" id="detailMaintainName"
+                                       name="maintainName" readonly class="form-control"/>
+                                <br/>
                                 <a>
                                     <button onclick="choiseMaintain();" type="button" class="btn btn-primary">
                                         <i class="glyphicon glyphicon-plus"></i> 选择维修保养项目
@@ -239,7 +242,9 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="detailButton" onclick="buttonStatus('detailForm', 'detailButton')" class="btn btn-primary" value="添加">
+                                <input type="button" id="detailButton"
+                                       onclick="buttonStatus('detailForm', 'detailButton')" class="btn btn-primary"
+                                       value="添加">
                                 </input>
                                 <input type="reset" name="reset" style="display: none;"/>
                             </div>
@@ -280,13 +285,13 @@
                                 <th data-field="maintain.maintainName">
                                     项目
                                 </th>
-                                 <th data-field="maintain.maintainMoney" data-formatter="formatterMoney">
+                                <th data-field="maintain.maintainMoney" data-formatter="formatterMoney">
                                     原价
                                 </th>
                                 <th data-field="maintainDiscount" data-formatter="formatterDiscount">
                                     打折&nbsp;|&nbsp;减价
                                 </th>
-                                 <th data-field="price" data-formatter="formatterMoney">
+                                <th data-field="price" data-formatter="formatterMoney">
                                     现价
                                 </th>
                                 <th data-field="detailCreatedTime" data-formatter="formatterDate">
@@ -298,12 +303,14 @@
                             <div id="toolbar1" class="btn-group">
 
                                 <a>
-                                    <button onclick="showEditDetailWin();" type="button" id="editDetail" class="btn btn-default">
+                                    <button onclick="showEditDetailWin();" type="button" id="editDetail"
+                                            class="btn btn-default">
                                         <i class="glyphicon glyphicon-pencil"></i> 修改
                                     </button>
                                 </a>
                                 <a>
-                                    <button onclick="generateDetail();" type="button" id="generateDetail" class="btn btn-default">
+                                    <button onclick="generateDetail();" type="button" id="generateDetail"
+                                            class="btn btn-default">
                                         <i class="glyphicon glyphicon-list-alt"></i> 生成明细清单
                                     </button>
                                 </a>
@@ -326,7 +333,8 @@
     </div>
 </div>
 
-<div id="editDetailWin" style="overflow:scroll" class="modal fade" aria-hidden="true" data-backdrop="static" keyboard:false>
+<div id="editDetailWin" style="overflow:scroll" class="modal fade" aria-hidden="true" data-backdrop="static"
+     keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -343,24 +351,28 @@
 
                             <div class="form-group">
                                 <label>车主电话：</label>
-                                <input readonly type="text" attr="detail.record.checkin.userPhone" class="form-control"/>
+                                <input readonly type="text" attr="detail.record.checkin.userPhone"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">维修保养项目：</label>
-                                <select id="editDetailMaintain" class="js-example-tags form-control maintain_fix" name="maintainId">
+                                <select id="editDetailMaintain" class="js-example-tags form-control maintain_fix"
+                                        name="maintainId">
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">折扣&nbsp;|&nbsp;减价：</label>
-                                <input type="text" maxlength="4" attr="detail.maintainDiscount" name="maintainDiscount" class="form-control"/>
+                                <input type="text" maxlength="4" attr="detail.maintainDiscount" name="maintainDiscount"
+                                       class="form-control"/>
                                 <span style="font-size: 12px; color: green;">小于1大于0是折扣，大于等于1则是减价</span>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default" onclick="closeEditDetailWin()">关闭
                                 </button>
-                                <input type="button" onclick="buttonStatus('editDetailForm', 'editDetailButton')" id="editDetailButton" class="btn btn-primary" value="修改">
+                                <input type="button" onclick="buttonStatus('editDetailForm', 'editDetailButton')"
+                                       id="editDetailButton" class="btn btn-primary" value="修改">
                                 </input>
                             </div>
                         </form>
@@ -388,19 +400,19 @@
                             <thead>
                             <tr>
                                 <th data-field="state" data-checkbox="true"></th>
-                                <th data-field="maintainName" >
+                                <th data-field="maintainName">
                                     保养项目名称
                                 </th>
-                                <th data-field="maintainHour" >
+                                <th data-field="maintainHour">
                                     保养所需工时
                                 </th>
-                                <th data-field="maintainMoney" >
+                                <th data-field="maintainMoney">
                                     保养基础费用
                                 </th>
-                                <th data-field="maintainManHourFee" >
+                                <th data-field="maintainManHourFee">
                                     保养工时费
                                 </th>
-                                <th data-field="maintainDes" >
+                                <th data-field="maintainDes">
                                     保养描述
                                 </th>
                                 <th data-field="company.companyName">
@@ -447,19 +459,19 @@
                             <thead>
                             <tr>
                                 <th data-field="state" data-checkbox="true"></th>
-                                <th data-field="maintainName" >
+                                <th data-field="maintainName">
                                     维修项目名称
                                 </th>
-                                <th data-field="maintainHour" >
+                                <th data-field="maintainHour">
                                     维修所需工时
                                 </th>
-                                <th data-field="maintainMoney" >
+                                <th data-field="maintainMoney">
                                     维修基础费用
                                 </th>
-                                <th data-field="maintainManHourFee" >
+                                <th data-field="maintainManHourFee">
                                     维修工时费
                                 </th>
-                                <th data-field="maintainDes" >
+                                <th data-field="maintainDes">
                                     维修描述
                                 </th>
                                 <th data-field="company.companyName">
@@ -499,187 +511,185 @@
                         <h3 class="m-t-none m-b">
 
                         </h3>
-                        <!--startprint-->
-                        <div id="printDiv" class="content col-sm-12">
-                            <div class="title">
-                                公司车辆维修、保养清单
-                            </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">车主姓名</div>
-                                <div id="userName" class="right_border col-sm-3 bootom_border">&nbsp;</div>
-                                <div class="right_border col-sm-2 bootom_border" style="font-weight: bold;">车主电话</div>
-                                <div id="userPhone" class="col-sm-4 bootom_border">&nbsp;</div>
-                            </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">车牌号及车型</div>
-                                <div id="carPlate" class="right_border col-sm-3 bootom_border">&nbsp;</div>
-                                <div class="right_border col-sm-2 bootom_border" style="font-weight: bold;">首保里程</div>
-                                <div class="col-sm-4 bootom_border">&nbsp;</div>
-                            </div>
-                            <div class="bootom_border float_left">
-                                <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">保养里程（km）</div>
-                                <div class="right_border col-sm-3 bootom_border" style="font-weight: bold;">保养时间</div>
-                                <div class="col-sm-6 bootom_border" style="font-weight: bold;">保养项目</div>
-                            </div>
-                            <div style="padding: 0;">
-                                <%--汽车保养里程--%>
-                                <div id="maintainCarMileage" class="right_border bootom_border col-sm-3" style="float:left;height:252px;line-height:250px;">
-                                    &nbsp;
-                                </div>
-                                <%--汽车保养时间--%>
-                                <div id="startTime" class="right_border bootom_border col-sm-3" style="float:left;height:252px;line-height:250px;">
-                                    &nbsp;
-                                </div>
-                                <div class="text_left col-sm-6" style="float:left;padding:0;">
-                                    <div style="font-weight: bold;">
-                                        <div class="bootom_border right_border col-sm-6">项目名</div>
-                                        <div class="bootom_border col-sm-6">价格</div>
-                                    </div>
-                                    <div>
-                                        <div id="maintainName0" class="bootom_border right_border col-sm-6">&nbsp;</div>
-                                        <div id="maintainPrice0" class="bootom_border col-sm-6">&nbsp;</div>
-                                    </div>
-                                    <div>
-                                        <div id="maintainName1" class="bootom_border right_border col-sm-6">&nbsp;</div>
-                                        <div id="maintainPrice1" class="bootom_border col-sm-6">&nbsp;</div>
-                                    </div>
-                                    <div>
-                                        <div id="maintainName2" class="bootom_border right_border col-sm-6">&nbsp;</div>
-                                        <div id="maintainPrice2" class="bootom_border col-sm-6">&nbsp;</div>
-                                    </div>
-                                    <div>
-                                        <div id="maintainName3" class="bootom_border right_border col-sm-6">&nbsp;</div>
-                                        <div id="maintainPrice3" class="bootom_border col-sm-6">&nbsp;</div>
-                                    </div>
-                                    <div>
-                                        <div id="maintainName4" class="bootom_border right_border col-sm-6">&nbsp;</div>
-                                        <div id="maintainPrice4" class="bootom_border col-sm-6">&nbsp;</div>
-                                    </div>
-                                    <div>
-                                        <div id="maintainName5" class="bootom_border right_border col-sm-6">&nbsp;</div>
-                                        <div id="maintainPrice5" class="bootom_border col-sm-6">&nbsp;</div>
-                                    </div>
-                                    <div>
-                                        <div id="maintainName6" class="bootom_border right_border col-sm-6">&nbsp;</div>
-                                        <div id="maintainPrice6" class="bootom_border col-sm-6">&nbsp;</div>
-                                    </div>
-                                    <div>
-                                        <div id="maintainName7" class="bootom_border right_border col-sm-6">&nbsp;</div>
-                                        <div id="maintainPrice7" class="bootom_border col-sm-6">&nbsp;</div>
-                                    </div>
-                                    <div>
-                                        <div id="maintainName8" class="bootom_border right_border col-sm-6">&nbsp;</div>
-                                        <div id="maintainPrice8" class="bootom_border col-sm-6">&nbsp;</div>
-                                    </div>
-                                    <div>
-                                        <div id="maintainName9" class="bootom_border right_border col-sm-6">&nbsp;</div>
-                                        <div id="maintainPrice9" class="bootom_border col-sm-6">&nbsp;</div>
-                                    </div>
+                        <div id="printDiv">
+                            <table class="my-table col-sm-12">
+                                <tr>
+                                    <th colspan="5">公司车辆维修、保养清单</th>
+                                </tr>
+                                <tr>
+                                    <td class="alter">车主姓名</td>
+                                    <td id="userName"></td>
+                                    <td class="alter">车主电话</td>
+                                    <td id="userPhone" colspan="2"></td>
+                                </tr>
+                                <tr>
+                                    <td class="alter">车牌号及车型</td>
+                                    <td id="carPlate"></td>
+                                    <td class="alter">首保里程</td>
+                                    <td colspan="2"></td>
+                                </tr>
+                                <tr>
+                                    <td class="alter">保养里程（km）</td>
+                                    <td class="alter">保养时间</td>
+                                    <td colspan="3" class="alter">保养项目</td>
+                                </tr>
+                                <tr>
+                                    <td id="maintainCarMileage" rowspan="12"></td>
+                                    <td id="startTime" rowspan="12"></td>
+                                    <td class="alter">项目名</td>
+                                    <td class="alter">原价</td>
+                                    <td class="alter">现价</td>
+                                </tr>
+                                <tr>
+                                    <td id="maintainName0"></td>
+                                    <td id="maintainMoney0"></td>
+                                    <td id="maintainPrice0"></td>
+                                </tr>
+                                <tr>
+                                    <td id="maintainName1"></td>
+                                    <td id="maintainMoney1"></td>
+                                    <td id="maintainPrice1"></td>
+                                </tr>
+                                <tr>
+                                    <td id="maintainName2"></td>
+                                    <td id="maintainMoney2"></td>
+                                    <td id="maintainPrice2"></td>
+                                </tr>
+                                <tr>
+                                    <td id="maintainName3"></td>
+                                    <td id="maintainMoney3"></td>
+                                    <td id="maintainPrice3"></td>
+                                </tr>
+                                <tr>
+                                    <td id="maintainName4"></td>
+                                    <td id="maintainMoney4"></td>
+                                    <td id="maintainPrice4"></td>
+                                </tr>
+                                <tr>
+                                    <td id="maintainName5"></td>
+                                    <td id="maintainMoney5"></td>
+                                    <td id="maintainPrice5"></td>
+                                </tr>
+                                <tr>
+                                    <td id="maintainName6"></td>
+                                    <td id="maintainMoney6"></td>
+                                    <td id="maintainPrice6"></td>
+                                </tr>
+                                <tr>
+                                    <td id="maintainName7"></td>
+                                    <td id="maintainMoney7"></td>
+                                    <td id="maintainPrice7"></td>
+                                </tr>
+                                <tr>
+                                    <td id="maintainName8"></td>
+                                    <td id="maintainMoney8"></td>
+                                    <td id="maintainPrice8"></td>
+                                </tr>
+                                <tr>
+                                    <td id="maintainName9"></td>
+                                    <td id="maintainMoney9"></td>
+                                    <td id="maintainPrice9"></td>
+                                </tr>
 
-                                    <div>
-                                        <div class="bootom_border right_border col-sm-6">&nbsp;合计：</div>
-                                        <div id="count" class="bootom_border col-sm-6">&nbsp;</div>
-                                    </div>
-                                </div>
-                                <p class="clear"></p>
-                            </div>
-                            <div class="bootom_border" style="font-weight: bold;">
-                                维修记录
-                            </div>
-                            <div class="float_left" style="font-weight: bold;">
-                                <div class="bootom_border right_border col-sm-3">维修项目</div>
-                                <div class="bootom_border right_border col-sm-3">更换配件名称</div>
-                                <div class="bootom_border right_border col-sm-2">里程（km）</div>
-                                <div class="bootom_border right_border col-sm-2">经手人</div>
-                                <div class="bootom_border col-sm-2">日期</div>
-                            </div>
-                            <div class="float_left">
-                                <div id="fixName0" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixAcc0" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixCarMileage0" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixUser0" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixTime0" class="bootom_border col-sm-2">&nbsp;</div>
-                            </div>
-                            <div class="float_left">
-                                <div id="fixName1" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixAcc1" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixCarMileage1" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixUser1" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixTime1" class="bootom_border col-sm-2">&nbsp;</div>
-                            </div>
-                            <div class="float_left">
-                                <div id="fixName2" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixAcc2" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixCarMileage2" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixUser2" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixTime2" class="bootom_border col-sm-2">&nbsp;</div>
-                            </div>
-                            <div class="float_left">
-                                <div id="fixName3" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixAcc3" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixCarMileage3" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixUser3" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixTime3" class="bootom_border col-sm-2">&nbsp;</div>
-                            </div>
-                            <div class="float_left">
-                                <div id="fixName4" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixAcc4" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixCarMileage4" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixUser4" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixTime4" class="bootom_border col-sm-2">&nbsp;</div>
-                            </div>
-                            <div class="float_left">
-                                <div id="fixName5" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixAcc5" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixCarMileage5" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixUser5" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixTime5" class="bootom_border col-sm-2">&nbsp;</div>
-                            </div>
-                            <div class="float_left">
-                                <div id="fixName6" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixAcc6" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixCarMileage6" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixUser6" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixTime6" class="bootom_border col-sm-2">&nbsp;</div>
-                            </div>
-                            <div class="float_left">
-                                <div id="fixName7" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixAcc7" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixCarMileage7" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixUser7" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixTime7" class="bootom_border col-sm-2">&nbsp;</div>
-                            </div>
-                            <div class="float_left">
-                                <div id="fixName8" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixAcc8" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixCarMileage8" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixUser8" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixTime8" class="bootom_border col-sm-2">&nbsp;</div>
-                            </div>
-                            <div class="float_left">
-                                <div id="fixName9" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixAcc9" class="bootom_border right_border col-sm-3">&nbsp;</div>
-                                <div id="fixCarMileage9" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixUser9" class="bootom_border right_border col-sm-2">&nbsp;</div>
-                                <div id="fixTime9" class="bootom_border col-sm-2">&nbsp;</div>
-                            </div>
-
-
-                            <div class="col-sm-12 bootom_border" style="height: 40px;">
-                                备注：
-                            </div>
-                            <div class="col-sm-12" style="text-align: right;">
-                                <div style="margin-right: 100px;">车主签字：</div>
-                            </div>
+                                <tr>
+                                    <td class="alter">合计：</td>
+                                    <td id="count" colspan="2"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" class="alter">维修记录</td>
+                                </tr>
+                                <tr>
+                                    <td class="alter">维修项目</td>
+                                    <td class="alter">更换配件名称</td>
+                                    <td class="alter">里程（km）</td>
+                                    <td class="alter">经手人</td>
+                                    <td class="alter">维修日期</td>
+                                </tr>
+                                <tr>
+                                    <td id="fixName0"></td>
+                                    <td id="fixAcc0"></td>
+                                    <td id="fixCarMileage0"></td>
+                                    <td id="fixUser0"></td>
+                                    <td id="fixTime0"></td>
+                                </tr>
+                                <tr>
+                                    <td id="fixName1"></td>
+                                    <td id="fixAcc1"></td>
+                                    <td id="fixCarMileage1"></td>
+                                    <td id="fixUser1"></td>
+                                    <td id="fixTime1"></td>
+                                </tr>
+                                <tr>
+                                    <td id="fixName2"></td>
+                                    <td id="fixAcc2"></td>
+                                    <td id="fixCarMileage2"></td>
+                                    <td id="fixUser2"></td>
+                                    <td id="fixTime2"></td>
+                                </tr>
+                                <tr>
+                                    <td id="fixName3"></td>
+                                    <td id="fixAcc3"></td>
+                                    <td id="fixCarMileage3"></td>
+                                    <td id="fixUser3"></td>
+                                    <td id="fixTime3"></td>
+                                </tr>
+                                <tr>
+                                    <td id="fixName4"></td>
+                                    <td id="fixAcc4"></td>
+                                    <td id="fixCarMileage4"></td>
+                                    <td id="fixUser4"></td>
+                                    <td id="fixTime4"></td>
+                                </tr>
+                                <tr>
+                                    <td id="fixName5"></td>
+                                    <td id="fixAcc5"></td>
+                                    <td id="fixCarMileage5"></td>
+                                    <td id="fixUser5"></td>
+                                    <td id="fixTime5"></td>
+                                </tr>
+                                <tr>
+                                    <td id="fixName6"></td>
+                                    <td id="fixAcc6"></td>
+                                    <td id="fixCarMileage6"></td>
+                                    <td id="fixUser6"></td>
+                                    <td id="fixTime6"></td>
+                                </tr>
+                                <tr>
+                                    <td id="fixName7"></td>
+                                    <td id="fixAcc7"></td>
+                                    <td id="fixCarMileage7"></td>
+                                    <td id="fixUser7"></td>
+                                    <td id="fixTime7"></td>
+                                </tr>
+                                <tr>
+                                    <td id="fixName8"></td>
+                                    <td id="fixAcc8"></td>
+                                    <td id="fixCarMileage8"></td>
+                                    <td id="fixUser8"></td>
+                                    <td id="fixTime8"></td>
+                                </tr>
+                                <tr>
+                                    <td id="fixName9"></td>
+                                    <td id="fixAcc9"></td>
+                                    <td id="fixCarMileage9"></td>
+                                    <td id="fixUser9"></td>
+                                    <td id="fixTime9"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">备注：</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" style="text-align: right;padding-right:100px;">车主签字：</td>
+                                </tr>
+                            </table>
                         </div>
-                        <!--endprint-->
                         <div style="height: 40px;"></div>
                         <div class="modal-footer" style="overflow:hidden;">
                             <button type="button" class="btn btn-default"
                                     data-dismiss="modal">关闭
                             </button>
                             <button type="button" class="btn btn-info" onclick="printMaintainAndFix()">
-                                <i class="glyphicon glyphicon-floppy-disk"></i> 打印
+                                <i class="glyphicon glyphicon-print"></i> 打印
                             </button>
                         </div>
                     </div>
