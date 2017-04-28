@@ -9,6 +9,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.UUIDUtil;
 import com.gs.service.AccessoriesTypeService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -54,6 +55,7 @@ public class AccessoriesTypeController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addAccType(AccessoriesType accessoriesType) {
         logger.info("添加");
+        accessoriesType.setAccTypeId(UUIDUtil.uuid());
         System.out.println(accessoriesType);
         accessoriesType.setAccTypeStatus("Y");
         accessoriesTypeService.insert(accessoriesType);
