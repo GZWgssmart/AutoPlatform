@@ -134,12 +134,12 @@
 
 
 <div id="searchDetailWin" class="modal fade" aria-hidden="true">
-    <div class="modal-dialog" style="width: 100%">
+    <div class="modal-dialog" style="width: 80%">
         <div class="modal-content">
-            <div class="modal-body">
+            <div class="modal-body" style="padding: 0px;">
                 <div class="row">
-                    <div class="col-sm-12 b-r">
-                        <h4 class="m-t-none m-b">维修保养进度</h4>
+                    <div class="col-sm-12">
+                        <h3 class="m-t-none m-b">维修保养进度</h3>
                             <div class="step-header">
                                 <ul>
                                     <li>
@@ -191,7 +191,6 @@
                                         <img src="<%=path%>/img/Ok.png">
                                         <p class="des">完成车辆维修保养</p>
                                     </li>
-                                    <p class="clear"></p>
                                 </ul>
                         </div>
                         <div style="height: 25%;border-top: 1px solid #e5e5e5;"></div>
@@ -313,7 +312,7 @@
 <script src="<%=path %>/js/city-picker.data.js"></script>
 <script src="<%=path %>/js/city-picker.js"></script>
 <script src="<%=path %>/js/jquery.form.min.js"></script>
-<%--<script src="<%=path %>/js/maintenanceProgress/jquery.step.js"></script>--%>
+<script src="<%=path %>/js/maintenanceProgress/jquery.step.js"></script>
 <script src="<%=path %>/js/maintenanceProgress/progress.js"></script>
 
 </body>

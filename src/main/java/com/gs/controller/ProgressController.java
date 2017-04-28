@@ -8,6 +8,7 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.MaintainRecordService;
 import com.gs.service.UserService;
+import com.gs.service.WorkInfoService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -65,8 +66,6 @@ public class ProgressController {
     @RequestMapping(value = "progress_byInfo", method = RequestMethod.GET)
     public ControllerResult ByInfo(@Param("id")String id, MaintainRecord maintainRecord, HttpServletRequest request){
         logger.info("根据id查询");
-        System.out.println("aaaa");
-        request.setAttribute("maintainRecord", "aaaaaaaaa");
         maintainRecordService.queryById(id);
         return ControllerResult.getSuccessResult("已查询");
     }
