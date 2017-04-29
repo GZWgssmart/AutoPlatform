@@ -45,9 +45,6 @@ public class CheckinController {
     private MaintainRecordService maintainRecordService;
 
     @Resource
-    private WorkInfoService workInfoService;
-
-    @Resource
     private UserService userService;
 
     @RequestMapping(value = "checkin_page", method = RequestMethod.GET)
@@ -127,10 +124,6 @@ public class CheckinController {
         maintainRecord.setStartTime(new Date());
         maintainRecord.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
 
-        WorkInfo workInfo = new WorkInfo();
-        workInfo.setRecordId(recordId);
-
-        workInfoService.insert(workInfo);
         maintainRecordService.insert(maintainRecord);
         checkinService.insert(checkin);
         return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录和工单信息已经自动生成");

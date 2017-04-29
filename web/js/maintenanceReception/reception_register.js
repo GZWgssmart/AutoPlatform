@@ -96,6 +96,7 @@ function carWash(value, row, index) {
 
 /** 显示添加数据的窗口 */
 function showAddWin() {
+    appointment = "";
     validator("addForm");
     clearAddForm();
     $("#addWin").modal('show');

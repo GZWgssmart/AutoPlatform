@@ -32,9 +32,14 @@
 	</insert>
 
 	<insert id="batchInsert"  parameterType="list">
-		<![CDATA[
-
-		]]>
+		<selectKey resultType="int" keyProperty="materialId" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into t_material_list (materialId, recordId, accId, materialCount, materialCreatedTime, materialStatus)
+		values
+		<foreach collection="list" item="item" index="index" separator="," >
+			(uuid(), #{item.recordId}, #{item.accId}, #{item.materialCount}, now(), 'Y')
+		</foreach>
 	</insert>
 
 	<delete id="delete" parameterType="materialList">

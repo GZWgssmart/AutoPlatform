@@ -37,4 +37,7 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 	public int inactive(String id) { return maintainFixAccDAO.inactive(id); }
 	public int active(String id) { return maintainFixAccDAO.active(id); }
 
+	public List<MaintainFixAcc> queryAllByMaintainId(String[] ids) {
+		return maintainFixAccDAO.queryAllByMaintainId(ids);
+	}
 }

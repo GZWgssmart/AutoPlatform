@@ -314,6 +314,12 @@
                                         <i class="glyphicon glyphicon-list-alt"></i> 生成明细清单
                                     </button>
                                 </a>
+                                <a>
+                                    <button onclick="userConfirm();" type="button"
+                                            class="btn btn-success">
+                                        <i class="glyphicon glyphicon-ok"></i> 用户已签字
+                                    </button>
+                                </a>
 
                             </div>
                             </tbody>
@@ -602,77 +608,77 @@
                                     <td class="alter">维修项目</td>
                                     <td class="alter">更换配件名称</td>
                                     <td class="alter">里程（km）</td>
-                                    <td class="alter">经手人</td>
+                                    <td class="alter">价格</td>
                                     <td class="alter">维修日期</td>
                                 </tr>
                                 <tr>
                                     <td id="fixName0"></td>
                                     <td id="fixAcc0"></td>
                                     <td id="fixCarMileage0"></td>
-                                    <td id="fixUser0"></td>
+                                    <td id="fixPrice0"></td>
                                     <td id="fixTime0"></td>
                                 </tr>
                                 <tr>
                                     <td id="fixName1"></td>
                                     <td id="fixAcc1"></td>
                                     <td id="fixCarMileage1"></td>
-                                    <td id="fixUser1"></td>
+                                    <td id="fixPrice1"></td>
                                     <td id="fixTime1"></td>
                                 </tr>
                                 <tr>
                                     <td id="fixName2"></td>
                                     <td id="fixAcc2"></td>
                                     <td id="fixCarMileage2"></td>
-                                    <td id="fixUser2"></td>
+                                    <td id="fixPrice2"></td>
                                     <td id="fixTime2"></td>
                                 </tr>
                                 <tr>
                                     <td id="fixName3"></td>
                                     <td id="fixAcc3"></td>
                                     <td id="fixCarMileage3"></td>
-                                    <td id="fixUser3"></td>
+                                    <td id="fixPrice3"></td>
                                     <td id="fixTime3"></td>
                                 </tr>
                                 <tr>
                                     <td id="fixName4"></td>
                                     <td id="fixAcc4"></td>
                                     <td id="fixCarMileage4"></td>
-                                    <td id="fixUser4"></td>
+                                    <td id="fixPrice4"></td>
                                     <td id="fixTime4"></td>
                                 </tr>
                                 <tr>
                                     <td id="fixName5"></td>
                                     <td id="fixAcc5"></td>
                                     <td id="fixCarMileage5"></td>
-                                    <td id="fixUser5"></td>
+                                    <td id="fixPrice5"></td>
                                     <td id="fixTime5"></td>
                                 </tr>
                                 <tr>
                                     <td id="fixName6"></td>
                                     <td id="fixAcc6"></td>
                                     <td id="fixCarMileage6"></td>
-                                    <td id="fixUser6"></td>
+                                    <td id="fixPrice6"></td>
                                     <td id="fixTime6"></td>
                                 </tr>
                                 <tr>
                                     <td id="fixName7"></td>
                                     <td id="fixAcc7"></td>
                                     <td id="fixCarMileage7"></td>
-                                    <td id="fixUser7"></td>
+                                    <td id="fixPrice7"></td>
                                     <td id="fixTime7"></td>
                                 </tr>
                                 <tr>
                                     <td id="fixName8"></td>
                                     <td id="fixAcc8"></td>
                                     <td id="fixCarMileage8"></td>
-                                    <td id="fixUser8"></td>
+                                    <td id="fixPrice8"></td>
                                     <td id="fixTime8"></td>
                                 </tr>
                                 <tr>
                                     <td id="fixName9"></td>
                                     <td id="fixAcc9"></td>
                                     <td id="fixCarMileage9"></td>
-                                    <td id="fixUser9"></td>
+                                    <td id="fixPrice9"></td>
                                     <td id="fixTime9"></td>
                                 </tr>
                                 <tr>

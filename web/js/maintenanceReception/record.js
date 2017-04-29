@@ -31,7 +31,7 @@ $(document).ready(function () {
             $("#fixName" + i).html('');
             $("#fixAcc" + i).html('');
             $("#fixCarMileage" + i).html('');
-            $("#fixUser" + i).html('');
+            $("#fixPrice" + i).html('');
             $("#fixTime" + i).html('');
         }
     });
@@ -274,10 +274,10 @@ function formatterDiscount(value, row, index) {
 function choiseMaintain() {
     var maintainOrFix = $("#maintainOrFix").val();
     if (maintainOrFix == "维修") {
-        initTableNotTollbar("fixTable", "/maintainFix/queryByMaintenanceItemPager");
+        initTableNotTollbar("fixTable", "/maintainFix/queryByPager");
         $("#fixWin").modal('show');
     } else if (maintainOrFix == "保养") {
-        initTableNotTollbar("maintainTable", "/maintainFix/queryByPager");
+        initTableNotTollbar("maintainTable", "/maintainFix/queryByMaintenanceItemPager");
         $("#maintainWin").modal('show');
     }
 }
@@ -289,7 +289,7 @@ function determineMaintain() {
 
 /** 确定选择的维修项目 */
 function determineFix() {
-    determineMaintainOrFix("fixTable", "fixWin", "只能选择一条保养项目");
+    determineMaintainOrFix("fixTable", "fixWin", "只能选择一条维修项目");
 }
 
 /** 选择维修保养项目的公共方法 */
@@ -323,63 +323,98 @@ function searchCondition() {
 
 /** 生成明细清单 */
 function generateDetail() {
-    var selectRow = $("#detailTable").bootstrapTable('getSelections');
-    if (selectRow.length < 1) {
-        swal('错误提示', "最少选择一条数据", "error");
-        return false;
-    } else {
-        var len = selectRow.length;
-        var detail1 = selectRow[0];
-        var maintainOrFix = detail1.record.checkin.maintainOrFix;
-        var count = 0;
-        if (maintainOrFix == "保养") {
-            for (var i = 0; i < len; i++) {
-                var detail = selectRow[i];
-                $("#maintainName" + i).html(detail.maintain.maintainName);
-                $("#maintainMoney" + i).html('$' + detail.maintain.maintainMoney);
-                $("#maintainPrice" + i).html('$' + detail.price);
-                count += detail.price;
-            }
-            $("#count").html(count);
-        } else if (maintainOrFix == "维修") {
-            for (var i = 0; i < len; i++) {
-                var detail = selectRow[i];
-                $("#fixName" + i).html(detail.maintain.maintainName);
-                $("#fixAcc" + i).html("配件名");
-                $("#fixCarMileage" + i).html(detail.record.checkin.carMileage);
-                $("#fixUser" + i).html("张师傅");
-                $("#fixTime" + i).html(formatterDate1(detail.record.startTime));
-            }
+    var tableData = $('#detailTable').bootstrapTable('getData');
+
+    var len = tableData.length;
+    var detail1 = tableData[0];
+    var maintainOrFix = detail1.record.checkin.maintainOrFix;
+    var count = 0;
+    if (maintainOrFix == "保养") {
+        for (var i = 0; i < len; i++) {
+            var detail = tableData[i];
+            $("#maintainName" + i).html(detail.maintain.maintainName);
+            $("#maintainMoney" + i).html('$' + detail.maintain.maintainMoney);
+            $("#maintainPrice" + i).html('$' + detail.price);
+            count += detail.price;
         }
-
-
-
-        var carPlate = detail1.record.checkin.plate.plateName + "-" + detail1.record.checkin.carPlate;
-        var userName = detail1.record.checkin.userName;
-        var userPhone = detail1.record.checkin.userPhone;
-        var maintainCarMileage = detail1.record.checkin.carMileage;
-        var startTime = detail1.record.startTime;
-        $("#carPlate").html(carPlate);
-        $("#userName").html(userName);
-        $("#userPhone").html(userPhone);
-        $("#maintainCarMileage").html(maintainCarMileage);
-        $("#startTime").html(formatterDate1(startTime));
-
-        $("#maintainFixWin").modal("show");
-
-
+        $("#count").html(count);
+    } else if (maintainOrFix == "维修") {
+        for (var i = 0; i < len; i++) {
+            var detail = tableData[i];
+            $("#fixName" + i).html(detail.maintain.maintainName);
+            $("#fixAcc" + i).html("配件名");
+            $("#fixCarMileage" + i).html(detail.record.checkin.carMileage);
+            $("#fixPrice" + i).html("$" + detail.price);
+            $("#fixTime" + i).html(formatterDate1(detail.record.startTime));
+        }
     }
+
+
+
+    var carPlate = detail1.record.checkin.plate.plateName + "-" + detail1.record.checkin.carPlate;
+    var userName = detail1.record.checkin.userName;
+    var userPhone = detail1.record.checkin.userPhone;
+    var maintainCarMileage = detail1.record.checkin.carMileage;
+    var startTime = detail1.record.startTime;
+    $("#carPlate").html(carPlate);
+    $("#userName").html(userName);
+    $("#userPhone").html(userPhone);
+    $("#maintainCarMileage").html(maintainCarMileage);
+    $("#startTime").html(formatterDate1(startTime));
+
+    $("#maintainFixWin").modal("show");
 }
 
 /** 打印维修保养清单 */
 function printMaintainAndFix() {
-    $("#maintainFixWin").modal("hide");
+
     var newWin=window.open('about:blank', '', '');
-    var titleHTML = document.all.item('printDiv').innerHTML;// 拿打印div所有元素
+    var titleHTML = document.getElementById('printDiv').innerHTML;// 拿打印div所有元素
     newWin.document.write("<html><head><title></title><link rel='stylesheet' type ='text/css' href='/css/my-table.css'></head><body>" + titleHTML + "</body></html>");
     newWin.document.location.reload();
     newWin.print();
     newWin.close();
+    $("#maintainFixWin").modal("hide");
+}
+
+/** 用户已签字 */
+function userConfirm() {
+    swal({
+            title: "确认操作?",
+            text: "请确认用户已经签字!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            closeOnConfirm: false,
+            closeOnCancel: false
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                var tableData = $('#detailTable').bootstrapTable('getData');
+                var maintainIds = "";
+                var recordId = tableData[0].record.recordId;
+                for (var i = 0, len = tableData.length; i < len; i++) {
+                    if (maintainIds == "" || maintainIds == null) {
+                        maintainIds = tableData[i].maintain.maintainId;
+                    } else {
+                        maintainIds += "," + tableData[i].maintain.maintainId;
+                    }
+                }
+                $.get("/detail/confirm?recordId=" + recordId + "&maintainIds=" + maintainIds,function(data) {
+                    if (data.result == "success") {
+                        swal("确认成功", data.message, "success");
+                        $("#searchDetailWin").modal('hide');
+                    } else if (data.result == "fail") {
+                        swal("确认失败", "出现了一个错误", "error");
+                    }
+                }, "json");
+
+            } else {
+                swal("取消操作", "您已经取消操作", "error");
+            }
+        });
 }
 
 

@@ -1,14 +1,14 @@
 package com.gs.controller;
 
-import com.gs.bean.Checkin;
-import com.gs.bean.MaintainDetail;
-import com.gs.bean.MaintainRecord;
-import com.gs.bean.WorkInfo;
+import com.gs.bean.*;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.MaintainDetailService;
+import com.gs.service.MaintainFixAccService;
+import com.gs.service.MaterialListService;
+import com.gs.service.WorkInfoService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +38,15 @@ public class MaintainDetailController {
 
     @Resource
     private MaintainDetailService detailService;
+
+    @Resource
+    private MaintainFixAccService maintainFixAccService;
+
+    @Resource
+    private MaterialListService materialListService;
+
+    @Resource
+    private WorkInfoService workInfoService;
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -64,6 +74,28 @@ public class MaintainDetailController {
         logger.info("修改维修保养明细记录");
         detailService.update(detail);
         return ControllerResult.getSuccessResult("修改成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "confirm", method = RequestMethod.GET)
+    public ControllerResult userConfirm(@Param("recordId") String recordId, @Param("maintainIds") String maintainIds) {
+        logger.info("用户签字确认");
+        String[] maintainIds1 = maintainIds.split(",");
+        List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryAllByMaintainId(maintainIds1);
+        List<MaterialList> materialLists = new ArrayList<MaterialList>();
+        for (MaintainFixAcc maintainFixAcc : maintainFixAccs) {
+            MaterialList materialList = new MaterialList();
+            materialList.setRecordId(recordId);
+            materialList.setAccId(maintainFixAcc.getAccId());
+            materialList.setMaterialCount(maintainFixAcc.getAccCount());
+            materialLists.add(materialList);
+        }
+        WorkInfo workInfo = new WorkInfo();
+        workInfo.setRecordId(recordId);
+
+        workInfoService.insert(workInfo);
+        materialListService.batchInsert(materialLists);
+        return ControllerResult.getSuccessResult("用户已经确认签字，工单信息和物料清单已经自动生成");
     }
 
     @InitBinder
