@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.ChargeBill;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,4 +38,19 @@ public class ChargeBillServiceImpl implements ChargeBillService {
 	public int inactive(String id) { return chargeBillDAO.inactive(id); }
 	public int active(String id) { return chargeBillDAO.active(id); }
 
+	public int countByStatus(String status) {
+		return chargeBillDAO.countByStatus(status);
+	}
+
+	public List<ChargeBill> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status) {
+		return chargeBillDAO.queryPagerByStatus(pager, status);
+	}
+
+	public int countByCondition(ChargeBill chargeBill) {
+		return chargeBillDAO.countByCondition(chargeBill);
+	}
+
+	public List<ChargeBill> queryPagerByCondition(@Param("pager") Pager pager, @Param("chargeBill") ChargeBill chargeBill) {
+		return chargeBillDAO.queryPagerByCondition(pager, chargeBill);
+	}
 }

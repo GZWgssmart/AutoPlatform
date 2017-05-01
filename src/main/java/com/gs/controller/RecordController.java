@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by JangoGuo on 2017/4/18.
+ * Created by JangoGuo on 2017/4/18. 维修保养记录控制器
  */
 @Controller
 @RequestMapping("record")

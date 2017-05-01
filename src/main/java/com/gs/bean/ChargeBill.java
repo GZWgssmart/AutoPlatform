@@ -6,31 +6,26 @@ import java.util.Date;
 *由Wjhsmart技术支持
 *
 *@author Wjhsmart
-*@since 2017-04-14 16:16:21
+*@since 2017-04-14 16:16:21 收费单据bean
 */
 public class ChargeBill {
-	private String chargeBillId;
-	private String maintainRecordId;
-	private String chargeBillMoney;
-	private String paymentMethod;
-	private String actualPayment;
-	private Date chargeTime;
-	private Date chargeCreatedTime;
-	private String chargeBillDes;
-	private String chargeBillStatus;
+	private String chargeBillId; // 收费单据的id
+	private String recordId; // 维修保养记录的ID
+	private String chargeBillMoney; // 收费总金额
+	private String paymentMethod; // 付款方式
+	private String actualPayment; // 实付款
+	private Date chargeTime; // 收款时间
+	private Date chargeCreatedTime; // 收费单据创建时间
+	private String chargeBillDes; // 收费单据描述
+	private String chargeBillStatus; // 收费单据状态
+
+	private MaintainRecord record;
 
 	public String getChargeBillId(){
 		return this.chargeBillId;
 	}
 	public void setChargeBillId(String chargeBillId){
 		this.chargeBillId=chargeBillId;
-	}
-
-	public String getMaintainRecordId(){
-		return this.maintainRecordId;
-	}
-	public void setMaintainRecordId(String maintainRecordId){
-		this.maintainRecordId=maintainRecordId;
 	}
 
 	public String getChargeBillMoney(){
@@ -82,4 +77,19 @@ public class ChargeBill {
 		this.chargeBillStatus=chargeBillStatus;
 	}
 
+	public String getRecordId() {
+		return recordId;
+	}
+
+	public void setRecordId(String recordId) {
+		this.recordId = recordId;
+	}
+
+	public MaintainRecord getRecord() {
+		return record;
+	}
+
+	public void setRecord(MaintainRecord record) {
+		this.record = record;
+	}
 }

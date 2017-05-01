@@ -149,7 +149,7 @@
             </a>
             <a>
                 <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-search"></i> 查询
+                    <i class="glyphicon glyphicon-search"></i> 条件查询
                 </button>
             </a>
 
