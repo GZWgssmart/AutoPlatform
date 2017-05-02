@@ -4,7 +4,7 @@
 var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable", "/admin/query_pager");
+    initTable("cusTable", contextPath + "/admin/query_pager");
 
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
@@ -109,11 +109,13 @@ function thisStatus(value, row, index) {
 function operateFormatter(value, row, index) {
     if (row.userStatus == 'Y') {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>'
+            '<button type="button" class="updateActive btn btn-success  btn-sm">冻结</button>',
+            ' <button type="button" class="showEditModule btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>'
+            '<button type="button" class="updateInactive btn btn-danger  btn-sm">激活</button>',
+            ' <button type="button" class="showEditModule btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     }
 }
@@ -125,7 +127,6 @@ window.operateEvents = {
             function (data) {
                 if (data.result == "success") {
                     $('#addWin').modal('hide');
-                    // swal(data.message, "", "success");
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
@@ -138,7 +139,6 @@ window.operateEvents = {
             function (data) {
                 if (data.result == "success") {
                     $('#addWin').modal('hide');
-                    // swal(data.message, "", "success");
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
@@ -146,3 +146,17 @@ window.operateEvents = {
             }, "json");
     }
 }
+
+function queryAll() {
+    initTable("cusTable", contextPath + "/admin/query_pager");
+}
+
+function queryCompany() {
+    initTable("cusTable", contextPath + "/admin/company_pager");
+}
+
+function querySystem() {
+    initTable("cusTable", contextPath + "/admin/system_pager");
+}
+
+

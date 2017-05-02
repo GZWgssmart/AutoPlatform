@@ -44,4 +44,28 @@ public class UserServiceImpl implements UserService {
 	public int countByUser(String companyId) {
 		return userDAO.countByUser(companyId);
 	}
+
+	public List<User> queryByAdminPager(Pager pager) {
+		return userDAO.queryByAdminPager(pager);
+	}
+
+	public int countAdmin() {
+		return userDAO.countAdmin();
+	}
+
+	public List<User> queryByCompanyAdminPager(Pager pager) {
+		return userDAO.queryByCompanyAdminPager(pager);
+	}
+
+	public int countCompanyAdmin() {
+		return userDAO.countCompanyAdmin();
+	}
+
+	public List<User> queryBySystemAdminPager(Pager pager) {
+		return userDAO.queryBySystemAdminPager(pager);
+	}
+
+	public int countSystemAdmin() {
+		return userDAO.countSystemAdmin();
+	}
 }

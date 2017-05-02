@@ -118,17 +118,84 @@
 		]]>
 	</select>
 	<select id="queryByPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
-
 		<![CDATA[
 			SELECT u.*, c.companyId, c.companyName FROM t_user u,t_company c where 1=1 and c.companyId = u.companyId
 				order by userCreatedTime Desc, u.companyId
 		]]>limit #{beginIndex}, #{pageSize}
+	</select>
 
+	<select id="queryByAdminPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
+		<![CDATA[
+			select u.*, c.companyId, c.companyName from t_user u
+			LEFT JOIN t_company c on u.companyId = c.companyId
+			LEFT JOIN t_user_role ur  on ur.userId = u.userId
+			LEFT JOIN t_role r on r.roleId = ur.roleId
+			where r.roleId = 'f0f999ab-2497-11e7-8420-2c600cb87d10'
+			or r.roleId = 'ad381c0d-2497-11e7-8420-2c600cb87d10'
+			or (u.companyId = c.companyId and r.roleId = ur.roleId)
+			order by userCreatedTime Desc
+		]]>limit #{beginIndex}, #{pageSize}
+	</select>
+
+	<select id="queryByCompanyAdminPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
+		<![CDATA[
+			select u.*, c.companyId, c.companyName from t_user u
+			LEFT JOIN t_company c on u.companyId = c.companyId
+			LEFT JOIN t_user_role ur  on ur.userId = u.userId
+			LEFT JOIN t_role r on r.roleId = ur.roleId
+			where u.companyId = c.companyId and r.roleId = ur.roleId
+			order by userCreatedTime Desc
+		]]>limit #{beginIndex}, #{pageSize}
+	</select>
+
+	<select id="queryBySystemAdminPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
+		<![CDATA[
+			select u.*, c.companyId, c.companyName from t_user u
+			LEFT JOIN t_company c on u.companyId = c.companyId
+			LEFT JOIN t_user_role ur  on ur.userId = u.userId
+			LEFT JOIN t_role r on r.roleId = ur.roleId
+			where r.roleId = 'f0f999ab-2497-11e7-8420-2c600cb87d10'
+			or r.roleId = 'ad381c0d-2497-11e7-8420-2c600cb87d10'
+			order by userCreatedTime Desc
+		]]>limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) FROM t_user
+		]]>
+	</select>
+
+	<select id="countAdmin" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) from t_user u
+			LEFT JOIN t_company c on u.companyId = c.companyId
+			LEFT JOIN t_user_role ur  on ur.userId = u.userId
+			LEFT JOIN t_role r on r.roleId = ur.roleId
+			where r.roleId = 'f0f999ab-2497-11e7-8420-2c600cb87d10'
+			or r.roleId = 'ad381c0d-2497-11e7-8420-2c600cb87d10'
+			or (u.companyId = c.companyId and r.roleId = ur.roleId)
+		]]>
+	</select>
+
+	<select id="countCompanyAdmin" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) from t_user u
+			LEFT JOIN t_company c on u.companyId = c.companyId
+			LEFT JOIN t_user_role ur  on ur.userId = u.userId
+			LEFT JOIN t_role r on r.roleId = ur.roleId
+			where u.companyId = c.companyId and r.roleId = ur.roleId
+		]]>
+	</select>
+
+	<select id="countSystemAdmin" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) from t_user u
+			LEFT JOIN t_company c on u.companyId = c.companyId
+			LEFT JOIN t_user_role ur  on ur.userId = u.userId
+			LEFT JOIN t_role r on r.roleId = ur.roleId
+			where r.roleId = 'f0f999ab-2497-11e7-8420-2c600cb87d10'
+			or r.roleId = 'ad381c0d-2497-11e7-8420-2c600cb87d10'
 		]]>
 	</select>
 
