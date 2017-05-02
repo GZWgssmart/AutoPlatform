@@ -48,7 +48,14 @@ function showEditWin() {
 }
 
 
-
+window.openCustomer ={
+    'click .addCustomer': function (e, value, row, index) {
+        $(".customerId").val(row.checkin.userId);
+        $(".visit_user").val(row.checkin.userName);
+        showAddWin();
+        $("#customerWin").modal('hide');
+    }
+}
 
 
 

@@ -10,13 +10,28 @@ $(document).ready(function () {
 });
 
 
-
-
-/** 添加数据 */
-function showAddWin() {
-    $("#addWin").modal('show');
-
+/**添加车主*/
+function showCustomer(){
+    initTableNotTollbar("customerTable", "/record/pager_track");
+    $("#customerWin").modal('show');
 }
+
+function addCustomer(){
+    var selectRow = $("#customerTable").bootstrapTable('getSelections');
+    if(selectRow.length < 1){
+        swal('操作错误', "至少选择一个车主", "error");
+    }else{
+        var customer = selectRow[0];
+        $(".customerId").val(customer.checkin.userId);
+        $(".visit_user").val(customer.checkin.userName);
+        showEditWin(2);
+        $("#customerWin").modal('hide');
+
+    }
+}
+
+
+
 var idList = new Array();
 var sendMsg = '';
 /** 编辑数据 */
@@ -71,9 +86,8 @@ function updateIncomingType() {
         error.innerHTML = "请输入正确的数据";
         $("#addButton1").removeAttr("disabled");
     }
-
-
 }
+
 
 /**提交添加数据 */
 function addCompaint() {

@@ -178,7 +178,7 @@
                                 <th data-field="checkin.userRequests">
                                     车主维保要求
                                 </th>
-                                <th data-field="operate" data-formatter="customerFormatter" data-events="customerEvents">
+                                <th data-field="operate" data-formatter="customerFormatter" data-events="openCustomer">
                                     操作
                                 </th>
                             </tr>

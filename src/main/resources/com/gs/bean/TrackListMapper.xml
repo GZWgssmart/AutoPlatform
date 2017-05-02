@@ -105,7 +105,7 @@
 		select l.userId as customerId,c.userPhone as customerPhone, l.trackUser as adminId, l.*, u.userName as adminName, c.userName as customerName
 		from t_checkin c, t_user u, t_track_list l, t_maintain_record r
 		where l.trackUser=u.userId and c.userId = l.userId and r.checkinId=c.checkinId and
-		c.checkinStatus ='Y' and r.recordStatus ='Y'
+		c.checkinStatus ='Y' and r.recordStatus ='Y' order by l.trackCreatedTime desc
 		]]>
 		limit #{beginIndex}, #{pageSize}
 	</select>
