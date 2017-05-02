@@ -20,4 +20,14 @@ public class Constants {
 
     public static final String DEFAULT_ENCODING = "UTF-8";
 
+    public static final String APPOINTMENT = "预约中";
+
+    public static final String CHECKIN = "登记中";
+
+    public static final String MAINTAIN_FIX = "维修保养中";
+
+    public static final String SETTLEMENT = "待结算";
+
+    public static final String COMPLETED = "已完成";
+
 }

@@ -81,7 +81,6 @@ CREATE TABLE `t_accessories_type` (
 /*预约表*/
 
 DROP TABLE IF EXISTS `t_appointment`;
-
 CREATE TABLE `t_appointment` (
   `appointmentId` varchar(36) NOT NULL DEFAULT '主键',
   `userId` varchar(36) DEFAULT NULL COMMENT '用户编号',
@@ -97,6 +96,7 @@ CREATE TABLE `t_appointment` (
   `appCreatedTime` datetime NOT NULL COMMENT '预约记录创建时间',
   `companyId` varchar(36) NOT NULL COMMENT '汽修公司编号',
   `appoitmentStatus` varchar(2) DEFAULT NULL COMMENT '预约状态',
+  `speedStatus` varchar(10) NOT NULL COMMENT '标识这条记录当前的进度，如预约中，登记完',
   PRIMARY KEY (`appointmentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -317,7 +317,8 @@ CREATE TABLE `t_maintain_record` (
   `pickupTime` datetime DEFAULT NULL COMMENT '维修保养结束车主提车时间',
   `companyId` varchar(36) DEFAULT NULL COMMENT '来源于t_company表公司Id',
   `recordDes` varchar(500) DEFAULT NULL COMMENT '维修保养记录描述',
-  `recordStatus` varchar(2) DEFAULT NULL COMMENT '维修保养记录状态，Y表示可用，N表示不可用'
+  `recordStatus` varchar(2) DEFAULT NULL COMMENT '维修保养记录状态，Y表示可用，N表示不可用',
+  `speedStatus` varchar(10) NOT NULL COMMENT '标识这条记录的当前进度，如登记完，维修中或保养中，待结算，已完成'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*维修保养提醒记录表*/
