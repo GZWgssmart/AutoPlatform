@@ -31,5 +31,19 @@ public interface SupplyTypeDAO extends BaseDAO<String, SupplyType>{
      */
     public List<SupplyType> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status);
 
+    /**
+     * 根据查询条件计数
+     * @param supplyType
+     * @return
+     */
+    public int countByCondition(SupplyType supplyType);
+
+    /**
+     * 根据查询条件分页查询
+     * @param pager
+     * @param supplyType
+     * @return
+     */
+    public List<SupplyType> queryPagerByCondition(@Param("pager") Pager pager, @Param("supplyType") SupplyType supplyType);
 
 }

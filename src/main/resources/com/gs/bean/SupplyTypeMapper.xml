@@ -60,7 +60,7 @@
 
 	<select id="queryAll" resultMap="supplyTypeResultMap">
 		<![CDATA[
-
+		select * from t_supply_type
 		]]>
 	</select>
 
@@ -98,6 +98,20 @@
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
+	<select id="queryPagerByCondition" resultType="list" resultMap="supplyTypeResultMap">
+		<![CDATA[
+			select t.*, c.companyId, c.companyName from t_supply_type t, t_company c
+			where 1=1 and c.companyId = t.companyId
+		]]>
+		<if test="supplyType.supplyTypeName != null and supplyType.supplyTypeName != ''">
+			and t.supplyTypeName like concat('%',#{supplyType.supplyTypeName},'%')
+		</if>
+		<if test="supplyType.companyId != null and supplyType.companyId != ''">
+			and t.companyId = #{supplyType.companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
 	<select id="count" resultType="int">
 		<![CDATA[
 		select count(supplyTypeId) from t_supply_type where 1 = 1
@@ -109,6 +123,15 @@
 		select count(supplyTypeId) from t_supply_type where supplyTypeStatus = #{status}
 		]]>
 	</select>
+
+	<select id="countByCondition" resultType="int">
+	<![CDATA[
+			select count(*) from t_supply_type where 1 = 1
+		]]>
+	<if test="companyId != null and companyId != ''">
+		and companyId = #{companyId}
+	</if>
+</select>
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[

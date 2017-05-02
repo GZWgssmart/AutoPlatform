@@ -16,6 +16,7 @@
     <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -73,6 +74,33 @@
             </th>
         </tr>
         </thead>
+        <form id="formSearch" class="form-horizontal">
+            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+                <div class="col-sm-2" style="margin-left: -15px;">
+                    <input type="text" id="searchSupplyName" name="supplyName" class="form-control" placeholder="请输入供应商名称" >
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" id="searchSupplyPricipal" name="supplyPricipal" class="form-control" placeholder="请输入供应商负责人" >
+                </div>
+                <div class="col-sm-2">
+                    <select class="js-example-tags form-control supplyType" id="searchSupplyTypeId" name="supplyTypeId">
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" onclick="searchSupply()" class="btn btn-primary">
+                        查询
+                    </button>
+                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                        关闭
+                    </button>
+                    <input type="reset" name="reset" style="display: none;"/>
+                </div>
+            </div>
+        </form>
         <tbody>
         <div id="toolbar" class="btn-group">
             <a>
@@ -98,6 +126,11 @@
             <a>
                 <button onclick="searchStatus('/supply/queryByPager?status=ALL');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部
+                </button>
+            </a>
+            <a>
+                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-search"></i> 条件查询
                 </button>
             </a>
         </div>
@@ -158,8 +191,8 @@
                                 <input type="text" attr="supply.supplyTypeId"  name="supplyTypeId" class="form-control"/>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
-                                <span id="error1" style="color: red;"></span>
-                                <br/>
+
+
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
@@ -247,6 +280,8 @@
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
+<script src="<%=path %>/js/select2.full.min.js"></script>
+<script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/supply/supply_info.js"></script>

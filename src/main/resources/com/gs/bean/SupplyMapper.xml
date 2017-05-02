@@ -8,7 +8,7 @@
 		<id property="supplyId" column="supplyId"></id>
 		<result property="supplyName" column="supplyName"></result>
 		<result property="supplyTel" column="supplyTel"></result>
-		<result property="supplyPricipal" column="suplyPricipal"></result>
+		<result property="supplyPricipal" column="supplyPricipal"></result>
 		<result property="supplyAddress" column="supplyAddress"></result>
 		<result property="supplyBank" column="supplyBank"></result>
 		<result property="supplyBankAccount" column="supplyBankAccount"></result>
@@ -110,6 +110,27 @@
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
+	<select id="queryPagerByCondition" resultType="list" resultMap="supplyResultMap">
+		<![CDATA[
+			select s.*, t.supplyTypeId, t.supplyTypeName, c.companyId, c.companyName
+			from t_supply s, t_supply_type t, t_company c
+			where 1=1 and c.companyId = s.companyId and t.supplyTypeId = s.supplyTypeId
+		]]>
+		<if test="supply.supplyName != null and supply.supplyName != ''">
+			and s.supplyName like concat('%',#{supply.supplyName},'%')
+		</if>
+		<if test="supply.supplyPricipal != null and supply.supplyPricipal != ''">
+			and s.supplyPricipal like concat('%',#{supply.supplyPricipal},'%')
+		</if>
+		<if test="supply.supplyTypeId != null and supply.supplyTypeId != ''">
+			and s.supplyTypeId = #{supply.supplyTypeId}
+		</if>
+		<if test="supply.companyId != null and supply.companyId != ''">
+			and s.companyId = #{supply.companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
 	<select id="count" resultType="int">
 		<![CDATA[
 		select count(supplyId) from t_supply where 1 = 1
@@ -120,6 +141,15 @@
 		<![CDATA[
 		select count(supplyId) from t_supply where supplyStatus = #{status}
 		]]>
+	</select>
+
+	<select id="countByCondition" resultType="int">
+		<![CDATA[
+			select count(*) from t_supply where 1 = 1
+		]]>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+		</if>
 	</select>
 
 	<update id="inactive" parameterType="string">

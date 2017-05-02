@@ -56,6 +56,26 @@ public class SupplyController {
             return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
         }
 
+    @ResponseBody
+    @RequestMapping(value = "conditionPager", method = RequestMethod.GET)
+    public Pager4EasyUI<Supply> queryPagerByCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
+                                                          @Param("supplyName")String supplyName, @Param("supplyPricipal")String supplyPricipal,
+                                                          @Param("supplyTypeId")String supplyTypeId, @Param("companyId")String companyId) {
+        logger.info("根据条件分页查询供应商分类");
+        Supply supply = new Supply();
+        supply.setSupplyName(supplyName);
+        supply.setSupplyPricipal(supplyPricipal);
+        supply.setSupplyTypeId(supplyTypeId);
+        supply.setCompanyId(companyId);
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<Supply> supplys = new ArrayList<Supply>();
+        pager.setTotalRecords(supplyService.countByCondition(supply));
+        supplys = supplyService.queryPagerByCondition(pager, supply);
+        return new Pager4EasyUI<Supply>(pager.getTotalRecords(), supplys);
+    }
+
         @ResponseBody
         @RequestMapping("add")
         public ControllerResult add(Supply supply) {
@@ -89,7 +109,7 @@ public class SupplyController {
 
     @ResponseBody
     @RequestMapping(value = "queryAll", method = RequestMethod.GET)
-    public List<ComboBox4EasyUI> queryUserAll() {
+    public List<ComboBox4EasyUI> queryAll() {
         logger.info("查询供应商");
         List<Supply> supplyList = supplyService.queryAll();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();

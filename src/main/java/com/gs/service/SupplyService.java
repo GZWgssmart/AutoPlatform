@@ -29,6 +29,19 @@ public interface SupplyService extends BaseService<String, Supply>{
      */
     public List<Supply> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status);
 
+    /**
+     * 根据查询条件计数
+     * @param supply
+     * @return
+     */
+    public int countByCondition(Supply supply);
 
+    /**
+     * 根据查询条件分页查询
+     * @param pager
+     * @param supply
+     * @return
+     */
+    public List<Supply> queryPagerByCondition(@Param("pager") Pager pager, @Param("supply") Supply supply);
 
 }

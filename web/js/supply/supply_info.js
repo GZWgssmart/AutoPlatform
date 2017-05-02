@@ -1,7 +1,8 @@
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/supply/queryByPager?status=ALL");
-
+    initSelect2("supplyType", "请选择供应商分类", "/supplyType/queryAll", "150");
+    initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin", "editForm");
 
@@ -197,5 +198,19 @@ function validator(formId) {
             }
 
         })
+
+}
+
+/** 根据条件搜索 */
+function searchSupply() {
+    var supplyName = $("#searchSupplyName").val();
+    var supplyPricipal = $("#searchSupplyPricipal").val();
+    var supplyTypeId = $("#searchSupplyTypeId").val();
+    var companyId = $("#searchCompanyId").val();
+    if (companyId != null && companyId != "") {
+        initTable("cusTable", "/supply/conditionPager?supplyName=" + supplyName  + "&supplyPricipal="+ supplyPricipal + "%supplyTypeId=" + supplyTypeId + "&companyId=" + companyId);
+    } else {
+        swal("错误提示", "请选择一家汽修公司", "error");
+    }
 
 }

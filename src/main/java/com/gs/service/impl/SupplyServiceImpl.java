@@ -45,4 +45,12 @@ public class SupplyServiceImpl implements SupplyService {
 	public List<Supply> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status) {
 		return supplyDAO.queryPagerByStatus(pager, status);
 	}
+
+	public int countByCondition(Supply supply) {
+		return supplyDAO.countByCondition(supply);
+	}
+
+	public List<Supply> queryPagerByCondition(@Param("pager") Pager pager, @Param("supply") Supply supply) {
+		return supplyDAO.queryPagerByCondition(pager, supply);
+	}
 }

@@ -2,6 +2,7 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.SupplyType;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -66,6 +67,23 @@ public class SupplyTypeController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "conditionPager", method = RequestMethod.GET)
+    public Pager4EasyUI<SupplyType> queryPagerByCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
+                                                       @Param("supplyTypeName")String supplyTypeName, @Param("companyId")String companyId) {
+        logger.info("根据条件分页查询供应商分类");
+        SupplyType supplyType = new SupplyType();
+        supplyType.setSupplyTypeName(supplyTypeName);
+        supplyType.setCompanyId(companyId);
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<SupplyType> supplyTypes = new ArrayList<SupplyType>();
+        pager.setTotalRecords(supplyTypeService.countByCondition(supplyType));
+        supplyTypes = supplyTypeService.queryPagerByCondition(pager, supplyType);
+        return new Pager4EasyUI<SupplyType>(pager.getTotalRecords(), supplyTypes);
+    }
+
+    @ResponseBody
     @RequestMapping("edit")
     public ControllerResult edit(SupplyType supplyType) {
         logger.info("修改供应商分类");
@@ -83,6 +101,21 @@ public class SupplyTypeController {
             supplyTypeService.inactive(id);
         }
         return ControllerResult.getSuccessResult("更新成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryAll", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryAll() {
+        logger.info("查询供应商分类");
+        List<SupplyType> supplyTypeList = supplyTypeService.queryAll();
+        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+        for (SupplyType supplyTypes : supplyTypeList) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(supplyTypes.getSupplyTypeId());
+            comboBox4EasyUI.setText(supplyTypes.getSupplyTypeName());
+            comboBox4EasyUIs.add(comboBox4EasyUI);
+        }
+        return comboBox4EasyUIs;
     }
 
 }
