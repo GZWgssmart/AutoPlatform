@@ -2,6 +2,9 @@ var tempData = {
     chart: {
         type: 'column'
     },
+    title: {
+        text: '收入与支出本月统计'
+    },
     yAxis: {
         min: 0,
         title: {
@@ -22,13 +25,16 @@ var tempData = {
             borderWidth: 0
         }
     },
+    credits: {
+        enabled: false
+    },
     series: []
 };
 
 
 
 $(function () {
-    getColumnarChart("columnar", "/incomingOutgoing/query_default", tempData);
+    getColumnarChart("columnar", "/incomingOutgoing/query_default", tempData,"default");
 
     initDateTime("datatimepicker")
 });
@@ -36,19 +42,68 @@ $(function () {
 function showSearchForm(count) {
     if(count == 1){
         $("#searchDiv1").show();
-        $("#showButton1").hide();
+        $("#searchDiv2").hide();
+        $("#searchDiv3").hide();
+        $("#searchDiv4").hide();
+        $("#searchDiv5").hide();
+        $("#showButton1").attr("class"," btn btn-success");
+        $("#showButton2").attr("class"," btn btn-primary");
+        $("#showButton3").attr("class"," btn btn-primary");
+        $("#showButton4").attr("class"," btn btn-primary");
+        $("#showButton5").attr("class"," btn btn-primary");
+        $("#start1").val("");
+        $("#end1").val("");
     }else if(count == 2){
         $("#searchDiv2").show();
-        $("#showButton2").hide();
+        $("#searchDiv1").hide();
+        $("#searchDiv3").hide();
+        $("#searchDiv4").hide();
+        $("#searchDiv5").hide();
+        $("#showButton2").attr("class"," btn btn-success");
+        $("#showButton1").attr("class"," btn btn-primary");
+        $("#showButton3").attr("class"," btn btn-primary");
+        $("#showButton4").attr("class"," btn btn-primary");
+        $("#showButton5").attr("class"," btn btn-primary");
+        $("#start2").val("");
+        $("#end2").val("");
     }else if(count == 3){
         $("#searchDiv3").show();
-        $("#showButton3").hide();
+        $("#searchDiv2").hide();
+        $("#searchDiv1").hide();
+        $("#searchDiv4").hide();
+        $("#showButton3").attr("class"," btn btn-success");
+        $("#showButton2").attr("class"," btn btn-primary");
+        $("#showButton1").attr("class"," btn btn-primary");
+        $("#showButton4").attr("class"," btn btn-primary");
+        $("#showButton5").attr("class"," btn btn-primary");
+        $("#start3").val("");
+        $("#end3").val("");
     }else if(count == 4){
         $("#searchDiv4").show();
-        $("#showButton4").hide();
+        $("#searchDiv2").hide();
+        $("#searchDiv3").hide();
+        $("#searchDiv1").hide();
+        $("#searchDiv5").hide();
+        $("#showButton4").attr("class"," btn btn-success");
+        $("#showButton2").attr("class"," btn btn-primary");
+        $("#showButton3").attr("class"," btn btn-primary");
+        $("#showButton1").attr("class"," btn btn-primary");
+        $("#showButton5").attr("class"," btn btn-primary");
+        $("#start4").val("");
+        $("#end4").val("");
     }else if(count == 5){
         $("#searchDiv5").show();
-        $("#showButton5").hide();
+        $("#searchDiv2").hide();
+        $("#searchDiv3").hide();
+        $("#searchDiv4").hide();
+        $("#searchDiv1").hide();
+        $("#showButton5").attr("class"," btn btn-success");
+        $("#showButton2").attr("class"," btn btn-primary");
+        $("#showButton3").attr("class"," btn btn-primary");
+        $("#showButton4").attr("class"," btn btn-primary");
+        $("#showButton1").attr("class"," btn btn-primary");
+        $("#start5").val("");
+        $("#end5").val("");
     }
 
 }
@@ -57,29 +112,29 @@ function showSearchForm(count) {
 function closeSearchForm(count) {
     if(count == 1){
         $("#searchDiv1").hide();
-        $("#showButton1").show();
         $("#start1").val("");
         $("#end1").val("");
+        $("#showButton1").attr("class"," btn btn-primary");
     }else if(count == 2){
         $("#searchDiv2").hide();
-        $("#showButton2").show();
         $("#start2").val("");
         $("#end2").val("");
+        $("#showButton2").attr("class"," btn btn-primary");
     }else if(count == 3){
         $("#searchDiv3").hide();
-        $("#showButton3").show();
         $("#start3").val("");
         $("#end3").val("");
+        $("#showButton3").attr("class"," btn btn-primary");
     }else if(count == 4){
         $("#searchDiv4").hide();
-        $("#showButton4").show();
         $("#start4").val("");
         $("#end4").val("");
+        $("#showButton4").attr("class"," btn btn-primary");
     }else if(count == 5){
         $("#searchDiv5").hide();
-        $("#showButton5").show();
         $("#start5").val("");
         $("#end5").val("");
+        $("#showButton5").attr("class"," btn btn-primary");
     }
 
 }
@@ -128,8 +183,8 @@ function initDateTime(clazz) {
 
 function validator( start, end, type){
     if(start != '' && end != ''){
-        getColumnarChart("columnar", "/incomingOutgoing/query_condition?start=" + start +"&end=" + end + "&type=" + type, tempData);
+        getColumnarChart("columnar", "/incomingOutgoing/query_condition?start=" + start +"&end=" + end + "&type=" + type, tempData,type);
     }else{
-        getColumnarChart("columnar", "/incomingOutgoing/query_default", tempData);
+        getColumnarChart("columnar", "/incomingOutgoing/query_default", tempData,"default");
     }
 }

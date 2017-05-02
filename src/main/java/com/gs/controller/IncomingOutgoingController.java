@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +31,37 @@ import java.util.List;
 public class IncomingOutgoingController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(IncomingOutgoingController.class);
+
+
+    private  String[] strDay = new String[]{"01","02","03","04","05","06","07","08","09",
+            "10","11","12","13","14","15","16","17","18","19","20",
+            "21","22","23","24","25","26","27","28","29","30","31"};
+
+    private  String[] strQuarter = new String[]{"1~3月春季","4~6月夏季","7~9月秋季","10~12月冬季"};
+
+    private  String[] strMonth = new String[]{"01月","02月","03月","04月","05月","06月","07月","08月","09月",
+            "10月","11月","12月"};
+
+    private String[] strYear;
+    private int yearLen;
+    private double[] doubleYearInType;
+    private double[] doubleYearOutType;
+
+    private String[] strWeek;
+    private int weekLen;
+    private double[] doubleWeekInType;
+    private double[] doubleWeekOutType;
+
+    private double[] doubleMonthInType = new double[12];
+    private double[] doubleMonthOutType = new double[12];
+
+    private double[] doubleDayInType = new double[31];
+    private double[] doubleDayOutType = new double[31];
+
+    private double[] doubleQuarterInType = new double[4];
+    private double[] doubleQuarterOutType = new double[4];
+
+    private int len;
 
     @Resource
     private IncomingOutgoingService incomingOutgoingService;
@@ -94,13 +129,13 @@ public class IncomingOutgoingController {
         LineBasic lineBasic = new LineBasic();
         LineBasic lineBasic1 = new LineBasic();
         lineBasic.setName("支出");
-        lineBasic.setText("本月收入");
-        lineBasic.setData(date(incomingOutgoingService.queryByDefault(1)));
+        dateDay("outgoing");
+        lineBasic.setData(doubleDayOutType);
         lineBasic1.setName("收入");
-        lineBasic1.setData(date(incomingOutgoingService.queryByDefault(2)));
-        lineBasic1.setText("本月收入");
-        lineBasic.setCategories(str(incomingOutgoingService.queryByDefault(1)));
-        lineBasic1.setCategories(str(incomingOutgoingService.queryByDefault(2)));
+        dateDay("incoming");
+        lineBasic1.setData(doubleDayInType);
+        lineBasic.setCategories(strDay);
+        lineBasic1.setCategories(strDay);
         lineBasics.add(lineBasic);
         lineBasics.add(lineBasic1);
         return lineBasics;
@@ -116,20 +151,42 @@ public class IncomingOutgoingController {
         lineBasic1.setName("收入");
         if(start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")){
             if(type.equals("year")){
-                lineBasic.setData(data(start,end,1,type));
-                lineBasic1.setData(data(start,end,2,type));
+                setStrYear(start,end);
+                dataCondition(start,end,1,type,"year","outgoing");
+                lineBasic.setData(doubleYearOutType);
+                dataCondition(start,end,2,type,"year","incoming");
+                lineBasic1.setData(doubleYearInType);
+                lineBasic.setCategories(strYear);
+                lineBasic1.setCategories(strYear);
             }else if(type.equals("quarter")){
-                lineBasic.setData(data(start,end,1,type));
-                lineBasic1.setData(data(start,end,2,type));
+                dataCondition(start,end,1,type,"quarter","outgoing");
+                lineBasic.setData(doubleQuarterOutType);
+                dataCondition(start,end,2,type,"quarter","incoming");
+                lineBasic1.setData(doubleQuarterInType);
+                lineBasic.setCategories(strQuarter);
+                lineBasic1.setCategories(strQuarter);
             } else if(type.equals("month")){
-                lineBasic.setData(data(start,end,1,type));
-                lineBasic1.setData(data(start,end,2,type));
+                dataCondition(start,end,1,type,"month","outgoing");
+                lineBasic.setData(doubleMonthOutType);
+                dataCondition(start,end,2,type,"month","incoming");
+                lineBasic1.setData(doubleMonthInType);
+                lineBasic.setCategories(strMonth);
+                lineBasic1.setCategories(strMonth);
             }else if(type.equals("week")){
-                lineBasic.setData(data(start,end,1,type));
-                lineBasic1.setData(data(start,end,2,type));
+                setStrWeek(start,end);
+                dataCondition(start,end,1,type,"week","outgoing");
+                lineBasic.setData(doubleWeekOutType);
+                dataCondition(start,end,2,type,"week","incoming");
+                lineBasic1.setData(doubleWeekInType);
+                lineBasic.setCategories(strWeek);
+                lineBasic1.setCategories(strWeek);
             }else if(type.equals("day")){
-                lineBasic.setData(data(start,end,1,type));
-                lineBasic1.setData(data(start,end,2,type));
+                dataCondition(start,end,1,type,"day","outgoing");
+                lineBasic.setData(doubleDayOutType);
+                dataCondition(start,end,2,type,"day","incoming");
+                lineBasic1.setData(doubleDayInType);
+                lineBasic.setCategories(strDay);
+                lineBasic1.setCategories(strDay);
             }
         }
         lineBasics.add(lineBasic);
@@ -138,39 +195,254 @@ public class IncomingOutgoingController {
     }
 
 
-
-
-    public double[] date(List<IncomingOutgoing> service){
-        List<IncomingOutgoing> incomingOutgoings = service;
+            /*  默认查询本月的收入与支出
+            * */
+    public void dateDay(String type){
+        doubleDayInType = new double[31];
+        doubleDayOutType = new double[31];
+        List<IncomingOutgoing> incomingOutgoings = null;
+        if(type.equals("incoming")){
+            incomingOutgoings = incomingOutgoingService.queryByDefault(2);
+        }else if(type.equals("outgoing")){
+            incomingOutgoings = incomingOutgoingService.queryByDefault(1);
+        }
         int i = 0;
         double[] doubles = new double[incomingOutgoings.size()];
-        for(IncomingOutgoing io: incomingOutgoings) {
-            doubles[i] = io.getInOutMoney();
-            i++;
-        }
-        return doubles;
-    }
-
-    public String[] str(List<IncomingOutgoing> service){
-        List<IncomingOutgoing> incomingOutgoings = service;
-        int i = 0;
         String[] strs = new String[incomingOutgoings.size()];
         for(IncomingOutgoing io: incomingOutgoings) {
-            strs[i] = DateFormatUtil.defaultFormat(io.getInOutCreatedTime());
+            doubles[i] = io.getInOutMoney();
+            strs[i] = dateFormat(io.getInOutCreatedTime(),"day");
             i++;
         }
-        return strs;
-    }
+        for(int j = 0; j < strDay.length; j++){
+            for(int k = 0; k < strs.length; k++){
+                if(strDay[j].equals(strs[k])){
+                    if(type.equals("incoming")){
+                        doubleDayInType[j] = doubles[k];
+                    }else if(type.equals("outgoing")){
+                        doubleDayOutType[j] = doubles[k];
+                    }
 
-    public double[] data(String start,String end,int inOutType,String type){
-        List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByCondition(start,end,inOutType,type);
+                }
+            }
+        }
+
+
+    }
+        /*
+        *  按年，季度，月，周，日，查询
+        * */
+    public void dataCondition(String start,String end,int inOutType,String type,String date,String inOut){
+        doubleDayInType = new double[31];
+        doubleDayOutType = new double[31];
+        doubleMonthInType = new double[12];
+        doubleMonthOutType = new double[12];
+        doubleQuarterInType = new double[4];
+        doubleQuarterOutType = new double[4];
+        doubleYearInType = new double[yearLen];
+        doubleYearOutType = new double[yearLen];
+        doubleWeekInType = new double[weekLen];
+        doubleWeekOutType = new double[weekLen];
+        List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByCondition(start,end,inOutType,type);;
         int i = 0;
         double[] doubles = new double[incomingOutgoings.size()];
+        String[] strs = new String[incomingOutgoings.size()];
+        len = 0;
         for(IncomingOutgoing io: incomingOutgoings) {
             doubles[i] = io.getInOutMoney();
+            if(date.equals("month")) {
+                strs[i] = dateFormat(io.getInOutCreatedTime(), "month");
+                len = strMonth.length;
+            }else if(date.equals("day")){
+                strs[i] = dateFormat(io.getInOutCreatedTime(), "day");
+                len = strDay.length;
+            }else if(date.equals("quarter")){
+                strs[i] = dateFormat(io.getInOutCreatedTime(), "quarter");
+                len = strQuarter.length;
+            }else if(date.equals("year")){
+                strs[i] = dateFormat(io.getInOutCreatedTime(),"year");
+                len = strYear.length;
+            }else if(date.equals("week")){
+                strs[i] = "第"+String.valueOf(getWeek(dateFormat(io.getInOutCreatedTime())))+"周";
+                len = strWeek.length;
+            }
             i++;
         }
-        return doubles;
+        if(date.equals("quarter")) {
+            getQuarter(strs,doubles,inOut);
+        }else if(date.equals("month")){
+            getMonth(strs,doubles,inOut);
+        }else if(date.equals("day")){
+            getDay(strs,doubles,inOut);
+        }else if(date.equals("year")){
+            getYear(strs,doubles,inOut);
+        }else if(date.equals("week")){
+            getWeek(strs,doubles,inOut);
+        }
+
+
+
     }
 
+    public String dateFormat(Date date,String type){
+        String str = DateFormatUtil.defaultFormat(date);
+        String time = null;
+        if(type.equals("day")){
+            time = str.substring(8,10);
+        }else if(type.equals("month")){
+            time = str.substring(5,8);
+        }else if(type.equals("quarter")){
+            time = str.substring(5,7);
+        }else if(type.equals("year")){
+            time = str.substring(0,4);
+        }
+        return time;
+    }
+
+    public String dateFormat(Date date){
+        return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    }
+
+    // 获取周报表数据
+    public void getWeek(String[] strs,double[] doubles,String inOut) {
+        for (int j = 0; j < len; j++) {
+            for (int k = 0; k < strs.length; k++) {
+                if (strWeek[j].equals(strs[k])) {
+                    if (inOut.equals("incoming")) {
+                        doubleWeekInType[j] = doubles[k];
+                    } else if (inOut.equals("outgoing")) {
+                        doubleWeekOutType[j] = doubles[k];
+                    }
+                }
+            }
+        }
+    }
+
+    // 获取年报表数据
+    public void getYear(String[] strs,double[] doubles,String inOut) {
+        for (int j = 0; j < len; j++) {
+            for (int k = 0; k < strs.length; k++) {
+                if (strYear[j].equals(strs[k])) {
+                    if (inOut.equals("incoming")) {
+                        doubleYearInType[j] = doubles[k];
+                    } else if (inOut.equals("outgoing")) {
+                        doubleYearOutType[j] = doubles[k];
+                    }
+                }
+            }
+        }
+    }
+
+    // 获取季度报表数据
+    public void getQuarter(String[] strs,double[] doubles,String inOut){
+        for(int j = 0; j < len; j++) {
+            for (int k = 0; k < strs.length; k++) {
+                if (strs[k].equals("01") || strs[k].equals("02") || strs[k].equals("03")) {
+                    if (inOut.equals("incoming")) {
+                        doubleQuarterInType[0] = doubles[k];
+                    } else if (inOut.equals("outgoing")) {
+                        doubleQuarterOutType[0] = doubles[k];
+                    }
+                } else if (strs[k].equals("04") || strs[k].equals("05") || strs[k].equals("06")) {
+                    if (inOut.equals("incoming")) {
+                        doubleQuarterInType[1] = doubles[k];
+                    } else if (inOut.equals("outgoing")) {
+                        doubleQuarterOutType[1] = doubles[k];
+                    }
+                } else if (strs[k].equals("07") || strs[k].equals("08") || strs[k].equals("09")) {
+                    if (inOut.equals("incoming")) {
+                        doubleQuarterInType[2] = doubles[k];
+                    } else if (inOut.equals("outgoing")) {
+                        doubleQuarterOutType[2] = doubles[k];
+                    }
+                } else if (strs[k].equals("10") || strs[k].equals("11") || strs[k].equals("12")) {
+                    if (inOut.equals("incoming")) {
+                        doubleQuarterInType[3] = doubles[k];
+                    } else if (inOut.equals("outgoing")) {
+                        doubleQuarterOutType[3] = doubles[k];
+                    }
+                }
+            }
+
+        }
+    }
+
+    // 获取月报表数据
+    public void getMonth(String[] strs,double[] doubles,String inOut) {
+        for (int j = 0; j < len; j++) {
+            for (int k = 0; k < strs.length; k++) {
+                if (strMonth[j].equals(strs[k])) {
+                    if (inOut.equals("incoming")) {
+                        doubleMonthInType[j] = doubles[k];
+                    } else if (inOut.equals("outgoing")) {
+                        doubleMonthOutType[j] = doubles[k];
+                    }
+                }
+            }
+        }
+    }
+
+    // 获取日报表数据
+    public void getDay(String[] strs,double[] doubles,String inOut) {
+        for (int j = 0; j < len; j++) {
+            for (int k = 0; k < strs.length; k++) {
+                if(strDay[j].equals(strs[k])){
+                    if(inOut.equals("incoming")){
+                        doubleDayInType[j] = doubles[k];
+                    }else if(inOut.equals("outgoing")){
+                        doubleDayOutType[j] = doubles[k];
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+    *
+    * 获取选中的时间是本年的第几周
+    * */
+    public int getWeek(String time){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = sdf.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int weekOfMonth = calendar.get(Calendar.WEEK_OF_YEAR);
+        return weekOfMonth;
+    }
+
+
+    /*
+    * 获取选择的开始年和结束年的所有
+    * */
+    public void setStrYear(String start,String end){
+        String strStartTime = start.substring(0,4);
+        String strEndTime = end.substring(0,4);
+        int startTime = Integer.valueOf(strStartTime);
+        int endTime = Integer.valueOf(strEndTime);
+        yearLen =  endTime - startTime+1;
+        strYear = new String[yearLen];
+        for(int i = 0; i < strYear.length; i++){
+            strYear[i] = String.valueOf(startTime);
+            startTime++;
+        }
+    }
+    /*
+       * 获取选择的开始周和结束周的所有
+       * */
+    public void setStrWeek(String start,String end){
+        int starkWeek =  getWeek(start);
+        int endWeek = getWeek(end);
+        weekLen =  endWeek - starkWeek+1;
+        strWeek = new String[weekLen];
+        for(int i = 0; i < strWeek.length; i++){
+            strWeek[i] = "第"+ String.valueOf(starkWeek) + "周";
+            starkWeek++;
+        }
+
+    }
 }
