@@ -531,7 +531,7 @@ CREATE TABLE `t_user` (
   `userIdentity` varchar(18) DEFAULT NULL COMMENT '用户身份证号',
   `userName` varchar(20) DEFAULT NULL COMMENT '用户真实姓名',
   `userGender` varchar(2) DEFAULT NULL COMMENT '用户性别',
-  `userBirthday` datetime DEFAULT NULL COMMENT '用户生日',
+  `userBirthday` date DEFAULT NULL COMMENT '用户生日',
   `userAddress` varchar(150) DEFAULT NULL COMMENT '用户地址',
   `qqOpenId` varchar(100) DEFAULT NULL COMMENT 'QQ open id',
   `weiboOpenId` varchar(100) DEFAULT NULL COMMENT '微博open id',
