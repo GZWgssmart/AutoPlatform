@@ -52,4 +52,8 @@ public class CheckinServiceImpl implements CheckinService {
 	public List<Checkin> queryPagerByCondition(Pager pager, Checkin checkin) {
 		return checkinDAO.queryPagerByCondition(pager, checkin);
 	}
+
+	public Checkin queryByTrackStatus(String userId) {
+		return checkinDAO.queryByTrackStatus(userId);
+	}
 }

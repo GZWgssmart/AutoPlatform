@@ -19,6 +19,7 @@ public class TrackList {
 	private MaintainRecord maintainRecord; // 维修保养记录表
 	private Checkin checkin;//登记表
 
+
 	public MaintainRecord getMaintainRecord() {
 		return maintainRecord;
 	}

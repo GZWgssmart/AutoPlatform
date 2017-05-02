@@ -6,15 +6,14 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/trackVisit/query_pager");
-
-    //当点击查询按钮的时候执行
-    $("#search").bind("click", initTable);
+    destoryValidator("editWin","editForm");
+    destoryValidator("addWin","addForm");
 });
 
 
 
 function operateFormatter(value, row, index) {
-    if (row.inTypeStatus == 'Y') {
+    if (row.maintainRecord.trackStatus == 'Y') {
         return [
             '<button type="button" class="updateActive btn btn-danger  btn-sm" style="margin-right:15px;" >已回访</button>',
             '<button type="button" class="showUpdateIncomingType1 btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
@@ -31,8 +30,8 @@ function operateFormatter(value, row, index) {
 
 /** 添加数据 */
 function showAddWin() {
+    validator("addForm");
     $("#addWin").modal('show');
-
 }
 
 /** 编辑数据 */
@@ -124,7 +123,7 @@ function addCustomer(){
         var customer = selectRow[0];
         $(".customerId").val(customer.checkin.userId);
         $(".visit_user").val(customer.checkin.userName);
-        $("#addWin").modal('show');
+        showAddWin();
         $("#customerWin").modal('hide');
 
     }
@@ -140,17 +139,18 @@ function validator(formId) {
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
-        serviceEvaluate: {
+        fields: {
+            serviceEvaluate: {
                 validators: {
-                    notEmpty:{
+                    notEmpty: {
                         message: '回访评分不能为空'
                     }
                 }
 
             },
-        trackContent:{
-                validators:{
-                    notEmpty:{
+            trackContent: {
+                validators: {
+                    notEmpty: {
                         message: '回访问题不能为空'
                     },
                     stringLength: {
@@ -160,6 +160,7 @@ function validator(formId) {
                     }
                 }
             }
+        }
     })
 
         .on('success.form.bv', function (e) {

@@ -43,4 +43,12 @@ public interface CheckinService extends BaseService<String, Checkin>{
      */
     public List<Checkin> queryPagerByCondition(Pager pager, Checkin checkin);
 
+    /**
+     * 根据查询userId查询回访状态
+     * @param userId
+     * @return
+     */
+    public Checkin queryByTrackStatus(String userId);
+
+
 }

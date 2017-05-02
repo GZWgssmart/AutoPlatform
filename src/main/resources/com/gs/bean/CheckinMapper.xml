@@ -163,6 +163,12 @@
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
+	<select id="queryByTrackStatus" resultType="checkin" parameterType="string">
+		<![CDATA[
+			select * from t_checkin where userId= #{userId}
+		]]>
+	</select>
+
 	<select id="count" resultType="int">
 		<![CDATA[
 			select count(*) from t_checkin

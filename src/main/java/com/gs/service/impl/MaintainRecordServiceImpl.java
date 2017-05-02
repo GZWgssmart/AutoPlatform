@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRecord;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
@@ -103,7 +104,13 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.countByTrackStatus(status);
     }
 
-    public List<MaintainRecord> queryPagerByTrackStatus(@Param("pager") Pager pager, @Param("status") String status) {
+    public List<MaintainRecord> queryPagerByTrackStatus( Pager pager, String status) {
         return maintainRecordDAO.queryPagerByTrackStatus(pager, status);
     }
+
+    public void updateTrackStatus(String checkinId) {
+        maintainRecordDAO.updateTrackStatus(checkinId);
+    }
+
+
 }

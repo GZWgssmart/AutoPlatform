@@ -66,6 +66,13 @@
         ]]>
 	</update>
 
+    <update id="updateTrackStatus" parameterType="string">
+        <![CDATA[
+          update t_maintain_record
+            set trackStatus = 'Y' where checkinId=#{checkinId}
+        ]]>
+    </update>
+
     <update id="batchUpdate" parameterType="list">
 		<![CDATA[
 

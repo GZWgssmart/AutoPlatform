@@ -1,5 +1,6 @@
 package com.gs.dao;
 
+import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRecord;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
@@ -59,5 +60,12 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      * @return
      */
     public List<MaintainRecord> queryPagerByTrackStatus(@Param("pager") Pager pager, @Param("status") String status);
+
+    /**
+     * 根据状态checkId更新
+     * @param checkinId
+     * @return
+     */
+    public void updateTrackStatus(@Param("checkinId") String checkinId);
 
 }

@@ -16,9 +16,9 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -36,6 +36,9 @@
             <th data-field="checkin.userName">
                 车主名:
             </th>
+            <th data-field="checkin.userPhone">
+                车主电话:
+            </th>
             <th data-field="trackContent" >
                 回访问题:
             </th>
@@ -47,9 +50,6 @@
             </th>
             <th data-field="trackCreatedTime" data-formatter="formatterDate">
                 回访时间:
-            </th>
-            <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
-                是否回访
             </th>
         </tr>
         </thead>
@@ -116,8 +116,8 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b" style="text-align: center;">添加回访记录</h3>
-                        <input type="hidden" id="addCustomerId" name="userId" class="form-control customerId"/>
                         <form role="form" id="addForm" >
+                        <input type="hidden" id="addCustomerId" name="userId" class="form-control customerId"/>
                             <div class="form-group">
                                 <label class="control-label">回访车主名：</label>
                                 <input  type="text" id="addCustomer" class="form-control visit_user"/>
@@ -204,6 +204,7 @@
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>

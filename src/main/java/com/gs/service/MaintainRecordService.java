@@ -53,10 +53,14 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
 
     /**
      * 根据回访状态分页查询
-     * @param pager
-     * @param status
      * @return
      */
-    public List<MaintainRecord> queryPagerByTrackStatus(@Param("pager") Pager pager, @Param("status") String status);
+    public List<MaintainRecord> queryPagerByTrackStatus( Pager pager,String status);
+
+    /**
+     * 根据状态checkId更新
+     * @return
+     */
+    public void updateTrackStatus(String checkinId);
 
 }

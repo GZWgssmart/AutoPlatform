@@ -46,4 +46,11 @@ public interface CheckinDAO extends BaseDAO<String, Checkin>{
      */
     public List<Checkin> queryPagerByCondition(@Param("pager") Pager pager, @Param("checkin") Checkin checkin);
 
+    /**
+     * 根据查询userId查询回访状态
+     * @param userId
+     * @return
+     */
+    public Checkin queryByTrackStatus(@Param("userId") String userId);
+
 }
