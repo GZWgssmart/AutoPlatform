@@ -86,6 +86,12 @@
 		]]>
 	</select>
 
+	<select id="statusCount" resultType="int" parameterType="string">
+		<![CDATA[
+			select count(companyId) from t_company where companyStatus = #{status}
+		]]>
+	</select>
+
 	<update id="inactive" parameterType="string">
 		<![CDATA[
 			update t_company set companyStatus = 'N' where companyId = #{companyId}
@@ -97,5 +103,11 @@
 			update t_company set companyStatus = 'Y' where companyId = #{companyId}
 		]]>
 	</update>
+
+	<select id="queryByStatusPager" resultMap="companyResultMap" parameterType="com.gs.common.bean.Pager">
+		<![CDATA[
+			select * from t_company where companyStatus = #{status} limit #{pager.beginIndex}, #{pager.pageSize}
+		]]>
+	</select>
 
 </mapper>

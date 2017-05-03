@@ -112,5 +112,4 @@
 			update t_maintain_fix set maintainStatus = 'Y' where maintainId = #{maintainId}
 		]]>
 	</update>
-
 </mapper>

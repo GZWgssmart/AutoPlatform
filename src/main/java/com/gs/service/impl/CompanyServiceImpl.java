@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Company;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,4 +38,11 @@ public class CompanyServiceImpl implements CompanyService {
 	public int inactive(String id) { return companyDAO.inactive(id); }
 	public int active(String id) { return companyDAO.active(id); }
 
+	public List<Company> queryByStatusPager(String status,Pager pager) {
+		return companyDAO.queryByStatusPager(status, pager);
+	}
+
+	public int statusCount(String status) {
+		return companyDAO.statusCount(status);
+	}
 }

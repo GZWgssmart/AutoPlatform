@@ -7,7 +7,8 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
-        $("#updateForm").fill(product);
+        $("#editForm").fill(product);
+        validator("editForm");
         $("#editWin").modal('show');
     }
 }

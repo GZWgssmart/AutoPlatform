@@ -14,6 +14,7 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -70,15 +71,29 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a href="#addWin" data-toggle="modal"><button type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
-            <a><button type="button" onclick="deleteProduct();" id="delete" class="btn btn-default">
-                <i class="glyphicon glyphicon-trash"></i> 删除
-            </button></a>
+            <a>
+                <button type="button" id="add" onclick = "showAddWin();" class="btn btn-default" >
+                <i class="glyphicon glyphicon-plus"></i>添加</button>
+            </a>
+            <a>
+                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                <i class="glyphicon glyphicon-pencil"></i> 修改</button>
+            </a>
+            <a>
+                <button onclick="companyAll();" type="button" class="btn btn-default">查看所有</button>
+            </a>
+            <a>
+                <button onclick="statusUsableness();" type="button" class="btn btn-default">查看可用公司</button>
+            </a>
+            <a>
+                <button onclick="statusAvailable();" type="button" class="btn btn-default">查看不可用公司</button>
+            </a>
+            <a>
+                <button onclick="showSearchForm();" type="button" class="btn btn-default">条件查询</button>
+            </a>
+
+
+
         </div>
         </tbody>
 
@@ -97,7 +112,7 @@
                         <form role="form" id="updateForm" >
                             <input type="hidden" attr="product.id" name="id" id = "id"/>
                             <div class="form-group">
-                                <label>商品名称：</label>
+                                <label class="control-label">商品名称：</label>
                                 <input type="text" attr="product.name" name="name" id="name" class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -116,7 +131,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="updateProduct()">
+                                <input type="button" class="btn btn-primary" value="修改" onclick="edit();">
                                 </input>
                             </div>
                         </form>
@@ -137,31 +152,31 @@
                         <h3 class="m-t-none m-b">添加公司</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
-                                <label>公司名称：</label>
+                                <label class="control-label">公司名称：</label>
                                 <input type="text"   name="companyName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>公司地址：</label>
+                                <label class="control-label">公司地址：</label>
                                 <input type="text"  name="companyAddress"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>公司联系方式：</label>
+                                <label class="control-label">公司联系方式：</label>
                                 <input type="text"  name="companyTel"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>公司负责人：</label>
+                                <label class="control-label">公司负责人：</label>
                                 <input type="text"  name="companyPricipal"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>公司官网</label>
+                                <label class="control-label">公司官网</label>
                                 <input type="text"  name="companyWebsite"
                                        class="form-control"/>
                             </div>
                             <div class="form-group" >
-                                <label>公司规模</label>
+                                <label class="control-label">公司规模</label>
                                 <select class="form-control" name="companySize">
                                     <option value ="请选择公司规模">请选择公司规模</option>
                                     <option value ="5~10">5~10</option>
@@ -170,30 +185,30 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>公司创建时间</label>
+                                <label class="control-label">公司创建时间</label>
                                 <input size="16" type="text" name="companyOpenDate" readonly
                                        class="form_datetime form-control " id="establishTime">
                                 <span class="add-on"><i class="icon-th"></i></span>
                             </div>
                             <div class="form-group">
-                                <label>公司纬度</label>
+                                <label class="control-label">公司纬度</label>
                                 <input type="text"  name="companyLongitude"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>公司经度</label>
+                                <label class="control-label">公司经度</label>
                                 <input type="text"  name="companyLatitude"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>公司描述：</label>
+                                <label class="control-label">公司描述：</label>
                                 <textarea  name="companyDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="addProduct()" value="添加">
+                                <input type="button" class="btn btn-primary" onclick="add();" value="添加">
                                 </input>
                             </div>
                         </form>
@@ -213,8 +228,7 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
-
-
+<script src="<%=path%>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>

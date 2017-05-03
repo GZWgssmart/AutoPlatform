@@ -14,10 +14,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
@@ -151,6 +148,23 @@ public class CompanyController {
         }
         return comboBox4EasyUIs;
     }
+
+    @ResponseBody
+    @RequestMapping(value="queryStatusPager",method = RequestMethod.GET)
+    public Pager4EasyUI<Company> companyStatus (@Param("status")String status,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+            System.out.println("状态"+status);
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            pager.setTotalRecords(companyService.statusCount(status));
+            List<Company> companys = companyService.queryByStatusPager(status,pager);
+            for(Company c : companys){
+                System.out.println(c);
+            }
+            return new Pager4EasyUI<Company>(pager.getTotalRecords(),companys);
+    }
+
+
 
 }
 

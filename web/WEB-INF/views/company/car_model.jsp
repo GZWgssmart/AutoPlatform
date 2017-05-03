@@ -73,18 +73,22 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">修改汽车品牌</h3>
+                        <h3 class="m-t-none m-b">修改车型信息</h3>
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="carBrand.brandId" name="brandId" id = "id"/>
                             <input type="hidden" attr="carBrand.brandStatus" name="brandStatus"/>
                             <div class="form-group">
                                 <label>汽车品牌名称：</label>
-                                <select class="js-example-tags form-control car_brand" id="" name="brandId">
+                                <select class="js-example-tags form-control car_brand" name="brandId">
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>汽车品牌描述：</label>
-                                <textarea attr="carBrand.brandDes" name="brandDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>
+                                <label>车型名称：</label>
+                                <input attr="carBrand.brandName" type="text" name="brandName" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>车型描述：</label>
+                                <textarea attr="carBrand.brandDes" name="brandDes" attr="carBrand.brandDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"

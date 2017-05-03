@@ -3,8 +3,10 @@
  */
 $(document).ready(function () {
     //调用函数，初始化表格
+    // initTable("cusTables","/accessories/queryByIdAcc");
     initTable("cusTable","/maintainFix/queryByMaintenanceItemPager");
     initSelect2("company", "请选择汽修公司", "/company/company_all", "550");
+    initSelect2("acc_accessoriesType", "请选择配件类别", "/accessoriesType/accessoriesType_All", "550");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 });
@@ -28,6 +30,23 @@ function showAddWin(){
     $("input[type=reset]").trigger("click");
 }
 
+function showAddacc(){
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择保养项目失败', "只能选择一条保养项目进行配件分配", "error");
+        return false;
+    } else {
+        var product = selectRow[0];
+        $("#Form").fill(product);
+        $("#maintenanceWin").modal('show');
+
+    }
+}
+
+
+function queryByTypeId(obj){
+    initTable("cusTable2", "/accessories/queryByIdAcc?id=" + obj.value);
+}
 
 function operating(value, row, index) {
     if (row.maintainStatus == 'Y') {
@@ -43,7 +62,15 @@ function operating(value, row, index) {
     }
 }
 
+function Addacc() {
+    var maintainId = $("#maintainId").val();
+    var selectRow = $("#cusTable2").bootstrapTable('getSelections');
+    if(selectRow.length > 0){
 
+    }else{
+        swal('选择保养项目失败', "最少一个配件", "error");
+    }
+}
 
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
