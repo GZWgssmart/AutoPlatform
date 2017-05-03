@@ -12,34 +12,46 @@ $(document).ready(function () {
         size: 'normal',
         onSwitchChange: function (event, state) {
             if (state == true) {
+                disableInput();
                 isAcc = true;
                 showAccessories();
             } else if (state == false) {
+                enableInput();
                 isAcc = false;
             }
         }
     });
-
-    $("#accWin").on("hide.bs.modal", function () {
-        $("#isAcc").bootstrapSwitch("state", false);
-    });
-
+    
+    disableSwitch();
     destoryValidator("addWin", "addForm");
     destoryValidator("accWin", "accForm");
     destoryValidator("editWin", "editForm");
 
 });
 
-function disableInput() {
-    $("#accName").prop("disabled", true);
 
-}
-
-function onState() {
+function disableSwitch() {
     $("#accWin").on("hide.bs.modal", function () {
-        disableInput();
+        $("#isAcc").bootstrapSwitch("state", false);
+    });
+}
+function enableSwitch() {
+    $("#accWin").on("hide.bs.modal", function () {
         $("#isAcc").bootstrapSwitch("state", true);
     });
+}
+
+
+function disableInput() {
+    $("input[name='accessories.accName']").prop("disabled", true);
+    $("input[name='accUnit']").prop("disabled", true);
+    $("input[name='accessories.accessoriesType.accTypeName']").prop("disabled", true);
+}
+
+function enableInput() {
+    $("input[name='accessories.accName']").prop("disabled", false);
+    $("input[name='accUnit']").prop("disabled", false);
+    $("input[name='accessories.accessoriesType.accTypeName']").prop("disabled", false);
 }
 
 /** 编辑数据 */
@@ -137,13 +149,15 @@ function showAccessories() {
 function addAccBuy() {
     var selectRow = $("#accTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
+        disableSwitch();
         swal('添加失败', "请至少选择一条数据后关闭本窗口", "error");
     } else {
         var acc = selectRow[0];
         $("#addForm").fill(acc);
-        onState();
+        enableSwitch();
         $("#accWin").modal("hide");
     }
+    disableSwitch();
 }
 
 function fmtCheckState(value) {
@@ -342,6 +356,7 @@ function validator(formId) {
 }
 
 function clearTempData() {
+    enableInput();
     $('#aAccName').html('').trigger("change");
     $('#aAccUnit').html('').trigger("change");
     $('#addCarModel').html('').trigger("change");

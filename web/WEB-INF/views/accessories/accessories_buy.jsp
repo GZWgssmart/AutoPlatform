@@ -328,7 +328,7 @@
                                     <th data-field="accIdle">
                                         可用数量
                                     </th>
-                                    <th data-field="accSaledPrice">
+                                    <th data-field="acdPrice">
                                         售价
                                     </th>
                                     <th data-field="accUsedTime" data-formatter="formatterDate">
@@ -360,7 +360,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="添加"
+                                <input type="button" class="btn btn-primary" value="添加" id="addAccBtn"
                                        onclick="addAccBuy()">
                                 </input>
                             </div>
