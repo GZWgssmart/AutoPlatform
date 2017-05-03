@@ -37,4 +37,7 @@ public class ComplaintServiceImpl implements ComplaintService {
 	public int inactive(String id) { return complaintDAO.inactive(id); }
 	public int active(String id) { return complaintDAO.active(id); }
 
+	public void updateReply(Complaint complaint) {
+		complaintDAO.updateReply(complaint);
+	}
 }

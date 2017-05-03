@@ -10,4 +10,5 @@ import com.gs.bean.Complaint;
 */
 public interface ComplaintService extends BaseService<String, Complaint>{
 
+    public void updateReply(Complaint complaint);
 }

@@ -2,11 +2,13 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Complaint;
+import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.ComplaintService;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.session.Session;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -49,15 +52,24 @@ public class ComplaintController {
     }
 
     @ResponseBody
-    @RequestMapping(value="add_complaint", method=RequestMethod.POST)
-    public ControllerResult ConplaintAdd(Complaint complaint){
-        logger.info("添加回复");
+    @RequestMapping(value="add_customer", method=RequestMethod.POST)
+    public ControllerResult ConplaintAdd(Complaint complaint, HttpSession session){
+        logger.info("用户添加投诉");
+        User user = (User) session.getAttribute("user");
+        complaint.setUserId(user.getUserId());
         complaintService.insert(complaint);
         return ControllerResult.getSuccessResult("添加成功");
     }
 
-
-
+    @ResponseBody
+    @RequestMapping(value="add_admin", method=RequestMethod.POST)
+    public ControllerResult ConplaintReply(Complaint complaint, HttpSession session){
+        logger.info("员工回复");
+        User user = (User) session.getAttribute("user");
+        complaint.setUserId(user.getUserId());
+        complaintService.updateReply(complaint);
+        return ControllerResult.getSuccessResult("回复成功");
+    }
 
 }
 

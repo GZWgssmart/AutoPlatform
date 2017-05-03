@@ -17,8 +17,8 @@
     <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -34,7 +34,7 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="customer.userName">
+            <th data-field="admin.userName">
                 投诉人
             </th>
             <th data-field="complaintContent">
@@ -43,7 +43,7 @@
             <th data-field="complaintCreatedTime" data-formatter="formatterDate">
                 投诉时间
             </th>
-            <th data-field="user.userName">
+            <th data-field="customer.userName">
                 回复人
             </th>
             <th data-field="complaintReply">
@@ -52,6 +52,9 @@
             <th data-field="complaintReplyTime" data-formatter="formatterDate">
                 回复时间
             </th>
+            <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
+                操作
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -59,8 +62,8 @@
             <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
+            <a><button onclick="showAdminWin();" type="button" id="edit" class="btn btn-default">
+                <i class="glyphicon glyphicon-pencil"></i>回复
             </button></a>
 
         </div>
@@ -71,7 +74,7 @@
 
 
 
-<div id="editWin" class="modal fade" aria-hidden="true">
+<%--<div id="editWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -79,21 +82,51 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改投诉信息</h3>
                         <form role="form" id="updateForm" >
-                            <input type="hidden" attr="complaint.complaintId" name="complaintId" />
-                            <div class="col-md-6 form-group">
-                                <label>投诉人：</label>
-                                <select class="js-example-tags form-control com_name" name="user.userName">
-                                </select>
+                            <input type="hidden" class="userId" name="userId"/>
+                            <input type="hidden" class="complaintId" name="complaintId"/>
+                            <div class="form-group">
+                                <label>投诉内容：</label>
+                                <textarea class="form-control" name="complaintReply" id="complaintReplyEidt"></textarea>
                             </div>
-
                             <div class="modal-footer" style="overflow:hidden;">
-                                <span id="error1" style="color: red;"></span>
-                                <br/>
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="submit" id="addButton1" class="btn btn-primary" value="修改" >
+                                <input type="button" id="editButton" onclick="edit()" class="btn btn-primary"
+                                       value="修改">
                                 </input>
+                                <input type="reset" name="reset" style="display: none;"/>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>--%>
+
+<div id="addWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">添加投诉</h3>
+                        <form role="form" id="addForm" >
+                            <input type="hidden" class="userId" name="userId"/>
+                            <input type="hidden" class="complaintId" name="complaintId"/>
+                            <div class="form-group">
+                                <label>投诉内容：</label>
+                                <textarea class="form-control" name="complaintContent" id="complaint"></textarea>
+                            </div>
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="添加投诉">
+                                </input>
+                                <input type="reset" name="reset" style="display: none;"/>
                             </div>
                         </form>
                     </div>
@@ -104,41 +137,31 @@
     </div>
 </div>
 
-<div id="addWin" class="modal fade" aria-hidden="true">
+
+<div id="adminWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加回复</h3>
-                        <form role="form" id="addForm" >
-                            <div class="form-group">
-                                <label>受理人：</label>
-                                <select class="js-example-tags form-control com_name" name="user.userName">
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>受理时间：</label>
-                                <input id="complaintReplyTime" type="text" name="complaintReplyTime"
-                                       class="form-control"/>
-                            </div>
+                        <form role="form" id="adminForm" >
+                            <input type="hidden" class="complaintReplyUser" name="complaintReplyUser"/>
+                            <input type="hidden" class="complaintId" attr="Reply.complaintId" name="complaintId"/>
                             <div class="form-group">
                                 <label>回复内容：</label>
                                 <textarea class="form-control" name="complaintReply" id="complaintReply"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
-                                <span id="error" style="color: #ff0000;"></span>
-                                <br/>
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="submit" id="addButton" class="btn btn-primary" value="添加">
+                                <input type="button" id="addAdminButton" onclick="addReply()" class="btn btn-primary" value="添加回复">
                                 </input>
-                                <input type="reset" name="reset" style="display: none;" />
+                                <input type="reset" name="reset" style="display: none;"/>
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -149,12 +172,11 @@
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
-<script src="<%=path %>/js/select2.full.min.js"></script>
-<script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>

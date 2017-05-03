@@ -16,8 +16,8 @@ public class Complaint{
 	private String complaintReply; 		//投诉回复内容
 	private Date complaintReplyTime; 	//投诉回复时间
 	private String complaintReplyUser;  //投诉回复人
-	private User user; //传递User
-	private User customer;
+	private User admin; 				//管理员的User
+	private User customer;				//顾客的User
 
 	public User getCustomer() {
 		return customer;
@@ -26,11 +26,11 @@ public class Complaint{
 		this.customer = customer;
 	}
 
-	public User getUser() {
-		return user;
+	public User getAdmin() {
+		return admin;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setAdmin(User admin) {
+		this.admin = admin;
 	}
 
 	public String getComplaintId(){

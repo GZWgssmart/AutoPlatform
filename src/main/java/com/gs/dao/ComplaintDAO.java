@@ -11,4 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ComplaintDAO extends BaseDAO<String, Complaint>{
 
+    /**
+     * 回复更新
+     * @return
+     */
+    public void updateReply(Complaint complaint);
+
+
 }

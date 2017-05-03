@@ -11,7 +11,7 @@
 		<result column="complaintReplyTime" property="complaintReplyTime"/>
 		<result column="complaintReplyUser" property="complaintReplyUser"/>
 		<!--管理员Id-->
-		<association property="user" javaType="com.gs.bean.User">
+		<association property="admin" javaType="com.gs.bean.User">
 			<id column="adminId" property="userId"/>
 			<result column="adminName" property="userName"/>
 		</association>
@@ -25,9 +25,8 @@
 
 	<insert id="insert"  parameterType="complaint">
 		<![CDATA[
-		insert into t_complaint
-		(complaintId, userId, complaintContent, complaintCreatedTime, complaintReply, complaintReplyTime, complaintReplyUser)
-		values (UUID(),#{user.userId},#{complaintContent},#{complaintCreatedTime},#{complaintReply},#{complaintReplyTime},#{complaintReplyUser});
+		insert into t_complaint (complaintId,userId,complaintContent,complaintCreatedTime)
+ 		VALUES(UUID(),#{userId},#{complaintContent},NOW())
 		]]>
 	</insert>
 
@@ -59,7 +58,14 @@
 		<![CDATA[
 		update t_complaint set userId = #{userId},complaintContent = #{complaintContent},complaintCreatedTime= #{complaintCreatedTime},
 		complaintReply =#{complaintReply},complaintReplyTime =#{complaintReplyTime},complaintReplyUser=#{complaintReplyUser}
-		where complaintId = #{complaintId};
+		where complaintId = #{complaintId}
+		]]>
+	</update>
+
+	<update id="updateReply" parameterType="complaint">
+		<![CDATA[
+		update t_complaint set complaintReply = #{complaintReply}, complaintReplyTime = now(), complaintReplyUser = #{userId}
+		where complaintId =#{complaintId}
 		]]>
 	</update>
 
