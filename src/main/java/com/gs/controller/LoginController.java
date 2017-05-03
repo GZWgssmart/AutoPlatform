@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("login")
 public class LoginController {
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(AdminController.class);
+    private Logger logger = (Logger) LoggerFactory.getLogger(LoginController.class);
 
     @Resource
     private UserService userService;

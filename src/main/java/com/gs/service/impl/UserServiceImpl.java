@@ -72,4 +72,8 @@ public class UserServiceImpl implements UserService {
 	public User queryLogin(User user) {
 		return userDAO.queryLogin(user);
 	}
+
+	public void insertAdmin(User user) {
+		userDAO.insertAdmin(user);
+	}
 }

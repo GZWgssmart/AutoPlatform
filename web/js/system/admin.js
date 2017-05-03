@@ -5,8 +5,7 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", contextPath + "/admin/query_pager");
-
-    //当点击查询按钮的时候执行
+    initSelect2("adminCAndSO", "选择管理员类型", contextPath + "/role/query_cAdminAndSOAdmin", "350");
     $("#search").bind("click", initTable);
 });
 
@@ -41,21 +40,11 @@ function updateAdmin() {
 
 }
 
-/**提交添加数据 */
-function addAdmin() {
-    $.post(contextPath + "/admin/add_admin",
-        $("#addForm").serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#addWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-                $("input[type=reset]").trigger("click");
-            } else if (data.result == "fail") {
-                swal(data.message, "", "error");
-            }
-        }, "json");
-
+function showAddWin() {
+    validator("addForm");
+    $('#adminTypeSelect').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
+    $("#addWin").modal('show');
 }
 
 /**
@@ -157,6 +146,86 @@ function queryCompany() {
 
 function querySystem() {
     initTable("cusTable", contextPath + "/admin/system_pager");
+}
+
+function adminSelect(obj) {
+    var adminId = obj.value;
+}
+
+/** 表单验证 */
+function validator(formId) {
+    $("#addButton").removeAttr("disabled");
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            adminTypeId: {
+                message: '管理员类型验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '管理员类型不能为空'
+                    }
+                }
+            },
+            userName: {
+                message: '名称验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 10,
+                        message: '名称长度必须在2到10位之间'
+                    }
+                }
+            },
+            userEmail: {
+                validators: {
+                    notEmpty: {
+                        message: '邮箱不能为空'
+                    },
+                    regexp: {
+                        regexp: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
+                        message: '邮箱格式错误'
+                    }
+                }
+            },userPhone: {
+                validators: {
+                    notEmpty: {
+                        message: '手机号不能为空'
+                    },
+                    regexp: {
+                        regexp: /^1(3|4|5|7|8)\d{9}$/,
+                        message: '手机号格式错误'
+                    }
+                }
+            },userIdentity: {
+                validators: {
+                    notEmpty: {
+                        message: '身份证不能为空'
+                    },
+                    regexp: {
+                        regexp: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
+                        message: '身份证格式错误'
+                    }
+                }
+            },
+        }
+    })
+        .on('success.form.bv', function (e) {
+            if (formId == "addForm") {
+                formSubmit(contextPath + "/admin/add_admin", formId, "addWin");
+
+            } else if (formId == "editForm") {
+                formSubmit(contextPath + "/permission/update_permission", formId, "editWin");
+            }
+        })
+
 }
 
 

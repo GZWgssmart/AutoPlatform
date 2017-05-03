@@ -40,4 +40,7 @@ public interface UserDAO extends BaseDAO<String, User>{
 
     /**登陆*/
     public User queryLogin(User user);
+
+    /**添加管理员*/
+    public void insertAdmin(User user);
 }

@@ -79,6 +79,11 @@
 		]]>
 	</select>
 
+	<select id="queryCAdminAndSOAdmin" resultMap="roleResultMap">
+	<![CDATA[
+			select * from t_role where roleName like concat('%','Admin') and roleName not like 'systemSuperAdmin'
+	]]>
+	</select>
 	<select id="count" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) FROM t_role

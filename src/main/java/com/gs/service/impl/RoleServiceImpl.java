@@ -37,4 +37,7 @@ public class RoleServiceImpl implements RoleService {
 	public int inactive(String id) { return roleDAO.inactive(id); }
 	public int active(String id) { return roleDAO.active(id); }
 
+	public List<Role> queryCAdminAndSOAdmin() {
+		return roleDAO.queryCAdminAndSOAdmin();
+	}
 }

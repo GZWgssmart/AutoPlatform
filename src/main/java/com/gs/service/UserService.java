@@ -38,4 +38,7 @@ public interface UserService extends BaseService<String, User>{
 
     /**登陆*/
     public User queryLogin(User user);
+
+    /**添加管理员*/
+    public void insertAdmin(User user);
 }

@@ -71,6 +71,14 @@ public class AdminController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "add_admin", method = RequestMethod.POST)
+    public ControllerResult addAdmin(User user) {
+        logger.info("添加管理员");
+        userService.insertAdmin(user);
+        return ControllerResult.getSuccessResult("添加成功");
+    }
+
+    @ResponseBody
     @RequestMapping(value = "update_status", method = RequestMethod.GET)
     public ControllerResult updateStatus(@Param("id") String id, @Param("status") String status) {
         if (status.equals("Y")) {

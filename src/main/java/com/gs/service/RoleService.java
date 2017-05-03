@@ -2,6 +2,8 @@ package com.gs.service;
 
 import com.gs.bean.Role;
 
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -10,4 +12,6 @@ import com.gs.bean.Role;
 */
 public interface RoleService extends BaseService<String, Role>{
 
+    /**查询除了系统超级管理员之外的管理员*/
+    public List<Role> queryCAdminAndSOAdmin();
 }
