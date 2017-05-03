@@ -3,6 +3,7 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Company;
 import com.gs.bean.User;
+import com.gs.common.Constants;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -99,6 +100,7 @@ public class AppointmentController {
         String userId = UUIDUtil.uuid();
 
         appointment.setUserId(userId);
+        appointment.setSpeedStatus(Constants.APPOINTMENT);
         appointment.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
 
         User user = new User();

@@ -24,6 +24,7 @@ public class Appointment{
 	private String maintainOrFix; //维修或保养
 	private Date appCreatedTime;  //预约创建时间
 	private String appoitmentStatus; //预约状态
+	private String speedStatus;//标识这条记录当前的进度，如预约中，登记完
 
 	private CarBrand brand;  //品牌
 	private CarColor color;  //颜色
@@ -32,67 +33,124 @@ public class Appointment{
 
 	private Company company;//公司
 
-	public String getAppointmentId(){
-		return this.appointmentId;
-	}
-	public void setAppointmentId(String appointmentId){
-		this.appointmentId=appointmentId;
+	public String getAppointmentId() {
+		return appointmentId;
 	}
 
-	public String getUserId(){
-		return this.userId;
-	}
-	public void setUserId(String userId){
-		this.userId=userId;
+	public void setAppointmentId(String appointmentId) {
+		this.appointmentId = appointmentId;
 	}
 
-	public String getUserName(){
-		return this.userName;
-	}
-	public void setUserName(String userName){
-		this.userName=userName;
+	public String getUserId() {
+		return userId;
 	}
 
-	public String getUserPhone(){
-		return this.userPhone;
-	}
-	public void setUserPhone(String userPhone){
-		this.userPhone=userPhone;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public String getCarPlate(){
-		return this.carPlate;
-	}
-	public void setCarPlate(String carPlate){
-		this.carPlate=carPlate;
+	public String getUserName() {
+		return userName;
 	}
 
-	public Date getArriveTime(){
-		return this.arriveTime;
-	}
-	public void setArriveTime(Date arriveTime){
-		this.arriveTime=arriveTime;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getMaintainOrFix(){
-		return this.maintainOrFix;
-	}
-	public void setMaintainOrFix(String maintainOrFix){
-		this.maintainOrFix=maintainOrFix;
+	public String getUserPhone() {
+		return userPhone;
 	}
 
-	public Date getAppCreatedTime(){
-		return this.appCreatedTime;
-	}
-	public void setAppCreatedTime(Date appCreatedTime){
-		this.appCreatedTime=appCreatedTime;
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
 	}
 
-	public String getAppoitmentStatus(){
-		return this.appoitmentStatus;
+	public String getBrandId() {
+		return brandId;
 	}
-	public void setAppoitmentStatus(String appoitmentStatus){
-		this.appoitmentStatus=appoitmentStatus;
+
+	public void setBrandId(String brandId) {
+		this.brandId = brandId;
+	}
+
+	public String getColorId() {
+		return colorId;
+	}
+
+	public void setColorId(String colorId) {
+		this.colorId = colorId;
+	}
+
+	public String getModelId() {
+		return modelId;
+	}
+
+	public void setModelId(String modelId) {
+		this.modelId = modelId;
+	}
+
+	public String getPlateId() {
+		return plateId;
+	}
+
+	public void setPlateId(String plateId) {
+		this.plateId = plateId;
+	}
+
+	public String getCarPlate() {
+		return carPlate;
+	}
+
+	public void setCarPlate(String carPlate) {
+		this.carPlate = carPlate;
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
+
+	public Date getArriveTime() {
+		return arriveTime;
+	}
+
+	public void setArriveTime(Date arriveTime) {
+		this.arriveTime = arriveTime;
+	}
+
+	public String getMaintainOrFix() {
+		return maintainOrFix;
+	}
+
+	public void setMaintainOrFix(String maintainOrFix) {
+		this.maintainOrFix = maintainOrFix;
+	}
+
+	public Date getAppCreatedTime() {
+		return appCreatedTime;
+	}
+
+	public void setAppCreatedTime(Date appCreatedTime) {
+		this.appCreatedTime = appCreatedTime;
+	}
+
+	public String getAppoitmentStatus() {
+		return appoitmentStatus;
+	}
+
+	public void setAppoitmentStatus(String appoitmentStatus) {
+		this.appoitmentStatus = appoitmentStatus;
+	}
+
+	public String getSpeedStatus() {
+		return speedStatus;
+	}
+
+	public void setSpeedStatus(String speedStatus) {
+		this.speedStatus = speedStatus;
 	}
 
 	public CarBrand getBrand() {
@@ -133,45 +191,5 @@ public class Appointment{
 
 	public void setCompany(Company company) {
 		this.company = company;
-	}
-
-	public String getColorId() {
-		return colorId;
-	}
-
-	public void setColorId(String colorId) {
-		this.colorId = colorId;
-	}
-
-	public String getModelId() {
-		return modelId;
-	}
-
-	public void setModelId(String modelId) {
-		this.modelId = modelId;
-	}
-
-	public String getBrandId() {
-		return brandId;
-	}
-
-	public void setBrandId(String brandId) {
-		this.brandId = brandId;
-	}
-
-	public String getPlateId() {
-		return plateId;
-	}
-
-	public void setPlateId(String plateId) {
-		this.plateId = plateId;
-	}
-
-	public String getCompanyId() {
-		return companyId;
-	}
-
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
 	}
 }

@@ -64,6 +64,9 @@
             <th data-field="appoitmentStatus" data-formatter="status">
                 预约状态
             </th>
+            <th data-field="speedStatus">
+                当前进度
+            </th>
             <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
@@ -129,7 +132,7 @@
             </a>
             <a>
                 <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-search"></i> 查询
+                    <i class="glyphicon glyphicon-search"></i> 条件查询
                 </button>
             </a>
         </div>
