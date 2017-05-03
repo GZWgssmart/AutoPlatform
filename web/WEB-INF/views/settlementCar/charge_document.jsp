@@ -135,6 +135,61 @@
     </table>
 </div>
 
+<div id="editWin" class="modal fade" style="overflow:scroll" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">修改收费单据</h3>
+                        <form role="form" id="editForm">
+                            <input type="hidden" id="addChargeBillId" attr="chargeBill.chargeBillId" name="chargeBillId" class="form-control"/>
+                            <div class="form-group">
+                                <label class="control-label">收费总金额：</label>
+                                <input id="editChargeBillMoney" attr="chargeBill.chargeBillMoney" type="number" name="chargeBillMoney" maxlength="5" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">付款方式：</label>
+                                <select class="js-example-tags form-control" attr="chargeBill.paymentMethod" type="select-one" id="editPaymentMethod" name="paymentMethod">
+                                    <option value="现金">现金</option>
+                                    <option value="支付宝">支付宝</option>
+                                    <option value="微信">微信</option>
+                                    <option value="刷卡">刷卡</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">实付款：</label>
+                                <input id="editActualPayment" attr="chargeBill.actualPayment" type="number" name="actualPayment" maxlength="5" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">收费时间：</label>
+                                <input id="editChargeTime" readonly type="text" name="chargeTime"
+                                       class="form-control datetimepicker"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">收费描述：</label>
+                                <textarea class="form-control" attr="chargeBill.chargeBillDes" type="textarea" name="chargeBillDes"
+                                          rows="3"></textarea>
+                            </div>
+
+
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" id="editButton" onclick="edit()" class="btn btn-primary" value="修改">
+                                </input>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 <%@ include file="../common/rightMenu.jsp" %>

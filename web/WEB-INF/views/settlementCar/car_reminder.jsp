@@ -114,6 +114,17 @@
         <div id="toolbar" class="btn-group">
 
             <a>
+                <button onclick="showAddWin()" id="settlementBtn" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-envelope"></i> 提车提醒
+                </button>
+            </a>
+            <a>
+                <button onclick="showAddWin()" id="settlementButton" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-ok"></i> 结算提车
+                </button>
+            </a>
+
+            <a>
                 <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
                     <i class="glyphicon glyphicon-search"></i> 条件查询
                 </button>
@@ -123,6 +134,61 @@
         </tbody>
 
     </table>
+</div>
+
+<div id="addWin" class="modal fade" style="overflow:scroll" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">结算提车</h3>
+                        <form role="form" id="addForm">
+                            <input type="hidden" id="addRecordId" attr="record.recordId" name="recordId" class="form-control"/>
+                            <div class="form-group">
+                                <label class="control-label">收费总金额：</label>
+                                <input id="addChargeBillMoney" type="number" name="chargeBillMoney" maxlength="5" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">付款方式：</label>
+                                <select class="js-example-tags form-control" id="addPaymentMethod" name="paymentMethod">
+                                    <option value="现金">现金</option>
+                                    <option value="支付宝">支付宝</option>
+                                    <option value="微信">微信</option>
+                                    <option value="刷卡">刷卡</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">实付款：</label>
+                                <input id="addActualPayment" type="number" name="actualPayment" maxlength="5" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">收费时间：</label>
+                                <input id="addChargeTime" readonly onclick="getDate()" type="text" name="chargeTime"
+                                       class="form-control datetimepicker"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">收费描述：</label>
+                                <textarea class="form-control" name="chargeBillDes"
+                                          rows="3"></textarea>
+                            </div>
+
+
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="结算">
+                                </input>
+                                <input type="reset" name="reset" style="display: none;"/>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 

@@ -36,7 +36,7 @@
 	<insert id="insert"  parameterType="chargeBill">
 		<![CDATA[
 			insert into t_charge_bill(chargeBillId, recordId, chargeBillMoney, paymentMethod, actualPayment, chargeTime, chargeCreatedTime, chargeBillDes, chargeBillStatus)
-            	values(uuid(), #{recordId}, #{chargeBillMoney}, #{actualPayment}, #{chargeTime}, now(), #{chargeBillDes}, 'Y')
+            	values(uuid(), #{recordId}, #{chargeBillMoney}, #{paymentMethod}, #{actualPayment}, #{chargeTime}, now(), #{chargeBillDes}, 'Y')
 		]]>
 	</insert>
 
@@ -66,7 +66,7 @@
 
 	<update id="update" parameterType="chargeBill">
 		<![CDATA[
-			update t_charge_bill set recordId = #{recordId}, chargeBillMoney = #{chargeBillMoney}, paymentMethod = #{paymentMethod}, actualPayment = #{actualPayment}, chargeTime = #{chargeTime}, chargeCreatedTime = now(), chargeBillStatus = 'Y' where chargeBillId = #{chargeBillId}
+			update t_charge_bill set chargeBillMoney = #{chargeBillMoney}, paymentMethod = #{paymentMethod}, actualPayment = #{actualPayment}, chargeTime = #{chargeTime}, chargeCreatedTime = now(), chargeBillStatus = 'Y' where chargeBillId = #{chargeBillId}
 		]]>
 	</update>
 

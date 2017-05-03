@@ -4,10 +4,12 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.ChargeBill;
 import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRecord;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.service.ChargeBillService;
+import com.gs.service.MaintainRecordService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -35,6 +37,9 @@ public class ChargeBillController {
 
     @Resource
     private ChargeBillService chargeBillService;
+
+    @Resource
+    private MaintainRecordService maintainRecordService;
 
     @RequestMapping(value = "bill_page", method = RequestMethod.GET)
     public String chargeBillPage() {
@@ -95,6 +100,23 @@ public class ChargeBillController {
             chargeBillService.active(id);
         }
         return ControllerResult.getSuccessResult("更新成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    public ControllerResult addChargeBill(ChargeBill chargeBill) {
+        logger.info("添加收费单据");
+        chargeBillService.insert(chargeBill);
+        maintainRecordService.updateSpeedStatusById(Constants.COMPLETED, chargeBill.getRecordId());
+        return ControllerResult.getSuccessResult("已经成功结算，收费单据已经自动生成");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public ControllerResult editChargeBill(ChargeBill chargeBill) {
+        logger.info("修改收费单据");
+        chargeBillService.update(chargeBill);
+        return ControllerResult.getSuccessResult("修改成功");
     }
 
     @InitBinder

@@ -2,7 +2,8 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/bill/pager?status=ALL");
 
-    destoryValidator("addWin", "addForm");
+    initDateTimePicker("datetimepicker", "chargeTime", "editForm");
+
     destoryValidator("editWin", "editForm");
 
 });
@@ -68,4 +69,85 @@ function closeSearchForm() {
     $("#searchPaymentMethod").val('all');
     $("#searchDiv").hide();
     $("#showButton").show();
+}
+
+/** 显示修改收费单据的信息 */
+function showEditWin() {
+    validator("editForm");
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('修改失败', "只能选择一条收费单据", "error");
+        return false;
+    } else {
+        var chargeBill = selectRow[0];
+        $("#editForm").fill(chargeBill);
+        $("#editChargeTime").val(formatterDate(chargeBill.chargeTime))
+        $("#editWin").modal('show');
+    }
+}
+
+
+/** 表单验证 */
+function validator(formId) {
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            chargeBillMoney: {
+                validators: {
+                    notEmpty: {
+                        message: '总金额不能为空'
+                    },
+                    stringLength: {
+                        min: 0,
+                        max: 5,
+                        message: '总金额的长度不能超过5位'
+                    }
+                }
+            },
+            actualPayment: {
+                validators: {
+                    notEmpty: {
+                        message: '车主实际付款不能为空'
+                    },
+                    stringLength: {
+                        min: 0,
+                        max: 5,
+                        message: '实际付款金额不能超过5位'
+                    }
+                }
+            },
+            chargeTime: {
+                validators: {
+                    notEmpty: {
+                        message: '付款时间不能为空'
+                    }
+
+                }
+            },
+            chargeBillDes: {
+                validators: {
+                    stringLength: {
+                        min: 0,
+                        max: 500,
+                        message: '描述不能超过500个字'
+                    }
+
+                }
+            }
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            if (formId == "editForm") {
+                formSubmit("/bill/edit", formId, "editWin");
+
+            }
+
+
+        })
 }
