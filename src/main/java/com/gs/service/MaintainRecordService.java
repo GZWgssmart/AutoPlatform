@@ -71,5 +71,19 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      */
     public int updateSpeedStatusById(String speedStatus, String id);
 
+    /**
+     * 根据进度状态计数
+     * @param speedStatus
+     * @return
+     */
+    public int countBySpeedStatus(String speedStatus);
+
+    /**
+     * 根据进度状态分页查询
+     * @param pager
+     * @param speedStatus
+     * @return
+     */
+    public List<MaintainRecord> queryPagerBySpeedStatus(Pager pager, String speedStatus);
 
 }

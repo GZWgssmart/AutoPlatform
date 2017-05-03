@@ -403,6 +403,17 @@ function searchCheckin() {
 
 }
 
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchUserName").val('');
+    $("#searchUserPhone").val('');
+    $("#searchCarPlate").val('');
+    $("#searchMaintainOrFix").val('all');
+    $('#searchCompanyId').html('').trigger("change");
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
+
 
 
 

@@ -61,6 +61,9 @@
             <th data-field="checkin.maintainOrFix">
                 保养&nbsp;|&nbsp;维修
             </th>
+            <th data-field="speedStatus">
+                当前进度
+            </th>
             <th data-field="trackStatus" data-formatter="formatterTrack">
                 是否回访
             </th>
@@ -72,9 +75,6 @@
             </th>
             <th data-field="recordStatus" data-formatter="status">
                 记录状态
-            </th>
-            <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
-                操作
             </th>
         </tr>
         </thead>
@@ -106,6 +106,7 @@
                     <button type="button" onclick="closeSearchForm()" class="btn btn-default">
                         关闭
                     </button>
+
                 </div>
             </div>
         </form>
@@ -113,41 +114,8 @@
         <div id="toolbar" class="btn-group">
 
             <a>
-                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                    <i class="glyphicon glyphicon-pencil"></i> 修改
-                </button>
-            </a>
-
-            <a>
-                <button onclick="showAddDetailWin();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-glass"></i> 生成明细
-                </button>
-            </a>
-
-            <a>
-                <button onclick="showDetailWin();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看明细
-                </button>
-            </a>
-
-            <a>
-                <button onclick="searchStatus('/record/pager?status=Y');" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看可用记录
-                </button>
-            </a>
-            <a>
-                <button onclick="searchStatus('/record/pager?status=N');" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看不可用记录
-                </button>
-            </a>
-            <a>
-                <button onclick="searchStatus('/record/pager?status=ALL');" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看全部
-                </button>
-            </a>
-            <a>
                 <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-search"></i> 查询
+                    <i class="glyphicon glyphicon-search"></i> 条件查询
                 </button>
             </a>
 

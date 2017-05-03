@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.Checkin;
 import com.gs.bean.Complaint;
 import com.gs.bean.MaintainRecord;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -84,7 +85,7 @@ public class RecordController {
     public Pager4EasyUI<MaintainRecord> queryPagerByCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
                                                        @Param("userName")String userName, @Param("carPlate")String carPlate,
                                                        @Param("maintainOrFix")String maintainOrFix,
-                                                       @Param("companyId")String companyId) {
+                                                       @Param("companyId")String companyId, @Param("speedStatus") String speedStatus) {
         logger.info("根据条件分页查询维修保养记录");
         MaintainRecord record = new MaintainRecord();
         Checkin checkin = new Checkin();
@@ -93,6 +94,7 @@ public class RecordController {
         checkin.setMaintainOrFix(maintainOrFix);
         record.setCheckin(checkin);
         record.setCompanyId(companyId);
+        record.setSpeedStatus(speedStatus);
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
@@ -101,6 +103,25 @@ public class RecordController {
         records = maintainRecordService.queryPagerByCondition(pager, record);
 
         return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), records);
+    }
+
+    @RequestMapping(value = "reminder_page", method = RequestMethod.GET)
+    public String reminderPage() {
+        logger.info("显示维已完成的修保养记录页面");
+        return "settlementCar/car_reminder";
+    }
+
+    @ResponseBody
+    @RequestMapping(value="pager_speedStatus",method= RequestMethod.GET)
+    public Pager4EasyUI<MaintainRecord> queryPagerBySpeedStatus(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        logger.info("分页查询进度状态的维修保养记录管理");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<MaintainRecord> maintainRecordList = new ArrayList<MaintainRecord>();
+        pager.setTotalRecords(maintainRecordService.countBySpeedStatus(Constants.SETTLEMENT));
+        maintainRecordList = maintainRecordService.queryPagerBySpeedStatus(pager, Constants.SETTLEMENT);
+        return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
     }
 
     @ResponseBody

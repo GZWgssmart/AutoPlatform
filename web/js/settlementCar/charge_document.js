@@ -60,3 +60,12 @@ function searchCondition() {
     initTable("cusTable", "/bill/condition_pager?userName=" + userName + "&userPhone=" + userPhone + "&paymentMethod=" + paymentMethod);
 
 }
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchUserName").val('');
+    $("#searchUserPhone").val('');
+    $("#searchPaymentMethod").val('all');
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}

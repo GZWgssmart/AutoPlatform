@@ -207,7 +207,7 @@
                             class="nav-label">结算提车</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_wizard.html">查看已完成的维修保养</a>
+                        <li><a class="J_menuItem" href="<%=path %>/record/reminder_page">查看已完成的维修保养</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path %>/bill/bill_page">收费单据管理</a>
                         </li>

@@ -313,8 +313,19 @@ function searchCondition() {
     var carPlate = $("#searchCarPlate").val();
     var maintainOrFix = $("#searchMaintainOrFix").val();
     var companyId = $("#searchCompanyId").val();
-    initTable("cusTable", "/record/condition_pager?userName=" + userName + "&carPlate=" + carPlate + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
+    var speedStatus = "已登记";
+    initTable("cusTable", "/record/condition_pager?userName=" + userName + "&carPlate=" + carPlate + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId + "&speedStatus=" + speedStatus);
 
+}
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchUserName").val('');
+    $("#searchCarPlate").val('');
+    $("#searchMaintainOrFix").val('all');
+    $('#searchCompanyId').html('').trigger("change");
+    $("#searchDiv").hide();
+    $("#showButton").show();
 }
 
 /** 生成明细清单 */

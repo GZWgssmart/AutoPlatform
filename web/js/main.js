@@ -295,17 +295,8 @@ function buttonStatus(formId, buttonId) {
 
 /** 显示搜索的form */
 function showSearchForm() {
-    $('#searchSupplyTypeId').html('').trigger("change");
-    $('#searchCompanyId').html('').trigger("change");
-    $("input[type=reset]").trigger("click");
     $("#searchDiv").show();
     $("#showButton").hide();
-}
-
-/** 关闭搜索的form */
-function closeSearchForm() {
-    $("#searchDiv").hide();
-    $("#showButton").show();
 }
 
 /** 当窗口隐藏时销毁验证 */
