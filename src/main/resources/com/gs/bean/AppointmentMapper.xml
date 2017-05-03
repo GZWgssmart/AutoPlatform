@@ -116,7 +116,7 @@
 		<![CDATA[
 			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
 				from t_appointment c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
-				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId and c.speedStatus = '预约中'
+				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId and c.speedStatus = '已预约'
 		]]>
 		limit #{beginIndex}, #{pageSize}
 	</select>
@@ -125,7 +125,7 @@
 		<![CDATA[
 			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
 				from t_appointment c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
-				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId and appoitmentStatus = #{status} and c.speedStatus = '预约中'
+				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId and appoitmentStatus = #{status} and c.speedStatus = '已预约'
 				order by c.appCreatedTime desc, c.companyId
 		]]>
 		limit #{pager.beginIndex}, #{pager.pageSize}
@@ -135,7 +135,7 @@
 		<![CDATA[
 			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
 				from t_appointment c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
-				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and c.companyId = cpy.companyId and c.speedStatus = '预约中'
+				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and c.companyId = cpy.companyId and c.speedStatus = '已预约'
 		]]>
 		<if test="appointment.userName != null and appointment.userName != ''">
 			and c.userName like concat('%',#{appointment.userName},'%')
@@ -158,19 +158,19 @@
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(*) from t_appointment where speedStatus = '预约中'
+			select count(*) from t_appointment where speedStatus = '已预约'
 		]]>
 	</select>
 
 	<select id="countByStatus" resultType="int">
 		<![CDATA[
-			select count(*) from t_appointment where appoitmentStatus = #{status} and speedStatus = '预约中'
+			select count(*) from t_appointment where appoitmentStatus = #{status} and speedStatus = '已预约'
 		]]>
 	</select>
 
 	<select id="countByCondition" resultType="int">
 		<![CDATA[
-			select count(*) from t_appointment where 1 = 1 and speedStatus = '预约中'
+			select count(*) from t_appointment where 1 = 1 and speedStatus = '已预约'
 		]]>
 		<if test="userName != null and userName != ''">
 			and userName like concat('%',#{userName},'%')

@@ -110,7 +110,7 @@
 
 		  select r.*, c.checkinId, c.userName, c.carPlate, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 		    from t_maintain_record r,  t_checkin c, t_company cpy
-		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.speedStatus = '登记完'
+		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.speedStatus = '已登记'
 
         ]]>
         order by r.recordCreatedTime desc, r.companyId
@@ -121,7 +121,7 @@
         <![CDATA[
 			select r.*, c.checkinId, c.userName, c.carPlate, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 			  from t_maintain_record r,  t_checkin c, t_company cpy
-			  where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordStatus = #{status} and r.speedStatus = '登记完'
+			  where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordStatus = #{status} and r.speedStatus = '已登记'
 		]]>
 		order by r.recordCreatedTime desc, r.companyId
         limit #{pager.beginIndex}, #{pager.pageSize}
@@ -131,7 +131,7 @@
         <![CDATA[
 			select r.*, c.checkinId, c.userName, c.carPlate, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 			  from t_maintain_record r,  t_checkin c, t_company cpy
-		      where 1= 1 and c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.speedStatus = '登记完'
+		      where 1= 1 and c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.speedStatus = '已登记'
 		]]>
         <if test="record.checkin.userName != null and record.checkin.userName != ''">
             and c.userName like concat('%',#{record.checkin.userName},'%')
@@ -166,20 +166,20 @@
     <select id="count" resultType="int">
 		<![CDATA[
 
-		  select count(*) from t_maintain_record where speedStatus = '登记完'
+		  select count(*) from t_maintain_record where speedStatus = '已登记'
 
         ]]>
 	</select>
 
     <select id="countByStatus" resultType="int">
         <![CDATA[
-			select count(*) from t_maintain_record where recordStatus = #{status} and speedStatus = '登记完'
+			select count(*) from t_maintain_record where recordStatus = #{status} and speedStatus = '已登记'
 		]]>
     </select>
 
     <select id="countByCondition" resultType="int">
         <![CDATA[
-			select count(*) from t_maintain_record r, t_checkin c where 1 = 1 and r.checkinId = c.checkinId and r.speedStatus = '登记完'
+			select count(*) from t_maintain_record r, t_checkin c where 1 = 1 and r.checkinId = c.checkinId and r.speedStatus = '已登记'
 		]]>
         <if test="checkin.userName != null and checkin.userName != ''">
             and c.userName like concat('%',#{checkin.userName},'%')
@@ -221,7 +221,7 @@
         ]]>
 	</update>
 
-    <update id="active" parameterType="string">
+    <update id="updateSpeedStatusById">
         <![CDATA[
 
 		  update t_maintain_record set speedStatus = #{speedStatus} where recordId = #{id}
