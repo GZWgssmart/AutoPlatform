@@ -13,9 +13,9 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"type="text/css">
+    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
+          type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/accessories/accessoriesBuy.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -72,7 +72,7 @@
         </tr>
         </thead>
         <tbody>
-        <div id="toolbar" class="btn-group">
+        <div id="toolbar" class="btn-group" style="margin: 10px 0px 10px 0px;">
             <a data-toggle="modal">
                 <button type="button" onclick="showAccAddWin()" id="add" class="btn btn-default">
                     <i class="glyphicon glyphicon-plus"></i> 添加
@@ -99,7 +99,9 @@
 
 
             <a>
-                <button onclick="showSearchForm();" type="button" class="btn btn-default">条件查询</button>
+                <button onclick="showSearchForm();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-filter"></i>条件查询
+                </button>
             </a>
 
             <a>
@@ -326,7 +328,7 @@
                                     <th data-field="accIdle">
                                         可用数量
                                     </th>
-                                    <th data-field="accSalePrice">
+                                    <th data-field="accSaledPrice">
                                         售价
                                     </th>
                                     <th data-field="accUsedTime" data-formatter="formatterDate">
@@ -359,7 +361,7 @@
                                         data-dismiss="modal">关闭
                                 </button>
                                 <input type="button" class="btn btn-primary" value="添加"
-                                       onclick="add()">
+                                       onclick="addAccBuy()">
                                 </input>
                             </div>
                         </form>
@@ -370,8 +372,6 @@
         </div>
     </div>
 </div>
-
-
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>

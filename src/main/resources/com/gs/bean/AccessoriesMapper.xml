@@ -5,19 +5,19 @@
 <mapper namespace="com.gs.dao.AccessoriesDAO">
 
 	<resultMap id="accessoriesResultMap" type="accessories">
-			<id property="accId" column="accId"/>
-			<result property="accName" column="accName"/>
-			<result property="accCommodityCode" column="accCommodityCode"/>
-			<result property="accDes" column="accDes"/>
-			<result property="accPrice" column="accPrice"/>
-			<result property="accSalePrice" column="accSalePrice"/>
-			<result property="accUnit" column="accUnit"/>
-			<result property="accTotal" column="accTotal"/>
-			<result property="accIdle" column="accIdle"/>
-			<result property="accUsedTime" column="accUsedTime"/>
-			<result property="accBuyedTime" column="accBuyedTime"/>
-			<result property="accCreatedTime" column="accCreatedTime"/>
-			<result property="accStatus" column="accStatus"/>
+		<id property="accId" column="accId"/>
+		<result property="accName" column="accName"/>
+		<result property="accCommodityCode" column="accCommodityCode"/>
+		<result property="accDes" column="accDes"/>
+		<result property="accPrice" column="accPrice"/>
+		<result property="accSalePrice" column="accSalePrice"/>
+		<result property="accUnit" column="accUnit"/>
+		<result property="accTotal" column="accTotal"/>
+		<result property="accIdle" column="accIdle"/>
+		<result property="accUsedTime" column="accUsedTime"/>
+		<result property="accBuyedTime" column="accBuyedTime"/>
+		<result property="accCreatedTime" column="accCreatedTime"/>
+		<result property="accStatus" column="accStatus"/>
 
 		<association property="supply" javaType="com.gs.bean.Supply">
 			<id property="supplyId" column="supplyId"/>

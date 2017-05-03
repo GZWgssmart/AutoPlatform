@@ -1,5 +1,6 @@
 package com.gs.bean;
 
+import javax.xml.bind.annotation.XmlAccessOrder;
 import java.util.Date;
 
 /**
@@ -20,6 +21,16 @@ public class AccessoriesSale {
     private Date accSaleCreatedTime; // 配件销售记录创建时间
     private String companyId; // 配件销售记录所属公司，来源于t_company表
     private String accSaleStatus; // 配件销售记录状态
+
+    private Accessories accessories;
+
+    public Accessories getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(Accessories accessories) {
+        this.accessories = accessories;
+    }
 
     public String getAccSaleId() {
         return accSaleId;

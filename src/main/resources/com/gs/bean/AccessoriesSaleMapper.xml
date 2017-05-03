@@ -4,14 +4,44 @@
 
 <mapper namespace="com.gs.dao.AccessoriesSaleDAO">
 
-    <resultMap id="accessoriesSaleResultMap" type="accessoriesSale">
+    <resultMap id="accessoriesSaleResultMap" type="com.gs.bean.AccessoriesSale">
+        <id property="accSaleId" column="accSaleId"/>
+        <result property="accId" column="accId"/>
+        <result property="accSaledTime" column="accSaledTime"/>
+        <result property="accSaleCount" column="accSaleCount"/>
+        <result property="accSalePrice" column="accSalePrice"/>
+        <result property="accSaleTotal" column="accSaleTotal"/>
+        <result property="accSaleDiscount" column="accSaleDiscount"/>
+        <result property="accSaleMoney" column="accSaleMoney"/>
+        <result property="accSaleCreatedTime" column="accSaleCreatedTime"/>
+        <result property="companyId" column="companyId"/>
+        <result property="accSaleStatus" column="accSaleStatus"/>
+
+        <association property="accessories" javaType="com.gs.bean.Accessories">
+            <id property="accId" column="accId"/>
+            <result property="accName" column="accName"/>
+            <result property="accCommodityCode" column="accCommodityCode"/>
+            <result property="accPrice" column="accPrice"/>
+            <result property="accSalePrice" column="accSalePrice"/>
+            <result property="accUnit" column="accUnit"/>
+            <result property="accTotal" column="accTotal"/>
+            <result property="accIdle" column="accIdle"/>
+            <result property="accTypeId" column="accTypeId"/>
+            <result property="companyId" column="companyId"/>
+            <result property="accStatus" column="accStatus"/>
+
+            <association property="accessoriesType" javaType="com.gs.bean.AccessoriesType">
+                <id property="accTypeId" column="accTypeId"/>
+                <result property="accTypeName" column="accTypeName"/>
+            </association>
+        </association>
 
     </resultMap>
 
     <insert id="insert" parameterType="accessoriesSale">
 		insert into
 		auto_platform.t_accessories_sale(accSaleId, accId, accSaledTime, accSaleCount, accSalePrice, accSaleTotal, accSaleDiscount, accSaleMoney, accSaleCreatedTime, companyId, accSaleStatus)
-		values (#{accSaleId}, #{accId}, #{accSaledTime}, #{accSaleCount}, #{accSalePrice}, #{accSaleTotal}, #{accSaleDiscount}, #{accSaleMoney}, #{accSaleCreatedTime}, #{companyId}, #{accSaleStatus})
+		values (#{accSaleId}, #{accId}, #{accSaledTime}, #{accSaleCount}, #{accSalePrice}, #{accSaleTotal}, #{accSaleDiscount}, #{accSaleMoney}, now(), #{companyId}, 'Y')
 	</insert>
 
     <insert id="batchInsert" parameterType="list">
@@ -53,12 +83,16 @@
     <select id="queryAll" resultMap="accessoriesSaleResultMap">
 		<![CDATA[
 
+
+		select * from auto_platform.t_accessories_sale;
+
+
         ]]>
 	</select>
 
     <select id="queryByStatus" resultMap="accessoriesSaleResultMap" parameterType="string">
 		<![CDATA[
-
+		select * from t_accessories_sale where accSaleStatus = #{status}
         ]]>
 	</select>
 
@@ -70,13 +104,35 @@
 
     <select id="queryById" parameterType="string" resultType="accessoriesSale">
 		<![CDATA[
-
+		select * from t_accessories_type where accSaleId = #{id}
         ]]>
 	</select>
 
     <select id="queryByPager" resultType="list" resultMap="accessoriesSaleResultMap"
             parameterType="com.gs.common.bean.Pager">
-		select * from auto_platform.t_accessories_sale limit #{beginIndex}, #{pageSize}
+		<![CDATA[
+            SELECT
+                acs.*,
+                act.accTypeName,
+                usr.userName,
+                acc.accName,
+                acc.accPrice,
+                acc.accUnit
+            FROM
+                (
+                    (
+                        (
+                            (
+                                t_accessories_sale acs
+                                INNER JOIN t_accessories acc ON acs.accId = acc.accId
+                            )
+                            LEFT JOIN t_accessories_type act ON acc.accTypeId = act.accTypeId
+                        )
+                        INNER JOIN t_company cpy ON act.companyId = cpy.companyId
+                    )
+                    INNER JOIN t_user usr ON usr.companyId = cpy.companyId
+                )LIMIT #{beginIndex},#{pageSize}
+        ]]>
 	</select>
 
     <select id="count" resultType="int">
