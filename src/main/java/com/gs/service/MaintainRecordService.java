@@ -63,4 +63,13 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      */
     public void updateTrackStatus(String checkinId);
 
+    /**
+     * 根据id更新记录的进度
+     * @param speedStatus 当前进度
+     * @param id 维修保养记录的id
+     * @return
+     */
+    public int updateSpeedStatusById(String speedStatus, String id);
+
+
 }

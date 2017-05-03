@@ -2,6 +2,7 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.*;
+import com.gs.common.Constants;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -46,6 +47,9 @@ public class CheckinController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private AppointmentService appointmentService;
 
     @RequestMapping(value = "checkin_page", method = RequestMethod.GET)
     public String checkinPage() {
@@ -97,7 +101,7 @@ public class CheckinController {
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ControllerResult addCheckin(Checkin checkin) {
+    public ControllerResult addCheckin(Checkin checkin, String isApp) {
         logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录和工单信息");
         String checkinId = UUIDUtil.uuid();
         String userId = "";
@@ -120,9 +124,14 @@ public class CheckinController {
         MaintainRecord maintainRecord = new MaintainRecord();
         String recordId = UUIDUtil.uuid();
         maintainRecord.setRecordId(recordId);
+        maintainRecord.setSpeedStatus(Constants.CHECKIN);
         maintainRecord.setCheckinId(checkinId);
         maintainRecord.setStartTime(new Date());
         maintainRecord.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
+
+        if (isApp != null && !isApp.equals("") && isApp.equals("on")) {
+            appointmentService.updateSpeedStatusById(Constants.CHECKIN, checkin.getAppointmentId());
+        }
 
         maintainRecordService.insert(maintainRecord);
         checkinService.insert(checkin);

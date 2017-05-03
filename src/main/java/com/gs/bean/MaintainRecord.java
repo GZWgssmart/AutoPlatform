@@ -20,6 +20,7 @@ public class MaintainRecord {
     private String trackStatus; // 是否回访，默认是N，回访则改为Y
     private String companyId; // 公司的ID
     private String recordStatus;  // 维修保养记录状态
+    private String speedStatus; // 标识当前进度
 
     private Checkin checkin; // 登记表
     private Company company; // 公司
@@ -126,5 +127,13 @@ public class MaintainRecord {
 
     public void setTrackStatus(String trackStatus) {
         this.trackStatus = trackStatus;
+    }
+
+    public String getSpeedStatus() {
+        return speedStatus;
+    }
+
+    public void setSpeedStatus(String speedStatus) {
+        this.speedStatus = speedStatus;
     }
 }

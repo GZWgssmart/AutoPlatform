@@ -444,9 +444,11 @@
                                 <th data-field="carPlate">
                                     车牌号码
                                 </th>
+                                <th data-field="speedStatus">
+                                    当前进度
+                                </th>
                                 <th data-field="arriveTime" data-formatter="formatterDate">
                                     预计到店时间
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </th>
                                 <th data-field="maintainOrFix">
                                     维修&nbsp;|&nbsp;保养

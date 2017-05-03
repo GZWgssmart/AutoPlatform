@@ -63,6 +63,9 @@
             <th data-field="checkin.maintainOrFix">
                 保养&nbsp;|&nbsp;维修
             </th>
+            <th data-field="speedStatus">
+                当前进度
+            </th>
             <th data-field="trackStatus" data-formatter="formatterTrack">
                 是否回访
             </th>

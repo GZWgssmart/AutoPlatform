@@ -29,7 +29,7 @@ $(document).ready(function () {
             if (state == true) {
                 isApp = true;
                 //调用函数，初始化表格
-                initTableNotTollbar("appTable", "/appointment/query_pager");
+                initTableNotTollbar("appTable", "/appointment/query_pager?status=Y");
 
                 $("#appWin").modal('show');
             } else if (state == false) {

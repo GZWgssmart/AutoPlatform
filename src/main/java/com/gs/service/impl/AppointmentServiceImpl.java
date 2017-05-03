@@ -37,22 +37,22 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public int inactive(String id) { return appointmentDAO.inactive(id); }
 	public int active(String id) { return appointmentDAO.active(id); }
 
-	@Override
 	public int countByStatus(String status) {
 		return appointmentDAO.countByStatus(status);
 	}
 
-	@Override
 	public int countByCondition(Appointment appointment) {
 		return appointmentDAO.countByCondition(appointment);
 	}
 
-	@Override
 	public List<Appointment> queryPagerByCondition(Pager pager, Appointment appointment) {
 		return appointmentDAO.queryPagerByCondition(pager,appointment);
 	}
 
-	@Override
+	public int updateSpeedStatusById(String speedStatus, String id) {
+		return appointmentDAO.updateSpeedStatusById(speedStatus, id);
+	}
+
 	public List<Appointment> queryPagerByStatus(Pager pager, String status) {
 		return appointmentDAO.queryPagerByStatus(pager,status);
 	}

@@ -13,6 +13,7 @@
         <result column="trackStatus" property="trackStatus"/>
         <result column="recordDes" property="recordDes"/>
         <result column="recordStatus" property="recordStatus"/>
+        <result column="speedStatus" property="speedStatus"/>
         <!--接待表Id-->
         <association property="checkin" javaType="com.gs.bean.Checkin">
             <id column="checkinId" property="checkinId"/>
@@ -30,8 +31,8 @@
     </resultMap>
     <insert id="insert" parameterType="maintainRecord">
 		<![CDATA[
-          insert into t_maintain_record(recordId, checkinId, startTime, endTime, actualEndTime, recordCreatedTime, pickupTime, companyId, recordDes, recordStatus, trackStatus)
-            values(#{recordId}, #{checkinId}, #{startTime}, #{endTime}, #{actualEndTime}, now(), #{pickupTime}, #{companyId}, #{recordDes}, 'Y', 'N')
+          insert into t_maintain_record(recordId, checkinId, startTime, endTime, actualEndTime, recordCreatedTime, pickupTime, companyId, recordDes, recordStatus, trackStatus, speedStatus)
+            values(#{recordId}, #{checkinId}, #{startTime}, #{endTime}, #{actualEndTime}, now(), #{pickupTime}, #{companyId}, #{recordDes}, 'Y', 'N', #{speedStatus})
         ]]>
 	</insert>
 
@@ -109,7 +110,7 @@
 
 		  select r.*, c.checkinId, c.userName, c.carPlate, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 		    from t_maintain_record r,  t_checkin c, t_company cpy
-		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId
+		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.speedStatus = '登记完'
 
         ]]>
         order by r.recordCreatedTime desc, r.companyId
@@ -120,7 +121,7 @@
         <![CDATA[
 			select r.*, c.checkinId, c.userName, c.carPlate, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 			  from t_maintain_record r,  t_checkin c, t_company cpy
-			  where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordStatus = #{status}
+			  where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordStatus = #{status} and r.speedStatus = '登记完'
 		]]>
 		order by r.recordCreatedTime desc, r.companyId
         limit #{pager.beginIndex}, #{pager.pageSize}
@@ -130,7 +131,7 @@
         <![CDATA[
 			select r.*, c.checkinId, c.userName, c.carPlate, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 			  from t_maintain_record r,  t_checkin c, t_company cpy
-		      where 1= 1 and c.checkinId = r.checkinId and c.companyId = cpy.companyId
+		      where 1= 1 and c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.speedStatus = '登记完'
 		]]>
         <if test="record.checkin.userName != null and record.checkin.userName != ''">
             and c.userName like concat('%',#{record.checkin.userName},'%')
@@ -165,20 +166,20 @@
     <select id="count" resultType="int">
 		<![CDATA[
 
-		  select count(*) from t_maintain_record
+		  select count(*) from t_maintain_record where speedStatus = '登记完'
 
         ]]>
 	</select>
 
     <select id="countByStatus" resultType="int">
         <![CDATA[
-			select count(*) from t_maintain_record where recordStatus = #{status}
+			select count(*) from t_maintain_record where recordStatus = #{status} and speedStatus = '登记完'
 		]]>
     </select>
 
     <select id="countByCondition" resultType="int">
         <![CDATA[
-			select count(*) from t_maintain_record r, t_checkin c where 1 = 1 and r.checkinId = c.checkinId
+			select count(*) from t_maintain_record r, t_checkin c where 1 = 1 and r.checkinId = c.checkinId and r.speedStatus = '登记完'
 		]]>
         <if test="checkin.userName != null and checkin.userName != ''">
             and c.userName like concat('%',#{checkin.userName},'%')
@@ -219,5 +220,13 @@
 
         ]]>
 	</update>
+
+    <update id="active" parameterType="string">
+        <![CDATA[
+
+		  update t_maintain_record set speedStatus = #{speedStatus} where recordId = #{id}
+
+        ]]>
+    </update>
 
 </mapper>

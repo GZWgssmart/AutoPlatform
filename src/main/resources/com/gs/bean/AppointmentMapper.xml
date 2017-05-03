@@ -201,4 +201,10 @@
 		]]>
 	</update>
 
+	<update id="updateSpeedStatusById">
+		<![CDATA[
+			update t_appointment set speedStatus = #{speedStatus} where appointmentId = #{id}
+		]]>
+	</update>
+
 </mapper>

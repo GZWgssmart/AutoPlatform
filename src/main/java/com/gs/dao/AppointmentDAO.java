@@ -24,4 +24,6 @@ public interface AppointmentDAO extends BaseDAO<String, Appointment>{
 
     public List<Appointment> queryPagerByCondition(@Param("pager") Pager pager, @Param("appointment") Appointment appointment);
 
+    public int updateSpeedStatusById(@Param("speedStatus") String speedStatus, @Param("id") String id);
+
 }
