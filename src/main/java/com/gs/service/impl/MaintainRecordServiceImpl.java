@@ -116,12 +116,12 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.updateSpeedStatusById(speedStatus, id);
     }
 
-    public int countBySpeedStatus(String speedStatus) {
+    public int countBySpeedStatus(String[] speedStatus) {
         return maintainRecordDAO.countBySpeedStatus(speedStatus);
     }
 
-    public List<MaintainRecord> queryPagerBySpeedStatus(Pager pager, String speedStatus) {
-        return maintainRecordDAO.queryPagerBySpeedStatus(pager, speedStatus);
+    public List<MaintainRecord> queryPagerBySpeedStatus(Pager pager, String[] speedStatus) {
+        return maintainRecordDAO.queryPagerBySpeedStatus(speedStatus, pager);
     }
 
 

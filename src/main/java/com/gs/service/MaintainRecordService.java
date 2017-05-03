@@ -76,7 +76,7 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      * @param speedStatus
      * @return
      */
-    public int countBySpeedStatus(String speedStatus);
+    public int countBySpeedStatus(String[] speedStatus);
 
     /**
      * 根据进度状态分页查询
@@ -84,6 +84,6 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      * @param speedStatus
      * @return
      */
-    public List<MaintainRecord> queryPagerBySpeedStatus(Pager pager, String speedStatus);
+    public List<MaintainRecord> queryPagerBySpeedStatus(Pager pager, String[] speedStatus);
 
 }

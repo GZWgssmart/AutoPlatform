@@ -166,8 +166,11 @@
         <![CDATA[
 			select r.*, c.checkinId, c.userName, c.carPlate, c.userPhone, c.userId, c.userRequests, c.maintainOrFix, cpy.companyId, cpy.companyName
 			  from t_maintain_record r,  t_checkin c, t_company cpy
-			  where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordStatus = 'Y' and r.speedStatus = #{speedStatus}
+			  where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordStatus = 'Y' and r.speedStatus in
 		]]>
+        <foreach item="item" index="index" collection="speedStatus" open="(" separator="," close=")">
+            #{item}
+        </foreach>
         order by r.recordCreatedTime desc, r.companyId
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
@@ -217,8 +220,11 @@
 
     <select id="countBySpeedStatus" resultType="int">
         <![CDATA[
-			select count(*) from t_maintain_record where recordStatus = 'Y' and speedStatus = #{speedStatus}
+			select count(*) from t_maintain_record where recordStatus = 'Y' and speedStatus in
 		]]>
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
     <update id="inactive" parameterType="string">

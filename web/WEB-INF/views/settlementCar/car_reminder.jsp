@@ -118,9 +118,28 @@
                     <i class="glyphicon glyphicon-envelope"></i> 提车提醒
                 </button>
             </a>
+
             <a>
                 <button onclick="showAddWin()" id="settlementButton" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-ok"></i> 结算提车
+                </button>
+            </a>
+
+            <a>
+                <button onclick="alreadyRemind()" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看已提醒
+                </button>
+            </a>
+
+            <a>
+                <button onclick="notRemind()" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看未提醒
+                </button>
+            </a>
+
+            <a>
+                <button onclick="allRemind()" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看全部
                 </button>
             </a>
 

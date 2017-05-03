@@ -113,14 +113,15 @@ public class RecordController {
 
     @ResponseBody
     @RequestMapping(value="pager_speedStatus",method= RequestMethod.GET)
-    public Pager4EasyUI<MaintainRecord> queryPagerBySpeedStatus(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    public Pager4EasyUI<MaintainRecord> queryPagerBySpeedStatus(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("speedStatus")String speedStatus){
         logger.info("分页查询进度状态的维修保养记录管理");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         List<MaintainRecord> maintainRecordList = new ArrayList<MaintainRecord>();
-        pager.setTotalRecords(maintainRecordService.countBySpeedStatus(Constants.SETTLEMENT));
-        maintainRecordList = maintainRecordService.queryPagerBySpeedStatus(pager, Constants.SETTLEMENT);
+        String[] ss = speedStatus.split(",");
+        pager.setTotalRecords(maintainRecordService.countBySpeedStatus(ss));
+        maintainRecordList = maintainRecordService.queryPagerBySpeedStatus(pager, ss);
         return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
     }
 

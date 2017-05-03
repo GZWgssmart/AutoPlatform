@@ -26,7 +26,9 @@ public class Constants {
 
     public static final String MAINTAIN_FIX = "维修保养中";
 
-    public static final String SETTLEMENT = "待结算";
+    public static final String NOT_REMIND = "未提醒";
+
+    public static final String ALREADY_REMIND = "已提醒";
 
     public static final String COMPLETED = "已完成";
 
