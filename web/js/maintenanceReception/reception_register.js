@@ -399,11 +399,7 @@ function searchCheckin() {
     var carPlate = $("#searchCarPlate").val();
     var maintainOrFix = $("#searchMaintainOrFix").val();
     var companyId = $("#searchCompanyId").val();
-    if (companyId != null && companyId != "") {
-        initTable("cusTable", "/checkin/condition_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
-    } else {
-        swal("错误提示", "请选择一家汽修公司", "error");
-    }
+    initTable("cusTable", "/checkin/condition_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
 
 }
 

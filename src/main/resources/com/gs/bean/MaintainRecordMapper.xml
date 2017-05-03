@@ -145,7 +145,7 @@
         <if test="record.checkin.maintainOrFix != 'all'">
             and c.maintainOrFix = #{record.checkin.maintainOrFix}
         </if>
-        <if test="record.companyId != null and record.companyId != ''">
+        <if test="record.companyId != null and record.companyId != '' and record.companyId != 'null'">
             and r.companyId = #{record.companyId}
         </if>
         order by r.recordCreatedTime desc
@@ -193,7 +193,7 @@
         <if test="checkin.maintainOrFix != 'all'">
             and c.maintainOrFix = #{checkin.maintainOrFix}
         </if>
-        <if test="companyId != null and companyId != ''">
+        <if test="companyId != null and companyId != '' and companyId != 'null'">
             and r.companyId = #{companyId}
         </if>
 

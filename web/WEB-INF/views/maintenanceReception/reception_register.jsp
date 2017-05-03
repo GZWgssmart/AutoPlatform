@@ -130,6 +130,7 @@
                     <button type="button" onclick="closeSearchForm()" class="btn btn-default">
                         关闭
                     </button>
+                    <input type="reset" name="reset" style="display: none;"/>
                 </div>
             </div>
         </form>

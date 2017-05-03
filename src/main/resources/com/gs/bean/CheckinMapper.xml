@@ -156,7 +156,7 @@
 		<if test="checkin.maintainOrFix != 'all'">
 			and c.maintainOrFix = #{checkin.maintainOrFix}
 		</if>
-		<if test="checkin.companyId != null and checkin.companyId != ''">
+		<if test="checkin.companyId != null and checkin.companyId != '' and checkin.companyId != 'null'">
 			and c.companyId = #{checkin.companyId}
 		</if>
 		order by c.checkinCreatedTime desc, c.companyId
@@ -197,7 +197,7 @@
 		<if test="maintainOrFix != 'all'">
 			and maintainOrFix = #{maintainOrFix}
 		</if>
-		<if test="companyId != null and companyId != ''">
+		<if test="companyId != null and companyId != '' and companyId != 'null'">
 			and companyId = #{companyId}
 		</if>
 
