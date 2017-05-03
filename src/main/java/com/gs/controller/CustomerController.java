@@ -7,6 +7,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.FileUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.UserService;
@@ -56,11 +57,11 @@ public class CustomerController {
     }
     @ResponseBody
     @RequestMapping(value = "customerInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(User user, Company company){
+    public ControllerResult infoInsert(User user){
         logger.info("信息添加");
         String customerId = UUIDUtil.uuid();
         user.setUserId(customerId);
-        user.setCompanyId(company.getCompanyId());
+        user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
         userService.insert(user);
         return ControllerResult.getSuccessResult("添加成功");
     }

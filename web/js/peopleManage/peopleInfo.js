@@ -45,6 +45,27 @@ function fmtDate(){
 
 }
 
+
+function customerAge(row) {
+    var card = row.userIdentity;
+    if(card != null && card != '') {
+        var myDate = new Date();
+        var month = myDate.getMonth() + 1;
+        var day = myDate.getDate();
+
+        var age = myDate.getFullYear() - card.substring(6, 10) - 1;
+        if (card.substring(10, 12) < month || card.substring(10, 12) == month && card.substring(12, 14) <= day) {
+            age++;
+        }
+        var birthday = card.substring(10, 12) + "月" + card.substring(12, 14) + "日";
+        $("#birthday").val(birthday);
+        $("#age").val(age);
+    }else{
+        $("#birthday").val("");
+        $("#age").val("");
+    }
+}
+
 function operateFormatter(value, row, index) {
     if (row.userStatus == 'Y') {
         return [
@@ -98,6 +119,7 @@ window.operateEvents = {
         }else{
             $("#status").val("不可用");
         }
+        customerAge(row);
         fmtDate();
         formatterDate();
     }

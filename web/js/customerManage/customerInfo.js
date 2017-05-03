@@ -1,11 +1,7 @@
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/customer/customerInfo_pager");
-    //当点击查询按钮的时候执行
-    $("#search").bind("click", initTable);
 
-    initSelect2("user_company", "请选择公司", "/company/company_all", "565");
-    initSelect2("userModal_company", "请选择公司", "/company/company_all", "130");
 });
 
 
@@ -43,6 +39,41 @@ function fmtDate(){
         }
     }
 
+}
+
+
+function oldAndNew() {
+    var da1 = $("#form_datetime").val();
+    var da = formatterDate(new Date());
+    var year = da.substring(0,4);
+    var year1 = da1.substring(0,4);
+    var count = year - year1;
+    if (count >= 1){
+        $("#client").val("老客户");
+    } else {
+        $("#client").val("新客户");
+    }
+}
+
+
+function customerAge(row) {
+    var card = row.userIdentity;
+    if(card != null && card != '') {
+        var myDate = new Date();
+        var month = myDate.getMonth() + 1;
+        var day = myDate.getDate();
+
+        var age = myDate.getFullYear() - card.substring(6, 10) - 1;
+        if (card.substring(10, 12) < month || card.substring(10, 12) == month && card.substring(12, 14) <= day) {
+            age++;
+        }
+        var birthday = card.substring(10, 12) + "月" + card.substring(12, 14) + "日";
+        $("#birthday").val(birthday);
+        $("#age").val(age);
+    }else{
+        $("#birthday").val("");
+        $("#age").val("");
+    }
 }
 
 function operateFormatter(value, row, index) {
@@ -98,6 +129,8 @@ window.operateEvents = {
         }else{
             $("#status").val("不可用");
         }
+        customerAge(row);
+        oldAndNew();
         fmtDate();
         formatterDate();
     }

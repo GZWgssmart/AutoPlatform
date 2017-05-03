@@ -289,7 +289,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="control-label">年龄：</label>
-                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" attr="user.userAge" name="useAge"/>
+                                            <input class="form-control" style="display: initial;" disabled="disabled" id="age" type="text" attr="user.userAge" name="useAge"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -14px">手机号：</label>
@@ -297,7 +297,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -14px">身份证：</label>
-                                            <input class="form-control" style="display: initial;" type="text" attr="user.userIdentity" name="userIdentity"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="identity" attr="user.userIdentity" name="userIdentity"/>
                                         </div>
                                         <br />
                                         <br />
@@ -321,7 +321,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="control-label">生日：</label>
-                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" attr="user.userBirthday" name="userBirthday"/>
+                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="birthday" attr="user.userBirthday" name="userBirthday"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">真实姓名：</label>

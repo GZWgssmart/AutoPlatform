@@ -6,6 +6,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.FileUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.RoleService;
@@ -61,11 +62,14 @@ public class PeopleInfoController {
     }
     @ResponseBody
     @RequestMapping(value = "peopleInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(User user, Company company){
+    public ControllerResult infoInsert(User user, Company company, Role role, UserRole userRole){
         logger.info("信息添加");
         String peopleId = UUIDUtil.uuid();
         user.setUserId(peopleId);
         user.setCompanyId(company.getCompanyId());
+        userRole.setUserId(user.getUserId());
+        userRole.setRoleId(role.getRoleId());
+        user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
         userService.insert(user);
         return ControllerResult.getSuccessResult("添加成功");
     }
@@ -133,13 +137,14 @@ public class PeopleInfoController {
 
     @ResponseBody
     @RequestMapping(value = "query_user", method = RequestMethod.GET)
-    public Pager4EasyUI<User> queryByUser(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("company")Company company){
+    public Pager4EasyUI<User> queryByUser(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         logger.info("分页查询所有员工");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(userService.countByUser(company.getCompanyId()));
-        List<User> users =  userService.queryByUser(pager, company.getCompanyId());
+        User user = (User)session.getAttribute("user");
+        pager.setTotalRecords(userService.countByUser(user.getCompanyId()));
+        List<User> users =  userService.queryByUser(pager, user.getCompanyId());
         return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
     }
 
