@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
     String path = request.getContextPath();
 %>
@@ -38,11 +40,24 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <span><img alt="image" class="img-circle" src="<%=path %>/img/default.png"/></span>
+                        <span><img alt="image" class="img-circle" src="#"/></span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
-                                <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
+                               <span class="block m-t-xs"><strong class="font-bold">${sessionScope.user.userName}</strong></span>
+                                <span class="text-muted text-xs block">
+                                    <shiro:hasRole name="companyAdmin">汽修管理员</shiro:hasRole>
+									<shiro:hasRole name="systemSuperAdmin">系统超级管理员</shiro:hasRole>
+									<shiro:hasRole name="systemOrdinaryAdmin">系统普通管理员</shiro:hasRole>
+                                    <shiro:hasRole name="companyRepertory">汽修公司库管人员</shiro:hasRole>
+									<shiro:hasRole name="car-owner">车主</shiro:hasRole>
+									<shiro:hasRole name="companyReceive">汽修公司接待员</shiro:hasRole>
+                                    <shiro:hasRole name="companyArtificer">汽修公司技师</shiro:hasRole>
+									<shiro:hasRole name="companySales">汽修公司销售员</shiro:hasRole>
+									<shiro:hasRole name="companyHumanManager">汽修公司人事</shiro:hasRole>
+                                    <shiro:hasRole name="companyAccounting">汽修公司财务</shiro:hasRole>
+									<shiro:hasRole name="companyBuyer">汽修公司采购员</shiro:hasRole>
+									<shiro:hasRole name="emp">汽修普通员工</shiro:hasRole>
+                                    <b class="caret"></b></span>
                                 </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -55,7 +70,7 @@
                             <li><a class="J_menuItem" href="mailbox.html">信箱</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="login.html">安全退出</a>
+                            <li><a href="<%=path %>/login/logout">安全退出</a>
                             </li>
                         </ul>
                     </div>
@@ -391,7 +406,7 @@
                     </li>
                 </ul>
             </div>
-            <a href="login.html" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
+            <a href="<%=path %>/login/logout" class="roll-nav roll-right J_tabExit"><i class="fa fa fa-sign-out"></i> 退出</a>
         </div>
         <div class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" id="J_iframe" name="iframe0" width="100%" height="100%"

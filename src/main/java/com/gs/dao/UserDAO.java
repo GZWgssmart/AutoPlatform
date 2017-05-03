@@ -37,4 +37,7 @@ public interface UserDAO extends BaseDAO<String, User>{
 
     /*统计系统管理员的个数*/
     public int  countSystemAdmin();
+
+    /**登陆*/
+    public User queryLogin(User user);
 }

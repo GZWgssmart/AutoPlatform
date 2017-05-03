@@ -68,4 +68,8 @@ public class UserServiceImpl implements UserService {
 	public int countSystemAdmin() {
 		return userDAO.countSystemAdmin();
 	}
+
+	public User queryLogin(User user) {
+		return userDAO.queryLogin(user);
+	}
 }

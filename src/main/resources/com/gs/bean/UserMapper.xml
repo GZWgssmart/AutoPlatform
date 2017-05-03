@@ -111,6 +111,12 @@
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
+	<select id="queryLogin" parameterType="user" resultType="user">
+		<![CDATA[
+			select * from t_user where userPwd = #{userPwd} and (userEmail = #{userEmail} or userPhone = #{userPhone})
+		]]>
+	</select>
+
 
 	<select id="countByUser" resultType="int" parameterType="string">
 		<![CDATA[
