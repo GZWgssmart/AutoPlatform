@@ -43,6 +43,15 @@
 	</insert>
 
 
+	<insert id="insertAdmin" parameterType="user">
+		<![CDATA[
+			insert into t_user(userId, userName, userEmail, userPhone, userPwd,
+								userIdentity, userBirthday, userAddress, companyId, userCreatedTime, userStatus)
+			value (uuid(), #{userName}, #{userEmail}, #{userPhone}, #{userPwd}, #{userIdentity},
+			#{userBirthday}, #{userAddress}, #{companyId), now(), 'Y');
+		]]>
+	</insert>
+
 	<insert id="batchInsert"  parameterType="list">
 		<![CDATA[
 
@@ -70,7 +79,7 @@
 	<update id="update" parameterType="user">
 		<![CDATA[
 			UPDATE t_user SET
-				userName = #{userName}, userIcon = #{userIcon}, userNickname = #{userNickname}, userDes = #{userDes}, userGender = #{userGender}, userPhone = #{userPhone}, userAddress = #{userAddress}, userStatus = 'Y', companyId = #{companyId}, qqOpenId = #{qqOpenId}, weiboOpenId = #{weiboOpenId}, wechatOpenId = #{wechatOpenId}, userDes = #{userDes} WHERE userId = #{userId}
+				userName = #{userName}, userIcon = #{userIcon}, userNickname = #{userNickname}, userDes = #{userDes}, userGender = #{userGender}, userAddress = #{userAddress}, userStatus = 'Y', companyId = #{companyId}, qqOpenId = #{qqOpenId}, weiboOpenId = #{weiboOpenId}, wechatOpenId = #{wechatOpenId}, userIdentity = #{userIdentity}, userDes = #{userDes} WHERE userId = #{userId}
 		]]>
 	</update>
 
@@ -125,7 +134,7 @@
 	</select>
 	<select id="queryByPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			SELECT u.*, c.companyId, c.companyName FROM t_user u,t_company c where 1=1 and c.companyId = u.companyId
+			SELECT u.*, c.companyId, c.companyName FROM t_user u,t_company c where 1=1 or c.companyId = u.companyId
 				order by userCreatedTime Desc, u.companyId
 		]]>limit #{beginIndex}, #{pageSize}
 	</select>
