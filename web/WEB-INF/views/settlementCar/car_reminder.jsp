@@ -114,8 +114,14 @@
         <div id="toolbar" class="btn-group">
 
             <a>
-                <button onclick="showAddWin()" id="settlementBtn" type="button" class="btn btn-default">
+                <button onclick="showRemindWin()" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-envelope"></i> 提车提醒
+                </button>
+            </a>
+
+            <a>
+                <button onclick="showAddWin()" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-envelope"></i> 全部提醒
                 </button>
             </a>
 
@@ -200,6 +206,43 @@
                                 <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="结算">
                                 </input>
                                 <input type="reset" name="reset" style="display: none;"/>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="remindWin" class="modal fade" style="overflow:scroll" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">提车提醒</h3>
+                        <form role="form" id="remindForm">
+                            <input type="hidden" id="remindUserId" name="checkin.userId" class="form-control"/>
+                            <div class="form-group">
+                                <label class="control-label">提醒方式：</label>
+                                <select class="js-example-tags form-control remindMethod" name="remindMethod">
+                                    <option value="现金">短信</option>
+                                    <option value="支付宝">邮箱</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">提醒标题：</label>
+                                <input type="text" name="remindTitle" value="维修保养提车提醒" class="form-control"/>
+                            </div>
+
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" id="remindButton" onclick="buttonStatus('remindForm', 'remindButton')" class="btn btn-primary" value="发送提醒">
+                                </input>
                             </div>
                         </form>
                     </div>

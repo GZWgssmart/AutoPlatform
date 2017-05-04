@@ -3,13 +3,24 @@
  */
 $(document).ready(function () {
     //调用函数，初始化表格
-    var speedStatus = "已提醒,未提醒";
+    var speedStatus = "未提醒";
     initTable("cusTable", "/record/pager_speedStatus?speedStatus=" + speedStatus);
 
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
     initDateTimePicker("datetimepicker", "chargeTime", "addForm");
 
+    $(".remindMethod").select2({
+        // enable tagging
+        tags: false,
+        width: '565px',
+        language: 'zh-CN',
+        minimumResultsForSearch: -1,
+        placeholder: "提醒方式",
+        multiple: true
+    });
+
     destoryValidator("addWin", "addForm");
+    destoryValidator("remindWin", "remindForm");
 });
 
 /** 显示是否回访 */
@@ -77,9 +88,48 @@ function showAddWin() {
     }
 }
 
+/** 显示提车提醒的win */
+function showRemindWin() {
+    validator("remindForm");
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length < 1) {
+        swal('提醒失败', "至少要选择一条记录", "error");
+        return false;
+    } else {
+        var len = selectRow.length;
+        var ids = "";
+        var flag = true;
+        var lastSpeedStatus = "";
+        for (var i = 0; i < len; i++) {
+            var record = selectRow[i];
+            lastSpeedStatus = record.speedStatus;
+            if (selectRow[0].speedStatus != selectRow[i].speedStatus) {
+                flag = false;
+            } else {
+                if (selectRow[i].speedStatus == "已提醒") {
+                    flag = false;
+                }
+            }
+            if (ids == "") {
+                ids = record.checkin.userId;
+            } else {
+                ids += "," + record.checkin.userId;
+            }
+        }
+        if (flag) {
+            $("#remindUserId").val(ids);
+            $("#remindWin").modal('show');
+        } else {
+            swal('提醒失败', "只能选择未提醒的记录", "error");
+        }
+
+    }
+}
+
 /** 表单验证 */
 function validator(formId) {
     $("#addButton").removeAttr("disabled");
+    $("#remindButton").removeAttr("disabled");
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -128,6 +178,22 @@ function validator(formId) {
                     }
 
                 }
+            },
+            remindTitle: {
+                validators: {
+                    notEmpty: {
+                        message: '提醒标题不能为空'
+                    }
+
+                }
+            },
+            remindMethod: {
+                validators: {
+                    notEmpty: {
+                        message: '至少选择一种提醒方式'
+                    }
+
+                }
             }
         }
     })
@@ -135,6 +201,8 @@ function validator(formId) {
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/bill/add", formId, "addWin");
+
+            } else if (formId == "remindForm") {
 
             }
 
