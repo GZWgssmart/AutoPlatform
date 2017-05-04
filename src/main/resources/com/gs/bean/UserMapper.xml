@@ -31,6 +31,12 @@
 			<id property="companyName" column="companyName"/>
 		</association>
 
+		<association property="role" javaType="com.gs.bean.Role">
+			<id property="roleId" column="roleId"/>
+			<id property="roleName" column="roleName"/>
+			<id property="roleDes" column="roleDes"/>
+		</association>
+
 	</resultMap>
 
 	<insert id="insert"  parameterType="user">
@@ -113,6 +119,12 @@
 		]]>
 	</select>
 
+	<select id="queryByPhone" parameterType="string" resultType="user">
+		<![CDATA[
+			  SELECT * FROM t_user WHERE userPhone = #{userPhone}
+		]]>
+	</select>
+
 	<select id="queryByUser"  resultMap="userResultMap">
 		<![CDATA[
 			  SELECT * FROM t_user WHERE companyId = #{companyId} order by userCreatedTime Desc
@@ -132,7 +144,17 @@
 			SELECT COUNT(*) FROM t_user WHERE companyId = #{companyId}
 		]]>
 	</select>
-	<select id="queryByPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryCustomerPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
+		<![CDATA[
+			SELECT * FROM t_user u
+			INNER JOIN t_user_role ur ON ur.userId = u.userId
+			INNER JOIN t_role r ON r.roleId = ur.roleId
+			where r.roleDes = '车主'
+			order by userCreatedTime Desc
+		]]>limit #{beginIndex}, #{pageSize}
+	</select>
+
+	<select id="queryPeoplePager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 			SELECT u.*, c.companyId, c.companyName FROM t_user u,t_company c where 1=1 or c.companyId = u.companyId
 				order by userCreatedTime Desc, u.companyId

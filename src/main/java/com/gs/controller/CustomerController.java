@@ -2,7 +2,9 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Company;
+import com.gs.bean.Role;
 import com.gs.bean.User;
+import com.gs.bean.UserRole;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -10,6 +12,7 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.FileUtil;
 import com.gs.common.util.UUIDUtil;
+import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -50,6 +53,9 @@ public class CustomerController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private UserRoleService userRoleService;
+
     @RequestMapping(value = "customer_page", method = RequestMethod.GET)
     public String customerInfo() {
         logger.info(" 车主基本信息页面");
@@ -57,12 +63,15 @@ public class CustomerController {
     }
     @ResponseBody
     @RequestMapping(value = "customerInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(User user){
+    public ControllerResult infoInsert(User user, UserRole userRole, Role role){
         logger.info("信息添加");
         String customerId = UUIDUtil.uuid();
         user.setUserId(customerId);
+        userRole.setUserId(user.getUserId());
+        userRole.setRoleId(role.getRoleId());
         user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
         userService.insert(user);
+        userRoleService.insert(userRole);
         return ControllerResult.getSuccessResult("添加成功");
     }
 
@@ -74,15 +83,14 @@ public class CustomerController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(userService.count());
-        List<User> users = userService.queryByPager(pager);
+        List<User> users = userService.queryCustomerPager(pager);
         return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
     }
 
     @ResponseBody
     @RequestMapping(value = "customerInfo_update", method = RequestMethod.POST)
-    public ControllerResult info_update(User user, Company company){
+    public ControllerResult info_update(User user){
         logger.info("信息修改");
-        user.setCompanyId(company.getCompanyId());
         userService.update(user);
         return ControllerResult.getSuccessResult(" 修改成功");
     }

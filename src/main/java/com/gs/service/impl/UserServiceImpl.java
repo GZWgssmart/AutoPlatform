@@ -69,8 +69,20 @@ public class UserServiceImpl implements UserService {
 		return userDAO.countSystemAdmin();
 	}
 
+	public List<User> queryCustomerPager(Pager pager) {
+		return userDAO.queryCustomerPager(pager);
+	}
+
+	public List<User> queryPeoplePager(Pager pager) {
+		return userDAO.queryPeoplePager(pager);
+	}
+
 	public User queryLogin(User user) {
 		return userDAO.queryLogin(user);
+	}
+
+	public User queryByPhone(User user) {
+		return userDAO.queryByPhone(user);
 	}
 
 	public void insertAdmin(User user) {

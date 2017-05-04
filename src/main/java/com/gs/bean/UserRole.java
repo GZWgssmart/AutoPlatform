@@ -13,6 +13,8 @@ public class UserRole {
 	private String userId;
 	private String roleId;
 	private Date urCreatedTime;
+	private User user;
+	private Role role;
 
 	public String getUserRoleId(){
 		return this.userRoleId;
@@ -42,4 +44,19 @@ public class UserRole {
 		this.urCreatedTime=urCreatedTime;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
 }

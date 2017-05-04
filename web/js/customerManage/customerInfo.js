@@ -121,7 +121,6 @@ window.operateEvents = {
         selectGender.value = user.userGender;
         $("#form_datetime").val(formatterDate(user.userCreatedTime));
         $("#editModal").fill(user);
-        $('#editModalCompany').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
         validator("editModal");
         $("#myModal").modal('show');
         if(user.userStatus == 'Y'){
@@ -162,7 +161,6 @@ function showEditWin() {
         var gender = document.getElementById("usergender");
         gender.value = user.userGender;
         $("#editForm").fill(user);
-        $('#editCompany').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
 }

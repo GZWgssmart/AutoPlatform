@@ -29,6 +29,8 @@ public class User{
 	private String userStatus; // 用户状态
 
 	private Company company;
+	private UserRole userRole;
+	private Role role;
 
 	public String getUserId(){
 		return this.userId;
@@ -177,5 +179,21 @@ public class User{
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 }

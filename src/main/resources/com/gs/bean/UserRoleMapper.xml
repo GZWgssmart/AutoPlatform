@@ -5,12 +5,19 @@
 <mapper namespace="com.gs.dao.UserRoleDAO">
 
 	<resultMap id="userRoleResultMap" type="userRole">
+		<id property="userRoleId" column="userRoleId" />
+		<result property="userId" column="userId" />
+		<result property="roleId" column="roleId" />
+		<result property="urCreatedTime" column="urCreatedTime" />
 
 	</resultMap>
 
 	<insert id="insert"  parameterType="userRole">
 		<![CDATA[
-
+			INSERT INTO t_user_role
+				(userRoleId, userId, roleId, urCreatedTime)
+			VALUES
+				(uuid(), #{userId}, #{roleId}, now())
 		]]>
 	</insert>
 

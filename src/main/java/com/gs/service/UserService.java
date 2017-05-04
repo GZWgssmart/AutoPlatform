@@ -36,9 +36,19 @@ public interface UserService extends BaseService<String, User>{
     /*统计系统管理员的个数*/
     public int  countSystemAdmin();
 
-    /**登陆*/
+    /*分页查询所有车主*/
+    public List<User> queryCustomerPager(Pager pager);
+
+    /*分页查询所有员工*/
+    public List<User> queryPeoplePager(Pager pager);
+
+    /*登陆*/
     public User queryLogin(User user);
 
     /**添加管理员*/
     public void insertAdmin(User user);
+
+    /*根据手机号查询id*/
+    public User queryByPhone(User user);
+
 }

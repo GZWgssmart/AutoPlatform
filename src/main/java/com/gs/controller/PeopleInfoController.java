@@ -62,13 +62,12 @@ public class PeopleInfoController {
     }
     @ResponseBody
     @RequestMapping(value = "peopleInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(User user, Company company, Role role, UserRole userRole){
+    public ControllerResult infoInsert(User user, Company company, UserRole userRole){
         logger.info("信息添加");
         String peopleId = UUIDUtil.uuid();
         user.setUserId(peopleId);
         user.setCompanyId(company.getCompanyId());
         userRole.setUserId(user.getUserId());
-        userRole.setRoleId(role.getRoleId());
         user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
         userService.insert(user);
         return ControllerResult.getSuccessResult("添加成功");
@@ -82,7 +81,7 @@ public class PeopleInfoController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(userService.count());
-        List<User> users = userService.queryByPager(pager);
+        List<User> users = userService.queryPeoplePager(pager);
         return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
     }
 
