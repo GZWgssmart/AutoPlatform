@@ -50,6 +50,7 @@ public interface UserDAO extends BaseDAO<String, User>{
 
     /**添加管理员*/
     public void insertAdmin(User user);
+
     /*根据手机号查询id*/
-    public User queryByPhone(User user);
+    public User queryByPhone(String phone);
 }

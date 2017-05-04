@@ -49,6 +49,6 @@ public interface UserService extends BaseService<String, User>{
     public void insertAdmin(User user);
 
     /*根据手机号查询id*/
-    public User queryByPhone(User user);
+    public User queryByPhone(String phone);
 
 }

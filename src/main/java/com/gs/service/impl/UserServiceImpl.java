@@ -81,8 +81,8 @@ public class UserServiceImpl implements UserService {
 		return userDAO.queryLogin(user);
 	}
 
-	public User queryByPhone(User user) {
-		return userDAO.queryByPhone(user);
+	public User queryByPhone(String phone) {
+		return userDAO.queryByPhone(phone);
 	}
 
 	public void insertAdmin(User user) {
