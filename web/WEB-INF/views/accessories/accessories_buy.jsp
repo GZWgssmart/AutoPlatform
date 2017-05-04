@@ -17,6 +17,18 @@
           type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
 
+    <style type="text/css">
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+
 </head>
 <body>
 <div class="container" style="width: 100%;">
@@ -146,19 +158,19 @@
 
                             <div class="form-group">
                                 <label>数量：</label>
-                                <input type="text" name="accBuyCount" attr="accessoriesBuy.accBuyCount"
+                                <input type="number" name="accBuyCount" attr="accessoriesBuy.accBuyCount"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>单价：</label>
-                                <input type="text" name="accBuyPrice" attr="accessoriesBuy.accBuyPrice"
+                                <input type="number" name="accBuyPrice" attr="accessoriesBuy.accBuyPrice"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>折扣：</label>
-                                <input type="text" name="accBuyDiscount" attr="accessoriesBuy.accBuyDiscount"
+                                <input type="number" name="accBuyDiscount" attr="accessoriesBuy.accBuyDiscount"
                                        class="form-control"/>
                             </div>
 
@@ -176,15 +188,15 @@
 
                             <div class="form-group">
                                 <label>总价：</label>
-                                <input type="text" name="accBuyTotal" attr="accessoriesBuy.accBuyTotal"
+                                <input type="number" name="accBuyTotal" attr="accessoriesBuy.accBuyTotal"
                                        onfocus="autoCalculation(this)"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
-                                <input type="text" name="accBuyMoney" attr="accessoriesBuy.accBuyMoney"
-                                       onfocus="autoCalculation(this)"
+                                <input type="number" name="accBuyMoney" attr="accessoriesBuy.accBuyMoney"
+                                       onfocus="autoCalculation(this)" onkeyup="value=value.replace(/[^\d]/g,'') "
                                        class="form-control"/>
                             </div>
 
@@ -227,7 +239,7 @@
 
                             <div class="form-group">
                                 <label>计量单位：</label>
-                                <input type="text" name="accessories.accUnit" id="aAccUnit" attr="acc.accUnit"
+                                <input type="text" name="accUnit" id="aAccUnit" attr="acc.accUnit"
                                        class="form-control"/>
                             </div>
 
@@ -240,20 +252,20 @@
 
                             <div class="form-group">
                                 <label>数量：</label>
-                                <input type="text" name="accBuyCount" id="accBuyCount" attr="acc.accIdle"
+                                <input type="number" name="accBuyCount" id="accBuyCount" attr="acc.accIdle"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>单价：</label>
-                                <input type="text" name="accBuyPrice" id="accBuyPrice" attr="acc.accPrice"
+                                <input type="number" name="accBuyPrice" id="accBuyPrice" attr="acc.accPrice"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>折扣：</label>
-                                <input type="tel" name="accBuyDiscount" id="accBuyDiscount" title="如：7.8折是0.78、5折是0.5"
-                                       class="form-control"/>
+                                <input type="text" name="accBuyDiscount" id="accBuyDiscount" title="如：7.8折是0.78、5折是0.5"
+                                       class="form-control" placeholder="没打折可以不用输入"/>
                             </div>
 
                             <%--<div class="form-group">--%>
@@ -270,14 +282,14 @@
 
                             <div class="form-group">
                                 <label>总价：</label>
-                                <input type="text" name="accBuyTotal" id="accBuyTotal" onfocus="autoCalculation(this)"
-                                       class="form-control" placeholder="总价可自动计算"/>
+                                <input type="text" name="accBuyTotal" id="accBuyTotal" onfocus="autoCalculation(this)" readonly
+                                       class="form-control" placeholder="点击自动计算"/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
-                                <input type="text" name="accBuyMoney" id="accBuyMoney" onfocus="autoCalculation(this)"
-                                       class="form-control" placeholder="最终价可自动计算"/>
+                                <input type="text" name="accBuyMoney" id="accBuyMoney" onfocus="autoCalculation(this)" readonly
+                                       class="form-control" placeholder="点击自动计算"/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">

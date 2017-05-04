@@ -67,34 +67,38 @@ public class AccessoriesBuyController {
     private ControllerResult isAccAdd(AccessoriesBuy accessoriesBuy, @Param("state") String state) {
         logger.info("添加采购信息");
 
+        String accId = accessoriesBuy.getAccId();
+
         Accessories acc = accessoriesBuy.getAccessories();
-        AccessoriesBuy ac = accessoriesBuyService.queryById(accessoriesBuy.getAccId());
+
+        AccessoriesBuy ab = accessoriesBuyService.queryById(accId);
+        Accessories ac = accessoriesService.queryById(accId);
 
         if (state.equals("true")) {  // 如果为 true 库存添加
             logger.info("库存添加");
 
-            if (ac != null) {
+            if (ab == null) {
+                accessoriesBuy.setAccBuyCount(acc.getAccIdle() + accessoriesBuy.getAccBuyCount());
+                accessoriesBuy.setCompanyId(ac.getCompanyId());
+                accessoriesBuy.setAccUnit(ac.getAccUnit());
+
+                accessoriesBuyService.insert(accessoriesBuy);
+
+                return ControllerResult.getSuccessResult("添加成功");
+
+            } else if(ab.getAccId().equals(ac.getAccId())) {
                 return ControllerResult.getFailResult("不能重复添加同一条数据");
             }
-
-            accessoriesBuy.setAccUnit(acc.getAccUnit());
-            accessoriesBuyService.insert(accessoriesBuy);
-
-            return ControllerResult.getSuccessResult("添加成功");
 
         } else if (state.equals("false")) { // 如果为false采购添加
             logger.info("采购添加");
-
-            if (ac != null) {
-                return ControllerResult.getFailResult("不能重复添加同一条数据");
-            }
 
             acc.setAccId(UUIDUtil.uuid());
             acc.setAccName(accessoriesBuy.getAccessories().getAccName());
             acc.setAccUnit(accessoriesBuy.getAccUnit());
 
-            AccessoriesType accessoriesType = accessoriesBuy.getAccessories().getAccessoriesType();
-            accessoriesType.setAccTypeName(accessoriesBuy.getAccessories().getAccessoriesType().getAccTypeName());
+            AccessoriesType accessoriesType = acc.getAccessoriesType();
+            accessoriesType.setAccTypeName(acc.getAccessoriesType().getAccTypeName());
             accessoriesType.setAccTypeId(UUIDUtil.uuid());
 
             accessoriesBuy.setAccessories(acc);

@@ -1,5 +1,5 @@
 var isAcc = false;
-
+var count = 0;
 $(document).ready(function () {
     initDateTimePicker("form_datetime", "");
     initTable("cusTable", "/accessoriesBuy/pager");
@@ -71,14 +71,14 @@ function showEditWin() {
 /**更新数据 */
 function updateAccessoriesBuyInfo(formId) {
     $.post("/accessoriesBuy/update",
-        $("#editForm").serialize(),
+        $("#" + formId).serialize(),
         function (data) {
             if (data.result == "success") {
                 $('#editWin').modal('hide');
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
                 allBuys();
-                $(formId).data('bootstrapValidator').resetForm(true);
+                $("#" + formId).data('bootstrapValidator').resetForm(true);
             } else if (data.result == "fail") {
                 swal(data.message, "", "error");
             }
@@ -88,7 +88,7 @@ function updateAccessoriesBuyInfo(formId) {
 /**添加采购信息 */
 function addAccessoriesBuyInfo(formId) {
     $.post("/accessoriesBuy/isAccAdd?state=" + isAcc,
-        $("#addForm").serialize(),
+        $("#" + formId).serialize(),
         function (data) {
             if (data.result == "success") {
                 $('#addWin').modal('hide');
@@ -97,6 +97,9 @@ function addAccessoriesBuyInfo(formId) {
                 $("input[type=reset]").trigger("click");
                 $(formId).data('bootstrapValidator').resetForm(true);
             } else if (data.result == "fail") {
+                destoryValidator(formId, "addForm");
+                clearTempData();
+                validator(formId);
                 swal(data.message, "", "error");
             }
         }, "json");
@@ -273,7 +276,7 @@ function validator(formId) {
             accBuyCount: {
                 validators: {
                     notEmpty: {
-                        message: '不可以为空'
+                        message: '不可以为空',
                     },
                     regexp: {
                         regexp: /^[0-9]+$/,
@@ -348,9 +351,9 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                addAccessoriesBuyInfo("#addForm");
+                addAccessoriesBuyInfo(formId);
             } else if (formId == "editForm") {
-                updateAccessoriesBuyInfo("#editForm");
+                updateAccessoriesBuyInfo(formId);
             }
         })
 }
@@ -385,7 +388,7 @@ function showAccEditWin() {
 function autoCalculation(iId) {
     var id = iId.id;
     console.log(id);
-    var count = $("#accBuyCount").val();
+    count = $("#accBuyCount").val();
     var price = $("#accBuyPrice").val();
     var discount = $("#accBuyDiscount").val();
     var result = 0;
@@ -401,6 +404,9 @@ function autoCalculation(iId) {
                     money = rs * discount;
                     $("#" + id).val(money);
                 }
+            } else if (discount == "0" || discount == "") {
+                var rs = $("#accBuyTotal").val();
+                $("#" + id).val(rs);
             }
         }
     }
