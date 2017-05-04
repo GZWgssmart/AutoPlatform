@@ -97,7 +97,7 @@
 
 	<select id="queryById" parameterType="string" resultType="accessories">
 		<![CDATA[
-
+			select * from t_accessories where accId = #{id}
         ]]>
 	</select>
 
