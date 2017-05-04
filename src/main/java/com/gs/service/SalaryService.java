@@ -2,6 +2,8 @@ package com.gs.service;
 
 import com.gs.bean.Salary;
 
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -11,4 +13,6 @@ import com.gs.bean.Salary;
 public interface SalaryService extends BaseService<String, Salary>{
 
     public Salary queryByUserId(String userId);
+
+    public boolean saveBatchInsert(List<Salary> salarys);
 }

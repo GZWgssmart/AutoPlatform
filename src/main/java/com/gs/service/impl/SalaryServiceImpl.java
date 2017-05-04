@@ -7,6 +7,8 @@ import java.util.List;
 import com.gs.dao.SalaryDAO;
 import com.gs.service.SalaryService;
 import com.gs.common.bean.Pager;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -39,5 +41,16 @@ public class SalaryServiceImpl implements SalaryService {
 
 	public Salary queryByUserId(String userId) {
 		return salaryDAO.queryByUserId(userId);
+	}
+
+
+	@Transactional
+	public boolean saveBatchInsert(List<Salary> salaries){
+		boolean flag = false;
+		if(salaries != null){
+			salaryDAO.addInsert(salaries);
+			flag = true;
+		}
+		return flag;
 	}
 }

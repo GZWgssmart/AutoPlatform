@@ -25,22 +25,22 @@
 </head>
 <body>
 <div class="container">
-    <div class="form-group" style="margin-top:30px;">
-        <button onclick="showSearchForm(1)" id="showButton1" type="button" class="btn btn-primary">
-            <i class="glyphicon glyphicon-search"></i> 按年查询
-        </button>
-        <button onclick="showSearchForm(2)" id="showButton2" type="button" class="btn btn-primary">
-            <i class="glyphicon glyphicon-search"></i> 按季度查询
-        </button>
-        <button onclick="showSearchForm(3)" id="showButton3" type="button" class="btn btn-primary">
-            <i class="glyphicon glyphicon-search"></i> 按月查询
-        </button>
-        <button onclick="showSearchForm(4)" id="showButton4" type="button" class="btn btn-primary">
-            <i class="glyphicon glyphicon-search"></i> 按周查询
-        </button>
-        <button onclick="showSearchForm(5)" id="showButton5" type="button" class="btn btn-primary">
-            <i class="glyphicon glyphicon-search"></i> 按日查询
-        </button>
+    <div class="btn-group" data-toggle="buttons" style="margin-top:20px;">
+        <label class="btn btn-primary" id="showButton1" onclick="showSearchForm(1)">
+            <input type="checkbox" autocomplete="off"> 按年查询
+        </label>
+        <label class="btn btn-primary" onclick="showSearchForm(2)" id="showButton2">
+            <input type="checkbox" autocomplete="off"> 按季度查询
+        </label>
+        <label class="btn btn-primary" onclick="showSearchForm(3)" id="showButton3">
+            <input type="checkbox" autocomplete="off"> 按月查询
+        </label>
+        <label class="btn btn-primary" onclick="showSearchForm(4)" id="showButton4">
+            <input type="checkbox" autocomplete="off"> 按周查询
+        </label>
+        <label class="btn btn-primary" onclick="showSearchForm(5)" id="showButton5">
+            <input type="checkbox" autocomplete="off"> 按日查询
+        </label>
     </div>
 </div>
 <div class="container">

@@ -10,7 +10,7 @@ $(document).ready(function () {
     initDateTimePicker("datatimepicker","salaryTime");
     destoryValidator("editWin","editForm");
     destoryValidator("addWin","addForm");
-
+    destoryValidator("importSalaryWin","importSalaryForm");
 });
 
 /** 编辑数据 */
@@ -88,6 +88,10 @@ function addUserName(){
     }
 }
 
+function showImport(){
+    fileValidator();
+    $("#importSalaryWin").modal("show");
+}
 function validator(formId) {
     $("#addButton").removeAttr("disabled");
     $("#editButton").removeAttr("disabled");
@@ -98,7 +102,7 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            userId: {
+            userName: {
                 message: '验证失败',
                 validators: {
                     notEmpty: {
@@ -157,3 +161,64 @@ function validator(formId) {
 
 }
 
+
+function importSalary() {
+    $("#importSalaryForm").data('bootstrapValidator').validate();
+    if ($("#importSalaryForm").data('bootstrapValidator').isValid()) {
+        $("#importButton").attr("disabled","disabled");
+    } else {
+        $("#importButton").removeAttr("disabled");
+    }
+}
+
+function fileValidator() {
+    $("#importButton").removeAttr("disabled");
+    $('#importSalaryForm').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            fileSalary: {
+                message: '验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '请选择文件'
+                    },
+                    regexp: {
+                        regexp: /\.(?:xls|xlsx)$/,
+                        message: '文件格式错误,请导入excel文件'
+                    }
+                }
+
+            }
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            $.ajaxFileUpload({
+                    url:'/salary/readExcel',             //需要链接到服务器地址
+                    secureuri:false,
+                    fileElementId:'file',                   //文件选择框的id属性
+                    dataType: 'json',                             //服务器返回的格式，可以是json
+                    success: function (data, status) {
+                        if (data.result == "success") {
+                            $('#importSalaryWin').modal('hide');
+                            swal(data.message, "", "success");
+                            $('#cusTable').bootstrapTable('refresh');
+                            $('#importSalaryForm').data('bootstrapValidator').resetForm(true);
+                        } else if (data.result == "fail") {
+                            $('#importSalaryWin').modal('hide');
+                            swal(data.message, "内容不匹配", "error");
+                            $('#importSalaryForm').data('bootstrapValidator').resetForm(true);
+                        }
+                    },
+                    error: function (data,status) {
+
+                    }
+                }
+            );
+        })
+
+}

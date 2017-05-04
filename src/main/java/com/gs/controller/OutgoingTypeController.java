@@ -92,6 +92,9 @@ public class OutgoingTypeController {
         }else if(status.equals("N")){
             outgoingTypes = outgoingTypeService.queryPagerStatus(status,pager);
             pager.setTotalRecords(outgoingTypeService.countStatus(status));
+        }else if(status.equals("ALL")){
+            pager.setTotalRecords(outgoingTypeService.count());
+            outgoingTypes = outgoingTypeService.queryByPager(pager);
         }
         return new Pager4EasyUI<OutgoingType>(pager.getTotalRecords(), outgoingTypes);
     }

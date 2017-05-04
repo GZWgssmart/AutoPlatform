@@ -93,6 +93,9 @@ public class IncomingTypeController {
         }else if(status.equals("N")){
             incomingTypes = incomingTypeService.queryPagerStatus(status,pager);
             pager.setTotalRecords(incomingTypeService.countStatus(status));
+        }else if(status.equals("ALL")){
+            pager.setTotalRecords(incomingTypeService.count());
+            incomingTypes = incomingTypeService.queryByPager(pager);
         }
         return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
     }

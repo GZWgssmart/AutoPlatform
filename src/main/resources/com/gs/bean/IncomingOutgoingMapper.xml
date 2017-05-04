@@ -32,7 +32,7 @@
 	<insert id="insert"  parameterType="incomingOutgoing">
 		<![CDATA[
 			insert into t_incoming_outgoing(inOutId, inTypeId,outTypeId,inOutMoney,inOutCreatedUser,inOutCreatedTime,inOutStatus)
-			 values(uuid(), #{inTypeId},#{outTypeId},#{inOutMoney},#{inOutCreatedUser},now(),#{inOutStatus})
+			 values(uuid(), #{inTypeId},#{outTypeId},#{inOutMoney},#{inOutCreatedUser},now(),'Y')
 		]]>
 	</insert>
 

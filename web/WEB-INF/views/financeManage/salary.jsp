@@ -63,10 +63,10 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
-            <a><button onclick="" type="button"  class="btn btn-default" >
+            <a><button onclick="showImport()" type="button"  class="btn btn-default" >
                 <i class="glyphicon glyphicon-floppy-save"></i> 导入
             </button></a>
-            <a><button onclick="" type="button"  class="btn btn-default">
+            <a onclick="location.href='/salary/export'" href="javascript:;"><button type="button"  class="btn btn-default">
                 <i class="glyphicon glyphicon-floppy-open"></i> 导出
             </button></a>
         </div>
@@ -129,6 +129,36 @@
                                        value="修改">
                                 </input>
                                 <input type="reset" name="reset" style="display: none;"/>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="importSalaryWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">导入工资</h3>
+                        <form id="importSalaryForm" enctype="multipart/form-data" method="post">
+                            <div class="form-group">
+                                <label class="control-label">选择文件：</label>
+                                <input type="file" name="fileSalary" id="file" class="form-control"/>
+                            </div>
+
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" onclick="importSalary()" id="importButton" class="btn btn-primary"
+                                       value="导入">
+                                </input>
                             </div>
                         </form>
                     </div>
@@ -247,9 +277,9 @@
                         </table>
                         <div class="modal-footer" style="overflow:hidden;">
                             <button type="button" class="btn btn-default"
-                                    data-dismiss="modal">关闭
+                                    data-dismiss="modal" style="margin-top: 15px;">关闭
                             </button>
-                            <input type="button" onclick="addUserName()" class="btn btn-primary" value="选择">
+                            <input type="button" style="margin-top: 15px;" onclick="addUserName()" class="btn btn-primary" value="选择">
                             </input>
                         </div>
                     </div>
@@ -270,6 +300,7 @@
 <script src="<%=path %>/js/jquery.formFill.js"></script>
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="<%=path %>/js/ajaxfileupload.js"></script>
 <script src="<%=path %>/js/financeManage/salary.js"></script>
 <script src="<%=path%>/js/main.js"></script>
 

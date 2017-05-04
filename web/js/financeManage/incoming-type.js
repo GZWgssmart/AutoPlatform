@@ -75,17 +75,6 @@ window.operateEvents = {
          }
 }
 
-function searchStatus(status){
-    if(status == 'Y'){
-        var status = 'Y';
-        initTable("cusTable", "/incomingType/query_status?status="+status);
-    }else if(status == 'N'){
-        var status = 'N';
-        initTable("cusTable", "/incomingType/query_status?status="+status);
-    }else if(status == 'ALL'){
-        initTable("cusTable", "/incomingType/query_pager");
-    }
-}
 function validator(formId) {
     $("#addButton").removeAttr("disabled");
     $("#editButton").removeAttr("disabled");

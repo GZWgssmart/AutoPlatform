@@ -26,10 +26,21 @@
 		]]>
 	</insert>
 
-	<insert id="batchInsert"  parameterType="list">
+	<insert id="batchInsert"  parameterType="salary">
 		<![CDATA[
-
 		]]>
+	</insert>
+
+	<insert id="addInsert">
+		<selectKey resultType="int" keyProperty="salaryId" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into t_salary
+		values
+		<foreach collection="list" item="item" index="index" separator="," >
+			(uuid(),#{item.userId},#{item.prizeSalary},#{item.minusSalary},
+			#{item.totalSalary},#{item.salaryDes},#{item.salaryTime},now())
+		</foreach>
 	</insert>
 
 	<delete id="delete" parameterType="salary">
@@ -67,8 +78,9 @@
 
 	<select id="queryAll" resultMap="salaryResultMap">
 		<![CDATA[
-
+			select s.*,u.userId as user_id,u.userName from t_salary s ,t_user u where s.userId = u.userId
 		]]>
+		order by s.salaryCreatedTime Desc
 	</select>
 
 	<select id="queryByStatus" resultMap="salaryResultMap" parameterType="string">
