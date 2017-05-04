@@ -145,9 +145,7 @@
 			LEFT JOIN t_company c on u.companyId = c.companyId
 			LEFT JOIN t_user_role ur  on ur.userId = u.userId
 			LEFT JOIN t_role r on r.roleId = ur.roleId
-			where r.roleId = 'f0f999ab-2497-11e7-8420-2c600cb87d10'
-			or r.roleId = 'ad381c0d-2497-11e7-8420-2c600cb87d10'
-			or (u.companyId = c.companyId and r.roleId = ur.roleId)
+			where r.roleId in(select roleId from t_role where roleName like concat('%','Admin', '%'))
 			order by userCreatedTime Desc
 		]]>limit #{beginIndex}, #{pageSize}
 	</select>
@@ -169,8 +167,7 @@
 			LEFT JOIN t_company c on u.companyId = c.companyId
 			LEFT JOIN t_user_role ur  on ur.userId = u.userId
 			LEFT JOIN t_role r on r.roleId = ur.roleId
-			where r.roleId = 'f0f999ab-2497-11e7-8420-2c600cb87d10'
-			or r.roleId = 'ad381c0d-2497-11e7-8420-2c600cb87d10'
+			where r.roleName like concat('system','%','Admin')
 			order by userCreatedTime Desc
 		]]>limit #{beginIndex}, #{pageSize}
 	</select>
@@ -187,9 +184,7 @@
 			LEFT JOIN t_company c on u.companyId = c.companyId
 			LEFT JOIN t_user_role ur  on ur.userId = u.userId
 			LEFT JOIN t_role r on r.roleId = ur.roleId
-			where r.roleId = 'f0f999ab-2497-11e7-8420-2c600cb87d10'
-			or r.roleId = 'ad381c0d-2497-11e7-8420-2c600cb87d10'
-			or (u.companyId = c.companyId and r.roleId = ur.roleId)
+			where r.roleId in(select roleId from t_role where roleName like concat('%','Admin', '%'))
 		]]>
 	</select>
 
@@ -209,8 +204,7 @@
 			LEFT JOIN t_company c on u.companyId = c.companyId
 			LEFT JOIN t_user_role ur  on ur.userId = u.userId
 			LEFT JOIN t_role r on r.roleId = ur.roleId
-			where r.roleId = 'f0f999ab-2497-11e7-8420-2c600cb87d10'
-			or r.roleId = 'ad381c0d-2497-11e7-8420-2c600cb87d10'
+			where r.roleName like concat('system','%','Admin')
 		]]>
 	</select>
 
