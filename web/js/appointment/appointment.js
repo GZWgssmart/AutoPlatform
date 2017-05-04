@@ -2,10 +2,10 @@ var appointment;
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/appointment/query_pager?status=ALL");
-    initSelect2("car_brand", "请选择品牌", "/carBrand/car_brand_all", "540");
-    initSelect2("car_color", "请选择颜色", "/carColor/car_color_all", "540");
-    initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "540");
-    initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
+    initSelect2("car_brand", "请选择品牌", "/carBrand/car_brand_all", "565");
+    initSelect2("car_color", "请选择颜色", "/carColor/car_color_all", "565");
+    initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "565");
+    initSelect2("company", "请选择汽修公司", "/company/company_all", "565");
     initDateTimePicker("datetimepicker", "arriveTime");
     destoryValidator("addWin","addForm");
     destoryValidator("editWin","editForm");
@@ -40,6 +40,7 @@ function showAddWin() {
     $('#addCarColor').html('').trigger("change");
     $('#addCarModel').html('').trigger("change");
     $('#addCarPlate').html('').trigger("change");
+    $('#addCompany').html('').trigger("change");
     $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }

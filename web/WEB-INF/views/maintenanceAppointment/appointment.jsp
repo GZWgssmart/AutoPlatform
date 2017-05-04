@@ -271,6 +271,12 @@
                             </div>
 
                             <div class="form-group">
+                                <label>请选择汽修公司：</label>
+                                <select id="addCompany" class="js-example-tags form-control company" name="CompanyId">
+                                </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label>保养&nbsp;|&nbsp;维修：</label>
                                 <select id="addMaintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
                                     <option value="保养">保养</option>
