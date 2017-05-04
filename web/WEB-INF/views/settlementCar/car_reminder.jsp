@@ -224,12 +224,14 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">提车提醒</h3>
                         <form role="form" id="remindForm">
-                            <input type="hidden" id="remindUserId" name="checkin.userId" class="form-control"/>
+                            <input type="hidden" id="remindUserId" name="userId" class="form-control"/>
+                            <input type="hidden" id="remindRecordId" name="recordId" class="form-control"/>
+                            <input type="text" id="remindCarPlate" name="carPlate" class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">提醒方式：</label>
                                 <select class="js-example-tags form-control remindMethod" name="remindMethod">
-                                    <option value="现金">短信</option>
-                                    <option value="支付宝">邮箱</option>
+                                    <option value="email">邮箱</option>
+                                    <option value="message">短信</option>
                                 </select>
                             </div>
                             <div class="form-group">

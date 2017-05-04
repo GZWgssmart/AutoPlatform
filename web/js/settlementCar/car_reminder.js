@@ -100,6 +100,8 @@ function showRemindWin() {
         var ids = "";
         var flag = true;
         var lastSpeedStatus = "";
+        var recordIds = "";
+        var carPlate = "";
         for (var i = 0; i < len; i++) {
             var record = selectRow[i];
             lastSpeedStatus = record.speedStatus;
@@ -112,12 +114,19 @@ function showRemindWin() {
             }
             if (ids == "") {
                 ids = record.checkin.userId;
+                recordIds = record.recordId;
+                carPlate = record.checkin.carPlate;
             } else {
                 ids += "," + record.checkin.userId;
+                recordIds += "," + record.recordId;
+                carPlate += "," + record.checkin.carPlate;
             }
+
         }
         if (flag) {
             $("#remindUserId").val(ids);
+            $("#remindRecordId").val(recordIds);
+            $("#remindCarPlate").val(carPlate);
             $("#remindWin").modal('show');
         } else {
             swal('提醒失败', "只能选择未提醒的记录", "error");
@@ -203,7 +212,7 @@ function validator(formId) {
                 formSubmit("/bill/add", formId, "addWin");
 
             } else if (formId == "remindForm") {
-
+                formSubmit("/record/send_remind", formId, "remindWin");
             }
 
 
