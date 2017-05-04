@@ -21,7 +21,7 @@ $(document).ready(function () {
             }
         }
     });
-    
+
     disableSwitch();
     destoryValidator("addWin", "addForm");
     destoryValidator("accWin", "accForm");
@@ -295,8 +295,8 @@ function validator(formId) {
             accBuyDiscount: {
                 validators: {
                     regexp: {
-                        regexp: /^\d+(\.\d+)?$/,
-                        message: '折扣只能是数字'
+                        regexp: /^(\d(\.\d)?|10)$/,
+                        message: '请输入正确的折扣'
                     }
                 }
             },
@@ -380,4 +380,28 @@ function showAccEditWin() {
     clearTempData();
     validator("editForm");
     $("#editWin").modal('show');
+}
+
+function autoCalculation(iId) {
+    var id = iId.id;
+    console.log(id);
+    var count = $("#accBuyCount").val();
+    var price = $("#accBuyPrice").val();
+    var discount = $("#accBuyDiscount").val();
+    var result = 0;
+    var money = 0;
+    if (count != null && count != "" && price != null && price != "") {
+        if (id == "accBuyTotal") {
+            result = count * price;
+            $("#" + id).val(result);
+        } else if (id == "accBuyMoney") {
+            if (discount != null && discount != "") {
+                var rs = $("#accBuyTotal").val();
+                if (rs != null && rs != "") {
+                    money = rs * discount;
+                    $("#" + id).val(money);
+                }
+            }
+        }
+    }
 }

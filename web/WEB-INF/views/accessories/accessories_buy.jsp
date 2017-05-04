@@ -177,12 +177,14 @@
                             <div class="form-group">
                                 <label>总价：</label>
                                 <input type="text" name="accBuyTotal" attr="accessoriesBuy.accBuyTotal"
+                                       onfocus="autoCalculation(this)"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
                                 <input type="text" name="accBuyMoney" attr="accessoriesBuy.accBuyMoney"
+                                       onfocus="autoCalculation(this)"
                                        class="form-control"/>
                             </div>
 
@@ -212,6 +214,7 @@
                         <h3 class="m-t-none m-b">添加配件采购信息</h3>
                         <form role="form" id="addForm">
                             <input type="hidden" attr="acc.accId" name="accId"/>
+                            <input type="hidden" attr="acc.accId" name="accessories.accId"/>
                             <div class="form-group" style="width: auto; display: inherit;">
                                 <label>是否从库存中添加：</label>
                                 <input type="checkbox" id="isAcc" name="isAcc">
@@ -224,19 +227,20 @@
 
                             <div class="form-group">
                                 <label>计量单位：</label>
-                                <input type="text" name="accUnit" id="aAccUnit" attr="acc.accUnit"
+                                <input type="text" name="accessories.accUnit" id="aAccUnit" attr="acc.accUnit"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>类别：</label>
                                 <input type="text" name="accessories.accessoriesType.accTypeName" id="accTypeName"
+                                       attr="acc.accessoriesType.accTypeName"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>数量：</label>
-                                <input type="text" name="accBuyCount" id="accBuyCount" attr="acc.accTotal"
+                                <input type="text" name="accBuyCount" id="accBuyCount" attr="acc.accIdle"
                                        class="form-control"/>
                             </div>
 
@@ -248,7 +252,8 @@
 
                             <div class="form-group">
                                 <label>折扣：</label>
-                                <input type="text" name="accBuyDiscount" id="accBuyDiscount" class="form-control"/>
+                                <input type="tel" name="accBuyDiscount" id="accBuyDiscount" title="如：7.8折是0.78、5折是0.5"
+                                       class="form-control"/>
                             </div>
 
                             <%--<div class="form-group">--%>
@@ -265,12 +270,14 @@
 
                             <div class="form-group">
                                 <label>总价：</label>
-                                <input type="text" name="accBuyTotal" id="accBuyTotal" class="form-control"/>
+                                <input type="text" name="accBuyTotal" id="accBuyTotal" onfocus="autoCalculation(this)"
+                                       class="form-control" placeholder="总价可自动计算"/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
-                                <input type="text" name="accBuyMoney" id="accBuyMoney" class="form-control"/>
+                                <input type="text" name="accBuyMoney" id="accBuyMoney" onfocus="autoCalculation(this)"
+                                       class="form-control" placeholder="最终价可自动计算"/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
@@ -328,7 +335,7 @@
                                     <th data-field="accIdle">
                                         可用数量
                                     </th>
-                                    <th data-field="acdPrice">
+                                    <th data-field="accSalePrice">
                                         售价
                                     </th>
                                     <th data-field="accUsedTime" data-formatter="formatterDate">
@@ -337,19 +344,19 @@
                                     <th data-field="accBuyedTime" data-formatter="formatterDate">
                                         最近一次购买时间
                                     </th>
-                                    <th data-field="supplyId">
-                                        供应商
+                                    <th data-field="supply.supplyName">
+                                        配件供应商
                                     </th>
                                     <th data-field="accCreatedTime" data-formatter="formatterDate">
                                         创建时间
                                     </th>
-                                    <th data-field="accTypeId">
+                                    <th data-field="accessoriesType.accTypeName">
                                         所属分类
                                     </th>
-                                    <th data-field="companyId">
+                                    <th data-field="company.companyName">
                                         所属公司
                                     </th>
-                                    <th data-field="accStatus">
+                                    <th data-field="accStatus" data-formatter="status">
                                         状态
                                     </th>
                                 </tr>

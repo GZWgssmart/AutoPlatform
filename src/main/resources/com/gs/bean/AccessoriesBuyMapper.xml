@@ -102,12 +102,12 @@
 
     <select id="query" parameterType="accessoriesBuy" resultType="accessoriesBuy">
 		<![CDATA[
-
+        select * from t_accessories_buy
         ]]>
 	</select>
 
     <select id="queryById" parameterType="string" resultType="accessoriesBuy">
-		select * from auto_platform.t_accessories_buy where accBuyId = #{id}
+		select * from auto_platform.t_accessories_buy where accId = #{id}
 	</select>
 
     <select id="queryByPager" resultType="list" resultMap="accessoriesBuyResultMap" parameterType="com.gs.common.bean.Pager">

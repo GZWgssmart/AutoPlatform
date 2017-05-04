@@ -68,18 +68,26 @@ public class AccessoriesBuyController {
         logger.info("添加采购信息");
 
         Accessories acc = accessoriesBuy.getAccessories();
+        AccessoriesBuy ac = accessoriesBuyService.queryById(accessoriesBuy.getAccId());
 
         if (state.equals("true")) {  // 如果为 true 库存添加
             logger.info("库存添加");
-            System.out.println("库存添加");
-            acc.setAccName(accessoriesBuy.getAccessories().getAccName());
-            accessoriesBuy.setAccId(accessoriesBuy.getAccId());
+
+            if (ac != null) {
+                return ControllerResult.getFailResult("不能重复添加同一条数据");
+            }
+
+            accessoriesBuy.setAccUnit(acc.getAccUnit());
             accessoriesBuyService.insert(accessoriesBuy);
-            accessoriesService.insert(acc);
+
             return ControllerResult.getSuccessResult("添加成功");
+
         } else if (state.equals("false")) { // 如果为false采购添加
             logger.info("采购添加");
-            System.out.println("采购添加");
+
+            if (ac != null) {
+                return ControllerResult.getFailResult("不能重复添加同一条数据");
+            }
 
             acc.setAccId(UUIDUtil.uuid());
             acc.setAccName(accessoriesBuy.getAccessories().getAccName());
