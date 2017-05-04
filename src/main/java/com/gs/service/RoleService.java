@@ -14,4 +14,7 @@ public interface RoleService extends BaseService<String, Role>{
 
     /**查询除了系统超级管理员之外的管理员*/
     public List<Role> queryCAdminAndSOAdmin();
+
+    /**根据roleName去查询*/
+    public Role queryByName(String roleName);
 }

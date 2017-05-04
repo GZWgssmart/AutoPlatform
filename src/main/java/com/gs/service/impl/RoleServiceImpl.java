@@ -40,4 +40,8 @@ public class RoleServiceImpl implements RoleService {
 	public List<Role> queryCAdminAndSOAdmin() {
 		return roleDAO.queryCAdminAndSOAdmin();
 	}
+
+	public Role queryByName(String roleName) {
+		return roleDAO.queryByName(roleName);
+	}
 }

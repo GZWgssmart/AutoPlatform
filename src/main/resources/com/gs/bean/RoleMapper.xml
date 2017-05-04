@@ -73,6 +73,12 @@
 		]]>
 	</select>
 
+	<select id="queryByName" parameterType="string" resultType="role">
+		<![CDATA[
+			select * from t_role where roleName = #{roleName}
+		]]>
+	</select>
+
 	<select id="queryByPager" resultType="list" resultMap="roleResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 			SELECT * FROM t_role limit #{beginIndex}, #{pageSize}
