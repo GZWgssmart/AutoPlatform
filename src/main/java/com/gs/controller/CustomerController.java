@@ -12,6 +12,7 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.FileUtil;
 import com.gs.common.util.UUIDUtil;
+import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -54,6 +55,10 @@ public class CustomerController {
     private UserService userService;
 
     @Resource
+    private RoleService roleService;
+
+
+    @Resource
     private UserRoleService userRoleService;
 
     @RequestMapping(value = "customer_page", method = RequestMethod.GET)
@@ -63,11 +68,12 @@ public class CustomerController {
     }
     @ResponseBody
     @RequestMapping(value = "customerInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(User user, UserRole userRole, Role role){
+    public ControllerResult infoInsert(User user, UserRole userRole, HttpServletRequest request){
         logger.info("信息添加");
         String customerId = UUIDUtil.uuid();
         user.setUserId(customerId);
         userRole.setUserId(user.getUserId());
+        Role role = roleService.queryByName("car-owner");
         userRole.setRoleId(role.getRoleId());
         user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
         userService.insert(user);
@@ -89,7 +95,7 @@ public class CustomerController {
 
     @ResponseBody
     @RequestMapping(value = "customerInfo_update", method = RequestMethod.POST)
-    public ControllerResult info_update(User user){
+    public ControllerResult info_update(User user, Role role){
         logger.info("信息修改");
         userService.update(user);
         return ControllerResult.getSuccessResult(" 修改成功");

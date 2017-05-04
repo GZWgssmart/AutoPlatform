@@ -234,7 +234,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h4 class="m-t-none m-b">管理员个人信息</h4>
+                        <h4 class="m-t-none m-b">个人信息</h4>
                         <div class="form_info">
                             <form role="form" method="post" id="editModal" class="form_form" onkeydown="if(event.keyCode==13){return false;}" enctype="multipart/form-data">
                                 <input type="hidden" name="userId" attr="user.userId" />
@@ -336,7 +336,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">所属角色：</label>
-                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled"/>
+                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="role"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">当前状态：</label>

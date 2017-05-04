@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface SalaryDAO extends BaseDAO<String, Salary>{
 
-    public Salary queryByUserId(@Param("pager")Pager pager,@Param("userId") String userId);
+    public List<Salary> queryByUserId(@Param("pager")Pager pager,@Param("userId") String userId);
     public int countByUserId(String userId);
 
     public void addInsert(List<Salary> salarys);

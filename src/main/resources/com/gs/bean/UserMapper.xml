@@ -149,15 +149,19 @@
 			SELECT * FROM t_user u
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
 			INNER JOIN t_role r ON r.roleId = ur.roleId
-			where r.roleDes = '车主'
-			order by userCreatedTime Desc
+			WHERE r.roleDes = '车主'
+			ORDER BY userCreatedTime Desc
 		]]>limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="queryPeoplePager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			SELECT u.*, c.companyId, c.companyName FROM t_user u,t_company c where 1=1 or c.companyId = u.companyId
-				order by userCreatedTime Desc, u.companyId
+			SELECT * FROM t_user u
+			INNER JOIN t_company c ON u.companyId = c.companyId
+			INNER JOIN t_user_role ur ON ur.userId = u.userId
+			INNER JOIN t_role r ON r.roleId = ur.roleId
+			WHERE r.roleDes = '汽修普通员工'
+			ORDER BY userCreatedTime Desc
 		]]>limit #{beginIndex}, #{pageSize}
 	</select>
 

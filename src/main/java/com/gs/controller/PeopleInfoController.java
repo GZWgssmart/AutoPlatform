@@ -52,6 +52,9 @@ public class PeopleInfoController {
     private UserService userService;
 
     @Resource
+    private UserRoleService userRoleService;
+
+    @Resource
     private RoleService roleService;
 
 
@@ -67,8 +70,11 @@ public class PeopleInfoController {
         String peopleId = UUIDUtil.uuid();
         user.setUserId(peopleId);
         user.setCompanyId(company.getCompanyId());
+        Role role = roleService.queryByName("emp");
         userRole.setUserId(user.getUserId());
+        userRole.setRoleId(role.getRoleId());
         user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
+        userRoleService.insert(userRole);
         userService.insert(user);
         return ControllerResult.getSuccessResult("添加成功");
     }

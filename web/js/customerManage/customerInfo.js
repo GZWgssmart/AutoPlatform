@@ -119,6 +119,7 @@ window.operateEvents = {
         var user = row;
         var selectGender = document.getElementById("gender");
         selectGender.value = user.userGender;
+        $("#role").val(row.role.roleDes);
         $("#form_datetime").val(formatterDate(user.userCreatedTime));
         $("#editModal").fill(user);
         validator("editModal");

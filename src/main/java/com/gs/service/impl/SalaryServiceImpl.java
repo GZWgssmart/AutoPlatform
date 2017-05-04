@@ -39,7 +39,7 @@ public class SalaryServiceImpl implements SalaryService {
 	public int inactive(String id) { return salaryDAO.inactive(id); }
 	public int active(String id) { return salaryDAO.active(id); }
 
-	public Salary queryByUserId(Pager pager,String userId) {
+	public List<Salary> queryByUserId(Pager pager,String userId) {
 		return salaryDAO.queryByUserId(pager,userId);
 	}
 
