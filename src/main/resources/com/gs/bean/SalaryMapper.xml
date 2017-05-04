@@ -101,9 +101,9 @@
 		]]>
 	</select>
 
-	<select id="queryByUserId" parameterType="string" resultType="salary">
+	<select id="queryByUserId" parameterType="string" resultMap="salaryResultMap">
 		<![CDATA[
-			select * from t_salary where userId = #{userId}
+			select * from t_salary where userId = #{userId} order by salaryCreatedTime Desc
 		]]>
 	</select>
 
