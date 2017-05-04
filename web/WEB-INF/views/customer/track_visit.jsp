@@ -130,10 +130,6 @@
                                 <label class="control-label">回访评分：</label>
                                 <input type="text" id="serviceEvaluate1" name="serviceEvaluate" class="form-control"/>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label">回访客服：</label>
-                                <input  type="text" id="addAdmin1" class="form-control visit_admin" name="trackUser"/>
-                            </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error" style="color: #ff0000;"></span>
                                 <br/>

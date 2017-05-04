@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 /**添加车主*/
 function showCustomer(){
-    initTableNotTollbar("customerTable", "/record/pager_track");
+    initTableNotTollbar("customerTable", "/record/pager_message");
     $("#customerWin").modal('show');
 }
 

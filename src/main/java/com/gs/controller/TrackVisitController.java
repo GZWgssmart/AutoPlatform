@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -59,9 +60,10 @@ public class TrackVisitController {
 
     @ResponseBody
     @RequestMapping(value="add_track", method=RequestMethod.POST)
-    public ControllerResult trackAdd(TrackList trackList){
+    public ControllerResult trackAdd(TrackList trackList,HttpSession session){
         logger.info("添加回访");
-        trackList.setTrackUser("c9179fd3-84d2-42ba-b24d-6ed444c838b5");
+        User user = (User) session.getAttribute("user");
+        trackList.setTrackUser(user.getUserId());
         trackListService.insert(trackList);
         Checkin checkin = checkinService.queryByTrackStatus(trackList.getUserId());
         maintainRecordService.updateTrackStatus(checkin.getCheckinId());

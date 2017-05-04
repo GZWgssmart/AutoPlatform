@@ -124,5 +124,12 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.queryPagerBySpeedStatus(speedStatus, pager);
     }
 
+    public int countByRecordStatus() {
+        return maintainRecordDAO.countByRecordStatus();
+    }
+    public List<MaintainRecord> queryPagerByMessage(Pager pager) {
+        return maintainRecordDAO.queryPagerByMessage(pager);
+    }
+
 
 }

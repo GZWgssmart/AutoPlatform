@@ -79,6 +79,19 @@ public class RecordController {
         return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
     }
 
+    @ResponseBody
+    @RequestMapping(value="pager_message",method= RequestMethod.GET)
+    public Pager4EasyUI<MaintainRecord> queryPagerBymessage(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        logger.info("分页查询维修保养过用户");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<MaintainRecord> maintainRecordList = new ArrayList<MaintainRecord>();
+        pager.setTotalRecords(maintainRecordService.countByRecordStatus());
+        maintainRecordList = maintainRecordService.queryPagerByMessage(pager);
+        return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "condition_pager", method = RequestMethod.GET)

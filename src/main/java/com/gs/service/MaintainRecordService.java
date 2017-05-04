@@ -86,4 +86,13 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      */
     public List<MaintainRecord> queryPagerBySpeedStatus(Pager pager, String[] speedStatus);
 
+    /**
+     * 根据维修表可用状态计数
+     */
+    public int countByRecordStatus();
+    /**
+     * 根据维修表状态分页查询可用的用户
+     */
+    public List<MaintainRecord> queryPagerByMessage(Pager pager);
+
 }
