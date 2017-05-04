@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.Salary;
+import com.gs.common.bean.Pager;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 */
 public interface SalaryService extends BaseService<String, Salary>{
 
-    public Salary queryByUserId(String userId);
+    public Salary queryByUserId(Pager pager, String userId);
 
     public boolean saveBatchInsert(List<Salary> salarys);
 }

@@ -1,6 +1,8 @@
 package com.gs.dao;
 
 import com.gs.bean.Salary;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
 @Repository
 public interface SalaryDAO extends BaseDAO<String, Salary>{
 
-    public Salary queryByUserId(String userId);
+    public Salary queryByUserId(@Param("pager")Pager pager,@Param("userId") String userId);
 
     public void addInsert(List<Salary> salarys);
 }
