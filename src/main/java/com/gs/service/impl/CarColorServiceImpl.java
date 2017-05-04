@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarColor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,4 +38,13 @@ public class CarColorServiceImpl implements CarColorService {
 	public int inactive(String id) { return carColorDAO.inactive(id); }
 	public int active(String id) { return carColorDAO.active(id); }
 
+	@Override
+	public List<CarColor> queryByColorPager(String status,Pager pager) {
+		return carColorDAO.queryByColorPager(status, pager);
+	}
+
+	@Override
+	public int statusCount(String status) {
+		return carColorDAO.statusCount(status);
+	}
 }

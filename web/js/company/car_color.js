@@ -11,6 +11,22 @@ $(document).ready(function () {
     $("#search").bind("click", initTable);
 });
 
+function colorAll(){
+    initTable("cusTable","/carColor/queryByPager");
+}
+
+/**查询可用*/
+function statusUsableness(){
+    var status = 'Y';
+    initTable("cusTable","/carColor/queryByStatusPager?status="+status);
+}
+
+/**查询不可用*/
+function statusAvailable(){
+    var status = 'N';
+    initTable("cusTable","/carColor/queryByStatusPager?status="+status);
+}
+
 /** 编辑数据 */
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');

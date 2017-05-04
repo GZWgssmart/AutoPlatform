@@ -1,6 +1,8 @@
 package com.gs.service;
 
 import com.gs.bean.CarModel;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,4 +15,6 @@ import java.util.List;
 public interface CarModelService extends BaseService<String, CarModel>{
 
     public List<CarModel> queryByBrandId(String brandId);
+    public List<CarModel> queryByModelStatusPager(@Param("status")String status, @Param("pager")Pager pager);
+    public int statusCount(String status);
 }

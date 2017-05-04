@@ -14,6 +14,21 @@ function showAddWin(){
     validator("addForm");
     $("#addWin").modal('show');
 }
+function brandAll(){
+    initTable("cusTable","/carBrand/queryByPager");
+}
+
+/**查询可用*/
+function statusUsableness(){
+    var status = 'Y';
+    initTable("cusTable","/carBrand/queryByStatusPager?status="+status);
+}
+
+/**查询不可用*/
+function statusAvailable(){
+    var status = 'N';
+    initTable("cusTable","/carBrand/queryByStatusPager?status="+status);
+}
 
 /** 编辑数据 */
 function showEditWin() {

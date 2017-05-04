@@ -59,6 +59,15 @@
                     <i class="glyphicon glyphicon-pencil"></i> 修改
                 </button>
             </a>
+            <a>
+                <button onclick="modelAll();" type="button" class="btn btn-default">查看所有</button>
+            </a>
+            <a>
+                <button onclick="statusUsableness();" type="button" class="btn btn-default">查看可用颜色</button>
+            </a>
+            <a>
+                <button onclick="statusAvailable();" type="button" class="btn btn-default">查看不可用颜色</button>
+            </a>
         </div>
         </tbody>
 

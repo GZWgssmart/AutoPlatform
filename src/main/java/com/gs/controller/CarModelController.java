@@ -100,4 +100,16 @@ public class CarModelController {
         }
         return ControllerResult.getFailResult("修改失败");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByModelPager", method = RequestMethod.GET)
+    public Pager4EasyUI<CarModel> queryByModelPager(@Param("status") String status,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(carModelService.statusCount(status));
+        List<CarModel> carModelList = carModelService.queryByModelStatusPager(status,pager);
+        return new Pager4EasyUI<CarModel>(pager.getTotalRecords(),carModelList);
+    }
+
 }

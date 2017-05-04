@@ -88,4 +88,15 @@ public class CarPlateController {
         logger.info("车牌激活失败");
         return ControllerResult.getFailResult("颜色修改失败");
     }
+
+    @ResponseBody
+    @RequestMapping(value="statusPager",method = RequestMethod.GET)
+    public Pager4EasyUI<CarPlate> statusPager(@Param("status")String status,@Param("pageNumber") String pageNumber, @Param("pageSize")String pageSize){
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(carPlateService.countStatus(status));
+        List<CarPlate>carPlates = carPlateService.byStatusPager(status,pager);
+        return new Pager4EasyUI<CarPlate>(pager.getTotalRecords(),carPlates);
+    }
 }

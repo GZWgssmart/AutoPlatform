@@ -90,4 +90,14 @@
 		]]>
 	</update>
 
+	<select id="byStatusPager" resultType="list" resultMap="carPlateResultMap" parameterType="com.gs.common.bean.Pager">
+		select * from t_car_plate where plateStatus = #{status} limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="countStatus" resultType="int">
+		<![CDATA[
+		select count(plateId) from t_car_plate where plateStatus = #{status}
+		]]>
+	</select>
+
 </mapper>

@@ -59,7 +59,7 @@ public class CarBrandController {
     @RequestMapping(value = "queryByPager" , method = RequestMethod.GET)
     public Pager4EasyUI<CarBrand> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         Pager pager = new Pager();
-        logger.info("分页查询所有车牌");
+        logger.info("分页查询所有汽车品牌");
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(carBrandService.count());
@@ -101,6 +101,17 @@ public class CarBrandController {
             return ControllerResult.getSuccessResult("品牌激活成功");
         }
         return ControllerResult.getFailResult("品牌冻结失败");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByStatusPager" , method = RequestMethod.GET)
+    public Pager4EasyUI<CarBrand> queryByStatusPager(@Param("status")String status,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(carBrandService.statusCount(status));
+        List<CarBrand>carBrandList = carBrandService.queryByBrandPager(status,pager);
+        return new Pager4EasyUI<CarBrand>(pager.getTotalRecords(),carBrandList);
     }
 
 }

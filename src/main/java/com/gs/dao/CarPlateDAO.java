@@ -1,7 +1,13 @@
 package com.gs.dao;
 
+import com.gs.bean.CarBrand;
 import com.gs.bean.CarPlate;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -10,5 +16,6 @@ import org.springframework.stereotype.Repository;
 */
 @Repository
 public interface CarPlateDAO extends BaseDAO<String, CarPlate>{
-
+    public List<CarPlate> byStatusPager(@Param("status") String status, @Param("pager") Pager pager);
+    public int countStatus(String status);
 }

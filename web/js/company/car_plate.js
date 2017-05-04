@@ -8,6 +8,22 @@ $(document).ready(function () {
     $("#search").bind("click", initTable);
 });
 
+function plateAll(){
+    initTable("cusTable","/carPlate/queryByPager");
+}
+
+/**查询可用*/
+function statusUsableness(){
+    var status = 'Y';
+    initTable("cusTable","/carPlate/statusPager?status="+status);
+}
+
+/**查询不可用*/
+function statusAvailable(){
+    var status = 'N';
+    initTable("cusTable","/carPlate/statusPager?status="+status);
+}
+
 /** 编辑数据 */
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');

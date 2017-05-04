@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarPlate;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,4 +38,13 @@ public class CarPlateServiceImpl implements CarPlateService {
 	public int inactive(String id) { return carPlateDAO.inactive(id); }
 	public int active(String id) { return carPlateDAO.active(id); }
 
+	@Override
+	public List<CarPlate> byStatusPager(String status, Pager pager) {
+		return carPlateDAO.byStatusPager(status, pager);
+	}
+
+	@Override
+	public int countStatus(String status) {
+		return carPlateDAO.countStatus(status);
+	}
 }

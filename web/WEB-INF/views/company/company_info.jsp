@@ -13,7 +13,6 @@
     <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
@@ -88,12 +87,6 @@
             <a>
                 <button onclick="statusAvailable();" type="button" class="btn btn-default">查看不可用公司</button>
             </a>
-            <a>
-                <button onclick="showSearchForm();" type="button" class="btn btn-default">条件查询</button>
-            </a>
-
-
-
         </div>
         </tbody>
 

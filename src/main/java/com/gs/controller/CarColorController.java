@@ -98,4 +98,15 @@ public class CarColorController {
         }
         return ControllerResult.getFailResult("颜色修改失败");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByStatusPager" , method = RequestMethod.GET)
+    public Pager4EasyUI<CarColor> queryByStatusPager(@Param("status")String status,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(carColorService.statusCount(status));
+        List<CarColor>carColorList = carColorService.queryByColorPager(status,pager);
+        return new Pager4EasyUI<CarColor>(pager.getTotalRecords(),carColorList);
+    }
 }

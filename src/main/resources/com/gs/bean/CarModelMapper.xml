@@ -92,7 +92,7 @@
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(modelId) from t_car_model
+			select count(modelId) from t_car_model m ,t_car_brand b where m.brandId = b.brandId
 		]]>
 	</select>
 
@@ -108,4 +108,15 @@
 		]]>
 	</update>
 
+	<select id="queryByModelStatusPager" resultType="list" resultMap="carModelResultMap" parameterType="com.gs.common.bean.Pager">
+		<![CDATA[
+			select brand.brandName,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId and model.modelStatus = #{status} limit #{pager.beginIndex}, #{pager.pageSize}
+		]]>
+	</select>
+
+	<select id="statusCount" resultType="int">
+		<![CDATA[
+			select count(modelId) from t_car_model m ,t_car_brand b where m.brandId = b.brandId and m.modelStatus = #{status}
+		]]>
+	</select>
 </mapper>

@@ -48,6 +48,15 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
+            <a>
+                <button onclick="plateAll();" type="button" class="btn btn-default">查看所有</button>
+            </a>
+            <a>
+                <button onclick="statusUsableness();" type="button" class="btn btn-default">查看可用汽车品牌</button>
+            </a>
+            <a>
+                <button onclick="statusAvailable();" type="button" class="btn btn-default">查看不可用汽车品牌</button>
+            </a>
         </div>
         </tbody>
 

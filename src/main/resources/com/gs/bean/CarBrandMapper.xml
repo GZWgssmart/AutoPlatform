@@ -86,4 +86,12 @@
 			select brandName from t_car_brand where brandId = #{brandId}
 		]]>
 	</select>
+
+	<select id="queryByBrandPager" resultType="list" resultMap="carBrandResultMap" parameterType="com.gs.common.bean.Pager">
+		select * from t_car_brand  where brandStatus = #{status} limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="statusCount" resultType="int">
+		select count(brandId) from t_car_brand where brandStatus = #{status}
+	</select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarModel;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -39,5 +40,15 @@ public class CarModelServiceImpl implements CarModelService {
 
 	public List<CarModel> queryByBrandId(String brandId) {
 		return carModelDAO.queryByBrandId(brandId);
+	}
+
+	@Override
+	public List<CarModel> queryByModelStatusPager(String status,Pager pager) {
+		return carModelDAO.queryByModelStatusPager(status, pager);
+	}
+
+	@Override
+	public int statusCount(String status) {
+		return carModelDAO.statusCount(status);
 	}
 }

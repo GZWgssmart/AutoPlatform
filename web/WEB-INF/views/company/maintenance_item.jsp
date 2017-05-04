@@ -187,39 +187,39 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加保养项目基础配件</h3>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <div class="form-group">
+                                <label>请选择配件分类</label>
+                                <select id="addAccessoriesType" onchange="queryByTypeId(this);" class="js-example-tags form-control acc_accessoriesType" name="accTypeId"></select>
+                            </div>
+                            <table class="table table-hover" id="cusTable2"
+                                   data-pagination="true"
+                                   data-show-refresh="true"
+                                   data-show-toggle="true"
+                                   data-showColumns="true">
+                                <thead>
+                                <tr>
+                                    <th data-field="state" data-checkbox="true"></th>
+                                    <th data-field="accName" >
+                                        配件名称
+                                    </th>
+                                    <th data-field="accIdle" >
+                                        配件库可用数
+                                    </th>
+                                    <th data-field="accSalePrice" >
+                                        配件单价
+                                    </th>
+                                </tr>
+                                </thead>
+                            </table>
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" value="确认选择配件" onclick="Addacc();">
+                            </input>
+                        </div>
                         <form role="form" id="Form">
                             <input type="hidden" id="maintainId" name="maintainId" attr="maintain.maintainId"/>
-                            <div class="modal-footer" style="overflow:hidden;">
-                                <div class="form-group">
-                                    <label>请选择配件分类</label>
-                                    <select id="addAccessoriesType" onchange="queryByTypeId(this);" class="js-example-tags form-control acc_accessoriesType" name="accTypeId"></select>
-                                </div>
-                                <table class="table table-hover" id="cusTable2"
-                                       data-pagination="true"
-                                       data-show-refresh="true"
-                                       data-show-toggle="true"
-                                       data-showColumns="true">
-                                    <thead>
-                                    <tr>
-                                        <th data-field="state" data-checkbox="true"></th>
-                                        <th data-field="accName" >
-                                            配件名称
-                                        </th>
-                                        <th data-field="accIdle" >
-                                            配件库可用数
-                                        </th>
-                                        <th data-field="accSalePrice" >
-                                            配件单价
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                </table>
-                                <button type="button" class="btn btn-default"
-                                        data-dismiss="modal">关闭
-                                </button>
-                                <input type="button" class="btn btn-primary" value="确认选择配件" onclick="Addacc();">
-                                </input>
-                            </div>
                         </form>
                     </div>
                 </div>

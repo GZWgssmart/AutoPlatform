@@ -13,7 +13,7 @@
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css"
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -49,6 +49,15 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
+            <a>
+                <button onclick="brandAll();" type="button" class="btn btn-default">查看所有</button>
+            </a>
+            <a>
+                <button onclick="statusUsableness();" type="button" class="btn btn-default">查看可用汽车品牌</button>
+            </a>
+            <a>
+                <button onclick="statusAvailable();" type="button" class="btn btn-default">查看不可用汽车品牌</button>
+            </a>
         </div>
         </tbody>
 

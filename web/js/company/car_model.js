@@ -29,6 +29,22 @@ $(document).ready(function () {
     $("#search").bind("click", initTable);
 });
 
+function modelAll(){
+    initTable("cusTable","/carModel/queryByPager");
+}
+
+/**查询可用*/
+function statusUsableness(){
+    var status = 'Y';
+    initTable("cusTable","/carModel/queryByModelPager?status="+status);
+}
+
+/**查询不可用*/
+function statusAvailable(){
+    var status = 'N';
+    initTable("cusTable","/carModel/queryByModelPager?status="+status);
+}
+
 function operating(value, row, index) {
     if (row.modelStatus == 'Y') {
         return [

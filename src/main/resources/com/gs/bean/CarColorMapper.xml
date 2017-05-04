@@ -88,4 +88,11 @@
 		]]>
 	</update>
 
+	<select id="queryByColorPager" resultType="list" resultMap="carColorResultMap" parameterType="com.gs.common.bean.Pager">
+		select * from t_car_color where colorStatus = #{status} limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="statusCount" resultType="int">
+		select count(colorId) from t_car_color where colorStatus = #{status}
+	</select>
 </mapper>
