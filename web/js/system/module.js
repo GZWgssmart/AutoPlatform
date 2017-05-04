@@ -36,13 +36,13 @@ function showEditWin() {
 function operateFormatter(value, row, index) {
     if (row.moduleStatus == 'Y') {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm" style="margin-right:15px;" >冻结</button>',
-            '<button type="button" class="showEditModule btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
+            '<button type="button" class="updateActive btn btn-success  btn-sm">冻结</button>',
+            ' <button type="button" class="showEditModule btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm" style="margin-right:15px;" >激活</button>',
-            '<button type="button" class="showEditModule btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
+            '<button type="button" class="updateInactive btn btn-danger  btn-sm">激活</button>',
+            ' <button type="button" class="showEditModule btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     }
 }

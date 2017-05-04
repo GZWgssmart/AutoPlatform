@@ -69,10 +69,8 @@
                         <h3 class="m-t-none m-b">修改信息</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" attr="role.roleId" name="roleId"/>
+                            <input type="hidden" attr="role.roleName" name="roleName"/>
                             <div class="form-group">
-                                <label class="control-label">角色名称：</label>
-                                <input type="text" attr="role.roleName" name="roleName"  class="form-control"/>
-
                                 <label>角色描述：</label>
                                 <textarea attr="role.roleDes"  type="textarea" name="roleDes" class="form-control"></textarea>
                             </div>
