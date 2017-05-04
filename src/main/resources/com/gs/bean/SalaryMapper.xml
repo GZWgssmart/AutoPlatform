@@ -108,6 +108,12 @@
 		order by s.salaryCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
+	<select id="countByUserId" resultType="int">
+		<![CDATA[
+			select count(*) from t_salary where userId = #{userId}
+		]]>
+	</select>
+
 	<select id="queryByPager" resultType="list" resultMap="salaryResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 			select s.*,u.userId as user_id,u.userName from t_salary s ,t_user u where s.userId = u.userId

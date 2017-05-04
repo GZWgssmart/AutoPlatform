@@ -14,6 +14,7 @@ import java.util.List;
 public interface SalaryService extends BaseService<String, Salary>{
 
     public Salary queryByUserId(Pager pager, String userId);
+    public int countByUserId(String userId);
 
     public boolean saveBatchInsert(List<Salary> salarys);
 }

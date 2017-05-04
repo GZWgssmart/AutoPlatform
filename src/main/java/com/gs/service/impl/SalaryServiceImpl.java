@@ -43,6 +43,11 @@ public class SalaryServiceImpl implements SalaryService {
 		return salaryDAO.queryByUserId(pager,userId);
 	}
 
+	@Override
+	public int countByUserId(String userId) {
+		return salaryDAO.countByUserId(userId);
+	}
+
 
 	@Transactional
 	public boolean saveBatchInsert(List<Salary> salaries){
