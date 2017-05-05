@@ -44,4 +44,9 @@ public class RoleServiceImpl implements RoleService {
 	public Role queryByName(String roleName) {
 		return roleDAO.queryByName(roleName);
 	}
+
+	@Override
+	public Role queryByUserId(String userId) {
+		return roleDAO.queryByUserId(userId);
+	}
 }

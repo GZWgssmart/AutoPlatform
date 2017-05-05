@@ -17,4 +17,7 @@ public interface RoleService extends BaseService<String, Role>{
 
     /**根据roleName去查询*/
     public Role queryByName(String roleName);
+
+    /**根据userId去查询*/
+    public Role queryByUserId(String userId);
 }

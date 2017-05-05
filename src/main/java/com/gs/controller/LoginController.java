@@ -1,9 +1,11 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Role;
 import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.EncryptUtil;
+import com.gs.service.RoleService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
@@ -32,6 +34,8 @@ public class LoginController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private RoleService roleService;
 
     @RequestMapping(value = "show_login", method = RequestMethod.GET)
     public String showLogin() {
@@ -51,12 +55,17 @@ public class LoginController {
             user.setUserPwd(EncryptUtil.md5Encrypt(pwd));
             User u = userService.queryLogin(user);
             if (u != null) {
-                userService.updateLoginTime(u.getUserId());
-                u.setUserLoginedTime(new Date());
-                subject.login(new UsernamePasswordToken(u.getUserEmail(), u.getUserPwd()));
-                Session session = subject.getSession();
-                session.setAttribute("user", u);
-                return ControllerResult.getSuccessResult("登陆成功!");
+                Role role = roleService.queryByUserId(u.getUserId());
+                if (!role.getRoleName().equals("carOwner")) {
+                    userService.updateLoginTime(u.getUserId());
+                    u.setUserLoginedTime(new Date());
+                    subject.login(new UsernamePasswordToken(u.getUserEmail(), u.getUserPwd()));
+                    Session session = subject.getSession();
+                    session.setAttribute("user", u);
+                    return ControllerResult.getSuccessResult("登陆成功!");
+                } else {
+                    return ControllerResult.getFailResult("登录失败,账号或密码错误!");
+                }
             } else {
                 return ControllerResult.getFailResult("登录失败,账号或密码错误!");
             }
