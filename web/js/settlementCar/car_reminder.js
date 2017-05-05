@@ -82,9 +82,27 @@ function showAddWin() {
         return false;
     } else {
         var record = selectRow[0];
-        $("#addForm").fill(record);
-        $("#addWin").modal('show');
-        $("input[type=reset]").trigger("click");
+        var count = 0;
+        $.get("/detail/pager?recordId=" + record.recordId + "&pageNumber=1&pageSize=20",
+            function(data) {
+                var len = data.rows.length;
+                if (len > 0) {
+                    for (var i = 0; i < len; i++) {
+                        count += data.rows[i].price;
+                    }
+                    $("#addForm").fill(record);
+
+                    $("#addWin").modal('show');
+                    $("input[type=reset]").trigger("click");
+                    $("#addChargeBillMoney").val(count);
+                } else {
+                    swal('结算失败', "该车主没有做维修保养项目", "error");
+                    return false;
+                }
+
+            }, "json");
+
+
     }
 }
 

@@ -185,6 +185,7 @@ function validator(formId) {
                 formSubmit("/record/edit", formId, "editWin");
             } else if (formId == "detailForm") {
                 formSubmit("/detail/add", formId, "detailWin");
+
             } else if (formId == "editDetailForm") {
                 formSubmit("/detail/edit", formId, "editDetailWin");
                 $('#detailTable').bootstrapTable('refresh');

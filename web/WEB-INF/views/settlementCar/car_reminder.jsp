@@ -171,8 +171,8 @@
                         <form role="form" id="addForm">
                             <input type="hidden" id="addRecordId" attr="record.recordId" name="recordId" class="form-control"/>
                             <div class="form-group">
-                                <label class="control-label">收费总金额：</label>
-                                <input id="addChargeBillMoney" type="number" name="chargeBillMoney" maxlength="5" class="form-control"/>
+                                <label class="control-label">收费总金额（元）：</label>
+                                <input id="addChargeBillMoney" readonly type="text" name="chargeBillMoney" maxlength="5" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">付款方式：</label>
@@ -184,7 +184,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">实付款：</label>
+                                <label class="control-label">实付款（元）：</label>
                                 <input id="addActualPayment" type="number" name="actualPayment" maxlength="5" class="form-control"/>
                             </div>
                             <div class="form-group">
