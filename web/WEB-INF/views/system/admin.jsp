@@ -158,14 +158,19 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">添加模块</h3>
+                        <h3 class="m-t-none m-b">添加管理员</h3>
                         <form role="form" id="addForm">
-
+                            <input type="text" id="birthday" name="userBirthday"/>
                             <div class="form-group">
-                                <select id="adminTypeSelect" onchange="adminSelect(this);"
+                                <select id="adminTypeSelect" onchange="adminSelect('adminTypeSelect');"
                                         class="js-example-tags form-control adminCAndSO"
                                         name="adminTypeId">
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <select id="addCompany" disabled="disabled"
+                                        class="js-example-tags form-control admin_company"
+                                        name="companyId"></select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">姓名：</label>
@@ -186,21 +191,8 @@
                                 </button>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">性别：</label>
-                                <select class="form-control" name="userGender">
-                                    <option value="N" selected="selected">未知</option>
-                                    <option value="M">男</option>
-                                    <option value="F">女</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
                                 <label class="control-label">手机号：</label>
                                 <input type="text" name="userPhone"
-                                       class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">基本工资：</label>
-                                <input type="text" name="userSalary"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -211,13 +203,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">身份证：</label>
-                                <input type="text" name="userIdentity"
+                                <input type="text" name="userIdentity" onblur="getBirthday(this)"
                                        class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">所属公司：</label>
-                                <select id="addCompany" class="js-example-tags form-control user_company"
-                                        name="companyId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"

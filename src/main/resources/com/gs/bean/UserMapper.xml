@@ -53,8 +53,8 @@
 		<![CDATA[
 			insert into t_user(userId, userName, userEmail, userPhone, userPwd,
 								userIdentity, userBirthday, userAddress, companyId, userCreatedTime, userStatus)
-			value (uuid(), #{userName}, #{userEmail}, #{userPhone}, #{userPwd}, #{userIdentity},
-			#{userBirthday}, #{userAddress}, #{companyId), now(), 'Y');
+			value (#{userId}, #{userName}, #{userEmail}, #{userPhone}, #{userPwd}, #{userIdentity},
+			#{userBirthday}, #{userAddress}, #{companyId}, now(), 'Y');
 		]]>
 	</insert>
 

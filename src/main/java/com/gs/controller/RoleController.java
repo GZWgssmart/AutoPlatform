@@ -85,7 +85,7 @@ public class RoleController {
     @ResponseBody
     @RequestMapping(value = "query_cAdminAndSOAdmin", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCAdminAndSOAdmin() {
-        logger.info("查询所有模块");
+        logger.info("查询添加管理员时需要的下拉条件");
         List<Role> roles = roleService.queryCAdminAndSOAdmin();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
         for (Role r : roles) {

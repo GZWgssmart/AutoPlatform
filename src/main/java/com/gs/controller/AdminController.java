@@ -2,19 +2,29 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.User;
+import com.gs.bean.UserRole;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.UUIDUtil;
+import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Xiao-Qiang on 2017/4/17.
@@ -27,6 +37,8 @@ public class AdminController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private UserRoleService userRoleService;
 
     @RequestMapping(value = "info", method = RequestMethod.GET)
     public String showAdminInfo() {
@@ -72,9 +84,14 @@ public class AdminController {
 
     @ResponseBody
     @RequestMapping(value = "add_admin", method = RequestMethod.POST)
-    public ControllerResult addAdmin(User user) {
+    public ControllerResult addAdmin(@Param("user") User user, @Param("adminTypeId") String adminTypeId) {
         logger.info("添加管理员");
+        user.setUserId(UUIDUtil.uuid());
         userService.insertAdmin(user);
+        UserRole ur = new UserRole();
+        ur.setRoleId(adminTypeId);
+        ur.setUserId(user.getUserId());
+        userRoleService.insert(ur);
         return ControllerResult.getSuccessResult("添加成功");
     }
 
@@ -89,5 +106,12 @@ public class AdminController {
             userService.inactive(id);
         }
         return ControllerResult.getSuccessResult("更新成功");
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }

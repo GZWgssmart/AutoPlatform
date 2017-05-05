@@ -5,7 +5,8 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", contextPath + "/admin/query_pager");
-    initSelect2("adminCAndSO", "选择管理员类型", contextPath + "/role/query_cAdminAndSOAdmin", "350");
+    initSelect2("adminCAndSO", "选择管理员类型", contextPath + "/role/query_cAdminAndSOAdmin", "540");
+    initSelect2("admin_company", "请选择公司", contextPath + "/company/company_all", "540");
     $("#search").bind("click", initTable);
 });
 
@@ -43,6 +44,7 @@ function updateAdmin() {
 function showAddWin() {
     validator("addForm");
     $('#adminTypeSelect').html('').trigger("change");
+    $('#addCompany').html('').trigger("change");
     $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }
@@ -148,8 +150,21 @@ function querySystem() {
     initTable("cusTable", contextPath + "/admin/system_pager");
 }
 
-function adminSelect(obj) {
-    var adminId = obj.value;
+function adminSelect(selectId) {
+    var roleId = $("#" + selectId).val();
+    var roleName = $("#" + selectId).find("option:selected").text();
+    if (roleName == "汽修公司管理员") {
+        $(".admin_company").prop("disabled", false);
+    } else {
+        $(".admin_company").prop("disabled", true);
+        $("#addCompany").empty();
+    }
+}
+
+/**生成默认密码*/
+function defaultPwd() {
+    var password = "123456";
+    $("#pwd").val(password);
 }
 
 /** 表单验证 */
@@ -170,8 +185,7 @@ function validator(formId) {
                         message: '管理员类型不能为空'
                     }
                 }
-            },
-            userName: {
+            },userName: {
                 message: '名称验证失败',
                 validators: {
                     notEmpty: {
@@ -183,8 +197,19 @@ function validator(formId) {
                         message: '名称长度必须在2到10位之间'
                     }
                 }
-            },
-            userEmail: {
+            },userPwd: {
+                message: '密码验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '密码不能为空'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 16,
+                        message: '密码长度必须在6到16位之间'
+                    }
+                }
+            },userEmail: {
                 validators: {
                     notEmpty: {
                         message: '邮箱不能为空'
@@ -214,11 +239,24 @@ function validator(formId) {
                         message: '身份证格式错误'
                     }
                 }
-            },
+            },userAddress: {
+                message: '地址验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '地址不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 15,
+                        message: '地址长度必须在2到15位之间'
+                    }
+                }
+            }
         }
     })
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
+                alert("aaaabbb");
                 formSubmit(contextPath + "/admin/add_admin", formId, "addWin");
 
             } else if (formId == "editForm") {
@@ -226,6 +264,17 @@ function validator(formId) {
             }
         })
 
+}
+
+function getBirthday(obj) {
+    var identity = obj.value;
+    if (identity.length == 18) {
+        var year = identity.substring(6, 10);
+        var month = identity.substring(10, 12);
+        var date = identity.substring(12, 14);
+        var birthday = year + "-" + month + "-" + date;
+        $("#birthday").val(birthday);
+    }
 }
 
 
