@@ -8,6 +8,7 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.FileUtil;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
@@ -70,7 +71,7 @@ public class PeopleInfoController {
         String peopleId = UUIDUtil.uuid();
         user.setUserId(peopleId);
         user.setCompanyId(company.getCompanyId());
-        Role role = roleService.queryByName("emp");
+        Role role = roleService.queryByName("companyEmp");
         userRole.setUserId(user.getUserId());
         userRole.setRoleId(role.getRoleId());
         user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
@@ -86,8 +87,8 @@ public class PeopleInfoController {
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(userService.count());
-        List<User> users = userService.queryPeoplePager(pager);
+        pager.setTotalRecords(userService.countCompanyEmp(SessionGetUtil.getUser().getCompanyId()));
+        List<User> users = userService.queryPeoplePager(pager, SessionGetUtil.getUser().getCompanyId());
         return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
     }
 

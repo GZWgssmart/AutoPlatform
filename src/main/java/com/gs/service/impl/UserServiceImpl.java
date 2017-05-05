@@ -73,8 +73,8 @@ public class UserServiceImpl implements UserService {
 		return userDAO.queryCustomerPager(pager);
 	}
 
-	public List<User> queryPeoplePager(Pager pager) {
-		return userDAO.queryPeoplePager(pager);
+	public List<User> queryPeoplePager(Pager pager, String companyId) {
+		return userDAO.queryPeoplePager(pager, companyId);
 	}
 
 	public User queryLogin(User user) {
@@ -91,5 +91,9 @@ public class UserServiceImpl implements UserService {
 
 	public void updateLoginTime(String userId) {
 		userDAO.updateLoginTime(userId);
+	}
+
+	public int countCompanyEmp(String companyId) {
+		return userDAO.countCompanyEmp(companyId);
 	}
 }

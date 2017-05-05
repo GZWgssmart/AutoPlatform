@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * Created by Xiao-Qiang on 2017/5/2.
@@ -48,6 +49,8 @@ public class LoginController {
             user.setUserPwd(EncryptUtil.md5Encrypt(pwd));
             User u = userService.queryLogin(user);
             if (u != null) {
+                userService.updateLoginTime(u.getUserId());
+                u.setUserLoginedTime(new Date());
                 subject.login(new UsernamePasswordToken(u.getUserEmail(), u.getUserPwd()));
                 Session session = subject.getSession();
                 session.setAttribute("user", u);

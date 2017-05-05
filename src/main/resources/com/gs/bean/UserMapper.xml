@@ -160,15 +160,16 @@
 		]]>limit #{beginIndex}, #{pageSize}
 	</select>
 
-	<select id="queryPeoplePager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryPeoplePager" resultType="list" resultMap="userResultMap">
 		<![CDATA[
 			SELECT * FROM t_user u
 			INNER JOIN t_company c ON u.companyId = c.companyId
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
 			INNER JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleDes = '汽修普通员工'
+			WHERE r.roleName like concat('company', '%')
+			AND u.companyId = #{companyId}
 			ORDER BY userCreatedTime Desc
-		]]>limit #{beginIndex}, #{pageSize}
+		]]>limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="queryByAdminPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
@@ -188,7 +189,7 @@
 			LEFT JOIN t_company c on u.companyId = c.companyId
 			LEFT JOIN t_user_role ur  on ur.userId = u.userId
 			LEFT JOIN t_role r on r.roleId = ur.roleId
-			where u.companyId = c.companyId and r.roleId = ur.roleId
+			where u.companyId = c.companyId and r.roleId = ur.roleId and roleName like concat('company', '%', 'Admin');
 			order by userCreatedTime Desc
 		]]>limit #{beginIndex}, #{pageSize}
 	</select>
@@ -207,6 +208,17 @@
 	<select id="count" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) FROM t_user
+		]]>
+	</select>
+
+	<select id="countCompanyEmp" parameterType="String" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM t_user u
+			INNER JOIN t_company c ON u.companyId = c.companyId
+			INNER JOIN t_user_role ur ON ur.userId = u.userId
+			INNER JOIN t_role r ON r.roleId = ur.roleId
+			WHERE r.roleName like concat('company', '%')
+			AND u.companyId = #{companyId}
 		]]>
 	</select>
 
