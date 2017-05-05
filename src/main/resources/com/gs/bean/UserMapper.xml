@@ -173,7 +173,7 @@
 			SELECT * FROM t_user u
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
 			INNER JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName = 'car-owner'
+			WHERE r.roleName = 'carOwner'
 			ORDER BY userCreatedTime Desc
 		]]>limit #{beginIndex}, #{pageSize}
 	</select>
@@ -228,7 +228,7 @@
 			SELECT COUNT(*) FROM t_user u
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
 			INNER JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName LIKE CONCAT('car-owner')
+			WHERE r.roleName LIKE CONCAT('carOwner')
 		]]>
 	</select>
 

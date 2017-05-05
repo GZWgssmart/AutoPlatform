@@ -49,7 +49,7 @@
 									<shiro:hasRole name="systemSuperAdmin">系统超级管理员</shiro:hasRole>
 									<shiro:hasRole name="systemOrdinaryAdmin">系统普通管理员</shiro:hasRole>
                                     <shiro:hasRole name="companyRepertory">汽修公司库管人员</shiro:hasRole>
-									<shiro:hasRole name="car-owner">车主</shiro:hasRole>
+									<shiro:hasRole name="carOwner">车主</shiro:hasRole>
 									<shiro:hasRole name="companyReceive">汽修公司接待员</shiro:hasRole>
                                     <shiro:hasRole name="companyArtificer">汽修公司技师</shiro:hasRole>
 									<shiro:hasRole name="companySales">汽修公司销售员</shiro:hasRole>

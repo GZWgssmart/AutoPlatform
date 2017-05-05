@@ -160,7 +160,7 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加管理员</h3>
                         <form role="form" id="addForm">
-                            <input type="text" id="birthday" name="userBirthday"/>
+                            <input type="hidden" id="birthday" name="userBirthday"/>
                             <div class="form-group">
                                 <select id="adminTypeSelect" onchange="adminSelect('adminTypeSelect');"
                                         class="js-example-tags form-control adminCAndSO"

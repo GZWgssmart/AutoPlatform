@@ -68,7 +68,7 @@ public class CustomerController {
     public ControllerResult infoInsert(User user, UserRole userRole){
         logger.info("信息添加");
         String customerId = UUIDUtil.uuid();
-        Role role = roleService.queryByName("car-owner");
+        Role role = roleService.queryByName("carOwner");
         user.setUserId(customerId);
         userRole.setUserId(user.getUserId());
         userRole.setRoleId(role.getRoleId());
