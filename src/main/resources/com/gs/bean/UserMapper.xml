@@ -89,6 +89,12 @@
 		]]>
 	</update>
 
+	<update id="updateLoginTime" parameterType="string">
+		<![CDATA[
+			update t_user set userLoginedTime = now() where userId = #{userId}
+		]]>
+	</update>
+
 	<update id="batchUpdate" parameterType="list">
 		<![CDATA[
 

@@ -88,4 +88,8 @@ public class UserServiceImpl implements UserService {
 	public void insertAdmin(User user) {
 		userDAO.insertAdmin(user);
 	}
+
+	public void updateLoginTime(String userId) {
+		userDAO.updateLoginTime(userId);
+	}
 }
