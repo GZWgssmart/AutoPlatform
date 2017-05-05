@@ -56,7 +56,7 @@
 									<shiro:hasRole name="companyHumanManager">汽修公司人事</shiro:hasRole>
                                     <shiro:hasRole name="companyAccounting">汽修公司财务</shiro:hasRole>
 									<shiro:hasRole name="companyBuyer">汽修公司采购员</shiro:hasRole>
-									<shiro:hasRole name="emp">汽修普通员工</shiro:hasRole>
+									<shiro:hasRole name="companyEmp">汽修普通员工</shiro:hasRole>
                                     <b class="caret"></b></span>
                                 </span>
                         </a>
