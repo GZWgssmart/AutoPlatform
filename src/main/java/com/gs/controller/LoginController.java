@@ -2,6 +2,7 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.User;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.EncryptUtil;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -37,10 +39,10 @@ public class LoginController {
         return "index/login";
     }
 
+    @ResponseBody
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ModelAndView login(@Param("number")String number, @Param("pwd")String pwd) {
+    public ControllerResult login(@Param("number")String number, @Param("pwd")String pwd) {
         logger.info("登陆");
-        ModelAndView mav = new ModelAndView();
         if (number != null && !number.equals("") && pwd != null && !pwd.equals("")) {
             Subject subject = SecurityUtils.getSubject();
             User user = new User();
@@ -54,17 +56,20 @@ public class LoginController {
                 subject.login(new UsernamePasswordToken(u.getUserEmail(), u.getUserPwd()));
                 Session session = subject.getSession();
                 session.setAttribute("user", u);
-                mav.setViewName("index/index");
-                mav.addObject("loginInfo", "1");
+                return ControllerResult.getSuccessResult("登陆成功!");
             } else {
-                mav.setViewName("index/login");
-                mav.addObject("loginInfo", "0");
+                return ControllerResult.getFailResult("登录失败,账号或密码错误!");
             }
         } else {
-            mav.setViewName("index/login");
+            return ControllerResult.getFailResult("登录失败,账号或密码错误!");
         }
-        return mav;
     }
+
+    @RequestMapping(value = "home", method = RequestMethod.GET)
+    public String home() {
+        return "index/home";
+    }
+
 
     @RequestMapping("logout")
     public String logout(HttpSession session) {

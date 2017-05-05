@@ -16,9 +16,15 @@ public class IndexController {
     private Logger logger = (Logger) LoggerFactory.getLogger(IndexController.class);
 
     @RequestMapping(value = "index",method = RequestMethod.GET)
+    public String index() {
+        logger.info("进入首页");
+        return "index/index";
+    }
+
+    @RequestMapping(value = "home",method = RequestMethod.GET)
     public String home() {
         logger.info("进入主页");
-        return "index/index";
+        return "index/home";
     }
 
 }

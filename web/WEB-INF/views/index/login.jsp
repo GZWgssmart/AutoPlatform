@@ -33,16 +33,6 @@
 </head>
 
 <body class="gray-bg">
-<c:if test="${requestScope.loginInfo eq '0'}">
-    <script>
-        alert("账号或密码有误!");
-    </script>
-</c:if>
-<c:if test="${requestScope.regInfo eq '1' }">
-    <script>
-        alert("注册成功,点击确定跳转到登陆页!");
-    </script>
-</c:if>
 <div class="middle-box text-center loginscreen  animated fadeInDown">
     <div>
         <div>
@@ -51,8 +41,8 @@
 
         </div>
         <h3>欢迎登陆</h3>
-
-        <form class="m-t" role="form" action="<%=path%>/login/login" method="post">
+        <div id="errMsg" style="color: red; text-align: left; padding-left: 50px;"></div>
+        <form class="m-t" role="form" id="login_form" method="post">
             <div class="form-group">
                 <input type="text" name="number" class="form-control" placeholder="账号"
                        required="">
@@ -60,10 +50,8 @@
             <div class="form-group">
                 <input type="password" name="pwd" class="form-control" placeholder="密码" required="">
             </div>
-            <button type="submit" class="btn btn-primary block full-width m-b">登
-                录
+            <button type="button" class="btn btn-primary block full-width m-b" onclick="login()">登录
             </button>
-
 
             <p class="text-muted text-center">
                 <a href="login.html#">
@@ -77,5 +65,6 @@
 </div>
 <script src="<%=path%>/js/jquery.min.js"></script>
 <script src="<%=path%>/js/bootstrap.min.js"></script>
+<script src="<%=path%>/js/index/login.js"></script>
 </body>
 </html>
