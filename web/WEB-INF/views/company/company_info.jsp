@@ -15,6 +15,7 @@
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/fileinput.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -95,46 +96,6 @@
 
 
 
-<div id="editWin" class="modal fade" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">修改商品</h3>
-                        <form role="form" id="updateForm" >
-                            <input type="hidden" attr="product.id" name="id" id = "id"/>
-                            <div class="form-group">
-                                <label class="control-label">商品名称：</label>
-                                <input type="text" attr="product.name" name="name" id="name" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label>商品价格：</label>
-                                <input type="text"  name="price" attr="product.price" id ="price"
-                                       class="form-control"/>
-                            </div>
-
-                            <div class="form-group">
-                                <label>商品描述：</label>
-                                <input type="text"  name="des" id = "des" attr="product.des"
-                                       class="form-control"/>
-                            </div>
-
-                            <div class="modal-footer" style="overflow:hidden;">
-                                <button type="button" class="btn btn-default"
-                                        data-dismiss="modal">关闭
-                                </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="edit();">
-                                </input>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="addWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
@@ -213,6 +174,97 @@
     </div>
 </div>
 
+
+<div id="editWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">修改公司</h3>
+                        <form role="form" id="editForm">
+                            <div class="form-group">
+                                <label class="control-label">公司名称：</label>
+                                <input type="text"   name="companyName" class="form-control" attr="company.companyName"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">公司地址：</label>
+                                <input type="text"  name="companyAddress"
+                                       class="form-control" attr="company.companyAddress"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">公司联系方式：</label>
+                                <input type="text"  name="companyTel"
+                                       class="form-control" attr="company.companyTel"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">公司负责人：</label>
+                                <input type="text"  name="companyPricipal"
+                                       class="form-control" attr="company.companyPricipal"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">公司官网</label>
+                                <input type="text"  name="companyWebsite"
+                                       class="form-control" attr="company.companyWebsite"/>
+                            </div>
+                            <div class="form-group" >
+                                <label class="control-label">公司规模</label>
+                                <select class="form-control" name="companySize">
+                                    <option value ="请选择公司规模">请选择公司规模</option>
+                                    <option value ="5~10">5~10</option>
+                                    <option value="10~50">10~50</option>
+                                    <option value="50~100">50~100</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">公司创建时间</label>
+                                <input size="16" type="text" name="companyOpenDate" readonly
+                                       class="form_datetime form-control " id="establishTime2" attr="company.companyOpenDate">
+                                <span class="add-on"><i class="icon-th"></i></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">公司纬度</label>
+                                <input type="text"  name="companyLongitude"
+                                       class="form-control" attr="company.companyLongitude"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">公司经度</label>
+                                <input type="text"  name="companyLatitude"
+                                       class="form-control" attr="company.companyLatitude"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">公司logo：</label>
+                                <div class="col-lg-7">
+                                    <div class="ibox-title">
+                                        <div class="input-group" style="padding-left: 15px;">
+                                            <input id="edit_companyLogo" define="company.companyLogo" name="file"
+                                                   type="file" class="form-control" multiple
+                                                   class="file-loading"
+                                                   placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">公司描述：</label>
+                                <textarea  name="companyDes" type="textarea" cols="20" rows="5" class="form-control" attr="company.companyDes"></textarea>
+                            </div>
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" class="btn btn-primary" onclick="edit();" value="修改">
+                                </input>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
@@ -227,6 +279,8 @@
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
 <script src="<%=path %>/js/company/company.js"></script>
 <script src="<%=path %>/js/main.js"></script>
+<script src="<%=path %>/js/fileinput.js"></script>
+<script src="<%=path %>/js/zh.js"></script>
 <script>
     $("#establishTime").datetimepicker({
         format: "yyyy-mm-dd hh:ii",

@@ -107,9 +107,10 @@ public class AccessoriesController {
 
     @ResponseBody
     @RequestMapping(value = "queryByIdAcc", method = RequestMethod.GET)
-    public Pager4EasyUI<Accessories> queryByIdAccPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,@Param("id")String id) {
+    public Pager4EasyUI<Accessories> queryByIdAccPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("id")String id) {
+        System.out.println(id);
         Pager pager = new Pager();
-        logger.info("分页查询所有配件");
+        logger.info("分页查询某个分类下的配件");
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(accessoriesService.count());

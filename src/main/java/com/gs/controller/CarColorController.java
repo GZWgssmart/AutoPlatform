@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,4 +110,6 @@ public class CarColorController {
         List<CarColor>carColorList = carColorService.queryByColorPager(status,pager);
         return new Pager4EasyUI<CarColor>(pager.getTotalRecords(),carColorList);
     }
+
+
 }

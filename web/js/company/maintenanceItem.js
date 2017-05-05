@@ -5,7 +5,7 @@ $(document).ready(function () {
     //调用函数，初始化表格
     // initTable("cusTables","/accessories/queryByIdAcc");
     initTable("cusTable","/maintainFix/queryByMaintenanceItemPager");
-    initSelect2("company", "请选择汽修公司", "/company/company_all", "550");
+    initSelect2("company", "请选择汽修公司", "/company/company_all", "565");
     initSelect2("acc_accessoriesType", "请选择配件类别", "/accessoriesType/accessoriesType_All", "550");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
@@ -39,13 +39,12 @@ function showAddacc(){
         var product = selectRow[0];
         $("#Form").fill(product);
         $("#maintenanceWin").modal('show');
-
     }
 }
 
 
 function queryByTypeId(obj){
-    initTable("cusTable2", "/accessories/queryByIdAcc?id=" + obj.value);
+    initTableNotTollbar("cusTable2", "/accessories/queryByIdAcc?id=" + obj.value);
 }
 
 function operating(value, row, index) {
