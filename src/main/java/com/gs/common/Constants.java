@@ -32,4 +32,5 @@ public class Constants {
 
     public static final String COMPLETED = "已完成";
 
+    public static final String CAR_OWNER = "carOwner";
 }

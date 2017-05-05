@@ -51,6 +51,12 @@ public class CheckinController {
     @Resource
     private AppointmentService appointmentService;
 
+    @Resource
+    private UserRoleService userRoleService;
+
+    @Resource
+    private RoleService roleService;
+
     @RequestMapping(value = "checkin_page", method = RequestMethod.GET)
     public String checkinPage() {
         logger.info("访问登记页面");
@@ -115,6 +121,12 @@ public class CheckinController {
             user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
             user.setUserName(checkin.getUserName());
 
+            String roleId = roleService.queryByName(Constants.CAR_OWNER).getRoleId();
+            UserRole userRole = new UserRole();
+            userRole.setUserId(userId);
+            userRole.setRoleId(roleId);
+
+            userRoleService.insert(userRole);
             userService.insert(user);
         }
         checkin.setCheckinId(checkinId);
