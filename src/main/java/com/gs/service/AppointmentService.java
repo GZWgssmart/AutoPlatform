@@ -13,6 +13,8 @@ public interface AppointmentService extends BaseService<String, Appointment>{
 
     public List<Appointment> queryPagerByStatus(Pager pager, String status);
 
+    public List<Appointment> querySpeedStatus(Pager pager);
+
     public int countByCondition(Appointment appointment);
 
     public List<Appointment> queryPagerByCondition(Pager pager, Appointment appointment);

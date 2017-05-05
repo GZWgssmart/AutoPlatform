@@ -63,7 +63,10 @@ public class AppointmentController {
         if (status.equals("ALL")) {
             pager.setTotalRecords(appointmentService.count());
             appointments = appointmentService.queryByPager(pager);
-        } else {
+        } else if (status.equals("P")) {
+            pager.setTotalRecords(appointmentService.count());
+            appointments = appointmentService.querySpeedStatus(pager);
+        }else {
             pager.setTotalRecords(appointmentService.countByStatus(status));
             appointments = appointmentService.queryPagerByStatus(pager, status);
         }

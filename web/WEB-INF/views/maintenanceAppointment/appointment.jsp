@@ -125,6 +125,13 @@
                     <i class="glyphicon glyphicon-search"></i> 查看不可用记录
                 </button>
             </a>
+
+            <a>
+                <button onclick="searchStatus('/appointment/query_pager?status=P');" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查询已登记
+                </button>
+            </a>
+            
             <a>
                 <button onclick="searchStatus('/appointment/query_pager?status=ALL');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部

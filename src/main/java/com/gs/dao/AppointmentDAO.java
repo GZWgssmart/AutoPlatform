@@ -19,6 +19,7 @@ public interface AppointmentDAO extends BaseDAO<String, Appointment>{
     public int countByStatus(String status);
 
     public List<Appointment> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status);
+    public List<Appointment> querySpeedStatus(@Param("pager")Pager pager );
 
     public int countByCondition(Appointment appointment);
 

@@ -56,4 +56,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> queryPagerByStatus(Pager pager, String status) {
 		return appointmentDAO.queryPagerByStatus(pager,status);
 	}
+
+	public List<Appointment> querySpeedStatus(Pager pager) {
+		return appointmentDAO.querySpeedStatus(pager);
+	}
 }
