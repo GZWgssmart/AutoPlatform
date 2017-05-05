@@ -155,7 +155,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">所属公司：</label>
-                                <select id="editCompany" class="js-example-tags form-control user_company" name="companyId"></select>
+                                <select id="editCompany" disabled="disabled" class="js-example-tags form-control user_company" name="companyId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error1" style="color: red;"></span>
@@ -326,7 +326,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">所属公司：</label>
-                                            <select id="editModalCompany" class="js-example-tags form-control userModal_company" name="companyId"></select>
+                                            <select id="editModalCompany" disabled="disabled" class="js-example-tags form-control userModal_company" name="companyId"></select>
                                         </div>
                                         <br />
                                         <br />

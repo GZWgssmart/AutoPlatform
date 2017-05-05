@@ -85,7 +85,7 @@
 	<update id="update" parameterType="user">
 		<![CDATA[
 			UPDATE t_user SET
-				userName = #{userName}, userIcon = #{userIcon}, userNickname = #{userNickname}, userDes = #{userDes}, userGender = #{userGender}, userAddress = #{userAddress}, userStatus = 'Y', companyId = #{companyId}, qqOpenId = #{qqOpenId}, weiboOpenId = #{weiboOpenId}, wechatOpenId = #{wechatOpenId}, userIdentity = #{userIdentity}, userDes = #{userDes} WHERE userId = #{userId}
+				userName = #{userName}, userIcon = #{userIcon}, userNickname = #{userNickname}, userDes = #{userDes}, userGender = #{userGender}, userAddress = #{userAddress}, userStatus = 'Y', qqOpenId = #{qqOpenId}, weiboOpenId = #{weiboOpenId}, wechatOpenId = #{wechatOpenId}, userIdentity = #{userIdentity}, userDes = #{userDes} WHERE userId = #{userId}
 		]]>
 	</update>
 
@@ -162,7 +162,7 @@
 
 	<select id="queryPeoplePager" resultType="list" resultMap="userResultMap">
 		<![CDATA[
-			SELECT * FROM t_user u
+			SELECT u.* , c.companyId, c.companyName, r.roleDes FROM t_user u
 			INNER JOIN t_company c ON u.companyId = c.companyId
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
 			INNER JOIN t_role r ON r.roleId = ur.roleId

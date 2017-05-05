@@ -17,6 +17,8 @@ function gender(value, row, index) {
         return '女'
     }else if (row.userGender == 'N'){
         return '未知'
+    } else if (row.userGender == null || row.userGender == "") {
+        return '未知'
     }
 }
 
