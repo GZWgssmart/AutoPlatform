@@ -1,6 +1,8 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.*;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
@@ -32,10 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 温鑫
@@ -78,6 +77,76 @@ public class PeopleInfoController {
         userRoleService.insert(userRole);
         userService.insert(user);
         return ControllerResult.getSuccessResult("添加成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "peoplePhone_verification", method = RequestMethod.GET)
+    public String verificationPhone(@Param("userPhone")String userPhone) {
+        boolean result = true;
+        List<User> verification = userService.queryPhone();
+        for (User user : verification) {
+            if (user.getUserPhone().equals(userPhone)) {
+                result = false;
+                break;
+            }
+        }
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        map.put("valid", result);
+        ObjectMapper mapper = new ObjectMapper();
+        String resultString = "";
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "peopleEmail_verification", method = RequestMethod.GET)
+    public String verificationEmail(@Param("userEmail")String userEmail) {
+        boolean result = true;
+        List<User> verification = userService.queryEmail();
+        for (User user : verification) {
+            if (user.getUserEmail().equals(userEmail)) {
+                result = false;
+                break;
+            }
+        }
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        map.put("valid", result);
+        ObjectMapper mapper = new ObjectMapper();
+        String resultString = "";
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "peopleIdentity_verification", method = RequestMethod.GET)
+    public String verificationIdentity(@Param("userIdentity")String userIdentity) {
+        boolean result = true;
+        List<User> verification = userService.queryIdentity();
+        for (User user : verification) {
+            System.out.println("aaaaaaaa"+userIdentity);
+            if (user.getUserIdentity().equals(userIdentity)) {
+                result = false;
+                break;
+            }
+        }
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        map.put("valid", result);
+        ObjectMapper mapper = new ObjectMapper();
+        String resultString = "";
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
     @ResponseBody
@@ -138,7 +207,6 @@ public class PeopleInfoController {
         }
         return comboBox4EasyUIs;
     }
-
 
 
     @ResponseBody

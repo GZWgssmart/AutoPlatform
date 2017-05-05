@@ -191,6 +191,30 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
+            userNickname: {
+                validators: {
+                    notEmpty: {
+                        message: '昵称不能为空'
+                    },
+                    stringLength: {
+                        min: 4,
+                        max: 8,
+                        message: '昵称长度为4-8位'
+                    }
+                }
+            },
+            userPwd: {
+                validators: {
+                    notEmpty: {
+                        message: '密码不能为空'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 16,
+                        message: '密码长度为6-16位'
+                    }
+                }
+            },
             userName: {
                 validators: {
                     notEmpty: {
@@ -202,6 +226,7 @@ function validator(formId) {
                     }
                 }
             },
+
             userPhone: {
                 validators: {
                     notEmpty: {
@@ -210,6 +235,13 @@ function validator(formId) {
                     regexp: {
                         regexp: /^1(3|4|5|7|8)\d{9}$/,
                         message: '手机号格式错误'
+                    },
+                    threshold: 11,
+                    remote: {
+                        url: '/customer/customerPhone_verification',
+                        message: '该手机号已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -221,6 +253,13 @@ function validator(formId) {
                     regexp: {
                         regexp: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
                         message: '邮箱格式错误'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/customer/customerEmail_verification',
+                        message: '该邮箱已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -229,6 +268,13 @@ function validator(formId) {
                     regexp: {
                         regexp: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
                         message: '身份证格式错误'
+                    },
+                    threshold: 15,
+                    remote: {
+                        url: '/customer/customerIdentity_verification',
+                        message: '该身份证号已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },

@@ -85,6 +85,19 @@ public class UserServiceImpl implements UserService {
 		return userDAO.queryByPhone(phone);
 	}
 
+	public List<User> queryPhone() {
+		return userDAO.queryPhone();
+	}
+
+	public List<User> queryEmail() {
+		return userDAO.queryEmail();
+	}
+
+	public List<User> queryIdentity() {
+		return userDAO.queryIdentity();
+	}
+
+
 	public void insertAdmin(User user) {
 		userDAO.insertAdmin(user);
 	}

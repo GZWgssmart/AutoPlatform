@@ -3,8 +3,6 @@ $(document).ready(function () {
     initTable("cusTable", "/peopleManage/peopleInfo_pager");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
-
-    initSelect2("userModal_company", "请选择公司", "/company/company_all", "130");
 });
 
 
@@ -53,13 +51,13 @@ function customerAge(row) {
         var myDate = new Date();
         var month = myDate.getMonth() + 1;
         var day = myDate.getDate();
-
         var age = myDate.getFullYear() - card.substring(6, 10) - 1;
         if (card.substring(10, 12) < month || card.substring(10, 12) == month && card.substring(12, 14) <= day) {
             age++;
         }
         var birthday = card.substring(10, 12) + "月" + card.substring(12, 14) + "日";
         $("#birthday").val(birthday);
+        $("#addBirthday").val(birthday);
         $("#age").val(age);
     }else{
         $("#birthday").val("");
@@ -112,6 +110,7 @@ window.operateEvents = {
         selectGender.value = user.userGender;
         $("#role").val(row.role.roleDes);
         $("#form_datetime").val(formatterDate(user.userCreatedTime));
+        // $("#form_loginedTime").val(formatterDate(user.userLoginedTime));
         $("#editModal").fill(user);
         $('#editModalCompany').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
         validator("editModal");
@@ -182,6 +181,25 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
+            userAddress: {
+                validators: {
+                    notEmpty: {
+                        message: '居住地不能为空'
+                    }
+                }
+            },
+            userPwd: {
+                validators: {
+                    notEmpty: {
+                        message: '密码不能为空'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 16,
+                        message: '密码长度为6-16位'
+                    }
+                }
+            },
             userName: {
                 validators: {
                     notEmpty: {
@@ -201,6 +219,13 @@ function validator(formId) {
                     regexp: {
                         regexp: /^1(3|4|5|7|8)\d{9}$/,
                         message: '手机号格式错误'
+                    },
+                    threshold: 11,
+                    remote: {
+                        url: '/peopleManage/peoplePhone_verification',
+                        message: '该手机号已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -212,6 +237,13 @@ function validator(formId) {
                     regexp: {
                         regexp: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
                             message: '邮箱格式错误'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/peopleManage/peopleEmail_verification',
+                        message: '该邮箱已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -223,6 +255,13 @@ function validator(formId) {
                     regexp: {
                         regexp: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
                         message: '身份证格式错误'
+                    },
+                    threshold: 15,
+                    remote: {
+                        url: '/peopleManage/peopleIdentity_verification',
+                        message: '该身份证号已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },

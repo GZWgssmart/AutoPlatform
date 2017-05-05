@@ -42,9 +42,9 @@
 	<insert id="insert"  parameterType="user">
 		<![CDATA[
 			INSERT INTO t_user
-				(userId, userName, userNickname, userEmail, userPwd, userGender, userAddress, userPhone, userSalary, userIdentity, userCreatedTime, companyId, userStatus, qqOpenId, weiboOpenId, wechatOpenId, userDes, userBirthday, userLoginedTime)
+				(userId, userName, userNickname, userEmail, userPwd, userGender, userAddress, userPhone, userSalary, userBirthday, userIdentity, userCreatedTime, companyId, userStatus, qqOpenId, weiboOpenId, wechatOpenId, userDes, userBirthday, userLoginedTime)
 			VALUES
-				(#{userId}, #{userName}, #{userNickname}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userSalary}, #{userIdentity}, now(), #{companyId}, 'Y', #{qqOpenId}, #{weiboOpenId}, #{wechatOpenId}, #{userDes}, #{userBirthday}, #{userLoginedTime})
+				(#{userId}, #{userName}, #{userNickname}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userSalary}, #{userBirthday}, #{userIdentity}, now(), #{companyId}, 'Y', #{qqOpenId}, #{weiboOpenId}, #{wechatOpenId}, #{userDes}, #{userBirthday}, #{userLoginedTime})
 		]]>
 	</insert>
 
@@ -131,6 +131,24 @@
 		]]>
 	</select>
 
+	<select id="queryPhone" parameterType="string" resultType="user">
+		<![CDATA[
+			  SELECT DISTINCT userPhone FROM t_user
+		]]>
+	</select>
+
+	<select id="queryEmail" parameterType="string" resultType="user">
+		<![CDATA[
+			  SELECT DISTINCT userEmail FROM t_user
+		]]>
+	</select>
+
+	<select id="queryIdentity" parameterType="string" resultType="user">
+		<![CDATA[
+			  SELECT DISTINCT userIdentity FROM t_user
+		]]>
+	</select>
+
 	<select id="queryByUser"  resultMap="userResultMap">
 		<![CDATA[
 			  SELECT * FROM t_user WHERE companyId = #{companyId} order by userCreatedTime Desc
@@ -155,7 +173,7 @@
 			SELECT * FROM t_user u
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
 			INNER JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleDes = '车主'
+			WHERE r.roleName = 'car-owner'
 			ORDER BY userCreatedTime Desc
 		]]>limit #{beginIndex}, #{pageSize}
 	</select>
@@ -207,7 +225,10 @@
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			SELECT COUNT(*) FROM t_user
+			SELECT COUNT(*) FROM t_user u
+			INNER JOIN t_user_role ur ON ur.userId = u.userId
+			INNER JOIN t_role r ON r.roleId = ur.roleId
+			WHERE r.roleName LIKE CONCAT('car-owner')
 		]]>
 	</select>
 

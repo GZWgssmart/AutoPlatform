@@ -183,6 +183,7 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加员工</h3>
                         <form role="form" id="addForm">
+                            <input type="hidden" id="addBirthday" name="userBirthday"/>
                             <input type="hidden" name="companyId" value="${sessionScope.user.companyId}">
                             <div class="form-group">
                                 <label class="control-label">姓名：</label>
@@ -294,7 +295,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -14px">身份证：</label>
-                                            <input class="form-control" style="display: initial;" type="text" id="identity" attr="user.userIdentity" name="userIdentity"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="identity" onblur="getBirthday(this)" attr="user.userIdentity" name="userIdentity"/>
                                         </div>
                                         <br />
                                         <br />
@@ -318,7 +319,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="control-label">生日：</label>
-                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="birthday" attr="user.userBirthday" name="userBirthday"/>
+                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="birthday" name="userBirthday"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">真实姓名：</label>
@@ -326,7 +327,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">所属公司：</label>
-                                            <select id="editModalCompany" disabled="disabled" class="js-example-tags form-control userModal_company" name="companyId"></select>
+                                            <input id="editModalCompany" style="display: initial;" disabled="disabled" class="js-example-tags form-control" name="companyId"/>
                                         </div>
                                         <br />
                                         <br />
@@ -338,7 +339,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">最近登录：</label>
-                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" attr="user.userLoginedTime" name="userLoginedTime"/>
+                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" id="form_loginedTime" name="userLoginedTime"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">基本工资：</label>

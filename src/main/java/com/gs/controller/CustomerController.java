@@ -1,6 +1,8 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.Company;
 import com.gs.bean.Role;
 import com.gs.bean.User;
@@ -20,10 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -31,12 +30,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 温鑫
@@ -68,17 +65,87 @@ public class CustomerController {
     }
     @ResponseBody
     @RequestMapping(value = "customerInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(User user, UserRole userRole, HttpServletRequest request){
+    public ControllerResult infoInsert(User user, UserRole userRole){
         logger.info("信息添加");
         String customerId = UUIDUtil.uuid();
+        Role role = roleService.queryByName("car-owner");
         user.setUserId(customerId);
         userRole.setUserId(user.getUserId());
-        Role role = roleService.queryByName("car-owner");
         userRole.setRoleId(role.getRoleId());
         user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
         userService.insert(user);
         userRoleService.insert(userRole);
         return ControllerResult.getSuccessResult("添加成功");
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "customerPhone_verification", method = RequestMethod.GET)
+    public String verificationPhone(@Param("userPhone")String userPhone) {
+        boolean result = true;
+        List<User> verification = userService.queryPhone();
+        for (User user : verification) {
+            if (user.getUserPhone().equals(userPhone)) {
+                result = false;
+                break;
+            }
+        }
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        map.put("valid", result);
+        ObjectMapper mapper = new ObjectMapper();
+        String resultString = "";
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "customerEmail_verification", method = RequestMethod.GET)
+    public String verificationEmail(@Param("userEmail")String userEmail) {
+        boolean result = true;
+        List<User> verification = userService.queryEmail();
+        for (User user : verification) {
+            if (user.getUserEmail().equals(userEmail)) {
+                result = false;
+                break;
+            }
+        }
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        map.put("valid", result);
+        ObjectMapper mapper = new ObjectMapper();
+        String resultString = "";
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "customerIdentity_verification", method = RequestMethod.GET)
+    public String verificationIdentity(@Param("userIdentity")String userIdentity) {
+        boolean result = true;
+        List<User> verification = userService.queryIdentity();
+        for (User user : verification) {
+            if (user.getUserIdentity().equals(userIdentity)) {
+                result = false;
+                break;
+            }
+        }
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        map.put("valid", result);
+        ObjectMapper mapper = new ObjectMapper();
+        String resultString = "";
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
     @ResponseBody

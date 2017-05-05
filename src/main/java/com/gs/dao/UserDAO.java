@@ -54,6 +54,17 @@ public interface UserDAO extends BaseDAO<String, User>{
     /*根据手机号查询id*/
     public User queryByPhone(String phone);
 
+
+
+    /*验证手机号*/
+    public List<User> queryPhone();
+
+    /*验证邮箱*/
+    public List<User> queryEmail();
+
+    /*验证身份证*/
+    public List<User> queryIdentity();
+
     /**更新最后一次登陆的时间*/
     public void updateLoginTime(String userId);
 

@@ -183,14 +183,14 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">邮箱：</label>
-                                <input type="email" name="userEmail"
+                                <input type="email" id="userEmail" name="userEmail"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <p><label class="control-label">密码：</label></p>
                                 <input type="password" id="pwd" name="userPwd"
                                        class="form-control" style="width: 75%; display: initial;"/>
-                                <button type="button" onclick="defaultPwd()"style="float: right" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="默认密码为123456">使用默认密码</button>
+                                <button type="button" onclick="defaultPwd()"style="float: right; margin-right: 5px" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="默认密码为123456">使用默认密码</button>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">性别：</label>
@@ -208,7 +208,7 @@
                             <div class="form-group">
                                 <label class="control-label">居住地址：</label>
                                 <div style="position: relative;">
-                                    <input data-toggle="city-picker" class="address" name="userAddress">
+                                    <input data-toggle="city-picker" id="ress" class="address" name="userAddress">
                                 </div>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
@@ -276,7 +276,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -14px">身份证：</label>
-                                            <input class="form-control" style="display: initial;" type="text" id="identity" attr="user.userIdentity" name="userIdentity"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="identity" name="userIdentity"/>
                                         </div>
                                         <br />
                                         <br />
@@ -319,7 +319,7 @@
                                             <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="form_datetime" name="userCreatedTime"/>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="control-label" style="margin-left: -28px">最近登录：</label>
+                                            <label class="control-label" style="margin-left: -28px">上次登录：</label>
                                             <input class="form-control" style="display: initial;" type="text" disabled="disabled" attr="user.userLoginedTime" name="userLoginedTime"/>
                                         </div>
                                         <div class="col-md-4">
