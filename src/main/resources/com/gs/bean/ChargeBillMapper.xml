@@ -30,7 +30,12 @@
 					<result column="plateName" property="plateName"/>
 				</association>
 			</association>
+			<association property="company" javaType="com.gs.bean.Company">
+				<id column="companyId" property="companyId"/>
+				<result column="companyName" property="companyName"/>
+			</association>
 		</association>
+
 	</resultMap>
 
 	<insert id="insert"  parameterType="chargeBill">
@@ -102,9 +107,9 @@
 
 	<select id="queryByPager" resultType="list" resultMap="chargeBillResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select cb.*, r.recordId, r.checkinId, c.checkinId, c.userName, c.maintainOrFix, c.userPhone, p.plateId, p.plateName
-				from t_charge_bill cb, t_maintain_record r, t_checkin c, t_car_plate p
-				where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId and c.plateId = p.plateId
+			select cb.*, r.recordId, r.checkinId, c.checkinId, c.userName, c.maintainOrFix, c.userPhone, p.plateId, p.plateName, cpy.companyId, cpy.companyName
+				from t_charge_bill cb, t_maintain_record r, t_checkin c, t_car_plate p, t_company cpy
+				where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId and c.plateId = p.plateId and r.companyId = cpy.companyId
 		]]>
 		order by cb.chargeCreatedTime desc
         limit #{beginIndex}, #{pageSize}
@@ -112,9 +117,9 @@
 
 	<select id="queryPagerByStatus" resultType="list" resultMap="chargeBillResultMap">
 		<![CDATA[
-			select cb.*, r.recordId, r.checkinId, c.checkinId, c.userName, c.maintainOrFix, c.userPhone, p.plateId, p.plateName
-				from t_charge_bill cb, t_maintain_record r, t_checkin c, t_car_plate p
-				where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId and c.plateId = p.plateId and cb.chargeBillStatus = #{status}
+			select cb.*, r.recordId, r.checkinId, c.checkinId, c.userName, c.maintainOrFix, c.userPhone, p.plateId, p.plateName, cpy.companyId, cpy.companyName
+				from t_charge_bill cb, t_maintain_record r, t_checkin c, t_car_plate p, t_company cpy
+				where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId and c.plateId = p.plateId and r.companyId = cpy.companyId and cb.chargeBillStatus = #{status}
 		]]>
 		order by cb.chargeCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
@@ -122,9 +127,9 @@
 
 	<select id="queryPagerByCondition" resultType="list" resultMap="chargeBillResultMap">
 		<![CDATA[
-			select cb.*, r.recordId, r.checkinId, c.checkinId, c.userName, c.maintainOrFix, c.userPhone, p.plateId, p.plateName
-				from t_charge_bill cb, t_maintain_record r, t_checkin c, t_car_plate p
-				where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId and c.plateId = p.plateId
+			select cb.*, r.recordId, r.checkinId, c.checkinId, c.userName, c.maintainOrFix, c.userPhone, p.plateId, p.plateName, cpy.companyId, cpy.companyName
+				from t_charge_bill cb, t_maintain_record r, t_checkin c, t_car_plate p, t_company cpy
+				where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId and c.plateId = p.plateId and r.companyId = cpy.companyId
 		]]>
 		<if test="chargeBill.record.checkin.userName != null and chargeBill.record.checkin.userName != ''">
 			and c.userName like concat('%',#{chargeBill.record.checkin.userName},'%')

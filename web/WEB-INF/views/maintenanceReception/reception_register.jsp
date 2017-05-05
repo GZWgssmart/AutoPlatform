@@ -27,7 +27,6 @@
     <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
 
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/maintenanceReception/reception_register.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>

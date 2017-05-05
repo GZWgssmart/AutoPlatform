@@ -151,3 +151,33 @@ function validator(formId) {
 
         })
 }
+
+/** 显示打印收费单据的win */
+function showChargeBillWin() {
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('打印失败', "只能选择一条收费单据进行打印", "error");
+        return false;
+    } else {
+        var chargeBill = selectRow[0];
+        $("#chargeTime").html(formatterDate2(chargeBill.chargeTime));
+        $("#companyName").html(chargeBill.record.company.companyName);
+        $("#paymentMethod").html(chargeBill.paymentMethod);
+        $("#actualPaymentMax").html(upDigit(chargeBill.actualPayment));
+        $("#actualPayment").html(chargeBill.actualPayment);
+        $("#chargeBillDes").html(chargeBill.chargeBillDes);
+        $("#chargeBillWin").modal("show");
+    }
+
+}
+
+/** 打印收费单据 */
+function printChargeBill() {
+    var newWin=window.open('about:blank', '', '');
+    var titleHTML = document.getElementById('printDiv').innerHTML;// 拿打印div所有元素
+    newWin.document.write("<html><head><title></title><link rel='stylesheet' type ='text/css' href='/css/bootstrap.min.css'></head><body>" + titleHTML + "</body></html>");
+    newWin.document.location.reload();
+    newWin.print();
+    newWin.close();
+}
+

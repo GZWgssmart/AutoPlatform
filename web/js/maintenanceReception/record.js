@@ -331,45 +331,49 @@ function closeSearchForm() {
 /** 生成明细清单 */
 function generateDetail() {
     var tableData = $('#detailTable').bootstrapTable('getData');
-
     var len = tableData.length;
-    var detail1 = tableData[0];
-    var maintainOrFix = detail1.record.checkin.maintainOrFix;
-    var count = 0;
-    if (maintainOrFix == "保养") {
-        for (var i = 0; i < len; i++) {
-            var detail = tableData[i];
-            $("#maintainName" + i).html(detail.maintain.maintainName);
-            $("#maintainMoney" + i).html('$' + detail.maintain.maintainMoney);
-            $("#maintainPrice" + i).html('$' + detail.price);
-            count += detail.price;
+    if (len > 0) {
+        var detail1 = tableData[0];
+        var maintainOrFix = detail1.record.checkin.maintainOrFix;
+        var count = 0;
+        if (maintainOrFix == "保养") {
+            for (var i = 0; i < len; i++) {
+                var detail = tableData[i];
+                $("#maintainName" + i).html(detail.maintain.maintainName);
+                $("#maintainMoney" + i).html('￥' + detail.maintain.maintainMoney);
+                $("#maintainPrice" + i).html('￥' + detail.price);
+                count += detail.price;
+            }
+            $("#count").html("￥" + count);
+        } else if (maintainOrFix == "维修") {
+            for (var i = 0; i < len; i++) {
+                var detail = tableData[i];
+                $("#fixName" + i).html(detail.maintain.maintainName);
+                $("#fixAcc" + i).html("配件名");
+                $("#fixCarMileage" + i).html(detail.record.checkin.carMileage);
+                $("#fixPrice" + i).html("￥" + detail.price);
+                $("#fixTime" + i).html(formatterDate1(detail.record.startTime));
+            }
         }
-        $("#count").html(count);
-    } else if (maintainOrFix == "维修") {
-        for (var i = 0; i < len; i++) {
-            var detail = tableData[i];
-            $("#fixName" + i).html(detail.maintain.maintainName);
-            $("#fixAcc" + i).html("配件名");
-            $("#fixCarMileage" + i).html(detail.record.checkin.carMileage);
-            $("#fixPrice" + i).html("$" + detail.price);
-            $("#fixTime" + i).html(formatterDate1(detail.record.startTime));
-        }
+
+
+
+        var carPlate = detail1.record.checkin.plate.plateName + "-" + detail1.record.checkin.carPlate;
+        var userName = detail1.record.checkin.userName;
+        var userPhone = detail1.record.checkin.userPhone;
+        var maintainCarMileage = detail1.record.checkin.carMileage;
+        var startTime = detail1.record.startTime;
+        $("#carPlate").html(carPlate);
+        $("#userName").html(userName);
+        $("#userPhone").html(userPhone);
+        $("#maintainCarMileage").html(maintainCarMileage);
+        $("#startTime").html(formatterDate1(startTime));
+
+        $("#maintainFixWin").modal("show");
+    } else {
+        swal("生成明细清单失败", "该用户还没有明细清单", "error");
     }
 
-
-
-    var carPlate = detail1.record.checkin.plate.plateName + "-" + detail1.record.checkin.carPlate;
-    var userName = detail1.record.checkin.userName;
-    var userPhone = detail1.record.checkin.userPhone;
-    var maintainCarMileage = detail1.record.checkin.carMileage;
-    var startTime = detail1.record.startTime;
-    $("#carPlate").html(carPlate);
-    $("#userName").html(userName);
-    $("#userPhone").html(userPhone);
-    $("#maintainCarMileage").html(maintainCarMileage);
-    $("#startTime").html(formatterDate1(startTime));
-
-    $("#maintainFixWin").modal("show");
 }
 
 /** 打印维修保养清单 */
@@ -400,23 +404,28 @@ function userConfirm() {
         function(isConfirm){
             if (isConfirm) {
                 var tableData = $('#detailTable').bootstrapTable('getData');
-                var maintainIds = "";
-                var recordId = tableData[0].record.recordId;
-                for (var i = 0, len = tableData.length; i < len; i++) {
-                    if (maintainIds == "" || maintainIds == null) {
-                        maintainIds = tableData[i].maintain.maintainId;
-                    } else {
-                        maintainIds += "," + tableData[i].maintain.maintainId;
+                if (tableData.length > 0) {
+                    var maintainIds = "";
+                    var recordId = tableData[0].record.recordId;
+                    for (var i = 0, len = tableData.length; i < len; i++) {
+                        if (maintainIds == "" || maintainIds == null) {
+                            maintainIds = tableData[i].maintain.maintainId;
+                        } else {
+                            maintainIds += "," + tableData[i].maintain.maintainId;
+                        }
                     }
+                    $.get("/detail/confirm?recordId=" + recordId + "&maintainIds=" + maintainIds,function(data) {
+                        if (data.result == "success") {
+                            swal("确认成功", data.message, "success");
+                            $("#searchDetailWin").modal('hide');
+                        } else if (data.result == "fail") {
+                            swal("确认失败", "出现了一个错误", "error");
+                        }
+                    }, "json");
+                } else {
+                    swal("确认失败", "该用户还没有明细清单", "error");
                 }
-                $.get("/detail/confirm?recordId=" + recordId + "&maintainIds=" + maintainIds,function(data) {
-                    if (data.result == "success") {
-                        swal("确认成功", data.message, "success");
-                        $("#searchDetailWin").modal('hide');
-                    } else if (data.result == "fail") {
-                        swal("确认失败", "出现了一个错误", "error");
-                    }
-                }, "json");
+
 
             } else {
                 swal("取消操作", "您已经取消操作", "error");
