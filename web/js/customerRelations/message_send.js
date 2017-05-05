@@ -24,13 +24,28 @@ function addCustomer(){
         var customer = selectRow[0];
         $(".customerId").val(customer.checkin.userId);
         $(".visit_user").val(customer.checkin.userName);
-        showEditWin(2);
+        addMessageId();
         $("#customerWin").modal('hide');
-
     }
 }
 
-
+var userId = new Array();
+/**插入Id*/
+function addMessageId(){
+    var selectRow = $("#customerTable").bootstrapTable('getSelections');
+    alert(selectRow.length);
+    if(selectRow.length>0){
+        for(var i = 0; i<selectRow.length;i++){
+            userId[i] =selectRow[i].checkin.userId;
+        }
+        $.get("/MessageSend/addMessageId?userId="+userId,
+            function(data){
+                swal('添加成功', "", "success");
+            })
+    }else {
+        swal('添加失败', "至少选择一行数据", "error");
+    }
+}
 
 var idList = new Array();
 var sendMsg = '';

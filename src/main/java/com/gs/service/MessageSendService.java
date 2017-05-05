@@ -2,6 +2,8 @@ package com.gs.service;
 
 import com.gs.bean.MessageSend;
 
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -11,5 +13,7 @@ import com.gs.bean.MessageSend;
 public interface MessageSendService extends BaseService<String, MessageSend>{
 
     public void batchUpdateBySendMsg( String[] idList, String sendMsg);
+
+    public void addMessageId(List<MessageSend> msd);
 
 }

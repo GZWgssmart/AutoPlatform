@@ -3,6 +3,9 @@ package com.gs.dao;
 import com.gs.bean.MessageSend;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -14,4 +17,6 @@ public interface MessageSendDAO extends BaseDAO<String, MessageSend>{
 
 
     public void batchUpdateBySendMsg(@Param("idList") String[] idList, @Param("sendMsg")String sendMsg);
+
+    public void addMessageId(List<MessageSend> msd);
 }

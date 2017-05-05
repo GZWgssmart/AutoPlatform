@@ -69,6 +69,22 @@ public class MessageSendController {
         return mesList;
     }
 
+    /*插入messageId*/
+    @ResponseBody
+    @RequestMapping(value = "addMessageId", method = RequestMethod.GET)
+    public ControllerResult addMessageId(String[] userId){
+        logger.info("添加messageId");
+        List<MessageSend> msList = new ArrayList<MessageSend>();
+        for(int i = 0;i< userId.length; i++){
+            System.out.println(userId[i]+"======================================");
+            MessageSend m = new MessageSend();
+            m.setUserId(userId[i]);
+            msList.add(m);
+        }
+        messageSendService.addMessageId(msList);
+        return ControllerResult.getSuccessResult("插入成功");
+    }
+
 }
 
 

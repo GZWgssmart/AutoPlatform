@@ -21,6 +21,17 @@
 		]]>
 	</insert>
 
+	<insert id="addMessageId">
+		<selectKey resultType="int" keyProperty="messageId" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into t_message_send (messageId,userId)
+		values
+		<foreach collection="list" item="item" index="index" separator="," >
+			(uuid(),#{item.userId})
+		</foreach>
+	</insert>
+
 	<insert id="batchInsert"  parameterType="list">
 		<![CDATA[
 
@@ -59,7 +70,7 @@
 
 	<update id="batchUpdateBySendMsg" >
 		<![CDATA[
-		  update t_message_send s set s.sendMsg= #{sendMsg} where s.messageId in
+		  update t_message_send s set s.sendMsg= #{sendMsg}, s.sendCreatedTime= now() where s.messageId in
 		]]>
 			<foreach collection="idList" item="str" open="(" separator="," close=")">
 				#{str}
