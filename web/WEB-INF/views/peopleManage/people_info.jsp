@@ -183,6 +183,7 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加员工</h3>
                         <form role="form" id="addForm">
+                            <input type="hidden" name="companyId" value="${sessionScope.user.companyId}">
                             <div class="form-group">
                                 <label class="control-label">姓名：</label>
                                 <input type="text"  name="userName" class="form-control"/>
@@ -226,10 +227,6 @@
                                 <label class="control-label">身份证：</label>
                                 <input type="text" name="userIdentity"
                                        class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">所属公司：</label>
-                                <select id="addCompany" class="js-example-tags form-control user_company" name="companyId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"

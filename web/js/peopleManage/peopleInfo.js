@@ -4,7 +4,6 @@ $(document).ready(function () {
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 
-    initSelect2("user_company", "请选择公司", "/company/company_all", "565");
     initSelect2("userModal_company", "请选择公司", "/company/company_all", "130");
 });
 
@@ -165,7 +164,6 @@ function defaultPwd() {
 /**提交添加数据 */
 function showAddWin() {
     validator("addForm");
-    $('#addCompany').html('').trigger("change");
     $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }
