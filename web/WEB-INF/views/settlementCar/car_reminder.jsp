@@ -120,7 +120,7 @@
             </a>
 
             <a>
-                <button onclick="showAddWin()" type="button" class="btn btn-default">
+                <button onclick="showAllRemindWin()" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-envelope"></i> 全部提醒
                 </button>
             </a>

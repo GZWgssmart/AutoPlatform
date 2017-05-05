@@ -99,12 +99,11 @@ function showRemindWin() {
         var len = selectRow.length;
         var ids = "";
         var flag = true;
-        var lastSpeedStatus = "";
         var recordIds = "";
         var carPlate = "";
+        var userName = "";
         for (var i = 0; i < len; i++) {
             var record = selectRow[i];
-            lastSpeedStatus = record.speedStatus;
             if (selectRow[0].speedStatus != selectRow[i].speedStatus) {
                 flag = false;
             } else {
@@ -116,23 +115,100 @@ function showRemindWin() {
                 ids = record.checkin.userId;
                 recordIds = record.recordId;
                 carPlate = record.checkin.carPlate;
+                userName = record.checkin.userName;
             } else {
                 ids += "," + record.checkin.userId;
                 recordIds += "," + record.recordId;
                 carPlate += "," + record.checkin.carPlate;
+                userName += "," + record.checkin.userName;
             }
 
         }
         if (flag) {
-            $("#remindUserId").val(ids);
-            $("#remindRecordId").val(recordIds);
-            $("#remindCarPlate").val(carPlate);
-            $("#remindWin").modal('show');
+            swal({
+                    title: "确认操作?",
+                    text: "您确定想车主：" + userName + ",发送提车提醒吗？",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "确认",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                },
+                function (isConfirm) {
+                    if (isConfirm) {
+                        $("#remindUserId").val(ids);
+                        $("#remindRecordId").val(recordIds);
+                        $("#remindCarPlate").val(carPlate);
+                        $("#remindWin").modal('show');
+                    } else {
+                        swal("取消操作", "您已经取消操作", "error");
+                    }
+                });
         } else {
             swal('提醒失败', "只能选择未提醒的记录", "error");
         }
 
     }
+}
+
+/** 全部提醒 */
+function showAllRemindWin() {
+    validator("remindForm");
+    var selectRow = $("#cusTable").bootstrapTable('getData');
+    var len = selectRow.length;
+    var ids = "";
+    var recordIds = "";
+    var carPlate = "";
+    var count = 0;
+    var userName = "";
+    for (var i = 0; i < len; i++) {
+        var record = selectRow[i];
+        if (selectRow[i].speedStatus == "已提醒") {
+            continue;
+        }
+        if (ids == "") {
+            ids = record.checkin.userId;
+            recordIds = record.recordId;
+            carPlate = record.checkin.carPlate;
+            userName = record.checkin.userName;
+        } else {
+            ids += "," + record.checkin.userId;
+            recordIds += "," + record.recordId;
+            carPlate += "," + record.checkin.carPlate;
+            userName += "," + record.checkin.userName;
+        }
+        count++;
+
+    }
+    if (count <= 0) {
+        swal('提醒失败', "没有未提醒的记录", "error");
+    } else {
+        swal({
+                title: "确认操作?",
+                text: "您确定想车主：" + userName + ",发送提车提醒吗？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: true,
+                closeOnCancel: false
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    $("#remindUserId").val(ids);
+                    $("#remindRecordId").val(recordIds);
+                    $("#remindCarPlate").val(carPlate);
+                    $("#remindWin").modal('show');
+                } else {
+                    swal("取消操作", "您已经取消操作", "error");
+                }
+            });
+
+    }
+
 }
 
 /** 表单验证 */
