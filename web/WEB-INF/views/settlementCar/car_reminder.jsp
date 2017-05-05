@@ -226,7 +226,7 @@
                         <form role="form" id="remindForm">
                             <input type="hidden" id="remindUserId" name="userId" class="form-control"/>
                             <input type="hidden" id="remindRecordId" name="recordId" class="form-control"/>
-                            <input type="text" id="remindCarPlate" name="carPlate" class="form-control"/>
+                            <input type="hidden" id="remindCarPlate" name="carPlate" class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">提醒方式：</label>
                                 <select class="js-example-tags form-control remindMethod" name="remindMethod">
