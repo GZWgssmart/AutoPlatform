@@ -13,18 +13,6 @@
 		<result column="materialStatus" property="materialStatus"/>
 	</resultMap>
 
-	<resultMap id="materialListInfoResultMap" type="materialListInfo">
-		<id column="materialId" property="materialId"/>
-		<result column="materialCount" property="materialCount"/>
-		<result column="materialCreatedTime" property="materialCreatedTime"/>
-		<result column="materialStatus" property="materialStatus"/>
-		<result column="userName" property="userName" />
-		<result column="userRequests" property="userRequests" />
-		<result column="maintainName" property="maintainName" />
-		<result column="maintainMoney" property="maintainMoney" />
-		<result column="accName" property="accName" />
-	</resultMap>
-
 	<insert id="insert"  parameterType="materialList">
 		<![CDATA[
 
@@ -96,13 +84,10 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="materialListInfoResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="materialListResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			SELECT ml.`materialId`, ml.`materialCount`, ml.`materialCreatedTime`, ml.`materialStatus`, c.`userName`, c.`userRequests`, mf.`maintainName`,
-			mf.`maintainMoney`, a.`accName` FROM t_material_list ml, t_maintain_record mr, t_maintain_detail md, t_maintain_fix mf, t_accessories a, t_checkin c
-			WHERE 1 = 1 AND ml.`accId` = a.`accId` AND ml.`recordId` = mr.`recordId` AND mr.`recordId` = md.`recordId`
-			AND md.`maintainId` = mf.`maintainId` AND mr.`checkinId` = c.`checkinId`
-		]]> limit #{beginIndex}, #{pageSize}
+
+		]]>
 	</select>
 
 	<select id="count" resultType="int">
