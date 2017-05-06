@@ -10,6 +10,7 @@ $(document).ready(function () {
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
     initSelect2("accType_company", "请选择公司", "/company/company_all", "565");
+    initSelect2("company", "请选择公司", "/company/company_all", "150");
 
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin", "editForm");
@@ -154,4 +155,22 @@ function validator(formId) {
 
         })
 
+}
+
+/** 根据条件搜索 */
+function searchAccType() {
+    var accTypeName = $("#searchAccTypeName").val();
+    var accTypeDes = $("#searchAccTypeDes").val();
+    var companyId = $("#searchCompanyId").val();
+    initTable("cusTable", "/accessoriesType/queryByCondition?accTypeName=" + accTypeName + "&accTypeDes=" + accTypeDes + "&companyId=" + companyId);
+
+}
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchAccTypeName").val('');
+    $("#searchAccTypeDes").val('');
+    $('#searchCompanyId').html('').trigger("change");
+    $("#searchDiv").hide();
+    $("#showButton").show();
 }

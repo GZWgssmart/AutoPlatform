@@ -17,4 +17,7 @@ public interface AccessoriesTypeService extends BaseService<String, AccessoriesT
     public List<AccessoriesType> queryByStatusPager(String accTypeStatus, Pager pager);
     public int countByStatus(String status);
 
+    public int countByCondition(AccessoriesType accessoriesType);
+    public List<AccessoriesType> queryByCondition(Pager pager, AccessoriesType accessoriesType);
+
 }

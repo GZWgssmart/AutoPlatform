@@ -114,4 +114,24 @@ public class AccessoriesTypeController {
         List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryByStatusPager(status, pager);
         return new Pager4EasyUI<AccessoriesType>(pager.getTotalRecords(), accessoriesTypes);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByCondition", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesType> queryByCondition(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,
+                                                          @Param("accTypeName") String accTypeName, @Param("accTypeDes") String accTypeDes,
+                                                          @Param("companyId") String companyId) {
+            logger.info("条件查询配件分类");
+            AccessoriesType accessoriesType = new AccessoriesType();
+            accessoriesType.setAccTypeName(accTypeName);
+            accessoriesType.setAccTypeDes(accTypeDes);
+            accessoriesType.setCompanyId(companyId);
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            List<AccessoriesType> accessoriesTypes = new ArrayList<AccessoriesType>();
+            pager.setTotalRecords(accessoriesTypeService.countByCondition(accessoriesType));
+            accessoriesTypes = accessoriesTypeService.queryByCondition(pager, accessoriesType);
+
+            return new Pager4EasyUI<AccessoriesType>(pager.getTotalRecords(), accessoriesTypes);
+    }
 }

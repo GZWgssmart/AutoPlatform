@@ -44,4 +44,10 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
 		return accessoriesTypeDAO.countByStatus(status);
 	}
 
+	public int countByCondition(AccessoriesType accessoriesType) { return accessoriesTypeDAO.countByCondition(accessoriesType); }
+
+	public List<AccessoriesType> queryByCondition (Pager pager, AccessoriesType accessoriesType) {
+		return accessoriesTypeDAO.queryByCondition(pager, accessoriesType);
+	}
+
 }

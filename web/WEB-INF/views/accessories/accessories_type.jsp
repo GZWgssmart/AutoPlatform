@@ -50,6 +50,28 @@
             </th>
         </tr>
         </thead>
+        <form id="formSearch" class="form-horizontal">
+            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+                <div class="col-sm-2" style="margin-left: -15px;">
+                    <input type="text" id="searchAccTypeName" name="accTypeName" class="form-control" placeholder="请输入配件分类名称" >
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" id="searchAccTypeDes" name="accTypeDes" class="form-control" placeholder="请输入配件分类描述" >
+                </div>
+                <div class="col-sm-2">
+                    <select class="js-example-tags form-control company" id="searchCompanyId" name="companyId">
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" onclick="searchAccType()" class="btn btn-primary">
+                        查询
+                    </button>
+                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </form>
         <tbody>
         <div id="toolbar" class="btn-group">
             <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
@@ -67,6 +89,11 @@
             <a><button onclick="queryStatus('N')" type="button" class="btn btn-default" >
                 查不可用模块
             </button></a>
+            <a>
+                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-search"></i> 条件查询
+                </button>
+            </a>
         </div>
         </tbody>
 

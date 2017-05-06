@@ -97,6 +97,23 @@
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
+	<select id="queryByCondition" resultType="list" resultMap="accessoriesTypeResultMap">
+		<![CDATA[
+ 			select at.*, c.companyId, c.companyName from t_accessories_type at, t_company c where 1=1 and c.companyId = at.companyId
+		]]>
+		<if test="accessoriesType.accTypeName != null and accessoriesType.accTypeName !=''">
+			and at.accTypeName like concat('%', #{accessoriesType.accTypeName},'%')
+		</if>
+		<if test="accessoriesType.accTypeDes != null and accessoriesType.accTypeDes !=''">
+			and at.accTypeDes like concat('%', #{accessoriesType.accTypeDes}, '%')
+		</if>
+		<if test="accessoriesType.companyId != null and accessoriesType.companyId != '' and accessoriesType.companyId != 'null'">
+			and at.companyId = #{accessoriesType.companyId}
+		</if>
+		order by at.accTypeDes desc, at.companyId
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
 	<select id="count" resultType="int">
 	<![CDATA[
  			select count(accTypeId) from t_accessories_type
@@ -107,6 +124,21 @@
 		<![CDATA[
 			select count(*) from t_accessories_type where accTypeStatus = #{status}
 		]]>
+	</select>
+
+	<select id="countByCondition" resultType="int">
+		<![CDATA[
+			select count(*) from t_accessories_type where 1 = 1
+		]]>
+		<if test="accTypeName != null and accTypeName != ''">
+			and accTypeName like concat('%',#{accTypeName},'%')
+		</if>
+		<if test="accTypeDes != null and accTypeDes != ''">
+			and accTypeDes like concat('%',#{accTypeDes},'%')
+		</if>
+		<if test="companyId != null and companyId != '' and companyId != 'null'">
+			and companyId = #{companyId}
+		</if>
 	</select>
 
 	<update id="inactive" parameterType="string">
