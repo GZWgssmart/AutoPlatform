@@ -126,30 +126,6 @@ public class PeopleInfoController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "peopleIdentity_verification", method = RequestMethod.GET)
-    public String verificationIdentity(@Param("userIdentity")String userIdentity) {
-        boolean result = true;
-        List<User> verification = userService.queryIdentity();
-        for (User user : verification) {
-            System.out.println("aaaaaaaa"+userIdentity);
-            if (user.getUserIdentity().equals(userIdentity)) {
-                result = false;
-                break;
-            }
-        }
-        Map<String, Boolean> map = new HashMap<String, Boolean>();
-        map.put("valid", result);
-        ObjectMapper mapper = new ObjectMapper();
-        String resultString = "";
-        try {
-            resultString = mapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return resultString;
-    }
-
-    @ResponseBody
     @RequestMapping(value = "peopleInfo_pager", method= RequestMethod.GET)
     public Pager4EasyUI<User> info_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         logger.info("分页查询所有员工");

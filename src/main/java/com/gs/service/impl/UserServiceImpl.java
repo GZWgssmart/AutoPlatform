@@ -93,9 +93,6 @@ public class UserServiceImpl implements UserService {
 		return userDAO.queryEmail();
 	}
 
-	public List<User> queryIdentity() {
-		return userDAO.queryIdentity();
-	}
 
 
 	public void insertAdmin(User user) {

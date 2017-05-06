@@ -57,7 +57,6 @@ function customerAge(row) {
         }
         var birthday = card.substring(10, 12) + "月" + card.substring(12, 14) + "日";
         $("#birthday").val(birthday);
-        $("#addBirthday").val(birthday);
         $("#age").val(age);
     }else{
         $("#birthday").val("");
@@ -255,13 +254,6 @@ function validator(formId) {
                     regexp: {
                         regexp: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
                         message: '身份证格式错误'
-                    },
-                    threshold: 15,
-                    remote: {
-                        url: '/peopleManage/peopleIdentity_verification',
-                        message: '该身份证号已存在',
-                        delay :  2000,
-                        type: 'GET'
                     }
                 }
             },

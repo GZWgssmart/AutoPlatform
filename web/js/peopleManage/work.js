@@ -49,7 +49,7 @@ window.operateEvents = {
     'click .showUpdateInfo': function (e, value, row, index) {
         var work = row;
         $("#editForm").fill(work);
-        // $('#editCarBrand').html('<option value="' + work.user.userId + '">' + work.user.userName + '</option>').trigger("change");
+        $('#editCarBrand').html('<option value="' + work.user.userId + '">' + work.user.userName + '</option>').trigger("change");
         validator("editForm");
         $("#editWin").modal('show');
     }
@@ -65,7 +65,6 @@ function showEditWin() {
     if (selectRow.length > 0) {
         var work = selectRow[0];
         $("#editForm").fill(work);
-        $('#editUser').html('<option value="' + work.userId + '">' + work.user.userName + '</option>').trigger("change");
         $("#editWin").modal("show");
     } else {
         swal('指派失败', "只能选择一条数据进行指派", "error");

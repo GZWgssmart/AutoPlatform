@@ -183,7 +183,6 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加员工</h3>
                         <form role="form" id="addForm">
-                            <input type="hidden" id="addBirthday" name="userBirthday"/>
                             <input type="hidden" name="companyId" value="${sessionScope.user.companyId}">
                             <div class="form-group">
                                 <label class="control-label">姓名：</label>
@@ -198,7 +197,7 @@
                                 <p><label class="control-label">密码：</label></p>
                                 <input type="password" id="pwd" name="userPwd"
                                        class="form-control" style="width: 75%; display: initial;"/>
-                                <button type="button" onclick="defaultPwd()"style="float: right" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="默认密码为123456">使用默认密码</button>
+                                <button type="button" onclick="defaultPwd()"style="float: right; margin-right: 5px" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="默认密码为123456">使用默认密码</button>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">性别：</label>
