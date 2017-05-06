@@ -34,7 +34,7 @@ window.operateEvents = {
 function showAddWin() {
         validator("addForm");
         clearAddForm();
-        $("#addForm").modal('show');
+        $("#addWin").modal('show');
 }
 /** 清除添加的form表单信息 */
 function clearAddForm() {
