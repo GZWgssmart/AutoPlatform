@@ -43,6 +43,7 @@ CREATE TABLE `t_accessories_buy` (
   `accBuyCreatedTime` datetime DEFAULT NULL COMMENT '配件购买记录创建时间',
   `companyId` varchar(36) DEFAULT NULL COMMENT '配件购买记录所属公司',
   `accBuyStatus` varchar(2) DEFAULT NULL COMMENT '配件购买记录状态',
+  `accBuyCheck` varchar(2) DEFAULT 'N' COMMENT '配件购买审核状态',
   PRIMARY KEY (`accBuyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -53,6 +54,9 @@ DROP TABLE IF EXISTS `t_accessories_sale`;
 CREATE TABLE `t_accessories_sale` (
   `accSaleId` varchar(36) NOT NULL COMMENT '配件销售编号',
   `accId` varchar(36) DEFAULT NULL COMMENT '配件编号',
+  `userId` varchar(36) DEFAULT NULL COMMENT '来源于t_user表',
+  `userName` varchar(100) DEFAULT NULL COMMENT '用户姓名',
+  `userPhone` varchar(11) DEFAULT NULL COMMENT '用户手机号',
   `accSaledTime` datetime NOT NULL COMMENT '配件销售时间',
   `accSaleCount` int(255) NOT NULL COMMENT '配件销售数量',
   `accSalePrice` double NOT NULL COMMENT '配件销售单价',
@@ -234,6 +238,7 @@ CREATE TABLE `t_complaint` (
   `complaintCreatedTime` datetime DEFAULT NULL COMMENT '投诉时间',
   `complaintReply` varchar(500) DEFAULT NULL COMMENT '投诉回复内容',
   `complaintReplyTime` datetime DEFAULT NULL COMMENT '投诉回复时间',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '所属公司，来源于t_company表',
   `complaintReplyUser` varchar(36) DEFAULT NULL COMMENT '投诉回复人，来源于t_user表',
   PRIMARY KEY (`complaintId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -249,6 +254,7 @@ CREATE TABLE `t_incoming_outgoing` (
   `inOutMoney` double(255,0) DEFAULT NULL COMMENT '收支金额',
   `inOutCreatedUser` varchar(36) DEFAULT NULL COMMENT '收支记录创建人，来源于t_user表',
   `inOutCreatedTime` datetime DEFAULT NULL COMMENT '收支记录创建时间',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '所属公司，来源于t_company表',
   `inOutStatus` varchar(2) DEFAULT NULL COMMENT '收支记录状态，Y表示可用，N表示不可用'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -259,7 +265,9 @@ DROP TABLE IF EXISTS `t_incoming_type`;
 CREATE TABLE `t_incoming_type` (
   `inTypeId` varchar(36) NOT NULL COMMENT '收入类型编号',
   `inTypeName` varchar(20) DEFAULT NULL COMMENT '收人类型名称',
-  `inTypeStatus` varchar(2) DEFAULT NULL COMMENT '收人类型状态，Y表示可用，N表示不可用'
+  `companyId` varchar(36) DEFAULT NULL COMMENT '所属公司，来源于t_company表',
+  `inTypeStatus` varchar(2) DEFAULT NULL COMMENT '收人类型状态，Y表示可用，N表示不可用',
+  `inTypeCreatedTime` datetime DEFAULT NULL COMMENT '收人类型创建时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*维修保养明细表*/
@@ -333,6 +341,7 @@ CREATE TABLE `t_maintain_remind` (
   `remindMsg` varchar(255) DEFAULT NULL COMMENT '保养提醒消息',
   `remindTime` datetime DEFAULT NULL COMMENT '保养提醒时间',
   `remindType` varchar(20) DEFAULT NULL COMMENT '保养提醒方式，如邮箱，手机短信。默认使用手机短信方式发送提醒',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '所属公司，来源于t_company表',
   `remindCreatedTime` datetime DEFAULT NULL COMMENT '保养提醒记录创建时间',
   PRIMARY KEY (`remindId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -388,6 +397,7 @@ CREATE TABLE `t_message_send` (
   `userId` varchar(36) DEFAULT NULL COMMENT '用户编号，来源于t_user表',
   `sendMsg` varchar(500) DEFAULT NULL COMMENT '短信发送内容',
   `sendTime` datetime DEFAULT NULL COMMENT '短信发送时间',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '所属公司，来源于t_company表',
   `sendCreatedTime` datetime DEFAULT NULL COMMENT '短信发送记录创建时间',
   PRIMARY KEY (`messageId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -413,6 +423,7 @@ CREATE TABLE `t_outgoing_type` (
   `outTypeId` varchar(36) NOT NULL COMMENT '支出类型编号',
   `outTypeName` varchar(20) DEFAULT NULL COMMENT '支出类型名称',
   `outTypeStatus` varchar(2) DEFAULT NULL COMMENT '支出状态，Y表示可用，N表示不可用',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '所属公司，来源于t_company表',
   `outTypeCreatedTime` datetime DEFAULT NULL COMMENT '支出类型创建时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -516,6 +527,7 @@ CREATE TABLE `t_track_list` (
   `trackContent` varchar(500) DEFAULT NULL COMMENT '回访的问题',
   `serviceEvaluate` int(255) DEFAULT NULL COMMENT '本次服务评价,1-10分',
   `trackUser` varchar(36) DEFAULT NULL COMMENT '跟踪回访用户，来源于t_user表',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '所属公司，来源于t_company表',
   `trackCreatedTime` datetime DEFAULT NULL COMMENT '跟踪回访创建时间',
   PRIMARY KEY (`trackId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
