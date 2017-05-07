@@ -89,12 +89,13 @@ public class AdminController {
 
     @ResponseBody
     @RequestMapping(value = "add_admin", method = RequestMethod.POST)
-    public ControllerResult addAdmin(@Param("user") User user, @Param("adminTypeId") String adminTypeId) {
+    public ControllerResult addAdmin(User user) {
         logger.info("添加管理员");
         user.setUserId(UUIDUtil.uuid());
         userService.insertAdmin(user);
+        Role role = roleService.queryByName("systemOrdinaryAdmin");
         UserRole ur = new UserRole();
-        ur.setRoleId(adminTypeId);
+        ur.setRoleId(role.getRoleId());
         ur.setUserId(user.getUserId());
         userRoleService.insert(ur);
         return ControllerResult.getSuccessResult("添加成功");
@@ -125,8 +126,6 @@ public class AdminController {
     public String queryRoleByUserId() {
         Role role = roleService.queryByUserId(SessionGetUtil.getUser().getUserId());
         if (role.getRoleName().equals("systemSuperAdmin")) {
-            return "2";
-        } else if (role.getRoleName().equals("systemOrdinaryAdmin")) {
             return "1";
         } else {
             return "0";

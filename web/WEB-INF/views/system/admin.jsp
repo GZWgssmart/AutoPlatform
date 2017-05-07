@@ -161,17 +161,17 @@
                         <h3 class="m-t-none m-b">添加管理员</h3>
                         <form role="form" id="addForm">
                             <input type="hidden" id="birthday" name="userBirthday"/>
-                            <div class="form-group">
+                            <%--<div class="form-group">
                                 <select id="adminTypeSelect" onchange="adminSelect('adminTypeSelect');"
                                         class="js-example-tags form-control adminCAndSO"
                                         name="adminTypeId">
                                 </select>
-                            </div>
-                            <div class="form-group">
+                            </div>--%>
+                            <%--<div class="form-group">
                                 <select id="addCompany" disabled="disabled"
                                         class="js-example-tags form-control admin_company"
                                         name="companyId"></select>
-                            </div>
+                            </div>--%>
                             <div class="form-group">
                                 <label class="control-label">姓名：</label>
                                 <input type="text" name="userName" class="form-control"/>

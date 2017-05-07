@@ -5,8 +5,8 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", contextPath + "/admin/query_pager");
-    initSelect2("adminCAndSO", "选择管理员类型", contextPath + "/role/query_cAdminAndSOAdmin", "540");
-    initSelect2("admin_company", "请选择公司", contextPath + "/company/company_all", "540");
+    /*initSelect2("adminCAndSO", "选择管理员类型", contextPath + "/role/query_cAdminAndSOAdmin", "540");*/
+    /*initSelect2("admin_company", "请选择公司", contextPath + "/company/company_all", "540");*/
     $("#search").bind("click", initTable);
 });
 
@@ -43,8 +43,8 @@ function updateAdmin() {
 
 function showAddWin() {
     validator("addForm");
-    $('#adminTypeSelect').html('').trigger("change");
-    $('#addCompany').html('').trigger("change");
+    /*$('#adminTypeSelect').html('').trigger("change");
+    $('#addCompany').html('').trigger("change");*/
     $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }
@@ -150,7 +150,7 @@ function querySystem() {
     initTable("cusTable", contextPath + "/admin/system_pager");
 }
 
-function adminSelect(selectId) {
+/*function adminSelect(selectId) {
     var roleId = $("#" + selectId).val();
     var roleName = $("#" + selectId).find("option:selected").text();
     if (roleName == "董事长") {
@@ -159,7 +159,7 @@ function adminSelect(selectId) {
         $(".admin_company").prop("disabled", true);
         $("#addCompany").empty();
     }
-}
+}*/
 
 /**生成默认密码*/
 function defaultPwd() {
@@ -178,14 +178,7 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            adminTypeId: {
-                message: '管理员类型验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '管理员类型不能为空'
-                    }
-                }
-            },userName: {
+           userName: {
                 message: '名称验证失败',
                 validators: {
                     notEmpty: {
@@ -256,7 +249,6 @@ function validator(formId) {
     })
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                alert("aaaabbb");
                 formSubmit(contextPath + "/admin/add_admin", formId, "addWin");
 
             } else if (formId == "editForm") {
