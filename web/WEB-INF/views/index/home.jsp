@@ -45,18 +45,18 @@
                                 <span class="clear">
                                <span class="block m-t-xs"><strong class="font-bold">${sessionScope.user.userName}</strong></span>
                                 <span class="text-muted text-xs block">
-                                    <shiro:hasRole name="companyAdmin">汽修管理员</shiro:hasRole>
-									<shiro:hasRole name="systemSuperAdmin">系统超级管理员</shiro:hasRole>
-									<shiro:hasRole name="systemOrdinaryAdmin">系统普通管理员</shiro:hasRole>
-                                    <shiro:hasRole name="companyRepertory">汽修公司库管人员</shiro:hasRole>
+                                    <shiro:hasRole name="companyAdmin">董事长</shiro:hasRole>
+									<shiro:hasRole name="systemSuperAdmin">超级管理员</shiro:hasRole>
+									<shiro:hasRole name="systemOrdinaryAdmin">普通管理员</shiro:hasRole>
+                                    <shiro:hasRole name="companyRepertory">库管</shiro:hasRole>
 									<shiro:hasRole name="carOwner">车主</shiro:hasRole>
-									<shiro:hasRole name="companyReceive">汽修公司接待员</shiro:hasRole>
-                                    <shiro:hasRole name="companyArtificer">汽修公司技师</shiro:hasRole>
-									<shiro:hasRole name="companySales">汽修公司销售员</shiro:hasRole>
-									<shiro:hasRole name="companyHumanManager">汽修公司人事</shiro:hasRole>
-                                    <shiro:hasRole name="companyAccounting">汽修公司财务</shiro:hasRole>
-									<shiro:hasRole name="companyBuyer">汽修公司采购员</shiro:hasRole>
-									<shiro:hasRole name="companyEmp">汽修普通员工</shiro:hasRole>
+									<shiro:hasRole name="companyReceive">接待员</shiro:hasRole>
+                                    <shiro:hasRole name="companyArtificer">技师</shiro:hasRole>
+									<shiro:hasRole name="companySales">销售员</shiro:hasRole>
+									<shiro:hasRole name="companyHumanManager">人事管理员</shiro:hasRole>
+                                    <shiro:hasRole name="companyAccounting">财务</shiro:hasRole>
+									<shiro:hasRole name="companyBuyer">采购员</shiro:hasRole>
+									<shiro:hasRole name="companyEmp">普通员工</shiro:hasRole>
                                     <b class="caret"></b></span>
                                 </span>
                         </a>
