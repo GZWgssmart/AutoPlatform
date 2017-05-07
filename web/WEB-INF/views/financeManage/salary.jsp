@@ -55,6 +55,33 @@
             </th>
         </tr>
         </thead>
+
+        <form id="formSearch" class="form-horizontal">
+            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+                <div class="col-sm-4" style="margin-left: -15px;">
+                    <input type="text" id="userName"  class="form-control" placeholder="请输入员工姓名" >
+                </div>
+                <div class="col-sm-4">
+                    <select class="js-example-tags form-control" id="salaryRange" >
+                        <option value="0">工资范围</option>
+                        <option value="1">2500以下</option>
+                        <option value="2">2500~4500</option>
+                        <option value="3">4500~6500</option>
+                        <option value="4">6500~8500</option>
+                        <option value="5">8500以上</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-4">
+                    <button type="button" onclick="searchSalary()" class="btn btn-primary">
+                        查询
+                    </button>
+                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </form>
         <tbody>
         <div id="toolbar" class="btn-group">
             <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
@@ -69,6 +96,11 @@
             <a onclick="location.href='/salary/export'" href="javascript:;"><button type="button"  class="btn btn-default">
                 <i class="glyphicon glyphicon-floppy-open"></i> 导出
             </button></a>
+            <a>
+                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-search"></i> 条件查询
+                </button>
+            </a>
         </div>
         </tbody>
 
@@ -300,7 +332,7 @@
 <script src="<%=path %>/js/jquery.formFill.js"></script>
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-<script src="<%=path %>/js/ajaxfileupload.js"></script>
+<script src="<%=path %>/js/jquery.form.min.js"></script>
 <script src="<%=path %>/js/financeManage/salary.js"></script>
 <script src="<%=path%>/js/main.js"></script>
 

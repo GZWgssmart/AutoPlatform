@@ -7,7 +7,8 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/salary/query_pager");
 
-    initDateTimePicker("datatimepicker","salaryTime");
+    initDateTimePicker("datatimepicker","salaryTime","editForm");
+    initDateTimePicker("datatimepicker","salaryTime","addForm");
     destoryValidator("editWin","editForm");
     destoryValidator("addWin","addForm");
     destoryValidator("importSalaryWin","importSalaryForm");
@@ -88,10 +89,30 @@ function addUserName(){
     }
 }
 
+/** 根据条件搜索 */
+function searchSalary() {
+    var userName = $("#userName").val();
+    var salaryRange = $("#salaryRange").val();
+    if(userName != '' || salaryRange != ''){
+        initTable("cusTable", "/salary/query_search?userName=" + userName + "&salaryRange=" + salaryRange);
+    }else{
+        initTable("cusTable", "/salary/query_pager");
+    }
+}
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#userName").val('');
+    $("#salaryRange").val('0');
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
+
+// 显示导入窗口
 function showImport(){
     fileValidator();
     $("#importSalaryWin").modal("show");
 }
+// 验证添加工资和更新工资
 function validator(formId) {
     $("#addButton").removeAttr("disabled");
     $("#editButton").removeAttr("disabled");
@@ -161,7 +182,7 @@ function validator(formId) {
 
 }
 
-
+// 导入按钮导入成功之后禁用
 function importSalary() {
     $("#importSalaryForm").data('bootstrapValidator').validate();
     if ($("#importSalaryForm").data('bootstrapValidator').isValid()) {
@@ -171,6 +192,7 @@ function importSalary() {
     }
 }
 
+// 验证文件格式
 function fileValidator() {
     $("#importButton").removeAttr("disabled");
     $('#importSalaryForm').bootstrapValidator({
@@ -197,28 +219,24 @@ function fileValidator() {
     })
 
         .on('success.form.bv', function (e) {
-            $.ajaxFileUpload({
-                    url:'/salary/readExcel',             //需要链接到服务器地址
-                    secureuri:false,
-                    fileElementId:'file',                   //文件选择框的id属性
-                    dataType: 'json',                             //服务器返回的格式，可以是json
-                    success: function (data, status) {
-                        if (data.result == "success") {
-                            $('#importSalaryWin').modal('hide');
-                            swal(data.message, "", "success");
-                            $('#cusTable').bootstrapTable('refresh');
-                            $('#importSalaryForm').data('bootstrapValidator').resetForm(true);
-                        } else if (data.result == "fail") {
-                            $('#importSalaryWin').modal('hide');
-                            swal(data.message, "内容不匹配", "error");
-                            $('#importSalaryForm').data('bootstrapValidator').resetForm(true);
-                        }
-                    },
-                    error: function (data,status) {
+            $('#importSalaryForm').ajaxSubmit({
+                url:'/salary/readExcel',
+                type:'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.result == "success") {
+                        $('#importSalaryWin').modal('hide');
+                        swal(data.message, "", "success");
+                        $('#cusTable').bootstrapTable('refresh');
+                        $('#importSalaryForm').data('bootstrapValidator').resetForm(true);
+                    } else if(data.result == "fail"){
+                        $('#importSalaryWin').modal('hide');
+                        swal(data.message, "内容不匹配", "error");
+                        $('#importSalaryForm').data('bootstrapValidator').resetForm(true);
 
                     }
                 }
-            );
+            })
         })
 
 }

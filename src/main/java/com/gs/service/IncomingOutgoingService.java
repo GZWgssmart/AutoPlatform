@@ -20,4 +20,9 @@ public interface IncomingOutgoingService extends BaseService<String, IncomingOut
     public List<IncomingOutgoing> queryByDefault(int inOutType);
 
     public List<IncomingOutgoing> queryByCondition(String startTime,String endTime,int inOutType,String type);
+
+    public void addInsert(List<IncomingOutgoing> incomingOutgoings);
+
+    public List<IncomingOutgoing> queryPagerStatus(String status,Pager pager);
+    public int countStatus(String status);
 }

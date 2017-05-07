@@ -24,149 +24,132 @@
 
 </head>
 <body>
-<div class="container">
-    <div class="btn-group" data-toggle="buttons" style="margin-top:20px;">
-        <label class="btn btn-primary" id="showButton1" onclick="showSearchForm(1)">
-            <input type="checkbox" autocomplete="off"> 按年查询
-        </label>
-        <label class="btn btn-primary" onclick="showSearchForm(2)" id="showButton2">
-            <input type="checkbox" autocomplete="off"> 按季度查询
-        </label>
-        <label class="btn btn-primary" onclick="showSearchForm(3)" id="showButton3">
-            <input type="checkbox" autocomplete="off"> 按月查询
-        </label>
-        <label class="btn btn-primary" onclick="showSearchForm(4)" id="showButton4">
-            <input type="checkbox" autocomplete="off"> 按周查询
-        </label>
-        <label class="btn btn-primary" onclick="showSearchForm(5)" id="showButton5">
-            <input type="checkbox" autocomplete="off"> 按日查询
-        </label>
-    </div>
-</div>
-<div class="container">
-    <form id="formSearch" class="form-horizontal">
-        <div class="form-group" id="searchDiv1" style="margin-top:15px; display: none;">
-            <div class="col-sm-4">
-                <input type="text" readonly placeholder="开始 : 可按 年 " id="start1"  name="startTime"
-                       class="form-control datatimepicker"/>
-            </div>
-            <div class="col-md-1">
-                <hr style="color:black"/>
-            </div>
-            <div class="col-sm-4">
-                <input type="text" readonly placeholder="结束 : 可按 年 " id="end1" name="endTime"
-                       class="form-control datatimepicker"/>
-            </div>
+<div class="container" style="margin-top:15px;">
+    <ul class="nav nav-pills" id="myTab">
+               <li  class="active"><a  data-toggle="tab" data-target="#year"   >按年查询</a></li>
+               <li><a  data-toggle="tab" data-target="#quarter">按季度查询</a></li>
+               <li><a  data-toggle="tab" data-target="#month">按月查询</a></li>
+               <li><a  data-toggle="tab"data-target="#week">按周查询</a></li>
+        <li><a  data-toggle="tab"data-target="#day">按日查询</a></li>
+       　　 </ul>
+          <div class="tab-content" style="margin-top:10px;">
+              <div class="tab-pane  fade in active" id="year">
+                  <form id="formSearch" class="form-horizontal">
+                      <div class="form-group">
+                          <div class="col-sm-4">
+                              <input type="text" readonly placeholder="开始 : 可按 年 " id="start1"  name="startTime"
+                                     class="form-control datatimepicker"/>
+                          </div>
+                          <div class="col-md-1">
+                              <hr style="color:black"/>
+                          </div>
+                          <div class="col-sm-4">
+                              <input type="text" readonly placeholder="结束 : 可按 年 " id="end1" name="endTime"
+                                     class="form-control datatimepicker"/>
+                          </div>
 
-            <div class="col-sm-3">
-                <button type="button" onclick="searchCheckin(1)" class="btn btn-primary">
-                    查询
-                </button>
-                <button type="button" onclick="closeSearchForm(1)" class="btn btn-default">
-                    关闭
-                </button>
-            </div>
-        </div>
-    </form>
+                          <div class="col-sm-3">
+                              <button type="button" onclick="search(1)" class="btn btn-primary">
+                                  查询
+                              </button>
+                          </div>
+                      </div>
+                  </form>
+                </div>
+                <div class="tab-pane fade " id="quarter">
+                    <form  class="form-horizontal">
+                        <div class="form-group"  >
+                            <div class="col-sm-4">
+                                <input type="text" readonly placeholder="开始 : 可按 季度" id="start2" name="startTime"
+                                       class="form-control datatimepicker"/>
+                            </div>
+                            <div class="col-md-1">
+                                <hr style="color:black"/>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" readonly placeholder="结束 : 可按 季度" id="end2" name="endTime"
+                                       class="form-control datatimepicker"/>
+                            </div>
 
-    <form  class="form-horizontal">
-        <div class="form-group" id="searchDiv2" style="margin-top:15px; display: none;">
-            <div class="col-sm-4">
-                <input type="text" readonly placeholder="开始 : 可按 季度" id="start2" name="startTime"
-                       class="form-control datatimepicker"/>
-            </div>
-            <div class="col-md-1">
-                <hr style="color:black"/>
-            </div>
-            <div class="col-sm-4">
-                <input type="text" readonly placeholder="结束 : 可按 季度" id="end2" name="endTime"
-                       class="form-control datatimepicker"/>
-            </div>
+                            <div class="col-sm-3">
+                                <button type="button" onclick="search(2)" class="btn btn-primary">
+                                    查询
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                 </div>
+                 <div class="tab-pane fade" id="month">
+                     <form  class="form-horizontal">
+                         <div class="form-group" >
+                             <div class="col-sm-4">
+                                 <input type="text" readonly placeholder="开始 : 可按 月 " id="start3" name="startTime"
+                                        class="form-control datatimepicker"/>
+                             </div>
+                             <div class="col-md-1">
+                                 <hr style="color:black"/>
+                             </div>
+                             <div class="col-sm-4">
+                                 <input type="text" readonly placeholder="结束 : 可按 月 " id="end3" name="endTime"
+                                        class="form-control datatimepicker"/>
+                             </div>
 
-            <div class="col-sm-3">
-                <button type="button" onclick="searchCheckin(2)" class="btn btn-primary">
-                    查询
-                </button>
-                <button type="button" onclick="closeSearchForm(2)" class="btn btn-default">
-                    关闭
-                </button>
-            </div>
-        </div>
-    </form>
+                             <div class="col-sm-3">
+                                 <button type="button" onclick="search(3)" class="btn btn-primary">
+                                     查询
+                                 </button>
+                             </div>
+                         </div>
+                     </form>
+                 </div>
+                 <div class="tab-pane fade " id="week">
+                     <form class="form-horizontal">
+                         <div class="form-group"  >
+                             <div class="col-sm-4">
+                                 <input type="text" readonly placeholder="开始 : 可按 周 " id="start4" name="startTime"
+                                        class="form-control datatimepicker"/>
+                             </div>
+                             <div class="col-md-1">
+                                 <hr style="color:black"/>
+                             </div>
+                             <div class="col-sm-4">
+                                 <input type="text" readonly placeholder="结束 : 可按 周 " id="end4"  name="endTime"
+                                        class="form-control datatimepicker"/>
+                             </div>
 
-    <form  class="form-horizontal">
-        <div class="form-group" id="searchDiv3" style="margin-top:15px; display: none;">
-            <div class="col-sm-4">
-                <input type="text" readonly placeholder="开始 : 可按 月 " id="start3" name="startTime"
-                       class="form-control datatimepicker"/>
-            </div>
-            <div class="col-md-1">
-                <hr style="color:black"/>
-            </div>
-            <div class="col-sm-4">
-                <input type="text" readonly placeholder="结束 : 可按 月 " id="end3" name="endTime"
-                       class="form-control datatimepicker"/>
-            </div>
+                             <div class="col-sm-3">
+                                 <button type="button" onclick="search(4)" class="btn btn-primary">
+                                     查询
+                                 </button>
 
-            <div class="col-sm-3">
-                <button type="button" onclick="searchCheckin(3)" class="btn btn-primary">
-                    查询
-                </button>
-                <button type="button" onclick="closeSearchForm(3)" class="btn btn-default">
-                    关闭
-                </button>
-            </div>
-        </div>
-    </form>
+                             </div>
+                         </div>
+                     </form>
+                 </div>
+              <div class="tab-pane fade " id="day">
+                  <form class="form-horizontal">
+                      <div class="form-group" >
+                          <div class="col-sm-4">
+                              <input type="text" readonly placeholder="开始 : 可按 日 " id="start5" name="startTime"
+                                     class="form-control datatimepicker"/>
+                          </div>
+                          <div class="col-md-1">
+                              <hr style="color:black"/>
+                          </div>
+                          <div class="col-sm-4">
+                              <input type="text" readonly placeholder="结束 : 可按 日 " id="end5"  name="endTime"
+                                     class="form-control datatimepicker"/>
+                          </div>
 
-    <form class="form-horizontal">
-    <div class="form-group" id="searchDiv4" style="margin-top:15px; display: none;">
-        <div class="col-sm-4">
-            <input type="text" readonly placeholder="开始 : 可按 周 " id="start4" name="startTime"
-                   class="form-control datatimepicker"/>
-        </div>
-        <div class="col-md-1">
-            <hr style="color:black"/>
-        </div>
-        <div class="col-sm-4">
-            <input type="text" readonly placeholder="结束 : 可按 周 " id="end4"  name="endTime"
-                   class="form-control datatimepicker"/>
-        </div>
-
-        <div class="col-sm-3">
-            <button type="button" onclick="searchCheckin(4)" class="btn btn-primary">
-                查询
-            </button>
-            <button type="button" onclick="closeSearchForm(4)" class="btn btn-default">
-                关闭
-            </button>
-        </div>
-    </div>
-</form>
-    <form class="form-horizontal">
-        <div class="form-group" id="searchDiv5" style="margin-top:15px; display: none;">
-            <div class="col-sm-4">
-                <input type="text" readonly placeholder="开始 : 可按 日 " id="start5" name="startTime"
-                       class="form-control datatimepicker"/>
-            </div>
-            <div class="col-md-1">
-                <hr style="color:black"/>
-            </div>
-            <div class="col-sm-4">
-                <input type="text" readonly placeholder="结束 : 可按 日 " id="end5"  name="endTime"
-                       class="form-control datatimepicker"/>
-            </div>
-
-            <div class="col-sm-3">
-                <button type="button" onclick="searchCheckin(5)" class="btn btn-primary">
-                    查询
-                </button>
-                <button type="button" onclick="closeSearchForm(5)" class="btn btn-default">
-                    关闭
-                </button>
-            </div>
-        </div>
-    </form>
+                          <div class="col-sm-3">
+                              <button type="button" onclick="search(5)" class="btn btn-primary">
+                                  查询
+                              </button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+             </div>
 </div>
     <div id="columnar" style="min-width:400px;height:400px"></div>
 
@@ -177,6 +160,9 @@
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/highcharts.js"></script>
+<script src="<%=path %>/js/grid-light.js"></script>
+<script src="<%=path %>/js/exporting.js"></script>
+<script src="<%=path %>/js/highcharts-zh_CN.js"></script>
 <script src="<%=path %>/js/reportStatistics/my-charts.js"></script>
 <script src="<%=path %>/js/reportStatistics/finance-statistics.js"></script>
 </body>

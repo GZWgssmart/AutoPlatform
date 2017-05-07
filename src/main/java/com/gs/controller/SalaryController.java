@@ -18,7 +18,10 @@ import com.gs.service.SalaryService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -68,28 +72,30 @@ public class SalaryController {
     @ResponseBody
     @RequestMapping(value="query_pager",method= RequestMethod.GET)
     public Pager4EasyUI<Salary> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
-        logger.info("分页查询所有工");
+        logger.info("分页查询所有工资");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(salaryService.count());
-        List<Salary> incomingTypes = salaryService.queryByPager(pager);
-        return new Pager4EasyUI<Salary>(pager.getTotalRecords(), incomingTypes);
+        List<Salary> salaries = salaryService.queryByPager(pager);
+        return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salaries);
     }
 
     @ResponseBody
     @RequestMapping(value="add_salary", method=RequestMethod.POST)
-    public ControllerResult incomingTypeAdd(Salary salary){
+    public ControllerResult incomingTypeAdd(Salary salary,HttpSession session){
         logger.info("添加工资");
+        User sessionUser = (User)session.getAttribute("user");
         User user = userService.queryById(salary.getUserId());
-        OutgoingType outgoingType = outgoingTypeService.queryByName("工资支出");
+        OutgoingType outgoingType = outgoingTypeService.queryByName("工资支出",sessionUser.getCompanyId());
         salary.setTotalSalary(user.getUserSalary() + salary.getPrizeSalary() - salary.getMinusSalary());
         salaryService.insert(salary);
 
         IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
         incomingOutgoing.setOutTypeId(outgoingType.getOutTypeId());
-        incomingOutgoing.setInOutCreatedUser("9fcd1df8-25c6-11e7-ba3e-708bcd91a73a");
+        incomingOutgoing.setInOutCreatedUser(sessionUser.getUserId());
         incomingOutgoing.setInOutMoney(salary.getTotalSalary());
+        incomingOutgoing.setCompanyId(outgoingType.getCompanyId());
         incomingOutgoingService.insert(incomingOutgoing);
         return ControllerResult.getSuccessResult("添加成功");
 
@@ -103,6 +109,28 @@ public class SalaryController {
         salary.setTotalSalary(user.getUserSalary() + salary.getPrizeSalary() - salary.getMinusSalary());
         salaryService.update(salary);
         return ControllerResult.getSuccessResult("更新成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value="query_search",method= RequestMethod.GET)
+    public Pager4EasyUI<Salary> queryPagerSearch(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
+                                                 @Param("userName")String userName,@Param("salaryRange")String salaryRange){
+        logger.info("根据条件分页查询所有工资");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        Salary salary = new Salary();
+        User user  = new User();
+        if(userName != null && !userName.equals("")){
+            user.setUserName(userName);
+        }else{
+            user.setUserName("null");
+        }
+        salary.setUser(user);
+        salary.setSalaryRange(salaryRange);
+        pager.setTotalRecords(salaryService.countSearch(salary));
+        List<Salary> salarys = salaryService.queryByPagerSearch(pager,salary);
+        return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salarys);
     }
 
     @RequestMapping(value = "export",method=RequestMethod.GET)
@@ -135,12 +163,9 @@ public class SalaryController {
     }
     @ResponseBody
     @RequestMapping(value="readExcel",method=RequestMethod.POST)
-    public ControllerResult readExcel(MultipartFile fileSalary) throws IOException{
+    public ControllerResult readExcel(MultipartFile fileSalary,HttpSession session) throws IOException{
         //判断文件是否为空
         logger.info("导入工资");
-        if(fileSalary == null){
-            return ControllerResult.getFailResult("导入失败");
-        }
         String name = fileSalary.getOriginalFilename();
         long size = fileSalary.getSize();
         if(name == null || ExcelUtil.EMPTY.equals(name) && size==0){
@@ -154,9 +179,12 @@ public class SalaryController {
             e.printStackTrace();
         }
         Salary salary= null;
+        User sessionUser = (User)session.getAttribute("user");
         //list中存的就是excel中的数据，可以根据excel中每一列的值转换成你所需要的值（从0开始），如：
         List<Salary> salaries = new ArrayList<Salary>();
-        OutgoingType outgoingType = outgoingTypeService.queryByName("工资支出");
+        List<IncomingOutgoing> incomingOutgoings = new ArrayList<IncomingOutgoing>();
+        OutgoingType outgoingType = outgoingTypeService.queryByName("工资支出",sessionUser.getCompanyId());
+
         for(ArrayList<String> arr:list){
             salary= new Salary();
             User user = userService.queryByPhone(arr.get(1));
@@ -172,12 +200,14 @@ public class SalaryController {
             }
             IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
             incomingOutgoing.setOutTypeId(outgoingType.getOutTypeId());
-            incomingOutgoing.setInOutCreatedUser("9fcd1df8-25c6-11e7-ba3e-708bcd91a73a");
+            incomingOutgoing.setInOutCreatedUser(sessionUser.getUserId());
             incomingOutgoing.setInOutMoney(salary.getTotalSalary());
-            incomingOutgoingService.insert(incomingOutgoing);
+            incomingOutgoing.setCompanyId(outgoingType.getCompanyId());
+            incomingOutgoings.add(incomingOutgoing);
             salaries.add(salary);
         }
         if(salaryService.saveBatchInsert(salaries)){
+            incomingOutgoingService.addInsert(incomingOutgoings);
             return ControllerResult.getSuccessResult("导入成功");
         }else{
             return ControllerResult.getFailResult("导入失败");
@@ -191,5 +221,12 @@ public class SalaryController {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }

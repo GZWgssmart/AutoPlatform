@@ -17,6 +17,8 @@ public class Salary{
 	private Date salaryTime;    // 发放时间
 	private Date salaryCreatedTime; // 创建时间
 
+	private String salaryRange;		// 工资范围，用以查询条件查询
+
 	private String userId;		//
 
 	private User user;
@@ -90,4 +92,11 @@ public class Salary{
 		this.salaryCreatedTime=salaryCreatedTime;
 	}
 
+	public String getSalaryRange() {
+		return salaryRange;
+	}
+
+	public void setSalaryRange(String salaryRange) {
+		this.salaryRange = salaryRange;
+	}
 }

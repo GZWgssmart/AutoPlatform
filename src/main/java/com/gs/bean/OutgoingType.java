@@ -15,6 +15,9 @@ public class OutgoingType {
 	private String outTypeStatus; // 支出类型状态
 	private Date outTypeCreatedTime;	// 支出类型创建时间
 
+	private String companyId;		// 所属公司
+	private Company company;
+
 	private List<IncomingOutgoing> incomingOutgoingList;
 
 	public List<IncomingOutgoing> getIncomingOutgoingList() {
@@ -52,5 +55,21 @@ public class OutgoingType {
 
 	public void setOutTypeCreatedTime(Date outTypeCreatedTime) {
 		this.outTypeCreatedTime = outTypeCreatedTime;
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 }

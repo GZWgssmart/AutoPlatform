@@ -58,4 +58,14 @@ public class SalaryServiceImpl implements SalaryService {
 		}
 		return flag;
 	}
+
+	@Override
+	public List<Salary> queryByPagerSearch(Pager pager, Salary salary) {
+		return salaryDAO.queryByPagerSearch(pager,salary);
+	}
+
+	@Override
+	public int countSearch(Salary salary) {
+		return salaryDAO.countSearch(salary);
+	}
 }

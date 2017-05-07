@@ -127,6 +127,66 @@
 		]]>
 	</select>
 
+	<select id="queryByPagerSearch" resultType="list" resultMap="salaryResultMap">
+
+			select s.*,u.userId as user_id,u.userName from t_salary s ,t_user u where s.userId = u.userId
+
+		<if test="salary.user.userName != null and salary.user.userName != 'null'">
+			and u.userName like concat('%',#{salary.user.userName},'%')
+		</if>
+		<if test="salary.salaryRange == 0">
+		</if>
+		<if test="salary.salaryRange == 1">
+			and s.totalSalary <![CDATA[ <=  2500]]>
+		</if>
+		<if test="salary.salaryRange == 2">
+			and s.totalSalary <![CDATA[ >= 2500 ]]>
+			and s.totalSalary <![CDATA[ <= 4500 ]]>
+		</if>
+		<if test="salary.salaryRange == 3">
+			and s.totalSalary <![CDATA[ >= 4500 ]]>
+			and s.totalSalary <![CDATA[ <= 6500 ]]>
+		</if>
+		<if test="salary.salaryRange == 4">
+			and s.totalSalary <![CDATA[ >= 6500 ]]>
+			and s.totalSalary <![CDATA[ <= 8500 ]]>
+		</if>
+		<if test="salary.salaryRange == 5">
+			and s.totalSalary <![CDATA[ >= 8500 ]]>
+		</if>
+		order by s.salaryCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="countSearch" resultType="int">
+
+			select count(*) from t_salary s ,t_user u where s.userId = u.userId
+
+
+		<if test="user.userName != null and user.userName != 'null'">
+			and u.userName like concat('%',#{user.userName},'%')
+		</if>
+		<if test="salaryRange == 0">
+		</if>
+		<if test="salaryRange == 1">
+			and s.totalSalary <![CDATA[ <= 2500 ]]>
+		</if>
+		<if test="salaryRange == 2">
+			and s.totalSalary <![CDATA[ >= 2500 ]]>
+			and s.totalSalary <![CDATA[ <= 4500 ]]>
+		</if>
+		<if test="salaryRange == 3">
+			and s.totalSalary <![CDATA[ >= 4500 ]]>
+			and s.totalSalary <![CDATA[ <= 6500 ]]>
+		</if>
+		<if test="salaryRange == 4">
+			and s.totalSalary <![CDATA[ >= 6500 ]]>
+			and s.totalSalary <![CDATA[ <= 8500 ]]>
+		</if>
+		<if test="salaryRange == 5">
+			and s.totalSalary <![CDATA[ >= 8500 ]]>
+		</if>
+	</select>
+
 	<update id="inactive" parameterType="string">
 		<![CDATA[
 

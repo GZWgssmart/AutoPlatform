@@ -37,8 +37,8 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
 	public int inactive(String id) { return outgoingTypeDAO.inactive(id); }
 	public int active(String id) { return outgoingTypeDAO.active(id); }
 
-	public OutgoingType queryByName(String outTypeName) {
-		return outgoingTypeDAO.queryByName(outTypeName);
+	public OutgoingType queryByName(String outTypeName,String companyId) {
+		return outgoingTypeDAO.queryByName(outTypeName,companyId);
 	}
 
 	@Override

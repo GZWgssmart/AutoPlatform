@@ -16,8 +16,17 @@ import java.util.List;
 @Repository
 public interface SalaryDAO extends BaseDAO<String, Salary>{
 
+    // 查询自己所有的工资，分页显示
     public List<Salary> queryByUserId(@Param("pager")Pager pager,@Param("userId") String userId);
     public int countByUserId(String userId);
 
+    // 批量添加，导入时要用
     public void addInsert(List<Salary> salarys);
+
+    /*
+    * 条件查询
+    * */
+    public List<Salary> queryByPagerSearch(@Param("pager")Pager pager, @Param("salary")Salary salary);
+    public int countSearch(Salary salary);
+
 }

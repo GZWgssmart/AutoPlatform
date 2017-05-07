@@ -16,6 +16,7 @@
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -35,6 +36,9 @@
             </th>
             <th data-field="inTypeCreatedTime" data-formatter="formatterDate">
                 创建时间
+            </th>
+            <th data-field="company.companyName" >
+                所属公司
             </th>
             <th data-field="inTypeStatus" data-formatter="status">
                 当前状态
@@ -88,6 +92,10 @@
                                 <label>收入类型名称：</label>
                                 <input type="text"  id="name1" attr="incomingType.inTypeName" name="inTypeName"  class="form-control"/>
                             </div>
+                            <div class="form-group">
+                                <label class="control-label">所属公司：</label>
+                                <select id="editCompany" class="js-example-tags form-control company" name="companyId"></select>
+                            </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
@@ -118,6 +126,10 @@
                                 <input type="text"  id="name" name="inTypeName" class="form-control"/>
                             </div>
 
+                            <div class="form-group">
+                                <label class="control-label">所属公司：</label>
+                                <select id="addCompany" class="js-example-tags form-control company" name="companyId"></select>
+                            </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
@@ -144,6 +156,8 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
+<script src="<%=path %>/js/select2.full.min.js"></script>
+<script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/financeManage/incoming-type.js"></script>
 <script src="<%=path%>/js/main.js"></script>
 

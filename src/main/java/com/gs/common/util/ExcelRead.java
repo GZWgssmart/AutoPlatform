@@ -83,6 +83,7 @@ public class ExcelRead {
                             }
                             rowList.add(ExcelUtil.getXValue(cell).trim());
                         }
+                        list.add(rowList);
                     }
                 }
             }
@@ -102,8 +103,6 @@ public class ExcelRead {
     /**
      * read the Excel 2003-2007 .xls
      * @param file
-     * @param beanclazz
-     * @param titleExist
      * @return
      * @throws IOException
      */

@@ -5,12 +5,22 @@
 <mapper namespace="com.gs.dao.OutgoingTypeDAO">
 
 	<resultMap id="outgoingTypeResultMap" type="outgoingType">
-
+		<id column="outTypeId" property="outTypeId"></id>
+		<result column="outTypeName" property="outTypeName"></result>
+		<result column="outTypeDes" property="outTypeDes"></result>
+		<result column="outTypeStatus" property="outTypeStatus"></result>
+		<result column="outTypeCreatedTime" property="outTypeCreatedTime"></result>
+		<result column="companyId" property="companyId"></result>
+		<association property="company" javaType="com.gs.bean.Company">
+			<id column="companyId" property="companyId"/>
+			<result column="companyName" property="companyName"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="outgoingType">
 		<![CDATA[
-			insert into t_outgoing_type(outTypeId, outTypeName,outTypeStatus,outTypeCreatedTime) values(uuid(), #{outTypeName},#{outTypeStatus},now())
+			insert into t_outgoing_type(outTypeId, outTypeName,outTypeStatus,outTypeCreatedTime,companyId)
+			values(uuid(), #{outTypeName},#{outTypeStatus},now(),#{companyId})
 		]]>
 	</insert>
 
@@ -40,7 +50,7 @@
 
 	<update id="update" parameterType="outgoingType">
 		<![CDATA[
-			update t_outgoing_type set outTypeName = #{outTypeName},outTypeStatus = 'Y' where outTypeId = #{outTypeId}
+			update t_outgoing_type set outTypeName = #{outTypeName},outTypeStatus = 'Y',companyId=#{companyId} where outTypeId = #{outTypeId}
 		]]>
 	</update>
 
@@ -76,7 +86,7 @@
 
 	<select id="queryPagerStatus" resultType="list" resultMap="outgoingTypeResultMap">
 		<![CDATA[
-			select  * from t_outgoing_type where outTypeStatus = #{status} order by outTypeCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
+			select  * from t_outgoing_type ot,t_company c where ot.companyId = c.companyId and ot.outTypeStatus = #{status} order by ot.outTypeCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
 		]]>
 	</select>
 
@@ -86,15 +96,18 @@
 		]]>
 	</select>
 
-	<select id="queryByName" parameterType="string" resultType="outgoingType">
+	<select id="queryByName"  resultType="outgoingType">
 		<![CDATA[
-			  select * from t_outgoing_type where outTypeName = #{outTypeName}
+			  select * from t_outgoing_type ot, t_company c where ot.outTypeName = #{outTypeName} and ot.companyId = #{companyId}
+			  and ot.companyId = c.companyId
 		]]>
 	</select>
 
+
+
 	<select id="queryByPager" resultType="list" resultMap="outgoingTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select  * from t_outgoing_type order by outTypeCreatedTime Desc limit #{beginIndex}, #{pageSize}
+			select  * from t_outgoing_type ot, t_company c where ot.companyId = c.companyId  order by ot.outTypeCreatedTime Desc limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 

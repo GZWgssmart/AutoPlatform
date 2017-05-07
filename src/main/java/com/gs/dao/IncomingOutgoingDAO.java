@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
-*由Wjhsmart技术支持
-*
-*@author Wjhsmart
-*@since 2017-04-14 16:35:15
-*/
+ *由Wjhsmart技术支持
+ *
+ *@author Wjhsmart
+ *@since 2017-04-14 16:35:15
+ */
 @Repository
 public interface IncomingOutgoingDAO extends BaseDAO<String, IncomingOutgoing>{
 
@@ -32,4 +32,12 @@ public interface IncomingOutgoingDAO extends BaseDAO<String, IncomingOutgoing>{
     * 根据年，月，季度，周，日查询所有收支记录
     * */
     public List<IncomingOutgoing> queryByCondition(@Param("startTime")String startTime,@Param("endTime")String endTime,@Param("inOutType")int inOutType,@Param("type")String type);
+
+    /*
+   * 批量添加
+   * */
+    public void addInsert(List<IncomingOutgoing> incomingOutgoings);
+
+    public List<IncomingOutgoing> queryPagerStatus(@Param("status")String status,@Param("pager")Pager pager);
+    public int countStatus(String status);
 }

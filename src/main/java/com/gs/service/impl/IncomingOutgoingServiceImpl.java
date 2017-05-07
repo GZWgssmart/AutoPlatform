@@ -53,4 +53,19 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
     public List<IncomingOutgoing> queryByCondition(String startTime, String endTime, int inOutType, String type) {
         return incomingOutgoingDAO.queryByCondition(startTime,endTime,inOutType,type);
     }
+
+	@Override
+	public void addInsert(List<IncomingOutgoing> incomingOutgoings) {
+		incomingOutgoingDAO.addInsert(incomingOutgoings);
+	}
+
+	@Override
+	public List<IncomingOutgoing> queryPagerStatus(String status, Pager pager) {
+		return incomingOutgoingDAO.queryPagerStatus(status,pager);
+	}
+
+	@Override
+	public int countStatus(String status) {
+		return incomingOutgoingDAO.countStatus(status);
+	}
 }

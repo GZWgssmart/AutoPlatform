@@ -6,6 +6,7 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/incomingType/query_pager");
+    initSelect2("company", "请选择公司", "/company/company_all", "565");
     destoryValidator("editWin","editForm");
     destoryValidator("addWin","addForm");
 });
@@ -20,6 +21,7 @@ function showEditWin() {
         var incomingType = selectRow[0];
         validator("editForm");
         $("#editForm").fill(incomingType);
+        $('#editCompany').html('<option value="' + incomingType.company.companyId + '">' + incomingType.company.companyName + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
 }
@@ -27,6 +29,7 @@ function showEditWin() {
 
 function showAddWin(){
    validator("addForm");
+    $('#addCompany').html('').trigger("change");
     $("#addWin").modal('show');
 }
 
@@ -71,6 +74,7 @@ window.operateEvents = {
               var incomingType = row;
               validator("editForm");
               $("#editForm").fill(incomingType);
+              $('#editCompany').html('<option value="' + incomingType.company.companyId + '">' + incomingType.company.companyName + '</option>').trigger("change");
               $("#editWin").modal('show');
          }
 }
@@ -97,9 +101,14 @@ function validator(formId) {
                         message: '收入类型名称长度必须在2到20位之间'
                     }
                 }
+            },
+            companyId: {
+                validators: {
+                    notEmpty: {
+                        message: '所属公司不能为空'
+                    }
+                }
             }
-
-
         }
     })
 

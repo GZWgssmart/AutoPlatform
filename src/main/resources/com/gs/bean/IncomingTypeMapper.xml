@@ -5,12 +5,22 @@
 <mapper namespace="com.gs.dao.IncomingTypeDAO">
 
 	<resultMap id="incomingTypeResultMap" type="incomingType">
-
+		<id column="inTypeId" property="inTypeId"></id>
+		<result column="inTypeName" property="inTypeName"></result>
+		<result column="inTypeDes" property="inTypeDes"></result>
+		<result column="inTypeStatus" property="inTypeStatus"></result>
+		<result column="inTypeCreatedTime" property="inTypeCreatedTime"></result>
+		<result column="companyId" property="companyId"></result>
+		<association property="company" javaType="com.gs.bean.Company">
+			<id column="companyId" property="companyId"/>
+			<result column="companyName" property="companyName"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="incomingType">
 		<![CDATA[
-			insert into t_incoming_type(inTypeId, inTypeName,inTypeStatus,inTypeCreatedTime) values(uuid(), #{inTypeName},#{inTypeStatus},now())
+			insert into t_incoming_type(inTypeId, inTypeName,inTypeStatus,inTypeCreatedTime,companyId)
+			values(uuid(), #{inTypeName},#{inTypeStatus},now(),#{companyId})
 		]]>
 	</insert>
 
@@ -40,7 +50,7 @@
 
 	<update id="update" parameterType="incomingType">
 		<![CDATA[
-		update t_incoming_type set inTypeName = #{inTypeName},inTypeStatus = 'Y' where inTypeId = #{inTypeId}
+		update t_incoming_type set inTypeName = #{inTypeName},inTypeStatus = 'Y',companyId = #{companyId} where inTypeId = #{inTypeId}
 		]]>
 	</update>
 
@@ -64,8 +74,9 @@
 
 	<select id="queryPagerStatus" resultType="list" resultMap="incomingTypeResultMap">
 		<![CDATA[
-			select  * from t_incoming_type where inTypeStatus = #{status} order by inTypeCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
+			select  it.*,c.companyId,c.companyName from t_incoming_type it ,t_company c where it.companyId = c.companyId and it.inTypeStatus = #{status}
 		]]>
+		order by it.inTypeCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="countStatus" resultType="int">
@@ -88,7 +99,8 @@
 
 	<select id="queryByPager" resultType="list" resultMap="incomingTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select  * from t_incoming_type  order by inTypeCreatedTime Desc limit #{beginIndex}, #{pageSize}
+			select  it.*,c.companyId,c.companyName from t_incoming_type it ,t_company c where it.companyId = c.companyId
+			order by inTypeCreatedTime Desc limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 

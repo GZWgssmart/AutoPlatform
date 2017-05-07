@@ -95,7 +95,7 @@ public class IncomingOutgoingController {
     @ResponseBody
     @RequestMapping(value="update_status", method=RequestMethod.GET)
     public ControllerResult updateStatus(@Param("id") String id, @Param("status")String status){
-        logger.info("更新收入类型状态");
+        logger.info("更新收支类型状态");
         if(status.equals("Y")){
             incomingOutgoingService.active(id);
         }else if(status.equals("N")){
@@ -139,6 +139,24 @@ public class IncomingOutgoingController {
         lineBasics.add(lineBasic);
         lineBasics.add(lineBasic1);
         return lineBasics;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="query_status", method=RequestMethod.GET)
+    public Pager4EasyUI<IncomingOutgoing> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,@Param("status")String status){
+        logger.info("根据收入类型状态查询");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<IncomingOutgoing> incomingOutgoings = null;
+        if(status.equals("Y")){
+            incomingOutgoings = incomingOutgoingService.queryPagerStatus(status,pager);
+            pager.setTotalRecords(incomingOutgoingService.countStatus(status));
+        }else if(status.equals("N")){
+            incomingOutgoings = incomingOutgoingService.queryPagerStatus(status,pager);
+            pager.setTotalRecords(incomingOutgoingService.countStatus(status));
+        }
+        return new Pager4EasyUI<IncomingOutgoing>(pager.getTotalRecords(), incomingOutgoings);
     }
     @ResponseBody
     @RequestMapping(value="query_condition",method= RequestMethod.GET)

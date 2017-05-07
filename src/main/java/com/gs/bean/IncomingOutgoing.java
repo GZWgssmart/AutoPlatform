@@ -16,6 +16,7 @@ public class IncomingOutgoing {
 	private double inOutMoney;		//  收支金额
 	private Date inOutCreatedTime;		// 收支记录创建时间
 	private String inOutStatus;			// 收支记录状态
+	private String companyId;			// 所属公司
 
 	private String inOutType;		// 用来区分查询时候是支出还是收入
 	/*
@@ -25,6 +26,7 @@ public class IncomingOutgoing {
 	private OutgoingType outgoingType;
 	private User user;
 
+	private Company company ;
 
 
 	public String getInOutId(){
@@ -113,5 +115,21 @@ public class IncomingOutgoing {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 }

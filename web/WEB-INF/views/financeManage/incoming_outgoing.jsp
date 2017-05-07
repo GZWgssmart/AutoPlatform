@@ -45,6 +45,9 @@
             <th data-field="inOutCreatedTime" data-formatter="formatterDate">
                 创建时间
             </th>
+            <th data-field="company.companyName">
+                所属公司
+            </th>
             <th data-field="inOutStatus" data-formatter="status">
                 当前状态
             </th>
@@ -73,6 +76,16 @@
             <a><button onclick="queryByInOutType(3);" type="button" class="btn btn-default">
                 <i class="glyphicon glyphicon-search"></i> 查看收支
             </button></a>
+            <a>
+                <button onclick="searchStatus('/incomingOutgoing/query_status?status=Y');" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看可用记录
+                </button>
+            </a>
+            <a>
+                <button onclick="searchStatus('/incomingOutgoing/query_status?status=N');" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看不可用记录
+                </button>
+            </a>
 
             </div>
         </tbody>

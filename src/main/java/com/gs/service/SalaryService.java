@@ -17,4 +17,7 @@ public interface SalaryService extends BaseService<String, Salary>{
     public int countByUserId(String userId);
 
     public boolean saveBatchInsert(List<Salary> salarys);
+
+    public List<Salary> queryByPagerSearch(Pager pager,Salary salary);
+    public int countSearch(Salary salary);
 }
