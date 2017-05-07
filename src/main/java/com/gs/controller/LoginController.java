@@ -59,7 +59,7 @@ public class LoginController {
                 if (!role.getRoleName().equals("carOwner")) {
                     userService.updateLoginTime(u.getUserId());
                     u.setUserLoginedTime(new Date());
-                    subject.login(new UsernamePasswordToken(u.getUserEmail(), u.getUserPwd()));
+                    subject.login(new UsernamePasswordToken(u.getUserPhone(), u.getUserPwd()));
                     Session session = subject.getSession();
                     session.setAttribute("user", u);
                     return ControllerResult.getSuccessResult("登陆成功!");
@@ -82,6 +82,7 @@ public class LoginController {
 
     @RequestMapping("logout")
     public String logout(HttpSession session) {
+        logger.info("注销");
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         subject.getSession().removeAttribute("user");
