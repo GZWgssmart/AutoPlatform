@@ -202,8 +202,8 @@
 			LEFT JOIN t_company c on u.companyId = c.companyId
 			LEFT JOIN t_user_role ur  on ur.userId = u.userId
 			LEFT JOIN t_role r on r.roleId = ur.roleId
-			where u.companyId = c.companyId and r.roleId = ur.roleId and roleName like concat('company', '%', 'Admin');
-			order by userCreatedTime Desc
+			where u.companyId = c.companyId and r.roleId = ur.roleId and roleName like concat('company', '%', 'Admin')
+			order by u.userCreatedTime Desc
 		]]>limit #{beginIndex}, #{pageSize}
 	</select>
 

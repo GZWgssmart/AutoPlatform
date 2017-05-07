@@ -1,12 +1,15 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Role;
 import com.gs.bean.User;
 import com.gs.bean.UserRole;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
+import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -39,6 +42,8 @@ public class AdminController {
     private UserService userService;
     @Resource
     private UserRoleService userRoleService;
+    @Resource
+    private RoleService roleService;
 
     @RequestMapping(value = "info", method = RequestMethod.GET)
     public String showAdminInfo() {
@@ -113,5 +118,19 @@ public class AdminController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryRoleByUserId", method = RequestMethod.GET)
+    public String queryRoleByUserId() {
+        Role role = roleService.queryByUserId(SessionGetUtil.getUser().getUserId());
+        if (role.getRoleName().equals("systemSuperAdmin")) {
+            return "2";
+        } else if (role.getRoleName().equals("systemOrdinaryAdmin")) {
+            return "1";
+        } else {
+            return "0";
+        }
+
     }
 }

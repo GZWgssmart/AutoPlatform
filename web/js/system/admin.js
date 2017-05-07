@@ -153,7 +153,7 @@ function querySystem() {
 function adminSelect(selectId) {
     var roleId = $("#" + selectId).val();
     var roleName = $("#" + selectId).find("option:selected").text();
-    if (roleName == "汽修公司管理员") {
+    if (roleName == "董事长") {
         $(".admin_company").prop("disabled", false);
     } else {
         $(".admin_company").prop("disabled", true);
