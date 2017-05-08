@@ -11,6 +11,8 @@ $(document).ready(function () {
     /*initSelect2("adminCAndSO", "选择管理员类型", contextPath + "/role/query_cAdminAndSOAdmin", "540");*/
     /*initSelect2("admin_company", "请选择公司", contextPath + "/company/company_all", "540");*/
     $("#search").bind("click", initTable);
+    destoryValidator("addWin", "addForm");
+    destoryValidator("editWin", "editForm");
 });
 
 /** 编辑数据 */

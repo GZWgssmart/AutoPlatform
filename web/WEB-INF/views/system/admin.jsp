@@ -18,6 +18,7 @@
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/font-awesome.min93e3.css" rel="stylesheet">
     <link href="<%=path %>/css/people_info.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 
     <style>
         .form_form .form_save{
@@ -115,17 +116,20 @@
             </a>
             <a>
                 <button onclick="queryAll();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>
                     查询全部
                 </button>
             </a>
             <a>
                 <button onclick="querySystem();" type="button" class="btn btn-default">
-                    系统管理员
+                    <i class="glyphicon glyphicon-search"></i>
+                    查询管理员
                 </button>
             </a>
             <a>
                 <button onclick="queryCompany();" type="button" class="btn btn-default">
-                    公司管理员
+                    <i class="glyphicon glyphicon-search"></i>
+                    查询管理员
                 </button>
             </a>
         </div>
