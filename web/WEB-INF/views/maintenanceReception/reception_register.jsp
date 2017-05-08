@@ -295,10 +295,14 @@
                         <form role="form" id="addForm">
                             <input type="hidden" id="addUserId" name="userId" class="form-control"/>
                             <input type="hidden" id="addAppointmentId" name="appointmentId" class="form-control"/>
-                            <div class="form-group">
+                            <div class="form-group" id="appDiv">
                                 <label>是否预约：</label>
                                 <input type="checkbox" id="isApp" name="isApp" onchange="isAppChoice()">
 
+                            </div>
+                            <div class="form-group" id="userDiv">
+                                <label>从系统中选择车主信息：</label>
+                                <input type="checkbox" id="choiceUser" name="user" onchange="isUserChoice()">
                             </div>
                             <div class="form-group">
                                 <label class="control-label">车主姓名：</label>
@@ -416,10 +420,10 @@
                                data-show-refresh="true"
                                data-show-toggle="true"
                                data-showColumns="true"
-                               data-height="550">
+                               data-height="500">
                             <thead>
                             <tr>
-                                <th data-field="state" data-checkbox="true"></th>
+                                <th data-field="tater" data-checkbox="true"></th>
                                 <th data-field="userName">
                                     车主姓名
                                 </th>
@@ -434,17 +438,12 @@
                                 </th>
                                 <th data-field="model.modelName">
                                     汽车车型
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </th>
                                 <th data-field="plate.plateName">
                                     汽车车牌
                                 </th>
                                 <th data-field="carPlate">
                                     车牌号码
-                                </th>
-                                <th data-field="speedStatus">
-                                    当前进度
                                 </th>
                                 <th data-field="arriveTime" data-formatter="formatterDate">
                                     预计到店时间
@@ -461,16 +460,75 @@
                                 <th data-field="appoitmentStatus" data-formatter="status">
                                     预约状态
                                 </th>
+                                <th data-field="speedStatus">
+                                    当前进度
+                                </th>
+                            </tr>
                             </thead>
                             <tbody>
                             </tbody>
 
                         </table>
-                        <div style="height: 100px;"></div>
+                        <div style="height: 50px;"></div>
                         <div class="modal-footer" style="overflow:hidden;">
                             <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
                             </button>
                             <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
+                            </input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="userWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">选择车主信息</h3>
+                        <table class="table table-hover" id="userTable"
+                               data-pagination="true"
+                               data-show-refresh="true"
+                               data-show-toggle="true"
+                               data-showColumns="true"
+                               data-height="500">
+                            <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th data-field="userNickname" >
+                                    昵称
+                                </th>
+                                <th data-field="userName" >
+                                    姓名
+                                </th>
+                                <th data-field="userEmail" >
+                                    邮箱
+                                </th>
+                                <th data-field="userGender" data-formatter="gender" >
+                                    性别
+                                </th>
+                                <th data-field="userPhone" >
+                                    手机号
+                                </th>
+                                <th data-field="userStatus" data-formatter="status">
+                                    当前状态
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                        <div style="height: 50px;"></div>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default" onclick="closeUserWin()">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="choiceUser()" value="确定">
                             </input>
                         </div>
                     </div>

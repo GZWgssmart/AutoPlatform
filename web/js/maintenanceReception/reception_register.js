@@ -2,6 +2,7 @@
  * Created by Administrator on 2017-04-17.
  */
 var appointment;
+var userInfo;
 
 $(document).ready(function () {
     //调用函数，初始化表格
@@ -12,8 +13,6 @@ $(document).ready(function () {
 
     initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "540");
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
-
-
 
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin", "editForm");
@@ -27,35 +26,70 @@ $(document).ready(function () {
 
         onSwitchChange: function (event, state) {
             if (state == true) {
-                isApp = true;
                 //调用函数，初始化表格
                 initTableNotTollbar("appTable", "/appointment/query_pager?status=Y");
 
                 $("#appWin").modal('show');
             } else if (state == false) {
-                isApp = false;
+            }
+        }
+    });
+
+    $("#choiceUser").bootstrapSwitch({
+        onText: '是',
+        offText: '否',
+        onColor: 'success',
+        offColor: 'danger',
+        size: 'normal',
+
+        onSwitchChange: function (event, state) {
+            if (state == true) {
+                //调用函数，初始化表格
+                initTableNotTollbar("userTable", "/customer/customerInfo_pager");
+
+                $("#userWin").modal('show');
+            } else if (state == false) {
             }
         }
     });
 
     $("#appWin").on("hide.bs.modal", function () {
 
-        $("#addWin").modal('show')
         $('#isApp').bootstrapSwitch('state', false);
+
+    });
+
+    $("#userWin").on("hide.bs.modal", function () {
+
+        $('#choiceUser').bootstrapSwitch('state', false);
 
     });
 
 
 });
 
-/** 监听switch的监听事件 */
+/** 监听是否的预约监听事件 */
 function isAppChoice() {
     if ($('#isApp').bootstrapSwitch('state')) {
         if (appointment != null && appointment != "" && appointment != undefined) {
-            setData(appointment);
+            setData(appointment, "appointment");
         }
     } else {
         if (appointment != null && appointment != "" && appointment != undefined) {
+            clearAddForm();
+        }
+
+    }
+}
+
+/** 监听是否从系统中选择监听事件 */
+function isUserChoice() {
+    if ($('#choiceUser').bootstrapSwitch('state')) {
+        if (userInfo != null && userInfo != "" && userInfo != undefined) {
+            setData(userInfo, "userInfo");
+        }
+    } else {
+        if (userInfo != null && userInfo != "" && userInfo != undefined) {
             clearAddForm();
         }
 
@@ -103,18 +137,8 @@ function showAddWin() {
     $("#addWin").modal('show');
 }
 
-/** 清除添加的form表单信息 */
-function clearAddForm() {
-    $('#addCarBrand').html('').trigger("change");
-    $('#addCarColor').html('').trigger("change");
-    $('#addCarModel').html('').trigger("change");
-    $('#addCarPlate').html('').trigger("change");
-    $("input[type=reset]").trigger("click");
-}
-
 /** 给datetimepicker添加默认值 */
 function getDate() {
-
     if (appointment != null && appointment != "" && appointment != undefined) {
 
     } else {
@@ -125,7 +149,11 @@ function getDate() {
 /** 关闭预约 */
 function closeAppWin() {
     $("#appWin").modal('hide');
-    $("#addWin").modal('show')
+}
+
+/** 关闭选择车主信息 */
+function closeUserWin() {
+    $("#userWin").modal('hide');
 }
 
 /** 选择预约记录 */
@@ -137,7 +165,7 @@ function checkApp() {
     } else {
 
         appointment = selectRow[0];
-        setData(appointment);
+        setData(appointment, "appointment");
         $("#appWin").on("hide.bs.modal", function () {
             $('#isApp').bootstrapSwitch('state', true);
         });
@@ -145,19 +173,54 @@ function checkApp() {
     }
 }
 
+/** 选择车主信息 */
+function choiceUser() {
+    var selectRow = $("#userTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一条数据", "error");
+        return false;
+    } else {
+        userInfo = selectRow[0];
+        setData(userInfo, "userInfo");
+        $("#userWin").on("hide.bs.modal", function () {
+            $('#choiceUser').bootstrapSwitch('state', true);
+        });
+        $("#userWin").modal('hide');
+    }
+}
+
 /** 给添加的form表单设置值 */
-function setData(appointment) {
-    $("#addUserName").val(appointment.userName);
-    $("#addUserPhone").val(appointment.userPhone);
-    $("#addUserId").val(appointment.userId);
-    $("#addCarPlateNumber").val(appointment.carPlate);
-    $("#addAppointmentId").val(appointment.appointmentId);
-    $("#addDatetimepicker").val(formatterDate(appointment.arriveTime));
-    $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
-    $('#addCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
-    $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
-    $('#addCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
-    $("#addMaintainOrFix").val(appointment.maintainOrFix);
+function setData(appointment, flag) {
+    if (flag == "appointment") {
+        $("#userDiv").hide();
+        $("#addUserName").val(appointment.userName);
+        $("#addUserPhone").val(appointment.userPhone);
+        $("#addUserId").val(appointment.userId);
+        $("#addCarPlateNumber").val(appointment.carPlate);
+        $("#addAppointmentId").val(appointment.appointmentId);
+        $("#addDatetimepicker").val(formatterDate(appointment.arriveTime));
+        $('#addCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
+        $('#addCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
+        $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
+        $('#addCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
+        $("#addMaintainOrFix").val(appointment.maintainOrFix);
+    } else if (flag == "userInfo") {
+        $("#appDiv").hide();
+        $("#addUserName").val(appointment.userName);
+        $("#addUserPhone").val(appointment.userPhone);
+        $("#addUserId").val(appointment.userId);
+    }
+}
+
+/** 清除添加的form表单信息 */
+function clearAddForm() {
+    $("#appDiv").show();
+    $("#userDiv").show();
+    $('#addCarBrand').html('').trigger("change");
+    $('#addCarColor').html('').trigger("change");
+    $('#addCarModel').html('').trigger("change");
+    $('#addCarPlate').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
 }
 
 /** 编辑数据 */

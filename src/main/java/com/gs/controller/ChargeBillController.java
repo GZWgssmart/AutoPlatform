@@ -128,10 +128,15 @@ public class ChargeBillController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addChargeBill(ChargeBill chargeBill) {
         if (SessionGetUtil.isUser()) {
-            logger.info("添加收费单据");
-            chargeBillService.insert(chargeBill);
-            maintainRecordService.updateSpeedStatusById(Constants.COMPLETED, chargeBill.getRecordId());
-            return ControllerResult.getSuccessResult("已经成功结算，收费单据已经自动生成");
+            try {
+                logger.info("添加收费单据");
+                chargeBillService.insert(chargeBill);
+                maintainRecordService.updateSpeedStatusById(Constants.COMPLETED, chargeBill.getRecordId());
+                return ControllerResult.getSuccessResult("已经成功结算，收费单据已经自动生成");
+            } catch (Exception e) {
+                logger.info("添加收费单据失败，出现了一个错误");
+                return ControllerResult.getFailResult("添加收费单据失败，出现了一个错误");
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -142,9 +147,14 @@ public class ChargeBillController {
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public ControllerResult editChargeBill(ChargeBill chargeBill) {
         if (SessionGetUtil.isUser()) {
-            logger.info("修改收费单据");
-            chargeBillService.update(chargeBill);
-            return ControllerResult.getSuccessResult("修改成功");
+            try {
+                logger.info("修改收费单据");
+                chargeBillService.update(chargeBill);
+                return ControllerResult.getSuccessResult("修改成功");
+            } catch (Exception e) {
+                logger.info("修改收费单据失败，出现了一个错误");
+                return ControllerResult.getFailResult("修改收费单据失败，出现了一个错误");
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");

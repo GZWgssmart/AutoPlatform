@@ -121,47 +121,52 @@ public class CheckinController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addCheckin(Checkin checkin, String isApp) {
         if (SessionGetUtil.isUser()) {
-            logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录和工单信息");
-            User loginUser = SessionGetUtil.getUser();
-            String checkinId = UUIDUtil.uuid();
-            String userId = "";
-            if (checkin.getUserId() != null && checkin.getUserId() != "") {
-                userId = checkin.getUserId();
-            } else {
-                userId = UUIDUtil.uuid();
-                User user = new User();
-                user.setUserId(userId);
-                user.setUserPhone(checkin.getUserPhone());
-                user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
-                user.setUserName(checkin.getUserName());
+            try {
+                logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录和工单信息");
+                User loginUser = SessionGetUtil.getUser();
+                String checkinId = UUIDUtil.uuid();
+                String userId = "";
+                if (checkin.getUserId() != null && checkin.getUserId() != "") {
+                    userId = checkin.getUserId();
+                } else {
+                    userId = UUIDUtil.uuid();
+                    User user = new User();
+                    user.setUserId(userId);
+                    user.setUserPhone(checkin.getUserPhone());
+                    user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+                    user.setUserName(checkin.getUserName());
 
-                String roleId = roleService.queryByName(Constants.CAR_OWNER).getRoleId();
-                UserRole userRole = new UserRole();
-                userRole.setUserId(userId);
-                userRole.setRoleId(roleId);
+                    String roleId = roleService.queryByName(Constants.CAR_OWNER).getRoleId();
+                    UserRole userRole = new UserRole();
+                    userRole.setUserId(userId);
+                    userRole.setRoleId(roleId);
 
-                userRoleService.insert(userRole);
-                userService.insert(user);
+                    userRoleService.insert(userRole);
+                    userService.insert(user);
+                }
+                checkin.setCheckinId(checkinId);
+                checkin.setUserId(userId);
+                checkin.setCompanyId(loginUser.getCompanyId());
+
+                MaintainRecord maintainRecord = new MaintainRecord();
+                String recordId = UUIDUtil.uuid();
+                maintainRecord.setRecordId(recordId);
+                maintainRecord.setSpeedStatus(Constants.CHECKIN);
+                maintainRecord.setCheckinId(checkinId);
+                maintainRecord.setStartTime(new Date());
+                maintainRecord.setCompanyId(loginUser.getCompanyId());
+
+                if (isApp != null && !isApp.equals("") && isApp.equals("on")) {
+                    appointmentService.updateSpeedStatusById(Constants.CHECKIN, checkin.getAppointmentId());
+                }
+
+                maintainRecordService.insert(maintainRecord);
+                checkinService.insert(checkin);
+                return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录和工单信息已经自动生成");
+            } catch (Exception e) {
+                logger.info("添加登记记录失败，出现了一个错误");
+                return ControllerResult.getFailResult("添加登记记录失败，出现了一个错误");
             }
-            checkin.setCheckinId(checkinId);
-            checkin.setUserId(userId);
-            checkin.setCompanyId(loginUser.getCompanyId());
-
-            MaintainRecord maintainRecord = new MaintainRecord();
-            String recordId = UUIDUtil.uuid();
-            maintainRecord.setRecordId(recordId);
-            maintainRecord.setSpeedStatus(Constants.CHECKIN);
-            maintainRecord.setCheckinId(checkinId);
-            maintainRecord.setStartTime(new Date());
-            maintainRecord.setCompanyId(loginUser.getCompanyId());
-
-            if (isApp != null && !isApp.equals("") && isApp.equals("on")) {
-                appointmentService.updateSpeedStatusById(Constants.CHECKIN, checkin.getAppointmentId());
-            }
-
-            maintainRecordService.insert(maintainRecord);
-            checkinService.insert(checkin);
-            return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录和工单信息已经自动生成");
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -172,9 +177,14 @@ public class CheckinController {
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public ControllerResult editCheckin(Checkin checkin) {
         if (SessionGetUtil.isUser()) {
-            logger.info("修改登记记录");
-            checkinService.update(checkin);
-            return ControllerResult.getSuccessResult("修改成功");
+            try {
+                logger.info("修改登记记录");
+                checkinService.update(checkin);
+                return ControllerResult.getSuccessResult("修改成功");
+            } catch (Exception e) {
+                logger.info("修改失败，出现了一个错误");
+                return ControllerResult.getFailResult("修改失败，出现了一个错误");
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -185,13 +195,18 @@ public class CheckinController {
     @RequestMapping(value = "update_status", method = RequestMethod.GET)
     public ControllerResult updateCheckinStatus(String checkinId, String status) {
         if (SessionGetUtil.isUser()) {
-            logger.info("更新登记记录的状态");
-            if (status.equals("Y")) {
-                checkinService.inactive(checkinId);
-            } else {
-                checkinService.active(checkinId);
+            try {
+                logger.info("更新登记记录的状态");
+                if (status.equals("Y")) {
+                    checkinService.inactive(checkinId);
+                } else {
+                    checkinService.active(checkinId);
+                }
+                return ControllerResult.getSuccessResult("更新成功");
+            } catch (Exception e) {
+                logger.info("更新登记记录状态失败，出现了一个错误");
+                return ControllerResult.getFailResult("更新登记记录状态失败，出现了一个错误");
             }
-            return ControllerResult.getSuccessResult("更新成功");
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");

@@ -96,23 +96,35 @@ public class MaintainDetailController {
     @RequestMapping(value = "confirm", method = RequestMethod.GET)
     public ControllerResult userConfirm(@Param("recordId") String recordId, @Param("maintainIds") String maintainIds) {
         if (SessionGetUtil.isUser()) {
-            logger.info("用户签字确认");
-            String[] maintainIds1 = maintainIds.split(",");
-            List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryAllByMaintainId(maintainIds1);
-            List<MaterialList> materialLists = new ArrayList<MaterialList>();
-            for (MaintainFixAcc maintainFixAcc : maintainFixAccs) {
-                MaterialList materialList = new MaterialList();
-                materialList.setRecordId(recordId);
-                materialList.setAccId(maintainFixAcc.getAccId());
-                materialList.setMaterialCount(maintainFixAcc.getAccCount());
-                materialLists.add(materialList);
-            }
-            WorkInfo workInfo = new WorkInfo();
-            workInfo.setRecordId(recordId);
+            try {
+                logger.info("用户签字确认");
+                String[] maintainIds1 = maintainIds.split(",");
+                List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryAllByMaintainId(maintainIds1);
+                List<MaterialList> materialLists = new ArrayList<MaterialList>();
+                for (MaintainFixAcc maintainFixAcc : maintainFixAccs) {
+                    MaterialList materialList = new MaterialList();
+                    materialList.setRecordId(recordId);
+                    materialList.setAccId(maintainFixAcc.getAccId());
+                    materialList.setMaterialCount(maintainFixAcc.getAccCount());
+                    materialLists.add(materialList);
+                }
+                System.out.println(materialLists.size() + ",size");
+                for (MaterialList materialList : materialLists) {
+                    System.out.println(materialList.getRecordId() + ",recordId");
+                    System.out.println(materialList.getAccId() + ",accId");
+                    System.out.println(materialList.getMaterialCount() + ",materialCount");
+                }
+                WorkInfo workInfo = new WorkInfo();
+                workInfo.setRecordId(recordId);
 
-            workInfoService.insert(workInfo);
-            materialListService.batchInsert(materialLists);
-            return ControllerResult.getSuccessResult("用户已经确认签字，工单信息和物料清单已经自动生成");
+                workInfoService.insert(workInfo);
+                materialListService.batchInsert(materialLists);
+                return ControllerResult.getSuccessResult("用户已经确认签字，工单信息和物料清单已经自动生成");
+            } catch (Exception e) {
+                logger.info("用户确认失败，出现了一个异常");
+                return ControllerResult.getFailResult("用户确认失败，出现了一个异常");
+            }
+
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");

@@ -177,14 +177,19 @@ public class RecordController {
     @RequestMapping(value = "update_status", method=RequestMethod.GET)
     public ControllerResult updateStatus(@Param("id") String id, @Param("status")String status){
         if (SessionGetUtil.isUser()) {
-            logger.info("更新维修保养记录状态");
-            if (status.equals("Y")) {
-                maintainRecordService.inactive(id);
-            } else if (status.equals("N")) {
-                maintainRecordService.active(id);
+            try {
+                logger.info("更新维修保养记录状态");
+                if (status.equals("Y")) {
+                    maintainRecordService.inactive(id);
+                } else if (status.equals("N")) {
+                    maintainRecordService.active(id);
 
+                }
+                return ControllerResult.getSuccessResult("更新成功");
+            } catch (Exception e) {
+                logger.info("更新维修保养记录状态失败，出现了一个错误");
+                return ControllerResult.getFailResult("更新维修保养记录状态失败，出现了一个错误");
             }
-            return ControllerResult.getSuccessResult("更新成功");
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -195,9 +200,14 @@ public class RecordController {
     @RequestMapping(value = "edit", method=RequestMethod.POST)
     public ControllerResult editMainteranceRecord(MaintainRecord maintainRecord){
         if (SessionGetUtil.isUser()) {
-            logger.info("更新维修保养记录");
-            maintainRecordService.update(maintainRecord);
-            return ControllerResult.getSuccessResult("更新成功");
+            try {
+                logger.info("更新维修保养记录");
+                maintainRecordService.update(maintainRecord);
+                return ControllerResult.getSuccessResult("更新成功");
+            } catch (Exception e) {
+                logger.info("更新维修保养记录失败，出现了一个错误");
+                return ControllerResult.getFailResult("更新维修保养记录失败，出现了一个错误");
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -208,42 +218,47 @@ public class RecordController {
     @RequestMapping(value = "send_remind", method = RequestMethod.POST)
     public ControllerResult sendRemind(SendRemind sendRemind) {
         if (SessionGetUtil.isUser()) {
-            logger.info("发送提车提醒");
-            String[] userIds = sendRemind.getUserId().split(",");
-            String[] recordIds = sendRemind.getRecordId().split(",");
-            String[] remindMethod = sendRemind.getRemindMethod().split(",");
-            String[] carPlates = sendRemind.getCarPlate().split(",");
-            List<Mail> mails = new ArrayList<Mail>();
-            for (int i = 0, len = userIds.length; i < len; i++) {
-                User user = userService.queryById(userIds[i]);
-                if (remindMethod.length == 2) {
+            try {
+                logger.info("发送提车提醒");
+                String[] userIds = sendRemind.getUserId().split(",");
+                String[] recordIds = sendRemind.getRecordId().split(",");
+                String[] remindMethod = sendRemind.getRemindMethod().split(",");
+                String[] carPlates = sendRemind.getCarPlate().split(",");
+                List<Mail> mails = new ArrayList<Mail>();
+                for (int i = 0, len = userIds.length; i < len; i++) {
+                    User user = userService.queryById(userIds[i]);
+                    if (remindMethod.length == 2) {
 
-                } else {
-                    if (remindMethod[0].equals("email")) {
-                        Mail mail = new Mail();
-                        mail.setRecipients(user.getUserEmail());
-                        mail.setSubject(sendRemind.getRemindTitle());
-                        mail.setType(Mail.HTML);
-                        Multipart multipart = new MimeMultipart();
-                        BodyPart part1 = new MimeBodyPart();
-                        sendRemind.setRemindContent("<p>尊敬的" + user.getUserName() + "车主，车牌号为" + carPlates[i] + ",您的爱车已经整装待发，如果您有时间，请来领它回家哦^_^，如有问题，请联系0797-5201314</p>");
-                        try {
-                            part1.setContent(sendRemind.getRemindContent(), mail.getType());
-                            multipart.addBodyPart(part1);
-                            mail.setMultipart(multipart);
-                            mails.add(mail);
-                        } catch (MessagingException e) {
-                            e.printStackTrace();
-                            return ControllerResult.getFailResult("邮箱提醒发送失败");
+                    } else {
+                        if (remindMethod[0].equals("email")) {
+                            Mail mail = new Mail();
+                            mail.setRecipients(user.getUserEmail());
+                            mail.setSubject(sendRemind.getRemindTitle());
+                            mail.setType(Mail.HTML);
+                            Multipart multipart = new MimeMultipart();
+                            BodyPart part1 = new MimeBodyPart();
+                            sendRemind.setRemindContent("<p>尊敬的" + user.getUserName() + "车主，车牌号为" + carPlates[i] + ",您的爱车已经整装待发，如果您有时间，请来领它回家哦^_^，如有问题，请联系0797-5201314</p>");
+                            try {
+                                part1.setContent(sendRemind.getRemindContent(), mail.getType());
+                                multipart.addBodyPart(part1);
+                                mail.setMultipart(multipart);
+                                mails.add(mail);
+                            } catch (MessagingException e) {
+                                e.printStackTrace();
+                                return ControllerResult.getFailResult("邮箱提醒发送失败");
+                            }
+                        } else if (remindMethod[0].equals("message")) {
+
                         }
-                    } else if (remindMethod[0].equals("message")) {
-
                     }
+                    maintainRecordService.updateSpeedStatusById(Constants.ALREADY_REMIND, recordIds[i]);
                 }
-                maintainRecordService.updateSpeedStatusById(Constants.ALREADY_REMIND, recordIds[i]);
+                new Thread(new SendEmailThread(mails)).start();
+                return ControllerResult.getSuccessResult("提车提醒已成功发送");
+            } catch (Exception e) {
+                logger.info("发送提车提醒失败，出现了一个错误");
+                return ControllerResult.getFailResult("发送提车提醒失败，出现了一个错误");
             }
-            new Thread(new SendEmailThread(mails)).start();
-            return ControllerResult.getSuccessResult("提车提醒已成功发送");
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
