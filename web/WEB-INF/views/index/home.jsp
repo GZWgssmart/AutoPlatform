@@ -175,7 +175,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path %>/checkin/checkin_page">接待登记管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path%>/record/record_page">维修保养记录管理</a>
+                        <li><a id="maintain" class="J_menuItem" href="<%=path%>/record/record_page">维修保养记录管理</a>
                         </li>
                     </ul>
                 </li>
@@ -745,6 +745,8 @@
 <script src="<%=path %>/js/hplus.min.js?v=4.1.0"></script>
 <script src="<%=path %>/js/contabs.min.js" type="text/javascript"></script>
 <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
+
+<script src="<%=path %>/js/index/home.js"></script>
 
 </body>
 

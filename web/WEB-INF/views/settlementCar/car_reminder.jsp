@@ -176,6 +176,7 @@
                         <h3 class="m-t-none m-b">结算提车</h3>
                         <form role="form" id="addForm">
                             <input type="hidden" id="addRecordId" attr="record.recordId" name="recordId" class="form-control"/>
+                            <input type="hidden" id="addCheckinId" attr="record.checkin.checkinId" name="record.checkinId" class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">收费总金额（元）：</label>
                                 <input id="addChargeBillMoney" readonly type="text" name="chargeBillMoney" maxlength="5" class="form-control"/>
