@@ -20,4 +20,7 @@ public interface RoleService extends BaseService<String, Role>{
 
     /**根据userId去查询*/
     public Role queryByUserId(String userId);
+
+    /**查询属于公司的角色*/
+    public List<Role> queryByCompanyRole();
 }

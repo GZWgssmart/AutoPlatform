@@ -102,6 +102,12 @@
 		]]>
 	</select>
 
+	<select id="queryByCompanyRole" resultMap="roleResultMap">
+		<![CDATA[
+			select * from t_role r WHERE r.roleName like concat('company', '%');
+		]]>
+	</select>
+
 	<update id="inactive" parameterType="string">
 		<![CDATA[
 			UPDATE t_role set roleStatus = 'N' where roleId = #{roleId}
