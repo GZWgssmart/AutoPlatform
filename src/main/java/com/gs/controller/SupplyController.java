@@ -80,8 +80,8 @@ public class SupplyController {
         @RequestMapping("add")
         public ControllerResult add(Supply supply) {
             logger.info("添加供应商");
-            supply.setSupplyTypeId(UUIDUtil.uuid());
-            supply.setCompanyId(UUIDUtil.uuid());
+            supply.setSupplyTypeId("023e65a9-331a-11e7-b907-0a0027000015");
+            supply.setCompanyId("76eeb0f2-3315-11e7-b907-0a0027000015");
             supply.setSupplyStatus("Y");
             supplyService.insert(supply);
             return ControllerResult.getSuccessResult("添加成功");

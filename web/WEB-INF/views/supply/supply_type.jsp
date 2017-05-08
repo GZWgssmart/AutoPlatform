@@ -26,7 +26,8 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+           data-height="520">
         <thead>
         <tr>
             <th data-field="id" data-checkbox="true"></th>
@@ -56,6 +57,7 @@
                     <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
                     </select>
                 </div>
+                <div class="col-sm-6"></div>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchSupplyType()" class="btn btn-primary">
                         查询
@@ -63,6 +65,7 @@
                     <button type="button" onclick="closeSearchForm()" class="btn btn-default">
                         关闭
                     </button>
+                    <input type="reset" name="reset" style="display: none;"/>
                 </div>
             </div>
         </form>

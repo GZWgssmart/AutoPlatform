@@ -7,6 +7,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.PagerUtil;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.SupplyTypeService;
 import org.apache.ibatis.annotations.Param;
@@ -61,7 +62,7 @@ public class SupplyTypeController {
     @RequestMapping("add")
     public ControllerResult add(SupplyType supplyType) {
         logger.info("添加供应商分类");
-        supplyType.setCompanyId(UUIDUtil.uuid());
+        supplyType.setCompanyId("76eeb0f2-3315-11e7-b907-0a0027000015");
         supplyTypeService.insert(supplyType);
         return ControllerResult.getSuccessResult("添加成功");
     }
