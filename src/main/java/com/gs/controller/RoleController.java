@@ -7,6 +7,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.service.RoleService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -37,21 +38,39 @@ public class RoleController {
 
     @RequestMapping(value = "info", method = RequestMethod.GET)
     private String showRoleInfo() {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
         logger.info(" 人员角色管理页面");
         return "system/role";
     }
+
     @ResponseBody
     @RequestMapping(value = "add_role", method = RequestMethod.POST)
-    public ControllerResult addRole(Role role){
-        logger.info("角色添加");
-        roleService.insert(role);
-        return ControllerResult.getSuccessResult("添加成功");
+    public ControllerResult addRole(Role role) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        try {
+            logger.info("角色添加");
+            roleService.insert(role);
+            return ControllerResult.getSuccessResult("添加成功");
+        } catch (Exception e) {
+            logger.info("添加失败，出现了一个错误");
+            return ControllerResult.getFailResult("添加失败，出现了一个错误");
+        }
     }
 
 
     @ResponseBody
-    @RequestMapping(value = "query_pager", method= RequestMethod.GET)
-    public Pager4EasyUI<Role> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    @RequestMapping(value = "query_pager", method = RequestMethod.GET)
+    public Pager4EasyUI<Role> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         logger.info("分页查询所有角色");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -63,28 +82,50 @@ public class RoleController {
 
     @ResponseBody
     @RequestMapping(value = "update_role", method = RequestMethod.POST)
-    public ControllerResult updateRole(Role role){
-        logger.info("角色修改");
-        roleService.update(role);
-        return ControllerResult.getSuccessResult(" 修改成功");
+    public ControllerResult updateRole(Role role) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        try {
+            logger.info("角色修改");
+            roleService.update(role);
+            return ControllerResult.getSuccessResult(" 修改成功");
+        } catch (Exception e) {
+            logger.info("更新失败，出现了一个错误");
+            return ControllerResult.getFailResult("更新失败，出现了一个错误");
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "update_status", method = RequestMethod.GET)
-    public ControllerResult updateStatus(@Param("id")String id, @Param("status")String status){
-        logger.info("状态修改");
-        if(status.equals("Y")){
-            roleService.inactive(id);
-        }else if (status.equals("N")){
-            roleService.active(id);
+    public ControllerResult updateStatus(@Param("id") String id, @Param("status") String status) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        return ControllerResult.getSuccessResult(" 修改成功");
+        try {
+            logger.info("状态修改");
+            if (status.equals("Y")) {
+                roleService.inactive(id);
+            } else if (status.equals("N")) {
+                roleService.active(id);
+            }
+            return ControllerResult.getSuccessResult(" 修改成功");
+        } catch (Exception e) {
+            logger.info("操作失败，出现了一个错误");
+            return ControllerResult.getFailResult("操作失败，出现了一个错误");
+        }
 
     }
 
     @ResponseBody
     @RequestMapping(value = "query_cAdminAndSOAdmin", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCAdminAndSOAdmin() {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         logger.info("查询添加管理员时需要的下拉条件");
         List<Role> roles = roleService.queryCAdminAndSOAdmin();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();

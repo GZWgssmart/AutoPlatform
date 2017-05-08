@@ -15,12 +15,12 @@ function operateFormatter(value, row, index) {
     if (row.roleStatus == 'Y') {
         return [
             '<button type="button" class="updateInactive btn btn-success  btn-sm">冻结</button>',
-            ' <button type="button" class="showEditRole btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
+            ' <button type="button" class="showEditWin btn btn-primary btn-sm" style="margin-right:15px;">编辑</button>'
         ].join('');
     } else {
         return [
             '<button type="button" class="updateActive btn btn-danger  btn-sm">激活</button>',
-            ' <button type="button" class="showEditRole btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
+            ' <button type="button" class="showEditWin btn btn-primary btn-sm" style="margin-right:15px;">编辑</button>'
         ].join('');
     }
 }
@@ -31,10 +31,24 @@ window.operateEvents = {
         $.get(contextPath + "/role/update_status?id=" + row.roleId + "&status=" + status,
             function (data) {
                 if (data.result == "success") {
-
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json");
     },
@@ -43,15 +57,28 @@ window.operateEvents = {
         $.get(contextPath + "/role/update_status?id=" + row.roleId + "&status=" + status,
             function (data) {
                 if (data.result == "success") {
-                    $('#addWin').modal('hide');
-                    // swal(data.message, "", "success");
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json");
     },
-    'click .showEditRole': function (e, value, row, index) {
+    'click .showEditWin': function (e, value, row, index) {
         var role = row;
         $("#editForm").fill(role);
         validator("editForm");

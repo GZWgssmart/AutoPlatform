@@ -48,13 +48,21 @@ public class AdminController {
 
     @RequestMapping(value = "info", method = RequestMethod.GET)
     public String showAdminInfo() {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
         logger.info("显示管理员信息");
         return "system/admin";
     }
 
     @ResponseBody
-    @RequestMapping(value = "query_pager", method= RequestMethod.GET)
-    public Pager4EasyUI<User> queryAdminPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    @RequestMapping(value = "query_pager", method = RequestMethod.GET)
+    public Pager4EasyUI<User> queryAdminPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         logger.info("分页查询所有管理员");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -65,8 +73,12 @@ public class AdminController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "company_pager", method= RequestMethod.GET)
-    public Pager4EasyUI<User> queryCompanyAdminPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    @RequestMapping(value = "company_pager", method = RequestMethod.GET)
+    public Pager4EasyUI<User> queryCompanyAdminPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         logger.info("分页查询汽修公司管理员");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -77,8 +89,12 @@ public class AdminController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "system_pager", method= RequestMethod.GET)
-    public Pager4EasyUI<User> querySystemAdminPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    @RequestMapping(value = "system_pager", method = RequestMethod.GET)
+    public Pager4EasyUI<User> querySystemAdminPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         logger.info("分页查询系统管理员");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -91,8 +107,12 @@ public class AdminController {
     @ResponseBody
     @RequestMapping(value = "add_admin", method = RequestMethod.POST)
     public ControllerResult addAdmin(User user) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
         logger.info("添加管理员");
-        if (user != null) {
+        try {
             user.setUserId(UUIDUtil.uuid());
             user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
             userService.insertAdmin(user);
@@ -102,34 +122,49 @@ public class AdminController {
             ur.setUserId(user.getUserId());
             userRoleService.insert(ur);
             return ControllerResult.getSuccessResult("添加成功");
-        } else {
-            return ControllerResult.getFailResult("添加失败");
+        } catch (Exception e) {
+            logger.info("添加失败，出现了一个错误");
+            return ControllerResult.getFailResult("添加失败，出现了一个错误");
         }
     }
 
     @ResponseBody
     @RequestMapping(value = "update_admin", method = RequestMethod.POST)
     public ControllerResult updateAdmin(User user) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
         logger.info("更新管理员");
-        if (user != null) {
+        try {
             userService.updateAdmin(user);
             return ControllerResult.getSuccessResult("更新成功");
-        } else {
-            return ControllerResult.getFailResult("更新失败");
+        } catch (Exception e) {
+            logger.info("修改失败，出现了一个错误");
+            return ControllerResult.getFailResult("修改失败，出现了一个错误");
         }
     }
 
     @ResponseBody
     @RequestMapping(value = "update_status", method = RequestMethod.GET)
     public ControllerResult updateStatus(@Param("id") String id, @Param("status") String status) {
-        if (status.equals("Y")) {
-            logger.info("激活管理员状态");
-            userService.active(id);
-        } else if (status.equals("N")) {
-            logger.info("冻结管理员状态");
-            userService.inactive(id);
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        return ControllerResult.getSuccessResult("更新成功");
+        try {
+            if (status.equals("Y")) {
+                logger.info("激活管理员状态");
+                userService.active(id);
+            } else if (status.equals("N")) {
+                logger.info("冻结管理员状态");
+                userService.inactive(id);
+            }
+            return ControllerResult.getSuccessResult("更新成功");
+        } catch (Exception e) {
+            logger.info("操作失败，出现了一个错误");
+            return ControllerResult.getFailResult("操作失败，出现了一个错误");
+        }
     }
 
     @InitBinder
@@ -139,7 +174,7 @@ public class AdminController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
-    @ResponseBody
+/*    @ResponseBody
     @RequestMapping(value = "queryRoleByUserId", method = RequestMethod.GET)
     public String queryRoleByUserId() {
         Role role = roleService.queryByUserId(SessionGetUtil.getUser().getUserId());
@@ -149,5 +184,5 @@ public class AdminController {
             return "0";
         }
 
-    }
+    }*/
 }

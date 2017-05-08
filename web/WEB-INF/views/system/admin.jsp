@@ -129,7 +129,7 @@
             <a>
                 <button onclick="queryCompany();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i>
-                    查询管理员
+                    查询董事长
                 </button>
             </a>
         </div>

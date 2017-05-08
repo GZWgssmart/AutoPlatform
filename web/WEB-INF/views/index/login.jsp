@@ -37,10 +37,9 @@
     <div>
         <div>
 
-            <h1 class="logo-name">H+</h1>
+            <h1 class="logo-name">车+</h1>
 
         </div>
-        <h3>欢迎登陆</h3>
         <div id="errMsg" style="color: red; text-align: left; padding-left: 50px;"></div>
         <form class="m-t" role="form" id="login_form" method="post">
             <div class="form-group">
