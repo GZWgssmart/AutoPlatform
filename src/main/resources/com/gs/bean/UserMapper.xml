@@ -101,7 +101,7 @@
 				userName = #{userName}, userIcon = #{userIcon}, userNickname = #{userNickname},
 				userDes = #{userDes}, userGender = #{userGender}, userAddress = #{userAddress},
 				userStatus = 'Y', qqOpenId = #{qqOpenId}, weiboOpenId = #{weiboOpenId},
-				wechatOpenId = #{wechatOpenId}, userIdentity = #{userIdentity}, userDes = #{userDes}
+				wechatOpenId = #{wechatOpenId}, userIdentity = #{userIdentity}, userDes = #{userDes},userEmail = #{userEmail}
 				WHERE userId = #{userId}
 		]]>
 	</update>
