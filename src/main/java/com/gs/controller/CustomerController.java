@@ -65,10 +65,11 @@ public class CustomerController {
     }
     @ResponseBody
     @RequestMapping(value = "customerInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(User user, UserRole userRole){
+    public ControllerResult infoInsert(User user, UserRole userRole, Company company){
         logger.info("信息添加");
         String customerId = UUIDUtil.uuid();
         Role role = roleService.queryByName("carOwner");
+        user.setCompanyId(company.getCompanyId());
         user.setUserId(customerId);
         userRole.setUserId(user.getUserId());
         userRole.setRoleId(role.getRoleId());

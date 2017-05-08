@@ -197,7 +197,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="control-label">邮箱：</label>
-                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" attr="user.userEmail" name="userEmail"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="editEmail" attr="user.userEmail" name="userEmail"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label">昵称：</label>
@@ -221,11 +221,11 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -14px">手机号：</label>
-                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" attr="user.userPhone" name="userPhone"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="editPhone" attr="user.userPhone" name="userPhone"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -14px">身份证：</label>
-                                            <input class="form-control" style="display: initial;" type="text" id="identity" onblur="getBirthday(this)" attr="user.userIdentity" name="userIdentity"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="editIdentity" onblur="getBirthday(this)" attr="user.userIdentity" name="userIdentity"/>
                                         </div>
                                         <br />
                                         <br />
@@ -249,7 +249,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="control-label">生日：</label>
-                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="birthday" name="userBirthday"/>
+                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="birthday" attr="user.userBirthday" name="userBirthday"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">真实姓名：</label>

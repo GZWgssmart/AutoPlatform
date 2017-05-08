@@ -7,6 +7,10 @@ $(document).ready(function () {
 });
 
 
+var editEmail = "";
+var editPhone = "";
+var editIdentity = "";
+
 
 function gender(value, row, index) {
     if (row.userGender == 'M') {
@@ -52,7 +56,7 @@ function customerAge(row) {
         if (card.substring(10, 12) < month || card.substring(10, 12) == month && card.substring(12, 14) <= day) {
             age++;
         }
-        var birthday = card.substring(10, 12) + "月" + card.substring(12, 14) + "日";
+        var birthday = card.substring(10, 12) + "-" + card.substring(12, 14);
         $("#birthday").val(birthday);
         $("#age").val(age);
     }else{
@@ -126,6 +130,9 @@ window.operateEvents = {
             if (change == 'N'){
                 return 'Y';
             }
+        editEmail = user.userEmail;
+        editPhone = user.userPhone;
+        editIdentity = user.userIdentity;
         customerAge(row);
         fmtDate();
         formatterDate();
@@ -226,7 +233,7 @@ function validator(formId) {
                     },
                     threshold: 11,
                     remote: {
-                        url: '/peopleManage/peoplePhone_verification',
+                        url: '/peopleManage/peoplePhone_verification?editPhone='+editPhone,
                         message: '该手机号已存在',
                         delay :  2000,
                         type: 'GET'
@@ -244,7 +251,7 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: '/peopleManage/peopleEmail_verification',
+                        url: '/peopleManage/peopleEmail_verification?editEmail='+editEmail,
                         message: '该邮箱已存在',
                         delay :  2000,
                         type: 'GET'
@@ -262,7 +269,7 @@ function validator(formId) {
                     },
                     threshold: 18,
                     remote: {
-                        url: '/peopleManage/peopleIdentity_verification',
+                        url: '/peopleManage/peopleIdentity_verification?editIdentity='+editIdentity,
                         message: '该身份证已存在',
                         delay :  2000,
                         type: 'GET'
