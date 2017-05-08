@@ -8,6 +8,7 @@ import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.service.ChargeBillService;
 import com.gs.service.MaintainRecordService;
 import org.apache.ibatis.annotations.Param;
@@ -50,19 +51,24 @@ public class ChargeBillController {
     @ResponseBody
     @RequestMapping(value="pager",method= RequestMethod.GET)
     public Pager4EasyUI<ChargeBill> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("status") String status){
-        logger.info("分页查询指定状态的收费单据数据");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        List<ChargeBill> chargeBillList = new ArrayList<ChargeBill>();
-        if (status.equals("ALL")) {
-            pager.setTotalRecords(chargeBillService.count());
-            chargeBillList = chargeBillService.queryByPager(pager);
+        if (SessionGetUtil.isUser()) {
+            logger.info("分页查询指定状态的收费单据数据");
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            List<ChargeBill> chargeBillList = new ArrayList<ChargeBill>();
+            if (status.equals("ALL")) {
+                pager.setTotalRecords(chargeBillService.count());
+                chargeBillList = chargeBillService.queryByPager(pager);
+            } else {
+                pager.setTotalRecords(chargeBillService.countByStatus(status));
+                chargeBillList = chargeBillService.queryPagerByStatus(pager, status);
+            }
+            return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBillList);
         } else {
-            pager.setTotalRecords(chargeBillService.countByStatus(status));
-            chargeBillList = chargeBillService.queryPagerByStatus(pager, status);
+            logger.info("Session已失效，请重新登入");
+            return null;
         }
-        return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBillList);
     }
 
     @ResponseBody
@@ -70,53 +76,73 @@ public class ChargeBillController {
     public Pager4EasyUI<ChargeBill> queryPagerByCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
                                                        @Param("userName")String userName, @Param("userPhone")String userPhone,
                                                        @Param("paymentMethod")String paymentMethod) {
-        logger.info("根据条件分页查询收费单据记录");
-        ChargeBill chargeBill = new ChargeBill();
-        chargeBill.setPaymentMethod(paymentMethod);
-        MaintainRecord record = new MaintainRecord();
-        Checkin checkin = new Checkin();
-        checkin.setUserName(userName);
-        checkin.setUserPhone(userPhone);
-        record.setCheckin(checkin);
-        chargeBill.setRecord(record);
+        if (SessionGetUtil.isUser()) {
+            logger.info("根据条件分页查询收费单据记录");
+            ChargeBill chargeBill = new ChargeBill();
+            chargeBill.setPaymentMethod(paymentMethod);
+            MaintainRecord record = new MaintainRecord();
+            Checkin checkin = new Checkin();
+            checkin.setUserName(userName);
+            checkin.setUserPhone(userPhone);
+            record.setCheckin(checkin);
+            chargeBill.setRecord(record);
 
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        List<ChargeBill> chargeBills = new ArrayList<ChargeBill>();
-        pager.setTotalRecords(chargeBillService.countByCondition(chargeBill));
-        chargeBills = chargeBillService.queryPagerByCondition(pager, chargeBill);
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            List<ChargeBill> chargeBills = new ArrayList<ChargeBill>();
+            pager.setTotalRecords(chargeBillService.countByCondition(chargeBill));
+            chargeBills = chargeBillService.queryPagerByCondition(pager, chargeBill);
 
-        return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBills);
+            return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBills);
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "update_status", method = RequestMethod.GET)
     public ControllerResult updateChargeBillStatus(String id, String status) {
-        logger.info("更新收费单据记录的状态");
-        if (status.equals("Y")) {
-            chargeBillService.inactive(id);
+        if (SessionGetUtil.isUser()) {
+            logger.info("更新收费单据记录的状态");
+            if (status.equals("Y")) {
+                chargeBillService.inactive(id);
+            } else {
+                chargeBillService.active(id);
+            }
+            return ControllerResult.getSuccessResult("更新成功");
         } else {
-            chargeBillService.active(id);
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        return ControllerResult.getSuccessResult("更新成功");
     }
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addChargeBill(ChargeBill chargeBill) {
-        logger.info("添加收费单据");
-        chargeBillService.insert(chargeBill);
-        maintainRecordService.updateSpeedStatusById(Constants.COMPLETED, chargeBill.getRecordId());
-        return ControllerResult.getSuccessResult("已经成功结算，收费单据已经自动生成");
+        if (SessionGetUtil.isUser()) {
+            logger.info("添加收费单据");
+            chargeBillService.insert(chargeBill);
+            maintainRecordService.updateSpeedStatusById(Constants.COMPLETED, chargeBill.getRecordId());
+            return ControllerResult.getSuccessResult("已经成功结算，收费单据已经自动生成");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public ControllerResult editChargeBill(ChargeBill chargeBill) {
-        logger.info("修改收费单据");
-        chargeBillService.update(chargeBill);
-        return ControllerResult.getSuccessResult("修改成功");
+        if (SessionGetUtil.isUser()) {
+            logger.info("修改收费单据");
+            chargeBillService.update(chargeBill);
+            return ControllerResult.getSuccessResult("修改成功");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
     }
 
     @InitBinder

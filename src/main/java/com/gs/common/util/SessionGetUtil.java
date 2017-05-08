@@ -10,10 +10,25 @@ import org.apache.shiro.subject.Subject;
  */
 public class SessionGetUtil {
 
+    /**
+     * 获取当前登入的User
+     * @return
+     */
     public static User getUser() {
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         User user = (User) session.getAttribute("user");
         return user;
+    }
+
+    /**
+     * 判断session里面是否有User
+     * @return
+     */
+    public static boolean isUser() {
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        User user = (User) session.getAttribute("user");
+        return user != null;
     }
 }

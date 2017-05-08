@@ -292,11 +292,29 @@ function formSubmit(url, formId, winId) {
         function (data) {
             if (data.result == "success") {
                 $('#' + winId).modal('hide');
-                swal(data.message, "", "success");
+                swal("成功提示", data.message, "success");
                 $('#cusTable').bootstrapTable('refresh');
                 $('#' + formId).data('bootstrapValidator').resetForm(true);
             } else if (data.result == "fail") {
-                swal(data.message, "", "error");
+                swal("错误提示", data.message, "error");
+            } else if (data.result == "notLogin") {
+                swal({
+                        title: "登入失败",
+                        text: data.message,
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确认",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            top.location.href = "/login/show_login";
+                        } else {
+                        }
+                    });
             }
         }, "json");
 }

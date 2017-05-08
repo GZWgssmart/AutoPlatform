@@ -62,6 +62,24 @@ window.operateEvents = {
                          $('#cusTable').bootstrapTable('refresh');
                      }else if(data.result == "fail"){
                          swal(data.message, "", "error");
+                     } else if (data.result == "notLogin") {
+                         swal({
+                                 title: "登入失败",
+                                 text: data.message,
+                                 type: "warning",
+                                 showCancelButton: true,
+                                 confirmButtonColor: "#DD6B55",
+                                 confirmButtonText: "确认",
+                                 cancelButtonText: "取消",
+                                 closeOnConfirm: true,
+                                 closeOnCancel: true
+                             },
+                             function (isConfirm) {
+                                 if (isConfirm) {
+                                     top.location.href = "/login/show_login";
+                                 } else {
+                                 }
+                             });
                      }
                  },"json");
          },
@@ -70,8 +88,26 @@ window.operateEvents = {
                   function(data){
                       if(data.result == "success"){
                           $('#cusTable').bootstrapTable('refresh');
-                      }else if(data.result == "fail"){
+                      } else if(data.result == "fail"){
                           swal(data.message, "", "error");
+                      } else if (data.result == "notLogin") {
+                          swal({
+                                  title: "登入失败",
+                                  text: data.message,
+                                  type: "warning",
+                                  showCancelButton: true,
+                                  confirmButtonColor: "#DD6B55",
+                                  confirmButtonText: "确认",
+                                  cancelButtonText: "取消",
+                                  closeOnConfirm: true,
+                                  closeOnCancel: true
+                              },
+                              function (isConfirm) {
+                                  if (isConfirm) {
+                                      top.location.href = "/login/show_login";
+                                  } else {
+                                  }
+                              });
                       }
                   },"json");
           },
@@ -421,6 +457,24 @@ function userConfirm() {
                             $("#searchDetailWin").modal('hide');
                         } else if (data.result == "fail") {
                             swal("确认失败", "出现了一个错误", "error");
+                        } else if (data.result == "notLogin") {
+                            swal({
+                                    title: "登入失败",
+                                    text: data.message,
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "确认",
+                                    cancelButtonText: "取消",
+                                    closeOnConfirm: true,
+                                    closeOnCancel: true
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        top.location.href = "/login/show_login";
+                                    } else {
+                                    }
+                                });
                         }
                     }, "json");
                 } else {

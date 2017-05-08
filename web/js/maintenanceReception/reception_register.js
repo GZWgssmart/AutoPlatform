@@ -12,8 +12,8 @@ $(document).ready(function () {
 
     initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "540");
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
-    initDateTimePicker("datetimepicker", "arriveTime", "addForm");
-    initDateTimePicker("datetimepicker", "arriveTime", "editForm");
+
+
 
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin", "editForm");
@@ -97,8 +97,9 @@ function carWash(value, row, index) {
 /** 显示添加数据的窗口 */
 function showAddWin() {
     appointment = "";
-    validator("addForm");
     clearAddForm();
+    validator("addForm");
+    initDateTimePicker("datetimepicker", "arriveTime", "addForm");
     $("#addWin").modal('show');
 }
 
@@ -162,6 +163,7 @@ function setData(appointment) {
 /** 编辑数据 */
 function showEditWin() {
     validator("editForm");
+    initDateTimePicker("datetimepicker", "arriveTime", "editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
@@ -185,12 +187,12 @@ function operateFormatter(value, row, index) {
     if (row.checkinStatus == 'Y') {
         return [
             '<button type="button" class="updateActive btn btn-danger btn-sm" style="margin-right:15px;" >冻结</button>',
-            '<button type="button" class="showUpdateIncomingType1 btn btn-primary btn-sm" style="margin-right:15px;" >编辑</button>'
+            '<button type="button" class="showEditWin btn btn-primary btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('');
     } else {
         return [
             '<button type="button" class="updateInactive btn btn-success btn-sm" style="margin-right:15px;" >激活</button>',
-            '<button type="button" class="showUpdateIncomingType1 btn btn-primary btn-sm" style="margin-right:15px;">编辑</button>'
+            '<button type="button" class="showEditWin btn btn-primary btn-sm" style="margin-right:15px;">编辑</button>'
         ].join('');
     }
 
@@ -204,6 +206,24 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            cancelButtonText: "取消",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            } else {
+                            }
+                        });
                 }
             }, "json");
     },
@@ -214,10 +234,28 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            cancelButtonText: "取消",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            } else {
+                            }
+                        });
                 }
             }, "json");
     },
-    'click .showUpdateIncomingType1': function (e, value, row, index) {
+    'click .showEditWin': function (e, value, row, index) {
         var checkin = row;
         $("#editForm").fill(checkin);
         $('#editCarBrand').html('<option value="' + checkin.brand.brandId + '">' + checkin.brand.brandName + '</option>').trigger("change");
@@ -319,8 +357,13 @@ function validator(formId) {
                     notEmpty: {
                         message: '汽车油量不能为空'
                     },
+                    stringLength: {
+                        min: 1,
+                        max: 3,
+                        message: '汽车油量不能超过3位数'
+                    },
                     regexp: {
-                        regexp: /^[0-9]+$/,
+                        regexp: /^[\.0-9]+$/,
                         message: '油量只能是数字'
                     }
 
@@ -331,8 +374,13 @@ function validator(formId) {
                     notEmpty: {
                         message: '汽车行驶里程不能为空'
                     },
+                    stringLength: {
+                        min: 1,
+                        max: 6,
+                        message: '汽车行驶里程不能超过6位数'
+                    },
                     regexp: {
-                        regexp: /^[0-9]+$/,
+                        regexp: /^[\.0-9]+$/,
                         message: '行驶里程只能是数字'
                     }
 

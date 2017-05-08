@@ -60,6 +60,9 @@
             <th data-field="chargeBillDes">
                 收费单据描述
             </th>
+            <th data-field="record.company.companyName">
+                所属公司
+            </th>
             <th data-field="chargeBillStatus" data-formatter="status">
                 单据状态
             </th>

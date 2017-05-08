@@ -190,7 +190,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">车主电话：</label>
-                                <input type="text" attr="checkin.userPhone" name="userPhone" class="form-control"/>
+                                <input type="text" attr="checkin.userPhone" maxlength="11" name="userPhone" class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -236,11 +236,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车油量（L）：</label>
-                                <input type="number" attr="checkin.oilCount" name="oilCount" class="form-control"/>
+                                <input type="text" attr="checkin.oilCount" maxlength="3" name="oilCount" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车行驶里程（km）：</label>
-                                <input type="number" attr="checkin.carMileage" name="carMileage" class="form-control"/>
+                                <input type="text" attr="checkin.carMileage" maxlength="6" name="carMileage" class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -306,7 +306,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">车主电话：</label>
-                                <input type="text" id="addUserPhone" name="userPhone" class="form-control"/>
+                                <input type="text" id="addUserPhone" maxlength="11" name="userPhone" class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -354,11 +354,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车油量（L）：</label>
-                                <input type="number" name="oilCount" class="form-control"/>
+                                <input type="text" name="oilCount" maxlength="3" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车行驶里程（km）：</label>
-                                <input type="number" name="carMileage" class="form-control"/>
+                                <input type="text" name="carMileage" maxlength="6" class="form-control"/>
                             </div>
 
                             <div class="form-group">

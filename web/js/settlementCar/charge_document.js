@@ -2,8 +2,6 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/bill/pager?status=ALL");
 
-    initDateTimePicker("datetimepicker", "chargeTime", "editForm");
-
     destoryValidator("editWin", "editForm");
 
 });
@@ -30,8 +28,26 @@ window.operateEvents = {
             function(data){
                 if(data.result == "success"){
                     $('#cusTable').bootstrapTable('refresh');
-                }else if(data.result == "fail"){
+                } else if(data.result == "fail"){
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            cancelButtonText: "取消",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            } else {
+                            }
+                        });
                 }
             },"json");
     },
@@ -40,8 +56,26 @@ window.operateEvents = {
             function(data){
                 if(data.result == "success"){
                     $('#cusTable').bootstrapTable('refresh');
-                }else if(data.result == "fail"){
+                } else if(data.result == "fail"){
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            cancelButtonText: "取消",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            } else {
+                            }
+                        });
                 }
             },"json");
     },
@@ -74,6 +108,7 @@ function closeSearchForm() {
 /** 显示修改收费单据的信息 */
 function showEditWin() {
     validator("editForm");
+    initDateTimePicker("datetimepicker", "chargeTime", "editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('修改失败', "只能选择一条收费单据", "error");
