@@ -83,17 +83,14 @@ public class CustomerController {
     @RequestMapping(value = "customerPhone_verification", method = RequestMethod.GET)
     public String verificationPhone(@Param("userPhone")String userPhone) {
         boolean result = true;
-        List<User> verification = userService.queryPhone();
-        for (User user : verification) {
-            if (user.getUserPhone().equals(userPhone)) {
-                result = false;
-                break;
-            }
+        String resultString = "";
+        int count = userService.queryPhone(userPhone);
+        if (count > 1 || count == 1) {
+            result = false;
         }
         Map<String, Boolean> map = new HashMap<String, Boolean>();
         map.put("valid", result);
         ObjectMapper mapper = new ObjectMapper();
-        String resultString = "";
         try {
             resultString = mapper.writeValueAsString(map);
         } catch (JsonProcessingException e) {
@@ -101,6 +98,47 @@ public class CustomerController {
         }
         return resultString;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "customerEmail_verification", method = RequestMethod.GET)
+    public String verificationEmail(@Param("userEmail")String userEmail) {
+        boolean result = true;
+        String resultString = "";
+        int count = userService.queryEmail(userEmail);
+        if (count > 1 || count == 1) {
+            result = false;
+        }
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        map.put("valid", result);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "customerIdentity_verification", method = RequestMethod.GET)
+    public String verificationIdentity(@Param("userIdentity")String userIdentity) {
+        boolean result = true;
+        String resultString = "";
+        int count = userService.queryIdentity(userIdentity);
+        if (count > 1 || count == 1) {
+            result = false;
+        }
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        map.put("valid", result);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
 
 
     @ResponseBody

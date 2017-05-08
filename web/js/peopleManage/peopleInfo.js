@@ -242,6 +242,13 @@ function validator(formId) {
                     regexp: {
                         regexp: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
                             message: '邮箱格式错误'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/peopleManage/peopleEmail_verification',
+                        message: '该邮箱已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -253,6 +260,13 @@ function validator(formId) {
                     regexp: {
                         regexp: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
                         message: '身份证格式错误'
+                    },
+                    threshold: 18,
+                    remote: {
+                        url: '/peopleManage/peopleIdentity_verification',
+                        message: '该身份证已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },

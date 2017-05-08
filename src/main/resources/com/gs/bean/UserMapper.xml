@@ -96,7 +96,6 @@
 	</update>
 
 
-
 	<update id="updateLoginTime" parameterType="string">
 		<![CDATA[
 			update t_user set userLoginedTime = now() where userId = #{userId}
@@ -139,9 +138,21 @@
 		]]>
 	</select>
 
-	<select id="queryPhone" parameterType="string" resultType="user">
+	<select id="queryPhone" parameterType="string" resultType="int">
 		<![CDATA[
-			  SELECT DISTINCT userPhone FROM t_user
+			  select count(userPhone) from t_user where userPhone = #{userPhone}
+		]]>
+	</select>
+
+	<select id="queryEmail" parameterType="string" resultType="int">
+		<![CDATA[
+			  select count(userEmail) from t_user where userEmail = #{userEmail}
+		]]>
+	</select>
+
+	<select id="queryIdentity" parameterType="string" resultType="int">
+		<![CDATA[
+			  select count(userIdentity) from t_user where userIdentity = #{userIdentity}
 		]]>
 	</select>
 

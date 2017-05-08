@@ -83,17 +83,14 @@ public class PeopleInfoController {
     @RequestMapping(value = "peoplePhone_verification", method = RequestMethod.GET)
     public String verificationPhone(@Param("userPhone")String userPhone) {
         boolean result = true;
-        List<User> verification = userService.queryPhone();
-        for (User user : verification) {
-            if (user.getUserPhone().equals(userPhone)) {
-                result = false;
-                break;
-            }
+        String resultString = "";
+        int count = userService.queryPhone(userPhone);
+        if (count > 1 || count == 1) {
+            result = false;
         }
         Map<String, Boolean> map = new HashMap<String, Boolean>();
         map.put("valid", result);
         ObjectMapper mapper = new ObjectMapper();
-        String resultString = "";
         try {
             resultString = mapper.writeValueAsString(map);
         } catch (JsonProcessingException e) {
@@ -102,6 +99,45 @@ public class PeopleInfoController {
         return resultString;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "peopleEmail_verification", method = RequestMethod.GET)
+    public String verificationEmail(@Param("userEmail")String userEmail) {
+        boolean result = true;
+        String resultString = "";
+        int count = userService.queryEmail(userEmail);
+        if (count > 1 || count == 1) {
+            result = false;
+        }
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        map.put("valid", result);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "peopleIdentity_verification", method = RequestMethod.GET)
+    public String verificationIdentity(@Param("userIdentity")String userIdentity) {
+        boolean result = true;
+        String resultString = "";
+        int count = userService.queryIdentity(userIdentity);
+        if (count > 1 || count == 1) {
+            result = false;
+        }
+        Map<String, Boolean> map = new HashMap<String, Boolean>();
+        map.put("valid", result);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            resultString = mapper.writeValueAsString(map);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
 
     @ResponseBody
     @RequestMapping(value = "peopleInfo_pager", method= RequestMethod.GET)
@@ -132,6 +168,14 @@ public class PeopleInfoController {
         }
         user.setCompanyId(company.getCompanyId());
         userService.update(user);
+        return ControllerResult.getSuccessResult(" 修改成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "peopleRole_update", method = RequestMethod.POST)
+    public ControllerResult updateRole(UserRole userRole) {
+        logger.info("信息修改");
+        userRoleService.update(userRole);
         return ControllerResult.getSuccessResult(" 修改成功");
     }
 

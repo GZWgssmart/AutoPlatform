@@ -85,8 +85,17 @@ public class UserServiceImpl implements UserService {
 		return userDAO.queryByPhone(phone);
 	}
 
-	public List<User> queryPhone() {
-		return userDAO.queryPhone();
+	public int queryPhone(String userPhone) {
+ 		return userDAO.queryPhone(userPhone);
+	}
+
+	public int queryEmail(String userEmail) {
+		return userDAO.queryEmail(userEmail);
+	}
+
+	@Override
+	public int queryIdentity(String userIdentity) {
+		return userDAO.queryIdentity(userIdentity);
 	}
 
 

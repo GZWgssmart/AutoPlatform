@@ -47,7 +47,7 @@
 
 	<update id="update" parameterType="userRole">
 		<![CDATA[
-
+			UPDATE t_user_role SET roleId = #{roleId} WHERE userRoleId = #{userRoleId}
 		]]>
 	</update>
 
