@@ -24,7 +24,9 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+           data-height="520"
+    >
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
@@ -80,13 +82,19 @@
                 <i class="glyphicon glyphicon-pencil"></i> 修改</button>
             </a>
             <a>
-                <button onclick="companyAll();" type="button" class="btn btn-default">查看所有</button>
+                <button onclick="statusUsableness();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>查看可用公司
+                </button>
             </a>
             <a>
-                <button onclick="statusUsableness();" type="button" class="btn btn-default">查看可用公司</button>
+                <button onclick="statusAvailable();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>查看不可用公司
+                </button>
             </a>
             <a>
-                <button onclick="statusAvailable();" type="button" class="btn btn-default">查看不可用公司</button>
+                <button onclick="companyAll();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>查看全部
+                </button>
             </a>
         </div>
         </tbody>
@@ -182,7 +190,7 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改公司</h3>
-                        <form role="form" id="editForm">
+                        <form role="form" id="editForm" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label class="control-label">公司名称：</label>
                                 <input type="text"   name="companyName" class="form-control" attr="company.companyName"/>
@@ -209,7 +217,7 @@
                             </div>
                             <div class="form-group" >
                                 <label class="control-label">公司规模</label>
-                                <select class="form-control" name="companySize">
+                                <select class="form-control" id="companys" name="companySize">
                                     <option value ="请选择公司规模">请选择公司规模</option>
                                     <option value ="5~10">5~10</option>
                                     <option value="10~50">10~50</option>
@@ -237,7 +245,7 @@
                                 <div class="col-lg-7">
                                     <div class="ibox-title">
                                         <div class="input-group" style="padding-left: 15px;">
-                                            <input id="edit_companyLogo" define="company.companyLogo" name="file"
+                                            <input id="edit_companyLogo" define="company.companyLogo" name="companyLogo"
                                                    type="file" class="form-control" multiple
                                                    class="file-loading"
                                                    placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
@@ -281,14 +289,5 @@
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/fileinput.js"></script>
 <script src="<%=path %>/js/zh.js"></script>
-<script>
-    $("#establishTime").datetimepicker({
-        format: "yyyy-mm-dd hh:ii",
-        autoclose: true,
-        language:'ZH_CN',
-        todayBtn: true,
-        pickerPosition: "bottom-left",
-    });
-</script>
 </body>
 </html>

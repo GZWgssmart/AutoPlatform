@@ -8,6 +8,7 @@ function showEditWin() {
     } else {
         var product = selectRow[0];
         $("#editForm").fill(product);
+        $('.car_brand').html('<option value="' + product.brand.brandName+ '">' + product.brand.brandName + '</option>').trigger("change");
         validator("editForm");
         $("#editWin").modal('show');
     }
@@ -15,6 +16,7 @@ function showEditWin() {
 
 function showAddWin(){
     validator("addForm");
+    $('#car_brand').html('').trigger("change");
     $("#addWin").modal('show');
     $("input[type=reset]").trigger("click");
 }
@@ -104,7 +106,7 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            brandId: {
+            brandName: {
                 message: '品牌失败',
                 validators: {
                     notEmpty: {

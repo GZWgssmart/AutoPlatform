@@ -5,6 +5,7 @@
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/company/queryByPager");
+    initDateTimePicker("form_datetime","","addForm");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 });
@@ -30,6 +31,7 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
+        $('#companys').html('<option value="' + product.companySize + '">' + product.companySize + '</option>').trigger("change");
         $("#editForm").fill(product);
         validator("editForm");
         $("#editWin").modal('show');
@@ -52,6 +54,7 @@ function operating(value, row, index) {
 
 
 function showAddWin(){
+    $('#companys').html('').trigger("change");
     validator("addForm");
     $("#addWin").modal('show');
 }
@@ -176,7 +179,7 @@ function validator(formId) {
                     }
                 }
             },
-            companyOpenSize:{
+            companySize:{
                 message: '公司规模失败',
                 validators: {
                     notEmpty: {
@@ -208,7 +211,7 @@ function validator(formId) {
                 formSubmit("/company/InsertCompany", formId, "addWin");
             } else if (formId == "editForm") {
                 formSubmit("/company/uploadCompany", formId, "editWin");
-
+                oFileInput.Init("edit_companyLogo", "/company/uploadCompany");
             }
         })
 }
@@ -218,13 +221,7 @@ function validator(formId) {
 $(function () {
     //0.初始化fileinput
     var oFileInput = new FileInput();
-    oFileInput.Init("add_companyLogo", "/file/addFile");
-});
-
-$(function () {
-    //0.初始化fileinput
-    var oFileInput = new FileInput();
-    oFileInput.Init("edit_companyLogo", "/file/editFile");
+    oFileInput.Init("edit_companyLogo", "/company/uploadCompany");
 });
 
 //初始化fileinput

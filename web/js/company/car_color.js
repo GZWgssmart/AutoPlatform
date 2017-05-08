@@ -1,5 +1,6 @@
 
 function showAddWin(){
+    $("#span").css("background-color","");
     $("#addWin").modal('show');
     validator("addForm");
     $("input[type=reset]").trigger("click");
@@ -31,9 +32,11 @@ function statusAvailable(){
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     var product = selectRow[0];
+    $("#spans").css("background",product.colorHex);
     validator("editForm");
     $("#editForm").fill(product);
     $("#editWin").modal('show');
+
 }
 
 /**
@@ -203,9 +206,9 @@ $('#colorpalette').colorPalette()
         $("#span").css("background-color", e.color);
     });
 
-$('#colorpalette').colorPalette()
+$('#colorpalette1').colorPalette()
     .on('selectColor', function(e) {
         $('#selected-color1').val(e.color);
         $('#selected-colorRGB1').val(colorHexToRGB(e.color));
-        $("#span").css("background-color", e.color);
+        $("#spans").css("background-color", e.color);
     });

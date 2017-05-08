@@ -41,18 +41,10 @@ public class CarBrandController {
     @ResponseBody
     @RequestMapping(value = "uploadCarBrand",method = RequestMethod.POST)
     public ControllerResult uploadCarBrand(CarBrand carBrand){
+            System.out.println("id:"+carBrand.getBrandId());
             carBrandService.update(carBrand);
             logger.info("更新汽车品牌成功");
             return ControllerResult.getSuccessResult("更新汽车品牌成功");
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "StatusInactive" , method = RequestMethod.GET)
-    public ControllerResult statusInactive(String Id){
-        if(Id!=null){
-            return ControllerResult.getSuccessResult(",.,.,.,.");
-        }
-        return ControllerResult.getFailResult("///////////////////");
     }
 
     @ResponseBody

@@ -46,7 +46,7 @@
 
 	<update id="update" parameterType="carModel">
 		<![CDATA[
-
+			update t_car_model set modelName=#{modelName},modelDes=#{modelDes},brandId=#{brandId},modelStatus= "Y" where modelId = #{modelId}
 		]]>
 	</update>
 

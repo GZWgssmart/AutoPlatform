@@ -18,6 +18,7 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
+        $('.company').html('<option value="' + product.company.companyName + '">' + product.company.companyName + '</option>').trigger("change");
         validator("editForm");
         $("#editForm").fill(product);
         $("#editWin").modal('show');
@@ -195,7 +196,6 @@ function validator(formId) {
                 formSubmit("/maintainFix/InsertMaintain", formId, "addWin");
             } else if (formId == "editForm") {
                 formSubmit("/maintainFix/update", formId, "editWin");
-
             }
         })
 
