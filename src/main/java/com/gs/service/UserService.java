@@ -60,7 +60,5 @@ public interface UserService extends BaseService<String, User>{
     /*验证手机号*/
     public List<User> queryPhone();
 
-    /*验证邮箱*/
-    public List<User> queryEmail();
 
 }

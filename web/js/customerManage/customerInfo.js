@@ -129,6 +129,10 @@ window.operateEvents = {
         }else{
             $("#status").val("不可用");
         }
+        var change = user.userStatus;
+        if (change == 'N'){
+            return 'Y';
+        }
         customerAge(row);
         oldAndNew();
         fmtDate();
@@ -253,13 +257,6 @@ function validator(formId) {
                     regexp: {
                         regexp: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
                         message: '邮箱格式错误'
-                    },
-                    threshold: 6,
-                    remote: {
-                        url: '/customer/customerEmail_verification',
-                        message: '该邮箱已存在',
-                        delay :  2000,
-                        type: 'GET'
                     }
                 }
             },

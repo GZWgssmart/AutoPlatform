@@ -35,9 +35,6 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th  data-field="workCreatedTime" data-sortable="true">
-                工单编号
-            </th>
             <th data-field="maintainRecord.checkin.maintainOrFix" >
                 维修或保养
             </th>

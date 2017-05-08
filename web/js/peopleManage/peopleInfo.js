@@ -7,15 +7,12 @@ $(document).ready(function () {
 
 
 
-
 function gender(value, row, index) {
     if (row.userGender == 'M') {
         return '男'
     }else if (row.userGender == 'F'){
         return '女'
     }else if (row.userGender == 'N'){
-        return '未知'
-    } else if (row.userGender == null || row.userGender == "") {
         return '未知'
     }
 }
@@ -44,7 +41,6 @@ function fmtDate(){
 
 }
 
-
 function customerAge(row) {
     var card = row.userIdentity;
     if(card != null && card != '') {
@@ -63,6 +59,7 @@ function customerAge(row) {
         $("#age").val("");
     }
 }
+
 
 function operateFormatter(value, row, index) {
     if (row.userStatus == 'Y') {
@@ -111,6 +108,11 @@ window.operateEvents = {
         $("#form_datetime").val(formatterDate(user.userCreatedTime));
         // $("#form_loginedTime").val(formatterDate(user.userLoginedTime));
         $("#editModal").fill(user);
+        var company = document.getElementById("editModalCompany");
+        company.value = user.company.companyName;
+        var loginedTime = document.getElementById("form_loginedTime");
+        loginedTime.value = user.userLoginedTime;
+        $("#form_loginedTime").val(formatterDate(user.userLoginedTime));
         $('#editModalCompany').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
         validator("editModal");
         $("#myModal").modal('show');
@@ -119,6 +121,10 @@ window.operateEvents = {
         }else{
             $("#status").val("不可用");
         }
+        var change = user.userStatus;
+            if (change == 'N'){
+                return 'Y';
+            }
         customerAge(row);
         fmtDate();
         formatterDate();
@@ -236,13 +242,6 @@ function validator(formId) {
                     regexp: {
                         regexp: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
                             message: '邮箱格式错误'
-                    },
-                    threshold: 6,
-                    remote: {
-                        url: '/peopleManage/peopleEmail_verification',
-                        message: '该邮箱已存在',
-                        delay :  2000,
-                        type: 'GET'
                     }
                 }
             },
@@ -283,9 +282,6 @@ function validator(formId) {
             },
             userSalary: {
                 validators: {
-                    notEmpty: {
-                        message: '工资不能为空'
-                    },
                     regexp: {
                         regexp: /^([1-9][\d]{0,7}|0)(\.[\d]{1,2})?$/,
                             message: '工资格式错误'

@@ -35,9 +35,6 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th  data-field="userCreatedTime" data-sortable="true">
-                人员编号
-            </th>
             <th data-field="userName" >
                 姓名
             </th>
@@ -70,7 +67,7 @@
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
+                <i class="glyphicon glyphicon-pencil"></i> 修改角色
             </button></a>
         </div>
         </tbody>
@@ -326,7 +323,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">所属公司：</label>
-                                            <input id="editModalCompany" style="display: initial;" disabled="disabled" class="js-example-tags form-control" name="companyId"/>
+                                            <input id="editModalCompany" style="display: initial;" disabled="disabled" class="js-example-tags form-control"/>
                                         </div>
                                         <br />
                                         <br />

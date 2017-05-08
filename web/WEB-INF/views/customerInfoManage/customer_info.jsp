@@ -34,9 +34,6 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="userCreatedTime" data-sortable="true">
-                车主编号
-            </th>
             <th data-field="userNickname" >
                 昵称
             </th>

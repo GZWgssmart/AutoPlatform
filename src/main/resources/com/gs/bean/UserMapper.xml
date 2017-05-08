@@ -89,6 +89,13 @@
 		]]>
 	</update>
 
+	<update id="updateRole" parameterType="user">
+		<![CDATA[
+			UPDATE t_user SET
+
+		]]>
+	</update>
+
 	<update id="updateLoginTime" parameterType="string">
 		<![CDATA[
 			update t_user set userLoginedTime = now() where userId = #{userId}
@@ -134,12 +141,6 @@
 	<select id="queryPhone" parameterType="string" resultType="user">
 		<![CDATA[
 			  SELECT DISTINCT userPhone FROM t_user
-		]]>
-	</select>
-
-	<select id="queryEmail" parameterType="string" resultType="user">
-		<![CDATA[
-			  SELECT DISTINCT userEmail FROM t_user
 		]]>
 	</select>
 

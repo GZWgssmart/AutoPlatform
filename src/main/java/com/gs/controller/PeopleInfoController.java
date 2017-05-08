@@ -102,28 +102,6 @@ public class PeopleInfoController {
         return resultString;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "peopleEmail_verification", method = RequestMethod.GET)
-    public String verificationEmail(@Param("userEmail")String userEmail) {
-        boolean result = true;
-        List<User> verification = userService.queryEmail();
-        for (User user : verification) {
-            if (user.getUserEmail().equals(userEmail)) {
-                result = false;
-                break;
-            }
-        }
-        Map<String, Boolean> map = new HashMap<String, Boolean>();
-        map.put("valid", result);
-        ObjectMapper mapper = new ObjectMapper();
-        String resultString = "";
-        try {
-            resultString = mapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return resultString;
-    }
 
     @ResponseBody
     @RequestMapping(value = "peopleInfo_pager", method= RequestMethod.GET)
