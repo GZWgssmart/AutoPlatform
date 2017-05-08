@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.naming.ldap.PagedResultsControl;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -139,6 +140,26 @@ public class AccessoriesController {
         pager.setTotalRecords(accessoriesService.countByStatus(status));
         List<Accessories> accessoriess = accessoriesService.queryByStatusPager(status, pager);
         return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriess);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryByCondition", method = RequestMethod.GET)
+    public Pager4EasyUI<Accessories> queryByCondition(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,
+                                                      @Param("accName") String accName, @Param("accCommodityCode") String accCommodityCode,
+                                                      @Param("accTypeId") String accTypeId, @Param("companyId") String companyId){
+        logger.info("条件查询配件");
+        Accessories accessories = new Accessories();
+        accessories.setAccName(accName);
+        accessories.setAccTypeId(accTypeId);
+        accessories.setCompanyId(companyId);
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<Accessories> accessoriesList = new ArrayList<Accessories>();
+        pager.setTotalRecords(accessoriesService.countByCondition(accessories));
+        accessoriesList = accessoriesService.queryByCondition(pager, accessories);
+
+        return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
     }
 }
 

@@ -14,6 +14,9 @@ $(document).ready(function () {
     initSelect2("acc_company", "请选择公司", "/company/company_all", "565");
     initSelect2("acc_accessoriesType", "请选择配件类别", "/accessoriesType/accessoriesType_All", "565");
 
+    initSelect2("company", "请选择公司", "/company/company_all", "150");
+    initSelect2("accType", "请选择配件分类", "/accessoriesType/accessoriesType_All", "150");
+
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin", "editForm");
 
@@ -170,6 +173,26 @@ function validator(formId) {
 
         })
 
+}
+
+/** 根据条件搜索 */
+function searchAcc() {
+    var accName = $("#searchAccName").val();
+    var accCommodityCode = $("#searchAccCommodityCode").val();
+    var companyId = $("#searchCompanyId").val();
+    var accTypeId = $("#searchAccTypeId").val();
+    initTable("cusTable", "/accessories/queryByCondition?accName=" + accName + "&accCommodityCode=" + accCommodityCode + "&companyId=" + companyId + "&accTypeId" +accTypeId);
+
+}
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchAccName").val('');
+    $("#searchAccCommodityCode").val('');
+    $('#searchCompanyId').html('').trigger("change");
+    $('#searchAccTypeId').html('').trigger("change");
+    $("#searchDiv").hide();
+    $("#showButton").show();
 }
 
 

@@ -19,5 +19,7 @@ public interface AccessoriesService extends BaseService<String, Accessories>{
     public int countByStatus(String status);
     public List<Accessories> queryByIdPager(@Param("id") String id, @Param("pager") Pager pager);
 
+    public int countByCondition(Accessories accessories);
+    public List<Accessories> queryByCondition(Pager pager, Accessories accessories);
 
 }

@@ -50,4 +50,10 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 		return accessoriesDAO.queryByIdPager(id,pager);
 	}
 
+	public int countByCondition(Accessories accessories) { return accessoriesDAO.countByCondition(accessories); }
+
+	public List<Accessories> queryByCondition(Pager pager, Accessories accessories){
+		return accessoriesDAO.queryByCondition(pager, accessories);
+	}
+
 }

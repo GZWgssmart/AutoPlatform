@@ -129,6 +129,28 @@
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
+	<select id="queryByCondition" resultType="list" resultMap="accessoriesResultMap">
+		<![CDATA[
+ 			select ac.*, c.companyId, c.companyName, at.accTypeId, at.accTypeName, s.supplyId, s.supplyName
+ 			from t_accessories ac, t_company c, t_accessories_type at, t_supply s
+ 			where 1=1 and c.companyId = ac.companyId and at.accTypeId = ac.accTypeId and s.supplyId = ac.supplyId
+		]]>
+		<if test="accessories.accName != null and accessories.accName !=''">
+			and ac.accName like concat('%', #{accessories.accName},'%')
+		</if>
+		<if test="accessories.accCommodityCode != null and accessories.accCommodityCode !=''">
+			and ac.accCommodityCode like concat('%', #{accessories.accCommodityCode}, '%')
+		</if>
+		<if test="accessories.companyId != null and accessories.companyId != '' and accessories.companyId != 'null'">
+			and ac.companyId = #{accessories.companyId}
+		</if>
+		<if test="accessories.accTypeId != null and accessories.accTypeId != '' and accessories.accTypeId != 'null'">
+			and ac.accTypeId = #{accessories.accTypeId}
+		</if>
+		order by ac.accCreatedTime desc, ac.companyId
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
 	<select id="count" resultType="int">
 		<![CDATA[
 			select count(accId) from t_accessories
@@ -140,6 +162,25 @@
 			select count(*) from t_accessories where accStatus = #{accStatus}
 		]]>
 	</select>
+
+	<select id="countByCondition" resultType="int">
+		<![CDATA[
+			select count(*) from t_accessories where 1 = 1
+		]]>
+		<if test="accName != null and accName != ''">
+			and accName like concat('%',#{accName},'%')
+		</if>
+		<if test="accCommodityCode != null and accCommodityCode != ''">
+			and accCommodityCode like concat('%',#{accCommodityCode},'%')
+		</if>
+		<if test="companyId != null and companyId != '' and companyId != 'null'">
+			and companyId = #{companyId}
+		</if>
+		<if test="accTypeId != null and accTypeId != '' and accTypeId != 'null'">
+			and accTypeId = #{accTypeId}
+		</if>
+	</select>
+
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
