@@ -31,12 +31,18 @@
 			<id property="companyName" column="companyName"/>
 		</association>
 
+
 		<association property="role" javaType="com.gs.bean.Role">
 			<id property="roleId" column="roleId"/>
 			<id property="roleName" column="roleName"/>
 			<id property="roleDes" column="roleDes"/>
 		</association>
 
+		<association property="userRole" javaType="com.gs.bean.UserRole">
+			<id property="userRoleId" column="userRoleId"/>
+			<id property="userId" column="userId"/>
+			<id property="roleId" column="roleId"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="user">
@@ -52,9 +58,9 @@
 	<insert id="insertAdmin" parameterType="user">
 		<![CDATA[
 			insert into t_user(userId, userName, userEmail, userPhone, userPwd,
-								userIdentity, userBirthday, userAddress, companyId, userCreatedTime, userStatus)
+								userIdentity, userBirthday, userAddress, companyId, userCreatedTime, userStatus, userGender)
 			value (#{userId}, #{userName}, #{userEmail}, #{userPhone}, #{userPwd}, #{userIdentity},
-			#{userBirthday}, #{userAddress}, #{companyId}, now(), 'Y');
+			#{userBirthday}, #{userAddress}, #{companyId}, now(), 'Y', #{userGender});
 		]]>
 	</insert>
 
@@ -89,12 +95,7 @@
 		]]>
 	</update>
 
-	<update id="updateRole" parameterType="user">
-		<![CDATA[
-			UPDATE t_user SET
 
-		]]>
-	</update>
 
 	<update id="updateLoginTime" parameterType="string">
 		<![CDATA[
@@ -188,7 +189,7 @@
 
 	<select id="queryByAdminPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select u.*, c.companyId, c.companyName from t_user u
+			select u.*, c.companyId, c.companyName, r.roleDes from t_user u
 			LEFT JOIN t_company c on u.companyId = c.companyId
 			LEFT JOIN t_user_role ur  on ur.userId = u.userId
 			LEFT JOIN t_role r on r.roleId = ur.roleId
@@ -199,7 +200,7 @@
 
 	<select id="queryByCompanyAdminPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select u.*, c.companyId, c.companyName from t_user u
+			select u.*, c.companyId, c.companyName, r.roleDes from t_user u
 			LEFT JOIN t_company c on u.companyId = c.companyId
 			LEFT JOIN t_user_role ur  on ur.userId = u.userId
 			LEFT JOIN t_role r on r.roleId = ur.roleId
@@ -210,7 +211,7 @@
 
 	<select id="queryBySystemAdminPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select u.*, c.companyId, c.companyName from t_user u
+			select u.*, c.companyId, c.companyName, r.roleDes from t_user u
 			LEFT JOIN t_company c on u.companyId = c.companyId
 			LEFT JOIN t_user_role ur  on ur.userId = u.userId
 			LEFT JOIN t_role r on r.roleId = ur.roleId
