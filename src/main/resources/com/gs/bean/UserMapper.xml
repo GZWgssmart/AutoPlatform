@@ -95,6 +95,17 @@
 		]]>
 	</update>
 
+	<update id="updateAdmin" parameterType="user">
+		<![CDATA[
+			UPDATE t_user SET
+				userName = #{userName}, userIcon = #{userIcon}, userNickname = #{userNickname},
+				userDes = #{userDes}, userGender = #{userGender}, userAddress = #{userAddress},
+				userStatus = 'Y', qqOpenId = #{qqOpenId}, weiboOpenId = #{weiboOpenId},
+				wechatOpenId = #{wechatOpenId}, userIdentity = #{userIdentity}, userDes = #{userDes}
+				WHERE userId = #{userId}
+		]]>
+	</update>
+
 
 	<update id="updateLoginTime" parameterType="string">
 		<![CDATA[

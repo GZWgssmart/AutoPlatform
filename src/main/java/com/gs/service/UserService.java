@@ -65,4 +65,7 @@ public interface UserService extends BaseService<String, User>{
 
     /*验证身份证*/
     public int queryIdentity(String userIdentity);
+
+    /**修改管理员*/
+    public void updateAdmin(User user);
 }

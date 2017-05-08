@@ -206,6 +206,21 @@ public class PeopleInfoController {
         return comboBox4EasyUIs;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "role_all", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryRoleAll() {
+        logger.info("查询角色");
+        List<Role> roles = roleService.queryAll();
+        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+        for (Role role : roles) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(role.getRoleId());
+            comboBox4EasyUI.setText(role.getRoleDes());
+            comboBox4EasyUIs.add(comboBox4EasyUI);
+        }
+        return comboBox4EasyUIs;
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "query_user", method = RequestMethod.GET)

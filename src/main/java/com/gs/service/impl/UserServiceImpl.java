@@ -93,9 +93,12 @@ public class UserServiceImpl implements UserService {
 		return userDAO.queryEmail(userEmail);
 	}
 
-	@Override
 	public int queryIdentity(String userIdentity) {
 		return userDAO.queryIdentity(userIdentity);
+	}
+
+	public void updateAdmin(User user) {
+		userDAO.updateAdmin(user);
 	}
 
 

@@ -3,6 +3,7 @@ $(document).ready(function () {
     initTable("cusTable", "/peopleManage/peopleInfo_pager");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
+    initSelect2("user_role", "请选择角色", "/peopleManage/role_all", 565);
 });
 
 
@@ -153,11 +154,9 @@ function showEditWin() {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
-        var user = selectRow[0];
-        var gender = document.getElementById("usergender");
-        gender.value = user.userGender;
-        $("#editForm").fill(user);
-        $('#editCompany').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
+        var userRole = selectRow[0];
+        $("#editForm").fill(userRole);
+        $('#editRole').html('<option value="' + userRole.role.roleId + '">' + userRole.role.roleDes + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
 }
