@@ -131,7 +131,6 @@ function carWash(value, row, index) {
 /** 显示添加数据的窗口 */
 function showAddWin() {
     appointment = "";
-    clearAddForm();
     validator("addForm");
     initDateTimePicker("datetimepicker", "arriveTime", "addForm");
     $("#addWin").modal('show');
@@ -493,8 +492,7 @@ function validator(formId) {
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/checkin/add", formId, "addWin");
-
-
+                clearAddForm();
             } else if (formId == "editForm") {
                 formSubmit("/checkin/edit", formId, "editWin");
             }

@@ -63,10 +63,17 @@ function getDate() {
 function notRemind() {
     initTable("cusTable", "/record/pager_speedStatus?speedStatus=未提醒");
 }
+
 /** 查看已提醒 */
 function alreadyRemind() {
     initTable("cusTable", "/record/pager_speedStatus?speedStatus=已提醒");
 }
+
+/** 查看已完成 */
+function alreadyComplete() {
+    initTable("cusTable", "/record/pager_speedStatus?speedStatus=已完成");
+}
+
 /** 查看全部 */
 function allRemind() {
     var speedStatus = "已提醒,未提醒";
