@@ -17,9 +17,10 @@ public interface IncomingOutgoingService extends BaseService<String, IncomingOut
 
     public int countByInOutType(IncomingOutgoing incomingOutgoing);
 
-    public List<IncomingOutgoing> queryByDefault(int inOutType);
+    public List<IncomingOutgoing> queryByDefault(int inOutType,String companyId);
 
-    public List<IncomingOutgoing> queryByCondition(String startTime,String endTime,int inOutType,String type);
+    public List<IncomingOutgoing> queryByCondition(String startTime,String endTime,
+                                                   int inOutType,String type,String companyId);
 
     public void addInsert(List<IncomingOutgoing> incomingOutgoings);
 

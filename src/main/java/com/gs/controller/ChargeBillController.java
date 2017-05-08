@@ -48,6 +48,12 @@ public class ChargeBillController {
         return "settlementCar/charge_document";
     }
 
+    @RequestMapping(value = "statement_page", method = RequestMethod.GET)
+    public String statementPage() {
+        logger.info("访问对账单页面");
+        return "financeManage/account_statement";
+    }
+
     @ResponseBody
     @RequestMapping(value="pager",method= RequestMethod.GET)
     public Pager4EasyUI<ChargeBill> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("status") String status){

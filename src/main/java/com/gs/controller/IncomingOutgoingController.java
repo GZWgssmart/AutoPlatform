@@ -123,16 +123,16 @@ public class IncomingOutgoingController {
 
     @ResponseBody
     @RequestMapping(value="query_default",method= RequestMethod.GET)
-    public List<LineBasic> queryAll(){
+    public List<LineBasic> queryAll(@Param("companyId")String companyId){
         logger.info("查询所有收支记录报表显示");
         List<LineBasic> lineBasics = new ArrayList<LineBasic>();
         LineBasic lineBasic = new LineBasic();
         LineBasic lineBasic1 = new LineBasic();
         lineBasic.setName("支出");
-        dateDay("outgoing");
+        dateDay("outgoing",companyId);
         lineBasic.setData(doubleDayOutType);
         lineBasic1.setName("收入");
-        dateDay("incoming");
+        dateDay("incoming",companyId);
         lineBasic1.setData(doubleDayInType);
         lineBasic.setCategories(strDay);
         lineBasic1.setCategories(strDay);
@@ -160,7 +160,8 @@ public class IncomingOutgoingController {
     }
     @ResponseBody
     @RequestMapping(value="query_condition",method= RequestMethod.GET)
-    public List<LineBasic> queryCondition(@Param("start")String start,@Param("end")String end,@Param("type")String type){
+    public List<LineBasic> queryCondition(@Param("start")String start,@Param("end")String end,
+                                          @Param("type")String type,@Param("companyId")String companyId){
         logger.info("根据年，月，季度，周，日查询所有收支记录报表显示");
         List<LineBasic> lineBasics = new ArrayList<LineBasic>();
         LineBasic lineBasic = new LineBasic();
@@ -170,38 +171,38 @@ public class IncomingOutgoingController {
         if(start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")){
             if(type.equals("year")){
                 setStrYear(start,end);
-                dataCondition(start,end,1,type,"year","outgoing");
+                dataCondition(start,end,1,type,"year","outgoing",companyId);
                 lineBasic.setData(doubleYearOutType);
-                dataCondition(start,end,2,type,"year","incoming");
+                dataCondition(start,end,2,type,"year","incoming",companyId);
                 lineBasic1.setData(doubleYearInType);
                 lineBasic.setCategories(strYear);
                 lineBasic1.setCategories(strYear);
             }else if(type.equals("quarter")){
-                dataCondition(start,end,1,type,"quarter","outgoing");
+                dataCondition(start,end,1,type,"quarter","outgoing",companyId);
                 lineBasic.setData(doubleQuarterOutType);
-                dataCondition(start,end,2,type,"quarter","incoming");
+                dataCondition(start,end,2,type,"quarter","incoming",companyId);
                 lineBasic1.setData(doubleQuarterInType);
                 lineBasic.setCategories(strQuarter);
                 lineBasic1.setCategories(strQuarter);
             } else if(type.equals("month")){
-                dataCondition(start,end,1,type,"month","outgoing");
+                dataCondition(start,end,1,type,"month","outgoing",companyId);
                 lineBasic.setData(doubleMonthOutType);
-                dataCondition(start,end,2,type,"month","incoming");
+                dataCondition(start,end,2,type,"month","incoming",companyId);
                 lineBasic1.setData(doubleMonthInType);
                 lineBasic.setCategories(strMonth);
                 lineBasic1.setCategories(strMonth);
             }else if(type.equals("week")){
                 setStrWeek(start,end);
-                dataCondition(start,end,1,type,"week","outgoing");
+                dataCondition(start,end,1,type,"week","outgoing",companyId);
                 lineBasic.setData(doubleWeekOutType);
-                dataCondition(start,end,2,type,"week","incoming");
+                dataCondition(start,end,2,type,"week","incoming",companyId);
                 lineBasic1.setData(doubleWeekInType);
                 lineBasic.setCategories(strWeek);
                 lineBasic1.setCategories(strWeek);
             }else if(type.equals("day")){
-                dataCondition(start,end,1,type,"day","outgoing");
+                dataCondition(start,end,1,type,"day","outgoing",companyId);
                 lineBasic.setData(doubleDayOutType);
-                dataCondition(start,end,2,type,"day","incoming");
+                dataCondition(start,end,2,type,"day","incoming",companyId);
                 lineBasic1.setData(doubleDayInType);
                 lineBasic.setCategories(strDay);
                 lineBasic1.setCategories(strDay);
@@ -215,14 +216,14 @@ public class IncomingOutgoingController {
 
             /*  默认查询本月的收入与支出
             * */
-    public void dateDay(String type){
+    public void dateDay(String type,String companyId){
         doubleDayInType = new double[31];
         doubleDayOutType = new double[31];
         List<IncomingOutgoing> incomingOutgoings = null;
         if(type.equals("incoming")){
-            incomingOutgoings = incomingOutgoingService.queryByDefault(2);
+            incomingOutgoings = incomingOutgoingService.queryByDefault(2,companyId);
         }else if(type.equals("outgoing")){
-            incomingOutgoings = incomingOutgoingService.queryByDefault(1);
+            incomingOutgoings = incomingOutgoingService.queryByDefault(1,companyId);
         }
         int i = 0;
         double[] doubles = new double[incomingOutgoings.size()];
@@ -250,7 +251,7 @@ public class IncomingOutgoingController {
         /*
         *  按年，季度，月，周，日，查询
         * */
-    public void dataCondition(String start,String end,int inOutType,String type,String date,String inOut){
+    public void dataCondition(String start,String end,int inOutType,String type,String date,String inOut,String companyId){
         doubleDayInType = new double[31];
         doubleDayOutType = new double[31];
         doubleMonthInType = new double[12];
@@ -261,7 +262,7 @@ public class IncomingOutgoingController {
         doubleYearOutType = new double[yearLen];
         doubleWeekInType = new double[weekLen];
         doubleWeekOutType = new double[weekLen];
-        List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByCondition(start,end,inOutType,type);;
+        List<IncomingOutgoing> incomingOutgoings = incomingOutgoingService.queryByCondition(start,end,inOutType,type,companyId);;
         int i = 0;
         double[] doubles = new double[incomingOutgoings.size()];
         String[] strs = new String[incomingOutgoings.size()];

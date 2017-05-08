@@ -32,16 +32,34 @@ var tempData = {
 };
 
 
-
+var companyId='';
 $(function () {
-    getColumnarChart("columnar", "/incomingOutgoing/query_default", tempData,"default","收入与支出本月统计");
+    $("#checkWin").modal('show');
+    validatorCompany();
+    initSelect2("company", "请选择公司", "/company/company_all", "565");
+    destoryValidator("checkWin","checkForm");
     initDateTime("datatimepicker")
-
     $("#myTab a").click(function(e){
         $(this).tab("show");
         $(".datatimepicker").val("");
     });
 });
+
+function showCompany(){
+    companyId = '';
+    $('#company').html('').trigger("change");
+    validatorCompany();
+    $("#checkWin").modal('show');
+}
+
+function check(){
+    $("#checkForm").data('bootstrapValidator').validate();
+    if ($("#checkForm").data('bootstrapValidator').isValid()) {
+        $("#companyButton").attr("disabled","disabled");
+    } else {
+        $("#companyButton").removeAttr("disabled");
+    }
+}
 
 function search(count){
     var type = '';
@@ -86,9 +104,48 @@ function initDateTime(clazz) {
 }
 
 function validator( start, end, type,text){
-    if(start != '' && end != ''){
-        getColumnarChart("columnar", "/incomingOutgoing/query_condition?start=" + start +"&end=" + end + "&type=" + type, tempData,type,text);
+    if(companyId != ''){
+        if(start != '' && end != ''){
+            getColumnarChart("columnar", "/incomingOutgoing/query_condition?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
+        }else{
+            getColumnarChart("columnar", "/incomingOutgoing/query_default?companyId="+companyId, tempData,"default","收入与支出本月统计");
+        }
     }else{
-        getColumnarChart("columnar", "/incomingOutgoing/query_default", tempData,"default","收入与支出本月统计");
+        showCompany();
     }
+
+
+}
+function checkCompany(company) {
+    companyId = company.value;
+}
+
+function validatorCompany(){
+    $("#companyButton").removeAttr("disabled");
+    $('#checkForm').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            companyId: {
+                message: '验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '请选择公司'
+                    }
+                }
+
+            }
+        }
+    })
+
+        .on('success.form.bv', function (e) {
+            $("#checkWin").modal('hide');
+            var companyName = $("#company").find("option:selected").text();
+            $('#spans').html("当前公司:"+companyName);
+            $('#checkForm').data('bootstrapValidator').resetForm(true);
+            getColumnarChart("columnar", "/incomingOutgoing/query_default?companyId="+companyId, tempData,"default","收入与支出本月统计");
+        })
 }

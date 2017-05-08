@@ -26,12 +26,13 @@ public interface IncomingOutgoingDAO extends BaseDAO<String, IncomingOutgoing>{
     /*
     * 默认查询本月的财务统计
     * */
-    public List<IncomingOutgoing> queryByDefault(@Param("inOutType") int inOutType);
+    public List<IncomingOutgoing> queryByDefault(@Param("inOutType") int inOutType,@Param("companyId")String companyId);
 
     /*
     * 根据年，月，季度，周，日查询所有收支记录
     * */
-    public List<IncomingOutgoing> queryByCondition(@Param("startTime")String startTime,@Param("endTime")String endTime,@Param("inOutType")int inOutType,@Param("type")String type);
+    public List<IncomingOutgoing> queryByCondition(@Param("startTime")String startTime,@Param("endTime")String endTime,@Param("inOutType")int inOutType,
+                                                   @Param("type")String type, @Param("companyId")String companyId);
 
     /*
    * 批量添加

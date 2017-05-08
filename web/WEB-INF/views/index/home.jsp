@@ -243,7 +243,7 @@
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/salary/show_salary">工资管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">对账单管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/bill/statement_page">对账单管理</a>
                         </li>
                     </ul>
                 </li>

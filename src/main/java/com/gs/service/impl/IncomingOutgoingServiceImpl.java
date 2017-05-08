@@ -45,13 +45,13 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
 		return incomingOutgoingDAO.countByInOutType(incomingOutgoing);
 	}
 
-	public List<IncomingOutgoing> queryByDefault(int inOutType) {
-		return incomingOutgoingDAO.queryByDefault(inOutType);
+	public List<IncomingOutgoing> queryByDefault(int inOutType,String companyId) {
+		return incomingOutgoingDAO.queryByDefault(inOutType,companyId);
 	}
 
     @Override
-    public List<IncomingOutgoing> queryByCondition(String startTime, String endTime, int inOutType, String type) {
-        return incomingOutgoingDAO.queryByCondition(startTime,endTime,inOutType,type);
+    public List<IncomingOutgoing> queryByCondition(String startTime, String endTime, int inOutType, String type,String companyId) {
+        return incomingOutgoingDAO.queryByCondition(startTime,endTime,inOutType,type,companyId);
     }
 
 	@Override

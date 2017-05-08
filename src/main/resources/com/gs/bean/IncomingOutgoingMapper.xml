@@ -104,6 +104,7 @@
 		<![CDATA[
            SELECT sum(inOutMoney) as inOutMoney,inOutCreatedTime,inOutId from t_incoming_outgoing
              WHERE DATE_FORMAT(inOutCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and  inOutStatus = 'Y'
+             and companyId = #{companyId}
 		]]>
         <if test="inOutType ==1">
             and outTypeId is not null
@@ -118,6 +119,7 @@
         <![CDATA[
            select sum(inOutMoney) as inOutMoney ,inOutCreatedTime from t_incoming_outgoing
             where inOutCreatedTime >= #{startTime} and inOutCreatedTime <= #{endTime} and  inOutStatus = 'Y'
+            and companyId = #{companyId}
 		]]>
         <if test="inOutType ==1">
             and outTypeId is not null
@@ -126,19 +128,19 @@
             and inTypeId is not null
         </if>
         <if test="type =='year'">
-            GROUP BY year(inOutCreatedTime);
+            GROUP BY year(inOutCreatedTime)
         </if>
         <if test="type =='quarter'">
-            GROUP BY quarter(inOutCreatedTime);
+            GROUP BY quarter(inOutCreatedTime)
         </if>
         <if test="type =='month'">
-            GROUP BY month(inOutCreatedTime);
+            GROUP BY month(inOutCreatedTime)
         </if>
         <if test="type =='week'">
-            GROUP BY week(inOutCreatedTime);
+            GROUP BY week(inOutCreatedTime)
         </if>
         <if test="type =='day'">
-            GROUP BY day(inOutCreatedTime);
+            GROUP BY day(inOutCreatedTime)
         </if>
     </select>
 

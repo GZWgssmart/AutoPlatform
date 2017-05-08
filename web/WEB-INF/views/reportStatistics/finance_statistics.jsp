@@ -20,7 +20,9 @@
     <meta name="description" content="">
 
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
 
 </head>
 <body>
@@ -30,7 +32,9 @@
                <li><a  data-toggle="tab" data-target="#quarter">按季度查询</a></li>
                <li><a  data-toggle="tab" data-target="#month">按月查询</a></li>
                <li><a  data-toggle="tab"data-target="#week">按周查询</a></li>
-        <li><a  data-toggle="tab"data-target="#day">按日查询</a></li>
+                <li><a  data-toggle="tab"data-target="#day">按日查询</a></li>
+                 <li><a  data-toggle="tab" onclick="showCompany()">选择公司</a></li>
+                <li class="disabled" ><a id="spans" href ="javascript:return false;"></a></li>
        　　 </ul>
           <div class="tab-content" style="margin-top:10px;">
               <div class="tab-pane  fade in active" id="year">
@@ -151,19 +155,54 @@
               </div>
              </div>
 </div>
+
+
+<div id="checkWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">选择公司</h3>
+                        <form role="form" id="checkForm" >
+                            <div class="form-group">
+                                <label class="control-label">请选择公司：</label>
+                                <select id="company" class="js-example-tags form-control company" name="companyId" onchange="checkCompany(this)"></select>
+                            </div>
+
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" id="companyButton" onclick="check()" class="btn btn-primary" value="确认" >
+                                </input>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     <div id="columnar" style="min-width:400px;height:400px"></div>
 
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/highcharts.js"></script>
 <script src="<%=path %>/js/grid-light.js"></script>
 <script src="<%=path %>/js/exporting.js"></script>
 <script src="<%=path %>/js/highcharts-zh_CN.js"></script>
+<script src="<%=path %>/js/select2.full.min.js"></script>
+<script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/reportStatistics/my-charts.js"></script>
 <script src="<%=path %>/js/reportStatistics/finance-statistics.js"></script>
+<script src="<%=path %>/js/main.js"></script>
 </body>
 </html>
