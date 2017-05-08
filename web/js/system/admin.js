@@ -26,17 +26,7 @@ function showEditWin() {
         var user = selectRow[0];
         var selectGender = document.getElementById("editGender");
         selectGender.value = user.userGender;
-        editEmail = user.userEmail;
-        editPhone = user.userPhone;
-        editIdentity = user.userIdentity;
-        $("#role").val(user.role.roleDes);
-        $("#editBirthday").val(birthday(user.userBirthday));
-        $("#createTime").val(formatterDate(user.userCreatedTime));
-        $("#loginTime").val(formatterDate(user.userLoginedTime));
-        $("#editForm").fill(user);
-        validator("editForm");
-        $("#editWin").modal('show');
-        fmtDate();
+        initEditParam(user);
     }
 }
 
@@ -100,17 +90,7 @@ window.operateEvents = {
         var user = row;
         var selectGender = document.getElementById("editGender");
         selectGender.value = user.userGender;
-        editEmail = user.userEmail;
-        editPhone = user.userPhone;
-        editIdentity = user.userIdentity;
-        $("#role").val(user.role.roleDes);
-        $("#editBirthday").val(birthday(user.userBirthday));
-        $("#createTime").val(formatterDate(user.userCreatedTime));
-        $("#loginTime").val(formatterDate(user.userLoginedTime));
-        $("#editForm").fill(user);
-        validator("editForm");
-        $("#editWin").modal('show');
-        fmtDate();
+        initEditParam(user);
     }
 }
 
@@ -120,6 +100,20 @@ function queryAll() {
 
 function queryCompany() {
     initTable("cusTable", contextPath + "/admin/company_pager");
+}
+
+function initEditParam(user) {
+    editEmail = user.userEmail;
+    editPhone = user.userPhone;
+    editIdentity = user.userIdentity;
+    $("#role").val(user.role.roleDes);
+    $("#editBirthday").val(birthday(user.userBirthday));
+    $("#createTime").val(formatterDate(user.userCreatedTime));
+    $("#loginTime").val(formatterDate(user.userLoginedTime));
+    $("#editForm").fill(user);
+    validator("editForm");
+    $("#editWin").modal('show');
+    fmtDate();
 }
 
 function querySystem() {
@@ -250,12 +244,10 @@ function validator(formId) {
         }
     })
         .on('success.form.bv', function (e) {
-            alert("1111");
             if (formId == "addForm") {
                 formSubmit(contextPath + "/admin/add_admin", formId, "addWin");
 
             } else if (formId == "editForm") {
-                alert("进入");
                 formSubmit(contextPath + "/admin/update_admin", formId, "editWin");
             }
         })
