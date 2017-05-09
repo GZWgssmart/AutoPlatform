@@ -35,7 +35,7 @@
 	</delete>
 
 	<update id="update" parameterType="carBrand">
-		update t_car_brand set brandName = #{brandName} , brandDes = #{brandDes} , brandStatus= 'Y' where brandId = #{brandId}
+		update t_car_brand set brandName = #{brandName} , brandDes = #{brandDes} , brandStatus= 'Y' WHERE brandId = #{brandId}
 	</update>
 
 	<update id="batchUpdate" parameterType="list">
@@ -67,7 +67,7 @@
 	</select>
 
 	<select id="queryByPager" resultType="list" resultMap="carBrandResultMap" parameterType="com.gs.common.bean.Pager">
-		select * from t_car_brand  limit #{beginIndex}, #{pageSize}
+		select * from t_car_brand order by brandName ASC limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">

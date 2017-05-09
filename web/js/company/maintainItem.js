@@ -4,7 +4,7 @@
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/maintainFix/queryByPager");
-    initSelect2("company", "请选择汽修公司", "/company/company_all", "550");
+    initSelect2("company", "请选择汽修公司", "/company/company_all", "565");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 });
@@ -17,10 +17,12 @@ function showEditWin() {
     } else {
         var product = selectRow[0];
         validator("editForm");
+        $('#companys').html('<option value="' + product.company.companyName + '">' + product.company.companyName + '</option>').trigger("change");
         $("#editForm").fill(product);
         $("#editWin").modal('show');
     }
 }
+
 
 function showAddWin(){
     validator("addForm");

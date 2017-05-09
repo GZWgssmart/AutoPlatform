@@ -63,13 +63,20 @@ function getDate() {
 function notRemind() {
     initTable("cusTable", "/record/pager_speedStatus?speedStatus=未提醒");
 }
+
 /** 查看已提醒 */
 function alreadyRemind() {
     initTable("cusTable", "/record/pager_speedStatus?speedStatus=已提醒");
 }
+
+/** 查看已完成 */
+function alreadyComplete() {
+    initTable("cusTable", "/record/pager_speedStatus?speedStatus=已完成");
+}
+
 /** 查看全部 */
 function allRemind() {
-    var speedStatus = "已提醒,未提醒";
+    var speedStatus = "已提醒,未提醒,已完成";
     initTable("cusTable", "/record/pager_speedStatus?speedStatus=" + speedStatus);
 }
 
@@ -90,10 +97,9 @@ function showAddWin() {
                     for (var i = 0; i < len; i++) {
                         count += data.rows[i].price;
                     }
-                    $("#addForm").fill(record);
-
                     $("#addWin").modal('show');
-                    $("input[type=reset]").trigger("click");
+
+                    $("#addForm").fill(record);
                     $("#addChargeBillMoney").val(count);
                 } else {
                     swal('结算失败', "该车主没有做维修保养项目", "error");
@@ -125,7 +131,7 @@ function showRemindWin() {
             if (selectRow[0].speedStatus != selectRow[i].speedStatus) {
                 flag = false;
             } else {
-                if (selectRow[i].speedStatus == "已提醒") {
+                if (selectRow[i].speedStatus == "已提醒" || selectRow[i].speedStatus == "已完成") {
                     flag = false;
                 }
             }
@@ -183,7 +189,7 @@ function showAllRemindWin() {
     var userName = "";
     for (var i = 0; i < len; i++) {
         var record = selectRow[i];
-        if (selectRow[i].speedStatus == "已提醒") {
+        if (selectRow[i].speedStatus == "已提醒" || selectRow[i].speedStatus == "已完成") {
             continue;
         }
         if (ids == "") {
@@ -304,7 +310,7 @@ function validator(formId) {
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/bill/add", formId, "addWin");
-
+                $("input[type=reset]").trigger("click");
             } else if (formId == "remindForm") {
                 formSubmit("/record/send_remind", formId, "remindWin");
             }

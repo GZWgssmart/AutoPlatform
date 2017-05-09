@@ -25,7 +25,9 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+           data-height="520"
+    >
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
@@ -60,13 +62,19 @@
                 </button>
             </a>
             <a>
-                <button onclick="modelAll();" type="button" class="btn btn-default">查看所有</button>
+                <button onclick="statusUsableness();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>查看可用颜色
+                </button>
             </a>
             <a>
-                <button onclick="statusUsableness();" type="button" class="btn btn-default">查看可用颜色</button>
+                <button onclick="statusAvailable();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>查看不可用颜色
+                </button>
             </a>
             <a>
-                <button onclick="statusAvailable();" type="button" class="btn btn-default">查看不可用颜色</button>
+                <button onclick="modelAll();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看全部
+                </button>
             </a>
         </div>
         </tbody>
@@ -134,6 +142,7 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改汽车颜色</h3>
                         <form role="form" id="editForm">
+                            <input type="hidden" name="colorId" class="form-control" attr="carColor.colorId"/>
                             <div class="form-group">
                                 <label class="control-label">汽车颜色名称：</label>
                                 <br />
@@ -142,7 +151,7 @@
 
                             <div class="form-group">
                                 <label class="control-label">汽车颜色：</label>
-                                <span id="spans" style='display: inline-block; width: 25px; height: 25px;'></span>
+                                <span id="spans" style='display: inline-block; width: 25px; height: 25px;  background-color:transparent;'></span>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车颜色RGB：</label>

@@ -14,6 +14,7 @@
     <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -22,7 +23,9 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+           data-height="520"
+    >
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
@@ -49,13 +52,19 @@
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
             <a>
-                <button onclick="plateAll();" type="button" class="btn btn-default">查看所有</button>
+                <button onclick="statusUsableness();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>查看可用汽车品牌
+                </button>
             </a>
             <a>
-                <button onclick="statusUsableness();" type="button" class="btn btn-default">查看可用汽车品牌</button>
+                <button onclick="statusAvailable();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>查看不可用汽车品牌
+                </button>
             </a>
             <a>
-                <button onclick="statusAvailable();" type="button" class="btn btn-default">查看不可用汽车品牌</button>
+                <button onclick="plateAll();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>查看全部
+                </button>
             </a>
         </div>
         </tbody>
@@ -76,11 +85,11 @@
                             <input type="hidden" attr="carPlate.plateId" name="plateId" id = "id"/>
                             <input type="hidden" attr="carPlate.plateStatus" name="plateStatus"/>
                             <div class="form-group">
-                                <label>车牌名称：</label>
+                                <label class="control-label">车牌名称：</label>
                                 <input type="text"  name="plateName"  attr="carPlate.plateName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>车牌描述：</label>
+                                <label class="control-label">车牌描述：</label>
                                 <textarea attr="carPlate.plateDes" name="plateDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
@@ -108,11 +117,11 @@
                         <h3 class="m-t-none m-b">添加车牌</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
-                                <label>车牌名称：</label>
+                                <label class="control-label">车牌名称：</label>
                                 <input type="text"   name="plateName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>车牌描述：</label>
+                                <label class="control-label">车牌描述：</label>
                                 <textarea name="plateDes" cols="20" rows="5" class="form-control" ></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">

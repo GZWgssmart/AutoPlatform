@@ -81,16 +81,18 @@ public class PeopleInfoController {
 
     @ResponseBody
     @RequestMapping(value = "peoplePhone_verification", method = RequestMethod.GET)
-    public String verificationPhone(@Param("userPhone")String userPhone) {
+    public String verificationPhone(@Param("userPhone")String userPhone, @Param("editPhone") String editPhone) {
         boolean result = true;
         String resultString = "";
-        int count = userService.queryPhone(userPhone);
-        if (count > 1 || count == 1) {
-            result = false;
-        }
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        map.put("valid", result);
         ObjectMapper mapper = new ObjectMapper();
+        if (!editPhone.equals(userPhone)) {
+            int count = userService.queryPhone(userPhone);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
         try {
             resultString = mapper.writeValueAsString(map);
         } catch (JsonProcessingException e) {
@@ -101,16 +103,18 @@ public class PeopleInfoController {
 
     @ResponseBody
     @RequestMapping(value = "peopleEmail_verification", method = RequestMethod.GET)
-    public String verificationEmail(@Param("userEmail")String userEmail) {
+    public String verificationEmail(@Param("userEmail")String userEmail, @Param("editEmail") String editEmail) {
         boolean result = true;
         String resultString = "";
-        int count = userService.queryEmail(userEmail);
-        if (count > 1 || count == 1) {
-            result = false;
-        }
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        map.put("valid", result);
         ObjectMapper mapper = new ObjectMapper();
+        if (!editEmail.equals(userEmail)) {
+            int count = userService.queryEmail(userEmail);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
         try {
             resultString = mapper.writeValueAsString(map);
         } catch (JsonProcessingException e) {
@@ -121,16 +125,18 @@ public class PeopleInfoController {
 
     @ResponseBody
     @RequestMapping(value = "peopleIdentity_verification", method = RequestMethod.GET)
-    public String verificationIdentity(@Param("userIdentity")String userIdentity) {
+    public String verificationIdentity(@Param("userIdentity")String userIdentity, @Param("editIdentity")String editIdentity) {
         boolean result = true;
         String resultString = "";
-        int count = userService.queryIdentity(userIdentity);
-        if (count > 1 || count == 1) {
-            result = false;
-        }
         Map<String, Boolean> map = new HashMap<String, Boolean>();
-        map.put("valid", result);
         ObjectMapper mapper = new ObjectMapper();
+        if (!editIdentity.equals(userIdentity)) {
+            int count = userService.queryIdentity(userIdentity);
+            if (count > 1 || count == 1) {
+                result = false;
+            }
+        }
+        map.put("valid", result);
         try {
             resultString = mapper.writeValueAsString(map);
         } catch (JsonProcessingException e) {
@@ -201,6 +207,21 @@ public class PeopleInfoController {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
             comboBox4EasyUI.setId(user.getUserId());
             comboBox4EasyUI.setText(user.getUserName());
+            comboBox4EasyUIs.add(comboBox4EasyUI);
+        }
+        return comboBox4EasyUIs;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "role_all", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryRoleAll() {
+        logger.info("查询角色");
+        List<Role> roles = roleService.queryAll();
+        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+        for (Role role : roles) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(role.getRoleId());
+            comboBox4EasyUI.setText(role.getRoleDes());
             comboBox4EasyUIs.add(comboBox4EasyUI);
         }
         return comboBox4EasyUIs;

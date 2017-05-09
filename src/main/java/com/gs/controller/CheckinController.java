@@ -132,6 +132,7 @@ public class CheckinController {
                     userId = UUIDUtil.uuid();
                     User user = new User();
                     user.setUserId(userId);
+                    user.setCompanyId(loginUser.getCompanyId());
                     user.setUserPhone(checkin.getUserPhone());
                     user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
                     user.setUserName(checkin.getUserName());

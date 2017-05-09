@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.text.DateFormat;
@@ -95,7 +96,8 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "uploadCompany", method = RequestMethod.POST)
-    public ControllerResult uploadCarModel(Company company) {
+    public ControllerResult uploadCarModel(Company company,MultipartFile companyLogo) {
+        System.out.println(companyLogo.getContentType());
         companyService.update(company);
         logger.info("更新公司成功");
         return ControllerResult.getSuccessResult("更新公司成功");

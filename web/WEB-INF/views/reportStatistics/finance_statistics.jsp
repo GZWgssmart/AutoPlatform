@@ -33,8 +33,10 @@
                <li><a  data-toggle="tab" data-target="#month">按月查询</a></li>
                <li><a  data-toggle="tab"data-target="#week">按周查询</a></li>
                 <li><a  data-toggle="tab"data-target="#day">按日查询</a></li>
-                 <li><a  data-toggle="tab" onclick="showCompany()">选择公司</a></li>
+                <li><a  data-toggle="tab" onclick="showCompany()">选择公司</a></li>
                 <li class="disabled" ><a id="spans" href ="javascript:return false;"></a></li>
+                <li ><button  class="btn-success" onclick="switchs('bar')">柱状图</button></li>
+                <li ><button  class="btn-danger" onclick="switchs('line')">折线图</button></li>
        　　 </ul>
           <div class="tab-content" style="margin-top:10px;">
               <div class="tab-pane  fade in active" id="year">

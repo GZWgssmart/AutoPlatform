@@ -14,6 +14,9 @@ $(document).ready(function () {
     initSelect2("acc_company", "请选择公司", "/company/company_all", "565");
     initSelect2("acc_accessoriesType", "请选择配件类别", "/accessoriesType/accessoriesType_All", "565");
 
+    initSelect2("company", "请选择公司", "/company/company_all", "150");
+    initSelect2("accType", "请选择配件分类", "/accessoriesType/accessoriesType_All", "150");
+
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin", "editForm");
 
@@ -124,15 +127,36 @@ function validator(formId) {
         },
         fields: {
             accName: {
-                message: '配件分类验证失败',
+                message: '配件验证失败',
                 validators: {
                     notEmpty: {
-                        message: '配件分类名称不能为空'
+                        message: '配件名称不能为空'
                     },
                     stringLength: {
-                        min: 2,
+                        min: 1,
                         max: 8,
-                        message: '配件分类名称长度必须在2到8位之间'
+                        message: '配件名称长度必须在1到8位之间'
+                    }
+                }
+            },
+            accTotal: {
+                validators :{
+                    notEmpty: {
+                        message: '配件数量不能为空'
+                    }
+                }
+            },
+            accPrice: {
+                validators :{
+                    notEmpty: {
+                        message: '配件价格不能为空'
+                    }
+                }
+            },
+            accCommodityCode: {
+                validators :{
+                    notEmpty: {
+                        message: '商品价格不能为空'
                     }
                 }
             },
@@ -145,6 +169,55 @@ function validator(formId) {
                         min: 2,
                         max: 15,
                         message: '配件分类描述长度必须在2到15位之间'
+                    }
+                }
+            },
+            accUnit: {
+                validators: {
+                    nitEmpty: {
+                        message: '计量单位不能为空'
+                    }
+                }
+            },
+            accIdle: {
+                validators: {
+                    nitEmpty: {
+                        message: '可用数量不能为空'
+                    }
+                }
+            },
+            accSalePrice: {
+                validators: {
+                    nitEmpty: {
+                        message: '配件售价不能为空'
+                    }
+                }
+            },
+            accUsedTime: {
+                validators: {
+                    nitEmpty: {
+                        message: '最近一次领料时间不能为空'
+                    }
+                }
+            },
+            accBuyedTime: {
+                validators: {
+                    nitEmpty: {
+                        message: '最近一次购买时间不能为空'
+                    }
+                }
+            },
+            supplyId: {
+                validators: {
+                    nitEmpty: {
+                        message: '供应商不能为空'
+                    }
+                }
+            },
+            accTypeId: {
+                validators: {
+                    nitEmpty: {
+                        message: '配件分类不能为空'
                     }
                 }
             },
@@ -170,6 +243,26 @@ function validator(formId) {
 
         })
 
+}
+
+/** 根据条件搜索 */
+function searchAcc() {
+    var accName = $("#searchAccName").val();
+    var accCommodityCode = $("#searchAccCommodityCode").val();
+    var companyId = $("#searchCompanyId").val();
+    var accTypeId = $("#searchAccTypeId").val();
+    initTable("cusTable", "/accessories/queryByCondition?accName=" + accName + "&accCommodityCode=" + accCommodityCode + "&companyId=" + companyId + "&accTypeId" +accTypeId);
+
+}
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchAccName").val('');
+    $("#searchAccCommodityCode").val('');
+    $('#searchCompanyId').html('').trigger("change");
+    $('#searchAccTypeId').html('').trigger("change");
+    $("#searchDiv").hide();
+    $("#showButton").show();
 }
 
 

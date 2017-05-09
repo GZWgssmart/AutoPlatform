@@ -12,6 +12,7 @@
 		<result property="remindTime" column="remindTime" />
 		<result property="remindType" column="remindType" />
 		<result property="remindCreatedTime" column="remindCreatedTime" />
+		<result column="companyId" property="companyId"/>
 
 		<association property="checkin" javaType="com.gs.bean.Checkin">
 			<id property="checkinId" column="checkinId"></id>
@@ -28,7 +29,9 @@
 
 	<insert id="insert"  parameterType="maintainRemind">
 		<![CDATA[
-
+		insert into t_maintain_remind
+		(remindId, userId, lastMaintainTime, lastMaintainMileage, remindMsg, remindTime, remindType, companyId, remindCreatedTime)
+		VALUE (UUID(),#{userId},#{lastMaintainTime},#{lastMaintainMileage},#{remindMsg},#{remindTime},#{remindType},#{companyId},NOW())
 		]]>
 	</insert>
 

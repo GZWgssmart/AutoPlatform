@@ -20,4 +20,10 @@ public class ReportStatisticsController {
         logger.info("显示财务统计页面");
         return "reportStatistics/finance_statistics";
     }
+
+    @RequestMapping(value = "staff_page", method = RequestMethod.GET)
+    public String showStaff() {
+        logger.info("显示员工工单统计页面");
+        return "reportStatistics/staff_statistics";
+    }
 }

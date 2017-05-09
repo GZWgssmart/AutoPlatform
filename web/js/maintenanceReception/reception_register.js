@@ -131,7 +131,6 @@ function carWash(value, row, index) {
 /** 显示添加数据的窗口 */
 function showAddWin() {
     appointment = "";
-    clearAddForm();
     validator("addForm");
     initDateTimePicker("datetimepicker", "arriveTime", "addForm");
     $("#addWin").modal('show');
@@ -492,9 +491,53 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/checkin/add", formId, "addWin");
-
-
+                $.post("/checkin/add",
+                    $("#" + formId).serialize(),
+                    function (data) {
+                        if (data.result == "success") {
+                            $('#addWin').modal('hide');
+                            $('#cusTable').bootstrapTable('refresh');
+                            $('#' + formId).data('bootstrapValidator').resetForm(true);
+                            swal({
+                                    title: "添加成功",
+                                    text: data.message + ",是否添加维修保养明细？",
+                                    type: "success",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "是",
+                                    cancelButtonText: "否",
+                                    closeOnConfirm: true,
+                                    closeOnCancel: true
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        showMaintain();
+                                    } else {
+                                    }
+                                });
+                        } else if (data.result == "fail") {
+                            swal("错误提示", data.message, "error");
+                        } else if (data.result == "notLogin") {
+                            swal({
+                                    title: "登入失败",
+                                    text: data.message,
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "确认",
+                                    cancelButtonText: "取消",
+                                    closeOnConfirm: true,
+                                    closeOnCancel: true
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        top.location.href = "/login/show_login";
+                                    } else {
+                                    }
+                                });
+                        }
+                    }, "json");
+                clearAddForm();
             } else if (formId == "editForm") {
                 formSubmit("/checkin/edit", formId, "editWin");
             }
@@ -523,6 +566,46 @@ function closeSearchForm() {
     $('#searchCompanyId').html('').trigger("change");
     $("#searchDiv").hide();
     $("#showButton").show();
+}
+
+/** 子窗口调用父窗口的js方法 */
+function showMaintain() {
+    parent.showMaintainPage();
+}
+
+// 跳转到收费单据打印页面
+function addChargeBillPrint(chargeBillId){
+    //  o 为菜单栏li的href
+    var o = "/backstageargeBillprint/"+chargeBillId, m = "101", l = "收费单据打印", k = true;
+    if (o == undefined || $.trim(o).length == 0) {
+        return false
+    }
+    $(".J_menuTab").each(function () {
+        if ($(this).data("id") == o) {
+            if (!$(this).hasClass("active")) {
+                $(this).addClass("active").siblings(".J_menuTab").removeClass("active");
+                //g(this);
+                $(".J_mainContent .J_iframe").each(function () {
+                    if ($(this).data("id") == o) {
+                        $(this).show().siblings(".J_iframe").hide();
+                        return false
+                    }
+                })
+            }
+            k = false;
+            return false
+        }
+    });
+    if (k) {
+        var p = '<a href="javascript:;" class="active J_menuTab" data-id="' + o + '">' + l + ' <i class="fa fa-times-circle"></i></a>';
+        $(".J_menuTab").removeClass("active");
+        var n = '<iframe class="J_iframe" name="iframe' + m + '" width="100%" height="100%" src="' + o + '" frameborder="0" data-id="' + o + '" seamless></iframe>';
+        var iframeName = 'iframe'+m;
+        $(".J_mainContent").find("iframe.J_iframe").hide().parents(".J_mainContent").append(n);
+        $(".J_menuTabs .page-tabs-content").append(p);
+        //g($(".J_menuTab.active"))
+    }
+    return false
 }
 
 

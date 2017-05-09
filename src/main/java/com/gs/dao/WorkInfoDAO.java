@@ -1,7 +1,11 @@
 package com.gs.dao;
 
 import com.gs.bean.WorkInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -11,4 +15,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WorkInfoDAO extends BaseDAO<String, WorkInfo>{
 
+    /*
+    * 默认查询本月的工单统计
+    * */
+    public List<WorkInfo> queryByDefault(@Param("maintainOrFix") String maintainOrFix, @Param("companyId")String companyId);
+
+    /*
+    * 根据年，月，季度，周，日查询所有工单
+    * */
+    public List<WorkInfo> queryByCondition(@Param("startTime")String startTime,@Param("endTime")String endTime,@Param("maintainOrFix")String maintainOrFix,
+                                                   @Param("type")String type, @Param("companyId")String companyId);
 }

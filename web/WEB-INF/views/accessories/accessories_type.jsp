@@ -12,13 +12,20 @@
 <html>
 <head>
 
-    <title>配件分类管理</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>配件分类管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+
+    <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -29,7 +36,8 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+           data-height="520">
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
@@ -74,21 +82,31 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
-            <a><button onclick="queryAll()" type="button" class="btn btn-default" >
-                查询全部
-            </button></a>
-            <a><button onclick="queryStatus('Y')" type="button" class="btn btn-default" >
-                查可用模块
-            </button></a>
-            <a><button onclick="queryStatus('N')" type="button" class="btn btn-default" >
-                查不可用模块
-            </button></a>
+            <a>
+                <button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-plus"></i> 添加
+                </button>
+            </a>
+            <a>
+                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-pencil"></i> 修改
+                </button>
+            </a>
+            <a>
+                <button onclick="queryStatus('Y')" type="button" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-search"></i> 查可用模块
+                </button>
+            </a>
+            <a>
+                <button onclick="queryStatus('N')" type="button" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-search"></i> 查不可用模块
+                </button>
+            </a>
+            <a>
+                <button onclick="queryAll()" type="button" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-search"></i> 查询全部
+                </button>
+            </a>
             <a>
                 <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
                     <i class="glyphicon glyphicon-search"></i> 条件查询

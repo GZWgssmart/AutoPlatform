@@ -3,8 +3,13 @@ $(document).ready(function () {
     initTable("cusTable", "/peopleManage/peopleInfo_pager");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
+    initSelect2("user_role", "请选择角色", "/peopleManage/role_all", 565);
 });
 
+
+var editEmail = "";
+var editPhone = "";
+var editIdentity = "";
 
 
 function gender(value, row, index) {
@@ -51,7 +56,7 @@ function customerAge(row) {
         if (card.substring(10, 12) < month || card.substring(10, 12) == month && card.substring(12, 14) <= day) {
             age++;
         }
-        var birthday = card.substring(10, 12) + "月" + card.substring(12, 14) + "日";
+        var birthday = card.substring(10, 12) + "-" + card.substring(12, 14);
         $("#birthday").val(birthday);
         $("#age").val(age);
     }else{
@@ -125,6 +130,9 @@ window.operateEvents = {
             if (change == 'N'){
                 return 'Y';
             }
+        editEmail = user.userEmail;
+        editPhone = user.userPhone;
+        editIdentity = user.userIdentity;
         customerAge(row);
         fmtDate();
         formatterDate();
@@ -153,11 +161,9 @@ function showEditWin() {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
-        var user = selectRow[0];
-        var gender = document.getElementById("usergender");
-        gender.value = user.userGender;
-        $("#editForm").fill(user);
-        $('#editCompany').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
+        var userRole = selectRow[0];
+        $("#editForm").fill(userRole);
+        $('#editRole').html('<option value="' + userRole.role.roleId + '">' + userRole.role.roleDes + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
 }
@@ -227,7 +233,7 @@ function validator(formId) {
                     },
                     threshold: 11,
                     remote: {
-                        url: '/peopleManage/peoplePhone_verification',
+                        url: '/peopleManage/peoplePhone_verification?editPhone='+editPhone,
                         message: '该手机号已存在',
                         delay :  2000,
                         type: 'GET'
@@ -245,7 +251,7 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: '/peopleManage/peopleEmail_verification',
+                        url: '/peopleManage/peopleEmail_verification?editEmail='+editEmail,
                         message: '该邮箱已存在',
                         delay :  2000,
                         type: 'GET'
@@ -263,7 +269,7 @@ function validator(formId) {
                     },
                     threshold: 18,
                     remote: {
-                        url: '/peopleManage/peopleIdentity_verification',
+                        url: '/peopleManage/peopleIdentity_verification?editIdentity='+editIdentity,
                         message: '该身份证已存在',
                         delay :  2000,
                         type: 'GET'

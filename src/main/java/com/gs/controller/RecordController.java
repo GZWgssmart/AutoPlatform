@@ -14,7 +14,6 @@ import com.gs.service.MaintainRecordService;
 import com.gs.service.UserService;
 import com.gs.thread.SendEmailThread;
 import com.jh.email.Mail;
-import com.jh.email.MailSender;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;

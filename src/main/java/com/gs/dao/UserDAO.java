@@ -71,4 +71,8 @@ public interface UserDAO extends BaseDAO<String, User>{
 
     /**统计当前登陆者公司的所有员工*/
     public int countCompanyEmp(String companyId);
+
+    /**修改管理员*/
+    public void updateAdmin(User user);
+
 }

@@ -1,11 +1,13 @@
 package com.gs.controller;
 
-import com.gs.bean.*;
+import com.gs.bean.MaintainDetail;
+import com.gs.bean.MaintainFixAcc;
+import com.gs.bean.MaterialList;
+import com.gs.bean.WorkInfo;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.SessionGetUtil;
-import com.gs.common.util.UUIDUtil;
 import com.gs.service.MaintainDetailService;
 import com.gs.service.MaintainFixAccService;
 import com.gs.service.MaterialListService;

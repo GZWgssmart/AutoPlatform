@@ -18,6 +18,7 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
+        $('.company').html('<option value="' + product.company.companyName + '">' + product.company.companyName + '</option>').trigger("change");
         validator("editForm");
         $("#editForm").fill(product);
         $("#editWin").modal('show');
@@ -60,14 +61,27 @@ function operating(value, row, index) {
         ].join('');
     }
 }
-
+var cout;
+var accId;
 function Addacc() {
     var maintainId = $("#maintainId").val();
     var selectRow = $("#cusTable2").bootstrapTable('getSelections');
-    if(selectRow.length > 0){
-
+    if(selectRow.length!=1){
+        swal('选择失败', "只能选择一条数据进行填写", "error");
     }else{
-        swal('选择保养项目失败', "最少一个配件", "error");
+
+        cout = $("#count").val();
+        accId = selectRow.accId;
+    }
+}
+
+onclickRow:function onclickRowWin(row){
+    if(row.length!=1){
+
+        return false;
+    }else{
+
+
     }
 }
 
@@ -195,7 +209,6 @@ function validator(formId) {
                 formSubmit("/maintainFix/InsertMaintain", formId, "addWin");
             } else if (formId == "editForm") {
                 formSubmit("/maintainFix/update", formId, "editWin");
-
             }
         })
 

@@ -36,7 +36,7 @@
            data-show-refresh="true"
            data-show-toggle="true"
            data-showColumns="true"
-           data-height="550">
+           data-height="520">
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
@@ -186,7 +186,7 @@
                             <input type="hidden" attr="checkin.appointmentId" name="appointmentId" class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">车主姓名：</label>
-                                <input type="text" attr="checkin.userName" name="userName" class="form-control"/>
+                                <input type="text" attr="checkin.userName" maxlength="4" name="userName" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">车主电话：</label>
@@ -306,7 +306,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">车主姓名：</label>
-                                <input type="text" id="addUserName" name="userName" class="form-control"/>
+                                <input type="text" id="addUserName" maxlength="4" name="userName" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">车主电话：</label>

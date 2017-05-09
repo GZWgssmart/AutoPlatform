@@ -69,7 +69,7 @@
 	</select>
 
 	<select id="queryByPager" resultType="list" resultMap="carPlateResultMap" parameterType="com.gs.common.bean.Pager">
-		select * from t_car_plate  limit #{beginIndex}, #{pageSize}
+		select * from t_car_plate order by plateName asc limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">

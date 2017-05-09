@@ -23,7 +23,9 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+           data-height="520"
+    >
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
@@ -50,13 +52,19 @@
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
             <a>
-                <button onclick="brandAll();" type="button" class="btn btn-default">查看所有</button>
+                <button onclick="statusUsableness();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>查看可用汽车品牌
+                </button>
             </a>
             <a>
-                <button onclick="statusUsableness();" type="button" class="btn btn-default">查看可用汽车品牌</button>
+                <button onclick="statusAvailable();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>查看不可用汽车品牌
+                </button>
             </a>
             <a>
-                <button onclick="statusAvailable();" type="button" class="btn btn-default">查看不可用汽车品牌</button>
+                <button onclick="brandAll();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>查看全部
+                </button>
             </a>
         </div>
         </tbody>
@@ -73,27 +81,24 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改汽车品牌</h3>
-                        <form role="form" id="editForm" >
-                            <input type="hidden" attr="carBrand.brandId" name="brandId" id = "id"/>
-                            <input type="hidden" attr="carBrand.brandStatus" name="brandStatus"/>
+                        <form role="form" id="editForm">
+                            <input type="hidden" attr="carBrand.brandId" name="brandId"/>
                             <div class="form-group">
-                                <label>汽车品牌名称：</label>
+                                <label class="control-label">汽车品牌名称：</label>
                                 <input type="text"  name="brandName"  attr="carBrand.brandName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>汽车品牌描述：</label>
+                                <label class="control-label">汽车品牌描述：</label>
                                 <textarea attr="carBrand.brandDes" name="brandDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改" onclick="edit()">
-                                </input>
+                                <input type="button" class="btn btn-primary" id="editButton"  onclick="edit();" value="修改"/>
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -109,11 +114,11 @@
                         <h3 class="m-t-none m-b">添加汽车品牌</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
-                                <label>汽车品牌名称：</label>
+                                <label class="control-label">汽车品牌名称：</label>
                                 <input type="text"   name="brandName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>汽车品牌描述：</label>
+                                <label class="control-label">汽车品牌描述：</label>
                                 <textarea name="brandDes" cols="20" rows="5" class="form-control" ></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">

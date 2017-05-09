@@ -33,7 +33,7 @@
            data-show-refresh="true"
            data-show-toggle="true"
            data-showColumns="true"
-           data-height="500">
+           data-height="520">
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
@@ -133,19 +133,25 @@
 
             <a>
                 <button onclick="alreadyRemind()" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看已提醒
+                    <i class="glyphicon glyphicon-search"></i> 已提醒
                 </button>
             </a>
 
             <a>
                 <button onclick="notRemind()" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看未提醒
+                    <i class="glyphicon glyphicon-search"></i> 未提醒
+                </button>
+            </a>
+
+            <a>
+                <button onclick="alreadyComplete()" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 已完成
                 </button>
             </a>
 
             <a>
                 <button onclick="allRemind()" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看全部
+                    <i class="glyphicon glyphicon-search"></i> 全部
                 </button>
             </a>
 
@@ -170,6 +176,7 @@
                         <h3 class="m-t-none m-b">结算提车</h3>
                         <form role="form" id="addForm">
                             <input type="hidden" id="addRecordId" attr="record.recordId" name="recordId" class="form-control"/>
+                            <input type="hidden" id="addCheckinId" attr="record.checkin.checkinId" name="record.checkinId" class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">收费总金额（元）：</label>
                                 <input id="addChargeBillMoney" readonly type="text" name="chargeBillMoney" maxlength="5" class="form-control"/>
