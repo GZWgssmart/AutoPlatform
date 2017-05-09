@@ -171,7 +171,7 @@
 
     <select id="queryPagerByMessage" resultType="list" resultMap="maintainRecordResultMap">
         <![CDATA[
-			select r.*, c.checkinId, c.userName, c.carPlate, c.userPhone, c.userId, c.userRequests, c.maintainOrFix, cpy.companyId, cpy.companyName
+			select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.userId, c.userRequests, c.maintainOrFix, cpy.companyId, cpy.companyName
 			  from t_maintain_record r,  t_checkin c, t_company cpy
 			  where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordStatus = 'Y'
 		]]>
@@ -181,7 +181,7 @@
 
     <select id="queryPagerBySpeedStatus" resultType="list" resultMap="maintainRecordResultMap">
         <![CDATA[
-			select r.*, c.checkinId, c.userName, c.carPlate, c.userPhone, c.userId, c.userRequests, c.maintainOrFix, cpy.companyId, cpy.companyName
+			select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.userId, c.userRequests, c.maintainOrFix, cpy.companyId, cpy.companyName
 			  from t_maintain_record r,  t_checkin c, t_company cpy
 			  where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordStatus = 'Y' and r.speedStatus in
 		]]>
@@ -191,7 +191,6 @@
         order by r.recordCreatedTime desc, r.companyId
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
-
 
     <select id="count" resultType="int">
 		<![CDATA[

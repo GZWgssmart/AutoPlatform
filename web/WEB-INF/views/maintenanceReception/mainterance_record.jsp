@@ -174,6 +174,10 @@
                             <input type="hidden" attr="record.checkin.checkinId" name="checkinId" class="form-control"/>
                             <input type="hidden" attr="record.trackStatus" name="trackStatus" class="form-control"/>
                             <div class="form-group">
+                                <label class="control-label">车主姓名：</label>
+                                <input readonly type="text" attr="record.checkin.userName" class="form-control"/>
+                            </div>
+                            <div class="form-group">
                                 <label>开始时间：</label>
                                 <input id="editStartTime" readonly type="text" name="startTime"
                                        class="form-control datetimepicker"/>
@@ -218,6 +222,10 @@
                         <h3 class="m-t-none m-b">生成维修保养明细</h3>
                         <form role="form" id="detailForm">
                             <input type="hidden" id="detailRecordId" attr="record.recordId" name="recordId" class="form-control"/>
+                            <div class="form-group">
+                                <label class="control-label">车主姓名：</label>
+                                <input readonly type="text" attr="record.checkin.userName" class="form-control"/>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label">维修&nbsp;|&nbsp;保养：</label>
                                 <input type="text" id="maintainOrFix" attr="record.checkin.maintainOrFix" readonly

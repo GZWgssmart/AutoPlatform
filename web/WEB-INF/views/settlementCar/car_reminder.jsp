@@ -43,6 +43,9 @@
             <th data-field="checkin.carPlate">
                 登记车牌号
             </th>
+            <th data-field="checkin.carMileage">
+                汽车行驶里程
+            </th>
             <th data-field="startTime" data-formatter="formatterDate">
                 维修保养开始时间
             </th>
@@ -177,8 +180,12 @@
                         <form role="form" id="addForm">
                             <input type="hidden" id="addRecordId" attr="record.recordId" name="recordId" class="form-control"/>
                             <input type="hidden" id="addCheckinId" attr="record.checkin.checkinId" name="record.checkinId" class="form-control"/>
-                            <input type="text" attr="record.checkin.userId" name="userId" class="form-control"/>
-                            <input type="text" attr="record.checkin.carMileage" name="carMileage" class="form-control"/>
+                            <input type="hidden" attr="record.checkin.userId" name="userId" class="form-control"/>
+                            <input type="hidden" attr="record.checkin.carMileage" name="carMileage" class="form-control"/>
+                            <div class="form-group">
+                                <label class="control-label">车主姓名：</label>
+                                <input readonly type="text" attr="record.checkin.userName" class="form-control"/>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label">收费总金额（元）：</label>
                                 <input id="addChargeBillMoney" readonly type="text" name="chargeBillMoney" maxlength="5" class="form-control"/>
