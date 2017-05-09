@@ -76,7 +76,6 @@ public class MessageSendController {
         logger.info("添加messageId");
         List<MessageSend> msList = new ArrayList<MessageSend>();
         for(int i = 0;i< userId.length; i++){
-            System.out.println(userId[i]+"======================================");
             MessageSend m = new MessageSend();
             m.setUserId(userId[i]);
             msList.add(m);

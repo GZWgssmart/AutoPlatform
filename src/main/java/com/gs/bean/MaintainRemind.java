@@ -15,10 +15,18 @@ public class MaintainRemind {
 	private String lastMaintainMileage;  //上次保养行驶里程
 	private String remindMsg;  //保养提醒消息
 	private Date remindTime;  //保养提醒时间
+	private String companyId; //公司Id
 	private String remindType;  //保养提醒方式
 	private Date remindCreatedTime;  //保养提醒记录创建时间
 	private Checkin checkin; //传递checkin对象
 	private MaintainRecord maintainRecord;//传递maintainRecord表
+
+	public String getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
 
 	public Checkin getCheckin() {
 		return checkin;

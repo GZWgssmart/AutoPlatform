@@ -65,12 +65,16 @@ public class MessageReminderController {
         return ControllerResult.getSuccessResult("更新成功");
     }
 
+
+
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
+
 
 }
 
