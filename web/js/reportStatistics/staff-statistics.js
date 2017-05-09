@@ -1,28 +1,22 @@
-var tempData = {
+var tempData = tempData = {
     chart: {
-        type: 'column'
+        type: 'line'
     },
     title: {
-        text: '收入与支出本月统计'
+        text: '员工工单本月统计'
     },
     yAxis: {
-        min: 0,
         title: {
-            text: '金额 (￥)'
+            text: '条数 (条)'
         }
     },
-    tooltip: {
-        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-        '<td style="padding:0"><b>{point.y:.1f} ￥</b></td></tr>',
-        footerFormat: '</table>',
-        shared: true,
-        useHTML: true
-    },
+
     plotOptions: {
-        column: {
-            pointPadding: 0.2,
-            borderWidth: 0
+        line: {
+            dataLabels: {
+                enabled: true          // 开启数据标签
+            },
+            enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
         }
     },
     credits: {
@@ -30,7 +24,6 @@ var tempData = {
     },
     series: []
 };
-
 var type = '';
 function switchs(graphics){
     if(graphics == 'bar'){
@@ -39,18 +32,18 @@ function switchs(graphics){
                 type: 'column'
             },
             title: {
-                text: '收入与支出本月统计'
+                text: '员工工单本月统计'
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: '金额 (￥)'
+                    text: '条数 (条)'
                 }
             },
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} ￥</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.1f} 条</b></td></tr>',
                 footerFormat: '</table>',
                 shared: true,
                 useHTML: true
@@ -73,11 +66,11 @@ function switchs(graphics){
                 type: 'line'
             },
             title: {
-                text: '收入与支出本月统计'
+                text: '员工工单本月统计'
             },
             yAxis: {
                 title: {
-                    text: '金额 (￥)'
+                    text: '条数 (条)'
                 }
             },
 
@@ -97,7 +90,6 @@ function switchs(graphics){
         switchsValidator();
     }
 }
-
 
 var companyId='';
 $(function () {
@@ -131,27 +123,27 @@ function search(count){
         type = 'year'
         var start = $("#start1").val();
         var end = $("#end1").val();
-        validator(start,end,type,"收入与支出年统计");
+        validator(start,end,type,"员工工单年统计");
     }else if(count == 2){
         type = 'quarter'
         var start = $("#start2").val();
         var end = $("#end2").val();
-        validator(start,end,type,'收入与支出季度统计');
+        validator(start,end,type,'员工工单季度统计');
     }else if(count == 3){
         type = 'month'
         var start = $("#start3").val();
         var end = $("#end3").val();
-        validator(start,end,type,'收入与支出月统计');
+        validator(start,end,type,'员工工单月统计');
     }else if(count == 4){
         type = 'week'
         var start = $("#start4").val();
         var end = $("#end4").val();
-        validator(start,end,type,'收入与支出周统计');
+        validator(start,end,type,'员工工单周统计');
     }else if(count == 5){
         type = 'day'
         var start = $("#start5").val();
         var end = $("#end5").val();
-        validator(start,end,type,'收入与支出日统计');
+        validator(start,end,type,'员工工单日统计');
     }
 }
 
@@ -170,45 +162,44 @@ function initDateTime(clazz) {
 function validator( start, end, type,text){
     if($("#spans").text() != ''){
         if(start != '' && end != ''){
-            getColumnarChart("columnar", "/incomingOutgoing/query_condition?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
+            getLineBasicChart("columnar", "/peopleManage/query_condition?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
         }else{
-            getColumnarChart("columnar", "/incomingOutgoing/query_default?companyId="+companyId, tempData,"default","收入与支出本月统计");
+            getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
         }
     }else{
         showCompany();
     }
-
-
 }
+
 
 function switchsValidator(){
     if(type == 'year'){
         type = 'year'
         var start = $("#start1").val();
         var end = $("#end1").val();
-        validator(start,end,type,"收入与支出年统计");
+        validator(start,end,type,"员工工单年统计");
     }else if(type == 'quarter'){
         type = 'quarter';
         var start = $("#start2").val();
         var end = $("#end2").val();
-        validator(start,end,type,'收入与支出季度统计');
+        validator(start,end,type,'员工工单季度统计');
     }else if(type == 'month') {
         type = 'month';
         var start = $("#start3").val();
         var end = $("#end3").val();
-        validator(start,end,type,'收入与支出月统计');
+        validator(start,end,type,'员工工单月统计');
     }else if(type == 'week'){
         type = 'week';
         var start = $("#start4").val();
         var end = $("#end4").val();
-        validator(start,end,type,'收入与支出周统计');
+        validator(start,end,type,'员工工单周统计');
     } else if(type == 'day') {
         type = 'day';
         var start = $("#start5").val();
         var end = $("#end5").val();
-        validator(start,end,type,'收入与支出日统计');
+        validator(start,end,type,'员工工单日统计');
     }else{
-        getColumnarChart("columnar", "/incomingOutgoing/query_default?companyId="+companyId, tempData,"default","收入与支出本月统计");
+        getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
     }
 }
 
@@ -242,6 +233,6 @@ function validatorCompany(){
             var companyName = $("#company").find("option:selected").text();
             $('#spans').html("当前公司:"+companyName);
             $('#checkForm').data('bootstrapValidator').resetForm(true);
-            getColumnarChart("columnar", "/incomingOutgoing/query_default?companyId="+companyId, tempData,"default","收入与支出本月统计");
+            getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
         })
 }

@@ -10,7 +10,7 @@
 		<result property="workAssignTime" column="workAssignTime"></result>
 		<result property="workCreatedTime" column="workCreatedTime"></result>
 		<result property="workStatus" column="workStatus"></result>
-
+		<result property="coont" column="coont"></result>
 		<association property="user" javaType="com.gs.bean.User">
 			<id property="userId" column="u_userId"/>
 			<id property="userName" column="userName_emp"/>
@@ -109,6 +109,50 @@
 		<![CDATA[
 			SELECT COUNT(*) FROM t_work_info
 		]]>
+	</select>
+
+	<select id="queryByDefault"  resultMap="workInfoResultMap">
+		<![CDATA[
+           select count(wi.workId) as coont ,wi.workCreatedTime from t_work_info wi,t_maintain_record mr,t_checkin c
+             WHERE DATE_FORMAT(wi.workCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and  wi.workStatus = 'Y'
+           and wi.recordId = mr.recordId and mr.checkinId = c.checkinId and mr.companyId = #{companyId}
+		]]>
+		<if test="maintainOrFix =='保养'">
+			and c.maintainOrFix = '保养'
+		</if>
+		<if test="maintainOrFix =='维修'">
+			and c.maintainOrFix = '维修'
+		</if>
+		GROUP BY day(wi.workCreatedTime)
+	</select>
+
+	<select id="queryByCondition"  resultType="list" resultMap="workInfoResultMap">
+		<![CDATA[
+           select count(wi.workId) as coont ,wi.workCreatedTime from t_work_info wi,t_maintain_record mr,t_checkin c
+            where wi.workCreatedTime >= #{startTime} and wi.workCreatedTime <= #{endTime} and  wi.workStatus = 'Y'
+           and wi.recordId = mr.recordId and mr.checkinId = c.checkinId and mr.companyId = #{companyId}
+		]]>
+		<if test="maintainOrFix =='保养'">
+			and c.maintainOrFix = '保养'
+		</if>
+		<if test="maintainOrFix =='维修'">
+			and c.maintainOrFix = '维修'
+		</if>
+		<if test="type =='year'">
+			GROUP BY year(wi.workCreatedTime)
+		</if>
+		<if test="type =='quarter'">
+			GROUP BY quarter(wi.workCreatedTime)
+		</if>
+		<if test="type =='month'">
+			GROUP BY month(wi.workCreatedTime)
+		</if>
+		<if test="type =='week'">
+			GROUP BY week(wi.workCreatedTime)
+		</if>
+		<if test="type =='day'">
+			GROUP BY day(wi.workCreatedTime)
+		</if>
 	</select>
 
 	<update id="inactive" parameterType="string">

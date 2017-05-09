@@ -8,10 +8,7 @@ import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.util.DateFormatUtil;
-import com.gs.common.util.ExcelExport;
-import com.gs.common.util.ExcelRead;
-import com.gs.common.util.ExcelUtil;
+import com.gs.common.util.*;
 import com.gs.service.IncomingOutgoingService;
 import com.gs.service.OutgoingTypeService;
 import com.gs.service.SalaryService;
@@ -72,145 +69,173 @@ public class SalaryController {
     @ResponseBody
     @RequestMapping(value="query_pager",method= RequestMethod.GET)
     public Pager4EasyUI<Salary> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
-        logger.info("分页查询所有工资");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(salaryService.count());
-        List<Salary> salaries = salaryService.queryByPager(pager);
-        return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salaries);
+        if (SessionGetUtil.isUser()) {
+            logger.info("分页查询所有工资");
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            pager.setTotalRecords(salaryService.count());
+            List<Salary> salaries = salaryService.queryByPager(pager);
+            return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salaries);
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping(value="add_salary", method=RequestMethod.POST)
-    public ControllerResult incomingTypeAdd(Salary salary,HttpSession session){
-        logger.info("添加工资");
-        User sessionUser = (User)session.getAttribute("user");
-        User user = userService.queryById(salary.getUserId());
-        OutgoingType outgoingType = outgoingTypeService.queryByName("工资支出",sessionUser.getCompanyId());
-        salary.setTotalSalary(user.getUserSalary() + salary.getPrizeSalary() - salary.getMinusSalary());
-        salaryService.insert(salary);
+    public ControllerResult incomingTypeAdd(Salary salary){
+        if (SessionGetUtil.isUser()) {
+            logger.info("添加工资");
+            User sessionUser = SessionGetUtil.getUser();
+            User user = userService.queryById(salary.getUserId());
+            OutgoingType outgoingType = outgoingTypeService.queryByName("工资支出", sessionUser.getCompanyId());
+            salary.setTotalSalary(user.getUserSalary() + salary.getPrizeSalary() - salary.getMinusSalary());
+            salaryService.insert(salary);
 
-        IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
-        incomingOutgoing.setOutTypeId(outgoingType.getOutTypeId());
-        incomingOutgoing.setInOutCreatedUser(sessionUser.getUserId());
-        incomingOutgoing.setInOutMoney(salary.getTotalSalary());
-        incomingOutgoing.setCompanyId(outgoingType.getCompanyId());
-        incomingOutgoingService.insert(incomingOutgoing);
-        return ControllerResult.getSuccessResult("添加成功");
-
+            IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
+            incomingOutgoing.setOutTypeId(outgoingType.getOutTypeId());
+            incomingOutgoing.setInOutCreatedUser(sessionUser.getUserId());
+            incomingOutgoing.setInOutMoney(salary.getTotalSalary());
+            incomingOutgoing.setCompanyId(outgoingType.getCompanyId());
+            incomingOutgoingService.insert(incomingOutgoing);
+            return ControllerResult.getSuccessResult("添加成功");
+        } else {
+                logger.info("Session已失效，请重新登入");
+                return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
     }
 
     @ResponseBody
     @RequestMapping(value="update_salary", method=RequestMethod.POST)
     public ControllerResult incomingUpdate(Salary salary){
-        logger.info("更新工资");
-        User user = userService.queryById(salary.getUserId());
-        salary.setTotalSalary(user.getUserSalary() + salary.getPrizeSalary() - salary.getMinusSalary());
-        salaryService.update(salary);
-        return ControllerResult.getSuccessResult("更新成功");
+        if (SessionGetUtil.isUser()) {
+            logger.info("更新工资");
+            User user = userService.queryById(salary.getUserId());
+            salary.setTotalSalary(user.getUserSalary() + salary.getPrizeSalary() - salary.getMinusSalary());
+            salaryService.update(salary);
+            return ControllerResult.getSuccessResult("更新成功");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
     }
 
     @ResponseBody
     @RequestMapping(value="query_search",method= RequestMethod.GET)
     public Pager4EasyUI<Salary> queryPagerSearch(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
                                                  @Param("userName")String userName,@Param("salaryRange")String salaryRange){
-        logger.info("根据条件分页查询所有工资");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        Salary salary = new Salary();
-        User user  = new User();
-        if(userName != null && !userName.equals("")){
-            user.setUserName(userName);
-        }else{
-            user.setUserName("null");
+        if (SessionGetUtil.isUser()) {
+            logger.info("根据条件分页查询所有工资");
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            Salary salary = new Salary();
+            User user = new User();
+            if (userName != null && !userName.equals("")) {
+                user.setUserName(userName);
+            } else {
+                user.setUserName("null");
+            }
+            salary.setUser(user);
+            salary.setSalaryRange(salaryRange);
+            pager.setTotalRecords(salaryService.countSearch(salary));
+            List<Salary> salarys = salaryService.queryByPagerSearch(pager, salary);
+            return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salarys);
+        } else{
+            logger.info("Session已失效，请重新登入");
+            return null;
         }
-        salary.setUser(user);
-        salary.setSalaryRange(salaryRange);
-        pager.setTotalRecords(salaryService.countSearch(salary));
-        List<Salary> salarys = salaryService.queryByPagerSearch(pager,salary);
-        return new Pager4EasyUI<Salary>(pager.getTotalRecords(), salarys);
     }
 
     @RequestMapping(value = "export",method=RequestMethod.GET)
     public void exportExcel(HttpServletResponse response) {
-        try {
-            logger.info("导出工资");
-            // 查询工资信息
-            List<Salary> salarylist = salaryService.queryAll();
-            String title = "员工工资信息";
-            String[] rowsName = new String[]{"工资编号","员工名称", "奖金", "罚款", "总工资", "工资描述", "发放时间"};
-            List<Object[]> dataList = new ArrayList<Object[]>();
-            Object[] objs = null;
-            for (int i = 0; i < salarylist.size(); i++) {
-                Salary salary = salarylist.get(i);
-                objs = new Object[rowsName.length];
-                objs[0] = salary.getSalaryId();
-                objs[1] = salary.getUser().getUserName();
-                objs[2] = salary.getPrizeSalary();
-                objs[3] = salary.getMinusSalary();
-                objs[4] = salary.getTotalSalary();
-                objs[5] = salary.getSalaryDes();
-                objs[6] = DateFormatUtil.defaultFormat(salary.getSalaryTime());
-                dataList.add(objs);
+        if(SessionGetUtil.isUser()) {
+            try {
+                logger.info("导出工资");
+                // 查询工资信息
+                List<Salary> salarylist = salaryService.queryAll();
+                String title = "员工工资信息";
+                String[] rowsName = new String[]{"工资编号", "员工名称", "奖金", "罚款", "总工资", "工资描述", "发放时间"};
+                List<Object[]> dataList = new ArrayList<Object[]>();
+                Object[] objs = null;
+                for (int i = 0; i < salarylist.size(); i++) {
+                    Salary salary = salarylist.get(i);
+                    objs = new Object[rowsName.length];
+                    objs[0] = salary.getSalaryId();
+                    objs[1] = salary.getUser().getUserName();
+                    objs[2] = salary.getPrizeSalary();
+                    objs[3] = salary.getMinusSalary();
+                    objs[4] = salary.getTotalSalary();
+                    objs[5] = salary.getSalaryDes();
+                    objs[6] = DateFormatUtil.defaultFormat(salary.getSalaryTime());
+                    dataList.add(objs);
+                }
+                ExcelExport ex = new ExcelExport(title, rowsName, dataList, response);
+                ex.exportData();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            ExcelExport ex = new ExcelExport(title, rowsName, dataList, response);
-            ex.exportData();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else{
+            logger.info("Session已失效，请重新登入");
         }
     }
     @ResponseBody
     @RequestMapping(value="readExcel",method=RequestMethod.POST)
-    public ControllerResult readExcel(MultipartFile fileSalary,HttpSession session) throws IOException{
-        //判断文件是否为空
-        logger.info("导入工资");
-        String name = fileSalary.getOriginalFilename();
-        long size = fileSalary.getSize();
-        if(name == null || ExcelUtil.EMPTY.equals(name) && size==0){
-            return ControllerResult.getFailResult("导入失败");
-        }
-        //读取Excel数据到List中
-        List<ArrayList<String>> list = null;
-        try {
-            list = new ExcelRead().readExcel(fileSalary);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Salary salary= null;
-        User sessionUser = (User)session.getAttribute("user");
-        //list中存的就是excel中的数据，可以根据excel中每一列的值转换成你所需要的值（从0开始），如：
-        List<Salary> salaries = new ArrayList<Salary>();
-        List<IncomingOutgoing> incomingOutgoings = new ArrayList<IncomingOutgoing>();
-        OutgoingType outgoingType = outgoingTypeService.queryByName("工资支出",sessionUser.getCompanyId());
-
-        for(ArrayList<String> arr:list){
-            salary= new Salary();
-            User user = userService.queryByPhone(arr.get(1));
-            try {
-                salary.setUserId(user.getUserId());
-                salary.setPrizeSalary(Double.valueOf(arr.get(2)));
-                salary.setMinusSalary(Double.valueOf(arr.get(3)));
-                salary.setTotalSalary(Double.valueOf(arr.get(4)));
-                salary.setSalaryDes(arr.get(5));
-                salary.setSalaryTime(dateFormat(arr.get(6)));
-            } catch (NullPointerException e) {
+    public ControllerResult readExcel(MultipartFile fileSalary) throws IOException{
+        if(SessionGetUtil.isUser()) {
+            //判断文件是否为空
+            logger.info("导入工资");
+            String name = fileSalary.getOriginalFilename();
+            long size = fileSalary.getSize();
+            if (name == null || ExcelUtil.EMPTY.equals(name) && size == 0) {
                 return ControllerResult.getFailResult("导入失败");
             }
-            IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
-            incomingOutgoing.setOutTypeId(outgoingType.getOutTypeId());
-            incomingOutgoing.setInOutCreatedUser(sessionUser.getUserId());
-            incomingOutgoing.setInOutMoney(salary.getTotalSalary());
-            incomingOutgoing.setCompanyId(outgoingType.getCompanyId());
-            incomingOutgoings.add(incomingOutgoing);
-            salaries.add(salary);
-        }
-        if(salaryService.saveBatchInsert(salaries)){
-            incomingOutgoingService.addInsert(incomingOutgoings);
-            return ControllerResult.getSuccessResult("导入成功");
-        }else{
-            return ControllerResult.getFailResult("导入失败");
+            //读取Excel数据到List中
+            List<ArrayList<String>> list = null;
+            try {
+                list = new ExcelRead().readExcel(fileSalary);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Salary salary = null;
+            User sessionUser = SessionGetUtil.getUser();
+            //list中存的就是excel中的数据，可以根据excel中每一列的值转换成你所需要的值（从0开始），如：
+            List<Salary> salaries = new ArrayList<Salary>();
+            List<IncomingOutgoing> incomingOutgoings = new ArrayList<IncomingOutgoing>();
+            OutgoingType outgoingType = outgoingTypeService.queryByName("工资支出", sessionUser.getCompanyId());
+
+            for (ArrayList<String> arr : list) {
+                salary = new Salary();
+                User user = userService.queryByPhone(arr.get(1));
+                try {
+                    salary.setUserId(user.getUserId());
+                    salary.setPrizeSalary(Double.valueOf(arr.get(2)));
+                    salary.setMinusSalary(Double.valueOf(arr.get(3)));
+                    salary.setTotalSalary(Double.valueOf(arr.get(4)));
+                    salary.setSalaryDes(arr.get(5));
+                    salary.setSalaryTime(dateFormat(arr.get(6)));
+                } catch (NullPointerException e) {
+                    return ControllerResult.getFailResult("导入失败");
+                }
+                IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
+                incomingOutgoing.setOutTypeId(outgoingType.getOutTypeId());
+                incomingOutgoing.setInOutCreatedUser(sessionUser.getUserId());
+                incomingOutgoing.setInOutMoney(salary.getTotalSalary());
+                incomingOutgoing.setCompanyId(outgoingType.getCompanyId());
+                incomingOutgoings.add(incomingOutgoing);
+                salaries.add(salary);
+            }
+            if (salaryService.saveBatchInsert(salaries)) {
+                incomingOutgoingService.addInsert(incomingOutgoings);
+                return ControllerResult.getSuccessResult("导入成功");
+            } else {
+                return ControllerResult.getFailResult("导入失败");
+            }
+        } else{
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
     }
     public Date dateFormat(String str){

@@ -254,9 +254,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="form_wizard.html">维修保养统计</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_advanced.html">员工工单统计</a>
-                        </li>
-                        <li><a class="J_menuItem" href="form_basic.html">员工提成统计</a>
+                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/staff_page">员工工单统计</a>
                         </li>
                         <li><a class="J_menuItem" href="form_validate.html">维修保养类型统计</a>
                         </li>

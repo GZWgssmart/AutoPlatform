@@ -37,4 +37,13 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	public int inactive(String id) { return workInfoDAO.inactive(id); }
 	public int active(String id) { return workInfoDAO.active(id); }
 
+	@Override
+	public List<WorkInfo> queryByDefault(String maintainOrFix, String companyId) {
+		return workInfoDAO.queryByDefault(maintainOrFix,companyId);
+	}
+
+	@Override
+	public List<WorkInfo> queryByCondition(String startTime, String endTime, String maintainOrFix, String type, String companyId) {
+		return workInfoDAO.queryByCondition(startTime,endTime,maintainOrFix,type,companyId);
+	}
 }

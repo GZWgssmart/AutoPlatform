@@ -2,6 +2,8 @@ package com.gs.service;
 
 import com.gs.bean.WorkInfo;
 
+import java.util.List;
+
 /**
 *由Wjhsmart技术支持
 *
@@ -10,4 +12,14 @@ import com.gs.bean.WorkInfo;
 */
 public interface WorkInfoService extends BaseService<String, WorkInfo>{
 
+    /*
+   * 默认查询本月的工单统计
+   * */
+    public List<WorkInfo> queryByDefault(String maintainOrFix, String companyId);
+
+    /*
+    * 根据年，月，季度，周，日查询所有工单
+    * */
+    public List<WorkInfo> queryByCondition(String startTime, String endTime, String maintainOrFix,
+                                           String type, String companyId);
 }
