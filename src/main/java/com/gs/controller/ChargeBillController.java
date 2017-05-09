@@ -22,6 +22,7 @@ import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -145,17 +146,25 @@ public class ChargeBillController {
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ControllerResult addChargeBill(@Param("chargeBill") ChargeBill chargeBill, @Param("userId") String userId, @Param("carMileage") String carMileage) {
+    public ControllerResult addChargeBill(@Param("chargeBill") ChargeBill chargeBill, @Param("userId") String userId, @Param("carMileage") String carMileage, @Param("maintainOrFix") String maintainOrFix) {
         if (SessionGetUtil.isUser()) {
             try {
                 logger.info("结算提车，生成收费单据，生成维修保养提醒记录");
                 User loginUser = SessionGetUtil.getUser();
-                MaintainRemind maintainRemind = new MaintainRemind();
-                maintainRemind.setLastMaintainTime(new Date());
-                maintainRemind.setCompanyId(loginUser.getCompanyId());
-                maintainRemind.setUserId(userId);
-                maintainRemind.setLastMaintainMileage(carMileage);
 
+                if (maintainOrFix.equals("保养")) {
+                    Calendar calendar = Calendar.getInstance();
+                    Date lastMaintainTime = new Date();
+                    calendar.setTime(lastMaintainTime);
+                    calendar.add(Calendar.MONTH, 6);
+                    MaintainRemind maintainRemind = new MaintainRemind();
+                    maintainRemind.setLastMaintainTime(lastMaintainTime);
+                    maintainRemind.setCompanyId(loginUser.getCompanyId());
+                    maintainRemind.setRemindTime(calendar.getTime());
+                    maintainRemind.setUserId(userId);
+                    maintainRemind.setLastMaintainMileage(carMileage);
+                    maintainRemindService.insert(maintainRemind);
+                }
                 IncomingType incomingType = incomingTypeService.queryByName(Constants.MAINTENANCE_IN);
                 IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
                 incomingOutgoing.setInTypeId(incomingType.getInTypeId());
@@ -165,7 +174,6 @@ public class ChargeBillController {
 
                 incomingOutgoingService.insert(incomingOutgoing);
                 maintainRecordService.updatePickupTime(chargeBill.getRecordId());
-                maintainRemindService.insert(maintainRemind);
                 chargeBillService.insert(chargeBill);
                 maintainRecordService.updateSpeedStatusById(Constants.COMPLETED, chargeBill.getRecordId());
                 checkinService.inactive(chargeBill.getRecord().getCheckinId());

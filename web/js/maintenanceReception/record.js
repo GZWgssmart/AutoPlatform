@@ -5,8 +5,6 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/record/pager?status=ALL");
 
-    initDateTimePickerNotValitor("datetimepicker");
-
     initSelect2("maintain_fix", "请选择维修保养项目", "/maintainFix/maintain_all", "540");
 
     destoryValidator("editWin", "editForm");
@@ -109,8 +107,6 @@ window.operateEvents = {
 
               var record = row;
               $("#editForm").fill(record);
-              $('#editStartTime').val(formatterDate(record.startTime));
-              $('#editEndTime').val(formatterDate(record.endTime));
               $("#editWin").modal('show');
          }
 }
@@ -125,8 +121,6 @@ function showEditWin() {
     } else {
         var record = selectRow[0];
         $("#editForm").fill(record);
-        $('#editStartTime').val(formatterDate(record.startTime));
-        $('#editEndTime').val(formatterDate(record.endTime));
         $("#editWin").modal('show');
     }
 }

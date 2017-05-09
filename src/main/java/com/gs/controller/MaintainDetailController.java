@@ -110,15 +110,8 @@ public class MaintainDetailController {
                     materialList.setMaterialCount(maintainFixAcc.getAccCount());
                     materialLists.add(materialList);
                 }
-                System.out.println(materialLists.size() + ",size");
-                for (MaterialList materialList : materialLists) {
-                    System.out.println(materialList.getRecordId() + ",recordId");
-                    System.out.println(materialList.getAccId() + ",accId");
-                    System.out.println(materialList.getMaterialCount() + ",materialCount");
-                }
                 WorkInfo workInfo = new WorkInfo();
                 workInfo.setRecordId(recordId);
-
                 workInfoService.insert(workInfo);
                 materialListService.batchInsert(materialLists);
                 return ControllerResult.getSuccessResult("用户已经确认签字，工单信息和物料清单已经自动生成");

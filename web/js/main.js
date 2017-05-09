@@ -314,6 +314,10 @@ function formSubmit(url, formId, winId) {
                 $('#' + formId).data('bootstrapValidator').resetForm(true);
             } else if (data.result == "fail") {
                 swal("错误提示", data.message, "error");
+                $("#addButton").removeAttr("disabled");
+                $("#editButton").removeAttr("disabled");
+                $("#detailButton").removeAttr("disabled");
+                $("#remindButton").removeAttr("disabled");
             } else if (data.result == "notLogin") {
                 swal({
                         title: "登入失败",

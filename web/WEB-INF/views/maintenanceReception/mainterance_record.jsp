@@ -179,14 +179,14 @@
                             </div>
                             <div class="form-group">
                                 <label>开始时间：</label>
-                                <input id="editStartTime" readonly type="text" name="startTime"
-                                       class="form-control datetimepicker"/>
+                                <input attr="record.startTime" readonly type="text"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>预估结束时间：</label>
-                                <input id="editEndTime" readonly type="text" name="endTime"
-                                       class="form-control datetimepicker"/>
+                                <input readonly attr="record.endTime" type="text"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
