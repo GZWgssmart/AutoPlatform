@@ -1,24 +1,65 @@
-var appointment;
+var customer;
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/appointment/query_pager?status=ALL");
+
     initSelect2("car_brand", "请选择品牌", "/carBrand/car_brand_all", "565");
     initSelect2("car_color", "请选择颜色", "/carColor/car_color_all", "565");
     initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "565");
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
-    initDateTimePicker("datetimepicker", "arriveTime");
+
     destoryValidator("addWin","addForm");
     destoryValidator("editWin","editForm");
+
+    $("#isApp").bootstrapSwitch({
+        onText: '是',
+        offText: '否',
+        onColor: 'success',
+        offColor: 'danger',
+        size: 'normal',
+
+        onSwitchChange: function (event, state) {
+            if (state == true) {
+                isApp = true;
+                //调用函数，初始化表格
+                initTableNotTollbar("appTable", "/customer/customerInfo_pager");
+
+                $("#appWin").modal('show');
+            } else if (state == false) {
+                isApp = false;
+            }
+        }
+    });
+    $("#appWin").on("hide.bs.modal", function () {
+        $("#addWin").modal('show')
+        $('#isApp').bootstrapSwitch('state', false);
+
+    });
+
 });
+
 /** 添加选择品牌 */
 function checkBrand(combo) {
     $('#addCarModel').html('').trigger("change");
     var brandId = combo.value;
     if (brandId != null && brandId != undefined && brandId != "") {
         $("#carModelDiv").show();
-        initSelect2("car_model", "请选择车型", "/carModel/car_model_all?brandId=" + brandId, "540");
+        initSelect2("car_model", "请选择车型", "/carModel/car_model_all?brandId=" + brandId, "565");
     } else {
         $("#carModelDiv").hide();
+    }
+}
+
+/** 监听switch的监听事件 */
+function isAppChoice() {
+    if ($('#isApp').bootstrapSwitch('state')) {
+        if (customer != null && customer != "" && customer != undefined) {
+            setData(customer,"customer");
+        }
+    } else {
+        if (customer != null && customer != "" && customer != undefined) {
+            clearAddForm();
+        }
     }
 }
 
@@ -28,22 +69,61 @@ function editCheckBrand(combo) {
     var brandId = combo.value;
     if (brandId != null && brandId != undefined && brandId != "") {
 
-        initSelect2("car_model", "请选择车型", "/carModel/car_model_all?brandId=" + brandId, "540");
+        initSelect2("car_model", "请选择车型", "/carModel/car_model_all?brandId=" + brandId, "565");
     } else {
 
     }
 }
-/** 添加数据 */
+
+/** 显示添加数据的窗口 */
 function showAddWin() {
+    customer = "";
+    clearAddForm();
     validator("addForm");
-    $('#addCarBrand').html('').trigger("change");
-    $('#addCarColor').html('').trigger("change");
-    $('#addCarModel').html('').trigger("change");
-    $('#addCarPlate').html('').trigger("change");
-    $('#addCompany').html('').trigger("change");
-    $("input[type=reset]").trigger("click");
+    initDateTimePicker("datetimepicker", "arriveTime","addForm");
     $("#addWin").modal('show');
 }
+
+/** 关闭选择 */
+function closeAppWin() {
+    $("#appWin").modal('hide');
+    $("#addWin").modal('show')
+}
+
+/** 给添加的form表单设置值 */
+function setData(customer) {
+    $("#appDiv").hide();
+    $("#addUserName").val(customer.userName);
+    $("#addUserPhone").val(customer.userPhone);
+    $("#addUserId").val(customer.userId);
+
+}
+
+/** 选择车主*/
+function checkApp() {
+    var selectRow = $("#appTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一条数据", "error");
+        return false;
+    } else {
+        customer = selectRow[0];
+        setData(customer,"customer");
+        $("#appWin").on("hide.bs.modal", function () {
+            $('#isApp').bootstrapSwitch('state', true);
+        });
+        $("#appWin").modal('hide');
+    }
+}
+
+/** 清除添加的form表单信息 */
+function clearAddForm() {
+    $("#appDiv").show();
+    $('#addUserName').html('').trigger("change");
+    $('#addUserPhone').html('').trigger("change");
+    $('#addUserId').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
+}
+
 /** 编辑数据 */
 function showEditWin() {
     validator("editForm");
@@ -63,9 +143,14 @@ function showEditWin() {
         $("#editWin").modal('show');
     }
 }
+
 /** 给datetimepicker添加默认值 */
-function getDate(){
-    $("#addDatetimepicker").val(new Date());
+function getDate(){if (
+    appointment != null && appointment != "" && appointment != undefined) {
+
+    } else {
+        $("#addDatetimepicker").val(new Date());
+    }
 }
 
 /** 返回按钮 */
@@ -83,6 +168,7 @@ function operateFormatter(value, row, index) {
     }
 
 }
+
 /** 更改状态 */
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
@@ -92,6 +178,24 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                }else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            cancelButtonText: "取消",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            } else {
+                            }
+                        });
                 }
             }, "json");
     },
@@ -214,21 +318,11 @@ function validator(formId) {
     })
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
+                var userEmail = $("#addUserEmail").val();
                 formSubmit("/appointment/add", formId, "addWin");
             } else if (formId == "editForm") {
                 formSubmit("/appointment/update", formId, "editWin");
             }
         })
 }
-function searchCheckin() {
-    var userName = $("#searchUserName").val();
-    var userPhone = $("#searchUserPhone").val();
-    var carPlate = $("#searchCarPlate").val();
-    var maintainOrFix = $("#searchMaintainOrFix").val();
-    var companyId = $("#searchCompanyId").val();
-    if (companyId != null && companyId != "") {
-        initTable("cusTable", "/appointment/appointment_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate +  "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
-    } else {
-        swal("错误提示", "请选择一家汽修公司", "error");
-    }
-}
+

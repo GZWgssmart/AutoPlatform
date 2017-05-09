@@ -12,9 +12,12 @@
     <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -131,7 +134,7 @@
                     <i class="glyphicon glyphicon-search"></i> 查询已登记
                 </button>
             </a>
-            
+
             <a>
                 <button onclick="searchStatus('/appointment/query_pager?status=ALL');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部
@@ -232,10 +235,18 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加预约</h3>
                         <form role="form" id="addForm">
+
+                            <input type="hidden" id="addUserId" name="userId" class="form-control"/>
+                            <div class="form-group">
+                                <label>是否已注册车主：</label>
+                                <input type="checkbox" id="isApp" name="isApp" onchange="isAppChoice()">
+                            </div>
+
                             <div class="form-group">
                                 <label>车主姓名：</label>
                                 <input type="text" id="addUserName" name="userName" class="form-control"/>
                             </div>
+
                             <div class="form-group">
                                 <label>车主电话：</label>
                                 <input type="text" id="addUserPhone" name="userPhone" class="form-control"/>
@@ -278,12 +289,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label>请选择汽修公司：</label>
-                                <select id="addCompany" class="js-example-tags form-control company" name="CompanyId">
-                                </select>
-                            </div>
-
-                            <div class="form-group">
                                 <label>保养&nbsp;|&nbsp;维修：</label>
                                 <select id="addMaintainOrFix" class="js-example-tags form-control" name="maintainOrFix">
                                     <option value="保养">保养</option>
@@ -305,6 +310,61 @@
     </div>
 </div>
 
+<div id="appWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">选择车主</h3>
+                        <table class="table table-hover" id="appTable"
+                               data-pagination="true"
+                               data-show-refresh="true"
+                               data-show-toggle="true"
+                               data-showColumns="true"
+                               data-height="550">
+                            <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th data-field="userCreatedTime" data-sortable="true">
+                                    车主编号
+                                </th>
+                                <th data-field="userNickname" >
+                                    昵称
+                                </th>
+                                <th data-field="userName" >
+                                    姓名
+                                </th>
+                                <th data-field="userEmail" >
+                                    邮箱
+                                </th>
+                                <th data-field="userGender" data-formatter="gender" >
+                                    性别
+                                </th>
+                                <th data-field="userPhone" >
+                                    手机号
+                                </th>
+                                <th data-field="userStatus" data-formatter="status">
+                                    当前状态
+                                </th>
+                            </tr>
+                            </thead>
+                        </table>
+                        <div style="height: 100px;"></div>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
+                            </input>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
@@ -319,6 +379,7 @@
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="<%=path %>/js/accessories/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path%>/js/appointment/appointment.js"></script>
 </body>
