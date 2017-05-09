@@ -73,7 +73,7 @@
 
 	<update id="updateIdle" parameterType="accessories">
 		<![CDATA[
-			update t_accessories set id = #{id} where lastCount = #{lastCount}
+			update t_accessories set accIdle = #{lastCount} where accId = #{id}
 		]]>
 	</update>
 
