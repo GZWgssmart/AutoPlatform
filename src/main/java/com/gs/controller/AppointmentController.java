@@ -58,8 +58,13 @@ public class AppointmentController {
 
     @RequestMapping(value = "appointment", method = RequestMethod.GET)
     public String appointment() {
-        logger.info("预约管理");
-        return "maintenanceAppointment/appointment";
+        if (SessionGetUtil.isUser()) {
+            logger.info("预约管理");
+            return "maintenanceAppointment/appointment";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
 
     @ResponseBody
@@ -120,33 +125,38 @@ public class AppointmentController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult appointmentAdd(Appointment appointment) {
         if (SessionGetUtil.isUser()) {
-            User loginUser = SessionGetUtil.getUser();
+            try {
+                User loginUser = SessionGetUtil.getUser();
 
-            logger.info("添加预约");
-            String userId = UUIDUtil.uuid();
-            appointment.setUserId(userId);
-            appointment.setSpeedStatus(Constants.APPOINTMENT);
-            appointment.setCompanyId(loginUser.getCompanyId());
+                logger.info("添加预约");
+                String userId = UUIDUtil.uuid();
+                appointment.setUserId(userId);
+                appointment.setSpeedStatus(Constants.APPOINTMENT);
+                appointment.setCompanyId(loginUser.getCompanyId());
 
-            if (appointment.getUserId() == null && appointment.getUserId().equals("")) {
-                User user = new User();
-                user.setUserId(userId);
-                user.setCompanyId(loginUser.getCompanyId());
-                user.setUserPhone(appointment.getUserPhone());
-                user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
-                user.setUserName(appointment.getUserName());
+                if (appointment.getUserId() == null && appointment.getUserId().equals("")) {
+                    User user = new User();
+                    user.setUserId(userId);
+                    user.setCompanyId(loginUser.getCompanyId());
+                    user.setUserPhone(appointment.getUserPhone());
+                    user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+                    user.setUserName(appointment.getUserName());
 
-                String roleId = roleService.queryByName(Constants.CAR_OWNER).getRoleId();
-                UserRole userRole = new UserRole();
-                userRole.setUserId(userId);
-                userRole.setRoleId(roleId);
+                    String roleId = roleService.queryByName(Constants.CAR_OWNER).getRoleId();
+                    UserRole userRole = new UserRole();
+                    userRole.setUserId(userId);
+                    userRole.setRoleId(roleId);
 
-                userRoleService.insert(userRole);
-                userService.insert(user);
+                    userRoleService.insert(userRole);
+                    userService.insert(user);
+                }
+
+                appointmentService.insert(appointment);
+                return ControllerResult.getSuccessResult("添加成功");
+            } catch (Exception e) {
+                logger.info("添加登记记录失败，出现了一个错误");
+                return ControllerResult.getFailResult("添加登记记录失败，出现了一个错误");
             }
-
-            appointmentService.insert(appointment);
-            return ControllerResult.getSuccessResult("添加成功");
         }else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -157,9 +167,7 @@ public class AppointmentController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult appointmentUpdate(Appointment appointment) {
             if (SessionGetUtil.isUser()) {
-
                 logger.info("更新预约");
-                appointment.setCompanyId("65dc09ac-23e2-11e7-ba3e-juyhgt91a73a");
                 appointmentService.update(appointment);
                 return ControllerResult.getSuccessResult("更新成功");
             } else {

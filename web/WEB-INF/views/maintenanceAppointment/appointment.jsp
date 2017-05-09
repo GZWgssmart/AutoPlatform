@@ -237,7 +237,7 @@
                         <form role="form" id="addForm">
 
                             <input type="hidden" id="addUserId" name="userId" class="form-control"/>
-                            <div class="form-group">
+                            <div class="form-group" id="appDiv">
                                 <label>是否已注册车主：</label>
                                 <input type="checkbox" id="isApp" name="isApp" onchange="isAppChoice()">
                             </div>
