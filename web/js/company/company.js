@@ -5,6 +5,7 @@
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/company/queryByPager");
+    initDateTimePicker("form_datetime","","addForm");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 });
@@ -30,6 +31,7 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
+        $('#companys').html('<option value="' + product.companySize + '">' + product.companySize + '</option>').trigger("change");
         $("#editForm").fill(product);
         validator("editForm");
         $("#editWin").modal('show');
@@ -52,6 +54,7 @@ function operating(value, row, index) {
 
 
 function showAddWin(){
+    $('#companys').html('').trigger("change");
     validator("addForm");
     $("#addWin").modal('show');
 }
@@ -140,10 +143,9 @@ function validator(formId) {
                     notEmpty: {
                         message: '公司联系方式不能为空'
                     },
-                    stringLength: {
-                        min: 1,
-                        max: 200,
-                        message: '公司联系方式长度必须在1到11位之间'
+                    regexp: {
+                        regexp: /^\d{3,4}-?\d{7,9}$/,
+                        message: '号码格式错误'
                     }
                 }
             },
@@ -163,6 +165,8 @@ function validator(formId) {
             companyWebsite: {
                 message: '公司官网URL失败',
                 validators: {
+                    required: true,
+                    url: true,
                     notEmpty: {
                         message: '公司官网URL不能为空'
                     }
@@ -176,7 +180,7 @@ function validator(formId) {
                     }
                 }
             },
-            companyOpenSize:{
+            companySize:{
                 message: '公司规模失败',
                 validators: {
                     notEmpty: {
@@ -189,7 +193,8 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '公司经度不能为空'
-                    }
+                    },
+                    number:true
                 }
             },
             companyLatitude:{
@@ -197,7 +202,7 @@ function validator(formId) {
                 validators:{
                     notEmpty:{
                         message:'纬度不能为空'
-                    }
+                    },number:true
                 }
             }
 
@@ -208,7 +213,7 @@ function validator(formId) {
                 formSubmit("/company/InsertCompany", formId, "addWin");
             } else if (formId == "editForm") {
                 formSubmit("/company/uploadCompany", formId, "editWin");
-
+                oFileInput.Init("edit_companyLogo", "/company/uploadCompany");
             }
         })
 }
@@ -218,13 +223,7 @@ function validator(formId) {
 $(function () {
     //0.初始化fileinput
     var oFileInput = new FileInput();
-    oFileInput.Init("add_companyLogo", "/file/addFile");
-});
-
-$(function () {
-    //0.初始化fileinput
-    var oFileInput = new FileInput();
-    oFileInput.Init("edit_companyLogo", "/file/editFile");
+    oFileInput.Init("edit_companyLogo", "/company/uploadCompany");
 });
 
 //初始化fileinput

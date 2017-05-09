@@ -153,6 +153,10 @@
                         <form role="form" id="editForm">
                             <input type="hidden" id="addChargeBillId" attr="chargeBill.chargeBillId" name="chargeBillId" class="form-control"/>
                             <div class="form-group">
+                                <label class="control-label">车主姓名：</label>
+                                <input attr="chargeBill.record.checkin.userName" type="text" readonly class="form-control"/>
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label">收费总金额：</label>
                                 <input id="editChargeBillMoney" attr="chargeBill.chargeBillMoney" type="number" name="chargeBillMoney" maxlength="5" class="form-control"/>
                             </div>

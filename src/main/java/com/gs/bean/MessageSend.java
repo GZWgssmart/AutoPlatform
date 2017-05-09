@@ -13,8 +13,16 @@ public class MessageSend {
 	private String userId;  //用户Id
 	private String sendMsg;  //发送内容
 	private Date sendTime; //预计发送时间
+	private String companyId; //公司Id
 	private Date sendCreatedTime; //发送记录创建创建时间
 	private Checkin checkin;//用户登记表
+
+	public String getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
 
 	public Checkin getCheckin() {
 		return checkin;

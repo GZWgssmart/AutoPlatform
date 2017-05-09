@@ -2,14 +2,17 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.SupplyType;
+import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.PagerUtil;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.SupplyTypeService;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,10 +63,21 @@ public class SupplyTypeController {
     @ResponseBody
     @RequestMapping("add")
     public ControllerResult add(SupplyType supplyType) {
-        logger.info("添加供应商分类");
-        supplyType.setCompanyId(UUIDUtil.uuid());
-        supplyTypeService.insert(supplyType);
-        return ControllerResult.getSuccessResult("添加成功");
+        if (SessionGetUtil.isUser()) {
+            try {
+                logger.info("添加供应商分类");
+                User loginUser = SessionGetUtil.getUser();
+                supplyType.setCompanyId(loginUser.getCompanyId());
+                supplyTypeService.insert(supplyType);
+                return ControllerResult.getSuccessResult("添加成功");
+            }catch (Exception e) {
+                logger.info("添加供应商失败，出现了一个错误");
+                return ControllerResult.getFailResult("添加供应商失败，出现了一个错误");
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
     }
 
     @ResponseBody
@@ -86,9 +100,21 @@ public class SupplyTypeController {
     @ResponseBody
     @RequestMapping("edit")
     public ControllerResult edit(SupplyType supplyType) {
-        logger.info("修改供应商分类");
-        supplyTypeService.update(supplyType);
-        return ControllerResult.getSuccessResult("修改成功");
+        if (SessionGetUtil.isUser()) {
+            try {
+                logger.info("修改供应商分类");
+                User loginUser = SessionGetUtil.getUser();
+                supplyType.setCompanyId(loginUser.getCompanyId());
+                supplyTypeService.update(supplyType);
+                return ControllerResult.getSuccessResult("修改成功");
+            }catch (Exception e) {
+                logger.info("修改供应商失败，出现了一个错误");
+                return ControllerResult.getFailResult("添加供应商失败，出现了一个错误");
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
     }
 
     @ResponseBody

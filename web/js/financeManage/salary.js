@@ -234,6 +234,24 @@ function fileValidator() {
                         swal(data.message, "内容不匹配", "error");
                         $('#importSalaryForm').data('bootstrapValidator').resetForm(true);
 
+                    } else if(data.result == 'notLogin'){
+                        swal({
+                                title: "登入失败",
+                                text: data.message,
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "确认",
+                                cancelButtonText: "取消",
+                                closeOnConfirm: true,
+                                closeOnCancel: true
+                            },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    top.location.href = "/login/show_login";
+                                } else {
+                                }
+                            });
                     }
                 }
             })

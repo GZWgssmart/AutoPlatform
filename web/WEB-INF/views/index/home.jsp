@@ -138,9 +138,9 @@
                         </li>
                         <li><a class="J_menuItem" href="<%=path %>/supply/info">供应商信息管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_advanced.html">下单统计</a>
+                        <li><a class="J_menuItem" href="<%=path %>/order/order">下单统计</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_wizard.html">支付统计</a>
+                        <li><a class="J_menuItem" href="<%=path %>/pay/pay">支付统计</a>
                         </li>
                     </ul>
                 </li>
@@ -175,7 +175,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path %>/checkin/checkin_page">接待登记管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path%>/record/record_page">维修保养记录管理</a>
+                        <li><a id="maintain" class="J_menuItem" href="<%=path%>/record/record_page">维修保养记录管理</a>
                         </li>
                     </ul>
                 </li>
@@ -254,9 +254,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="form_wizard.html">维修保养统计</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_advanced.html">员工工单统计</a>
-                        </li>
-                        <li><a class="J_menuItem" href="form_basic.html">员工提成统计</a>
+                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/staff_page">员工工单统计</a>
                         </li>
                         <li><a class="J_menuItem" href="form_validate.html">维修保养类型统计</a>
                         </li>
@@ -745,6 +743,8 @@
 <script src="<%=path %>/js/hplus.min.js?v=4.1.0"></script>
 <script src="<%=path %>/js/contabs.min.js" type="text/javascript"></script>
 <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
+
+<script src="<%=path %>/js/index/home.js"></script>
 
 </body>
 

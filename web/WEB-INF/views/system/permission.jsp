@@ -18,6 +18,7 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="<%=path %>/css/main.css" rel="stylesheet">
 
     <style>
         .ibox-content span {

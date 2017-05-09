@@ -48,7 +48,7 @@
 
 	<update id="update" parameterType="supplyType">
 		<![CDATA[
-		update t_supply_type set supplyTypeName = #{supplyTypeName}, supplyTypeDes = #{supplyTypeDes}, supplyTypeStatus = 'Y' where supplyTypeId = #{supplyTypeId}
+		update t_supply_type set supplyTypeName = #{supplyTypeName}, supplyTypeDes = #{supplyTypeDes}, companyId = #{companyId}, supplyTypeStatus = 'Y' where supplyTypeId = #{supplyTypeId}
 		]]>
 	</update>
 

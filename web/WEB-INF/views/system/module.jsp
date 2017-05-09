@@ -16,6 +16,7 @@
     <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="<%=path %>/css/main.css" rel="stylesheet">
 
 </head>
 <body>
@@ -53,12 +54,15 @@
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
             <a><button onclick="queryAll()" type="button" class="btn btn-default" >
+                <i class="glyphicon glyphicon-search"></i>
                 查询全部
             </button></a>
             <a><button onclick="queryStatus('Y')" type="button" class="btn btn-default" >
+                <i class="glyphicon glyphicon-search"></i>
                  查可用模块
             </button></a>
             <a><button onclick="queryStatus('N')" type="button" class="btn btn-default" >
+                <i class="glyphicon glyphicon-search"></i>
                  查不可用模块
             </button></a>
         </div>

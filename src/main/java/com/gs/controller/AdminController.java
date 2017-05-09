@@ -7,6 +7,7 @@ import com.gs.bean.UserRole;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.RoleService;
@@ -91,14 +92,31 @@ public class AdminController {
     @RequestMapping(value = "add_admin", method = RequestMethod.POST)
     public ControllerResult addAdmin(User user) {
         logger.info("添加管理员");
-        user.setUserId(UUIDUtil.uuid());
-        userService.insertAdmin(user);
-        Role role = roleService.queryByName("systemOrdinaryAdmin");
-        UserRole ur = new UserRole();
-        ur.setRoleId(role.getRoleId());
-        ur.setUserId(user.getUserId());
-        userRoleService.insert(ur);
-        return ControllerResult.getSuccessResult("添加成功");
+        if (user != null) {
+            user.setUserId(UUIDUtil.uuid());
+            user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
+            userService.insertAdmin(user);
+            Role role = roleService.queryByName("systemOrdinaryAdmin");
+            UserRole ur = new UserRole();
+            ur.setRoleId(role.getRoleId());
+            ur.setUserId(user.getUserId());
+            userRoleService.insert(ur);
+            return ControllerResult.getSuccessResult("添加成功");
+        } else {
+            return ControllerResult.getFailResult("添加失败");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update_admin", method = RequestMethod.POST)
+    public ControllerResult updateAdmin(User user) {
+        logger.info("更新管理员");
+        if (user != null) {
+            userService.updateAdmin(user);
+            return ControllerResult.getSuccessResult("更新成功");
+        } else {
+            return ControllerResult.getFailResult("更新失败");
+        }
     }
 
     @ResponseBody

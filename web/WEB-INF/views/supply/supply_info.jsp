@@ -26,7 +26,8 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+           data-height="520">
         <thead>
         <tr>
             <th data-field="id" data-checkbox="true"></th>
@@ -77,10 +78,10 @@
         <form id="formSearch" class="form-horizontal">
             <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
                 <div class="col-sm-2" style="margin-left: -15px;">
-                    <input type="text" id="searchSupplyName" name="supplyName" class="form-control" placeholder="请输入供应商名称" >
+                    <input type="text" id="searchSupplyName" name="supplyName" class="form-control" placeholder="供应商名称" >
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" id="searchSupplyPricipal" name="supplyPricipal" class="form-control" placeholder="请输入供应商负责人" >
+                    <input type="text" id="searchSupplyPricipal" name="supplyPricipal" class="form-control" placeholder="供应商负责人" >
                 </div>
                 <div class="col-sm-2">
                     <select class="js-example-tags form-control supplyType" id="searchSupplyTypeId" name="supplyTypeId">
@@ -90,6 +91,7 @@
                     <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
                     </select>
                 </div>
+                <div class="col-sm-2"></div>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchSupply()" class="btn btn-primary">
                         查询
@@ -172,7 +174,7 @@
                             </div>
                             <div class="form-group">
                                 <label>开户人：</label>
-                                <input type="text" attr="supply.supplyBank" name="supplyBank" class="form-control"/>
+                                <input type="text" attr="supply.supplyBankAccount" name="supplyBankAccount" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>开户卡号：</label>
@@ -187,8 +189,9 @@
                                 <input type="text" attr="supply.supplyWechat" name="supplyWechat" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>供应商分类：</label>
-                                <input type="text" attr="supply.supplyTypeId"  name="supplyTypeId" class="form-control"/>
+                                <label class="control-label">供应商分类：</label>
+                                <select id="editSupplyType" class="js-example-tags form-control supply_type" name="supplyTypeId">
+                                </select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
 
@@ -238,7 +241,7 @@
                             </div>
                             <div class="form-group">
                                 <label>开户人：</label>
-                                <input type="text" name="supplyBank" class="form-control"/>
+                                <input type="text" name="supplyBankAccount" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>开户卡号：</label>
@@ -253,8 +256,9 @@
                                 <input type="text"  name="supplyWechat" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>供应商分类：</label>
-                                <input type="text" name="supplyTypeId" class="form-control"/>
+                                <label class="control-label">供应商分类：</label>
+                                <select id="addSupplyType" class="js-example-tags form-control supply_type" name="supplyTypeId">
+                                </select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"

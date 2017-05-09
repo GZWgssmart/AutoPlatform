@@ -15,7 +15,7 @@ public class WorkInfo {
 	private Date workAssignTime;
 	private Date workCreatedTime;
 	private String workStatus;
-
+	private double coont; // 用于员工工单统计报表记录数
 	private User user;
 	private MaintainRecord maintainRecord;
 	private Checkin checkin;
@@ -84,5 +84,13 @@ public class WorkInfo {
 
 	public void setCheckin(Checkin checkin) {
 		this.checkin = checkin;
+	}
+
+	public double getCoont() {
+		return coont;
+	}
+
+	public void setCoont(double coont) {
+		this.coont = coont;
 	}
 }

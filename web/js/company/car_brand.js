@@ -38,6 +38,7 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
+        validator("editForm");
         $("#editForm").fill(product);
         $("#editWin").modal('show');
     }
@@ -109,7 +110,7 @@ function validator(formId) {
                     stringLength: {
                         min: 2,
                         max: 20,
-                        message: '品牌名称长度必须在2到4位之间'
+                        message: '品牌名称长度必须在2到20位之间'
                     }
                 }
             },
@@ -129,13 +130,11 @@ function validator(formId) {
 
         }
     })
-
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/carBrand/insertCarBrand", formId, "addWin");
             } else if (formId == "editForm") {
                 formSubmit("/carBrand/uploadCarBrand", formId, "editWin");
-
             }
         })
 

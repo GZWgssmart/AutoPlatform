@@ -12,14 +12,21 @@
 <html>
 <head>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>库存管理</title>
 
+    <meta name="keywords" content="">
+    <meta name="description" content="">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+
+    <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="container">
@@ -27,7 +34,8 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+           data-height="520">
         <thead>
         <tr>
             <th data-field="id" data-checkbox="true"></th>
@@ -81,23 +89,64 @@
             </th>
         </tr>
         </thead>
+        <form id="formSearch" class="form-horizontal">
+            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+                <div class="col-sm-2" style="margin-left: -15px;">
+                    <input type="text" id="searchAccName" name="accName" class="form-control" placeholder="请输入配件名称" >
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" id="searchAccCommodityCode" name="accCommodityCode" class="form-control" placeholder="请输入商品条码" >
+                </div>
+                <div class="col-sm-2">
+                    <select class="js-example-tags form-control company" id="searchCompanyId" name="companyId">
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <select class="js-example-tags form-control accType" id="searchAccTypeId" name="accTypeId">
+                    </select>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" onclick="searchAcc()" class="btn btn-primary">
+                        查询
+                    </button>
+                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </form>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
-            <a><button onclick="queryAll()" type="button" class="btn btn-default" >
-                查询全部
-            </button></a>
-            <a><button onclick="queryStatus('Y')" type="button" class="btn btn-default" >
-                查可用模块
-            </button></a>
-            <a><button onclick="queryStatus('N')" type="button" class="btn btn-default" >
-                查不可用模块
-            </button></a>
+            <a>
+                <button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-plus"></i> 添加
+                </button>
+            </a>
+            <a>
+                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-pencil"></i> 修改
+                </button>
+            </a>
+            <a>
+                <button onclick="queryStatus('Y')" type="button" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-search"></i> 查可用模块
+                </button>
+            </a>
+            <a>
+                <button onclick="queryStatus('N')" type="button" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-search"></i> 查不可用模块
+                </button>
+            </a>
+            <a>
+                <button onclick="queryAll()" type="button" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-search"></i> 查询全部
+                </button>
+            </a>
+            <a>
+                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-search"></i> 条件查询
+                </button>
+            </a>
         </div>
         </tbody>
 
@@ -259,17 +308,18 @@
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
-<script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrapValidator.js"></script>
+<script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
-<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
-<script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
-<script src="<%=path %>/js/accessories/accessories.js"></script>
 <script src="<%=path %>/js/select2.full.min.js"></script>
 <script src="<%=path %>/js/zh-CN.js"></script>
+<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
+<script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
+<script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/main.js"></script>
+<script src="<%=path %>/js/accessories/accessories.js"></script>
 </body>
 </html>

@@ -10,6 +10,26 @@ $(document).ready(function () {
     initDateTimePicker("nowDatrtime","remindCreatedTime");
 });
 
+/** 根据条件搜索 */
+function searchCondition() {
+    var userName = $("#searchUserName").val();
+    var maintainOrFix = $("#searchMaintainOrFix").val();
+    var companyId = $("#searchCompanyId").val();
+    var speedStatus = "已登记";
+    initTable("cusTable", "/record/condition_pager?userName=" + userName + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId + "&speedStatus=" + speedStatus);
+
+}
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchUserName").val('');
+    $("#searchCarPlate").val('');
+    $("#searchMaintainOrFix").val('all');
+    $('#searchCompanyId').html('').trigger("change");
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
+
 function getDate() {
     $("#editRemindCreatedTime").val(new Date());
 }

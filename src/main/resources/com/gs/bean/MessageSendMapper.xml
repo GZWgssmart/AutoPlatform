@@ -7,6 +7,7 @@
 		<id property="messageId" column="messageId" />
 		<result property="sendMsg" column="sendMsg" />
 		<result property="sendTime" column="sendTime" />
+		<result column="companyId" property="companyId"/>
 		<result property="sendCreatedTime" column="sendCreatedTime" />
 		<association property="checkin" javaType="com.gs.bean.Checkin">
 			<id property="userId" column="userId"/>

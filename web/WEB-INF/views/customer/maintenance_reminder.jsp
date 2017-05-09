@@ -68,20 +68,11 @@
                     <input type="text" id="searchUserName" name="userName" class="form-control" placeholder="请输入车主姓名">
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" id="searchCarPlate" name="carPlate" class="form-control" placeholder="请输入车牌号码">
-                </div>
-                <div class="col-sm-2">
                     <select class="js-example-tags form-control" id="searchMaintainOrFix" name="maintainOrFix">
                         <option value="all">维修&nbsp;&&nbsp;保养</option>
                         <option value="维修">维修</option>
                         <option value="保养">保养</option>
                     </select>
-                </div>
-                <div class="col-sm-2">
-                    <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
-                    </select>
-                </div>
-                <div class="col-sm-2">
                 </div>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchCondition()" class="btn btn-primary">
@@ -90,7 +81,6 @@
                     <button type="button" onclick="closeSearchForm()" class="btn btn-default">
                         关闭
                     </button>
-
                 </div>
             </div>
         </form>

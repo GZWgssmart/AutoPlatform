@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface OutgoingTypeDAO extends BaseDAO<String, OutgoingType>{
 
-    public OutgoingType queryByName(@Param("outTypeName") String outTypeName,@Param("companyId")String companyId);
+    public OutgoingType queryByName(@Param("outTypeName") String outTypeName);
 
     public List<OutgoingType> queryPagerStatus(@Param("status")String status, @Param("pager")Pager pager);
     public int countStatus(String status);

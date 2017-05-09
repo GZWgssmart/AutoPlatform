@@ -17,7 +17,25 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="<%=path %>/css/people_info.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 
+    <style>
+        .form_form .form_save{
+        position: relative;
+        top: 9px;
+        float: right;
+        margin-right: 32px;
+        width: 70px;
+        height: 25px;
+        font-family: "微软雅黑";
+        color: #d4d4d4;
+        background-color: #909090;
+        border: 0px;
+        outline: none;
+        border-radius:5px;
+        }
+    </style>
 </head>
 <body>
 
@@ -46,10 +64,10 @@
             <th data-field="userName">
                 姓名
             </th>
-            <th data-field="userGender">
+            <th data-field="userGender" data-formatter="gender">
                 性别
             </th>
-            <th data-field="userBirthday">
+            <th data-field="userBirthday" data-formatter="birthday">
                 生日
             </th>
             <th data-field="userAddress">
@@ -70,10 +88,10 @@
             <th data-field="company.companyName">
                 公司
             </th>
-            <th data-field="userCreatedTime">
+            <th data-field="userCreatedTime" data-formatter="formatterDate">
                 创建时间
             </th>
-            <th data-field="userLoginedTime">
+            <th data-field="userLoginedTime" data-formatter="formatterDate">
                 最近登陆时间
             </th>
             <th data-field="userStatus" data-formatter="status">
@@ -98,17 +116,20 @@
             </a>
             <a>
                 <button onclick="queryAll();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>
                     查询全部
                 </button>
             </a>
             <a>
                 <button onclick="querySystem();" type="button" class="btn btn-default">
-                    系统管理员
+                    <i class="glyphicon glyphicon-search"></i>
+                    查询管理员
                 </button>
             </a>
             <a>
                 <button onclick="queryCompany();" type="button" class="btn btn-default">
-                    公司管理员
+                    <i class="glyphicon glyphicon-search"></i>
+                    查询管理员
                 </button>
             </a>
         </div>
@@ -118,7 +139,7 @@
 </div>
 
 
-<div id="editWin" class="modal fade" aria-hidden="true">
+<%--<div id="editWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -150,7 +171,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>--%>
 
 <div id="addWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
@@ -161,6 +182,7 @@
                         <h3 class="m-t-none m-b">添加管理员</h3>
                         <form role="form" id="addForm">
                             <input type="hidden" id="birthday" name="userBirthday"/>
+                            <input type="text" id="gender" name="userGender"/>
                             <%--<div class="form-group">
                                 <select id="adminTypeSelect" onchange="adminSelect('adminTypeSelect');"
                                         class="js-example-tags form-control adminCAndSO"
@@ -203,7 +225,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">身份证：</label>
-                                <input type="text" name="userIdentity" onblur="getBirthday(this)"
+                                <input type="text" name="userIdentity" onblur="getBirthday(this, 1)"
                                        class="form-control"/>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
@@ -223,6 +245,127 @@
     </div>
 </div>
 
+<div id="editWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style="width: 92%;margin-top: 25px">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h4 class="m-t-none m-b">修改管理员</h4>
+                        <div class="form_info">
+                            <form role="form" method="post" id="editForm" class="form_form" onkeydown="if(event.keyCode==13){return false;}" enctype="multipart/form-data">
+                                <input type="hidden" name="userId" attr="user.userId" />
+                                <div class="form_img">
+                                    <div id="preview">
+                                        <img alt="image" attr="user.userIcon" name="file" style="border-radius: 50%;"/>
+                                    </div>
+                                    <input type="file" name="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
+                                </div>
+                                <div class="info">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="control-label">邮箱：</label>
+                                            <input class="form-control" style="display: initial;" type="text" attr="user.userEmail" name="userEmail"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">昵称：</label>
+                                            <input class="form-control" style="display: initial;" type="text" attr="user.userNickname" name="userNickname"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">性别：</label>
+                                            <select style="display: initial;" class="form-control" name="userGender" attr="user.userGender" id="editGender">
+                                                <option value="" selected = "selected">未选择</option>
+                                                <option value="M">男</option>
+                                                <option value="F">女</option>
+                                            </select>
+                                        </div>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="control-label" style="margin-left: -14px">手机号：</label>
+                                            <input class="form-control" style="display: initial;" type="text" attr="user.userPhone" name="userPhone"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label" style="margin-left: -14px">身份证：</label>
+                                            <input class="form-control" style="display: initial;" type="text" id="identity" onblur="getBirthday(this, 2)" attr="user.userIdentity" name="userIdentity"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label" style="margin-left: -28px">所属职位：</label>
+                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" id="role"/>
+                                        </div>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="control-label" style="margin-left: -14px">微信号：</label>
+                                            <input class="form-control" style="display: initial;" type="text" attr="user.wechatOpenId" name="wechatOpenId"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label" style="margin-left: -8px">QQ号：</label>
+                                            <input class="form-control" style="display: initial;" type="text" attr="user.qqOpenId" name="qqOpenId"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">微博：</label>
+                                            <input class="form-control" style="display: initial;" type="text" attr="user.weiboOpenId" name="weiboOpenId"/>
+                                        </div>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="control-label">生日：</label>
+                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="editBirthday" name="userBirthday"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label">姓名：</label>
+                                            <input class="form-control" style="display: initial;" type="text" attr="user.userName" name="userName"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label" style="margin-left: -28px">居住地址：</label>
+                                            <input class="form-control" style="display: initial;" type="text" attr="user.userAddress" name="userAddress"/>
+                                        </div>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="control-label"  style="margin-left: -28px">入职时间：</label>
+                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" id="createTime" name="userCreatedTime"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label" style="margin-left: -28px">最近登录：</label>
+                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" id="loginTime" name="userLoginedTime"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="control-label" style="margin-left: -28px">基本工资：</label>
+                                            <input class="form-control" style="display: initial;" type="text" attr="user.userSalary" name="userSalary"/>
+                                        </div>
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label" style="margin-left: -28px">个人描述：</label>
+                                            <textarea class="form-control" style="display: initial;" id="chang" type="textarea" maxlength="200" placeholder="限制字数为200" attr="user.userDes" name="userDes"></textarea>
+                                            <em class="zi_em" id="textShu">200</em>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="form_save" data-dismiss="modal" aria-hidden="true">关闭</button>
+                                <button class="form_save" id="editButton" onclick="edit()">保存</button>
+                            </form>
+                            <button class="button_form" id="button" onclick="$('#previewImg').click();">更换头像</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
@@ -236,6 +379,7 @@
 <script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/system/admin.js"></script>
 <script src="<%=path %>/js/main.js"></script>
+<script src="<%=path %>/js/jquery.form.min.js"></script>
 
 </body>
 </html>

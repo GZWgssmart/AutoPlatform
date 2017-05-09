@@ -1,11 +1,13 @@
 package com.gs.controller;
 
-import com.gs.bean.*;
+import com.gs.bean.MaintainDetail;
+import com.gs.bean.MaintainFixAcc;
+import com.gs.bean.MaterialList;
+import com.gs.bean.WorkInfo;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.SessionGetUtil;
-import com.gs.common.util.UUIDUtil;
 import com.gs.service.MaintainDetailService;
 import com.gs.service.MaintainFixAccService;
 import com.gs.service.MaterialListService;
@@ -128,6 +130,18 @@ public class MaintainDetailController {
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "query_detail", method = RequestMethod.GET)
+    public Integer queryIsDetail(@Param("recordId") String recordId, @Param("maintainId") String maintainId) {
+        if (SessionGetUtil.isUser()) {
+            logger.info("根据记录id和项目id判断该记录是否已经存在该项目，返回1表示存在，返回0表示不存在");
+            return detailService.queryIsDetail(recordId, maintainId);
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return -1;
         }
     }
 

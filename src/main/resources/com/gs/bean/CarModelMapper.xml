@@ -46,7 +46,7 @@
 
 	<update id="update" parameterType="carModel">
 		<![CDATA[
-
+			update t_car_model set modelName=#{modelName},modelDes=#{modelDes},brandId=#{brandId},modelStatus= "Y" where modelId = #{modelId}
 		]]>
 	</update>
 
@@ -86,7 +86,7 @@
 
 	<select id="queryByPager" resultType="list" resultMap="carModelResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select brand.brandName,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId limit #{beginIndex}, #{pageSize}
+			select brand.brandName,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId order by brand.brandName ASC limit #{beginIndex}, #{pageSize}
 		]]>
 	</select>
 

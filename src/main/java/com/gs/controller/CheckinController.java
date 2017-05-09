@@ -61,8 +61,14 @@ public class CheckinController {
 
     @RequestMapping(value = "checkin_page", method = RequestMethod.GET)
     public String checkinPage() {
-        logger.info("访问登记页面");
-        return "maintenanceReception/reception_register";
+        if (SessionGetUtil.isUser()) {
+            logger.info("访问登记页面");
+            return "maintenanceReception/reception_register";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
+
     }
 
     @ResponseBody

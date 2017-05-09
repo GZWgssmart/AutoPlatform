@@ -14,7 +14,6 @@ import com.gs.service.MaintainRecordService;
 import com.gs.service.UserService;
 import com.gs.thread.SendEmailThread;
 import com.jh.email.Mail;
-import com.jh.email.MailSender;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -55,8 +54,13 @@ public class RecordController {
 
     @RequestMapping(value = "record_page", method = RequestMethod.GET)
     public String recordPage() {
-        logger.info("显示维修保养记录管理页面");
-        return "maintenanceReception/mainterance_record";
+        if (SessionGetUtil.isUser()) {
+            logger.info("显示维修保养记录管理页面");
+            return "maintenanceReception/mainterance_record";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
 
     @ResponseBody
@@ -150,8 +154,13 @@ public class RecordController {
 
     @RequestMapping(value = "reminder_page", method = RequestMethod.GET)
     public String reminderPage() {
-        logger.info("显示维已完成的修保养记录页面");
-        return "settlementCar/car_reminder";
+        if (SessionGetUtil.isUser()) {
+            logger.info("显示维已完成的修保养记录页面");
+            return "settlementCar/car_reminder";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
 
     @ResponseBody

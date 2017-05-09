@@ -1,16 +1,16 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.ChargeBill;
-import com.gs.bean.Checkin;
-import com.gs.bean.MaintainRecord;
+import com.gs.bean.*;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.ChargeBillService;
+import com.gs.service.CheckinService;
 import com.gs.service.MaintainRecordService;
+import com.gs.service.MaintainRemindService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -42,16 +42,32 @@ public class ChargeBillController {
     @Resource
     private MaintainRecordService maintainRecordService;
 
+    @Resource
+    private CheckinService checkinService;
+
+    @Resource
+    private MaintainRemindService maintainRemindService;
+
     @RequestMapping(value = "bill_page", method = RequestMethod.GET)
     public String chargeBillPage() {
-        logger.info("访问收费单据页面");
-        return "settlementCar/charge_document";
+        if (SessionGetUtil.isUser()) {
+            logger.info("访问收费单据页面");
+            return "settlementCar/charge_document";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
 
     @RequestMapping(value = "statement_page", method = RequestMethod.GET)
     public String statementPage() {
-        logger.info("访问对账单页面");
-        return "financeManage/account_statement";
+        if (SessionGetUtil.isUser()) {
+            logger.info("访问对账单页面");
+            return "financeManage/account_statement";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
 
     @ResponseBody
@@ -126,16 +142,24 @@ public class ChargeBillController {
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ControllerResult addChargeBill(ChargeBill chargeBill) {
+    public ControllerResult addChargeBill(@Param("chargeBill") ChargeBill chargeBill, @Param("userId") String userId, @Param("carMileage") String carMileage) {
         if (SessionGetUtil.isUser()) {
             try {
-                logger.info("添加收费单据");
+                logger.info("结算提车，生成收费单据，生成维修保养提醒记录");
+                User loginUser = SessionGetUtil.getUser();
+                MaintainRemind maintainRemind = new MaintainRemind();
+                maintainRemind.setLastMaintainTime(new Date());
+                maintainRemind.setCompanyId(loginUser.getCompanyId());
+                maintainRemind.setUserId(userId);
+                maintainRemind.setLastMaintainMileage(carMileage);
+                maintainRemindService.insert(maintainRemind);
                 chargeBillService.insert(chargeBill);
                 maintainRecordService.updateSpeedStatusById(Constants.COMPLETED, chargeBill.getRecordId());
+                checkinService.inactive(chargeBill.getRecord().getCheckinId());
                 return ControllerResult.getSuccessResult("已经成功结算，收费单据已经自动生成");
             } catch (Exception e) {
-                logger.info("添加收费单据失败，出现了一个错误");
-                return ControllerResult.getFailResult("添加收费单据失败，出现了一个错误");
+                logger.info("结算提车失败，出现了一个错误");
+                return ControllerResult.getFailResult("结算提车失败，出现了一个错误");
             }
         } else {
             logger.info("Session已失效，请重新登入");

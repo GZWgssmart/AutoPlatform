@@ -52,6 +52,24 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 }else if(data.result == "fail"){
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            cancelButtonText: "取消",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            } else {
+                            }
+                        });
                 }
             },"json");
     },
@@ -62,6 +80,24 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 }else if(data.result == "fail"){
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            cancelButtonText: "取消",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            } else {
+                            }
+                        });
                 }
             },"json");
     },

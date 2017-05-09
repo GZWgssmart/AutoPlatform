@@ -7,7 +7,30 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/incomingOutgoing/query_pager");
     destoryValidator("editWin","editForm");
+    initSelect2("outType", "请选择支出类型", "/outgoingType/outType_all", "565");
+    initSelect2("inType", "请选择收入类型", "/incomingType/inType_all", "565");
+    isType();
 });
+
+function isType(){
+    $("#isType").bootstrapSwitch({
+        onText: '支出',
+        offText: '收入',
+        onColor: 'success',
+        offColor: 'danger',
+        size: 'normal',
+        onSwitchChange: function (event, state) {
+            if (state == true) {
+               $("#outDiv").css("display",'block');
+                $("#inDiv").css("display",'none');
+            } else if (state == false) {
+                $('#inDiv').css("display",'block');
+                $("#outDiv").css("display",'none');
+
+            }
+        }
+    });
+}
 
 /** 编辑数据 */
 function showEditWin() {
@@ -24,7 +47,10 @@ function showEditWin() {
     }
 }
 
-
+function showAddWin(){
+    validator("addForm")
+    $("#addWin").modal('show');
+}
 
 function operateFormatter(value, row, index) {
     if (row.inOutStatus == 'Y') {
@@ -106,17 +132,30 @@ function validator(formId) {
                         message: '收支金额只能是数字'
                     }
                 }
+            },
+            outTypeId: {
+                validators:{
+                    notEmpty:{
+                        message: '支出类型不能为空'
+                    }
+                }
+            },
+            inTypeId:{
+                validators:{
+                    notEmpty:{
+                        message:'收入类型不能为空'
+                    }
+                }
             }
-
 
         }
     })
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
+                formSubmit("/incomingOutgoing/add_inOut", formId, "addWin");
             } else if (formId == "editForm") {
                 formSubmit("/incomingOutgoing/update_inOut", formId, "editWin");
-
             }
         })
 

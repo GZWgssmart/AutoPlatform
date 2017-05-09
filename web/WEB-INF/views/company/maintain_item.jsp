@@ -25,7 +25,9 @@
            data-pagination="true"
            data-show-refresh="true"
            data-show-toggle="true"
-           data-showColumns="true">
+           data-showColumns="true"
+           data-height="520"
+    >
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
@@ -86,7 +88,7 @@
                                 <input type="text"   name="maintainName" attr="maintain.maintainName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>维修所需工时：</label>
+                                <label>维修所需工时（小时）：</label>
                                 <input type="text"  name="maintainHour" attr="maintain.maintainHour"
                                        class="form-control"/>
                             </div>
@@ -102,7 +104,7 @@
                             </div>
                             <div class="form-group" >
                                 <label>公司名称</label>
-                                <select class="js-example-tags form-control company"  name="companyId" style="width:150px;">
+                                <select class="js-example-tags form-control company" id="companys" name="companyId" value="company.companyId" style="width:150px;">
                                 </select>
                             </div>
                             <div class="form-group">
@@ -138,7 +140,7 @@
                                 <input type="text"   name="maintainName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>维修所需工时：</label>
+                                <label>维修所需工时（小时）：</label>
                                 <input type="text"  name="maintainHour"
                                        class="form-control"/>
                             </div>
