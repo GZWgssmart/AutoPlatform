@@ -287,6 +287,23 @@ function status(value, row, index) {
 
 /** form表单提交 */
 function formSubmit(url, formId, winId) {
+    // var options = {
+    //     type:'post',
+    //     dataType:'json',
+    //     url:url,
+    //     success: function(data) {
+    //         if (data.result == "success") {
+    //             $('#' + winId).modal('hide');
+    //             swal(data.message, "", "success");
+    //             $('#cusTable').bootstrapTable('refresh');
+    //             $('#' + formId).data('bootstrapValidator').resetForm(true);
+    //         } else if (data.result == "fail") {
+    //             swal(data.message, "", "error");
+    //         }
+    //     }
+    // };
+    // $('#' + formId).ajaxSubmit(options);
+
     $.post(url,
         $("#" + formId).serialize(),
         function (data) {
@@ -393,3 +410,14 @@ function upDigit(n) {
     return head + s.replace(/(零.)*零元/, '元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整');
 }
 
+
+/*性别转换*/
+function gender(value, row, index) {
+    if (row.userGender == 'M') {
+        return '男'
+    }else if (row.userGender == 'F'){
+        return '女'
+    }else if (row.userGender == 'N'){
+        return '未知'
+    }
+}

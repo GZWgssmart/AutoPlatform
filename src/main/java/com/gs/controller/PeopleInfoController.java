@@ -181,7 +181,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "peopleRole_update", method = RequestMethod.POST)
     public ControllerResult updateRole(UserRole userRole) {
         logger.info("信息修改");
-        userRoleService.update(userRole);
+        userRoleService.updateByRole(userRole);
         return ControllerResult.getSuccessResult(" 修改成功");
     }
 

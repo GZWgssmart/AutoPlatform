@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.UserRole;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 /**
 *由Wjhsmart技术支持
@@ -11,4 +12,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRoleDAO extends BaseDAO<String, UserRole>{
 
+    public void updateByRole(UserRole userRole);
 }

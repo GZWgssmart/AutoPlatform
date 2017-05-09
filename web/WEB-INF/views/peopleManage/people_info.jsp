@@ -87,7 +87,7 @@
                             <input type="hidden" attr="user.userId" name="userId" />
                             <div class="form-group">
                                 <label class="control-label">角色：</label>
-                                <select id="editRole" class="js-example-tags form-control user_role" name="userRole.roleId"></select>
+                                <select id="editRole" class="js-example-tags form-control user_role" name="roleId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error1" style="color: red;"></span>
@@ -121,7 +121,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">邮箱：</label>
-                                <input type="email" name="userEmail"
+                                <input type="text" name="userEmail"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -225,7 +225,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -14px">身份证：</label>
-                                            <input class="form-control" style="display: initial;" type="text" id="editIdentity" onblur="getBirthday(this)" attr="user.userIdentity" name="userIdentity"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="editIdentity" attr="user.userIdentity" name="userIdentity"/>
                                         </div>
                                         <br />
                                         <br />

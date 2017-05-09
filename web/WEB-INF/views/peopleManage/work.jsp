@@ -50,6 +50,9 @@
             <th data-field="user.userName">
                 指派员工
             </th>
+            <th data-field="company.companyName">
+                汽修公司
+            </th>
             <th data-field="workStatus" data-formatter="status">
                 当前状态
             </th>
