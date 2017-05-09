@@ -117,6 +117,9 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
+        </div>
+        </tbody>
+        <!--
             <a>
                 <button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                     <i class="glyphicon glyphicon-plus"></i> 添加
@@ -127,6 +130,7 @@
                     <i class="glyphicon glyphicon-pencil"></i> 修改
                 </button>
             </a>
+            -->
             <a>
                 <button onclick="queryStatus('Y')" type="button" class="btn btn-default" >
                     <i class="glyphicon glyphicon-search"></i> 查可用模块
@@ -235,6 +239,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- 修改弹窗 -->
 <div id="editWin" class="modal fade" aria-hidden="true">

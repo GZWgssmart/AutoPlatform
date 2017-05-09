@@ -23,6 +23,6 @@ public interface AccessoriesService extends BaseService<String, Accessories>{
     public int countByCondition(Accessories accessories);
     public List<Accessories> queryByCondition(Pager pager, Accessories accessories);
 
-    public void updateIdle(String id,  int lastCount);
+    public void updateIdle(@Param("id") String id, @Param("lastCount") int lastCount);
 
 }

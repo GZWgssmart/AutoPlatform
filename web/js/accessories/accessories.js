@@ -56,13 +56,12 @@ function showAddWin() {
 function operateFormatter(value, row, index) {
     if (row.accStatus == 'Y') {
         return [
-            '<button type="button" class="updateActive btn btn-default  btn-sm btn-danger" style="margin-right:15px;" >冻结</button>',
-            '<button type="button" class="showUpdateInfo btn btn-default  btn-sm btn-primary" style="margin-right:15px;" >编辑</button>'
+            '<button type="button" class="updateActive btn btn-default  btn-sm btn-danger" style="margin-right:15px;" >冻结</button>'
+
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateInactive btn btn-default  btn-sm btn-success" style="margin-right:15px;" >激活</button>',
-            '<button type="button" class="showUpdateInfo btn btn-default  btn-sm btn-primary" style="margin-right:15px;" >编辑</button>'
+            '<button type="button" class="updateInactive btn btn-default  btn-sm btn-success" style="margin-right:15px;" >激活</button>'
         ].join('');
     }
 }
@@ -93,17 +92,6 @@ window.operateEvents = {
                     swal(data.message, "", "error");
                 }
             }, "json");
-    },
-    'click .showUpdateInfo': function (e, value, row, index) {
-        var accessories = row;
-        $("#editForm").fill(accessories);
-        $('#editCompany').html('<option value="' + accessories.company.companyId + '">' + accessories.company.companyName + '</option>').trigger("change");
-        $('#editSupply').html('<option value="' + accessories.supply.supplyId + '">' + accessories.supply.supplyName + '</option>').trigger("change");
-        $('#editAccessoriesType').html('<option value="' + accessories.accessoriesType.accTypeId + '">' + accessories.accessoriesType.accTypeName + '</option>').trigger("change");
-        $('#editBuyedTime').val(formatterDate(accessories.accBuyedTime));
-        $('#editUsedTime').val(formatterDate(accessories.accUsedTime));
-        validator("editForm");
-        $("#editWin").modal('show');
     }
 }
 
@@ -153,13 +141,6 @@ function validator(formId) {
                     }
                 }
             },
-            accCommodityCode: {
-                validators :{
-                    notEmpty: {
-                        message: '商品价格不能为空'
-                    }
-                }
-            },
             accDes: {
                 validators: {
                     notEmpty: {
@@ -172,51 +153,58 @@ function validator(formId) {
                     }
                 }
             },
+            accCommodityCode: {
+                validators :{
+                    notEmpty: {
+                        message: '商品条码不能为空'
+                    }
+                }
+            },
             accUnit: {
-                validators: {
-                    nitEmpty: {
+                validators :{
+                    notEmpty: {
                         message: '计量单位不能为空'
                     }
                 }
             },
             accIdle: {
-                validators: {
-                    nitEmpty: {
+                validators :{
+                    notEmpty: {
                         message: '可用数量不能为空'
                     }
                 }
             },
             accSalePrice: {
-                validators: {
-                    nitEmpty: {
+                validators :{
+                    notEmpty: {
                         message: '配件售价不能为空'
                     }
                 }
             },
             accUsedTime: {
-                validators: {
-                    nitEmpty: {
+                validators :{
+                    notEmpty: {
                         message: '最近一次领料时间不能为空'
                     }
                 }
             },
             accBuyedTime: {
-                validators: {
-                    nitEmpty: {
+                validators :{
+                    notEmpty: {
                         message: '最近一次购买时间不能为空'
                     }
                 }
             },
             supplyId: {
-                validators: {
-                    nitEmpty: {
+                validators :{
+                    notEmpty: {
                         message: '供应商不能为空'
                     }
                 }
             },
             accTypeId: {
-                validators: {
-                    nitEmpty: {
+                validators :{
+                    notEmpty: {
                         message: '配件分类不能为空'
                     }
                 }
