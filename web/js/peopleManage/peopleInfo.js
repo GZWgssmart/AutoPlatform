@@ -4,6 +4,8 @@ $(document).ready(function () {
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
     initSelect2("user_role", "请选择角色", "/peopleManage/role_all", 565);
+    destoryValidator("editWin","editForm");
+    destoryValidator("myModal","editModal");
 });
 
 
