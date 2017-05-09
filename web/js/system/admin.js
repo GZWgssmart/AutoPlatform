@@ -366,3 +366,19 @@ function fmtDate(){
     }
 
 }
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchPhone").val('');
+    $("#searchEmail").val('');
+    $("#searchName").val('');
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
+
+function bySelectSearch() {
+    var userName = $("#searchName").val();
+    var userPhone = $("#searchPhone").val();
+    var userEmail = $("#searchEmail").val();
+    initTable("cusTable", contextPath + "/admin/select_query?userName=" + userName + "&userPhone=" + userPhone + "&userEmail=" + userEmail);
+}
