@@ -146,4 +146,10 @@
 		]]>
 	</update>
 
+	<select id="queryIsDetail" resultType="int">
+		<![CDATA[
+			select count(*) from t_maintain_detail where recordId = #{recordId} and maintainId = #{maintainId}
+		]]>
+	</select>
+
 </mapper>

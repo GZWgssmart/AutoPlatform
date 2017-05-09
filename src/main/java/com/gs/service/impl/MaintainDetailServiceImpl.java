@@ -47,4 +47,9 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
 	public List<MaintainDetail> queryPagerByRecordId(@Param("pager") Pager pager, @Param("recordId") String recordId) {
 		return maintainDetailDAO.queryPagerByRecordId(pager, recordId);
 	}
+
+	@Override
+	public int queryIsDetail(String recordId, String maintainId) {
+		return maintainDetailDAO.queryIsDetail(recordId, maintainId);
+	}
 }

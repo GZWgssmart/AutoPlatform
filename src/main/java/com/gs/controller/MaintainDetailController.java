@@ -133,6 +133,18 @@ public class MaintainDetailController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "query_detail", method = RequestMethod.GET)
+    public Integer queryIsDetail(@Param("recordId") String recordId, @Param("maintainId") String maintainId) {
+        if (SessionGetUtil.isUser()) {
+            logger.info("根据记录id和项目id判断该记录是否已经存在该项目，返回1表示存在，返回0表示不存在");
+            return detailService.queryIsDetail(recordId, maintainId);
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return -1;
+        }
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");

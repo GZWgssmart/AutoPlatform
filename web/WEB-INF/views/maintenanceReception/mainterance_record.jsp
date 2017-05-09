@@ -217,7 +217,7 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">生成维修保养明细</h3>
                         <form role="form" id="detailForm">
-                            <input type="hidden" attr="record.recordId" name="recordId" class="form-control"/>
+                            <input type="hidden" id="detailRecordId" attr="record.recordId" name="recordId" class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">维修&nbsp;|&nbsp;保养：</label>
                                 <input type="text" id="maintainOrFix" attr="record.checkin.maintainOrFix" readonly
