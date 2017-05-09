@@ -114,7 +114,7 @@ public class AccessoriesController {
         logger.info("分页查询某个分类下的配件");
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(accessoriesService.count());
+        pager.setTotalRecords(accessoriesService.countByTypeId(id));
         List<Accessories> accessoriesList = accessoriesService.queryByIdPager(id,pager);
         return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
     }

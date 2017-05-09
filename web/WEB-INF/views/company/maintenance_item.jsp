@@ -182,6 +182,23 @@
     </div>
 </div>
 
+<div id="accWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 class="m-t-none m-b"></h3>
+                <input type="text" name="accCount" id="count" placeholder="请输入项目所需配件数量"/>
+                <div class="modal-footer" style="overflow:hidden;">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <input type="reset" name="reset" style="display: none;" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="maintenanceWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

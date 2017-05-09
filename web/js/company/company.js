@@ -143,10 +143,9 @@ function validator(formId) {
                     notEmpty: {
                         message: '公司联系方式不能为空'
                     },
-                    stringLength: {
-                        min: 1,
-                        max: 200,
-                        message: '公司联系方式长度必须在1到11位之间'
+                    regexp: {
+                        regexp: /^\d{3,4}-?\d{7,9}$/,
+                        message: '号码格式错误'
                     }
                 }
             },
@@ -166,6 +165,8 @@ function validator(formId) {
             companyWebsite: {
                 message: '公司官网URL失败',
                 validators: {
+                    required: true,
+                    url: true,
                     notEmpty: {
                         message: '公司官网URL不能为空'
                     }
@@ -192,7 +193,8 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '公司经度不能为空'
-                    }
+                    },
+                    number:true
                 }
             },
             companyLatitude:{
@@ -200,7 +202,7 @@ function validator(formId) {
                 validators:{
                     notEmpty:{
                         message:'纬度不能为空'
-                    }
+                    },number:true
                 }
             }
 
