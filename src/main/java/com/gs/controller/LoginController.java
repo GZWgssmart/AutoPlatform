@@ -5,6 +5,7 @@ import com.gs.bean.Role;
 import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.EncryptUtil;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.service.RoleService;
 import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
@@ -76,6 +77,10 @@ public class LoginController {
 
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public String home() {
+        if (SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
         return "index/home";
     }
 

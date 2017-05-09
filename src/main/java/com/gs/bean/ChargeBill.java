@@ -11,9 +11,9 @@ import java.util.Date;
 public class ChargeBill {
 	private String chargeBillId; // 收费单据的id
 	private String recordId; // 维修保养记录的ID
-	private String chargeBillMoney; // 收费总金额
+	private double chargeBillMoney; // 收费总金额
 	private String paymentMethod; // 付款方式
-	private String actualPayment; // 实付款
+	private double actualPayment; // 实付款
 	private Date chargeTime; // 收款时间
 	private Date chargeCreatedTime; // 收费单据创建时间
 	private String chargeBillDes; // 收费单据描述
@@ -28,25 +28,11 @@ public class ChargeBill {
 		this.chargeBillId=chargeBillId;
 	}
 
-	public String getChargeBillMoney(){
-		return this.chargeBillMoney;
-	}
-	public void setChargeBillMoney(String chargeBillMoney){
-		this.chargeBillMoney=chargeBillMoney;
-	}
-
 	public String getPaymentMethod(){
 		return this.paymentMethod;
 	}
 	public void setPaymentMethod(String paymentMethod){
 		this.paymentMethod=paymentMethod;
-	}
-
-	public String getActualPayment(){
-		return this.actualPayment;
-	}
-	public void setActualPayment(String actualPayment){
-		this.actualPayment=actualPayment;
 	}
 
 	public Date getChargeTime(){
@@ -91,5 +77,21 @@ public class ChargeBill {
 
 	public void setRecord(MaintainRecord record) {
 		this.record = record;
+	}
+
+	public double getChargeBillMoney() {
+		return chargeBillMoney;
+	}
+
+	public void setChargeBillMoney(double chargeBillMoney) {
+		this.chargeBillMoney = chargeBillMoney;
+	}
+
+	public double getActualPayment() {
+		return actualPayment;
+	}
+
+	public void setActualPayment(double actualPayment) {
+		this.actualPayment = actualPayment;
 	}
 }

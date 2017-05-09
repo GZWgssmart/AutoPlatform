@@ -181,7 +181,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "peopleRole_update", method = RequestMethod.POST)
     public ControllerResult updateRole(UserRole userRole) {
         logger.info("信息修改");
-        userRoleService.update(userRole);
+        userRoleService.updateByRole(userRole);
         return ControllerResult.getSuccessResult(" 修改成功");
     }
 
@@ -216,7 +216,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "role_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryRoleAll() {
         logger.info("查询角色");
-        List<Role> roles = roleService.queryAll();
+        List<Role> roles = roleService.queryByCompanyRole();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
         for (Role role : roles) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();

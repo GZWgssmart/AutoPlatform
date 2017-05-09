@@ -4,12 +4,15 @@ $(document).ready(function () {
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
     initSelect2("user_role", "请选择角色", "/peopleManage/role_all", 565);
+    destoryValidator("editWin","editForm");
+    destoryValidator("myModal","editModal");
 });
 
 
 var editEmail = "";
 var editPhone = "";
 var editIdentity = "";
+
 
 
 function gender(value, row, index) {
@@ -56,7 +59,7 @@ function customerAge(row) {
         if (card.substring(10, 12) < month || card.substring(10, 12) == month && card.substring(12, 14) <= day) {
             age++;
         }
-        var birthday = card.substring(10, 12) + "-" + card.substring(12, 14);
+        var birthday = card.substring(6, 10) + "-" + card.substring(10, 12) + "-" + card.substring(12, 14);
         $("#birthday").val(birthday);
         $("#age").val(age);
     }else{
@@ -109,9 +112,11 @@ window.operateEvents = {
         var user = row;
         var selectGender = document.getElementById("gender");
         selectGender.value = user.userGender;
+        editEmail = user.userEmail;
+        editPhone = user.userPhone;
+        editIdentity = user.userIdentity;
         $("#role").val(row.role.roleDes);
         $("#form_datetime").val(formatterDate(user.userCreatedTime));
-        // $("#form_loginedTime").val(formatterDate(user.userLoginedTime));
         $("#editModal").fill(user);
         var company = document.getElementById("editModalCompany");
         company.value = user.company.companyName;
@@ -130,9 +135,7 @@ window.operateEvents = {
             if (change == 'N'){
                 return 'Y';
             }
-        editEmail = user.userEmail;
-        editPhone = user.userPhone;
-        editIdentity = user.userIdentity;
+
         customerAge(row);
         fmtDate();
         formatterDate();
@@ -161,9 +164,9 @@ function showEditWin() {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
-        var userRole = selectRow[0];
-        $("#editForm").fill(userRole);
-        $('#editRole').html('<option value="' + userRole.role.roleId + '">' + userRole.role.roleDes + '</option>').trigger("change");
+        var user = selectRow[0];
+        $("#editForm").fill(user);
+        $('#editRole').html('<option value="' + user.role.roleId + '">' + user.role.roleDes + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
 }
@@ -315,7 +318,7 @@ function validator(formId) {
                 formSubmit("/peopleManage/peopleInfo_insert", formId, "addWin");
 
             } else if (formId == "editForm") {
-                formSubmit("/peopleManage/peopleInfo_update", formId, "editWin");
+                formSubmit("/peopleManage/peopleRole_update", formId, "editWin");
             } else if(formId == 'editModal'){
                // outFormData(document.getElementById('editModal'));
                 formSubmit("/peopleManage/peopleInfo_update", formId, "myModal");

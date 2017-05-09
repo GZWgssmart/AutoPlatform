@@ -65,6 +65,7 @@
             <th data-field="accSaleTotal">销售总价</th>
             <th data-field="accessories.accUnit">计量单位</th>
             <th data-field="accSaleMoney">销售最终价</th>
+            <th data-field="userName">购买人</th>
             <th data-field="accSaleStatus" data-formatter="fmtSaleState">状态</th>
             <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
         </tr>
@@ -132,7 +133,8 @@
 
                             <div class="form-group">
                                 <label>计量单位：</label>
-                                <input type="text" name="accUnit" attr="accessoriesSale.accessories.accUnit" class="form-control"/>
+                                <input type="text" name="accUnit" attr="accessoriesSale.accessories.accUnit"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -205,9 +207,12 @@
                         <h3 class="m-t-none m-b">添加配件销售信息</h3>
                         <form role="form" id="addForm">
                             <input type="hidden" attr="acc.accId" name="accId"/>
-
+                            <input type="hidden" attr="acc.accId" name="accessories.accId"/>
+                            <input type="hidden" attr="user.userId" name="userId"/>
                             <div class="form-group" style="width: auto; display: inherit;">
-                                <label>从库存中添加：</label>
+                                <label for="isUser">是否为本平台用户</label>
+                                <input type="checkbox" id="isUser" name="isAcc">
+                                &nbsp;
                                 <a data-toggle="modal">
                                     <button type="button" onclick="showAccessories()" class="btn btn-primary">从库存中添加
                                     </button>
@@ -215,60 +220,84 @@
                             </div>
 
                             <div class="form-group">
+                                <label>用户：</label>
+                                <input type="text" name="userName" class="form-control" attr="user.userName"
+                                       id="userName"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>用户手机号码：</label>
+                                <input type="text" name="userPhone" class="form-control" attr="user.userPhone"
+                                       id="userPhone"/>
+                            </div>
+
+                            <div class="form-group">
                                 <label>配件名称：</label>
-                                <input type="text" name="accessories.accName" class="form-control" id="accName"
+                                <input type="text" class="form-control" id="accName" disabled
                                        attr="acc.accName"/>
                             </div>
 
                             <div class="form-group">
                                 <label>计量单位：</label>
-                                <input type="text" name="accUnit" id="aAccUnit" attr="acc.accUnit"
+                                <input type="text" id="aAccUnit" attr="acc.accUnit" disabled
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>类别：</label>
-                                <input type="text" name="accessories.accessoriesType.accTypeName" id="accTypeName" attr="acc.accessoriesType.accTypeName"
-                                       class="form-control"/>
+                                <input type="text" name="accessories.accessoriesType.accTypeName" id="accTypeName"
+                                       attr="acc.accessoriesType.accTypeName"
+                                       class="form-control" disabled/>
                             </div>
 
                             <div class="form-group">
-                                <label>销售数量：</label>
+                                <label> 销售数量：（库存剩余数量）：</label>
+                                <span>
+                                    <input type="number" attr="acc.accIdle" name="accLastCount" id="lastCount" style="border: none;"
+                                           readonly/>
+                                </span>
                                 <input type="text" name="accSaleCount" id="accSaleCount" attr="acc.accSaleTotal"
+                                       placeholder="此为空则默认为库存配件剩余数量"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>配件买入单价：</label>
                                 <input type="text" name="accPrice" id="accBuyPrice" attr="acc.accPrice"
-                                       class="form-control"/>
+                                       class="form-control" disabled/>
                             </div>
 
                             <div class="form-group">
                                 <label>配件销售单价：</label>
-                                <input type="text" name="accSalePrice" id="accSalePrice"
-                                       class="form-control"/>
+                                <input type="text" name="accSalePrice" id="accSalePrice" attr="acc.accSalePrice"
+                                       class="form-control" placeholder="此为空则默认按配件售价来计算"/>
                             </div>
 
                             <div class="form-group">
                                 <label>折扣：</label>
-                                <input type="text" name="accSaleDiscount" id="accSaleDiscount" class="form-control" attr="acc.accDiscount"/>
+                                <input type="text" name="accSaleDiscount" id="accSaleDiscount" class="form-control"
+                                       placeholder="没折扣可为空" attr="acc.accDiscount"/>
                             </div>
 
                             <div class="form-group">
                                 <label>销售时间：</label>
-                                <input size="16" type="text" id="accSaleTime" name="accSaledTime" attr="acc.accSaledTime" readonly
+                                <input size="16" type="text" id="accSaleTime" name="accSaledTime"
+                                       attr="acc.accSaledTime" readonly
                                        class="form_datetime form-control ">
                             </div>
 
                             <div class="form-group">
                                 <label>总价：</label>
-                                <input type="text" name="accSaleTotal" id="accSaleTotal" attr="acc.accSaleTotal" class="form-control"/>
+                                <input type="text" name="accSaleTotal" id="accSaleTotal" attr="acc.accSaleTotal"
+                                       placeholder="点击可自动计算" readonly class="form-control"
+                                       onfocus="autoCalculation(this)"/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
-                                <input type="text" name="accSaleMoney" id="accSaleMoney" attr="acc.accSaleMoney" class="form-control"/>
+                                <input type="text" name="accSaleMoney" id="accSaleMoney" attr="acc.accSaleMoney"
+                                       placeholder="点击可自动计算" readonly class="form-control"
+                                       onfocus="autoCalculation(this)"/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
@@ -288,16 +317,16 @@
 </div>
 
 
-<div id="accTypeWin" class="modal fade " aria-hidden="true" style="overflow:scroll"
+<div id="userWin" class="modal fade " aria-hidden="true" style="overflow:scroll"
      data-keyboard="true">
     <div class="modal-dialog" style="width: 90%;">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">选择配件类别</h3>
-                        <form role="form" id="accTypeForm">
-                            <table class="table table-hover" id="accTypeTable"
+                        <h3 class="m-t-none m-b">选择用户</h3>
+                        <form role="form" id="userForm">
+                            <table class="table table-hover" id="userTable"
                                    data-pagination="true"
                                    data-show-refresh="true"
                                    data-show-toggle="true"
@@ -305,17 +334,26 @@
                                 <thead>
                                 <tr>
                                     <th data-field="state" data-checkbox="true"></th>
-                                    <th data-field="accTypeName" data-sortable="true">
-                                        配件分类名称
+                                    <th data-field="userCreatedTime" data-sortable="true">
+                                        车主编号
                                     </th>
-                                    <th data-field="accTypeDes">
-                                        配件分类描述
+                                    <th data-field="userNickname">
+                                        昵称
                                     </th>
-                                    <th data-field="company.companyName">
-                                        配件分类所属公司
+                                    <th data-field="userName">
+                                        姓名
                                     </th>
-                                    <th data-field="accTypeStatus" data-formatter="status">
-                                        状态
+                                    <th data-field="userEmail">
+                                        邮箱
+                                    </th>
+                                    <th data-field="userGender" data-formatter="gender">
+                                        性别
+                                    </th>
+                                    <th data-field="userPhone">
+                                        手机号
+                                    </th>
+                                    <th data-field="userStatus" data-formatter="status">
+                                        当前状态
                                     </th>
                                 </tr>
                                 </thead>
@@ -326,7 +364,7 @@
                                         data-dismiss="modal">关闭
                                 </button>
                                 <input type="button" class="btn btn-primary" value="添加"
-                                       onclick="add()">
+                                       onclick="addUser()">
                                 </input>
                             </div>
                         </form>
@@ -355,25 +393,25 @@
                                 <thead>
                                 <tr>
                                     <th data-field="id" data-checkbox="true"></th>
-                                    <th  data-field="accName" data-sortable="true">
+                                    <th data-field="accName" data-sortable="true">
                                         名称
                                     </th>
-                                    <th data-field="accTotal" >
+                                    <th data-field="accTotal">
                                         数量
                                     </th>
-                                    <th data-field="accPrice" >
+                                    <th data-field="accPrice">
                                         价格
                                     </th>
-                                    <th data-field="accDes" >
+                                    <th data-field="accDes">
                                         描述
                                     </th>
-                                    <th data-field="accCommodityCode" >
+                                    <th data-field="accCommodityCode">
                                         商品条码
                                     </th>
-                                    <th data-field="accUnit" >
+                                    <th data-field="accUnit">
                                         计量单位
                                     </th>
-                                    <th data-field="accIdle" >
+                                    <th data-field="accIdle">
                                         可用数量
                                     </th>
                                     <th data-field="accSalePrice">
@@ -385,19 +423,19 @@
                                     <th data-field="accSaledTime" data-formatter="formatterDate">
                                         最近一次购买时间
                                     </th>
-                                    <th data-field="supply.supplyName" >
+                                    <th data-field="supply.supplyName">
                                         配件供应商
                                     </th>
                                     <th data-field="accCreatedTime" data-formatter="formatterDate">
                                         创建时间
                                     </th>
-                                    <th data-field="accessoriesType.accTypeName" >
+                                    <th data-field="accessoriesType.accTypeName">
                                         所属分类
                                     </th>
-                                    <th data-field="company.companyName" >
+                                    <th data-field="company.companyName">
                                         所属公司
                                     </th>
-                                    <th data-field="accStatus" data-formatter="status" >
+                                    <th data-field="accStatus" data-formatter="status">
                                         状态
                                     </th>
                                 </tr>

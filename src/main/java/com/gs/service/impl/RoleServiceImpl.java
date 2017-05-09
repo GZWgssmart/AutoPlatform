@@ -49,4 +49,8 @@ public class RoleServiceImpl implements RoleService {
 	public Role queryByUserId(String userId) {
 		return roleDAO.queryByUserId(userId);
 	}
+
+	public List<Role> queryByCompanyRole() {
+		return roleDAO.queryByCompanyRole();
+	}
 }

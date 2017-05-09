@@ -21,8 +21,44 @@ public class AccessoriesSale {
     private Date accSaleCreatedTime; // 配件销售记录创建时间
     private String companyId; // 配件销售记录所属公司，来源于t_company表
     private String accSaleStatus; // 配件销售记录状态
+    private String userId;
+    private String userName;
+    private String userPhone;
 
     private Accessories accessories;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
 
     public Accessories getAccessories() {
         return accessories;

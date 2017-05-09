@@ -1,28 +1,18 @@
-var isAcc = false;
+var isUser = false;
+var lCount = "";
+var userId = "";
+
+$.ajaxSetup({
+    async: true
+});
 
 $(document).ready(function () {
     initDateTimePicker("form_datetime", "");
     initTable("saleTable", "/accessoriesSale/pager");
 
-    $("#isAcc").bootstrapSwitch({
-        onText: '是',
-        offText: '否',
-        onColor: 'success',
-        offColor: 'danger',
-        size: 'normal',
-        onSwitchChange: function (event, state) {
-            if (state == true) {
-                isAcc = true;
-                showAccessories();
-            } else if (state == false) {
-                isAcc = false;
-            }
-        }
-    });
+    inintBsSwitch("#isUser");
 
-    $("#accWin").on("hide.bs.modal", function () {
-        $("#isAcc").bootstrapSwitch("state", false);
-    });
+    disableSwitch("userWin", "isUser");
 
     destoryValidator("addWin", "addForm");
     destoryValidator("accTypeWin", "accForm");
@@ -30,23 +20,49 @@ $(document).ready(function () {
 
 });
 
+function inintBsSwitch(id) {
+    $(id).bootstrapSwitch({
+        onText: '是',
+        offText: '否',
+        onColor: 'success',
+        offColor: 'danger',
+        size: 'normal',
+        onSwitchChange: function (event, state) {
+            if (state == true) {
+                isUser = true;
+                showUserWin();
+            } else if (state == false) {
+                isUser = false;
+            }
+        }
+    });
+}
+
+function disableSwitch(modalId, switchId) {
+    $("#" + modalId).on("hide.bs.modal", function () {
+        $("#" + switchId).bootstrapSwitch("state", false);
+    });
+}
+
+function enableSwitch(modalId, switchId) {
+    $("#" + modalId).on("hide.bs.modal", function () {
+        $("#" + switchId).bootstrapSwitch("state", true);
+    });
+}
+
 function disableInput() {
-    $("input[name='accessories.accName']").prop("disabled", true);
-    $("input[name='accessories.accessoriesType.accTypeName']").prop("disabled", true);
+    $("input[name='accSaleCount']").prop("disabled", true);
     $("input[name='accUnit']").prop("disabled", true);
     $("input[name='accPrice']").prop("disabled", true);
-    $("input[name='accessories.accName']").prop("disabled", true);
-    $("input[name='accessories.accName']").prop("disabled", true);
-    $("input[name='accessories.accName']").prop("disabled", true);
-    $("input[name='accessories.accName']").prop("disabled", true);
+    $("input[name='accSaleTotal']").prop("disabled", true);
+    $("input[name='accSaleMoney']").prop("disabled", true);
 
 }
 
-function onState() {
-    $("#accWin").on("hide.bs.modal", function () {
-        disableInput();
-        $("#isAcc").bootstrapSwitch("state", true);
-    });
+function enableInput() {
+    $("input[name='accSaleCount']").prop("disabled", false);
+    $("input[name='accSaleTotal']").prop("disabled", false);
+    $("input[name='accSaleMoney']").prop("disabled", false);
 }
 
 /** 编辑数据 */
@@ -87,7 +103,7 @@ function addAccessoriesSaleInfo(formId) {
             if (data.result == "success") {
                 $('#addWin').modal('hide');
                 swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
+                $('#saleTable').bootstrapTable('refresh');
                 $("input[type=reset]").trigger("click");
                 $(formId).data('bootstrapValidator').resetForm(true);
             } else if (data.result == "fail") {
@@ -135,6 +151,7 @@ window.operateEvents = {
         showAccEditWin();
     }
 }
+
 function showAccessories() {
     initTableNotTollbar("accTable", "/accessories/pager");
     validator("accForm");
@@ -148,9 +165,34 @@ function addAcc() {
     } else {
         var acc = selectRow[0];
         $("#addForm").fill(acc);
-        onState();
+        lCount = acc.accIdle;
         $("#accWin").modal("hide");
+        enableInput();
     }
+}
+
+function addUser() {
+    var selectRow = $("#userTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('添加失败', "请至少选择一条数据后关闭本窗口", "error");
+    } else {
+        var user = selectRow[0];
+        userId = user.userId;
+        $("#addForm").fill(user);
+        $("#addForm").bootstrapValidator('validate');
+        enableSwitch("userWin", "isUser");
+        $("#userWin").modal("hide");
+    }
+}
+
+function isReAdd(id) {
+    $.get('/accessoriesSale/isReAdd?userId=' + id, function (data) {
+        if (data.result == 'success') {
+            return true;
+        } else {
+            return false;
+        }
+    })
 }
 
 function fmtCheckState(value) {
@@ -215,6 +257,14 @@ function byAccNameSearch() {
     initTable("cusTable", "/accessoriesSale/byAccNameSearch?accName=" + accName + "&SaleTimeStart=" + SaleTimeStart + "&SaleTimeEnd=" + SaleTimeEnd);
 }
 
+function getUserName() {
+    var ne = "";
+    $("#userName").bind('input', function (name, value) {
+        ne = this.value;
+    })
+    return ne;
+}
+
 function validator(formId) {
     $("#addButton").removeAttr("disabled");
     $("#editButton").removeAttr("disabled");
@@ -238,53 +288,84 @@ function validator(formId) {
                     }
                 }
             },
-            accUnit: {
+            userName: {
                 validators: {
                     notEmpty: {
                         message: '不能为空'
                     },
                     stringLength: {
                         min: 0,
-                        max: 3,
-                        message: '字数不可以超过3个字符'
+                        max: 15,
+                        message: '不能超过15个字符'
                     },
+                    threshold: 2,
+                    // remote: {
+                    //     url: '/accessoriesSale/isReAdd?userId=' + userId,
+                    //     type: 'get',
+                    //     delay: 2000
+                    // },
                 }
             },
+            accUnit: {
+                validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    }
+                    ,
+                    stringLength: {
+                        min: 0,
+                        max: 3,
+                        message: '字数不可以超过3个字符'
+                    }
+                    ,
+                }
+            }
+            ,
             'accessories.accessoriesType.accTypeName': {
                 validators: {
                     notEmpty: {
                         message: '不能为空'
-                    },
+                    }
+                    ,
                     stringLength: {
                         min: 0,
                         max: 8,
                         message: '字数不可以超过8个字符'
                     }
-                },
+                }
+                ,
 
-            },
+            }
+            ,
             accSaleCount: {
                 validators: {
-                    notEmpty: {
-                        message: '不可以为空'
-                    },
                     regexp: {
                         regexp: /^[0-9]+$/,
                         message: '只能是数字'
                     }
+                    ,
+                    callback: {
+                        message: "销售数量不能大于库存数量",
+                        callback: function (value, validator) {
+                            if (value > lCount) {
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
+                    }
                 }
-            },
+            }
+            ,
             accSalePrice: {
                 validators: {
-                    notEmpty: {
-                        message: '不可以为空'
-                    },
                     regexp: {
                         regexp: /^([1-9][0-9]*)+(.[0-9]{1,2})?$/,
                         message: '只接受小数点后两位'
                     }
                 }
-            },
+            }
+            ,
             accSaleDiscount: {
                 validators: {
                     regexp: {
@@ -292,50 +373,59 @@ function validator(formId) {
                         message: '折扣只能是数字'
                     }
                 }
-            },
+            }
+            ,
             'accessories.company.companyName': {
                 validators: {
                     notEmpty: {
                         message: '不能为空'
-                    },
-                },
+                    }
+                    ,
+                }
+                ,
                 stringLength: {
                     min: 0,
                     max: 8,
                     message: '字数不可以超过8个字符'
                 }
-            },
+            }
+            ,
             accSaleTime: {
                 validators: {
                     notEmpty: {
                         message: '不能为空'
                     }
                 }
-            },
+            }
+            ,
             accSaleTotal: {
                 validators: {
                     notEmpty: {
                         message: '不能为空'
                     }
 
-                },
+                }
+                ,
                 regexp: {
                     regexp: /^([1-9][0-9]*)+(.[0-9]{1,2})?$/,
                     message: '只接受小数点后两位'
                 }
-            },
+            }
+            ,
             accSaleMoney: {
                 validators: {
                     notEmpty: {
                         message: '不能为空'
                     }
 
-                },
+                }
+                ,
                 regexp: {
                     regexp: /^\d+(\.\d+)?$/,
                     message: '只能是数字'
                 }
-            },
+            }
+            ,
         }
     })
 
@@ -361,9 +451,16 @@ function clearTempData() {
 }
 
 function showAccAddWin() {
+
+    disableInput();
+    var sc = $("#accSaleCount").val();
     clearTempData();
     validator("addForm");
     $("#addWin").modal("show");
+    autoCalculationCount("#accSaleCount");
+    if (sc == null || sc == "") {
+        $("#lastCount").val("暂无法读取剩余数量");
+    }
 }
 
 function showAccEditWin() {
@@ -372,7 +469,63 @@ function showAccEditWin() {
     $("#editWin").modal("show");
 }
 
-function showAccTypeWin() {
-    initTableNotTollbar('accTypeTable', '/accessoriesType/queryByStatus_AccType?status=Y');
-    $('#accTypeWin').modal('show');
+function autoCalculationCount(id) {
+    $(id).bind("input", function () {
+        var lastCount = $("#lastCount").val();
+        var saleCount = $("#accSaleCount").val();
+        var result = "";
+        if (lastCount == null && lastCount == "") {
+            $("#lastCount").val("无法读取库存数量");
+        } else {
+            if (saleCount != null && saleCount != "") {
+                result = lCount - saleCount;
+                $("#lastCount").val(result);
+                if (result < 0 || saleCount == "NaN") {
+                    $("#lastCount").val(lCount);
+                } else if (result > lCount) {
+                    $("#lastCount").val(lCount);
+                }
+            } else if (saleCount == "" || saleCount == null || saleCount == "NaN") {
+                $("#lastCount").val(lCount);
+            }
+        }
+    })
 }
+
+function autoCalculation(iId) {
+    var result = 0;
+    var sMoney = 0;
+
+    var id = iId.id;
+
+    console.log(id);
+
+    var accPrice = $("#accSalePrice").val();
+    var sCount = $("#accSaleCount").val();
+    var sPrice = $("#accSalePrice").val();
+    var sDiscount = $("#accSaleDiscount").val();
+    if (sCount != null && sCount != "" && sPrice != null && sPrice != "") {
+        if (id == "accSaleTotal") {
+            result = sCount * sPrice;
+            $("#" + id).val(result);
+        } else if (id == "accSaleMoney") {
+            if (sDiscount != null && sDiscount != "") {
+                var rs = $("#accSaleTotal").val();
+                if (rs != null && rs != "") {
+                    sMoney = rs * sDiscount;
+                    $("#" + id).val(sMoney);
+                }
+            } else if (sDiscount == "0" || sDiscount == "") {
+                var rs = $("#accSaleTotal").val();
+                $("#" + id).val(rs);
+            }
+        }
+    }
+}
+
+function showUserWin() {
+    initTableNotTollbar("userTable", "/customer/customerInfo_pager");
+    $("#userWin").modal('show');
+
+}
+

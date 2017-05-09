@@ -245,7 +245,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="control-label">邮箱：</label>
-                                            <input class="form-control" style="display: initial;" type="email" disabled="disabled" attr="user.userEmail" name="userEmail"/>
+                                            <input class="form-control" style="display: initial;" type="email" id="editEmail" attr="user.userEmail" name="userEmail"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label">昵称：</label>
@@ -269,11 +269,11 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -14px">手机号：</label>
-                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" attr="user.userPhone" name="userPhone"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="editPhone" attr="user.userPhone" name="userPhone"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -14px">身份证：</label>
-                                            <input class="form-control" style="display: initial;" type="text" id="identity" name="userIdentity"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="editIdentity" attr="user.userIdentity" name="userIdentity"/>
                                         </div>
                                         <br />
                                         <br />
@@ -316,8 +316,8 @@
                                             <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="form_datetime" name="userCreatedTime"/>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="control-label" style="margin-left: -28px">上次登录：</label>
-                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" attr="user.userLoginedTime" name="userLoginedTime"/>
+                                            <label class="control-label" style="margin-left: -28px">最近登录：</label>
+                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="form_loginedTime" name="userLoginedTime"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">登录次数：</label>

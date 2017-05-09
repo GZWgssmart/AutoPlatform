@@ -7,10 +7,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.SessionGetUtil;
-import com.gs.service.ChargeBillService;
-import com.gs.service.CheckinService;
-import com.gs.service.MaintainRecordService;
-import com.gs.service.MaintainRemindService;
+import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -47,6 +44,12 @@ public class ChargeBillController {
 
     @Resource
     private MaintainRemindService maintainRemindService;
+
+    @Resource
+    private IncomingTypeService incomingTypeService;
+
+    @Resource
+    private IncomingOutgoingService incomingOutgoingService;
 
     @RequestMapping(value = "bill_page", method = RequestMethod.GET)
     public String chargeBillPage() {
@@ -152,6 +155,16 @@ public class ChargeBillController {
                 maintainRemind.setCompanyId(loginUser.getCompanyId());
                 maintainRemind.setUserId(userId);
                 maintainRemind.setLastMaintainMileage(carMileage);
+
+                IncomingType incomingType = incomingTypeService.queryByName(Constants.MAINTENANCE_IN);
+                IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
+                incomingOutgoing.setInTypeId(incomingType.getInTypeId());
+                incomingOutgoing.setInOutCreatedUser(loginUser.getUserId());
+                incomingOutgoing.setInOutMoney(chargeBill.getActualPayment());
+                incomingOutgoing.setCompanyId(loginUser.getCompanyId());
+
+                incomingOutgoingService.insert(incomingOutgoing);
+                maintainRecordService.updatePickupTime(chargeBill.getRecordId());
                 maintainRemindService.insert(maintainRemind);
                 chargeBillService.insert(chargeBill);
                 maintainRecordService.updateSpeedStatusById(Constants.COMPLETED, chargeBill.getRecordId());

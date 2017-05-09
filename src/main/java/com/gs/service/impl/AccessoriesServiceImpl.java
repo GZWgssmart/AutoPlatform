@@ -61,4 +61,8 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 		return accessoriesDAO.queryByCondition(pager, accessories);
 	}
 
+	public void updateIdle(String id,  int lastCount) {
+		accessoriesDAO.updateIdle(id, lastCount);
+	}
+
 }

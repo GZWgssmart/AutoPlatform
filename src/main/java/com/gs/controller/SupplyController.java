@@ -2,11 +2,13 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Supply;
+import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.DateUtil;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.SupplyService;
 import org.apache.ibatis.annotations.Param;
@@ -34,8 +36,13 @@ public class SupplyController {
 
         @RequestMapping("/info")
         public String supplierInfo() {
-            logger.info("进入供应商信息页");
-            return "supply/supply_info";
+            if (SessionGetUtil.isUser()) {
+                logger.info("进入供应商信息页");
+                return "supply/supply_info";
+            } else {
+                logger.info("Session已失效，请重新登入");
+                return "index/notLogin";
+            }
         }
 
         @ResponseBody
@@ -79,32 +86,63 @@ public class SupplyController {
         @ResponseBody
         @RequestMapping("add")
         public ControllerResult add(Supply supply) {
-            logger.info("添加供应商");
-            supply.setSupplyTypeId("023e65a9-331a-11e7-b907-0a0027000015");
-            supply.setCompanyId("76eeb0f2-3315-11e7-b907-0a0027000015");
-            supply.setSupplyStatus("Y");
-            supplyService.insert(supply);
-            return ControllerResult.getSuccessResult("添加成功");
+            if (SessionGetUtil.isUser()) {
+                try {
+                    logger.info("添加供应商");
+                    User loginUser = SessionGetUtil.getUser();
+                    supply.setCompanyId(loginUser.getCompanyId());
+                    supplyService.insert(supply);
+                    return ControllerResult.getSuccessResult("添加成功");
+                }catch (Exception e) {
+                    logger.info("添加供应商失败，出现了一个错误");
+                    return ControllerResult.getFailResult("添加供应商失败，出现了一个错误");
+                }
+            } else {
+                logger.info("Session已失效，请重新登入");
+                return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+            }
         }
 
         @ResponseBody
         @RequestMapping("edit")
         public ControllerResult update(Supply supply) {
-            logger.info("修改供应商");
-            supplyService.update(supply);
-            return ControllerResult.getSuccessResult("修改成功");
+            if (SessionGetUtil.isUser()) {
+                try {
+                    logger.info("修改供应商分类");
+                    User loginUser = SessionGetUtil.getUser();
+                    supply.setCompanyId(loginUser.getCompanyId());
+                    supplyService.update(supply);
+                    return ControllerResult.getSuccessResult("修改成功");
+                }catch (Exception e) {
+                    logger.info("修改供应商失败，出现了一个错误");
+                    return ControllerResult.getFailResult("添加供应商失败，出现了一个错误");
+                }
+            } else {
+                logger.info("Session已失效，请重新登入");
+                return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+            }
         }
 
         @ResponseBody
         @RequestMapping(value = "updateStatus", method = RequestMethod.GET)
         public ControllerResult updateStatus(@Param("id")String id, @Param("status")String status) {
-            logger.info("更新供应商状态");
-            if (status.equals("Y")) {
-                supplyService.active(id);
-            }else if (status.equals("N")) {
-                supplyService.inactive(id);
+            if (SessionGetUtil.isUser()) {
+                try{
+                    logger.info("更新供应商状态");
+                    if (status.equals("Y")) {
+                        supplyService.active(id);
+                    }else if (status.equals("N")) {
+                        supplyService.inactive(id);
+                    }
+                    return ControllerResult.getSuccessResult("更新成功");
+                } catch (Exception e) {
+                    logger.info("更新供应商状态失败，出现了一个错误");
+                    return ControllerResult.getFailResult("更新供应商状态失败，出现了一个错误");
+                }
+            } else {
+                logger.info("Session已失效，请重新登入");
+                return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
             }
-            return ControllerResult.getSuccessResult("更新成功");
         }
 
     @ResponseBody

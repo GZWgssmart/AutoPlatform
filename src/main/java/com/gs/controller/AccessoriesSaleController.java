@@ -1,7 +1,9 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesSale;
+import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -43,6 +45,9 @@ public class AccessoriesSaleController {
 
     @Resource
     private CompanyService companyService;
+
+    @Resource
+    private UserService userService;
 
     /**
      * 显示配件采购管理
@@ -94,11 +99,25 @@ public class AccessoriesSaleController {
 
     @ResponseBody
     @RequestMapping(value = "addSale", method = RequestMethod.POST)
-    public ControllerResult addSale(AccessoriesSale accessoriesSale) {
+    public ControllerResult addSale(AccessoriesSale accessoriesSale, String accLastCount) {
         accessoriesSale.setAccSaleId(UUIDUtil.uuid());
-        System.out.println(accessoriesSale);
         accessoriesSaleService.insert(accessoriesSale);
-        return ControllerResult.getSuccessResult("添加场成功");
+
+        int intAccLastCount = Integer.valueOf(accLastCount);
+        accessoriesService.updateIdle(accessoriesSale.getAccId(), intAccLastCount);
+
+        return ControllerResult.getSuccessResult("添加成功");
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "isReAdd", method = RequestMethod.GET)
+    public ControllerResult isRerAdd(@Param("userId") String userId, @Param("userName") String userName) {
+        int ass = accessoriesSaleService.queryByUserIdIsSameResult(userId, userName);
+        System.out.println(ass);
+        if (ass != 0) {
+            return ControllerResult.getSuccessResult("可用");
+        } else return ControllerResult.getFailResult("重复用户");
     }
 
     @InitBinder

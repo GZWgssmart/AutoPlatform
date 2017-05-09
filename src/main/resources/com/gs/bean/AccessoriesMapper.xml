@@ -71,6 +71,12 @@
         ]]>
 	</update>
 
+	<update id="updateIdle" parameterType="accessories">
+		<![CDATA[
+			update t_accessories set accIdle = #{lastCount} where accId = #{id}
+		]]>
+	</update>
+
 	<update id="batchUpdate" parameterType="list">
 		<![CDATA[
 

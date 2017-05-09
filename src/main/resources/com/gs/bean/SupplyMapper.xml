@@ -30,7 +30,7 @@
 
 	<insert id="insert"  parameterType="supply">
 		<![CDATA[
-		insert into t_supply(supplyId, supplyName, supplyTel, supplyPricipal, supplyAddress, supplyBank, supplyBankAccount, supplyBankNo, supplyAlipay, supplyWechat, supplyCreatedTime, supplyTypeId, companyId, supplyStatus) values(uuid(), #{supplyName}, #{supplyTel}, #{supplyPricipal}, #{supplyAddress}, #{supplyBank}, #{supplyBankAccount}, #{supplyBankNo}, #{supplyAlipay}, #{supplyWechat}, now(), #{supplyTypeId}, #{companyId}, #{supplyStatus})
+		insert into t_supply(supplyId, supplyName, supplyTel, supplyPricipal, supplyAddress, supplyBank, supplyBankAccount, supplyBankNo, supplyAlipay, supplyWechat, supplyCreatedTime, supplyTypeId, companyId, supplyStatus) values(uuid(), #{supplyName}, #{supplyTel}, #{supplyPricipal}, #{supplyAddress}, #{supplyBank}, #{supplyBankAccount}, #{supplyBankNo}, #{supplyAlipay}, #{supplyWechat}, now(), #{supplyTypeId}, #{companyId}, 'Y')
 		]]>
 	</insert>
 
@@ -60,7 +60,7 @@
 
 	<update id="update" parameterType="supply">
 		<![CDATA[
-		update t_supply set supplyName = #{supplyName}, supplyTel = #{supplyTel}, supplyPricipal = #{supplyPricipal}, supplyAddress = #{supplyAddress}, supplyBank = #{supplyBank}, supplyBankAccount = #{supplyBankAccount}, supplyBankNo = #{supplyBankNo}, supplyAlipay = #{supplyAlipay}, supplyWechat = #{supplyWechat}, supplyTypeId = #{supplyTypeId}, supplyStatus = 'Y' where supplyId = #{supplyId}
+		update t_supply set supplyName = #{supplyName}, supplyTel = #{supplyTel}, supplyPricipal = #{supplyPricipal}, supplyAddress = #{supplyAddress}, supplyBank = #{supplyBank}, supplyBankAccount = #{supplyBankAccount}, supplyBankNo = #{supplyBankNo}, supplyAlipay = #{supplyAlipay}, supplyWechat = #{supplyWechat}, supplyTypeId = #{supplyTypeId}, companyId = #{companyId}, supplyStatus = 'Y' where supplyId = #{supplyId}
 		]]>
 	</update>
 

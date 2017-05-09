@@ -22,36 +22,58 @@ $(document).ready(function () {
         }
     });
 
-    disableSwitch();
+    disableSwitch("accWin", "isAcc");
+
     destoryValidator("addWin", "addForm");
     destoryValidator("accWin", "accForm");
     destoryValidator("editWin", "editForm");
-
 });
 
-
-function disableSwitch() {
-    $("#accWin").on("hide.bs.modal", function () {
-        $("#isAcc").bootstrapSwitch("state", false);
-    });
-}
-function enableSwitch() {
-    $("#accWin").on("hide.bs.modal", function () {
-        $("#isAcc").bootstrapSwitch("state", true);
-    });
+// 获取某个表单内的所有inputName值
+function formInput(formId) {
+    var ne = [];
+    $("#" + formId + " input").each(function () {
+        ne.push(this.name);
+    })
+    return ne;
 }
 
+function eachNames(names, finName) {
+    var ne = "";
+    $.each(names, function (name, value) {
+        if (value == finName) {
+            ne = value;
+            return false;
+        }
+    });
+    return ne;
+}
+
+
+function disableSwitch(modalId, switchId) {
+    $("#" + modalId).on("hide.bs.modal", function () {
+        $("#" + switchId).bootstrapSwitch("state", false);
+    });
+}
+
+function enableSwitch(modalId, switchId) {
+    $("#" + modalId).on("hide.bs.modal", function () {
+        $("#" + switchId).bootstrapSwitch("state", true);
+    });
+}
 
 function disableInput() {
     $("input[name='accessories.accName']").prop("disabled", true);
     $("input[name='accUnit']").prop("disabled", true);
     $("input[name='accessories.accessoriesType.accTypeName']").prop("disabled", true);
+    $("input[name='accessories.accCommodityCode']").prop("disabled", true);
 }
 
 function enableInput() {
     $("input[name='accessories.accName']").prop("disabled", false);
     $("input[name='accUnit']").prop("disabled", false);
     $("input[name='accessories.accessoriesType.accTypeName']").prop("disabled", false);
+    $("input[name='accessories.accCommodityCode']").prop("disabled", false);
 }
 
 /** 编辑数据 */
@@ -64,6 +86,7 @@ function showEditWin() {
         var accessoriesBuy = selectRow[0];
         $("#editForm").fill(accessoriesBuy);
         $("#buyTime").val(formatterDate(accessoriesBuy.accBuyTime));
+
         $("#editWin").modal('show');
     }
 }
@@ -152,12 +175,14 @@ function showAccessories() {
 function addAccBuy() {
     var selectRow = $("#accTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        disableSwitch();
+        disableSwitch("accWin","isAcc");
         swal('添加失败', "请至少选择一条数据后关闭本窗口", "error");
     } else {
         var acc = selectRow[0];
+        $("#accBuyTime").val(formatterDate(acc.accUsedTime));
+        autoCalculation1(formId, count, price, discount, names);
         $("#addForm").fill(acc);
-        enableSwitch();
+        enableSwitch("accWin","isAcc");
         $("#accWin").modal("hide");
     }
     disableSwitch();
@@ -383,6 +408,10 @@ function showAccEditWin() {
     clearTempData();
     validator("editForm");
     $("#editWin").modal('show');
+}
+
+function autoCalculation1(count, price, discount, names) {
+
 }
 
 function autoCalculation(iId) {

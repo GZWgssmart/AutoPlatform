@@ -4,7 +4,9 @@ $(document).ready(function () {
 
 });
 
-
+var editEmail = "";
+var editPhone = "";
+var editIdentity = "";
 
 
 function gender(value, row, index) {
@@ -67,7 +69,7 @@ function customerAge(row) {
         if (card.substring(10, 12) < month || card.substring(10, 12) == month && card.substring(12, 14) <= day) {
             age++;
         }
-        var birthday = card.substring(10, 12) + "月" + card.substring(12, 14) + "日";
+        var birthday = card.substring(6, 10) + "-" + card.substring(10, 12) + "-" + card.substring(12, 14);
         $("#birthday").val(birthday);
         $("#age").val(age);
     }else{
@@ -119,6 +121,12 @@ window.operateEvents = {
         var user = row;
         var selectGender = document.getElementById("gender");
         selectGender.value = user.userGender;
+        editEmail = user.userEmail;
+        editPhone = user.userPhone;
+        editIdentity = user.userIdentity;
+        var loginedTime = document.getElementById("form_loginedTime");
+        loginedTime.value = user.userLoginedTime;
+        $("#form_loginedTime").val(formatterDate(user.userLoginedTime));
         $("#role").val(row.role.roleDes);
         $("#form_datetime").val(formatterDate(user.userCreatedTime));
         $("#editModal").fill(user);
@@ -242,7 +250,7 @@ function validator(formId) {
                     },
                     threshold: 11,
                     remote: {
-                        url: '/customer/customerPhone_verification',
+                        url: '/customer/customerPhone_verification?editPhone='+editPhone,
                         message: '该手机号已存在',
                         delay :  2000,
                         type: 'GET'
@@ -260,7 +268,7 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: '/customer/customerEmail_verification',
+                        url: '/customer/customerEmail_verification?editEmail='+editEmail,
                         message: '该微信已存在',
                         delay :  2000,
                         type: 'GET'
@@ -275,7 +283,7 @@ function validator(formId) {
                     },
                     threshold: 18,
                     remote: {
-                        url: '/customer/customerIdentity_verification',
+                        url: '/customer/customerIdentity_verification?editIdentity='+editIdentity,
                         message: '该身份证已存在',
                         delay :  2000,
                         type: 'GET'

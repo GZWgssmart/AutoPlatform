@@ -1,18 +1,12 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.Accessories;
-import com.gs.bean.AccessoriesBuy;
-import com.gs.bean.AccessoriesType;
-import com.gs.bean.Company;
+import com.gs.bean.*;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.UUIDUtil;
-import com.gs.service.AccessoriesBuyService;
-import com.gs.service.AccessoriesService;
-import com.gs.service.AccessoriesTypeService;
-import com.gs.service.CompanyService;
+import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -51,6 +45,9 @@ public class AccessoriesBuyController {
     @Resource
     private CompanyService companyService;
 
+    @Resource
+    private SupplyService supplyService;
+
     /**
      * 显示配件采购管理
      *
@@ -86,7 +83,7 @@ public class AccessoriesBuyController {
 
                 return ControllerResult.getSuccessResult("添加成功");
 
-            } else if(ab.getAccId().equals(ac.getAccId())) {
+            } else if (ab.getAccId().equals(ac.getAccId())) {
                 return ControllerResult.getFailResult("不能重复添加同一条数据");
             }
 
@@ -105,9 +102,12 @@ public class AccessoriesBuyController {
             accessoriesBuy.setAccId(acc.getAccId());
             acc.setAccTypeId(accessoriesType.getAccTypeId());
 
+            Supply supply = acc.getSupply();
+
             accessoriesBuyService.insert(accessoriesBuy);
             accessoriesService.insert(acc);
             accessoriesTypeService.insert(accessoriesType);
+            supplyService.insert(supply);
 
             return ControllerResult.getSuccessResult("添加成功");
         }

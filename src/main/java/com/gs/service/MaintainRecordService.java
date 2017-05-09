@@ -95,4 +95,10 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      */
     public List<MaintainRecord> queryPagerByMessage(Pager pager);
 
+    /**
+     * 根据维修保养记录id把提车时间更新成当前时间
+     * @param recordId
+     * @return
+     */
+    public int updatePickupTime(String recordId);
 }

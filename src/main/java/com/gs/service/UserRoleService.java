@@ -10,4 +10,6 @@ import com.gs.bean.UserRole;
 */
 public interface UserRoleService extends BaseService<String, UserRole>{
 
+    public void updateByRole(UserRole userRole);
+
 }

@@ -16,6 +16,9 @@
         <result property="accSaleCreatedTime" column="accSaleCreatedTime"/>
         <result property="companyId" column="companyId"/>
         <result property="accSaleStatus" column="accSaleStatus"/>
+        <result property="userId" column="userId"/>
+        <result property="userName" column="userName"/>
+        <result property="userPhone" column="userPhone"/>
 
         <association property="accessories" javaType="com.gs.bean.Accessories">
             <id property="accId" column="accId"/>
@@ -30,18 +33,27 @@
             <result property="companyId" column="companyId"/>
             <result property="accStatus" column="accStatus"/>
 
+
             <association property="accessoriesType" javaType="com.gs.bean.AccessoriesType">
                 <id property="accTypeId" column="accTypeId"/>
                 <result property="accTypeName" column="accTypeName"/>
             </association>
         </association>
 
+        <association property="user" javaType="com.gs.bean.User">
+            <id property="userId" column="userId"/>
+            <result property="userName" column="userName"/>
+            <result property="userPhone" column="userPhone"/>
+        </association>
+
     </resultMap>
 
     <insert id="insert" parameterType="accessoriesSale">
 		insert into
-		auto_platform.t_accessories_sale(accSaleId, accId, accSaledTime, accSaleCount, accSalePrice, accSaleTotal, accSaleDiscount, accSaleMoney, accSaleCreatedTime, companyId, accSaleStatus)
-		values (#{accSaleId}, #{accId}, #{accSaledTime}, #{accSaleCount}, #{accSalePrice}, #{accSaleTotal}, #{accSaleDiscount}, #{accSaleMoney}, now(), #{companyId}, 'Y')
+		auto_platform.t_accessories_sale
+		(accSaleId, accId, accSaledTime, accSaleCount, accSalePrice, accSaleTotal, accSaleDiscount, accSaleMoney, accSaleCreatedTime, companyId, accSaleStatus, userId, userName, userPhone)
+		values
+		(#{accSaleId}, #{accId}, #{accSaledTime}, #{accSaleCount}, #{accSalePrice}, #{accSaleTotal}, #{accSaleDiscount}, #{accSaleMoney}, now(), #{companyId}, 'Y', #{userId}, #{userName}, #{userPhone})
 	</insert>
 
     <insert id="batchInsert" parameterType="list">
@@ -83,16 +95,16 @@
     <select id="queryAll" resultMap="accessoriesSaleResultMap">
 		<![CDATA[
 
-
 		select * from auto_platform.t_accessories_sale;
-
 
         ]]>
 	</select>
 
     <select id="queryByStatus" resultMap="accessoriesSaleResultMap" parameterType="string">
 		<![CDATA[
+
 		select * from t_accessories_sale where accSaleStatus = #{status}
+
         ]]>
 	</select>
 
@@ -104,40 +116,45 @@
 
     <select id="queryById" parameterType="string" resultType="accessoriesSale">
 		<![CDATA[
+
 		select * from t_accessories_type where accSaleId = #{id}
+
         ]]>
 	</select>
 
     <select id="queryByPager" resultType="list" resultMap="accessoriesSaleResultMap"
             parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-            SELECT
-                acs.*,
-                act.accTypeName,
-                usr.userName,
-                acc.accName,
-                acc.accPrice,
-                acc.accUnit
+
+           SELECT
+            ase.*,
+            ace.accName,
+            ate.accTypeId,
+            ate.accTypeName,
+            usr.userName,
+            ace.accId,
+            ace.accUnit,
+            ace.accIdle
             FROM
                 (
                     (
-                        (
-                            (
-                                t_accessories_sale acs
-                                INNER JOIN t_accessories acc ON acs.accId = acc.accId
-                            )
-                            LEFT JOIN t_accessories_type act ON acc.accTypeId = act.accTypeId
-                        )
-                        INNER JOIN t_company cpy ON act.companyId = cpy.companyId
+                        t_accessories_sale ase
+                        INNER JOIN t_accessories ace ON ase.accId = ace.accId
                     )
-                    INNER JOIN t_user usr ON usr.companyId = cpy.companyId
-                )LIMIT #{beginIndex},#{pageSize}
+                    INNER JOIN t_accessories_type ate ON ace.accTypeId = ate.accTypeId
+                )
+            LEFT JOIN t_user usr ON ase.userId = usr.userId
+            order by ase.accSaledTime
+            limit
+             #{beginIndex},#{pageSize}
+
         ]]>
-	</select>
+
+    </select>
 
     <select id="count" resultType="int">
-		select count(*) from auto_platform.t_accessories_sale
-	</select>
+        select count(*) from auto_platform.t_accessories_sale
+    </select>
 
     <update id="inactive" parameterType="string">
 		<![CDATA[
@@ -150,5 +167,10 @@
 
         ]]>
 	</update>
+
+    <select id="queryByUserIdIsSameResult" resultType="int">
+--         select count(*) from t_accessories_sale ase inner join t_user usr on ase.userId = usr.userId where usr.userId = #{id}
+        select count(*) from t_accessories_sale ase where ase.userId = #{id} and ase.userName = #{userName}
+    </select>
 
 </mapper>

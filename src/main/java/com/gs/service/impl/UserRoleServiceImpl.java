@@ -37,4 +37,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 	public int inactive(String id) { return userRoleDAO.inactive(id); }
 	public int active(String id) { return userRoleDAO.active(id); }
 
+	public void updateByRole(UserRole userRole) {
+		 userRoleDAO.updateByRole(userRole);
+	}
 }
