@@ -16,7 +16,9 @@
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
-
+    <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
+          type="text/css">
 </head>
 <body>
 
@@ -60,17 +62,19 @@
         <tbody>
 
         <div id="toolbar" class="btn-group">
-
+            <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
+                <i class="glyphicon glyphicon-plus"></i> 添加
+            </button></a>
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
 
             <a><button onclick="queryByInOutType(1);" type="button" class="btn btn-default">
-                <i class="glyphicon glyphicon-search"></i> 查看所有支出
+                <i class="glyphicon glyphicon-search"></i> 查看支出
             </button></a>
 
             <a><button onclick="queryByInOutType(2);" type="button" class="btn btn-default">
-                <i class="glyphicon glyphicon-search"></i> 查看所有收入
+                <i class="glyphicon glyphicon-search"></i> 查看收入
             </button></a>
 
             <a><button onclick="queryByInOutType(3);" type="button" class="btn btn-default">
@@ -114,7 +118,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton1" class="btn btn-primary" value="修改" onclick="edit()">
+                                <input type="button" id="editButton" class="btn btn-primary" value="修改" onclick="edit()">
                                 </input>
                             </div>
                         </form>
@@ -126,6 +130,45 @@
     </div>
 </div>
 
+<div id="addWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">添加收支记录</h3>
+                        <form role="form" id="addForm" >
+                            <div class="form-group">
+                                <label class="control-label">收支记录金额：</label>
+                                <input type="text"   name="inOutMoney"  class="form-control"/>
+                            </div>
+                            <div class="form-group" style="width: auto; display: inherit;">
+                                <label>选择类型：</label>
+                                <input type="checkbox" id="isType" name="isType">
+                            </div>
+                            <div class="form-group" id="outDiv">
+                                <label class="control-label">支出类型：</label>
+                                <select id="outType" class="js-example-tags form-control outType" name="outTypeId"></select>
+                            </div>
+                            <div class="form-group" id ="inDiv" style="display: none;">
+                                <label class="control-label">收入类型：</label>
+                                <select id="inType" class="js-example-tags form-control inType" name="inTypeId"></select>
+                            </div>
+                            <div class="modal-footer" style="overflow:hidden;">
+                                <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">关闭
+                                </button>
+                                <input type="button" id="addButton" class="btn btn-primary" value="添加" onclick="add()">
+                                </input>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
@@ -134,8 +177,11 @@
 <script src="<%=path%>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
+<script src="<%=path %>/js/accessories/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
+<script src="<%=path %>/js/select2.full.min.js"></script>
+<script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/financeManage/incoming-outgoing.js"></script>
 <script src="<%=path%>/js/main.js"></script>
 

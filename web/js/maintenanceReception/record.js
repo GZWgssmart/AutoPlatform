@@ -67,17 +67,14 @@ window.operateEvents = {
                                  title: "登入失败",
                                  text: data.message,
                                  type: "warning",
-                                 showCancelButton: true,
+                                 showCancelButton: false,
                                  confirmButtonColor: "#DD6B55",
                                  confirmButtonText: "确认",
-                                 cancelButtonText: "取消",
-                                 closeOnConfirm: true,
-                                 closeOnCancel: true
+                                 closeOnConfirm: true
                              },
                              function (isConfirm) {
                                  if (isConfirm) {
                                      top.location.href = "/login/show_login";
-                                 } else {
                                  }
                              });
                      }
@@ -95,17 +92,14 @@ window.operateEvents = {
                                   title: "登入失败",
                                   text: data.message,
                                   type: "warning",
-                                  showCancelButton: true,
+                                  showCancelButton: false,
                                   confirmButtonColor: "#DD6B55",
                                   confirmButtonText: "确认",
-                                  cancelButtonText: "取消",
-                                  closeOnConfirm: true,
-                                  closeOnCancel: true
+                                  closeOnConfirm: true
                               },
                               function (isConfirm) {
                                   if (isConfirm) {
                                       top.location.href = "/login/show_login";
-                                  } else {
                                   }
                               });
                       }
@@ -337,10 +331,37 @@ function determineMaintainOrFix(tableId, winId, message) {
         return false;
     } else {
         var maintain = selectRow[0];
-        $("#detailMaintainId").val(maintain.maintainId);
-        $("#detailMaintainName").val(maintain.maintainName);
-        maintainMoney = maintain.maintainMoney;
-        $("#" + winId).modal('hide');
+        var recordId = $("#detailRecordId").val();
+        $.get("/detail/query_detail?recordId=" + recordId + "&maintainId=" + maintain.maintainId,
+            function(data) {
+                if (data == 0) { // 没有记录
+                    $("#detailMaintainId").val(maintain.maintainId);
+                    $("#detailMaintainName").val(maintain.maintainName);
+                    maintainMoney = maintain.maintainMoney;
+                    $("#" + winId).modal('hide');
+                } else if (data >= 1) { // 有记录
+                    swal("错误提示", "该记录已经添加了此配件，请不要重复添加哦^_^", "error");
+                } else { // Session失效
+                    swal({
+                            title: "登入失败",
+                            text: "登入信息已失效，请重新登入",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            cancelButtonText: "取消",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            } else {
+                            }
+                        });
+                }
+            },"json");
+
     }
 }
 

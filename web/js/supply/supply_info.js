@@ -2,6 +2,7 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/supply/queryByPager?status=ALL");
     initSelect2("supplyType", "请选择供应商分类", "/supplyType/queryAll", "150");
+    initSelect2("supply_type", "请选择供应商分类", "/supplyType/queryAll", "550");
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin", "editForm");
@@ -18,8 +19,9 @@ function showEditWin() {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
-        var product = selectRow[0];
-        $("#editForm").fill(product);
+        var supply = selectRow[0];
+        $("#editForm").fill(supply);
+        $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
 }
@@ -71,7 +73,8 @@ window.operateEvents = {
         validator("editForm");
         var supply = row;
         $("#editForm").fill(supply);
-        $("#addButton").removeAttr("disabled");
+        $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");
+        validator("editForm");
         $("#editWin").modal('show');
     }
 }
@@ -207,10 +210,18 @@ function searchSupply() {
     var supplyPricipal = $("#searchSupplyPricipal").val();
     var supplyTypeId = $("#searchSupplyTypeId").val();
     var companyId = $("#searchCompanyId").val();
-    if (companyId != null && companyId != "") {
-        initTable("cusTable", "/supply/conditionPager?supplyName=" + supplyName  + "&supplyPricipal="+ supplyPricipal + "%supplyTypeId=" + supplyTypeId + "&companyId=" + companyId);
-    } else {
-        swal("错误提示", "请选择一家汽修公司", "error");
-    }
 
+        initTable("cusTable", "/supply/conditionPager?supplyName=" + supplyName  + "&supplyPricipal="+ supplyPricipal + "&supplyTypeId=" + supplyTypeId + "&companyId=" + companyId);
+
+}
+
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchSupplyName").val('');
+    $("#searchSupplyPricipal").val('');
+    $("#searchSupplyTypeId").html('').trigger("change");
+    $('#searchCompanyId').html('').trigger("change");
+    $("#searchDiv").hide();
+    $("#showButton").show();
 }

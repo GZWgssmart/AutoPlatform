@@ -33,4 +33,31 @@ public class Constants {
     public static final String COMPLETED = "已完成";
 
     public static final String CAR_OWNER = "carOwner";
+
+    public static final String COMPANY_ADMIN = "companyAdmin";
+
+    public static final String COMPANY_REPERTORY = "companyRepertory";
+
+    public static final String COMPANY_RECEIVE = "companyReceive";
+
+    public static final String COMPANY_ARTIFICER = "companyArtificer";
+
+    public static final String COMPANY_SALES = "companySales";
+
+    public static final String COMPANY_HUMAN_MANAGER = "companyHumanManager";
+
+    public static final String SYSTEM_SUPER_ADMIN = "systemSuperAdmin";
+
+    public static final String COMPANY_ACCOUNTING = "companyAccounting";
+
+    public static final String COMPANY_BUYER = "companyBuyer";
+
+    public static final String SYSTEM_ORDINARY_ADMIN = "systemOrdinaryAdmin";
+
+    public static final String COMPANY_EMP = "companyEmp";
+
+    public static final String  SALARY_OUT = "工资支出";
+
+    public static final String  MAINTENANCE_IN = "维修保养收入";
+
 }

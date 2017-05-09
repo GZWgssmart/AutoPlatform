@@ -35,17 +35,14 @@ window.operateEvents = {
                             title: "登入失败",
                             text: data.message,
                             type: "warning",
-                            showCancelButton: true,
+                            showCancelButton: false,
                             confirmButtonColor: "#DD6B55",
                             confirmButtonText: "确认",
-                            cancelButtonText: "取消",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
+                            closeOnConfirm: true
                         },
                         function (isConfirm) {
                             if (isConfirm) {
                                 top.location.href = "/login/show_login";
-                            } else {
                             }
                         });
                 }
@@ -63,17 +60,14 @@ window.operateEvents = {
                             title: "登入失败",
                             text: data.message,
                             type: "warning",
-                            showCancelButton: true,
+                            showCancelButton: false,
                             confirmButtonColor: "#DD6B55",
                             confirmButtonText: "确认",
-                            cancelButtonText: "取消",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
+                            closeOnConfirm: true
                         },
                         function (isConfirm) {
                             if (isConfirm) {
                                 top.location.href = "/login/show_login";
-                            } else {
                             }
                         });
                 }

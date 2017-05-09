@@ -127,15 +127,36 @@ function validator(formId) {
         },
         fields: {
             accName: {
-                message: '配件分类验证失败',
+                message: '配件验证失败',
                 validators: {
                     notEmpty: {
-                        message: '配件分类名称不能为空'
+                        message: '配件名称不能为空'
                     },
                     stringLength: {
-                        min: 2,
+                        min: 1,
                         max: 8,
-                        message: '配件分类名称长度必须在2到8位之间'
+                        message: '配件名称长度必须在1到8位之间'
+                    }
+                }
+            },
+            accTotal: {
+                validators :{
+                    notEmpty: {
+                        message: '配件数量不能为空'
+                    }
+                }
+            },
+            accPrice: {
+                validators :{
+                    notEmpty: {
+                        message: '配件价格不能为空'
+                    }
+                }
+            },
+            accCommodityCode: {
+                validators :{
+                    notEmpty: {
+                        message: '商品价格不能为空'
                     }
                 }
             },
@@ -148,6 +169,55 @@ function validator(formId) {
                         min: 2,
                         max: 15,
                         message: '配件分类描述长度必须在2到15位之间'
+                    }
+                }
+            },
+            accUnit: {
+                validators: {
+                    nitEmpty: {
+                        message: '计量单位不能为空'
+                    }
+                }
+            },
+            accIdle: {
+                validators: {
+                    nitEmpty: {
+                        message: '可用数量不能为空'
+                    }
+                }
+            },
+            accSalePrice: {
+                validators: {
+                    nitEmpty: {
+                        message: '配件售价不能为空'
+                    }
+                }
+            },
+            accUsedTime: {
+                validators: {
+                    nitEmpty: {
+                        message: '最近一次领料时间不能为空'
+                    }
+                }
+            },
+            accBuyedTime: {
+                validators: {
+                    nitEmpty: {
+                        message: '最近一次购买时间不能为空'
+                    }
+                }
+            },
+            supplyId: {
+                validators: {
+                    nitEmpty: {
+                        message: '供应商不能为空'
+                    }
+                }
+            },
+            accTypeId: {
+                validators: {
+                    nitEmpty: {
+                        message: '配件分类不能为空'
                     }
                 }
             },

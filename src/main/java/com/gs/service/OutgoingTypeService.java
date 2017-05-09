@@ -13,7 +13,7 @@ import java.util.List;
 */
 public interface OutgoingTypeService extends BaseService<String, OutgoingType>{
 
-    public OutgoingType queryByName(String outTypeName,String companyId);
+    public OutgoingType queryByName(String outTypeName);
 
     public List<OutgoingType> queryPagerStatus(String status,Pager pager);
     public int countStatus(String status);

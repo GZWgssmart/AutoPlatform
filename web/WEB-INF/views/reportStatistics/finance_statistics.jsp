@@ -23,7 +23,8 @@
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
-
+    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
+          type="text/css">
 </head>
 <body>
 <div class="container" style="margin-top:15px;">
@@ -35,8 +36,9 @@
                 <li><a  data-toggle="tab"data-target="#day">按日查询</a></li>
                 <li><a  data-toggle="tab" onclick="showCompany()">选择公司</a></li>
                 <li class="disabled" ><a id="spans" href ="javascript:return false;"></a></li>
-                <li ><button  class="btn-success" onclick="switchs('bar')">柱状图</button></li>
-                <li ><button  class="btn-danger" onclick="switchs('line')">折线图</button></li>
+                <div class="form-group" style="width: auto; display: inherit;">
+                    <input type="checkbox" id="isGraphics" name="isGraphics">
+                </div>
        　　 </ul>
           <div class="tab-content" style="margin-top:10px;">
               <div class="tab-pane  fade in active" id="year">
@@ -197,6 +199,7 @@
 <script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="<%=path %>/js/accessories/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="<%=path %>/js/highcharts.js"></script>
 <script src="<%=path %>/js/grid-light.js"></script>
 <script src="<%=path %>/js/exporting.js"></script>

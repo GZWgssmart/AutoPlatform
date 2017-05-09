@@ -156,6 +156,11 @@
 			select count(accId) from t_accessories
         ]]>
 	</select>
+	<select id="countByTypeId" resultType="int">
+		<![CDATA[
+			select count(accId) from t_accessories where  accTypeId = #{accTypeId}
+        ]]>
+	</select>
 
 	<select id="countByStatus" parameterType="String" resultType="int">
 		<![CDATA[

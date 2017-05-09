@@ -177,3 +177,16 @@ INSERT INTO `t_car_plate` VALUES ('ed4fe978-3208-11e7-8957-f8a9632663b3', '粤J',
 INSERT INTO `t_car_plate` VALUES ('ed54465b-3208-11e7-8957-f8a9632663b3', '粤K', '茂名市的车', 'Y');
 INSERT INTO `t_car_plate` VALUES ('ed58ccb7-3208-11e7-8957-f8a9632663b3', '粤Q', '阳江市的车', 'Y');
 INSERT INTO `t_car_plate` VALUES ('ed5d2a0d-3208-11e7-8957-f8a9632663b3', '粤S', '东莞市的车', 'Y');
+
+/**
+t_incoming_type表基本数据
+*/
+insert into t_incoming_type(inTypeId,inTypeName,inTypeStatus,inTypeCreatedTime) values('1eeeba11-3315-11e7-9707-507b9d3ffd38','维修保养收入','Y',now());
+
+
+/**
+t_outgoing_type表基本数据
+*/
+insert into t_outgoing_type(outTypeId,outTypeName,outTypeStatus,outTypeCreatedTime) values('1eeeba11-1234-11e7-9707-507b9d3ffd38','工资支出','Y',now());
+
+

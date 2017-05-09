@@ -3,6 +3,7 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.IncomingType;
 import com.gs.bean.Salary;
+import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -127,6 +129,19 @@ public class IncomingTypeController {
         }
     }
 
-
+    @ResponseBody
+    @RequestMapping(value = "inType_all", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryUserAll() {
+        logger.info("查询所有收入类型");
+        List<IncomingType> incomingTypes = incomingTypeService.queryAll();
+        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+        for (IncomingType in : incomingTypes) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(in.getInTypeId());
+            comboBox4EasyUI.setText(in.getInTypeName());
+            comboBox4EasyUIs.add(comboBox4EasyUI);
+        }
+        return comboBox4EasyUIs;
+    }
 
 }

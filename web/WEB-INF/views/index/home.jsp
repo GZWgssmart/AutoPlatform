@@ -138,9 +138,9 @@
                         </li>
                         <li><a class="J_menuItem" href="<%=path %>/supply/info">供应商信息管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_advanced.html">下单统计</a>
+                        <li><a class="J_menuItem" href="<%=path %>/order/order">下单统计</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_wizard.html">支付统计</a>
+                        <li><a class="J_menuItem" href="<%=path %>/pay/pay">支付统计</a>
                         </li>
                     </ul>
                 </li>

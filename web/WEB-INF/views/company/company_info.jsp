@@ -14,8 +14,14 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/fileinput.css" rel="stylesheet" type="text/css">
+    <style>
+        .address{
+            width: 53%;
+        }
+    </style>
 </head>
 <body>
 
@@ -119,8 +125,9 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司地址：</label>
-                                <input type="text"  name="companyAddress"
-                                       class="form-control"/>
+                                <div style="position: relative;">
+                                    <input data-toggle="city-picker" class="address" name="companyAddress"/>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司联系方式：</label>
@@ -285,6 +292,8 @@
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
+<script src="<%=path %>/js/city-picker.data.js"></script>
+<script src="<%=path %>/js/city-picker.js"></script>
 <script src="<%=path %>/js/company/company.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/fileinput.js"></script>

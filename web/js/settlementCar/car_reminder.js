@@ -98,7 +98,6 @@ function showAddWin() {
                         count += data.rows[i].price;
                     }
                     $("#addWin").modal('show');
-
                     $("#addForm").fill(record);
                     $("#addChargeBillMoney").val(count);
                 } else {

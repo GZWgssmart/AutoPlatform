@@ -48,13 +48,8 @@ window.operateEvents = {
     }
 }
 
-function showSearchForm() {
-    $("#searchDiv").show();
-    $("#showButton").hide();
-}
-
 function bySelectSearch() {
-    var userName = $("#userName").val();
+    var userName = $("#searchUserName").val();
     var startTime = $("#createTimeStart").val();
     var endTime = $("#createTimeEnd").val();
     initTable("cusTable", "/materialList/select_query?userName=" + userName + "&startTime=" + startTime + "&endTime=" + endTime);
@@ -66,4 +61,13 @@ function queryStatus(status) {
 
 function queryAll() {
     initTable('cusTable', contextPath + '/materialList/query_pager');
+}
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#createTimeStart").val('');
+    $("#createTimeEnd").val('');
+    $("#searchUserName").val('');
+    $("#searchDiv").hide();
+    $("#showButton").show();
 }

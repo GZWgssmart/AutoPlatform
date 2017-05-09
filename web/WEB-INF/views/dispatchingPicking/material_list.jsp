@@ -35,7 +35,7 @@
             </div>
 
             <div class="col-sm-2" style="margin-left: -15px;">
-                <input type="text" id="userName" class="form-control" placeholder="请车主名">
+                <input type="text" id="searchUserName" class="form-control" placeholder="请输入车主名">
             </div>
 
             <div class="col-sm-2">
@@ -89,15 +89,19 @@
         <tbody>
         <div id="toolbar" class="btn-group">
             <a><button onclick="queryAll()" type="button" class="btn btn-default" >
+                <i class="glyphicon glyphicon-search"></i>
                 查询全部
             </button></a>
             <a><button onclick="queryStatus('Y')" type="button" class="btn btn-default" >
-                可用清单
+                <i class="glyphicon glyphicon-search"></i>
+                查可用清单
             </button></a>
             <a><button onclick="queryStatus('N')" type="button" class="btn btn-default" >
-                不可用清单
+                <i class="glyphicon glyphicon-search"></i>
+                查不可用清单
             </button></a>
-            <a><button onclick="showSearchForm();" type="button" class="btn btn-default">
+            <a><button id="showButton" onclick="showSearchForm();" type="button" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i>
                 条件查询
             </button></a>
         </div>
