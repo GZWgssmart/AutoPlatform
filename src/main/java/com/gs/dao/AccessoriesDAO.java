@@ -25,4 +25,6 @@ public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
 
     public int countByCondition(Accessories accessories);
     public List<Accessories> queryByCondition(@Param("pager") Pager pager, @Param("accessories") Accessories accessories);
+
+    public void updateIdle(String id,  int lastCount);
 }
