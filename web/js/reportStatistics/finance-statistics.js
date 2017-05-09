@@ -32,71 +32,82 @@ var tempData = {
 };
 
 var type = '';
-function switchs(graphics){
-    if(graphics == 'bar'){
-        tempData = {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: '收入与支出本月统计'
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: '金额 (￥)'
-                }
-            },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} ￥</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            series: []
-        };
-        switchsValidator();
-    }else if(graphics == 'line'){
-        tempData = {
-            chart: {
-                type: 'line'
-            },
-            title: {
-                text: '收入与支出本月统计'
-            },
-            yAxis: {
-                title: {
-                    text: '金额 (￥)'
-                }
-            },
 
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true          // 开启数据标签
+function isGraphics(){
+    $("#isGraphics").bootstrapSwitch({
+        onText: '折线图',
+        offText: '柱状图',
+        onColor: 'success',
+        offColor: 'danger',
+        size: 'normal',
+        onSwitchChange: function (event, state) {
+            if (state == true) {
+                tempData = {
+                    chart: {
+                        type: 'column'
                     },
-                    enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
-                }
-            },
-            credits: {
-                enabled: false
-            },
-            series: []
-        };
-        switchsValidator();
-    }
+                    title: {
+                        text: '收入与支出本月统计'
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: '金额 (￥)'
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} ￥</b></td></tr>',
+                        footerFormat: '</table>',
+                        shared: true,
+                        useHTML: true
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: []
+                };
+                switchsValidator();
+            } else if (state == false) {
+                tempData = {
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: '收入与支出本月统计'
+                    },
+                    yAxis: {
+                        title: {
+                            text: '金额 (￥)'
+                        }
+                    },
+
+                    plotOptions: {
+                        line: {
+                            dataLabels: {
+                                enabled: true          // 开启数据标签
+                            },
+                            enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: []
+                };
+                switchsValidator();
+            }
+        }
+    });
 }
+
 
 
 var companyId='';
@@ -110,6 +121,7 @@ $(function () {
         $(this).tab("show");
         $(".datatimepicker").val("");
     });
+    isGraphics();
 });
 
 function showCompany(){

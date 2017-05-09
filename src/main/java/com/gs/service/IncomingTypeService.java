@@ -15,4 +15,6 @@ public interface IncomingTypeService extends BaseService<String, IncomingType>{
 
     public List<IncomingType> queryPagerStatus(String status, Pager pager);
     public int countStatus(String status);
+
+    public IncomingType queryByName(String inTypeName);
 }

@@ -2,6 +2,7 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.IncomingOutgoing;
+import com.gs.bean.User;
 import com.gs.common.bean.*;
 import com.gs.common.util.DateFormatUtil;
 import com.gs.common.util.SessionGetUtil;
@@ -56,6 +57,23 @@ public class IncomingOutgoingController {
             logger.info("session已失效，请重新登入");
             return null;
 
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value="add_inOut", method=RequestMethod.POST)
+    public ControllerResult incomingAdd(IncomingOutgoing incomingOutgoing){
+        if(SessionGetUtil.isUser()) {
+            logger.info("添加收支记录");
+            User user = SessionGetUtil.getUser();
+            incomingOutgoing.setCompanyId(user.getCompanyId());
+            incomingOutgoing.setInOutCreatedUser(user.getUserId());
+            incomingOutgoingService.insert(incomingOutgoing);
+            return ControllerResult.getSuccessResult("添加成功");
+        } else{
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
     }
 

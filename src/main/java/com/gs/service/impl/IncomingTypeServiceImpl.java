@@ -50,4 +50,9 @@ public class IncomingTypeServiceImpl implements IncomingTypeService {
 	public int countStatus(String status) {
 		return incomingTypeDAO.countStatus(status);
 	}
+
+	@Override
+	public IncomingType queryByName(String inTypeName) {
+		return incomingTypeDAO.queryByName(inTypeName);
+	}
 }

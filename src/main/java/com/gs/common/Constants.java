@@ -56,4 +56,8 @@ public class Constants {
 
     public static final String COMPANY_EMP = "companyEmp";
 
+    public static final String  SALARY_OUT = "工资支出";
+
+    public static final String  MAINTENANCE_IN = "维修保养收入";
+
 }

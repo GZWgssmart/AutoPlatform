@@ -19,10 +19,14 @@ function showEditWin() {
         return false;
     } else {
         var incomingType = selectRow[0];
-        validator("editForm");
-        $("#editForm").fill(incomingType);
-        $('#editCompany').html('<option value="' + incomingType.company.companyId + '">' + incomingType.company.companyName + '</option>').trigger("change");
-        $("#editWin").modal('show');
+        if(incomingType.inTypeName != '维修保养收入' && incomingType.company.companyId != null){
+            validator("editForm");
+            $("#editForm").fill(incomingType);
+            $('#editCompany').html('<option value="' + incomingType.company.companyId + '">' + incomingType.company.companyName + '</option>').trigger("change");
+            $("#editWin").modal('show');
+        }else{
+            swal('编辑失败', "你不能修改名称为维修保养收入的记录", "warning");
+        }
     }
 }
 
@@ -50,32 +54,44 @@ function operateFormatter(value, row, index) {
 window.operateEvents = {
          'click .updateActive': function (e, value, row, index) {
              var status = 'N';
-             $.get(contextPath + "/incomingType/update_status?id=" + row.inTypeId + "&status=" + status,
-                 function(data){
-                     if(data.result == "success"){
-                         $('#cusTable').bootstrapTable('refresh');
-                     }else if(data.result == "fail"){
-                         swal(data.message, "", "error");
-                     }
-                 },"json");
+             if(row.inTypeName != '维修保养收入' && row.company.companyId != null) {
+                 $.get(contextPath + "/incomingType/update_status?id=" + row.inTypeId + "&status=" + status,
+                     function (data) {
+                         if (data.result == "success") {
+                             $('#cusTable').bootstrapTable('refresh');
+                         } else if (data.result == "fail") {
+                             swal(data.message, "", "error");
+                         }
+                     }, "json");
+             }else{
+                 swal('编辑失败', "你不能冻结名称为维修保养收入的记录", "warning");
+             }
          },
           'click .updateInactive': function (e, value, row, index) {
               var status = 'Y';
-              $.get(contextPath + "/incomingType/update_status?id=" + row.inTypeId + "&status=" + status,
-                  function(data){
-                      if(data.result == "success"){
-                          $('#cusTable').bootstrapTable('refresh');
-                      }else if(data.result == "fail"){
-                          swal(data.message, "", "error");
-                      }
-                  },"json");
+              if(row.inTypeName != '维修保养收入' && row.company.companyId != null) {
+                  $.get(contextPath + "/incomingType/update_status?id=" + row.inTypeId + "&status=" + status,
+                      function (data) {
+                          if (data.result == "success") {
+                              $('#cusTable').bootstrapTable('refresh');
+                          } else if (data.result == "fail") {
+                              swal(data.message, "", "error");
+                          }
+                      }, "json");
+              } else{
+                  swal('编辑失败', "你不能激活名称为维修保养收入的记录", "warning");
+              }
           },
           'click .showUpdateIncomingType1': function (e, value, row, index) {
               var incomingType = row;
-              validator("editForm");
-              $("#editForm").fill(incomingType);
-              $('#editCompany').html('<option value="' + incomingType.company.companyId + '">' + incomingType.company.companyName + '</option>').trigger("change");
-              $("#editWin").modal('show');
+              if(incomingType.inTypeName != '维修保养收入' && incomingType.company.companyId != null) {
+                  validator("editForm");
+                  $("#editForm").fill(incomingType);
+                  $('#editCompany').html('<option value="' + incomingType.company.companyId + '">' + incomingType.company.companyName + '</option>').trigger("change");
+                  $("#editWin").modal('show');
+              }else{
+                  swal('编辑失败', "你不能修改名称为维修保养收入的记录", "warning");
+              }
          }
 }
 
@@ -113,11 +129,24 @@ function validator(formId) {
     })
 
         .on('success.form.bv', function (e) {
+            var addName = $("#name").val();
+            var editName = $("#name1").val();
             if (formId == "addForm") {
-                formSubmit("/incomingType/add_incomingType", formId, "addWin");
+                if(addName != '维修保养收入') {
+                    formSubmit("/incomingType/add_incomingType", formId, "addWin");
+                }else{
+                    swal('添加失败', "你不能添加名称为维修保养收入", "warning");
+                    $('#addWin').modal('hide');
+                    $('#' + formId).data('bootstrapValidator').resetForm(true);
+                }
             } else if (formId == "editForm") {
-                formSubmit("/incomingType/update_incomingType", formId, "editWin");
-
+                if(editName != '维修保养收入') {
+                    formSubmit("/incomingType/update_incomingType", formId, "editWin");
+                }else{
+                    swal('添加失败', "你不能添加名称为维修保养收入", "warning");
+                    $('#addWin').modal('hide');
+                    $('#' + formId).data('bootstrapValidator').resetForm(true);
+                }
             }
         })
 

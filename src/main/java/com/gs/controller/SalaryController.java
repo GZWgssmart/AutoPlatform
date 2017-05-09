@@ -5,6 +5,7 @@ import com.gs.bean.IncomingOutgoing;
 import com.gs.bean.OutgoingType;
 import com.gs.bean.Salary;
 import com.gs.bean.User;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -90,7 +91,7 @@ public class SalaryController {
             logger.info("添加工资");
             User sessionUser = SessionGetUtil.getUser();
             User user = userService.queryById(salary.getUserId());
-            OutgoingType outgoingType = outgoingTypeService.queryByName("工资支出", sessionUser.getCompanyId());
+            OutgoingType outgoingType = outgoingTypeService.queryByName(Constants.SALARY_OUT);
             salary.setTotalSalary(user.getUserSalary() + salary.getPrizeSalary() - salary.getMinusSalary());
             salaryService.insert(salary);
 
@@ -98,7 +99,7 @@ public class SalaryController {
             incomingOutgoing.setOutTypeId(outgoingType.getOutTypeId());
             incomingOutgoing.setInOutCreatedUser(sessionUser.getUserId());
             incomingOutgoing.setInOutMoney(salary.getTotalSalary());
-            incomingOutgoing.setCompanyId(outgoingType.getCompanyId());
+            incomingOutgoing.setCompanyId(sessionUser.getCompanyId());
             incomingOutgoingService.insert(incomingOutgoing);
             return ControllerResult.getSuccessResult("添加成功");
         } else {
@@ -204,7 +205,7 @@ public class SalaryController {
             //list中存的就是excel中的数据，可以根据excel中每一列的值转换成你所需要的值（从0开始），如：
             List<Salary> salaries = new ArrayList<Salary>();
             List<IncomingOutgoing> incomingOutgoings = new ArrayList<IncomingOutgoing>();
-            OutgoingType outgoingType = outgoingTypeService.queryByName("工资支出", sessionUser.getCompanyId());
+            OutgoingType outgoingType = outgoingTypeService.queryByName(Constants.SALARY_OUT);
 
             for (ArrayList<String> arr : list) {
                 salary = new Salary();

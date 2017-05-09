@@ -62,7 +62,7 @@
 
 	<select id="queryAll" resultMap="outgoingTypeResultMap">
 		<![CDATA[
-
+			select * from t_outgoing_type
 		]]>
 	</select>
 
@@ -86,8 +86,9 @@
 
 	<select id="queryPagerStatus" resultType="list" resultMap="outgoingTypeResultMap">
 		<![CDATA[
-			select  * from t_outgoing_type ot,t_company c where ot.companyId = c.companyId and ot.outTypeStatus = #{status} order by ot.outTypeCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
+			select  * from t_outgoing_type ot LEFT JOIN t_company c on ot.companyId = c.companyId where  ot.outTypeStatus = #{status}
 		]]>
+		 order by ot.outTypeCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="countStatus" resultType="int">
@@ -98,8 +99,8 @@
 
 	<select id="queryByName"  resultType="outgoingType">
 		<![CDATA[
-			  select * from t_outgoing_type ot, t_company c where ot.outTypeName = #{outTypeName} and ot.companyId = #{companyId}
-			  and ot.companyId = c.companyId
+			  select * from t_outgoing_type ot where ot.outTypeName = #{outTypeName}
+
 		]]>
 	</select>
 
@@ -107,8 +108,9 @@
 
 	<select id="queryByPager" resultType="list" resultMap="outgoingTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select  * from t_outgoing_type ot, t_company c where ot.companyId = c.companyId  order by ot.outTypeCreatedTime Desc limit #{beginIndex}, #{pageSize}
+			select  * from t_outgoing_type ot LEFT JOIN t_company c on ot.companyId = c.companyId
 		]]>
+		order by ot.outTypeCreatedTime Desc limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">

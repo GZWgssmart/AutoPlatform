@@ -62,7 +62,7 @@
 
 	<select id="queryAll" resultMap="incomingTypeResultMap">
 		<![CDATA[
-
+			select * from t_incoming_type
 		]]>
 	</select>
 
@@ -74,7 +74,7 @@
 
 	<select id="queryPagerStatus" resultType="list" resultMap="incomingTypeResultMap">
 		<![CDATA[
-			select  it.*,c.companyId,c.companyName from t_incoming_type it ,t_company c where it.companyId = c.companyId and it.inTypeStatus = #{status}
+			select  it.*,c.companyId,c.companyName from t_incoming_type it left join t_company c on it.companyId = c.companyId where it.inTypeStatus = #{status}
 		]]>
 		order by it.inTypeCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
@@ -97,11 +97,18 @@
 		]]>
 	</select>
 
+	<select id="queryByName"  resultType="incomingType">
+		<![CDATA[
+			  select * from t_incoming_type  where inTypeName = #{inTypeName}
+
+		]]>
+	</select>
+
 	<select id="queryByPager" resultType="list" resultMap="incomingTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select  it.*,c.companyId,c.companyName from t_incoming_type it ,t_company c where it.companyId = c.companyId
-			order by inTypeCreatedTime Desc limit #{beginIndex}, #{pageSize}
+			select  it.*,c.companyId,c.companyName from t_incoming_type it left join t_company c on it.companyId = c.companyId
 		]]>
+		order by inTypeCreatedTime Desc limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">

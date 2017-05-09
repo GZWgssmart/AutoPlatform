@@ -18,16 +18,21 @@ function showEditWin() {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
-        validator("editForm");
         var outgoingType = selectRow[0];
-        $("#editForm").fill(outgoingType);
-        $('#editCompany').html('<option value="' + outgoingType.company.companyId + '">' + outgoingType.company.companyName + '</option>').trigger("change");
-        $("#editWin").modal('show');
+        if(outgoingType.outTypeName != '工资支出' && outgoingType.company.companyId != null ){
+            validator("editForm");
+            $("#editForm").fill(outgoingType);
+            $('#editCompany').html('<option value="' + outgoingType.company.companyId + '">' + outgoingType.company.companyName + '</option>').trigger("change");
+            $("#editWin").modal('show');
+        }else{
+            swal('编辑失败', "你不能修改名称为工资支出的记录", "warning");
+        }
     }
 }
 
 function showAddWin(){
     validator("addForm");
+    $('#addCompany').html('').trigger("change");
     $("#addWin").modal('show');
 }
 
@@ -50,32 +55,44 @@ function operateFormatter(value, row, index) {
 window.operateEvents = {
          'click .updateActive': function (e, value, row, index) {
              var status = 'N';
-             $.get(contextPath + "/outgoingType/update_status?id=" + row.outTypeId + "&status=" + status,
-                 function(data){
-                     if(data.result == "success"){
-                         $('#cusTable').bootstrapTable('refresh');
-                     }else if(data.result == "fail"){
-                         swal(data.message, "", "error");
-                     }
-                 },"json");
+             if(row.outTypeName != '工资支出' && row.company.companyId != null ) {
+                 $.get(contextPath + "/outgoingType/update_status?id=" + row.outTypeId + "&status=" + status,
+                     function (data) {
+                         if (data.result == "success") {
+                             $('#cusTable').bootstrapTable('refresh');
+                         } else if (data.result == "fail") {
+                             swal(data.message, "", "error");
+                         }
+                     }, "json");
+             } else{
+                 swal('编辑失败', "你不能冻结称为工资支出的记录", "warning");
+             }
          },
           'click .updateInactive': function (e, value, row, index) {
               var status = 'Y';
-              $.get(contextPath + "/outgoingType/update_status?id=" + row.outTypeId + "&status=" + status,
-                  function(data){
-                      if(data.result == "success"){
-                          $('#cusTable').bootstrapTable('refresh');
-                      }else if(data.result == "fail"){
-                          swal(data.message, "", "error");
-                      }
-                  },"json");
+              if(row.outTypeName != '工资支出' && row.company.companyId != null ) {
+                  $.get(contextPath + "/outgoingType/update_status?id=" + row.outTypeId + "&status=" + status,
+                      function (data) {
+                          if (data.result == "success") {
+                              $('#cusTable').bootstrapTable('refresh');
+                          } else if (data.result == "fail") {
+                              swal(data.message, "", "error");
+                          }
+                      }, "json");
+              }else{
+                  swal('编辑失败', "你不能激活名称为工资支出的记录", "warning");
+              }
           },
           'click .showUpdateoutgoingType1': function (e, value, row, index) {
               var outgoingType = row;
-              validator("editForm");
-              $("#editForm").fill(outgoingType);
-              $('#editCompany').html('<option value="' + outgoingType.company.companyId + '">' + outgoingType.company.companyName + '</option>').trigger("change");
-              $("#editWin").modal('show');
+              if(outgoingType.outTypeName != '工资支出' && outgoingType.company.companyId != null ) {
+                  validator("editForm");
+                  $("#editForm").fill(outgoingType);
+                  $('#editCompany').html('<option value="' + outgoingType.company.companyId + '">' + outgoingType.company.companyName + '</option>').trigger("change");
+                  $("#editWin").modal('show');
+              }else{
+                  swal('编辑失败', "你不能修改名称为工资支出的记录", "warning");
+              }
          }
 }
 
@@ -117,11 +134,25 @@ function validator(formId) {
     })
 
         .on('success.form.bv', function (e) {
+            var addName = $("#name").val();
+            var editName = $("#name1").val();
             if (formId == "addForm") {
-                formSubmit("/outgoingType/add_outgoingType", formId, "addWin");
-            } else if (formId == "editForm") {
-                formSubmit("/outgoingType/update_outgoingType", formId, "editWin");
+                if(addName != '工资支出'){
+                    formSubmit("/outgoingType/add_outgoingType", formId, "addWin");
+                }else{
+                    swal('添加失败', "你不能添加名称为工资支出", "warning");
+                    $('#addWin').modal('hide');
+                    $('#' + formId).data('bootstrapValidator').resetForm(true);
+                }
 
+            } else if (formId == "editForm") {
+                if(editName != '工资支出'){
+                    formSubmit("/outgoingType/update_outgoingType", formId, "editWin");
+                }else{
+                    swal('编辑失败', "你不能修改名称为工资支出", "warning");
+                    $('#editWin').modal('hide');
+                    $('#' + formId).data('bootstrapValidator').resetForm(true);
+                }
             }
         })
 

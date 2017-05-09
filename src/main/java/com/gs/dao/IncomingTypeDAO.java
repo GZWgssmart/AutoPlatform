@@ -20,4 +20,6 @@ public interface IncomingTypeDAO extends BaseDAO<String, IncomingType>{
     public List<IncomingType> queryPagerStatus(@Param("status")String status,@Param("pager")Pager pager);
     public int countStatus(String status);
 
+    public IncomingType queryByName(@Param("inTypeName") String inTypeName);
+
 }
