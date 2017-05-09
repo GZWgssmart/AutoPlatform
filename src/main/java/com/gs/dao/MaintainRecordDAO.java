@@ -103,4 +103,10 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      */
     public List<MaintainRecord> queryPagerBySpeedStatus(@Param("speedStatus") String[] speedStatus, @Param("pager") Pager pager);
 
+    /**
+     * 根据维修保养记录id把提车时间更新成当前时间
+     * @param recordId
+     * @return
+     */
+    public int updatePickupTime(String recordId);
 }

@@ -267,4 +267,12 @@
         ]]>
     </update>
 
+    <update id="updatePickupTime">
+        <![CDATA[
+
+		  update t_maintain_record set pickupTime = now() where recordId = #{recordId}
+
+        ]]>
+    </update>
+
 </mapper>

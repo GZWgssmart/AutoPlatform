@@ -131,5 +131,10 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.queryPagerByMessage(pager);
     }
 
+    @Override
+    public int updatePickupTime(String recordId) {
+        return maintainRecordDAO.updatePickupTime(recordId);
+    }
+
 
 }
