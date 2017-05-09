@@ -4,6 +4,7 @@ $(document).ready(function () {
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
     initSelect2("user_role", "请选择角色", "/peopleManage/role_all", 565);
+    destoryValidator("addWin", "addForm");
     destoryValidator("editWin","editForm");
     destoryValidator("myModal","editModal");
 });
@@ -93,6 +94,21 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json");
     },
@@ -105,6 +121,21 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json");
     },
@@ -132,10 +163,9 @@ window.operateEvents = {
             $("#status").val("不可用");
         }
         var change = user.userStatus;
-            if (change == 'N'){
-                return 'Y';
-            }
-
+        if (change == 'N'){
+            return 'Y';
+        }
         customerAge(row);
         fmtDate();
         formatterDate();

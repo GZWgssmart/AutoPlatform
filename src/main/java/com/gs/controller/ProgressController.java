@@ -6,6 +6,7 @@ import com.gs.bean.WorkInfo;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.service.MaintainRecordService;
 import com.gs.service.UserService;
 import com.gs.service.WorkInfoService;
@@ -39,8 +40,13 @@ public class ProgressController {
 
     @RequestMapping(value = "progress_page", method = RequestMethod.GET)
     public String progressInfo() {
-        logger.info(" 维修保养进度页面");
-        return "maintenanceProgress/car_maintenance_progress";
+        if (SessionGetUtil.isUser()) {
+            logger.info(" 维修保养进度页面");
+            return "maintenanceProgress/car_maintenance_progress";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
 
     @ResponseBody
@@ -65,9 +71,14 @@ public class ProgressController {
     @ResponseBody
     @RequestMapping(value = "progress_byInfo", method = RequestMethod.GET)
     public ControllerResult ByInfo(@Param("id")String id, MaintainRecord maintainRecord, HttpServletRequest request){
-        logger.info("根据id查询");
-        maintainRecordService.queryById(id);
-        return ControllerResult.getSuccessResult("已查询");
+        if (SessionGetUtil.isUser()) {
+            logger.info("根据id查询");
+            maintainRecordService.queryById(id);
+            return ControllerResult.getSuccessResult("已查询");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
+        }
     }
 
 }

@@ -1,6 +1,9 @@
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/customer/customerInfo_pager");
+    destoryValidator("addWin", "addForm");
+    destoryValidator("editWin","editForm");
+    destoryValidator("myModal","editModal");
 
 });
 
@@ -102,6 +105,21 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json");
     },
@@ -114,6 +132,21 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                }else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json");
     },
@@ -140,6 +173,9 @@ window.operateEvents = {
         var change = user.userStatus;
         if (change == 'N'){
             return 'Y';
+        }
+        if (user.userNickname == null || user.userNickname == ""){
+            $("#nickname").val("");
         }
         customerAge(row);
         oldAndNew();
@@ -209,8 +245,6 @@ function validator(formId) {
                         message: '昵称不能为空'
                     },
                     stringLength: {
-                        min: 4,
-                        max: 8,
                         message: '昵称长度为4-8位'
                     }
                 }

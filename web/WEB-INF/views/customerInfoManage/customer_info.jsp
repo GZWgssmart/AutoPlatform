@@ -180,7 +180,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">邮箱：</label>
-                                <input type="email" id="userEmail" name="userEmail"
+                                <input type="text" id="userEmail" name="userEmail"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -249,7 +249,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label">昵称：</label>
-                                            <input class="form-control" style="display: initial;" type="text" attr="user.userNickname" name="userNickname"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="nickname" attr="user.userNickname" name="userNickname"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label">性别：</label>
