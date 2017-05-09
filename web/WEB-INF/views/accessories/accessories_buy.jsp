@@ -17,18 +17,6 @@
           type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
 
-    <style type="text/css">
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none !important;
-            margin: 0;
-        }
-
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-    </style>
-
 </head>
 <body>
 <div class="container" style="width: 100%;">
@@ -70,7 +58,7 @@
             <th data-field="state" data-checkbox="true"></th>
             <th data-field="accessories.accName">配件名称</th>
             <th data-field="accessories.accessoriesType.accTypeName">配件类别</th>
-            <%--<th data-field="accessories.company.companyName">供应商</th>--%>
+            <th data-field="accessories.supply.supplyName">供应商</th>
             <th data-field="accBuyCount">采购数量</th>
             <th data-field="accBuyPrice">采购单价</th>
             <th data-field="accBuyDiscount">采购折扣</th>
@@ -170,14 +158,14 @@
 
                             <div class="form-group">
                                 <label>折扣：</label>
-                                <input type="number" name="accBuyDiscount" attr="accessoriesBuy.accBuyDiscount"
+                                <input type="text" name="accBuyDiscount" attr="accessoriesBuy.accBuyDiscount"
                                        class="form-control"/>
                             </div>
 
-                            <%--<div class="form-group">--%>
-                            <%--<label>供应商：</label>--%>
-                            <%--<input type="text" name="accessories.company.companyName" class="form-control"/>--%>
-                            <%--</div>--%>
+                            <div class="form-group">
+                            <label>供应商：</label>
+                            <input type="text" name="accessories.supply.supplyName" attr="accessoriesBuy.accessories.supply.supplyName" class="form-control"/>
+                            </div>
 
                             <div class="form-group">
                                 <label>采购时间：</label>
@@ -238,6 +226,12 @@
                             </div>
 
                             <div class="form-group">
+                                <label>配件条码：</label>
+                                <input type="text" name="accessories.accCommodityCode" class="form-control" id="accCommodityCode"
+                                       attr="acc.accCommodityCode"/>
+                            </div>
+
+                            <div class="form-group">
                                 <label>计量单位：</label>
                                 <input type="text" name="accUnit" id="aAccUnit" attr="acc.accUnit"
                                        class="form-control"/>
@@ -265,14 +259,14 @@
                             <div class="form-group">
                                 <label>折扣：</label>
                                 <input type="text" name="accBuyDiscount" id="accBuyDiscount" title="如：7.8折是0.78、5折是0.5"
-                                       class="form-control" placeholder="没打折可以不用输入"/>
+                                       class="form-control" placeholder="没折扣可以不用输入"/>
                             </div>
 
-                            <%--<div class="form-group">--%>
-                            <%--<label>配件供应商：</label>--%>
-                            <%--<input type="text" name="accessories.company.companyName" id="aCompanyName"--%>
-                            <%--class="form-control"/>--%>
-                            <%--</div>--%>
+                            <div class="form-group">
+                            <label>配件供应商：</label>
+                            <input type="text" name="accessories.supply.supplyName" attr="accessoriesBuy.supply.supplyName" id="aCompanyName"
+                            class="form-control"/>
+                            </div>
 
                             <div class="form-group">
                                 <label>采购时间：</label>

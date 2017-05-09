@@ -32,6 +32,11 @@
                 <result property="companyName" column="companyName"/>
             </association>
 
+            <association property="supply" javaType="com.gs.bean.Supply">
+                <id property="supplyId" column="supplyId"></id>
+                <result property="supplyName" column="supplyName"/>
+            </association>
+
         </association>
 
 
@@ -113,11 +118,24 @@
     <select id="queryByPager" resultType="list" resultMap="accessoriesBuyResultMap" parameterType="com.gs.common.bean.Pager">
         <![CDATA[
         select
-          *
+          	ab.*,
+          	ac.accId,
+          	ac.accName,
+            ac.supplyId,
+            sy.supplyName,
+            ae.accTypeId,
+            ae.accTypeName
         from
-        (t_accessories_buy ab inner join t_accessories ac on ab.accId = ac.accId)
-        inner join
-        t_accessories_type ae on ac.accTypeId = ae.accTypeId
+        (
+          (
+                (
+                  t_accessories_buy ab
+                  inner join t_accessories ac on ab.accId = ac.accId
+                )
+                inner join t_accessories_type ae on ac.accTypeId = ae.accTypeId
+          )
+          inner join t_supply sy on ac.supplyId = sy.supplyId
+        ) order by ab.accBuyTime desc
         limit
          #{beginIndex},#{pageSize}
         ]]>
