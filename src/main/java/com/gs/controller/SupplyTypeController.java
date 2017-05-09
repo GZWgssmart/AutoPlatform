@@ -38,8 +38,13 @@ public class SupplyTypeController {
 
     @RequestMapping("/type")
     public String supplierType() {
-        logger.info("进入供应商分类页");
-        return "supply/supply_type";
+        if (SessionGetUtil.isUser()) {
+            logger.info("进入供应商分类页");
+            return "supply/supply_type";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+         }
     }
 
     @ResponseBody
@@ -71,8 +76,8 @@ public class SupplyTypeController {
                 supplyTypeService.insert(supplyType);
                 return ControllerResult.getSuccessResult("添加成功");
             }catch (Exception e) {
-                logger.info("添加供应商失败，出现了一个错误");
-                return ControllerResult.getFailResult("添加供应商失败，出现了一个错误");
+                logger.info("添加供应商分类失败，出现了一个错误");
+                return ControllerResult.getFailResult("添加供应商分类失败，出现了一个错误");
             }
         } else {
             logger.info("Session已失效，请重新登入");
@@ -108,8 +113,8 @@ public class SupplyTypeController {
                 supplyTypeService.update(supplyType);
                 return ControllerResult.getSuccessResult("修改成功");
             }catch (Exception e) {
-                logger.info("修改供应商失败，出现了一个错误");
-                return ControllerResult.getFailResult("添加供应商失败，出现了一个错误");
+                logger.info("修改供应商分类失败，出现了一个错误");
+                return ControllerResult.getFailResult("添加供应商分类失败，出现了一个错误");
             }
         } else {
             logger.info("Session已失效，请重新登入");
@@ -120,13 +125,23 @@ public class SupplyTypeController {
     @ResponseBody
     @RequestMapping(value =  "updateStatus", method = RequestMethod.GET)
     public ControllerResult updateStatus(@Param("id")String id, @Param("status")String status) {
-        logger.info("更新供应商分类状态");
-        if (status.equals("Y")) {
-            supplyTypeService.active(id);
-        }else if (status.equals("N")) {
-            supplyTypeService.inactive(id);
+        if (SessionGetUtil.isUser()) {
+            try{
+                logger.info("更新供应商分类状态");
+                if (status.equals("Y")) {
+                    supplyTypeService.active(id);
+                }else if (status.equals("N")) {
+                    supplyTypeService.inactive(id);
+                }
+                return ControllerResult.getSuccessResult("更新成功");
+            } catch (Exception e) {
+                logger.info("更新供应商分类状态失败，出现了一个错误");
+                return ControllerResult.getFailResult("更新供应商分类状态失败，出现了一个错误");
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        return ControllerResult.getSuccessResult("更新成功");
     }
 
     @ResponseBody
