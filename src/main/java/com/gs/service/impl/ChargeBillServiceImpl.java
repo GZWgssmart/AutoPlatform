@@ -53,4 +53,14 @@ public class ChargeBillServiceImpl implements ChargeBillService {
 	public List<ChargeBill> queryPagerByCondition(@Param("pager") Pager pager, @Param("chargeBill") ChargeBill chargeBill) {
 		return chargeBillDAO.queryPagerByCondition(pager, chargeBill);
 	}
+
+	@Override
+	public List<ChargeBill> queryByDefault(String maintainOrFix, String userId) {
+		return chargeBillDAO.queryByDefault(maintainOrFix,userId);
+	}
+
+	@Override
+	public List<ChargeBill> queryByCondition(String startTime, String endTime, String maintainOrFix, String type, String userId) {
+		return chargeBillDAO.queryByCondition(startTime,endTime,maintainOrFix,type,userId);
+	}
 }

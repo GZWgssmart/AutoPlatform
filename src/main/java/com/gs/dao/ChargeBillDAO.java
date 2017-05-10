@@ -46,4 +46,15 @@ public interface ChargeBillDAO extends BaseDAO<String, ChargeBill>{
      */
     public List<ChargeBill> queryPagerByCondition(@Param("pager") Pager pager, @Param("chargeBill") ChargeBill chargeBill);
 
+    /*
+    * 默认查询本月车主用户消费统计
+    * */
+    public List<ChargeBill> queryByDefault(@Param("maintainOrFix") String maintainOrFix, @Param("userId")String userId);
+
+    /*
+    * 根据年，月，季度，周，日查询所有工单
+    * */
+    public List<ChargeBill> queryByCondition(@Param("startTime")String startTime,@Param("endTime")String endTime,@Param("maintainOrFix")String maintainOrFix,
+                                           @Param("type")String type, @Param("userId")String userId);
+
 }

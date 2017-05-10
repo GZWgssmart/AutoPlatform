@@ -59,4 +59,48 @@ public class ReportStatisticsController {
             return "index/notLogin";
         }
     }
+
+    @RequestMapping(value = "consumption_page", method = RequestMethod.GET)
+    public String showConsumption() {
+        if(SessionGetUtil.isUser()) {
+            logger.info("显示消费统计页面");
+            return "customer/consumption_statistics";
+        }else{
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
+    }
+
+    @RequestMapping(value = "maintenance_page", method = RequestMethod.GET)
+    public String showMaintenance() {
+        if(SessionGetUtil.isUser()) {
+            logger.info("显示维修保养统计页面");
+            return "reportStatistics/maintenance_statistics";
+        }else{
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
+    }
+
+    @RequestMapping(value = "maintenanceItems_page", method = RequestMethod.GET)
+    public String showMaintenanceItems() {
+        if(SessionGetUtil.isUser()) {
+            logger.info("显示维修保养项目统计页面");
+            return "reportStatistics/maintenance_items_statistics";
+        }else{
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
+    }
+
+    @RequestMapping(value = "accessories_page", method = RequestMethod.GET)
+    public String showAccessories() {
+        if(SessionGetUtil.isUser()) {
+            logger.info("显示配件使用统计页面");
+            return "reportStatistics/accessories _usage_statistics";
+        }else{
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
+    }
 }

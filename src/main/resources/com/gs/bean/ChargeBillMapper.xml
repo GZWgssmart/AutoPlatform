@@ -186,6 +186,54 @@
 		</if>
 	</select>
 
+	<select id="queryByDefault"  resultMap="chargeBillResultMap">
+		<![CDATA[
+           select sum(cb.actualPayment) as actualPayment, cb.chargeCreatedTime from t_charge_bill cb
+           LEFT JOIN t_maintain_record  mr on cb.recordId = mr.recordId
+           LEFT JOIN t_checkin c on c.checkinId = mr.checkinId
+           WHERE DATE_FORMAT(cb.chargeCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+           and c.userId = #{userId} and cb.chargeBillStatus = 'Y'
+		]]>
+		<if test="maintainOrFix =='保养'">
+			and c.maintainOrFix = '保养'
+		</if>
+		<if test="maintainOrFix =='维修'">
+			and c.maintainOrFix = '维修'
+		</if>
+		GROUP BY day(cb.chargeCreatedTime)
+	</select>
+
+	<select id="queryByCondition"  resultType="list" resultMap="chargeBillResultMap">
+		<![CDATA[
+           select sum(cb.actualPayment) as actualPayment, cb.chargeCreatedTime from t_charge_bill cb
+           LEFT JOIN t_maintain_record  mr on cb.recordId = mr.recordId
+           LEFT JOIN t_checkin c on c.checkinId = mr.checkinId
+           where cb.chargeCreatedTime >= #{startTime} and cb.chargeCreatedTime <= #{endTime}
+           and c.userId = #{userId} and cb.chargeBillStatus = 'Y'
+		]]>
+		<if test="maintainOrFix =='保养'">
+			and c.maintainOrFix = '保养'
+		</if>
+		<if test="maintainOrFix =='维修'">
+			and c.maintainOrFix = '维修'
+		</if>
+		<if test="type =='year'">
+			GROUP BY year(cb.chargeCreatedTime)
+		</if>
+		<if test="type =='quarter'">
+			GROUP BY quarter(cb.chargeCreatedTime)
+		</if>
+		<if test="type =='month'">
+			GROUP BY month(cb.chargeCreatedTime)
+		</if>
+		<if test="type =='week'">
+			GROUP BY week(cb.chargeCreatedTime)
+		</if>
+		<if test="type =='day'">
+			GROUP BY day(cb.chargeCreatedTime)
+		</if>
+	</select>
+
 	<update id="inactive" parameterType="string">
 		<![CDATA[
 			update t_charge_bill set chargeBillStatus = 'N' where chargeBillId = #{id}

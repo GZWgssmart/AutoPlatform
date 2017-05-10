@@ -220,7 +220,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养提醒管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_basic.html">消费统计管理</a>
+                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/consumption_page">消费统计管理</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉管理</a>
                         </li>
@@ -252,13 +252,13 @@
                     <a href="#"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">报表统计</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="form_wizard.html">维修保养统计</a>
+                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/maintenance_page">维修保养统计</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/reportStatistics/staff_page">员工工单统计</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">维修保养类型统计</a>
+                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/maintenanceItems_page">维修保养项目统计</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_validate.html">配件使用统计</a>
+                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/accessories_page">配件使用统计</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/reportStatistics/finance_page">财务统计</a>
                         </li>
