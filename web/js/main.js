@@ -287,23 +287,6 @@ function status(value, row, index) {
 
 /** form表单提交 */
 function formSubmit(url, formId, winId) {
-    // var options = {
-    //     type:'post',
-    //     dataType:'json',
-    //     url:url,
-    //     success: function(data) {
-    //         if (data.result == "success") {
-    //             $('#' + winId).modal('hide');
-    //             swal(data.message, "", "success");
-    //             $('#cusTable').bootstrapTable('refresh');
-    //             $('#' + formId).data('bootstrapValidator').resetForm(true);
-    //         } else if (data.result == "fail") {
-    //             swal(data.message, "", "error");
-    //         }
-    //     }
-    // };
-    // $('#' + formId).ajaxSubmit(options);
-
     $.post(url,
         $("#" + formId).serialize(),
         function (data) {
@@ -314,6 +297,10 @@ function formSubmit(url, formId, winId) {
                 $('#' + formId).data('bootstrapValidator').resetForm(true);
             } else if (data.result == "fail") {
                 swal("错误提示", data.message, "error");
+                $("#addButton").removeAttr("disabled");
+                $("#editButton").removeAttr("disabled");
+                $("#detailButton").removeAttr("disabled");
+                $("#remindButton").removeAttr("disabled");
             } else if (data.result == "notLogin") {
                 swal({
                         title: "登入失败",

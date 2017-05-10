@@ -20,18 +20,16 @@ $(document).ready(function () {
 
         onSwitchChange: function (event, state) {
             if (state == true) {
-                isApp = true;
                 //调用函数，初始化表格
                 initTableNotTollbar("appTable", "/customer/customerInfo_pager");
-
                 $("#appWin").modal('show');
             } else if (state == false) {
-                isApp = false;
             }
         }
     });
+
     $("#appWin").on("hide.bs.modal", function () {
-        $("#addWin").modal('show')
+
         $('#isApp').bootstrapSwitch('state', false);
 
     });
@@ -63,6 +61,22 @@ function isAppChoice() {
     }
 }
 
+/** 选择车主*/
+function checkApp() {
+    var selectRow = $("#appTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一条数据", "error");
+        return false;
+    } else {
+        customer = selectRow[0];
+        setData(customer,"customer");
+        $("#appWin").on("hide.bs.modal", function () {
+            $('#isApp').bootstrapSwitch('state', true);
+        });
+        $("#appWin").modal('hide');
+    }
+}
+
 /** 修改窗口选择车型 */
 function editCheckBrand(combo) {
     $('#editCarModel').html('').trigger("change");
@@ -78,7 +92,6 @@ function editCheckBrand(combo) {
 /** 显示添加数据的窗口 */
 function showAddWin() {
     customer = "";
-    clearAddForm();
     validator("addForm");
     initDateTimePicker("datetimepicker", "arriveTime","addForm");
     $("#addWin").modal('show');
@@ -97,22 +110,6 @@ function setData(customer) {
     $("#addUserPhone").val(customer.userPhone);
     $("#addUserId").val(customer.userId);
 
-}
-
-/** 选择车主*/
-function checkApp() {
-    var selectRow = $("#appTable").bootstrapTable('getSelections');
-    if (selectRow.length != 1) {
-        swal('选择失败', "只能选择一条数据", "error");
-        return false;
-    } else {
-        customer = selectRow[0];
-        setData(customer,"customer");
-        $("#appWin").on("hide.bs.modal", function () {
-            $('#isApp').bootstrapSwitch('state', true);
-        });
-        $("#appWin").modal('hide');
-    }
 }
 
 /** 清除添加的form表单信息 */
@@ -206,6 +203,21 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json");
     },
@@ -220,6 +232,17 @@ window.operateEvents = {
         validator("editForm");
         $("#editWin").modal('show');
     }
+}
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchUserName").val('');
+    $("#searchUserPhone").val('');
+    $("#searchCarPlate").val('');
+    $("#searchMaintainOrFix").val('all');
+    $('#searchCompanyId').html('').trigger("change");
+    $("#searchDiv").hide();
+    $("#showButton").show();
 }
 
 /** 表单验证 */
@@ -318,11 +341,55 @@ function validator(formId) {
     })
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                var userEmail = $("#addUserEmail").val();
-                formSubmit("/appointment/add", formId, "addWin");
+                $.post("/appointment/add",
+                    $("#" + formId).serialize(),
+                    function (data) {
+                        if (data.result == "success") {
+                            $('#addWin').modal('hide');
+                            $('#cusTable').bootstrapTable('refresh');
+                        } else if (data.result == "fail") {
+                            swal("错误提示", data.message, "error");
+                        } else if (data.result == "notLogin") {
+                            swal({
+                                    title: "登入失败",
+                                    text: data.message,
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "确认",
+                                    cancelButtonText: "取消",
+                                    closeOnConfirm: true,
+                                    closeOnCancel: true
+
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        top.location.href = "/login/show_login";
+                                    } else {
+                                    }
+                                });
+                        }
+                    }, "json");
+                clearAddForm();
             } else if (formId == "editForm") {
-                formSubmit("/appointment/update", formId, "editWin");
+                formSubmit("/appointment/edit", formId, "editWin");
             }
         })
+}
+
+/**  条件查询*/
+function searchCheckin() {
+    var userName = $("#searchUserName").val();
+    var userPhone = $("#searchUserPhone").val();
+    var carPlate = $("#searchCarPlate").val();
+    var maintainOrFix = $("#searchMaintainOrFix").val();
+    var companyId = $("#searchCompanyId").val();
+    initTable("cusTable", "/appointment/appointment_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate +  "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
+}
+
+
+/** 子窗口调用父窗口的js方法 */
+function showMaintain() {
+    parent.showMaintainPage();
 }
 

@@ -40,16 +40,26 @@ public class WorkInfoController {
 
     @RequestMapping(value = "work", method = RequestMethod.GET)
     private String workInfo() {
-        logger.info(" 工单显示");
-        return "peopleManage/work";
+        if (SessionGetUtil.isUser()) {
+            logger.info(" 工单显示");
+            return "peopleManage/work";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "workInfo_insert", method = RequestMethod.POST)
     public ControllerResult infoInsert(WorkInfo workInfo){
-        logger.info("工单添加");
-        workInfoService.insert(workInfo);
-        return ControllerResult.getSuccessResult("添加成功");
+        if (SessionGetUtil.isUser()) {
+            logger.info("工单添加");
+            workInfoService.insert(workInfo);
+            return ControllerResult.getSuccessResult("添加成功");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
+        }
     }
 
     @ResponseBody
@@ -67,21 +77,31 @@ public class WorkInfoController {
     @ResponseBody
     @RequestMapping(value = "workInfo_update", method = RequestMethod.POST)
     public ControllerResult info_update(WorkInfo workInfo){
-        logger.info("信息修改");
-        workInfoService.update(workInfo);
-        return ControllerResult.getSuccessResult(" 修改成功");
+        if (SessionGetUtil.isUser()) {
+            logger.info("信息修改");
+            workInfoService.update(workInfo);
+            return ControllerResult.getSuccessResult(" 修改成功");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "workInfo_status", method = RequestMethod.GET)
     public ControllerResult info_status(@Param("id")String id, @Param("status")String status){
-        logger.info("状态修改");
-        if(status.equals("Y")){
-            workInfoService.inactive(id);
+        if (SessionGetUtil.isUser()) {
+            logger.info("状态修改");
+            if(status.equals("Y")){
+                workInfoService.inactive(id);
+            } else {
+                workInfoService.active(id);
+            }
+            return ControllerResult.getSuccessResult(" 修改成功");
         } else {
-            workInfoService.active(id);
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
         }
-        return ControllerResult.getSuccessResult(" 修改成功");
     }
 
     @InitBinder

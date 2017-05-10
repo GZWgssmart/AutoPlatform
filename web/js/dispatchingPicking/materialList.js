@@ -80,7 +80,7 @@ function bySelectSearch() {
     var userName = $("#searchUserName").val();
     var startTime = $("#createTimeStart").val();
     var endTime = $("#createTimeEnd").val();
-    initTable("cusTable", "/materialList/select_query?userName=" + userName + "&startTime=" + startTime + "&endTime=" + endTime);
+    initTable("cusTable", contextPath + "/materialList/select_query?userName=" + userName + "&startTime=" + startTime + "&endTime=" + endTime);
 }
 
 function queryStatus(status) {

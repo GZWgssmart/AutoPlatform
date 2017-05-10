@@ -105,6 +105,22 @@ public class AdminController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "select_query", method = RequestMethod.GET)
+    public Pager4EasyUI<User> selectQuery(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("userName") String userName, @Param("userPhone") String userPhone, @Param("userEmail") String userEmail) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+        logger.info("条件查询管理员");
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(userService.countSelectAdmin(userName, userPhone, userEmail));
+        List<User> users = userService.selectQuery(pager, userName, userPhone, userEmail);
+        return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "add_admin", method = RequestMethod.POST)
     public ControllerResult addAdmin(User user) {
         if (!SessionGetUtil.isUser()) {

@@ -40,6 +40,30 @@
 <body>
 
 <div class="container">
+    <form id="formSearch" class="form-horizontal">
+        <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+            <div class="col-sm-2" style="margin-left: -15px;">
+                <input type="text" id="searchEmail" class="form-control" placeholder="邮箱：">
+            </div>
+
+            <div class="col-sm-2" style="margin-left: -15px;">
+                <input type="text" id="searchPhone" class="form-control" placeholder="手机号：">
+            </div>
+
+            <div class="col-sm-2" style="margin-left: -15px;">
+                <input type="text" id="searchName" class="form-control" placeholder="姓名：">
+            </div>
+
+            <div class="col-sm-2">
+                <button type="button" onclick="bySelectSearch()" class="btn btn-primary">
+                    查询
+                </button>
+                <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </form>
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
            data-show-refresh="true"
@@ -132,6 +156,10 @@
                     查询董事长
                 </button>
             </a>
+            <a><button id="showButton" onclick="showSearchForm();" type="button" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i>
+                条件查询
+            </button></a>
         </div>
         </tbody>
 
@@ -182,7 +210,7 @@
                         <h3 class="m-t-none m-b">添加管理员</h3>
                         <form role="form" id="addForm">
                             <input type="hidden" id="birthday" name="userBirthday"/>
-                            <input type="text" id="gender" name="userGender"/>
+                            <input type="hidden" id="gender" name="userGender"/>
                             <%--<div class="form-group">
                                 <select id="adminTypeSelect" onchange="adminSelect('adminTypeSelect');"
                                         class="js-example-tags form-control adminCAndSO"

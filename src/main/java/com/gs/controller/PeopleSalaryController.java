@@ -3,8 +3,10 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Salary;
 import com.gs.bean.User;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.service.SalaryService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.session.Session;
@@ -37,8 +39,13 @@ public class PeopleSalaryController {
 
     @RequestMapping(value = "salary", method = RequestMethod.GET)
     public String customerInfo() {
-        logger.info(" 员工工资查看页面");
-        return "peopleManage/peopleSalary";
+        if (SessionGetUtil.isUser()) {
+            logger.info(" 员工工资查看页面");
+            return "peopleManage/peopleSalary";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
 
     @ResponseBody

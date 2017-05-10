@@ -101,6 +101,14 @@ public class UserServiceImpl implements UserService {
 		userDAO.updateAdmin(user);
 	}
 
+	public List<User> selectQuery(Pager pager, String userName, String userPhone, String userEmail) {
+		return userDAO.selectQuery(pager, userName, userPhone, userEmail);
+	}
+
+	public int countSelectAdmin(String userName, String userPhone, String userEmail) {
+		return userDAO.countSelectAdmin(userName, userPhone, userEmail);
+	}
+
 
 	public void insertAdmin(User user) {
 		userDAO.insertAdmin(user);

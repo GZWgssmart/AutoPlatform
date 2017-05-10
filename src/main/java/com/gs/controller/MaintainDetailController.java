@@ -102,6 +102,9 @@ public class MaintainDetailController {
                 logger.info("用户签字确认");
                 String[] maintainIds1 = maintainIds.split(",");
                 List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryAllByMaintainId(maintainIds1);
+                if (maintainFixAccs.size() <= 0) {
+                    return ControllerResult.getFailResult("用户签字失败，该项目还没有对应的配件");
+                }
                 List<MaterialList> materialLists = new ArrayList<MaterialList>();
                 for (MaintainFixAcc maintainFixAcc : maintainFixAccs) {
                     MaterialList materialList = new MaterialList();
@@ -110,15 +113,8 @@ public class MaintainDetailController {
                     materialList.setMaterialCount(maintainFixAcc.getAccCount());
                     materialLists.add(materialList);
                 }
-                System.out.println(materialLists.size() + ",size");
-                for (MaterialList materialList : materialLists) {
-                    System.out.println(materialList.getRecordId() + ",recordId");
-                    System.out.println(materialList.getAccId() + ",accId");
-                    System.out.println(materialList.getMaterialCount() + ",materialCount");
-                }
                 WorkInfo workInfo = new WorkInfo();
                 workInfo.setRecordId(recordId);
-
                 workInfoService.insert(workInfo);
                 materialListService.batchInsert(materialLists);
                 return ControllerResult.getSuccessResult("用户已经确认签字，工单信息和物料清单已经自动生成");
@@ -135,13 +131,36 @@ public class MaintainDetailController {
 
     @ResponseBody
     @RequestMapping(value = "query_detail", method = RequestMethod.GET)
-    public Integer queryIsDetail(@Param("recordId") String recordId, @Param("maintainId") String maintainId) {
+    public ControllerResult queryIsDetail(@Param("recordId") String recordId, @Param("maintainId") String maintainId) {
         if (SessionGetUtil.isUser()) {
-            logger.info("根据记录id和项目id判断该记录是否已经存在该项目，返回1表示存在，返回0表示不存在");
-            return detailService.queryIsDetail(recordId, maintainId);
+            int flag = detailService.queryIsDetail(recordId, maintainId);
+            logger.info("根据记录id和项目id判断该记录是否已经存在该项目，返回1表示存在，返回0表示不存在。result=" + flag);
+            if (flag == 0) {
+                return ControllerResult.getSuccessResult("此维修保养记录不存在该项目，可正常添加");
+            } else {
+                return ControllerResult.getFailResult("此维修保养记录已经存在该项目，不能再添加重复的配件");
+            }
         } else {
             logger.info("Session已失效，请重新登入");
-            return -1;
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "query_acc", method = RequestMethod.GET)
+    public ControllerResult queryIsAcc(String maintainIds) {
+        if (SessionGetUtil.isUser()) {
+            logger.info("根据项目id判断该项目有没有配件");
+            String[] maintainId = maintainIds.split(",");
+            List<MaintainFixAcc> maintainFixAccs = maintainFixAccService.queryAllByMaintainId(maintainId);
+            if (maintainFixAccs.size() <= 0) {
+                return ControllerResult.getFailResult("该项目还没有配件哦");
+            } else {
+                return ControllerResult.getSuccessResult("该项目已经有配件了");
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
     }
 

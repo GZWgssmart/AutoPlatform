@@ -60,23 +60,34 @@ public class PeopleInfoController {
 
     @RequestMapping(value = "people_info", method = RequestMethod.GET)
     private String peopleInfo() {
-        logger.info(" 人员基本信息页面");
-        return "peopleManage/people_info";
+        if (SessionGetUtil.isUser()) {
+            logger.info(" 人员基本信息页面");
+            return "peopleManage/people_info";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
+
     @ResponseBody
     @RequestMapping(value = "peopleInfo_insert", method = RequestMethod.POST)
     public ControllerResult infoInsert(User user, Company company, UserRole userRole){
-        logger.info("信息添加");
-        String peopleId = UUIDUtil.uuid();
-        user.setUserId(peopleId);
-        user.setCompanyId(company.getCompanyId());
-        Role role = roleService.queryByName("companyEmp");
-        userRole.setUserId(user.getUserId());
-        userRole.setRoleId(role.getRoleId());
-        user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
-        userRoleService.insert(userRole);
-        userService.insert(user);
-        return ControllerResult.getSuccessResult("添加成功");
+        if (SessionGetUtil.isUser()) {
+            logger.info("信息添加");
+            String peopleId = UUIDUtil.uuid();
+            user.setUserId(peopleId);
+            user.setCompanyId(company.getCompanyId());
+            Role role = roleService.queryByName("companyEmp");
+            userRole.setUserId(user.getUserId());
+            userRole.setRoleId(role.getRoleId());
+            user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
+            userRoleService.insert(userRole);
+            userService.insert(user);
+            return ControllerResult.getSuccessResult("添加成功");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
+        }
     }
 
     @ResponseBody
@@ -160,41 +171,56 @@ public class PeopleInfoController {
     @ResponseBody
     @RequestMapping(value = "peopleInfo_update", method = RequestMethod.POST)
     public ControllerResult info_update(User user, MultipartFile file, HttpSession session, HttpServletRequest request, Company company) throws IOException {
-        logger.info("信息修改");
-        System.out.println(file);
-        if(file != null){
-            String filePath =  FileUtil.uploadPath(session, UUID.randomUUID().toString()+"/"+file);
-            System.out.println(filePath);
-            if(!file.isEmpty()){
-                file.transferTo(new File(filePath));
-                user.setUserIcon(filePath);
+        if (SessionGetUtil.isUser()) {
+            logger.info("信息修改");
+            System.out.println(file);
+            if(file != null){
+                String filePath =  FileUtil.uploadPath(session, UUID.randomUUID().toString()+"/"+file);
+                System.out.println(filePath);
+                if(!file.isEmpty()){
+                    file.transferTo(new File(filePath));
+                    user.setUserIcon(filePath);
+                }
+            }else{
+                user.setUserIcon("img/default.png");
             }
-        }else{
-            user.setUserIcon("img/default.png");
+            user.setCompanyId(company.getCompanyId());
+            userService.update(user);
+            return ControllerResult.getSuccessResult(" 修改成功");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
         }
-        user.setCompanyId(company.getCompanyId());
-        userService.update(user);
-        return ControllerResult.getSuccessResult(" 修改成功");
     }
 
     @ResponseBody
     @RequestMapping(value = "peopleRole_update", method = RequestMethod.POST)
     public ControllerResult updateRole(UserRole userRole) {
-        logger.info("信息修改");
-        userRoleService.updateByRole(userRole);
-        return ControllerResult.getSuccessResult(" 修改成功");
+        if (SessionGetUtil.isUser()) {
+            logger.info("信息修改");
+            userRoleService.updateByRole(userRole);
+            return ControllerResult.getSuccessResult(" 修改成功");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "peopleInfo_status", method = RequestMethod.GET)
     public ControllerResult info_status(@Param("id")String id, @Param("status")String status){
-        logger.info("状态修改");
-        if(status.equals("Y")){
-            userService.inactive(id);
+        if (SessionGetUtil.isUser()) {
+            logger.info("状态修改");
+            if(status.equals("Y")){
+                userService.inactive(id);
+            } else {
+                userService.active(id);
+            }
+            return ControllerResult.getSuccessResult(" 修改成功");
         } else {
-            userService.active(id);
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
         }
-        return ControllerResult.getSuccessResult(" 修改成功");
     }
 
     @ResponseBody

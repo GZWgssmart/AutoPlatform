@@ -13,6 +13,7 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.FileUtil;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
@@ -60,23 +61,33 @@ public class CustomerController {
 
     @RequestMapping(value = "customer_page", method = RequestMethod.GET)
     public String customerInfo() {
-        logger.info(" 车主基本信息页面");
-        return "customerInfoManage/customer_info";
+        if (SessionGetUtil.isUser()) {
+            logger.info(" 车主基本信息页面");
+            return "customerInfoManage/customer_info";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
     @ResponseBody
     @RequestMapping(value = "customerInfo_insert", method = RequestMethod.POST)
     public ControllerResult infoInsert(User user, UserRole userRole, Company company){
-        logger.info("信息添加");
-        String customerId = UUIDUtil.uuid();
-        Role role = roleService.queryByName("carOwner");
-        user.setCompanyId(company.getCompanyId());
-        user.setUserId(customerId);
-        userRole.setUserId(user.getUserId());
-        userRole.setRoleId(role.getRoleId());
-        user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
-        userService.insert(user);
-        userRoleService.insert(userRole);
-        return ControllerResult.getSuccessResult("添加成功");
+        if (SessionGetUtil.isUser()) {
+            logger.info("信息添加");
+            String customerId = UUIDUtil.uuid();
+            Role role = roleService.queryByName("carOwner");
+            user.setCompanyId(company.getCompanyId());
+            user.setUserId(customerId);
+            userRole.setUserId(user.getUserId());
+            userRole.setRoleId(role.getRoleId());
+            user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
+            userService.insert(user);
+            userRoleService.insert(userRole);
+            return ControllerResult.getSuccessResult("添加成功");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
+        }
     }
 
 
@@ -163,21 +174,31 @@ public class CustomerController {
     @ResponseBody
     @RequestMapping(value = "customerInfo_update", method = RequestMethod.POST)
     public ControllerResult info_update(User user, Role role){
-        logger.info("信息修改");
-        userService.update(user);
-        return ControllerResult.getSuccessResult(" 修改成功");
+        if (SessionGetUtil.isUser()) {
+            logger.info("信息修改");
+            userService.update(user);
+            return ControllerResult.getSuccessResult(" 修改成功");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "customerInfo_status", method = RequestMethod.GET)
     public ControllerResult info_status(@Param("id")String id, @Param("status")String status){
-        logger.info("状态修改");
-        if(status.equals("Y")){
-            userService.inactive(id);
-        }else{
-            userService.active(id);
+        if (SessionGetUtil.isUser()) {
+            logger.info("状态修改");
+            if(status.equals("Y")){
+                userService.inactive(id);
+            }else{
+                userService.active(id);
+            }
+            return ControllerResult.getSuccessResult(" 修改成功");
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
         }
-        return ControllerResult.getSuccessResult(" 修改成功");
     }
 
     @InitBinder

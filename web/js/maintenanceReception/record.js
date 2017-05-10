@@ -5,8 +5,6 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/record/pager?status=ALL");
 
-    initDateTimePickerNotValitor("datetimepicker");
-
     initSelect2("maintain_fix", "请选择维修保养项目", "/maintainFix/maintain_all", "540");
 
     destoryValidator("editWin", "editForm");
@@ -109,8 +107,6 @@ window.operateEvents = {
 
               var record = row;
               $("#editForm").fill(record);
-              $('#editStartTime').val(formatterDate(record.startTime));
-              $('#editEndTime').val(formatterDate(record.endTime));
               $("#editWin").modal('show');
          }
 }
@@ -125,8 +121,6 @@ function showEditWin() {
     } else {
         var record = selectRow[0];
         $("#editForm").fill(record);
-        $('#editStartTime').val(formatterDate(record.startTime));
-        $('#editEndTime').val(formatterDate(record.endTime));
         $("#editWin").modal('show');
     }
 }
@@ -334,17 +328,42 @@ function determineMaintainOrFix(tableId, winId, message) {
         var recordId = $("#detailRecordId").val();
         $.get("/detail/query_detail?recordId=" + recordId + "&maintainId=" + maintain.maintainId,
             function(data) {
-                if (data == 0) { // 没有记录
-                    $("#detailMaintainId").val(maintain.maintainId);
-                    $("#detailMaintainName").val(maintain.maintainName);
-                    maintainMoney = maintain.maintainMoney;
-                    $("#" + winId).modal('hide');
-                } else if (data >= 1) { // 有记录
-                    swal("错误提示", "该记录已经添加了此配件，请不要重复添加哦^_^", "error");
-                } else { // Session失效
+                if (data.result == "success") { // 没有记录
+                    $.get("/detail/query_acc?maintainIds=" + maintain.maintainId,
+                        function(data) {
+                            if (data.result == "success") { // 有配件，可以添加
+                                $("#detailMaintainId").val(maintain.maintainId);
+                                $("#detailMaintainName").val(maintain.maintainName);
+                                maintainMoney = maintain.maintainMoney;
+                                $("#" + winId).modal('hide');
+                            } else if (data.result == "fail") { // 没有配件，添加失败
+                                swal("错误提示", data.message, "error");
+                            } else if (data.result == "notLogin") { // Session失效
+                                swal({
+                                        title: "登入失败",
+                                        text: data.message,
+                                        type: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "确认",
+                                        cancelButtonText: "取消",
+                                        closeOnConfirm: true,
+                                        closeOnCancel: true
+                                    },
+                                    function (isConfirm) {
+                                        if (isConfirm) {
+                                            top.location.href = "/login/show_login";
+                                        } else {
+                                        }
+                                    });
+                            }
+                        }, "json");
+                } else if (data.result == "fail") { // 有记录
+                    swal("错误提示", data.message, "error");
+                } else if (data.result == "notLogin") { // Session失效
                     swal({
                             title: "登入失败",
-                            text: "登入信息已失效，请重新登入",
+                            text: data.message,
                             type: "warning",
                             showCancelButton: true,
                             confirmButtonColor: "#DD6B55",

@@ -292,6 +292,46 @@
 		]]>
 	</select>
 
+	<select id="selectQuery" resultType="list" resultMap="userResultMap">
+		<![CDATA[
+			select u.*, c.companyId, c.companyName, r.roleDes from t_user u
+			LEFT JOIN t_company c on u.companyId = c.companyId
+			LEFT JOIN t_user_role ur  on ur.userId = u.userId
+			LEFT JOIN t_role r on r.roleId = ur.roleId
+			where r.roleId in(select roleId from t_role where roleName like concat('%','Admin', '%'))
+		]]>
+		<if test="userName != null and userName != '' ">
+			and u.userName like concat('%',#{userName},'%')
+		</if>
+		<if test="userPhone != null and userPhone != '' ">
+			and u.userPhone like concat('%',#{userPhone},'%')
+		</if>
+		<if test="userEmail != null and userEmail != '' ">
+			and u.userEmail like concat('%',#{userEmail},'%')
+		</if>
+		order by userCreatedTime Desc
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="countSelectAdmin" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) from t_user u
+			LEFT JOIN t_company c on u.companyId = c.companyId
+			LEFT JOIN t_user_role ur  on ur.userId = u.userId
+			LEFT JOIN t_role r on r.roleId = ur.roleId
+			where r.roleId in(select roleId from t_role where roleName like concat('%','Admin', '%'))
+		]]>
+		<if test="userName != null and userName != '' ">
+			and u.userName like concat('%',#{userName},'%')
+		</if>
+		<if test="userPhone != null and userPhone != '' ">
+			and u.userPhone like concat('%',#{userPhone},'%')
+		</if>
+		<if test="userEmail != null and userEmail != '' ">
+			and u.userEmail like concat('%',#{userEmail},'%')
+		</if>
+	</select>
+
 	<update id="inactive" parameterType="string">
 		<![CDATA[
 			UPDATE t_user set userStatus = 'N' where userId = #{userId}

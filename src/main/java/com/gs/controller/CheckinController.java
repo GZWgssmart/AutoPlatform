@@ -128,7 +128,7 @@ public class CheckinController {
     public ControllerResult addCheckin(Checkin checkin, String isApp) {
         if (SessionGetUtil.isUser()) {
             try {
-                logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录和工单信息");
+                logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录");
                 User loginUser = SessionGetUtil.getUser();
                 String checkinId = UUIDUtil.uuid();
                 String userId = "";
@@ -160,7 +160,6 @@ public class CheckinController {
                 maintainRecord.setRecordId(recordId);
                 maintainRecord.setSpeedStatus(Constants.CHECKIN);
                 maintainRecord.setCheckinId(checkinId);
-                maintainRecord.setStartTime(new Date());
                 maintainRecord.setCompanyId(loginUser.getCompanyId());
 
                 if (isApp != null && !isApp.equals("") && isApp.equals("on")) {
@@ -169,7 +168,7 @@ public class CheckinController {
 
                 maintainRecordService.insert(maintainRecord);
                 checkinService.insert(checkin);
-                return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录和工单信息已经自动生成");
+                return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录已经自动生成");
             } catch (Exception e) {
                 logger.info("添加登记记录失败，出现了一个错误");
                 return ControllerResult.getFailResult("添加登记记录失败，出现了一个错误");
