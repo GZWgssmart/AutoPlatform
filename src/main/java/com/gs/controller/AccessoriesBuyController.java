@@ -107,7 +107,7 @@ public class AccessoriesBuyController {
             accessoriesBuyService.insert(accessoriesBuy);
             accessoriesService.insert(acc);
             accessoriesTypeService.insert(accessoriesType);
-            supplyService.insert(supply);
+//            supplyService.insert(supply);
 
             return ControllerResult.getSuccessResult("添加成功");
         }

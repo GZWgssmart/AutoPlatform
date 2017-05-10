@@ -180,7 +180,7 @@ function addAccBuy() {
     } else {
         var acc = selectRow[0];
         $("#accBuyTime").val(formatterDate(acc.accUsedTime));
-        autoCalculation1(formId, count, price, discount, names);
+        // autoCalculation1(formId, count, price, discount, names);
         $("#addForm").fill(acc);
         enableSwitch("accWin","isAcc");
         $("#accWin").modal("hide");
