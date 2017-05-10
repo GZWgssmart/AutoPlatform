@@ -114,26 +114,26 @@ public class WorkInfoController {
     @ResponseBody
     @RequestMapping(value="query_default",method= RequestMethod.GET)
     public List<LineBasic> queryAll(@Param("companyId")String companyId){
-       // if(SessionGetUtil.isUser()) {
+       if(SessionGetUtil.isUser()) {
             logger.info("默认查询本月工单报表显示");
             List<LineBasic> lineBasics = new ArrayList<LineBasic>();
             LineBasic lineBasic = new LineBasic();
             LineBasic lineBasic1 = new LineBasic();
             lineBasic.setName("保养");
-            dateDay("maintenance", companyId);
-            lineBasic.setData(HighchartsData.doubleDayOutType);
+            dateDay("one", companyId);
+            lineBasic.setData(HighchartsData.doubleDayOne);
             lineBasic1.setName("维修");
-            dateDay("service", companyId);
-            lineBasic1.setData(HighchartsData.doubleDayInType);
+            dateDay("two", companyId);
+            lineBasic1.setData(HighchartsData.doubleDayTwo);
             lineBasic.setCategories(HighchartsData.strDay);
             lineBasic1.setCategories(HighchartsData.strDay);
             lineBasics.add(lineBasic);
             lineBasics.add(lineBasic1);
             return lineBasics;
-        /*} else{
+        } else{
             logger.info("Session已失效，请重新登入");
             return null;
-        }*/
+        }
 
     }
 
@@ -141,8 +141,8 @@ public class WorkInfoController {
     @RequestMapping(value="query_condition",method= RequestMethod.GET)
     public List<LineBasic> queryCondition(@Param("start")String start,@Param("end")String end,
                                           @Param("type")String type,@Param("companyId")String companyId){
-        //if(SessionGetUtil.isUser()) {
-            logger.info("根据年，月，季度，周，日查询所有收支记录报表显示");
+        if(SessionGetUtil.isUser()) {
+            logger.info("根据年，月，季度，周，日查询所有工单显示");
             List<LineBasic> lineBasics = new ArrayList<LineBasic>();
             LineBasic lineBasic = new LineBasic();
             LineBasic lineBasic1 = new LineBasic();
@@ -151,39 +151,39 @@ public class WorkInfoController {
             if (start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")) {
                 if (type.equals("year")) {
                     HighchartsData.setStrYear(start, end);
-                    dataCondition(start, end, "保养", type, "year", "maintenance", companyId);
-                    lineBasic.setData(HighchartsData.doubleYearOutType);
-                    dataCondition(start, end, "维修", type, "year", "service", companyId);
-                    lineBasic1.setData(HighchartsData.doubleYearInType);
+                    dataCondition(start, end, "保养", type, "year", "one", companyId);
+                    lineBasic.setData(HighchartsData.doubleYearOne);
+                    dataCondition(start, end, "维修", type, "year", "two", companyId);
+                    lineBasic1.setData(HighchartsData.doubleYearTwo);
                     lineBasic.setCategories(HighchartsData.strYear);
                     lineBasic1.setCategories(HighchartsData.strYear);
                 } else if (type.equals("quarter")) {
-                    dataCondition(start, end, "保养", type, "quarter", "maintenance", companyId);
-                    lineBasic.setData(HighchartsData.doubleQuarterOutType);
-                    dataCondition(start, end, "维修", type, "quarter", "service", companyId);
-                    lineBasic1.setData(HighchartsData.doubleQuarterInType);
+                    dataCondition(start, end, "保养", type, "quarter", "one", companyId);
+                    lineBasic.setData(HighchartsData.doubleQuarterOne);
+                    dataCondition(start, end, "维修", type, "quarter", "two", companyId);
+                    lineBasic1.setData(HighchartsData.doubleQuarterTwo);
                     lineBasic.setCategories(HighchartsData.strQuarter);
                     lineBasic1.setCategories(HighchartsData.strQuarter);
                 } else if (type.equals("month")) {
-                    dataCondition(start, end, "保养", type, "month", "maintenance", companyId);
-                    lineBasic.setData(HighchartsData.doubleMonthOutType);
-                    dataCondition(start, end, "维修", type, "month", "service", companyId);
-                    lineBasic1.setData(HighchartsData.doubleMonthInType);
+                    dataCondition(start, end, "保养", type, "month", "one", companyId);
+                    lineBasic.setData(HighchartsData.doubleMonthOne);
+                    dataCondition(start, end, "维修", type, "month", "two", companyId);
+                    lineBasic1.setData(HighchartsData.doubleMonthTwo);
                     lineBasic.setCategories(HighchartsData.strMonth);
                     lineBasic1.setCategories(HighchartsData.strMonth);
                 } else if (type.equals("week")) {
                     HighchartsData.setStrWeek(start, end);
-                    dataCondition(start, end, "保养", type, "week", "maintenance", companyId);
-                    lineBasic.setData(HighchartsData.doubleWeekOutType);
-                    dataCondition(start, end, "维修", type, "week", "service", companyId);
-                    lineBasic1.setData(HighchartsData.doubleWeekInType);
+                    dataCondition(start, end, "保养", type, "week", "one", companyId);
+                    lineBasic.setData(HighchartsData.doubleWeekOne);
+                    dataCondition(start, end, "维修", type, "week", "two", companyId);
+                    lineBasic1.setData(HighchartsData.doubleWeekTwo);
                     lineBasic.setCategories(HighchartsData.strWeek);
                     lineBasic1.setCategories(HighchartsData.strWeek);
                 } else if (type.equals("day")) {
-                    dataCondition(start, end, "保养", type, "day", "maintenance", companyId);
-                    lineBasic.setData(HighchartsData.doubleDayOutType);
-                    dataCondition(start, end, "维修", type, "day", "service", companyId);
-                    lineBasic1.setData(HighchartsData.doubleDayInType);
+                    dataCondition(start, end, "保养", type, "day", "one", companyId);
+                    lineBasic.setData(HighchartsData.doubleDayOne);
+                    dataCondition(start, end, "维修", type, "day", "two", companyId);
+                    lineBasic1.setData(HighchartsData.doubleDayTwo);
                     lineBasic.setCategories(HighchartsData.strDay);
                     lineBasic1.setCategories(HighchartsData.strDay);
                 }
@@ -191,22 +191,22 @@ public class WorkInfoController {
             lineBasics.add(lineBasic);
             lineBasics.add(lineBasic1);
             return lineBasics;
-       /* } else{
+        } else{
             logger.info("Session已失效，请重新登入");
             return null;
-        }*/
+        }
     }
 
 
-    /*  默认查询本月的收入与支出
+    /*  默认查询本月的工单
     * */
     public void dateDay(String type,String companyId){
-        HighchartsData.doubleDayInType = new double[31];
-        HighchartsData.doubleDayOutType = new double[31];
+        HighchartsData.doubleDayTwo = new double[31];
+        HighchartsData.doubleDayOne = new double[31];
         List<WorkInfo> workInfos = null;
-        if(type.equals("maintenance")){
+        if(type.equals("one")){
             workInfos = workInfoService.queryByDefault("保养",companyId);
-        }else if(type.equals("service")){
+        }else if(type.equals("two")){
             workInfos = workInfoService.queryByDefault("维修",companyId);
         }
         int i = 0;
@@ -220,10 +220,10 @@ public class WorkInfoController {
         for(int j = 0,len = HighchartsData.strDay.length; j <len ; j++){
             for(int k = 0; k < strs.length; k++){
                 if(HighchartsData.strDay[j].equals(strs[k])){
-                    if(type.equals("service")){
-                        HighchartsData.doubleDayInType[j] = doubles[k];
-                    }else if(type.equals("maintenance")){
-                        HighchartsData.doubleDayOutType[j] = doubles[k];
+                    if(type.equals("two")){
+                        HighchartsData.doubleDayTwo[j] = doubles[k];
+                    }else if(type.equals("one")){
+                        HighchartsData.doubleDayOne[j] = doubles[k];
                     }
 
                 }
@@ -233,19 +233,19 @@ public class WorkInfoController {
 
     }
     /*
-    *  按年，季度，月，周，日，查询
+    *  按年，季度，月，周，日，查询 工单
     * */
-    public void dataCondition(String start,String end,String maintainOrFix,String type,String date,String inOut,String companyId){
-        HighchartsData.doubleDayInType = new double[31];
-        HighchartsData.doubleDayOutType = new double[31];
-        HighchartsData. doubleMonthInType = new double[12];
-        HighchartsData.doubleMonthOutType = new double[12];
-        HighchartsData.doubleQuarterInType = new double[4];
-        HighchartsData.doubleQuarterOutType = new double[4];
-        HighchartsData.doubleYearInType = new double[HighchartsData.yearLen];
-        HighchartsData.doubleYearOutType = new double[HighchartsData.yearLen];
-        HighchartsData.doubleWeekInType = new double[HighchartsData.weekLen];
-        HighchartsData.doubleWeekOutType = new double[HighchartsData.weekLen];
+    public void dataCondition(String start,String end,String maintainOrFix,String type,String date,String species,String companyId){
+        HighchartsData.doubleDayTwo = new double[31];
+        HighchartsData.doubleDayOne = new double[31];
+        HighchartsData. doubleMonthTwo = new double[12];
+        HighchartsData.doubleMonthOne = new double[12];
+        HighchartsData.doubleQuarterTwo = new double[4];
+        HighchartsData.doubleQuarterOne = new double[4];
+        HighchartsData.doubleYearTwo = new double[HighchartsData.yearLen];
+        HighchartsData.doubleYearOne = new double[HighchartsData.yearLen];
+        HighchartsData.doubleWeekTwo = new double[HighchartsData.weekLen];
+        HighchartsData.doubleWeekOne = new double[HighchartsData.weekLen];
         List<WorkInfo> workInfos = workInfoService.queryByCondition(start,end,maintainOrFix,type,companyId);;
         int i = 0;
         double[] doubles = new double[workInfos.size()];
@@ -272,15 +272,15 @@ public class WorkInfoController {
             i++;
         }
         if(date.equals("quarter")) {
-            HighchartsData.getQuarter(strs,doubles,inOut);
+            HighchartsData.getQuarter(strs,doubles,species);
         }else if(date.equals("month")){
-            HighchartsData.getMonth(strs,doubles,inOut);
+            HighchartsData.getMonth(strs,doubles,species);
         }else if(date.equals("day")){
-            HighchartsData.getDay(strs,doubles,inOut);
+            HighchartsData.getDay(strs,doubles,species);
         }else if(date.equals("year")){
-            HighchartsData. getYear(strs,doubles,inOut);
+            HighchartsData. getYear(strs,doubles,species);
         }else if(date.equals("week")){
-            HighchartsData.getWeek(strs,doubles,inOut);
+            HighchartsData.getWeek(strs,doubles,species);
         }
     }
 }

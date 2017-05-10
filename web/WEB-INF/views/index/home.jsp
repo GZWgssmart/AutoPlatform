@@ -138,9 +138,9 @@
                         </li>
                         <li><a class="J_menuItem" href="<%=path %>/supply/info">供应商信息管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path %>/order/order">下单统计</a>
+                        <li><a class="J_menuItem" href="<%=path %>/reportStatistics/order_page">下单统计</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path %>/pay/pay">支付统计</a>
+                        <li><a class="J_menuItem" href="<%=path %>/reportStatistics/pay_page">支付统计</a>
                         </li>
                     </ul>
                 </li>
@@ -175,7 +175,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path %>/checkin/checkin_page">接待登记管理</a>
                         </li>
-                        <li><a id="maintain" class="J_menuItem" href="<%=path%>/record/record_page">维修保养记录管理</a>
+                        <li><a id="maintain" class="J_menuItem" href="<%=path%>/record/record_page">维修养记录管理</a>
                         </li>
                     </ul>
                 </li>

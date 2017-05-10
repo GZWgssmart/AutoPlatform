@@ -20,10 +20,10 @@ function isType(){
         offColor: 'danger',
         size: 'normal',
         onSwitchChange: function (event, state) {
-            if (state == true) {
+            if (state == false) {
                $("#outDiv").css("display",'block');
                 $("#inDiv").css("display",'none');
-            } else if (state == false) {
+            } else if (state == true) {
                 $('#inDiv').css("display",'block');
                 $("#outDiv").css("display",'none');
 
@@ -75,6 +75,21 @@ window.operateEvents = {
                          $('#cusTable').bootstrapTable('refresh');
                      }else if(data.result == "fail"){
                          swal(data.message, "", "error");
+                     }else if (data.result == "notLogin") {
+                         swal({
+                                 title: "登入失败",
+                                 text: data.message,
+                                 type: "warning",
+                                 showCancelButton: false,
+                                 confirmButtonColor: "#DD6B55",
+                                 confirmButtonText: "确认",
+                                 closeOnConfirm: true
+                             },
+                             function (isConfirm) {
+                                 if (isConfirm) {
+                                     top.location.href = "/login/show_login";
+                                 }
+                             });
                      }
                  },"json");
          },
@@ -86,6 +101,21 @@ window.operateEvents = {
                           $('#cusTable').bootstrapTable('refresh');
                       }else if(data.result == "fail"){
                           swal(data.message, "", "error");
+                      }else if (data.result == "notLogin") {
+                          swal({
+                                  title: "登入失败",
+                                  text: data.message,
+                                  type: "warning",
+                                  showCancelButton: false,
+                                  confirmButtonColor: "#DD6B55",
+                                  confirmButtonText: "确认",
+                                  closeOnConfirm: true
+                              },
+                              function (isConfirm) {
+                                  if (isConfirm) {
+                                      top.location.href = "/login/show_login";
+                                  }
+                              });
                       }
                   },"json");
           },

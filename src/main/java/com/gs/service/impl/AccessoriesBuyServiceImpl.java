@@ -5,6 +5,7 @@ import com.gs.bean.AccessoriesBuy;
 import com.gs.common.bean.Pager;
 import com.gs.dao.AccessoriesBuyDAO;
 import com.gs.service.AccessoriesBuyService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -121,6 +122,22 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 
     public int countByBuyTimeScope(String accName, String buyTimeStart, String buyTimeEnd) {
         return accessoriesBuyDAO.countByBuyTimeScope(accName, buyTimeStart, buyTimeEnd);
+    }
+
+    public List<AccessoriesBuy> queryByDefaultCount( String companyId) {
+        return accessoriesBuyDAO.queryByDefaultCount(companyId);
+    }
+
+    public List<AccessoriesBuy> queryByConditionCount( String startTime, String endTime, String type,  String companyId) {
+        return accessoriesBuyDAO.queryByConditionCount(startTime,endTime,type,companyId);
+    }
+
+    public List<AccessoriesBuy> queryByDefaultPay( String companyId) {
+        return accessoriesBuyDAO.queryByDefaultPay(companyId);
+    }
+
+    public List<AccessoriesBuy> queryByConditionPay( String startTime,  String endTime,  String type,  String companyId) {
+        return accessoriesBuyDAO.queryByConditionPay(startTime,endTime,type,companyId);
     }
 
 

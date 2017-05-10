@@ -277,9 +277,6 @@
                             <thead>
                             <tr>
                                 <th data-field="state" data-checkbox="true"></th>
-                                <th data-field="userId" data-sortable="true" data-formatter="random">
-                                    人员编号
-                                </th>
                                 <th data-field="userName">
                                     姓名
                                 </th>

@@ -21,23 +21,26 @@ public class HighchartsData {
             "10月","11月","12月"};
 
     public  static  String[] strYear;
-    public  static  int yearLen;
-    public  static double[] doubleYearInType;
-    public  static double[] doubleYearOutType;
-
     public  static String[] strWeek;
+
     public  static int weekLen;
-    public  static double[] doubleWeekInType;
-    public  static double[] doubleWeekOutType;
+    public  static  int yearLen;
 
-    public  static double[] doubleMonthInType = new double[12];
-    public  static double[] doubleMonthOutType = new double[12];
+    public  static double[] doubleYearOne;
+    public  static double[] doubleYearTwo;
 
-    public  static double[] doubleDayInType = new double[31];
-    public  static double[] doubleDayOutType = new double[31];
 
-    public  static double[] doubleQuarterInType = new double[4];
-    public  static double[] doubleQuarterOutType = new double[4];
+    public  static double[] doubleWeekOne;
+    public  static double[] doubleWeekTwo;
+
+    public  static double[] doubleMonthOne = new double[12];
+    public  static double[] doubleMonthTwo = new double[12];
+
+    public  static double[] doubleDayOne = new double[31];
+    public  static double[] doubleDayTwo = new double[31];
+
+    public  static double[] doubleQuarterOne = new double[4];
+    public  static double[] doubleQuarterTwo = new double[4];
 
     public  static int len;
 
@@ -61,18 +64,14 @@ public class HighchartsData {
     }
 
     // 获取周报表数据
-    public static void getWeek(String[] strs,double[] doubles,String inOut) {
+    public static void getWeek(String[] strs,double[] doubles,String species) {
         for (int j = 0; j < len; j++) {
             for (int k = 0; k < strs.length; k++) {
                 if (strWeek[j].equals(strs[k])) {
-                    if (inOut.equals("incoming")) {
-                        doubleWeekInType[j] = doubles[k];
-                    } else if (inOut.equals("outgoing")) {
-                        doubleWeekOutType[j] = doubles[k];
-                    }else if(inOut.equals("service")){
-                        doubleWeekInType[j] = doubles[k];
-                    }else if(inOut.equals("maintenance")){
-                        doubleWeekOutType[j] = doubles[k];
+                    if (species.equals("one")) {
+                        doubleWeekOne[j] = doubles[k];
+                    } else if (species.equals("two")) {
+                        doubleWeekTwo[j] = doubles[k];
                     }
                 }
             }
@@ -80,18 +79,14 @@ public class HighchartsData {
     }
 
     // 获取年报表数据
-    public static void getYear(String[] strs,double[] doubles,String inOut) {
+    public static void getYear(String[] strs,double[] doubles,String species) {
         for (int j = 0; j < len; j++) {
             for (int k = 0; k < strs.length; k++) {
                 if (strYear[j].equals(strs[k])) {
-                    if (inOut.equals("incoming")) {
-                        doubleYearInType[j] = doubles[k];
-                    } else if (inOut.equals("outgoing")) {
-                        doubleYearOutType[j] = doubles[k];
-                    }else if(inOut.equals("service")){
-                        doubleYearInType[j] = doubles[k];
-                    }else if(inOut.equals("maintenance")){
-                        doubleYearOutType[j] = doubles[k];
+                    if (species.equals("one")) {
+                        doubleYearOne[j] = doubles[k];
+                    } else if (species.equals("two")) {
+                        doubleYearTwo[j] = doubles[k];
                     }
                 }
             }
@@ -99,48 +94,30 @@ public class HighchartsData {
     }
 
     // 获取季度报表数据
-    public static void getQuarter(String[] strs,double[] doubles,String inOut){
+    public static void getQuarter(String[] strs,double[] doubles,String species){
         for(int j = 0; j < len; j++) {
             for (int k = 0; k < strs.length; k++) {
                 if (strs[k].equals("01") || strs[k].equals("02") || strs[k].equals("03")) {
-                    if (inOut.equals("incoming")) {
-                        doubleQuarterInType[0] = doubles[k];
-                    } else if (inOut.equals("outgoing")) {
-                        doubleQuarterOutType[0] = doubles[k];
-                    }else if(inOut.equals("service")){
-                        doubleQuarterInType[0] = doubles[k];
-                    }else if(inOut.equals("maintenance")){
-                        doubleQuarterOutType[0] = doubles[k];
+                    if (species.equals("one")) {
+                        doubleQuarterOne[0] = doubles[k];
                     }
                 } else if (strs[k].equals("04") || strs[k].equals("05") || strs[k].equals("06")) {
-                    if (inOut.equals("incoming")) {
-                        doubleQuarterInType[1] = doubles[k];
-                    } else if (inOut.equals("outgoing")) {
-                        doubleQuarterOutType[1] = doubles[k];
-                    }else if(inOut.equals("service")){
-                        doubleQuarterInType[1] = doubles[k];
-                    }else if(inOut.equals("maintenance")){
-                        doubleQuarterOutType[1] = doubles[k];
+                    if (species.equals("one")) {
+                        doubleQuarterOne[1] = doubles[k];
+                    } else if (species.equals("two")) {
+                        doubleQuarterTwo[1] = doubles[k];
                     }
                 } else if (strs[k].equals("07") || strs[k].equals("08") || strs[k].equals("09")) {
-                    if (inOut.equals("incoming")) {
-                        doubleQuarterInType[2] = doubles[k];
-                    } else if (inOut.equals("outgoing")) {
-                        doubleQuarterOutType[2] = doubles[k];
-                    }else if(inOut.equals("service")){
-                        doubleQuarterInType[2] = doubles[k];
-                    }else if(inOut.equals("maintenance")){
-                        doubleQuarterOutType[2] = doubles[k];
+                    if (species.equals("one")) {
+                        doubleQuarterOne[2] = doubles[k];
+                    } else if (species.equals("two")) {
+                        doubleQuarterTwo[2] = doubles[k];
                     }
                 } else if (strs[k].equals("10") || strs[k].equals("11") || strs[k].equals("12")) {
-                    if (inOut.equals("incoming")) {
-                        doubleQuarterInType[3] = doubles[k];
-                    } else if (inOut.equals("outgoing")) {
-                        doubleQuarterOutType[3] = doubles[k];
-                    }else if(inOut.equals("service")){
-                        doubleQuarterInType[3] = doubles[k];
-                    }else if(inOut.equals("maintenance")){
-                        doubleQuarterOutType[3] = doubles[k];
+                    if (species.equals("one")) {
+                        doubleQuarterOne[3] = doubles[k];
+                    } else if (species.equals("two")) {
+                        doubleQuarterTwo[3] = doubles[k];
                     }
                 }
             }
@@ -149,18 +126,14 @@ public class HighchartsData {
     }
 
     // 获取月报表数据
-    public static void getMonth(String[] strs,double[] doubles,String inOut) {
+    public static void getMonth(String[] strs,double[] doubles,String species) {
         for (int j = 0; j < len; j++) {
             for (int k = 0; k < strs.length; k++) {
                 if (strMonth[j].equals(strs[k])) {
-                    if (inOut.equals("incoming")) {
-                        doubleMonthInType[j] = doubles[k];
-                    } else if (inOut.equals("outgoing")) {
-                        doubleMonthOutType[j] = doubles[k];
-                    }else if(inOut.equals("service")){
-                        doubleMonthInType[j] = doubles[k];
-                    }else if(inOut.equals("maintenance")){
-                        doubleMonthOutType[j] = doubles[k];
+                    if (species.equals("one")) {
+                        doubleMonthOne[j] = doubles[k];
+                    } else if (species.equals("two")) {
+                        doubleMonthTwo[j] = doubles[k];
                     }
                 }
             }
@@ -168,18 +141,14 @@ public class HighchartsData {
     }
 
     // 获取日报表数据
-    public  static void getDay(String[] strs,double[] doubles,String inOut) {
+    public  static void getDay(String[] strs,double[] doubles,String species) {
         for (int j = 0; j < len; j++) {
             for (int k = 0; k < strs.length; k++) {
                 if(strDay[j].equals(strs[k])){
-                    if(inOut.equals("incoming")){
-                        doubleDayInType[j] = doubles[k];
-                    }else if(inOut.equals("outgoing")){
-                        doubleDayOutType[j] = doubles[k];
-                    }else if(inOut.equals("service")){
-                        doubleDayInType[j] = doubles[k];
-                    }else if(inOut.equals("maintenance")){
-                        doubleDayOutType[j] = doubles[k];
+                    if(species.equals("one")){
+                        doubleDayOne[j] = doubles[k];
+                    }else if(species.equals("two")){
+                        doubleDayTwo[j] = doubles[k];
                     }
                 }
             }

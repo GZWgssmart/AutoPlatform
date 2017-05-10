@@ -3,6 +3,7 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.IncomingType;
 import com.gs.bean.Salary;
+import com.gs.bean.User;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -38,8 +39,13 @@ public class IncomingTypeController {
 
     @RequestMapping(value = "show_incomingType", method = RequestMethod.GET)
     public String incomingType() {
-        logger.info("显示收入类型页面");
-        return "financeManage/incoming_type";
+        if(SessionGetUtil.isUser()) {
+            logger.info("显示收入类型页面");
+            return "financeManage/incoming_type";
+        }else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
 
     @ResponseBody
@@ -64,7 +70,8 @@ public class IncomingTypeController {
     public ControllerResult incomingTypeAdd(IncomingType incomingType){
         if(SessionGetUtil.isUser()) {
             logger.info("添加收入类型");
-            incomingType.setInTypeStatus("Y");
+            User user = SessionGetUtil.getUser();
+            user.setCompanyId(user.getCompanyId());
             incomingTypeService.insert(incomingType);
             return ControllerResult.getSuccessResult("添加成功");
         } else{
@@ -78,6 +85,8 @@ public class IncomingTypeController {
     public ControllerResult incomingUpdate(IncomingType incomingType){
         if(SessionGetUtil.isUser()) {
             logger.info("更新收入类型");
+            User user = SessionGetUtil.getUser();
+            user.setCompanyId(user.getCompanyId());
             incomingTypeService.update(incomingType);
             return ControllerResult.getSuccessResult("更新成功");
         }else{

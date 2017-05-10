@@ -6,7 +6,6 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/incomingType/query_pager");
-    initSelect2("company", "请选择公司", "/company/company_all", "565");
     destoryValidator("editWin","editForm");
     destoryValidator("addWin","addForm");
 });
@@ -61,6 +60,21 @@ window.operateEvents = {
                              $('#cusTable').bootstrapTable('refresh');
                          } else if (data.result == "fail") {
                              swal(data.message, "", "error");
+                         }else if (data.result == "notLogin") {
+                             swal({
+                                     title: "登入失败",
+                                     text: data.message,
+                                     type: "warning",
+                                     showCancelButton: false,
+                                     confirmButtonColor: "#DD6B55",
+                                     confirmButtonText: "确认",
+                                     closeOnConfirm: true
+                                 },
+                                 function (isConfirm) {
+                                     if (isConfirm) {
+                                         top.location.href = "/login/show_login";
+                                     }
+                                 });
                          }
                      }, "json");
              }else{
@@ -76,6 +90,21 @@ window.operateEvents = {
                               $('#cusTable').bootstrapTable('refresh');
                           } else if (data.result == "fail") {
                               swal(data.message, "", "error");
+                          }else if (data.result == "notLogin") {
+                              swal({
+                                      title: "登入失败",
+                                      text: data.message,
+                                      type: "warning",
+                                      showCancelButton: false,
+                                      confirmButtonColor: "#DD6B55",
+                                      confirmButtonText: "确认",
+                                      closeOnConfirm: true
+                                  },
+                                  function (isConfirm) {
+                                      if (isConfirm) {
+                                          top.location.href = "/login/show_login";
+                                      }
+                                  });
                           }
                       }, "json");
               } else{
