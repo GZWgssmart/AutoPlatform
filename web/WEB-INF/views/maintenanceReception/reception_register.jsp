@@ -301,7 +301,7 @@
 
                             </div>
                             <div class="form-group" id="userDiv">
-                                <label>从系统中选择车主信息：</label>
+                                <label>是否注册车主：</label>
                                 <input type="checkbox" id="choiceUser" name="user" onchange="isUserChoice()">
                             </div>
                             <div class="form-group">

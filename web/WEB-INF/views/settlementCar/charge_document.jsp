@@ -113,8 +113,8 @@
                     <i class="glyphicon glyphicon-print"></i> 打印收费单据
                 </button>
             </a>
-            <a>
-                <button onclick="exportChargeBill();" type="button" class="btn btn-default">
+            <a onclick="location.href='/bill/export_excel'" href="javascript:;">
+                <button type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-new-window"></i> 导出
                 </button>
             </a>

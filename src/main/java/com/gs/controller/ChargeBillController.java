@@ -6,6 +6,7 @@ import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.ExcelExport;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -203,6 +206,45 @@ public class ChargeBillController {
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+    }
+
+    @RequestMapping(value="export_excel", method = RequestMethod.GET)
+    public void exportExcel(HttpServletRequest request, HttpServletResponse response) {
+        logger.info("收费单据导出");
+        try {
+            List<ChargeBill> chargeBills = chargeBillService.queryAll();
+            String title = "收费单据";
+            String[] rowsName = new String[]{"收费单据编号", "车主姓名", "车主手机", "汽车品牌",
+                    "汽车车型", "汽车颜色", "汽车车牌", "车牌号码", "维修保养记录提车时间",
+                    "维修保养记录描述", "付款方式", "总金额", "实际付款", "收费时间", "收费单据创建时间",
+                    "收费单据描述", "收费单据状态"};
+            List<Object[]> dataList = new ArrayList<Object[]>();
+            for (ChargeBill c : chargeBills) {
+                Object[] objs = new Object[rowsName.length];
+                objs[0] = c.getChargeBillId();
+                objs[1] = c.getRecord().getCheckin().getUserName();
+                objs[2] = c.getRecord().getCheckin().getUserPhone();
+                objs[3] = c.getRecord().getCheckin().getBrand().getBrandName();
+                objs[4] = c.getRecord().getCheckin().getModel().getModelName();
+                objs[5] = c.getRecord().getCheckin().getColor().getColorName();
+                objs[6] = c.getRecord().getCheckin().getPlate().getPlateName();
+                objs[7] = c.getRecord().getCheckin().getCarPlate();
+                objs[8] = c.getRecord().getPickupTime();
+                objs[9] = c.getRecord().getRecordDes();
+                objs[10] = c.getPaymentMethod();
+                objs[11] = c.getChargeBillMoney();
+                objs[12] = c.getActualPayment();
+                objs[13] = c.getChargeTime();
+                objs[14] = java.sql.Timestamp.valueOf(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(c.getChargeCreatedTime()));
+                objs[15] = c.getChargeBillDes();
+                objs[16] = c.getChargeBillStatus();
+                dataList.add(objs);
+            }
+            ExcelExport ex = new ExcelExport(title, rowsName, dataList, response);
+            ex.exportData();
+        } catch (Exception e) {
+
         }
     }
 
