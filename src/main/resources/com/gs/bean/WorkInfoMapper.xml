@@ -99,8 +99,9 @@
 
 	<select id="queryByPager" resultType="list" resultMap="workInfoResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select wi.*, u.userId as u_userId, u.userName as userName_emp, mr.recordId,c.checkinId, c.userName as userName_customer, c.maintainOrFix from t_work_info wi
+			select wi.*, u.userId as u_userId, u.userName as userName_emp, mr.recordId, cy.companyId, c.checkinId, c.userName as userName_customer, c.maintainOrFix from t_work_info wi
 			LEFT JOIN t_maintain_record  mr on wi.recordId = mr.recordId
+		  	RIGHT JOIN t_company cy on cy.companyId = mr.companyId
 			LEFT JOIN t_checkin c on mr.checkinId = c.checkinId
 			LEFT JOIN t_user u on wi.userId = u.userId
 		]]>limit #{beginIndex}, #{pageSize}

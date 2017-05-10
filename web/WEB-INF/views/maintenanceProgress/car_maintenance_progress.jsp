@@ -125,7 +125,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -238,9 +237,6 @@
                             <%--</ul>--%>
                         <%--</div>--%>
                         <div class="modal-footer" style="overflow:hidden;">
-                            <button onclick="showEditDetailWin();" type="button" id="editDetail" class="btn btn-default">
-                                <i class="glyphicon glyphicon-pencil"></i>修改
-                            </button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         </div>
                     </div>

@@ -349,11 +349,46 @@ function validator(formId) {
 
             } else if (formId == "editForm") {
                 formSubmit("/peopleManage/peopleRole_update", formId, "editWin");
-            } else if(formId == 'editModal'){
-               // outFormData(document.getElementById('editModal'));
-                formSubmit("/peopleManage/peopleInfo_update", formId, "myModal");
             }
+            // else if(formId == 'editModal'){
+            //    // outFormData(document.getElementById('editModal'));
+            //     formSubmit("/peopleManage/peopleInfo_update", formId, "myModal");
+            // }
+            $('#editModal').ajaxSubmit({
+                url:'/peopleManage/peopleInfo_update',
+                type:'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.result == "success") {
+                        $('#myModal').modal('hide');
+                        swal(data.message, "", "success");
+                        $('#cusTable').bootstrapTable('refresh');
+                        $('#editModal').data('bootstrapValidator').resetForm(true);
+                    } else if(data.result == "fail"){
+                        $('#myModal').modal('hide');
+                        swal(data.message, "内容不匹配", "error");
+                        $('#editModal').data('bootstrapValidator').resetForm(true);
 
+                    } else if(data.result == 'notLogin'){
+                        swal({
+                                title: "登入失败",
+                                text: data.message,
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "确认",
+                                cancelButtonText: "取消",
+                                closeOnConfirm: true,
+                                closeOnCancel: true
+                            },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    top.location.href = "/login/show_login";
+                                }
+                        });
+                    }
+                }
+            })
 
         })
 }

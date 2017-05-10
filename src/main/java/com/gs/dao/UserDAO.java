@@ -75,4 +75,10 @@ public interface UserDAO extends BaseDAO<String, User>{
     /**修改管理员*/
     public void updateAdmin(User user);
 
+    /**条件查询管理员*/
+    public List<User> selectQuery(@Param("pager") Pager pager, @Param("userName") String userName, @Param("userPhone") String userPhone, @Param("userEmail") String userEmail);
+
+    /**统计条件查询管理员的个数*/
+    public int countSelectAdmin(@Param("userName") String userName, @Param("userPhone") String userPhone, @Param("userEmail") String userEmail);
+
 }

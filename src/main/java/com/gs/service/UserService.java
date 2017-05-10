@@ -68,4 +68,11 @@ public interface UserService extends BaseService<String, User>{
 
     /**修改管理员*/
     public void updateAdmin(User user);
+
+    /**条件查询管理员*/
+    public List<User> selectQuery(Pager pager, String userName, String userPhone, String userEmail);
+
+    /**统计条件查询管理员的个数*/
+    public int countSelectAdmin(String userName, String userPhone, String userEmail);
+
 }
