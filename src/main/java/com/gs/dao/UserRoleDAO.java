@@ -12,5 +12,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRoleDAO extends BaseDAO<String, UserRole>{
 
+    /**更新一个用户所对应的角色*/
     public void updateByRole(UserRole userRole);
 }

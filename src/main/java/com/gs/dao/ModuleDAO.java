@@ -17,6 +17,9 @@ import java.util.List;
 @Repository
 public interface ModuleDAO extends BaseDAO<String, Module> {
 
+    /**根据状态来分页*/
     public List<Module> queryByStatusPager(@Param("moduleStatus") String moduleStatus, @Param("pager") Pager pager);
+
+    /**根据状态来统计*/
     public int countByStatus(String moduleStatus);
 }
