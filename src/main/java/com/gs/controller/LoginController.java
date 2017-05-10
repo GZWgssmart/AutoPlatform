@@ -3,6 +3,7 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Role;
 import com.gs.bean.User;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionGetUtil;
@@ -57,7 +58,7 @@ public class LoginController {
             User u = userService.queryLogin(user);
             if (u != null) {
                 Role role = roleService.queryByUserId(u.getUserId());
-                if (!role.getRoleName().equals("carOwner")) {
+                if (!role.getRoleName().equals(Constants.CAR_OWNER)) {
                     userService.updateLoginTime(u.getUserId());
                     u.setUserLoginedTime(new Date());
                     subject.login(new UsernamePasswordToken(u.getUserPhone(), u.getUserPwd()));
@@ -65,22 +66,23 @@ public class LoginController {
                     session.setAttribute("user", u);
                     return ControllerResult.getSuccessResult("登陆成功!");
                 } else {
-                    return ControllerResult.getFailResult("登录失败,账号或密码错误!");
+                    return ControllerResult.getFailResult("登录失败,只能是管理员登入!");
                 }
             } else {
                 return ControllerResult.getFailResult("登录失败,账号或密码错误!");
             }
         } else {
-            return ControllerResult.getFailResult("登录失败,账号或密码错误!");
+            return ControllerResult.getFailResult("登录失败,请输入账号或密码!");
         }
     }
 
     @RequestMapping(value = "home", method = RequestMethod.GET)
     public String home() {
-        if (SessionGetUtil.isUser()) {
+        if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
         }
+        logger.info("进入后台主页");
         return "index/home";
     }
 

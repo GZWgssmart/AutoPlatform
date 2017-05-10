@@ -40,7 +40,7 @@
             <h1 class="logo-name">车+</h1>
 
         </div>
-        <div id="errMsg" style="color: red; text-align: left; padding-left: 50px;"></div>
+        <div id="errMsg" style="color: red; text-align: left;"></div>
         <form class="m-t" role="form" id="login_form" method="post">
             <div class="form-group">
                 <input type="text" name="number" class="form-control" placeholder="账号"
