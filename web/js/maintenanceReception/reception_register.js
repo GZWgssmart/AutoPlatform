@@ -75,7 +75,7 @@ function isAppChoice() {
             setData(appointment, "appointment");
         }
     } else {
-        if (appointment != null && appointment != "" && appointment != undefined) {
+        if (appointment == null || appointment == "" || appointment == undefined) {
             clearAddForm();
         }
 
@@ -89,7 +89,7 @@ function isUserChoice() {
             setData(userInfo, "userInfo");
         }
     } else {
-        if (userInfo != null && userInfo != "" && userInfo != undefined) {
+        if (userInfo == null || userInfo == "" || userInfo == undefined) {
             clearAddForm();
         }
 
@@ -162,7 +162,6 @@ function checkApp() {
         swal('选择失败', "只能选择一条数据", "error");
         return false;
     } else {
-
         appointment = selectRow[0];
         setData(appointment, "appointment");
         $("#appWin").on("hide.bs.modal", function () {
@@ -186,6 +185,20 @@ function choiceUser() {
         });
         $("#userWin").modal('hide');
     }
+}
+
+/** 格式化预约信息操作栏 */
+function formatterChoiceApp(value, row, index) {
+    return [
+        '<button type="button" class="choiceApp btn btn-primary btn-sm" style="margin-left:15px;" >选择</button>'
+    ].join('');
+}
+
+/** 格式化车主信息操作栏 */
+function formatterChoiceUser(value, row, index) {
+    return [
+        '<button type="button" class="choiceUser btn btn-primary btn-sm" style="margin-left:15px;" >选择</button>'
+    ].join('');
 }
 
 /** 给添加的form表单设置值 */
@@ -321,6 +334,22 @@ window.operateEvents = {
         $('#editDatetimepicker').val(formatterDate(checkin.arriveTime));
         validator("editForm");
         $("#editWin").modal('show');
+    },
+    'click .choiceUser': function (e, value, row, index) {
+        userInfo = row;
+        setData(userInfo, "userInfo");
+        $("#userWin").on("hide.bs.modal", function () {
+            $('#choiceUser').bootstrapSwitch('state', true);
+        });
+        $("#userWin").modal('hide');
+    },
+    'click .choiceApp': function (e, value, row, index) {
+        appointment = row;
+        setData(appointment, "appointment");
+        $("#appWin").on("hide.bs.modal", function () {
+            $('#isApp').bootstrapSwitch('state', true);
+        });
+        $("#appWin").modal('hide');
     }
 }
 

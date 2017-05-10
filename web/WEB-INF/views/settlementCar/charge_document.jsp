@@ -79,7 +79,7 @@
                 <div class="col-sm-2">
                     <input type="text" id="searchUserPhone" name="userPhone" class="form-control" placeholder="请输入车主手机号">
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select class="js-example-tags form-control" id="searchPaymentMethod">
                         <option value="all">选择付款方式</option>
                         <option value="现金">现金</option>
@@ -88,9 +88,7 @@
                         <option value="刷卡">刷卡</option>
                     </select>
                 </div>
-                <div class="col-sm-2">
-                </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                 </div>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchCondition()" class="btn btn-primary">
@@ -113,6 +111,11 @@
             <a>
                 <button onclick="showChargeBillWin();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-print"></i> 打印收费单据
+                </button>
+            </a>
+            <a>
+                <button onclick="exportChargeBill();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-new-window"></i> 导出
                 </button>
             </a>
 

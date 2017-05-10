@@ -463,6 +463,9 @@
                                 <th data-field="speedStatus">
                                     当前进度
                                 </th>
+                                <th data-field="caozuo" data-formatter="formatterChoiceApp" data-events="operateEvents">
+                                    操作
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -517,6 +520,9 @@
                                 </th>
                                 <th data-field="userStatus" data-formatter="status">
                                     当前状态
+                                </th>
+                                <th data-field="caozuo" data-formatter="formatterChoiceUser" data-events="operateEvents">
+                                    操作
                                 </th>
                             </tr>
                             </thead>
