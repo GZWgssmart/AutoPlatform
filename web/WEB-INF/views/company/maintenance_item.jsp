@@ -217,9 +217,9 @@
                                    data-show-toggle="true"
                                    data-showColumns="true">
                                 <thead>
-                                <tr>
+                                <tr onclick="clickRowByInline(this);">
                                     <th data-field="state" data-checkbox="true"></th>
-                                    <th data-field="accName" >
+                                    <th data-field="accName">
                                         配件名称
                                     </th>
                                     <th data-field="accIdle" >

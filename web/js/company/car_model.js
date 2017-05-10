@@ -25,11 +25,29 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/carModel/queryByPager");
     initSelect2("car_brand", "请选择汽车品牌", "/carBrand/car_brand_all", "550");
+    initSelect2("brand", "请选择汽车品牌", "/carBrand/car_brand_all", "200");
     destoryValidator("addWin","addForm");
     destoryValidator("editWin","editForm");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 });
+
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchModelName").val('');
+    $("#brandId").html('');
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
+
+function searchModel(){
+    var ModelName = $("#searchModelName").val();
+    var brandId = $("#brandId").val();
+    var brandName=$("#brandName").val();
+    initTable("cusTable","/carModel/searchPager?modelName="+ModelName+"&brandId="+brandId+"&brandName"+brandName);
+}
+
 
 function modelAll(){
     initTable("cusTable","/carModel/queryByPager");

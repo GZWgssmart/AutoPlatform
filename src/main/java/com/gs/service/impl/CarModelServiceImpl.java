@@ -51,4 +51,16 @@ public class CarModelServiceImpl implements CarModelService {
 	public int statusCount(String status) {
 		return carModelDAO.statusCount(status);
 	}
+
+	@Override
+	public List<CarModel> searchByPager(String brandId,Pager pager) {
+		return carModelDAO.searchByPager(brandId, pager);
+	}
+
+	@Override
+	public int searchCount(String brandId) {
+		return carModelDAO.searchCount(brandId);
+	}
+
+
 }

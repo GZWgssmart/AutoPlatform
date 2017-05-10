@@ -9,7 +9,17 @@ $(document).ready(function () {
     $("#search").bind("click", initTable);
 });
 
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchBrandName").val('');
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
 
+function searchBrand(){
+    var brandName = $("#searchBrandName").val();
+    initTable("cusTable","/carBrand/search?brandName="+brandName);
+}
 function showAddWin(){
     validator("addForm");
     $("#addWin").modal('show');

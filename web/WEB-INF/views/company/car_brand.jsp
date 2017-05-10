@@ -19,6 +19,21 @@
 <body>
 
 <div class="container">
+    <form id="formSearch" class="form-horizontal">
+        <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+            <div class="col-sm-2" style="margin-left: -15px;">
+                <input type="text" id="searchBrandName" name="brandName" class="form-control" placeholder="请输入品牌名称" >
+            </div>
+            <div class="col-sm-2">
+                <button type="button" onclick="searchBrand();" class="btn btn-primary">
+                    查询
+                </button>
+                <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </form>
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
            data-show-refresh="true"
@@ -64,6 +79,11 @@
             <a>
                 <button onclick="brandAll();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i>查看全部
+                </button>
+            </a>
+            <a>
+                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-search"></i> 条件查询
                 </button>
             </a>
         </div>

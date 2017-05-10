@@ -99,4 +99,15 @@ public class CarPlateController {
         List<CarPlate>carPlates = carPlateService.byStatusPager(status,pager);
         return new Pager4EasyUI<CarPlate>(pager.getTotalRecords(),carPlates);
     }
+
+    @ResponseBody
+    @RequestMapping(value="searchPager",method = RequestMethod.GET)
+    public Pager4EasyUI<CarPlate> searchPager(@Param("plateName")String plateName,@Param("pageNumber") String pageNumber, @Param("pageSize")String pageSize){
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(carPlateService.searchCount(plateName));
+        List<CarPlate>carPlates = carPlateService.searchByPager(plateName,pager);
+        return new Pager4EasyUI<CarPlate>(pager.getTotalRecords(),carPlates);
+    }
 }

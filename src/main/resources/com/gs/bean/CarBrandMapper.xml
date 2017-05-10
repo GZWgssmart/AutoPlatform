@@ -70,8 +70,14 @@
 		select * from t_car_brand order by brandName ASC limit #{beginIndex}, #{pageSize}
 	</select>
 
+	<select id="searchByPager" resultType="list" resultMap="carBrandResultMap" parameterType="com.gs.common.bean.Pager">
+		select * from t_car_brand where 1 = 1 and brandName like concat('%', #{brandName}, '%') order by brandName desc limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
 	<select id="count" resultType="int">
 		select count(brandId) from t_car_brand
+	</select>
+	<select id="searchCount" resultType="int">
+		select count(brandId) from t_car_brand where 1 = 1 and brandName like concat('%',#{brandName},'%')
 	</select>
 
 	<update id="inactive" parameterType="string">

@@ -48,7 +48,17 @@ public class CarBrandServiceImpl implements CarBrandService {
 	}
 
 	@Override
+	public List<CarBrand> searchByPager(String brandName, Pager pager) {
+		return carBrandDAO.searchByPager(brandName, pager);
+	}
+
+	@Override
 	public int statusCount(String status) {
 		return carBrandDAO.statusCount(status);
+	}
+
+	@Override
+	public int searchCount(String brandName) {
+		return carBrandDAO.searchCount(brandName);
 	}
 }

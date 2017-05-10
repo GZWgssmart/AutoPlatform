@@ -37,7 +37,7 @@
 	</delete>
 
 	<update id="update" parameterType="carColor">
-		update t_car_color set colorName = #{colorName} , colorRGB = #{colorRGB} , colorHex = #{colorHex},colorDes = #{colorDes} , colorStatus = #{colorStatus} where colorId = #{colorId}
+		update t_car_color set colorName = #{colorName} , colorRGB = #{colorRGB} , colorHex = #{colorHex},colorDes = #{colorDes} , colorStatus = 'Y' where colorId = #{colorId}
 	</update>
 
 	<update id="batchUpdate" parameterType="list">
@@ -74,6 +74,12 @@
 
 	<select id="count" resultType="int">
 		select count(colorId) from t_car_color
+	</select>
+	<select id="searchByPager" resultType="list" resultMap="carColorResultMap" parameterType="com.gs.common.bean.Pager">
+		select * from t_car_color  where 1 = 1 and colorName like concat('%', #{colorName}, '%') limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+	<select id="searchCount" resultType="int">
+		select count(colorId) from t_car_color where 1 = 1 and colorName like concat('%',#{colorName},'%')
 	</select>
 
 	<update id="inactive" parameterType="string">
