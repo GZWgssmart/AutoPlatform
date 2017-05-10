@@ -13,7 +13,7 @@ public class MaterialListInfo {
     private String userName;
     private String userRequests;
     private String maintainName;
-    private double maintainMoney;
+    private double accPrice;
     private String accName;
 
     public String getMaterialId() {
@@ -72,12 +72,12 @@ public class MaterialListInfo {
         this.maintainName = maintainName;
     }
 
-    public double getMaintainMoney() {
-        return maintainMoney;
+    public double getAccPrice() {
+        return accPrice;
     }
 
-    public void setMaintainMoney(double maintainMoney) {
-        this.maintainMoney = maintainMoney;
+    public void setAccPrice(double accPrice) {
+        this.accPrice = accPrice;
     }
 
     public String getAccName() {

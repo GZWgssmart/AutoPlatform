@@ -42,23 +42,23 @@ public class MaterialListController {
 
     @ResponseBody
     @RequestMapping(value = "query_pager", method = RequestMethod.GET)
-    public Pager4EasyUI<MaterialListInfo> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+    public Pager4EasyUI<MaterialListInfo> queryBySpeedStatus(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("recordId") String recordId) {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return null;
         }
-        logger.info("分页查询所有物料清单");
+        logger.info("分页查询当前维修记录物料清单");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(materialListInfoService.count());
-        List<MaterialListInfo> materialListInfos = materialListInfoService.queryByPager(pager);
+        pager.setTotalRecords(materialListInfoService.countBySpeedStatus(recordId));
+        List<MaterialListInfo> materialListInfos = materialListInfoService.queryBySpeedStatus(pager, recordId);
         return new Pager4EasyUI<MaterialListInfo>(pager.getTotalRecords(), materialListInfos);
     }
 
     @ResponseBody
     @RequestMapping(value = "queryByStatus_materialList", method = RequestMethod.GET)
-    public Pager4EasyUI<MaterialListInfo> queryByStatus(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("status") String status) {
+    public Pager4EasyUI<MaterialListInfo> queryByStatus(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("status") String status, @Param("recordId") String recordId) {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -71,8 +71,8 @@ public class MaterialListController {
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(materialListInfoService.count());
-        List<MaterialListInfo> materialListInfos = materialListInfoService.queryByStatus(pager, status);
+        pager.setTotalRecords(materialListInfoService.statusCount(recordId, status));
+        List<MaterialListInfo> materialListInfos = materialListInfoService.queryBySpeedStatusAndStatus(pager, recordId, status);
         return new Pager4EasyUI<MaterialListInfo>(pager.getTotalRecords(), materialListInfos);
     }
 
