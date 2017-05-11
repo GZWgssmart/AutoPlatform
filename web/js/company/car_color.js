@@ -160,6 +160,7 @@ window.operateEvents = {
         var incomingType = row;
         validator("editForm");
         $("#editForm").fill(incomingType);
+        $("#spans").css("background",incomingType.colorHex);
         $("#editWin").modal('show');
     }
 }

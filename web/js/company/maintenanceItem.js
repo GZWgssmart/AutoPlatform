@@ -9,6 +9,8 @@ $(document).ready(function () {
     initSelect2("acc_accessoriesType", "请选择配件类别", "/accessoriesType/accessoriesType_All", "550");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
+    destoryValidator('addWin', 'addForm');
+    destoryValidator('editWin', 'editForm');
 });
 
 function showEditWin() {
@@ -61,6 +63,7 @@ function operating(value, row, index) {
         ].join('');
     }
 }
+
 var cout;
 var accId;
 function Addacc() {
@@ -75,11 +78,16 @@ function Addacc() {
         $("#accWin").modal("show");
         // alert(cout);
         alert(accId);
+        id();
     }
 }
 
-
-
+function id(){
+    var rows = $("#cusTable2").bootstrapTable('getSelections');
+    var row = rows[0];
+    var accId = row.accessories.accId;
+    alert(accId);
+}
 
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
@@ -90,6 +98,21 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json");
     },
@@ -98,11 +121,24 @@ window.operateEvents = {
         $.get("/maintainFix/StatusModify?id=" + row.maintainId + "&status=" + Status,
             function (data) {
                 if (data.result == "success") {
-                    // $('#addWin').modal('hide');
-                    // swal(data.message, "", "success");
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json")
     },

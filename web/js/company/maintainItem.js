@@ -7,6 +7,8 @@ $(document).ready(function () {
     initSelect2("company", "请选择汽修公司", "/company/company_all", "565");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
+    destoryValidator('addWin', 'addForm');
+    destoryValidator('editWin', 'editForm');
 });
 
 function showEditWin() {
@@ -29,6 +31,7 @@ function showAddWin(){
     $("#addWin").modal('show');
     $("input[type=reset]").trigger("click");
 }
+
 
 function operating(value, row, index) {
     if (row.maintainStatus == 'Y') {
@@ -55,6 +58,21 @@ window.operateEvents = {
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json");
     },
@@ -63,11 +81,24 @@ window.operateEvents = {
         $.get("/maintainFix/StatusModify?id=" + row.maintainId + "&status=" + Status,
             function (data) {
                 if (data.result == "success") {
-                    // $('#addWin').modal('hide');
-                    // swal(data.message, "", "success");
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json")
     },

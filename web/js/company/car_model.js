@@ -8,7 +8,7 @@ function showEditWin() {
     } else {
         var product = selectRow[0];
         $("#editForm").fill(product);
-        $('.car_brand').html('<option value="' + product.brand.brandName+ '">' + product.brand.brandName + '</option>').trigger("change");
+        $('.car_brand').html('<option value="' + product.brand.brandId+ '">' + product.brand.brandName + '</option>').trigger("change");
         validator("editForm");
         $("#editWin").modal('show');
     }
@@ -136,6 +136,7 @@ window.operateEvents = {
         var incomingType = row;
         validator("editForm");
         $("#editForm").fill(incomingType);
+        $('.car_brand').html('<option value="' + incomingType.brand.brandId+ '">' + incomingType.brand.brandName + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
 }

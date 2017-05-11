@@ -178,7 +178,6 @@ function validator(formId) {
 
         }
     })
-
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/carPlate/insertCarPlate", formId, "addWin");
