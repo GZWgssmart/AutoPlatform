@@ -64,10 +64,19 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span class="nav-label">维修保养预约</span><span
+                    <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span class="nav-label">维修保养预约管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/appointment/appointment">预约</a>
+                        <li><a class="J_menuItem" href="<%=path %>/appointment/appointment">我的预约</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span class="nav-label">维修保养接待管理</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="<%=path %>/appointment/appointment">我的接待</a>
                         </li>
                     </ul>
                 </li>
@@ -76,17 +85,55 @@
                     <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">维修保养管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养明细</a>
+                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">我的维修保养记录</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养进度</a>
+                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">我的维修保养明细</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养记录</a>
+                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">我的维修保养进度</a>
                         </li>
-                        <li><a class="J_menuItem" href="form_basic.html">维修保养消费统计</a>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> <span
+                            class="nav-label">结算提车</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="<%=path %>/record/reminder_page">我的已完成的维修保养</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉</a>
+                        <li><a class="J_menuItem" href="<%=path %>/bill/bill_page">我的收费单据管理</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">报表统计</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/maintenance_page">我的维修保养消费统计</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">投诉</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="<%=path%>/complaint/show_complaint">我的投诉</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/trackVisit/show_trackVisit">跟踪回访</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        <span class="nav-label">系统管理</span><span
+                                class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="<%=path%>/role/info">个人资料</a>
+                        </li>
+                        <li><a class="J_menuItem" href="<%=path %>/admin/info">修改密码</a>
                         </li>
                     </ul>
                 </li>
