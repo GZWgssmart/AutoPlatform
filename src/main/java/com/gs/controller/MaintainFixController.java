@@ -7,6 +7,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.service.MaintainFixService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -30,46 +31,78 @@ public class MaintainFixController {
     private MaintainFixService maintainFixService;
 
     @ResponseBody
-    @RequestMapping(value = "InsertMaintainItem",method = RequestMethod.POST)
-    public ControllerResult InsertMaintainFix(MaintainFix maintainFix){
-        maintainFix.setMaintainOrFix("维修");
-        maintainFixService.insert(maintainFix);
-        return ControllerResult.getSuccessResult("添加维修项目成功");
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "InsertMaintain",method = RequestMethod.POST)
-    public ControllerResult InsertMaintain(MaintainFix maintainFix){
-        maintainFix.setMaintainOrFix("保养");
-        maintainFixService.insert(maintainFix);
-        return ControllerResult.getSuccessResult("添加保养项目成功");
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "update",method = RequestMethod.POST)
-    public ControllerResult UpdateMaintainFix(MaintainFix maintainFix){
-        System.out.println(maintainFix);
-        maintainFixService.update(maintainFix);
-        return ControllerResult.getSuccessResult("更新保养项目成功");
-    }
-
-    @ResponseBody
-    @RequestMapping(value="StatusModify",method = RequestMethod.GET)
-    public ControllerResult companyStatusModify(@Param("id") String id,@Param("status") String status){
-        if(status.equals("Y")){
-            logger.info("冻结成功");
-            maintainFixService.inactive(id);
-            return ControllerResult.getSuccessResult("冻结成功");
-        }else if(status.equals("N")){
-            maintainFixService.active(id);
-            return ControllerResult.getSuccessResult("激活成功");
+    @RequestMapping(value = "InsertMaintainItem", method = RequestMethod.POST)
+    public ControllerResult InsertMaintainFix(MaintainFix maintainFix) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        return ControllerResult.getFailResult("冻结失败");
+        try {
+            logger.info("添加维修项目");
+            maintainFix.setMaintainOrFix("维修");
+            maintainFixService.insert(maintainFix);
+            return ControllerResult.getSuccessResult("添加成功");
+        } catch (Exception e) {
+            logger.info("添加失败，出现了一个错误");
+            return ControllerResult.getFailResult("添加失败，出现了一个错误");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "InsertMaintain", method = RequestMethod.POST)
+    public ControllerResult InsertMaintain(MaintainFix maintainFix) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        try {
+            logger.info("添加保养项目");
+            maintainFix.setMaintainOrFix("保养");
+            maintainFixService.insert(maintainFix);
+            return ControllerResult.getSuccessResult("添加成功");
+        } catch (Exception e) {
+            logger.info("添加失败，出现了一个错误");
+            return ControllerResult.getFailResult("添加失败，出现了一个错误");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public ControllerResult UpdateMaintainFix(MaintainFix maintainFix) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        try {
+            logger.info("更新保养项目");
+            maintainFixService.update(maintainFix);
+            return ControllerResult.getSuccessResult("更新成功");
+        } catch (Exception e) {
+            logger.info("更新失败，出现了一个错误");
+            return ControllerResult.getFailResult("更新失败，出现了一个错误");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "Status Modify", method = RequestMethod.GET)
+    public ControllerResult companyStatusModify(@Param("id") String id, @Param("status") String status) {
+        if (status.equals("Y")) {
+            logger.info("冻结项目");
+            maintainFixService.inactive(id);
+        } else if (status.equals("N")) {
+            logger.info("激活项目");
+            maintainFixService.active(id);
+        }
+        return ControllerResult.getSuccessResult("操作成功");
     }
 
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainFix> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         Pager pager = new Pager();
         logger.info("分页查询所有维修项目");
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -82,6 +115,10 @@ public class MaintainFixController {
     @ResponseBody
     @RequestMapping(value = "queryByMaintenanceItemPager", method = RequestMethod.GET)
     public Pager4EasyUI<MaintainFix> queryByMaintenanceItemPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         Pager pager = new Pager();
         logger.info("分页查询所有保养项目");
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -94,6 +131,10 @@ public class MaintainFixController {
     @ResponseBody
     @RequestMapping(value = "maintain_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         logger.info("查询所有维修保养项目，封装成ComboBox");
         List<MaintainFix> maintainFices = maintainFixService.queryAll();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();

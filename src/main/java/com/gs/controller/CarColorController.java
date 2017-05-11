@@ -6,6 +6,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.service.CarColorService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -35,58 +36,78 @@ public class CarColorController {
 
     @ResponseBody
     @RequestMapping(value = "insertCarColor", method = RequestMethod.POST)
-    public ControllerResult insertCarColor(CarColor carColor){
-        System.out.println(carColor);
-        logger.info("添加汽车颜色成功");
-        carColorService.insert(carColor);
-        return ControllerResult.getSuccessResult("添加汽车颜色成功");
+    public ControllerResult insertCarColor(CarColor carColor) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        try {
+            logger.info("添加汽车颜色");
+            carColorService.insert(carColor);
+            return ControllerResult.getSuccessResult("添加汽车颜色成功");
+        } catch (Exception e) {
+            logger.info("添加失败，出现了一个错误");
+            return ControllerResult.getFailResult("添加失败，出现了一个错误");
+        }
     }
 
     @ResponseBody
-    @RequestMapping(value = "searchByPager",method = RequestMethod.GET)
-    public Pager4EasyUI<CarColor> search(@Param("colorName")String colorName,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    @RequestMapping(value = "searchByPager", method = RequestMethod.GET)
+    public Pager4EasyUI<CarColor> search(@Param("colorName") String colorName, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         Pager pager = new Pager();
         logger.info("模糊查询颜色");
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(carColorService.searchCount(colorName));
-        List<CarColor>carColorList = carColorService.searchByPager(colorName,pager);
-        return new Pager4EasyUI<CarColor>(pager.getTotalRecords(),carColorList);
+        List<CarColor> carColorList = carColorService.searchByPager(colorName, pager);
+        return new Pager4EasyUI<CarColor>(pager.getTotalRecords(), carColorList);
     }
 
     @ResponseBody
-    @RequestMapping(value = "uploadCarColor",method = RequestMethod.POST)
-    public ControllerResult uploadCarColor(CarColor carColor){
+    @RequestMapping(value = "uploadCarColor", method = RequestMethod.POST)
+    public ControllerResult uploadCarColor(CarColor carColor) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        try {
             carColorService.update(carColor);
             System.out.println();
-            logger.info("更新汽车颜色成功");
+            logger.info("更新汽车颜色");
             return ControllerResult.getSuccessResult("更新汽车颜色成功");
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "StatusInactive" , method = RequestMethod.GET)
-    public ControllerResult statusInactive(String Id){
-        if(Id!=null){
-            return ControllerResult.getSuccessResult(",.,.,.,.");
+        } catch (Exception e) {
+            logger.info("更新失败，出现了一个错误");
+            return ControllerResult.getFailResult("更新失败，出现了一个错误");
         }
-        return ControllerResult.getFailResult("///////////////////");
     }
 
     @ResponseBody
-    @RequestMapping(value = "queryByPager" , method = RequestMethod.GET)
-    public Pager4EasyUI<CarColor> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
+    public Pager4EasyUI<CarColor> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         Pager pager = new Pager();
         logger.info("分页查询所有颜色");
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(carColorService.count());
-        List<CarColor>carColorList = carColorService.queryByPager(pager);
-        return new Pager4EasyUI<CarColor>(pager.getTotalRecords(),carColorList);
+        List<CarColor> carColorList = carColorService.queryByPager(pager);
+        return new Pager4EasyUI<CarColor>(pager.getTotalRecords(), carColorList);
     }
 
     @ResponseBody
     @RequestMapping(value = "car_color_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarColorAll() {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         logger.info("查询汽车颜色");
         List<CarColor> carColors = carColorService.queryAll();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
@@ -100,28 +121,41 @@ public class CarColorController {
     }
 
     @ResponseBody
-    @RequestMapping(value="colorStatusModify",method = RequestMethod.GET)
-    public ControllerResult colorStatusModify(@Param("id") String id,@Param("status") String status){
-        if(status.equals("Y")){
-            logger.info("颜色冻结成功");
-            carColorService.inactive(id);
-            return ControllerResult.getSuccessResult("颜色冻结成功");
-        }else if(status.equals("N")){
-            carColorService.active(id);
-            return ControllerResult.getSuccessResult("颜色激活成功");
+    @RequestMapping(value = "colorStatusModify", method = RequestMethod.GET)
+    public ControllerResult colorStatusModify(@Param("id") String id, @Param("status") String status) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        return ControllerResult.getFailResult("颜色修改失败");
+        try {
+            if (status.equals("Y")) {
+                logger.info("颜色冻结");
+                carColorService.inactive(id);
+            } else if (status.equals("N")) {
+                logger.info("颜色激活");
+                carColorService.active(id);
+            }
+            return ControllerResult.getSuccessResult("操作成功");
+        } catch (Exception e) {
+            logger.info("操作成功，出现了一个错误");
+            return ControllerResult.getFailResult("操作成功，出现了一个错误");
+        }
+
     }
 
     @ResponseBody
-    @RequestMapping(value = "queryByStatusPager" , method = RequestMethod.GET)
-    public Pager4EasyUI<CarColor> queryByStatusPager(@Param("status")String status,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    @RequestMapping(value = "queryByStatusPager", method = RequestMethod.GET)
+    public Pager4EasyUI<CarColor> queryByStatusPager(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(carColorService.statusCount(status));
-        List<CarColor>carColorList = carColorService.queryByColorPager(status,pager);
-        return new Pager4EasyUI<CarColor>(pager.getTotalRecords(),carColorList);
+        List<CarColor> carColorList = carColorService.queryByColorPager(status, pager);
+        return new Pager4EasyUI<CarColor>(pager.getTotalRecords(), carColorList);
     }
 
 
