@@ -2,7 +2,7 @@
  * Created by Administrator on 2017-05-09.
  */
 
-function notLogin() {
+function notPermission() {
 
     swal({
             title: "没有权限访问",

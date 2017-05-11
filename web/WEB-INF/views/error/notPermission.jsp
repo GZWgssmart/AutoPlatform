@@ -25,6 +25,6 @@
 <script src="<%=path %>/js/jquery.min.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
-<script src="<%=path %>/js/index/not_login.js"></script>
+<script src="<%=path %>/js/error/not_permission.js"></script>
 </body>
 </html>
