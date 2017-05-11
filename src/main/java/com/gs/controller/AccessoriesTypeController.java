@@ -9,6 +9,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.AccessoriesTypeService;
 import org.apache.ibatis.annotations.Param;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by GOD on 2017/4/17.
  */
@@ -35,6 +37,10 @@ public class AccessoriesTypeController {
 
     @RequestMapping(value = "type", method = RequestMethod.GET)
     private String type() {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
         logger.info("显示配件分类");
         return "accessories/accessories_type";
     }
@@ -42,6 +48,10 @@ public class AccessoriesTypeController {
     @ResponseBody
     @RequestMapping(value = "pager", method = RequestMethod.GET)
     public Pager4EasyUI<AccessoriesType> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         logger.info("分页查询");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -54,38 +64,70 @@ public class AccessoriesTypeController {
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addAccType(AccessoriesType accessoriesType) {
-        logger.info("添加");
-        accessoriesType.setAccTypeId(UUIDUtil.uuid());
-        System.out.println(accessoriesType);
-        accessoriesType.setAccTypeStatus("Y");
-        accessoriesTypeService.insert(accessoriesType);
-        return ControllerResult.getSuccessResult("添加成功");
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        try {
+            logger.info("添加");
+            accessoriesType.setAccTypeId(UUIDUtil.uuid());
+            System.out.println(accessoriesType);
+            accessoriesType.setAccTypeStatus("Y");
+            accessoriesTypeService.insert(accessoriesType);
+            return ControllerResult.getSuccessResult("添加成功");
+        } catch (Exception e) {
+            logger.info("添加失败，出现了一个错误");
+            return ControllerResult.getFailResult("添加失败，出现了一个错误");
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateAccType(AccessoriesType accessoriesType) {
-        logger.info("更新");
-        accessoriesType.setAccTypeStatus("Y");
-        accessoriesTypeService.update(accessoriesType);
-        return ControllerResult.getSuccessResult("修改成功");
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        try {
+            logger.info("更新");
+            accessoriesType.setAccTypeStatus("Y");
+            accessoriesTypeService.update(accessoriesType);
+            return ControllerResult.getSuccessResult("修改成功");
+
+        } catch (Exception e) {
+            logger.info("修改失败，出现了一个错误");
+            return ControllerResult.getFailResult("修改失败，出现了一个错误");
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "update_status", method = RequestMethod.GET)
     public ControllerResult updateStatus(@Param("id") String id, @Param("status") String status) {
-        logger.info("更新状态");
-        if (status.equals("Y")) {
-            accessoriesTypeService.active(id);
-        } else if (status.equals("N")) {
-            accessoriesTypeService.inactive(id);
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        return ControllerResult.getSuccessResult("更新成功");
+        try {
+            logger.info("更新状态");
+            if (status.equals("Y")) {
+                accessoriesTypeService.active(id);
+            } else if (status.equals("N")) {
+                accessoriesTypeService.inactive(id);
+            }
+            return ControllerResult.getSuccessResult("更新成功");
+        } catch (Exception e) {
+            logger.info("操作失败，出现了一个错误");
+            return ControllerResult.getFailResult("操作失败，出现了一个错误");
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "accessoriesType_All", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         logger.info("查询配件分类");
         List<AccessoriesType> accessoriesTypeList = accessoriesTypeService.queryAll();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
@@ -101,6 +143,10 @@ public class AccessoriesTypeController {
     @ResponseBody
     @RequestMapping(value = "queryByStatus_AccType", method = RequestMethod.GET)
     public Pager4EasyUI<AccessoriesType> queryByStatusAccType(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
         if (status.equals("Y")) {
             logger.info("分页查询可用的配件分类");
         } else {
@@ -120,18 +166,22 @@ public class AccessoriesTypeController {
     public Pager4EasyUI<AccessoriesType> queryByCondition(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,
                                                           @Param("accTypeName") String accTypeName, @Param("accTypeDes") String accTypeDes,
                                                           @Param("companyId") String companyId) {
-            logger.info("条件查询配件分类");
-            AccessoriesType accessoriesType = new AccessoriesType();
-            accessoriesType.setAccTypeName(accTypeName);
-            accessoriesType.setAccTypeDes(accTypeDes);
-            accessoriesType.setCompanyId(companyId);
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
-            List<AccessoriesType> accessoriesTypes = new ArrayList<AccessoriesType>();
-            pager.setTotalRecords(accessoriesTypeService.countByCondition(accessoriesType));
-            accessoriesTypes = accessoriesTypeService.queryByCondition(pager, accessoriesType);
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+        logger.info("条件查询配件分类");
+        AccessoriesType accessoriesType = new AccessoriesType();
+        accessoriesType.setAccTypeName(accTypeName);
+        accessoriesType.setAccTypeDes(accTypeDes);
+        accessoriesType.setCompanyId(companyId);
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        List<AccessoriesType> accessoriesTypes = new ArrayList<AccessoriesType>();
+        pager.setTotalRecords(accessoriesTypeService.countByCondition(accessoriesType));
+        accessoriesTypes = accessoriesTypeService.queryByCondition(pager, accessoriesType);
 
-            return new Pager4EasyUI<AccessoriesType>(pager.getTotalRecords(), accessoriesTypes);
+        return new Pager4EasyUI<AccessoriesType>(pager.getTotalRecords(), accessoriesTypes);
     }
 }

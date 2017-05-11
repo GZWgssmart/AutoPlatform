@@ -59,11 +59,24 @@ window.operateEvents = {
         $.get(contextPath + "/accessoriesType/update_status?id=" + row.accTypeId + "&status=" + status,
             function (data) {
                 if (data.result == "success") {
-                    $('#addWin').modal('hide');
-                    // swal(data.message, "", "success");
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json");
     },
@@ -72,11 +85,24 @@ window.operateEvents = {
         $.get(contextPath + "/accessoriesType/update_status?id=" + row.accTypeId + "&status=" + status,
             function (data) {
                 if (data.result == "success") {
-                    $('#addWin').modal('hide');
-                    // swal(data.message, "", "success");
                     $('#cusTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
                 }
             }, "json");
     },
