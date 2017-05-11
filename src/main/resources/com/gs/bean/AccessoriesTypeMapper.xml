@@ -62,6 +62,9 @@
 		<![CDATA[
 			select * from t_accessories_type
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="queryByStatus" resultMap="accessoriesTypeResultMap" parameterType="string">
@@ -82,7 +85,7 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="accessoriesTypeResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultMap="accessoriesTypeResultMap">
 		<![CDATA[
 			select u.*, c.companyId, c.companyName from t_accessories_type u, t_company c where 1=1 and c.companyId = u.companyId
 		]]>
@@ -129,7 +132,7 @@
  			select count(accTypeId) from t_accessories_type where 1 = 1
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and at.companyId = #{user.companyId}
+			and companyId = #{user.companyId}
 		</if>
 </select>
 
@@ -138,7 +141,7 @@
 			select count(*) from t_accessories_type where accTypeStatus = #{status}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and at.companyId = #{user.companyId}
+			and companyId = #{user.companyId}
 		</if>
 	</select>
 

@@ -179,12 +179,13 @@ public class AccessoriesController {
             logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
+        User user = SessionGetUtil.getUser();
         Pager pager = new Pager();
         logger.info("分页查询某个分类下的配件");
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(accessoriesService.countByTypeId(id));
-        List<Accessories> accessoriesList = accessoriesService.queryByIdPager(id, pager);
+        pager.setTotalRecords(accessoriesService.countByTypeId(id, user));
+        List<Accessories> accessoriesList = accessoriesService.queryByIdPager(id, pager, user);
         return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
     }
 
@@ -207,11 +208,12 @@ public class AccessoriesController {
         } else {
             logger.info("分页查询不可用的配件");
         }
+        User user = SessionGetUtil.getUser();
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(accessoriesService.countByStatus(status));
-        List<Accessories> accessoriess = accessoriesService.queryByStatusPager(status, pager);
+        pager.setTotalRecords(accessoriesService.countByStatus(status,user));
+        List<Accessories> accessoriess = accessoriesService.queryByStatusPager(status, pager,user);
         return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriess);
     }
 
@@ -224,6 +226,7 @@ public class AccessoriesController {
             logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
+        User user = SessionGetUtil.getUser();
         logger.info("条件查询配件");
         Accessories accessories = new Accessories();
         accessories.setAccName(accName);
@@ -233,8 +236,8 @@ public class AccessoriesController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         List<Accessories> accessoriesList = new ArrayList<Accessories>();
-        pager.setTotalRecords(accessoriesService.countByCondition(accessories));
-        accessoriesList = accessoriesService.queryByCondition(pager, accessories);
+        pager.setTotalRecords(accessoriesService.countByCondition(accessories,user));
+        accessoriesList = accessoriesService.queryByCondition(pager, accessories,user);
 
         return new Pager4EasyUI<Accessories>(pager.getTotalRecords(), accessoriesList);
     }

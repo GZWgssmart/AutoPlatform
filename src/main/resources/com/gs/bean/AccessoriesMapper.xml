@@ -88,7 +88,7 @@
 			select * from t_accessories where 1 = 1
         ]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
+			and companyId = #{user.companyId}
 		</if>
 	</select>
 
@@ -109,12 +109,11 @@
 			select * from t_accessories where accId = #{id}
         ]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
+			and companyId = #{user.companyId}
 		</if>
 	</select>
 
-	<select id="queryByIdPager" resultMap="accessoriesResultMap"
-			parameterType="com.gs.common.bean.Pager">
+	<select id="queryByIdPager" resultMap="accessoriesResultMap">
 		<![CDATA[
 			select * from t_accessories where accTypeId = #{id}
         ]]>
@@ -124,18 +123,17 @@
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
-	<select id="queryByPager" resultMap="accessoriesResultMap"
-			parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultMap="accessoriesResultMap">
 		<![CDATA[
 			select c.*, s.supplyId, s.supplyName, ac.accTypeId, ac.accTypeName, cpy.companyId, cpy.companyName
 			from t_accessories c, t_supply s, t_accessories_type ac, t_company cpy, t_user u
 			where 1=1 and c.supplyId = s.supplyId and c.accTypeId = ac.accTypeId and c.companyId = cpy.companyId
         ]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
+			and c.companyId = #{user.companyId}
 		</if>
         order by c.accCreatedTime desc, c.companyId
-		limit #{beginIndex}, #{pageSize}
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="queryByStatusPager" resultMap="accessoriesResultMap">
@@ -143,12 +141,15 @@
 			select ac.*, s.supplyId, s.supplyName, at.accTypeId, at.accTypeName, cpy.companyId, cpy.companyName
 			from t_accessories ac, t_supply s, t_accessories_type at, t_company cpy
 			where s.supplyId = ac.supplyId and at.accTypeId = ac.accTypeId and cpy.companyId = ac.companyId and ac.accStatus = #{accStatus}
-			order by ac.accCreatedTime Desc, ac.companyId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and ac.companyId = #{user.companyId}
+		</if>
+		order by ac.accCreatedTime Desc, ac.companyId
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
-	<select id="queryByCondition" resultType="list" resultMap="accessoriesResultMap">
+	<select id="queryByCondition" resultMap="accessoriesResultMap">
 		<![CDATA[
  			select ac.*, c.companyId, c.companyName, at.accTypeId, at.accTypeName, s.supplyId, s.supplyName
  			from t_accessories ac, t_company c, t_accessories_type at, t_supply s
@@ -166,25 +167,37 @@
 		<if test="accessories.accTypeId != null and accessories.accTypeId != '' and accessories.accTypeId != 'null'">
 			and ac.accTypeId = #{accessories.accTypeId}
 		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and ac.companyId = #{user.companyId}
+		</if>
 		order by ac.accCreatedTime desc, ac.companyId
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(accId) from t_accessories
+			select count(*) from t_accessories where 1 = 1
         ]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 	<select id="countByTypeId" resultType="int">
 		<![CDATA[
 			select count(accId) from t_accessories where  accTypeId = #{accTypeId}
         ]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="countByStatus" parameterType="String" resultType="int">
 		<![CDATA[
 			select count(*) from t_accessories where accStatus = #{accStatus}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="countByCondition" resultType="int">
@@ -202,6 +215,9 @@
 		</if>
 		<if test="accTypeId != null and accTypeId != '' and accTypeId != 'null'">
 			and accTypeId = #{accTypeId}
+		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
 		</if>
 	</select>
 
