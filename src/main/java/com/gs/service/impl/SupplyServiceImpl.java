@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Supply;
+import com.gs.bean.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -20,37 +21,98 @@ public class SupplyServiceImpl implements SupplyService {
 	@Resource
 	private SupplyDAO supplyDAO;
 
-	public int insert(Supply supply) { return supplyDAO.insert(supply); }
-	public int batchInsert(List<Supply> list) { return supplyDAO.batchInsert(list); }
-	public int delete(Supply supply) { return supplyDAO.delete(supply); }
+	@Override
+	public int insert(Supply supply) {
+		return supplyDAO.insert(supply);
+	}
+
+	@Override
+	public int countByStatus(String status, User user) {
+		return supplyDAO.countByStatus(status, user);
+	}
+
+	@Override
+	public int batchInsert(List<Supply> list) {
+		return supplyDAO.batchInsert(list);
+	}
+
+	@Override
+	public int delete(Supply supply) {
+		return supplyDAO.delete(supply);
+	}
+
+	@Override
+	public List<Supply> queryPagerByStatus(Pager pager, String status, User user) {
+		return supplyDAO.queryPagerByStatus(pager, status, user);
+	}
+
+	@Override
 	public int deleteById(String id) {
-        return supplyDAO.deleteById(id);
-    }
-	public int batchDelete(List<Supply> list) { return supplyDAO.batchDelete(list); }
-	public int update(Supply supply) { return supplyDAO.update(supply); }
-	public int batchUpdate(List<Supply> list) { return supplyDAO.batchUpdate(list); }
-	public List<Supply> queryAll() { return supplyDAO.queryAll(); }
-	public List<Supply> queryByStatus(String status) { return supplyDAO.queryByStatus(status); }
-	public Supply query(Supply supply) { return supplyDAO.query(supply); }
-	public Supply queryById(String id) { return supplyDAO.queryById(id); }
-	public List<Supply> queryByPager(Pager pager) { return supplyDAO.queryByPager(pager); }
-	public int count() { return supplyDAO.count(); }
-	public int inactive(String id) { return supplyDAO.inactive(id); }
-	public int active(String id) { return supplyDAO.active(id); }
-
-	public int countByStatus(String status) {
-		return supplyDAO.countByStatus(status);
+		return supplyDAO.deleteById(id);
 	}
 
-	public List<Supply> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status) {
-		return supplyDAO.queryPagerByStatus(pager, status);
+	@Override
+	public int countByCondition(Supply supply, User user) {
+		return supplyDAO.countByCondition(supply, user);
 	}
 
-	public int countByCondition(Supply supply) {
-		return supplyDAO.countByCondition(supply);
+	@Override
+	public int batchDelete(List<Supply> list) {
+		return supplyDAO.batchDelete(list);
 	}
 
-	public List<Supply> queryPagerByCondition(@Param("pager") Pager pager, @Param("supply") Supply supply) {
-		return supplyDAO.queryPagerByCondition(pager, supply);
+	@Override
+	public int update(Supply supply) {
+		return supplyDAO.update(supply);
+	}
+
+	@Override
+	public List<Supply> queryPagerByCondition(Pager pager, Supply supply, User user) {
+		return supplyDAO.queryPagerByCondition(pager, supply, user);
+	}
+
+	@Override
+	public int batchUpdate(List<Supply> list) {
+		return supplyDAO.batchUpdate(list);
+	}
+
+	@Override
+	public List<Supply> queryAll(User user) {
+		return supplyDAO.queryAll(user);
+	}
+
+	@Override
+	public List<Supply> queryByStatus(String status, User user) {
+		return supplyDAO.queryByStatus(status, user);
+	}
+
+	@Override
+	public Supply query(Supply supply, User user) {
+		return supplyDAO.query(supply, user);
+	}
+
+	@Override
+	public Supply queryById(String id) {
+		return supplyDAO.queryById(id);
+	}
+
+	@Override
+	public List<Supply> queryByPager(Pager pager, User user) {
+		return supplyDAO.queryByPager(pager, user);
+	}
+
+	@Override
+	public int count(User user) {
+		return supplyDAO.count(user);
+	}
+
+	@Override
+	public int inactive(String id) {
+		return supplyDAO.inactive(id);
+	}
+
+	@Override
+	public int active(String id) {
+		return supplyDAO.active(id);
 	}
 }

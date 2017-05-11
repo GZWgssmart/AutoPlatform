@@ -1,8 +1,10 @@
 package com.gs.dao;
 
 import com.gs.bean.Supply;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public interface SupplyDAO extends BaseDAO<String, Supply>{
      * @param status
      * @return
      */
-    public int countByStatus(String status);
+    public int countByStatus(@Param("status") String status, @Param("user") User user);
 
     /**
      * 根据状态分页查询
@@ -29,14 +31,14 @@ public interface SupplyDAO extends BaseDAO<String, Supply>{
      * @param status
      * @return
      */
-    public List<Supply> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status);
+    public List<Supply> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status, @Param("user") User user);
 
     /**
      * 根据查询条件计数
      * @param supply
      * @return
      */
-    public int countByCondition(Supply supply);
+    public int countByCondition(@Param("supply") Supply supply, @Param("user") User user);
 
     /**
      * 根据查询条件分页查询
@@ -44,7 +46,7 @@ public interface SupplyDAO extends BaseDAO<String, Supply>{
      * @param supply
      * @return
      */
-    public List<Supply> queryPagerByCondition(@Param("pager") Pager pager, @Param("supply") Supply supply);
+    public List<Supply> queryPagerByCondition(@Param("pager") Pager pager, @Param("supply") Supply supply, @Param("user") User user);
 
 
 }

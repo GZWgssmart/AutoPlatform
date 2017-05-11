@@ -132,20 +132,24 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="#"><i class="glyphicon glyphicon-bishop"></i> <span class="nav-label">供应商管理</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/supplyType/type">供应商分类管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path %>/supply/info">供应商信息管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path %>/reportStatistics/order_page">下单统计</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path %>/reportStatistics/pay_page">支付统计</a>
-                        </li>
-                    </ul>
-                </li>
+                <shiro:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, systemOrdinaryAdmin">
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-bishop"></i> <span class="nav-label">供应商管理</span><span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, systemOrdinaryAdmin">
+                                <li><a class="J_menuItem" href="<%=path %>/supplyType/type">供应商分类管理</a>
+                                </li>
+                                <li><a class="J_menuItem" href="<%=path %>/supply/info">供应商信息管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
+                            <li><a class="J_menuItem" href="<%=path %>/reportStatistics/order_page">下单统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path %>/reportStatistics/pay_page">支付统计</a>
+                            </li>
+                        </ul>
+                    </li>
+                </shiro:hasAnyRoles>
 
                 <li>
                     <a href="#"><i class="glyphicon glyphicon-wrench"></i> <span class="nav-label">配件管理</span><span

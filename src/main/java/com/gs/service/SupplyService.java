@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.Supply;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,7 +20,7 @@ public interface SupplyService extends BaseService<String, Supply>{
      * @param status
      * @return
      */
-    public int countByStatus(String status);
+    public int countByStatus(String status, User user);
 
     /**
      * 根据状态分页查询
@@ -27,14 +28,14 @@ public interface SupplyService extends BaseService<String, Supply>{
      * @param status
      * @return
      */
-    public List<Supply> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status);
+    public List<Supply> queryPagerByStatus(Pager pager, String status, User user);
 
     /**
      * 根据查询条件计数
      * @param supply
      * @return
      */
-    public int countByCondition(Supply supply);
+    public int countByCondition(Supply supply, User user);
 
     /**
      * 根据查询条件分页查询
@@ -42,6 +43,6 @@ public interface SupplyService extends BaseService<String, Supply>{
      * @param supply
      * @return
      */
-    public List<Supply> queryPagerByCondition(@Param("pager") Pager pager, @Param("supply") Supply supply);
+    public List<Supply> queryPagerByCondition(Pager pager, Supply supply, User user);
 
 }

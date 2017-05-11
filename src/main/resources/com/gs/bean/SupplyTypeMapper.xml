@@ -87,7 +87,10 @@
 		select t.*, c.companyName from t_supply_type t, t_company c
 		where 1 = 1 and t.companyId = c.companyId
         ]]>
-		limit #{beginIndex}, #{pageSize}
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="queryPagerByStatus" resultType="list" resultMap="supplyTypeResultMap">
@@ -95,6 +98,9 @@
 		select t.*, c.companyName from t_supply_type t, t_company c
 		where 1 = 1 and t.companyId = c.companyId and supplyTypeStatus = #{status}
         ]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -103,6 +109,9 @@
 			select t.*, c.companyId, c.companyName from t_supply_type t, t_company c
 			where 1=1 and c.companyId = t.companyId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 		<if test="supplyType.supplyTypeName != null and supplyType.supplyTypeName != ''">
 			and t.supplyTypeName like concat('%',#{supplyType.supplyTypeName},'%')
 		</if>
@@ -116,22 +125,31 @@
 		<![CDATA[
 		select count(supplyTypeId) from t_supply_type where 1 = 1
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="countByStatus" resultType="int">
 		<![CDATA[
 		select count(supplyTypeId) from t_supply_type where supplyTypeStatus = #{status}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="countByCondition" resultType="int">
 	<![CDATA[
 			select count(*) from t_supply_type where 1 = 1
 		]]>
-	<if test="companyId != null and companyId != ''">
-		and companyId = #{companyId}
-	</if>
-</select>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+		</if>
+	</select>
 
 	<update id="inactive" parameterType="string">
 		<![CDATA[
