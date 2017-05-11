@@ -52,16 +52,16 @@ public class ChargeBillServiceImpl implements ChargeBillService {
         return chargeBillDAO.batchUpdate(list);
     }
 
-    public List<ChargeBill> queryAll() {
-        return chargeBillDAO.queryAll();
+    public List<ChargeBill> queryAll(User user) {
+        return chargeBillDAO.queryAll(user);
     }
 
-    public List<ChargeBill> queryByStatus(String status) {
-        return chargeBillDAO.queryByStatus(status);
+    public List<ChargeBill> queryByStatus(String status, User user) {
+        return chargeBillDAO.queryByStatus(status, user);
     }
 
-    public ChargeBill query(ChargeBill chargeBill) {
-        return chargeBillDAO.query(chargeBill);
+    public ChargeBill query(ChargeBill chargeBill, User user) {
+        return chargeBillDAO.query(chargeBill, user);
     }
 
     public ChargeBill queryById(String id) {

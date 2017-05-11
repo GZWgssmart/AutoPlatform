@@ -109,7 +109,7 @@
 				where d.recordId = r.recordId and d.maintainId = f.maintainId and r.checkinId = c.checkinId
 		]]>
 		order by d.detailCreatedTime desc
-        limit #{beginIndex}, #{pageSize}
+        limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="queryPagerByRecordId" resultType="list" resultMap="maintainDetailResultMap">

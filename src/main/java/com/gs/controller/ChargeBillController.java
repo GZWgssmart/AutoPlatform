@@ -54,11 +54,14 @@ public class ChargeBillController {
     @Resource
     private IncomingOutgoingService incomingOutgoingService;
 
+    // 可以查看的角色：董事长、接待员、超级管理员、普通管理员
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE + ","
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 
+    // 可以操作的角色：董事长、接待员
     private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE;
 
+    // 可以查看对账单的角色：董事长、财务、超级管理员、普通管理员
     private String queryRole1 = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ACCOUNTING + ","
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 

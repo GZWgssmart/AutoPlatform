@@ -2,6 +2,7 @@ package com.gs.service.impl;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRecord;
+import com.gs.bean.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -52,28 +53,28 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.batchUpdate(list);
     }
 
-    public List<MaintainRecord> queryAll() {
-        return maintainRecordDAO.queryAll();
+    public List<MaintainRecord> queryAll(User user) {
+        return maintainRecordDAO.queryAll(user);
     }
 
-    public List<MaintainRecord> queryByStatus(String status) {
-        return maintainRecordDAO.queryByStatus(status);
+    public List<MaintainRecord> queryByStatus(String status, User user) {
+        return maintainRecordDAO.queryByStatus(status, user);
     }
 
-    public MaintainRecord query(MaintainRecord maintainRecord) {
-        return maintainRecordDAO.query(maintainRecord);
+    public MaintainRecord query(MaintainRecord maintainRecord, User user) {
+        return maintainRecordDAO.query(maintainRecord, user);
     }
 
     public MaintainRecord queryById(String id) {
         return maintainRecordDAO.queryById(id);
     }
 
-    public List<MaintainRecord> queryByPager(Pager pager) {
-        return maintainRecordDAO.queryByPager(pager);
+    public List<MaintainRecord> queryByPager(Pager pager, User user) {
+        return maintainRecordDAO.queryByPager(pager, user);
     }
 
-    public int count() {
-        return maintainRecordDAO.count();
+    public int count(User user) {
+        return maintainRecordDAO.count(user);
     }
 
     public int inactive(String id) {
@@ -84,54 +85,46 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.active(id);
     }
 
-    public int countByStatus(String status) {
-        return maintainRecordDAO.countByStatus(status);
+    public int countByStatus(String status, User user) {
+        return maintainRecordDAO.countByStatus(status, user);
     }
 
-    public List<MaintainRecord> queryPagerByStatus(Pager pager, String status) {
-        return maintainRecordDAO.queryPagerByStatus(pager, status);
+    public List<MaintainRecord> queryPagerByStatus(Pager pager, String status, User user) {
+        return maintainRecordDAO.queryPagerByStatus(pager, status, user);
     }
 
-    public int countByCondition(MaintainRecord record) {
-        return maintainRecordDAO.countByCondition(record);
+    public int countByCondition(MaintainRecord record, User user) {
+        return maintainRecordDAO.countByCondition(record, user);
     }
 
-    public List<MaintainRecord> queryPagerByCondition(Pager pager, MaintainRecord record) {
-        return maintainRecordDAO.queryPagerByCondition(pager, record);
+    public List<MaintainRecord> queryPagerByCondition(Pager pager, MaintainRecord record, User user) {
+        return maintainRecordDAO.queryPagerByCondition(pager, record, user);
     }
 
-    public int countByTrackStatus(String status) {
-        return maintainRecordDAO.countByTrackStatus(status);
+    public int countByTrackStatus(String status, User user) {
+        return maintainRecordDAO.countByTrackStatus(status, user);
     }
 
-    public List<MaintainRecord> queryPagerByTrackStatus( Pager pager, String status) {
-        return maintainRecordDAO.queryPagerByTrackStatus(pager, status);
+    public List<MaintainRecord> queryPagerByTrackStatus(Pager pager, String status, User user) {
+        return maintainRecordDAO.queryPagerByTrackStatus(pager, status, user);
     }
 
-    public void updateTrackStatus(String checkinId) {
-        maintainRecordDAO.updateTrackStatus(checkinId);
+    public void updateTrackStatus(String trackStatus, String checkinId) {
+        maintainRecordDAO.updateTrackStatus(trackStatus, checkinId);
     }
 
     public int updateSpeedStatusById(String speedStatus, String id) {
         return maintainRecordDAO.updateSpeedStatusById(speedStatus, id);
     }
 
-    public int countBySpeedStatus(String[] speedStatus) {
-        return maintainRecordDAO.countBySpeedStatus(speedStatus);
+    public int countBySpeedStatus(String[] speedStatus, User user) {
+        return maintainRecordDAO.countBySpeedStatus(speedStatus, user);
     }
 
-    public List<MaintainRecord> queryPagerBySpeedStatus(Pager pager, String[] speedStatus) {
-        return maintainRecordDAO.queryPagerBySpeedStatus(speedStatus, pager);
+    public List<MaintainRecord> queryPagerBySpeedStatus(Pager pager, String[] speedStatus, User user) {
+        return maintainRecordDAO.queryPagerBySpeedStatus(speedStatus, pager, user);
     }
 
-    public int countByRecordStatus() {
-        return maintainRecordDAO.countByRecordStatus();
-    }
-    public List<MaintainRecord> queryPagerByMessage(Pager pager) {
-        return maintainRecordDAO.queryPagerByMessage(pager);
-    }
-
-    @Override
     public int updatePickupTime(String recordId) {
         return maintainRecordDAO.updatePickupTime(recordId);
     }

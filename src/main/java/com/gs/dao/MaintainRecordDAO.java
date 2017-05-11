@@ -2,6 +2,7 @@ package com.gs.dao;
 
 import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRecord;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,7 +22,7 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      * @param status
      * @return
      */
-    public int countByStatus(String status);
+    public int countByStatus(@Param("status") String status, @Param("user") User user);
 
     /**
      * 根据状态分页查询
@@ -29,14 +30,14 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      * @param status
      * @return
      */
-    public List<MaintainRecord> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status);
+    public List<MaintainRecord> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status, @Param("usr") User user);
 
     /**
      * 根据查询条件计数
      * @param record
      * @return
      */
-    public int countByCondition(MaintainRecord record);
+    public int countByCondition(@Param("record") MaintainRecord record, @Param("user") User user);
 
     /**
      * 根据查询条件分页查询
@@ -44,14 +45,14 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      * @param record
      * @return
      */
-    public List<MaintainRecord> queryPagerByCondition(@Param("pager") Pager pager, @Param("record") MaintainRecord record);
+    public List<MaintainRecord> queryPagerByCondition(@Param("pager") Pager pager, @Param("record") MaintainRecord record, @Param("user") User user);
 
     /**
      * 根据状态计数
      * @param status
      * @return
      */
-    public int countByTrackStatus(String status);
+    public int countByTrackStatus(@Param("status") String status, @Param("user") User user);
 
     /**
      * 根据状态分页查询
@@ -59,26 +60,14 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      * @param status
      * @return
      */
-    public List<MaintainRecord> queryPagerByTrackStatus(@Param("pager") Pager pager, @Param("status") String status);
-
-    /**
-     * 根据维修表可用状态计数
-     * @return
-     */
-    public int countByRecordStatus();
-    /**
-     * 根据维修表状态分页查询可用的用户
-     * @param pager
-     * @return
-     */
-    public List<MaintainRecord> queryPagerByMessage(@Param("pager") Pager pager);
+    public List<MaintainRecord> queryPagerByTrackStatus(@Param("pager") Pager pager, @Param("status") String status, @Param("user") User user);
 
     /**
      * 根据状态checkId更新
      * @param checkinId
      * @return
      */
-    public void updateTrackStatus(@Param("checkinId") String checkinId);
+    public void updateTrackStatus(@Param("trackStatus") String trackStatus, @Param("checkinId") String checkinId);
 
     /**
      * 根据id更新记录的进度
@@ -93,7 +82,7 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      * @param speedStatus
      * @return
      */
-    public int countBySpeedStatus(String[] speedStatus);
+    public int countBySpeedStatus(@Param("speedStatus") String[] speedStatus, @Param("user") User user);
 
     /**
      * 根据进度状态分页查询
@@ -101,7 +90,7 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      * @param speedStatus
      * @return
      */
-    public List<MaintainRecord> queryPagerBySpeedStatus(@Param("speedStatus") String[] speedStatus, @Param("pager") Pager pager);
+    public List<MaintainRecord> queryPagerBySpeedStatus(@Param("speedStatus") String[] speedStatus, @Param("pager") Pager pager, @Param("user") User user);
 
     /**
      * 根据维修保养记录id把提车时间更新成当前时间

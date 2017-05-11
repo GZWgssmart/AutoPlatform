@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.MaintainDetail;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,7 +22,7 @@ public interface MaintainDetailDAO extends BaseDAO<String, MaintainDetail>{
      * @param recordId
      * @return
      */
-    public int countByRecordId(String recordId);
+    public int countByRecordId(@Param("recordId") String recordId, @Param("user") User user);
 
     /**
      * 根据维修保养记录ID分页查询
@@ -29,7 +30,7 @@ public interface MaintainDetailDAO extends BaseDAO<String, MaintainDetail>{
      * @param recordId
      * @return
      */
-    public List<MaintainDetail> queryPagerByRecordId(@Param("pager") Pager pager, @Param("recordId") String recordId);
+    public List<MaintainDetail> queryPagerByRecordId(@Param("pager") Pager pager, @Param("recordId") String recordId, @Param("usr") User user);
 
     /**
      * 根据记录id和项目id判断该记录是否已经存在该项目，返回1表示存在，返回0表示不存在
