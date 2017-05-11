@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -77,7 +78,8 @@
                     <input type="text" id="searchUserName" name="userName" class="form-control" placeholder="请输入车主姓名">
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" id="searchUserPhone" name="userPhone" class="form-control" placeholder="请输入车主手机号">
+                    <input type="text" id="searchUserPhone" name="userPhone" class="form-control"
+                           placeholder="请输入车主手机号">
                 </div>
                 <div class="col-sm-3">
                     <select class="js-example-tags form-control" id="searchPaymentMethod">
@@ -102,23 +104,23 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
-
-            <a>
-                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                    <i class="glyphicon glyphicon-pencil"></i> 修改
-                </button>
-            </a>
-            <a>
-                <button onclick="showChargeBillWin();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-print"></i> 打印收费单据
-                </button>
-            </a>
-            <a onclick="location.href='/bill/export_excel'" href="javascript:;">
-                <button type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-new-window"></i> 导出
-                </button>
-            </a>
-
+            <shiro:hasAnyRoles name="companyAdmin, companyReceive">
+                <a>
+                    <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-pencil"></i> 修改
+                    </button>
+                </a>
+                <a>
+                    <button onclick="showChargeBillWin();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-print"></i> 打印收费单据
+                    </button>
+                </a>
+                <a onclick="location.href='/bill/export_excel'" href="javascript:;">
+                    <button type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-new-window"></i> 导出
+                    </button>
+                </a>
+            </shiro:hasAnyRoles>
             <a>
                 <button onclick="searchStatus('/bill/pager?status=Y');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看可用记录
@@ -154,18 +156,22 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改收费单据</h3>
                         <form role="form" id="editForm">
-                            <input type="hidden" id="addChargeBillId" attr="chargeBill.chargeBillId" name="chargeBillId" class="form-control"/>
+                            <input type="hidden" id="addChargeBillId" attr="chargeBill.chargeBillId" name="chargeBillId"
+                                   class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">车主姓名：</label>
-                                <input attr="chargeBill.record.checkin.userName" type="text" readonly class="form-control"/>
+                                <input attr="chargeBill.record.checkin.userName" type="text" readonly
+                                       class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">收费总金额：</label>
-                                <input id="editChargeBillMoney" attr="chargeBill.chargeBillMoney" type="number" name="chargeBillMoney" maxlength="5" class="form-control"/>
+                                <input id="editChargeBillMoney" attr="chargeBill.chargeBillMoney" type="number"
+                                       name="chargeBillMoney" maxlength="5" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">付款方式：</label>
-                                <select class="js-example-tags form-control" attr="chargeBill.paymentMethod" type="select-one" id="editPaymentMethod" name="paymentMethod">
+                                <select class="js-example-tags form-control" attr="chargeBill.paymentMethod"
+                                        type="select-one" id="editPaymentMethod" name="paymentMethod">
                                     <option value="现金">现金</option>
                                     <option value="支付宝">支付宝</option>
                                     <option value="微信">微信</option>
@@ -174,7 +180,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">实付款：</label>
-                                <input id="editActualPayment" attr="chargeBill.actualPayment" type="number" name="actualPayment" maxlength="5" class="form-control"/>
+                                <input id="editActualPayment" attr="chargeBill.actualPayment" type="number"
+                                       name="actualPayment" maxlength="5" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">收费时间：</label>
@@ -183,7 +190,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">收费描述：</label>
-                                <textarea class="form-control" attr="chargeBill.chargeBillDes" type="textarea" name="chargeBillDes"
+                                <textarea class="form-control" attr="chargeBill.chargeBillDes" type="textarea"
+                                          name="chargeBillDes"
                                           rows="3"></textarea>
                             </div>
 
@@ -192,7 +200,8 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="editButton" onclick="edit()" class="btn btn-primary" value="修改">
+                                <input type="button" id="editButton" onclick="edit()" class="btn btn-primary"
+                                       value="修改">
                                 </input>
                             </div>
                         </form>
@@ -221,8 +230,8 @@
                                         <h2>
                                             &nbsp;收&nbsp;费&nbsp;单&nbsp;据&nbsp;
                                         </h2>
-                                        <hr style="margin-top: -5px; border-color: black" />
-                                        <hr style="margin-top: -15px; border-color: black;" />
+                                        <hr style="margin-top: -5px; border-color: black"/>
+                                        <hr style="margin-top: -15px; border-color: black;"/>
                                     </div>
                                     <div class="col-sm-4">
                                         <h2>Νο<span style="color: red;">0969996</span></h2>
@@ -239,30 +248,37 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-12" style="border: 1px solid black; height: 180px; font-size: 20px; padding-top: 20px;">
+                                <div class="col-sm-12"
+                                     style="border: 1px solid black; height: 180px; font-size: 20px; padding-top: 20px;">
                                     <div class="col-sm-12" style="margin-bottom: 10px;">
                                         <div class="col-sm-1" style="width: 130px;">收款单位：</div>
-                                        <div id="companyName" class="col-sm-4" style="border-bottom: 1px solid black;"></div>
+                                        <div id="companyName" class="col-sm-4"
+                                             style="border-bottom: 1px solid black;"></div>
                                         <div class="col-sm-1" style="width: 130px;">收款方式：</div>
-                                        <div id="paymentMethod" class="col-sm-4" style="border-bottom: 1px solid black;"></div>
+                                        <div id="paymentMethod" class="col-sm-4"
+                                             style="border-bottom: 1px solid black;"></div>
                                     </div>
 
                                     <div class="col-sm-12" style="margin-bottom: 10px;">
-                                        <div class="col-sm-1" style="width: 150px;">人民币<span style="font-size: 13px;">(大写)</span>：</div>
-                                        <div id="actualPaymentMax" class="col-sm-4" style="border-bottom: 1px solid black;"></div>
+                                        <div class="col-sm-1" style="width: 150px;">人民币<span style="font-size: 13px;">(大写)</span>：
+                                        </div>
+                                        <div id="actualPaymentMax" class="col-sm-4"
+                                             style="border-bottom: 1px solid black;"></div>
                                         <div class="col-sm-1" style="width: 40px;">￥：</div>
-                                        <div id="actualPayment" class="col-sm-4" style="border-bottom: 1px solid black;"></div>
+                                        <div id="actualPayment" class="col-sm-4"
+                                             style="border-bottom: 1px solid black;"></div>
                                     </div>
 
                                     <div class="col-sm-12" style="margin-bottom: 10px;">
                                         <div class="col-sm-1" style="width: 130px;">收款事由：</div>
-                                        <div id="chargeBillDes" class="col-sm-10" style="border-bottom: 1px solid black;"></div>
+                                        <div id="chargeBillDes" class="col-sm-10"
+                                             style="border-bottom: 1px solid black;"></div>
                                     </div>
 
                                     <div class="col-sm-12">
                                         <div class="col-sm-9"></div>
                                         <div class="col-sm-1" style="width: 130px;">车主签字：</div>
-                                        <div class="col-sm-1" ></div>
+                                        <div class="col-sm-1"></div>
                                     </div>
                                 </div>
 
@@ -299,7 +315,6 @@
         </div>
     </div>
 </div>
-
 
 
 <%@ include file="../common/rightMenu.jsp" %>

@@ -40,10 +40,12 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <span><img alt="image" class="img-circle" src="<%=path %>/${sessionScope.user.userIcon}" style="width:65px;height:65px;"/></span>
+                        <span><img alt="image" class="img-circle" src="<%=path %>/${sessionScope.user.userIcon}"
+                                   style="width:65px;height:65px;"/></span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">${sessionScope.user.userName}</strong></span>
+                               <span class="block m-t-xs"><strong
+                                       class="font-bold">${sessionScope.user.userName}</strong></span>
                                 <span class="text-muted text-xs block">
                                     <shiro:hasRole name="companyAdmin">董事长</shiro:hasRole>
 									<shiro:hasRole name="systemSuperAdmin">超级管理员</shiro:hasRole>
@@ -169,16 +171,22 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="#"><i class="fa fa-hand-lizard-o"></i> <span class="nav-label">维修保养接待管理</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/checkin/checkin_page">接待登记管理</a>
-                        </li>
-                        <li><a id="maintain" class="J_menuItem" href="<%=path%>/record/record_page">维修保养记录管理</a>
-                        </li>
-                    </ul>
-                </li>
+                <shiro:hasAnyRoles
+                        name="companyAdmin, companyReceive, companyArtificer, systemSuperAdmin, systemOrdinaryAdmin">
+                    <li>
+                        <a href="#"><i class="fa fa-hand-lizard-o"></i> <span class="nav-label">维修保养接待管理</span><span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <shiro:hasAnyRoles
+                                    name="companyAdmin, companyReceive, systemSuperAdmin, systemOrdinaryAdmin">
+                                <li><a class="J_menuItem" href="<%=path %>/checkin/checkin_page">接待登记管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
+                            <li><a id="maintain" class="J_menuItem" href="<%=path%>/record/record_page">维修保养记录管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                </shiro:hasAnyRoles>
 
                 <li>
                     <a href="#"><i class="fa fa-odnoklassniki"></i> <span class="nav-label">派工领料</span><span
@@ -202,17 +210,20 @@
                     </ul>
                 </li>
 
-                <li>
-                    <a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> <span
-                            class="nav-label">结算提车</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/record/reminder_page">查看已完成的维修保养</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path %>/bill/bill_page">收费单据管理</a>
-                        </li>
-                    </ul>
-                </li>
+                <shiro:hasAnyRoles
+                        name="companyAdmin, companyReceive, systemSuperAdmin, systemOrdinaryAdmin">
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-shopping-cart"></i> <span
+                                class="nav-label">结算提车</span><span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="<%=path %>/record/reminder_page">查看已完成的维修保养</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path %>/bill/bill_page">收费单据管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                </shiro:hasAnyRoles>
 
                 <li>
                     <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">客户关系管理</span><span

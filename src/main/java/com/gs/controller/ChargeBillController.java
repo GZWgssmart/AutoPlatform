@@ -253,7 +253,8 @@ public class ChargeBillController {
         try {
             if (CheckRoleUtil.checkRoles(queryRole)) {
                 logger.info("收费单据导出");
-                List<ChargeBill> chargeBills = chargeBillService.queryAll();
+                User user = SessionGetUtil.getUser();
+                List<ChargeBill> chargeBills = chargeBillService.queryAll(user);
                 String title = "收费单据";
                 String[] rowsName = new String[]{"收费单据编号", "车主姓名", "车主手机", "汽车品牌",
                         "汽车车型", "汽车颜色", "汽车车牌", "车牌号码", "维修保养记录提车时间",

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -115,25 +116,25 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
+            <shiro:hasAnyRoles name="companyAdmin, companyReceive">
+                <a>
+                    <button onclick="showRemindWin()" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-envelope"></i> 提车提醒
+                    </button>
+                </a>
 
-            <a>
-                <button onclick="showRemindWin()" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-envelope"></i> 提车提醒
-                </button>
-            </a>
+                <a>
+                    <button onclick="showAllRemindWin()" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-envelope"></i> 全部提醒
+                    </button>
+                </a>
 
-            <a>
-                <button onclick="showAllRemindWin()" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-envelope"></i> 全部提醒
-                </button>
-            </a>
-
-            <a>
-                <button onclick="showAddWin()" id="settlementButton" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-ok"></i> 结算提车
-                </button>
-            </a>
-
+                <a>
+                    <button onclick="showAddWin()" id="settlementButton" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-ok"></i> 结算提车
+                    </button>
+                </a>
+            </shiro:hasAnyRoles>
             <a>
                 <button onclick="alreadyRemind()" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 已提醒
@@ -178,18 +179,23 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">结算提车</h3>
                         <form role="form" id="addForm">
-                            <input type="hidden" id="addRecordId" attr="record.recordId" name="recordId" class="form-control"/>
-                            <input type="hidden" id="addCheckinId" attr="record.checkin.checkinId" name="record.checkinId" class="form-control"/>
+                            <input type="hidden" id="addRecordId" attr="record.recordId" name="recordId"
+                                   class="form-control"/>
+                            <input type="hidden" id="addCheckinId" attr="record.checkin.checkinId"
+                                   name="record.checkinId" class="form-control"/>
                             <input type="hidden" attr="record.checkin.userId" name="userId" class="form-control"/>
-                            <input type="hidden" attr="record.checkin.carMileage" name="carMileage" class="form-control"/>
-                            <input type="text" attr="record.checkin.maintainOrFix" name="maintainOrFix" class="form-control"/>
+                            <input type="hidden" attr="record.checkin.carMileage" name="carMileage"
+                                   class="form-control"/>
+                            <input type="text" attr="record.checkin.maintainOrFix" name="maintainOrFix"
+                                   class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">车主姓名：</label>
                                 <input readonly type="text" attr="record.checkin.userName" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">收费总金额（元）：</label>
-                                <input id="addChargeBillMoney" readonly type="text" name="chargeBillMoney" maxlength="5" class="form-control"/>
+                                <input id="addChargeBillMoney" readonly type="text" name="chargeBillMoney" maxlength="5"
+                                       class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">付款方式：</label>
@@ -202,7 +208,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">实付款（元）：</label>
-                                <input id="addActualPayment" type="number" name="actualPayment" maxlength="5" class="form-control"/>
+                                <input id="addActualPayment" type="number" name="actualPayment" maxlength="5"
+                                       class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">收费时间：</label>
@@ -260,7 +267,9 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="remindButton" onclick="buttonStatus('remindForm', 'remindButton')" class="btn btn-primary" value="发送提醒">
+                                <input type="button" id="remindButton"
+                                       onclick="buttonStatus('remindForm', 'remindButton')" class="btn btn-primary"
+                                       value="发送提醒">
                                 </input>
                             </div>
                         </form>

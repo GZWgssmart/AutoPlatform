@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -77,9 +78,11 @@
             <th data-field="recordStatus" data-formatter="status">
                 记录状态
             </th>
-            <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
-                操作
-            </th>
+            <shiro:hasAnyRoles name="companyAdmin, companyReceive">
+                <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
+                    操作
+                </th>
+            </shiro:hasAnyRoles>
         </tr>
         </thead>
         <form id="formSearch" class="form-horizontal">
@@ -116,18 +119,20 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
-
-            <a>
-                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                    <i class="glyphicon glyphicon-pencil"></i> 修改
-                </button>
-            </a>
-
-            <a>
-                <button onclick="showAddDetailWin();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-glass"></i> 生成明细
-                </button>
-            </a>
+            <shiro:hasAnyRoles name="companyAdmin, companyReceive">
+                <a>
+                    <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-pencil"></i> 修改
+                    </button>
+                </a>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="companyAdmin, companyArtificer">
+                <a>
+                    <button onclick="showAddDetailWin();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-glass"></i> 生成明细
+                    </button>
+                </a>
+            </shiro:hasAnyRoles>
 
             <a>
                 <button onclick="showDetailWin();" type="button" class="btn btn-default">
@@ -221,7 +226,8 @@
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">生成维修保养明细</h3>
                         <form role="form" id="detailForm">
-                            <input type="hidden" id="detailRecordId" attr="record.recordId" name="recordId" class="form-control"/>
+                            <input type="hidden" id="detailRecordId" attr="record.recordId" name="recordId"
+                                   class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">车主姓名：</label>
                                 <input readonly type="text" attr="record.checkin.userName" class="form-control"/>
@@ -312,26 +318,28 @@
                             </thead>
                             <tbody>
                             <div id="toolbar1" class="btn-group">
-
-                                <a>
-                                    <button onclick="showEditDetailWin();" type="button" id="editDetail"
-                                            class="btn btn-default">
-                                        <i class="glyphicon glyphicon-pencil"></i> 修改
-                                    </button>
-                                </a>
-                                <a>
-                                    <button onclick="generateDetail();" type="button" id="generateDetail"
-                                            class="btn btn-default">
-                                        <i class="glyphicon glyphicon-list-alt"></i> 生成明细清单
-                                    </button>
-                                </a>
-                                <a>
-                                    <button onclick="userConfirm();" type="button"
-                                            class="btn btn-success">
-                                        <i class="glyphicon glyphicon-ok"></i> 用户已签字
-                                    </button>
-                                </a>
-
+                                <shiro:hasAnyRoles name="companyAdmin, companyArtificer">
+                                    <a>
+                                        <button onclick="showEditDetailWin();" type="button" id="editDetail"
+                                                class="btn btn-default">
+                                            <i class="glyphicon glyphicon-pencil"></i> 修改
+                                        </button>
+                                    </a>
+                                </shiro:hasAnyRoles>
+                                <shiro:hasAnyRoles name="companyAdmin, companyReceive">
+                                    <a>
+                                        <button onclick="generateDetail();" type="button" id="generateDetail"
+                                                class="btn btn-default">
+                                            <i class="glyphicon glyphicon-list-alt"></i> 生成明细清单
+                                        </button>
+                                    </a>
+                                    <a>
+                                        <button onclick="userConfirm();" type="button"
+                                                class="btn btn-success">
+                                            <i class="glyphicon glyphicon-ok"></i> 用户已签字
+                                        </button>
+                                    </a>
+                                </shiro:hasAnyRoles>
                             </div>
                             </tbody>
 
@@ -438,7 +446,8 @@
                                 <th data-field="maintainStatus" data-formatter="status">
                                     保养项目状态
                                 </th>
-                                <th data-field="caozuo" data-formatter="formatterChoiceMaintain" data-events="operateEvents">
+                                <th data-field="caozuo" data-formatter="formatterChoiceMaintain"
+                                    data-events="operateEvents">
                                     操作
                                 </th>
                             </tr>

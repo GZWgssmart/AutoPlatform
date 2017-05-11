@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%
     String path = request.getContextPath();
@@ -24,7 +25,8 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
+          type="text/css">
 
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 
@@ -94,18 +96,20 @@
             <th data-field="checkinStatus" data-formatter="status">
                 记录状态
             </th>
-            <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
-                操作
-            </th>
+            <shiro:hasAnyRoles name="companyAdmin, companyReceive">
+                <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
+                    操作
+                </th>
+            </shiro:hasAnyRoles>
         </tr>
         </thead>
         <form id="formSearch" class="form-horizontal">
             <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
                 <div class="col-sm-2" style="margin-left: -15px;">
-                    <input type="text" id="searchUserName" name="userName" class="form-control" placeholder="请输入车主姓名" >
+                    <input type="text" id="searchUserName" name="userName" class="form-control" placeholder="请输入车主姓名">
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" id="searchUserPhone" name="userPhone" class="form-control" placeholder="请输入车主电话" >
+                    <input type="text" id="searchUserPhone" name="userPhone" class="form-control" placeholder="请输入车主电话">
                 </div>
                 <div class="col-sm-2">
                     <input type="text" id="searchCarPlate" name="carPlate" class="form-control" placeholder="请输入车牌号码">
@@ -134,29 +138,33 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
-
+            <shiro:hasAnyRoles name="companyAdmin, companyReceive">
+                <a>
+                    <button onclick="showAddWin();" type="button" id="add" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i> 添加
+                    </button>
+                </a>
+                <a>
+                    <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-pencil"></i> 修改
+                    </button>
+                </a>
+            </shiro:hasAnyRoles>
             <a>
-                <button onclick="showAddWin();" type="button" id="add" class="btn btn-default">
-                    <i class="glyphicon glyphicon-plus"></i> 添加
-                </button>
-            </a>
-            <a>
-                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                    <i class="glyphicon glyphicon-pencil"></i> 修改
-                </button>
-            </a>
-            <a>
-                <button onclick="searchStatus('/checkin/checkin_pager?status=Y');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/checkin/checkin_pager?status=Y');" type="button"
+                        class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看可用记录
                 </button>
             </a>
             <a>
-                <button onclick="searchStatus('/checkin/checkin_pager?status=N');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/checkin/checkin_pager?status=N');" type="button"
+                        class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看不可用记录
                 </button>
             </a>
             <a>
-                <button onclick="searchStatus('/checkin/checkin_pager?status=ALL');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/checkin/checkin_pager?status=ALL');" type="button"
+                        class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部
                 </button>
             </a>
@@ -183,19 +191,23 @@
                         <form role="form" id="editForm">
                             <input type="hidden" attr="checkin.checkinId" name="checkinId" class="form-control"/>
                             <input type="hidden" attr="checkin.userId" name="userId" class="form-control"/>
-                            <input type="hidden" attr="checkin.appointmentId" name="appointmentId" class="form-control"/>
+                            <input type="hidden" attr="checkin.appointmentId" name="appointmentId"
+                                   class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">车主姓名：</label>
-                                <input type="text" attr="checkin.userName" maxlength="4" name="userName" class="form-control"/>
+                                <input type="text" attr="checkin.userName" maxlength="4" name="userName"
+                                       class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">车主电话：</label>
-                                <input type="text" attr="checkin.userPhone" maxlength="11" name="userPhone" class="form-control"/>
+                                <input type="text" attr="checkin.userPhone" maxlength="11" name="userPhone"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">汽车品牌：</label>
-                                <select id="editCarBrand" class="js-example-tags form-control car_brand" onchange="editCheckBrand(this)" name="brandId">
+                                <select id="editCarBrand" class="js-example-tags form-control car_brand"
+                                        onchange="editCheckBrand(this)" name="brandId">
                                 </select>
                             </div>
 
@@ -219,7 +231,8 @@
 
                             <div class="form-group">
                                 <label class="control-label">车牌号码：</label>
-                                <input type="text" attr="checkin.carPlate" maxlength="5" name="carPlate" class="form-control"/>
+                                <input type="text" attr="checkin.carPlate" maxlength="5" name="carPlate"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -229,18 +242,21 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">是否需要洗车：</label>
-                                <select class="js-example-tags form-control" attr="checkin.carWash" type="select-one" name="carWash">
+                                <select class="js-example-tags form-control" attr="checkin.carWash" type="select-one"
+                                        name="carWash">
                                     <option value="N">否</option>
                                     <option value="Y">是</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车油量（L）：</label>
-                                <input type="text" attr="checkin.oilCount" maxlength="3" name="oilCount" class="form-control"/>
+                                <input type="text" attr="checkin.oilCount" maxlength="3" name="oilCount"
+                                       class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">汽车行驶里程（km）：</label>
-                                <input type="text" attr="checkin.carMileage" maxlength="6" name="carMileage" class="form-control"/>
+                                <input type="text" attr="checkin.carMileage" maxlength="6" name="carMileage"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -251,19 +267,22 @@
 
                             <div class="form-group">
                                 <label class="control-label">汽车完好度描述：</label>
-                                <textarea class="form-control" attr="checkin.intactDegrees" type="textarea" name="intactDegrees"
+                                <textarea class="form-control" attr="checkin.intactDegrees" type="textarea"
+                                          name="intactDegrees"
                                           rows="3"></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">用户要求描述：</label>
-                                <textarea class="form-control" attr="checkin.userRequests" type="textarea" name="userRequests"
+                                <textarea class="form-control" attr="checkin.userRequests" type="textarea"
+                                          name="userRequests"
                                           rows="3"></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">保养&nbsp;|&nbsp;维修：</label>
-                                <select id="editMaintainOrFix" attr="checkin.maintainOrFix" type="select-one" class="js-example-tags form-control" name="maintainOrFix">
+                                <select id="editMaintainOrFix" attr="checkin.maintainOrFix" type="select-one"
+                                        class="js-example-tags form-control" name="maintainOrFix">
                                     <option value="保养">保养</option>
                                     <option value="维修">维修</option>
                                 </select>
@@ -273,7 +292,8 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" onclick="edit()" id="editButton" class="btn btn-primary" value="修改">
+                                <input type="button" onclick="edit()" id="editButton" class="btn btn-primary"
+                                       value="修改">
                                 </input>
                             </div>
                         </form>
@@ -311,12 +331,14 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">车主电话：</label>
-                                <input type="text" id="addUserPhone" maxlength="11" name="userPhone" class="form-control"/>
+                                <input type="text" id="addUserPhone" maxlength="11" name="userPhone"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">汽车品牌：</label>
-                                <select id="addCarBrand" class="js-example-tags form-control car_brand" onchange="checkBrand(this)" name="brandId">
+                                <select id="addCarBrand" class="js-example-tags form-control car_brand"
+                                        onchange="checkBrand(this)" name="brandId">
                                 </select>
                             </div>
 
@@ -340,7 +362,8 @@
 
                             <div class="form-group">
                                 <label class="control-label">车牌号码：</label>
-                                <input id="addCarPlateNumber" type="text" name="carPlate" maxlength="5" class="form-control"/>
+                                <input id="addCarPlateNumber" type="text" name="carPlate" maxlength="5"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -504,25 +527,26 @@
                             <thead>
                             <tr>
                                 <th data-field="state" data-checkbox="true"></th>
-                                <th data-field="userNickname" >
+                                <th data-field="userNickname">
                                     昵称
                                 </th>
-                                <th data-field="userName" >
+                                <th data-field="userName">
                                     姓名
                                 </th>
-                                <th data-field="userEmail" >
+                                <th data-field="userEmail">
                                     邮箱
                                 </th>
-                                <th data-field="userGender" data-formatter="gender" >
+                                <th data-field="userGender" data-formatter="gender">
                                     性别
                                 </th>
-                                <th data-field="userPhone" >
+                                <th data-field="userPhone">
                                     手机号
                                 </th>
                                 <th data-field="userStatus" data-formatter="status">
                                     当前状态
                                 </th>
-                                <th data-field="caozuo" data-formatter="formatterChoiceUser" data-events="operateEvents">
+                                <th data-field="caozuo" data-formatter="formatterChoiceUser"
+                                    data-events="operateEvents">
                                     操作
                                 </th>
                             </tr>
