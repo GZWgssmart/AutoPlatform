@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: xiao-kang
-  Date: 2017/4/13
-  Time: 14:22
+  User: Administrator
+  Date: 2017-05-11
+  Time: 10:40
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,7 +12,7 @@
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
-    <title>重新登入</title>
+    <title>没有权限提示</title>
 
     <meta name="keywords" content="">
     <meta name="description" content="">
@@ -20,7 +20,7 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
 
 </head>
-<body onload="notLogin()">
+<body onload="notPermission()">
 
 <script src="<%=path %>/js/jquery.min.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>

@@ -5,8 +5,8 @@
 function notLogin() {
 
     swal({
-            title: "登入失败",
-            text: "登入信息已失效，请重新登入",
+            title: "没有权限访问",
+            text: "抱歉，您没有权限访问哦，请联系管理员^_^",
             type: "warning",
             showCancelButton: false,
             confirmButtonColor: "#DD6B55",
@@ -15,7 +15,7 @@ function notLogin() {
         },
         function (isConfirm) {
             if (isConfirm) {
-                top.location.href = "/login/show_login";
+                window.parent.closeThis();
             }
         });
 }
