@@ -85,7 +85,7 @@ public interface BaseService<PK extends Serializable, T> {
      * @param id
      * @return
      */
-    public T queryById(PK id, User user);
+    public T queryById(PK id);
 
     /**
      * 分页查询记录
