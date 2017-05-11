@@ -1,7 +1,9 @@
 package com.gs.service;
 
 import com.gs.bean.MaintainFix;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,5 +14,6 @@ import java.util.List;
 *@since 2017-04-14 16:36:52
 */
 public interface MaintainFixService extends BaseService<String, MaintainFix>{
-    public List<MaintainFix> queryBymaintainPager(Pager pager);
+    public List<MaintainFix> queryBymaintainPager(@Param("pager") Pager pager, @Param("user") User user);
+    public int MaintainCont(User user);
 }

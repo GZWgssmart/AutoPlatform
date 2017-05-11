@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.Company;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,6 +14,6 @@ import java.util.List;
 *@since 2017-04-14 16:36:51
 */
 public interface CompanyService extends BaseService<String, Company>{
-    public List<Company> queryByStatusPager(String status, Pager pager);
-    public int statusCount(String status);
+    public List<Company> queryByStatusPager(@Param("status")String status, @Param("pager")Pager pager,@Param("user")User user);
+    public int statusCount(@Param("status")String status,@Param("user")User user);
 }

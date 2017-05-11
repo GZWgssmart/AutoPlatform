@@ -66,6 +66,7 @@
 		<![CDATA[
 			select * from t_company
 		]]>
+		Ma
 	</select>
 
 	<select id="queryById" parameterType="string" resultType="company">
@@ -76,13 +77,20 @@
 
 	<select id="queryByPager" resultType="list" resultMap="companyResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select * from t_company  limit #{beginIndex}, #{pageSize}
+			select * from t_company where 1 = 1
+			<if test="companyId != null and user.companyId != ''">
+				and companyId = #{user.companyId}
+			</if>
+			limit #{pager.beginIndex}, #{pager.pageSize}
 		]]>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(companyId) from t_company
+			select count(companyId) from t_company where 1 = 1
+			<if test="companyId != null and user.companyId != ''">
+				and companyId = #{user.companyId}
+			</if>
 		]]>
 	</select>
 

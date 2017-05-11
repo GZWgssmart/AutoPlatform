@@ -2,10 +2,13 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Company;
+import com.gs.bean.User;
+import com.gs.common.Constants;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.dao.CompanyDAO;
 import com.gs.service.CompanyService;
@@ -37,6 +40,9 @@ public class CompanyController {
     @Resource
     private CompanyService companyService;
 
+    private String CompanyQueryRole = Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+    private String CompanyEditRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+    private String carCommonRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN;
     @RequestMapping(value = "home", method = RequestMethod.GET)
     private String home() {
         if (!SessionGetUtil.isUser()) {
@@ -52,49 +58,77 @@ public class CompanyController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
+        }else{
+            if(CheckRoleUtil.checkRoles(CompanyQueryRole)){
+                logger.info("访问公司基本信息页面");
+                return "company/company_info";
+            }
+            return "error/notPermission";
         }
-        logger.info("访问公司基本信息页面");
-        return "company/company_info";
+
     }
 
     @RequestMapping(value = "brand", method = RequestMethod.GET)
     private String showCarBrand() {
         if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+            logger.info("Session已失效");
             return "index/notLogin";
+        }else{
+            if(CheckRoleUtil.checkRoles(carCommonRole)){
+                logger.info("访问汽车品牌页面");
+                return "company/car_brand";
+            }
+            return "error/notPermission";
         }
-        logger.info("访问汽车品牌页面");
-        return "company/car_brand";
+
     }
 
     @RequestMapping(value = "color", method = RequestMethod.GET)
     private String showCarColor() {
         if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+            logger.info("Session已失效");
             return "index/notLogin";
+        }else{
+            if(CheckRoleUtil.checkRoles(carCommonRole)){
+                logger.info("访问汽车颜色页面");
+                return "company/car_colour";
+            }else{
+                return "error/notPermission";
+            }
         }
-        logger.info("访问汽车颜色页面");
-        return "company/car_colour";
+
     }
 
     @RequestMapping(value = "model", method = RequestMethod.GET)
     private String showCarModel() {
         if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+            logger.info("Session已失效");
             return "index/notLogin";
+        }else{
+            if(CheckRoleUtil.checkRoles(carCommonRole)){
+                logger.info("访问汽车车型页面");
+                return "company/car_model";
+            }else{
+                return "error/notPermission";
+            }
         }
-        logger.info("访问汽车车型页面");
-        return "company/car_model";
+
     }
 
     @RequestMapping(value = "plate", method = RequestMethod.GET)
     private String showCarPlate() {
         if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+            logger.info("Session已失效");
             return "index/notLogin";
+        }else{
+            if(CheckRoleUtil.checkRoles(carCommonRole)){
+                logger.info("访问车牌页面");
+                return "company/car_plate";
+            } else{
+                return "error/notPermission";
+            }
         }
-        logger.info("访问车牌页面");
-        return "company/car_plate";
+
     }
 
     @RequestMapping(value = "maintainItem", method = RequestMethod.GET)
@@ -102,9 +136,15 @@ public class CompanyController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
+        }else{
+            if(CheckRoleUtil.checkRoles(carCommonRole)){
+                logger.info("访问维修项目页面");
+                return "company/maintain_item";
+            }else{
+                return "error/notPermission";
+            }
         }
-        logger.info("访问维修项目页面");
-        return "company/maintain_item";
+
     }
 
     @RequestMapping(value = "maintenanceItem", method = RequestMethod.GET)
@@ -112,9 +152,15 @@ public class CompanyController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
+        }else{
+            if(CheckRoleUtil.checkRoles(carCommonRole)){
+                logger.info("访问保养项目页面");
+                return "company/maintenance_item";
+            }else{
+                return "error/notPermission";
+            }
         }
-        logger.info("访问保养项目页面");
-        return "company/maintenance_item";
+
     }
 
     @ResponseBody
@@ -123,15 +169,21 @@ public class CompanyController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
-        }
-        try {
-            logger.info("添加公司");
-            company.setCompanyLogo("/upload/logo.jsp");
-            companyService.insert(company);
-            return ControllerResult.getSuccessResult("添加公司成功");
-        } catch (Exception e) {
-            logger.info("添加失败，出现了一个错误");
-            return ControllerResult.getFailResult("添加失败，出现了一个错误");
+        }else{
+            try {
+                if(CheckRoleUtil.checkRoles(CompanyEditRole)){
+                    logger.info("添加公司");
+                    company.setCompanyLogo("/upload/logo.jsp");
+                    companyService.insert(company);
+                    return ControllerResult.getSuccessResult("添加公司成功");
+                }else{
+                    return ControllerResult.getFailResult("添加公司失败,您没有权限操作");
+                }
+
+            } catch (Exception e) {
+                logger.info("添加失败，出现了一个错误");
+                return ControllerResult.getFailResult("添加失败，出现了一个错误");
+            }
         }
     }
 
@@ -143,9 +195,14 @@ public class CompanyController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
-            companyService.update(company);
-            logger.info("更新公司成功");
-            return ControllerResult.getSuccessResult("更新公司成功");
+            if(CheckRoleUtil.checkRoles(CompanyEditRole)){
+                companyService.update(company);
+                logger.info("更新公司成功");
+                return ControllerResult.getSuccessResult("更新公司成功");
+            }else{
+                return ControllerResult.getFailResult("更新公司失败，您没有权限操作");
+            }
+
         } catch (Exception e) {
             logger.info("更新失败，出现了一个错误");
             return ControllerResult.getFailResult("更新失败，出现了一个错误");
@@ -155,16 +212,17 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<Company> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(CompanyQueryRole)) {
+            logger.info("Session已失效或者权限不足");
             return null;
         }
+        User user = SessionGetUtil.getUser();
         Pager pager = new Pager();
         logger.info("分页查询所有公司");
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(companyService.count());
-        List<Company> companyList = companyService.queryByPager(pager);
+        pager.setTotalRecords(companyService.count(user));
+        List<Company> companyList = companyService.queryByPager(pager,user);
         return new Pager4EasyUI<Company>(pager.getTotalRecords(), companyList);
     }
 
@@ -176,14 +234,19 @@ public class CompanyController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
-            if (status.equals("Y")) {
-                logger.info("公司冻结");
-                companyService.inactive(id);
-            } else if (status.equals("N")) {
-                logger.info("公司激活");
-                companyService.active(id);
+            if(CheckRoleUtil.checkRoles(CompanyQueryRole)){
+                if (status.equals("Y")) {
+                    logger.info("公司冻结");
+                    companyService.inactive(id);
+                } else if (status.equals("N")) {
+                    logger.info("公司激活");
+                    companyService.active(id);
+                }
+                return ControllerResult.getSuccessResult("操作成功");
+            }else{
+                return ControllerResult.getFailResult("操作失败,你没有权限操作");
             }
-            return ControllerResult.getSuccessResult("操作成功");
+
         } catch (Exception e) {
             logger.info("操作失败，出现了一个错误");
             return ControllerResult.getFailResult("操作失败，出现了一个错误");
@@ -200,37 +263,43 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "company_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
+
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return null;
         }
-        logger.info("查询所有公司");
-        List<Company> companyList = companyService.queryAll();
-        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
-        for (Company companys : companyList) {
-            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(companys.getCompanyId());
-            comboBox4EasyUI.setText(companys.getCompanyName());
-            comboBox4EasyUIs.add(comboBox4EasyUI);
+        try{
+            User user = SessionGetUtil.getUser();
+            logger.info("查询所有公司");
+            List<Company> companyList = companyService.queryAll(user);
+            List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+            for (Company companys : companyList) {
+                ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                comboBox4EasyUI.setId(companys.getCompanyId());
+                comboBox4EasyUI.setText(companys.getCompanyName());
+                comboBox4EasyUIs.add(comboBox4EasyUI);
+            }
+            return comboBox4EasyUIs;
+        }catch(Exception e){
+            logger.info("查询失败,出现了一个错误");
+            return null;
         }
-        return comboBox4EasyUIs;
+
     }
 
     @ResponseBody
     @RequestMapping(value = "queryStatusPager", method = RequestMethod.GET)
     public Pager4EasyUI<Company> companyStatus(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(CompanyQueryRole)) {
+            logger.info("Session已失效或者权限不足");
             return null;
         }
         Pager pager = new Pager();
+        User user = SessionGetUtil.getUser();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(companyService.statusCount(status));
-        List<Company> companys = companyService.queryByStatusPager(status, pager);
-        for (Company c : companys) {
-            System.out.println(c);
-        }
+        pager.setTotalRecords(companyService.statusCount(status,user));
+        List<Company> companys = companyService.queryByStatusPager(status, pager,user);
         return new Pager4EasyUI<Company>(pager.getTotalRecords(), companys);
     }
 

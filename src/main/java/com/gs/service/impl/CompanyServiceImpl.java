@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Company;
+import com.gs.bean.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -29,20 +30,45 @@ public class CompanyServiceImpl implements CompanyService {
 	public int batchDelete(List<Company> list) { return companyDAO.batchDelete(list); }
 	public int update(Company company) { return companyDAO.update(company); }
 	public int batchUpdate(List<Company> list) { return companyDAO.batchUpdate(list); }
-	public List<Company> queryAll() { return companyDAO.queryAll(); }
-	public List<Company> queryByStatus(String status) { return companyDAO.queryByStatus(status); }
-	public Company query(Company company) { return companyDAO.query(company); }
+
+	@Override
+	public List<Company> queryAll(User user) {
+		return companyDAO.queryAll(user);
+	}
+
+	@Override
+	public List<Company> queryByStatus(String status, User user) {
+		return companyDAO.queryByStatus(status, user);
+	}
+
+	@Override
+	public Company query(Company company, User user) {
+		return companyDAO.query(company, user);
+	}
+
 	public Company queryById(String id) { return companyDAO.queryById(id); }
-	public List<Company> queryByPager(Pager pager) { return companyDAO.queryByPager(pager); }
-	public int count() { return companyDAO.count(); }
+
+	@Override
+	public List<Company> queryByPager(Pager pager, User user) {
+		return companyDAO.queryByPager(pager, user);
+	}
+
+	@Override
+	public int count(User user) {
+		return companyDAO.count(user);
+	}
+
 	public int inactive(String id) { return companyDAO.inactive(id); }
 	public int active(String id) { return companyDAO.active(id); }
 
-	public List<Company> queryByStatusPager(String status,Pager pager) {
-		return companyDAO.queryByStatusPager(status, pager);
+
+	@Override
+	public List<Company> queryByStatusPager(@Param("status") String status, @Param("pager") Pager pager, @Param("user") User user) {
+		return companyDAO.queryByStatusPager(status, pager, user);
 	}
 
-	public int statusCount(String status) {
-		return companyDAO.statusCount(status);
+	@Override
+	public int statusCount(@Param("status") String status, @Param("user") User user) {
+		return companyDAO.statusCount(status, user);
 	}
 }

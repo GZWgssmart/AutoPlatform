@@ -1,6 +1,8 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaintainFix;
+import com.gs.bean.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,16 +30,44 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 	public int batchDelete(List<MaintainFix> list) { return maintainFixDAO.batchDelete(list); }
 	public int update(MaintainFix maintainFix) { return maintainFixDAO.update(maintainFix); }
 	public int batchUpdate(List<MaintainFix> list) { return maintainFixDAO.batchUpdate(list); }
-	public List<MaintainFix> queryAll() { return maintainFixDAO.queryAll(); }
-	public List<MaintainFix> queryByStatus(String status) { return maintainFixDAO.queryByStatus(status); }
-	public MaintainFix query(MaintainFix maintainFix) { return maintainFixDAO.query(maintainFix); }
+
+	@Override
+	public List<MaintainFix> queryAll(User user) {
+		return maintainFixDAO.queryAll(user);
+	}
+
+	@Override
+	public List<MaintainFix> queryByStatus(String status, User user) {
+		return maintainFixDAO.queryByStatus(status, user);
+	}
+
+	@Override
+	public MaintainFix query(MaintainFix maintainFix, User user) {
+		return maintainFixDAO.query(maintainFix, user);
+	}
+
 	public MaintainFix queryById(String id) { return maintainFixDAO.queryById(id); }
-	public List<MaintainFix> queryByPager(Pager pager) { return maintainFixDAO.queryByPager(pager); }
-	public int count() { return maintainFixDAO.count(); }
+
+	@Override
+	public List<MaintainFix> queryByPager(Pager pager, User user) {
+		return maintainFixDAO.queryByPager(pager,user);
+	}
+
+	@Override
+	public int count(User user) {
+		return maintainFixDAO.count(user);
+	}
+
 	public int inactive(String id) { return maintainFixDAO.inactive(id); }
 	public int active(String id) { return maintainFixDAO.active(id); }
 
-	public List<MaintainFix> queryBymaintainPager(Pager pager) {
-		return maintainFixDAO.queryBymaintainPager(pager);
+	@Override
+	public List<MaintainFix> queryBymaintainPager(@Param("pager") Pager pager, @Param("user") User user) {
+		return maintainFixDAO.queryBymaintainPager(pager, user);
+	}
+
+	@Override
+	public int MaintainCont(User user) {
+		return maintainFixDAO.MaintainCont(user);
 	}
 }
