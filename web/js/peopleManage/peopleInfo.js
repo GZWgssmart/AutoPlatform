@@ -149,6 +149,7 @@ window.operateEvents = {
         $("#role").val(row.role.roleDes);
         $("#form_datetime").val(formatterDate(user.userCreatedTime));
         $("#editModal").fill(user);
+        $("#icon").attr("src","/"+user.userIcon);
         var company = document.getElementById("editModalCompany");
         company.value = user.company.companyName;
         var loginedTime = document.getElementById("form_loginedTime");
@@ -312,7 +313,7 @@ function validator(formId) {
             wechatOpenId: {
                 validators: {
                     regexp: {
-                        regexp: /^[a-zA-Z\d_]{5,}$/,
+                        regexp: /^[a-zA-Z\d_.]{5,}$/,
                         message: '微信号格式错误'
                     }
                 }
@@ -328,7 +329,7 @@ function validator(formId) {
             weiboOpenId: {
                 validators: {
                     regexp: {
-                        regexp: /@([a-zA-z0-9_]+)/,
+                        regexp: /[a-zA-z0-9_\d_.]{5,}/,
                             message: '微博号格式错误'
                     }
                 }
@@ -349,46 +350,25 @@ function validator(formId) {
 
             } else if (formId == "editForm") {
                 formSubmit("/peopleManage/peopleRole_update", formId, "editWin");
-            }
-            // else if(formId == 'editModal'){
-            //    // outFormData(document.getElementById('editModal'));
-            //     formSubmit("/peopleManage/peopleInfo_update", formId, "myModal");
-            // }
-            $('#editModal').ajaxSubmit({
-                url:'/peopleManage/peopleInfo_update',
-                type:'post',
-                dataType: 'json',
-                success: function (data) {
-                    if (data.result == "success") {
-                        $('#myModal').modal('hide');
-                        swal(data.message, "", "success");
-                        $('#cusTable').bootstrapTable('refresh');
-                        $('#editModal').data('bootstrapValidator').resetForm(true);
-                    } else if(data.result == "fail"){
-                        $('#myModal').modal('hide');
-                        swal(data.message, "内容不匹配", "error");
-                        $('#editModal').data('bootstrapValidator').resetForm(true);
-
-                    } else if(data.result == 'notLogin'){
-                        swal({
-                                title: "登入失败",
-                                text: data.message,
-                                type: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "#DD6B55",
-                                confirmButtonText: "确认",
-                                cancelButtonText: "取消",
-                                closeOnConfirm: true,
-                                closeOnCancel: true
-                            },
-                            function (isConfirm) {
-                                if (isConfirm) {
-                                    top.location.href = "/login/show_login";
-                                }
-                        });
+            } else if(formId == 'editModal') {
+                $('#editModal').ajaxSubmit({
+                    url: '/peopleManage/peopleInfo_update',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.result == "success") {
+                            $('#myModal').modal('hide');
+                            swal(data.message, "", "success");
+                            $('#cusTable').bootstrapTable('refresh');
+                            $('#editModal').data('bootstrapValidator').resetForm(true);
+                        } else if (data.result == "fail") {
+                            $('#myModal').modal('hide');
+                            swal(data.message, "内容不匹配", "error");
+                            $('#editModal').data('bootstrapValidator').resetForm(true);
+                        }
                     }
-                }
-            })
+                })
+            }
 
         })
 }

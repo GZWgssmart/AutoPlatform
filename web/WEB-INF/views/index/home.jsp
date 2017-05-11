@@ -40,7 +40,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <span><img alt="image" class="img-circle" src="<%=path %>${sessionScope.user.userIcon}"/></span>
+                        <span><img alt="image" class="img-circle" src="<%=path %>/${sessionScope.user.userIcon}" style="width:65px;height:65px;"/></span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                <span class="block m-t-xs"><strong class="font-bold">${sessionScope.user.userName}</strong></span>

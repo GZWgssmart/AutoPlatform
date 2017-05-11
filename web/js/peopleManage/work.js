@@ -4,7 +4,7 @@ $(document).ready(function () {
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 
-    initSelect2("work_user", "请选择员工", "/peopleManage/user_all", 565);
+    initSelect2("work_user", "请选择员工", "/peopleManage/self_user", 565);
     destoryValidator("editWin","editForm");
 });
 

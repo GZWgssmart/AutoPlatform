@@ -81,4 +81,6 @@ public interface UserDAO extends BaseDAO<String, User>{
     /**统计条件查询管理员的个数*/
     public int countSelectAdmin(@Param("userName") String userName, @Param("userPhone") String userPhone, @Param("userEmail") String userEmail);
 
+    /*查询自己公司的员工*/
+    public List<User> queryUser();
 }

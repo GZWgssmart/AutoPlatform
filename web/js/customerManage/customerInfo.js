@@ -159,6 +159,7 @@ window.operateEvents = {
         editIdentity = user.userIdentity;
         var loginedTime = document.getElementById("form_loginedTime");
         loginedTime.value = user.userLoginedTime;
+        $("#icon").attr("src","/"+user.userIcon);
         $("#form_loginedTime").val(formatterDate(user.userLoginedTime));
         $("#role").val(row.role.roleDes);
         $("#form_datetime").val(formatterDate(user.userCreatedTime));
@@ -173,9 +174,22 @@ window.operateEvents = {
         var change = user.userStatus;
         if (change == 'N'){
             return 'Y';
-        }
-        if (user.userNickname == null || user.userNickname == ""){
+        }if (user.userNickname == null || user.userNickname == ""){
             $("#nickname").val("");
+        }if (user.userEmail == null || user.userEmail == ""){
+            $("#editEmail").val("");
+        }if (user.userIdentity == null || user.userIdentity == ""){
+            $("#editIdentity").val("");
+        }if (user.wechatOpenId == null || user.wechatOpenId == ""){
+            $("#wechatOpen").val("");
+        }if (user.qqOpenId == null || user.qqOpenId == ""){
+            $("#qqOpen").val("");
+        }if (user.weiboOpenId == null || user.weiboOpenId == ""){
+            $("#weiboOpen").val("");
+        }if (user.userAddress == null || user.userAddress == ""){
+            $("#address").val("");
+        }if (user.userDes == null || user.userDes == ""){
+            $("#chang").val("");
         }
         customerAge(row);
         oldAndNew();
@@ -327,7 +341,7 @@ function validator(formId) {
             wechatOpenId: {
                 validators: {
                     regexp: {
-                        regexp: /^[a-zA-Z\d_]{5,}$/,
+                        regexp: /^[a-zA-Z\d_.]{5,}$/,
                         message: '微信号格式错误'
                     }
                 }
@@ -335,7 +349,7 @@ function validator(formId) {
             qqOpenId: {
                 validators: {
                     regexp: {
-                        regexp: /[1-9][0-9]{4,}/,
+                        regexp: /[1-9][0-9]{5,}/,
                         message: 'QQ号格式错误'
                     }
                 }
@@ -343,7 +357,7 @@ function validator(formId) {
             weiboOpenId: {
                 validators: {
                     regexp: {
-                        regexp: /@([a-zA-z0-9_]+)/,
+                        regexp: /[a-zA-z0-9_\d_.]{5,}/,
                         message: '微博号格式错误'
                     }
                 }
@@ -356,9 +370,24 @@ function validator(formId) {
 
             } else if (formId == "editForm") {
                 formSubmit("/customer/customerInfo_update", formId, "editWin");
-            } else if(formId == 'editModal'){
-               // outFormData(document.getElementById('editModal'));
-                formSubmit("/customer/customerInfo_update", formId, "myModal");
+            } else if(formId == 'editModal') {
+                    $('#editModal').ajaxSubmit({
+                        url: '/customer/customerInfo_update',
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.result == "success") {
+                                $('#myModal').modal('hide');
+                                swal(data.message, "", "success");
+                                $('#cusTable').bootstrapTable('refresh');
+                                $('#editModal').data('bootstrapValidator').resetForm(true);
+                            } else if (data.result == "fail") {
+                                $('#myModal').modal('hide');
+                                swal(data.message, "内容不匹配", "error");
+                                $('#editModal').data('bootstrapValidator').resetForm(true);
+                            }
+                        }
+                    })
             }
 
 

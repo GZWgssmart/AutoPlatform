@@ -140,7 +140,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">手机号：</label>
-                                <input type="text" name="userPhone"
+                                <input type="text" maxlength="11" name="userPhone"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -189,7 +189,7 @@
                                 <input type="hidden" name="userId" attr="user.userId" />
                                 <div class="form_img">
                                     <div id="preview">
-                                        <img alt="image" attr="user.userIcon" name="file" style="border-radius: 50%;"/>
+                                        <img alt="image" id="icon" name="file" style="border-radius: 50%;"/>
                                     </div>
                                     <input type="file" name="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
                                 </div>
