@@ -29,7 +29,7 @@ public class IndexController {
             return "index/home";
         } else {
             logger.info("Session已失效，请重新登入");
-            return "index/notLogin";
+            return "index/login";
         }
     }
 

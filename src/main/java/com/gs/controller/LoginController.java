@@ -80,7 +80,7 @@ public class LoginController {
     public String home() {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
-            return "index/notLogin";
+            return "index/login";
         }
         logger.info("进入后台主页");
         return "index/home";

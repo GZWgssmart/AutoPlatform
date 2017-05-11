@@ -292,18 +292,19 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">添加记录</h3>
+                        <div class="form-group" id="appDiv">
+                            <label>是否预约：</label>
+                            <input type="checkbox" id="isApp" name="isApp" onchange="isAppChoice()">
+
+                        </div>
+                        <div class="form-group" id="userDiv">
+                            <label>是否注册车主：</label>
+                            <input type="checkbox" id="choiceUser" name="user" onchange="isUserChoice()">
+                        </div>
                         <form role="form" id="addForm">
                             <input type="hidden" id="addUserId" name="userId" class="form-control"/>
                             <input type="hidden" id="addAppointmentId" name="appointmentId" class="form-control"/>
-                            <div class="form-group" id="appDiv">
-                                <label>是否预约：</label>
-                                <input type="checkbox" id="isApp" name="isApp" onchange="isAppChoice()">
 
-                            </div>
-                            <div class="form-group" id="userDiv">
-                                <label>是否注册车主：</label>
-                                <input type="checkbox" id="choiceUser" name="user" onchange="isUserChoice()">
-                            </div>
                             <div class="form-group">
                                 <label class="control-label">车主姓名：</label>
                                 <input type="text" id="addUserName" maxlength="4" name="userName" class="form-control"/>

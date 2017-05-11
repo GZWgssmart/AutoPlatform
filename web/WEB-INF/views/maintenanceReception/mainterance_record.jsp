@@ -438,6 +438,9 @@
                                 <th data-field="maintainStatus" data-formatter="status">
                                     保养项目状态
                                 </th>
+                                <th data-field="caozuo" data-formatter="formatterChoiceMaintain" data-events="operateEvents">
+                                    操作
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -496,6 +499,9 @@
                                 </th>
                                 <th data-field="maintainStatus" data-formatter="status">
                                     维修项目状态
+                                </th>
+                                <th data-field="caozuo" data-formatter="formatterChoiceFix" data-events="operateEvents">
+                                    操作
                                 </th>
                             </tr>
                             </thead>
