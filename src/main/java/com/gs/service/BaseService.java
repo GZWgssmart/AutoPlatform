@@ -64,28 +64,28 @@ public interface BaseService<PK extends Serializable, T> {
      * 查询所有记录
      * @return
      */
-    public List<T> queryAll();
+    public List<T> queryAll(User user);
 
     /**
      * 查询指定状态的所有记录
      * @param status
      * @return
      */
-    public List<T> queryByStatus(String status);
+    public List<T> queryByStatus(String status, User user);
 
     /**
      * 查询单个记录
      * @param t
      * @return
      */
-    public T query(T t);
+    public T query(T t, User user);
 
     /**
      * 根据id查询记录
      * @param id
      * @return
      */
-    public T queryById(PK id);
+    public T queryById(PK id, User user);
 
     /**
      * 分页查询记录
