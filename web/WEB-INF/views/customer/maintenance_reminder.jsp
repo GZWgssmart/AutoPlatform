@@ -42,19 +42,19 @@
                 上次保养时间
             </th>
             <th data-field="checkin.carMileage">
-                上次保养汽车行驶里程
+                上次保养行驶里程
             </th>
             <th data-field="remindMsg">
-                保养提醒内容
+                提醒内容
             </th>
             <th data-field="remindTime" data-formatter="formatterDate">
-                保养提醒时间
+                提醒时间
             </th>
             <th data-field="remindType" >
-                保养提醒方式
+                提醒方式
             </th>
             <th data-field="remindCreatedTime" data-formatter="formatterDate">
-                保养提醒记录创建时间
+                提醒记录创建时间
             </th>
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
@@ -63,15 +63,16 @@
         </thead>
 
         <form id="formSearch" class="form-horizontal">
-            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+            <div class="form-group" id="searchDiv" style="margin-top:15px;">
                 <div class="col-sm-2" style="margin-left: -15px;">
                     <input type="text" id="searchUserName" name="userName" class="form-control" placeholder="请输入车主姓名">
                 </div>
                 <div class="col-sm-2">
-                    <select class="js-example-tags form-control" id="searchMaintainOrFix" name="maintainOrFix">
-                        <option value="all">维修&nbsp;&&nbsp;保养</option>
-                        <option value="维修">维修</option>
-                        <option value="保养">保养</option>
+                    <select class="js-example-tags form-control" id="searchRemindType" name="searchRemindType">
+                        <option value="all">提醒方式</option>
+                        <option value="短信提醒">短信提醒</option>
+                        <option value="邮箱提醒">邮箱提醒</option>
+                        <option value="微信提醒">微信提醒</option>
                     </select>
                 </div>
                 <div class="col-sm-2">
@@ -79,61 +80,11 @@
                         查询
                     </button>
                     <button type="button" onclick="closeSearchForm()" class="btn btn-default">
-                        关闭
+                        重置
                     </button>
                 </div>
             </div>
         </form>
-        <tbody>
-        <div id="toolbar" class="btn-group">
-
-            <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-                </button>
-            </a>
-
-            <a>
-                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                    <i class="glyphicon glyphicon-pencil"></i> 修改
-                </button>
-            </a>
-
-            <a>
-                <button onclick="showAddDetailWin();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-glass"></i> 生成明细
-                </button>
-            </a>
-
-            <a>
-                <button onclick="showDetailWin();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看明细
-                </button>
-            </a>
-
-            <a>
-                <button onclick="searchStatus('/record/pager?status=Y');" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看可用记录
-                </button>
-            </a>
-            <a>
-                <button onclick="searchStatus('/record/pager?status=N');" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看不可用记录
-                </button>
-            </a>
-            <a>
-                <button onclick="searchStatus('/record/pager?status=ALL');" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看全部
-                </button>
-            </a>
-            <a>
-                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-search"></i> 条件查询
-                </button>
-            </a>
-
-        </div>
-        </tbody>
-
 
     </table>
 </div>
@@ -182,50 +133,6 @@
     </div>
 </div>
 
-<div id="addWin" class="modal fade" style="overflow:scroll" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">添加修改维修保养提醒</h3>
-                        <form role="form" id="addForm" >
-                            <div class="form-group">
-                                <label class="control-label">保养提醒时间：</label>
-                                <input type="text" readonly="readonly" id="addRemindTime" name="remindTime" class="form-control nowDatrtime"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">保养提醒方式：</label>
-                                <select class="js-example-tags form-control" name="remindType">
-                                    <option value="短信提醒" selected="selected">短信提醒</option>
-                                    <option value="邮箱提醒">邮箱提醒</option>
-                                    <option value="微信提醒">微信提醒</option>
-                                    <option value="QQ提醒">QQ提醒</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">保养提醒内容：</label>
-                                <textarea class="form-control" id="addMsg" type="textarea" name="remindMsg" maxlength="400"
-                                          rows="3"></textarea>
-                            </div>
-                            <div class="modal-footer" style="overflow:hidden;">
-                                <span id="error" style="color: #ff0000;"></span>
-                                <br/>
-                                <button type="button" class="btn btn-default"
-                                        data-dismiss="modal">关闭
-                                </button>
-                                <input type="button" id="addButton" class="btn btn-primary" onclick="addCompaint()" value="添加">
-                                </input>
-                                <input type="reset" name="reset" style="display: none;" />
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>

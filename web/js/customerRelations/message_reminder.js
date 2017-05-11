@@ -13,21 +13,16 @@ $(document).ready(function () {
 /** 根据条件搜索 */
 function searchCondition() {
     var userName = $("#searchUserName").val();
-    var maintainOrFix = $("#searchMaintainOrFix").val();
-    var companyId = $("#searchCompanyId").val();
+    var searchRemindType = $("#searchRemindType").val();
     var speedStatus = "已登记";
-    initTable("cusTable", "/record/condition_pager?userName=" + userName + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId + "&speedStatus=" + speedStatus);
+    initTable("cusTable", "/MessageReminder/condition_pager?userName=" + userName + "&searchRemindType=" + searchRemindType );
 
 }
 
 /** 关闭搜索的form */
 function closeSearchForm() {
     $("#searchUserName").val('');
-    $("#searchCarPlate").val('');
-    $("#searchMaintainOrFix").val('all');
-    $('#searchCompanyId').html('').trigger("change");
-    $("#searchDiv").hide();
-    $("#showButton").show();
+    $("#searchRemindType").val('all');
 }
 
 function getDate() {
@@ -36,7 +31,7 @@ function getDate() {
 
 function operateFormatter(value, row, index) {
     return [
-        '<button type="button" class="showUpdate btn btn-default  btn-sm" style="margin-right:15px;" >编辑</button>'
+        '<button type="button" class="showUpdate btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
     ].join('');
 }
 window.operateEvents = {

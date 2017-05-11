@@ -63,12 +63,15 @@ function operateFormatter(value, row, index) {
 }
 window.operateEvents = {
     'click .showomplaintReply': function (e, value, row, index) {
-        var Reply = row;
         validator("adminForm");
-        $("#adminForm").fill(Reply);
-        $("#adminWin").modal('show');
+        var Reply = row;
+
+            $("#adminForm").fill(Reply);
+            $("#adminWin").modal('show');
+
     }
 }
+
 
 function validator(formId) {
     $("#addButton").removeAttr("disabled");

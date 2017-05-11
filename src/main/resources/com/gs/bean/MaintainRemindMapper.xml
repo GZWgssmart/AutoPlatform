@@ -121,4 +121,24 @@
 		]]>
 	</update>
 
+	<select id="countByCondition" resultType="int">
+  		select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
+	</select>
+
+	<select id="queryPagerByCondition" resultType="list" resultMap="maintainRemindResultMap">
+	<![CDATA[
+		select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
+			  from t_maintain_remind r,  t_checkin c, t_company cpy
+		      where 1 = 1 and c.userId = r.userId and c.companyId = cpy.companyId
+		]]>
+		<if test="remind.checkin.userName != null and remind.checkin.userName != ''">
+			and c.userName like concat('%',#{remind.checkin.userName},'%')
+		</if>
+		<if test="remind.remindType != null and remind.remindType != ''">
+			and r.remindType = #{remind.remindType}
+		</if>
+		order by r.remindCreatedTime desc
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
 </mapper>

@@ -37,4 +37,13 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 	public int inactive(String id) { return maintainRemindDAO.inactive(id); }
 	public int active(String id) { return maintainRemindDAO.active(id); }
 
+	@Override
+	public int countByCondition(MaintainRemind remind) {
+		return maintainRemindDAO.countByCondition(remind);
+	}
+
+	@Override
+	public List<MaintainRemind> queryPagerByCondition(Pager pager, MaintainRemind remind) {
+		return maintainRemindDAO.queryPagerByCondition(pager, remind);
+	}
 }

@@ -34,6 +34,9 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
+            <th data-field="complaintCreatedTime">
+                投诉编号:
+            </th>
             <th data-field="admin.userName">
                 投诉人
             </th>

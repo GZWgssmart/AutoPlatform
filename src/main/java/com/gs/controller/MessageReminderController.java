@@ -1,13 +1,14 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Checkin;
+import com.gs.bean.MaintainRecord;
 import com.gs.bean.MaintainRemind;
-import com.gs.bean.MessageSend;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.service.MaintainRemindService;
-import com.gs.service.MessageSendService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +65,32 @@ public class MessageReminderController {
         /*maintainRemind.setRemindId("1e8f6410-24f5-11e7-8ee3-00909e9aaeb9");*/
         maintainRemindService.update(maintainRemind);
         return ControllerResult.getSuccessResult("更新成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "condition_pager", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainRemind> queryPagerByCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
+                                                              @Param("userName")String userName, @Param("searchRemindType")String searchRemindType
+                                                              ) {
+        if (SessionGetUtil.isUser()) {
+            logger.info("根据条件分页查询维修保养记录提醒");
+            MaintainRemind remind = new MaintainRemind();
+            Checkin checkin = new Checkin();
+            checkin.setUserName(userName);
+            remind.setCheckin(checkin);
+            remind.setRemindType(searchRemindType);
+            Pager pager = new Pager();
+            pager.setPageNo(Integer.valueOf(pageNumber));
+            pager.setPageSize(Integer.valueOf(pageSize));
+            List<MaintainRemind> reminds = new ArrayList<MaintainRemind>();
+            pager.setTotalRecords(maintainRemindService.countByCondition(remind));
+            reminds = maintainRemindService.queryPagerByCondition(pager, remind);
+
+            return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), reminds);
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
     }
 
 
