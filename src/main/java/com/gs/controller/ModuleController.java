@@ -2,10 +2,13 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Module;
+import com.gs.bean.User;
+import com.gs.common.Constants;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.ModuleService;
 import org.apache.ibatis.annotations.Param;
@@ -31,11 +34,18 @@ public class ModuleController {
     @Resource
     private ModuleService moduleService;
 
+    private String queryRole = Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+    private String editRole = Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+
     @RequestMapping(value = "info", method = RequestMethod.GET)
     public String showModuleInfo() {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
+        }
+        if (!CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("无权访问，想要访问请联系管理员!");
+            return "error/notPermission";
         }
         logger.info("显示模块信息");
         return "system/module";
@@ -44,28 +54,30 @@ public class ModuleController {
     @ResponseBody
     @RequestMapping(value = "query_pager", method = RequestMethod.GET)
     public Pager4EasyUI<Module> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
         logger.info("分页查询所有模块");
+        User user = SessionGetUtil.getUser();
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(moduleService.count());
-        List<Module> Modules = moduleService.queryByPager(pager);
+        pager.setTotalRecords(moduleService.count(user));
+        List<Module> Modules = moduleService.queryByPager(pager, user);
         return new Pager4EasyUI<Module>(pager.getTotalRecords(), Modules);
     }
 
     @ResponseBody
     @RequestMapping(value = "query_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll() {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
         logger.info("查询所有模块");
-        List<Module> modules = moduleService.queryAll();
+        User user = SessionGetUtil.getUser();
+        List<Module> modules = moduleService.queryAll(user);
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
         for (Module m : modules) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
@@ -84,6 +96,10 @@ public class ModuleController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("添加失败");
+                return ControllerResult.getFailResult("添加失败，没有该权限操作");
+            }
             logger.info("添加模块");
             module.setModuleStatus("Y");
             moduleService.insert(module);
@@ -102,6 +118,10 @@ public class ModuleController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("更新失败");
+                return ControllerResult.getFailResult("更新失败，没有该权限操作");
+            }
             logger.info("更新模块");
             module.setModuleStatus("Y");
             moduleService.update(module);
@@ -120,6 +140,10 @@ public class ModuleController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("更新状态失败");
+                return ControllerResult.getFailResult("更新状态失败，没有该权限操作");
+            }
             logger.info("更新模块状态");
             if (status.equals("Y")) {
                 moduleService.active(id);
@@ -136,8 +160,8 @@ public class ModuleController {
     @ResponseBody
     @RequestMapping(value = "queryByStatus_module", method = RequestMethod.GET)
     public Pager4EasyUI<Module> queryByStatusModule(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
         if (status.equals("Y")) {
@@ -145,11 +169,12 @@ public class ModuleController {
         } else {
             logger.info("分页查询不可用的模块");
         }
+        User user = SessionGetUtil.getUser();
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(moduleService.countByStatus(status));
-        List<Module> modules = moduleService.queryByStatusPager(status, pager);
+        pager.setTotalRecords(moduleService.countByStatus(status, user));
+        List<Module> modules = moduleService.queryByStatusPager(status, pager, user);
         return new Pager4EasyUI<Module>(pager.getTotalRecords(), modules);
     }
 }
