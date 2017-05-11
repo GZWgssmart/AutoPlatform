@@ -14,6 +14,9 @@ function showAduqPermission() {
     initTable("cusTable", contextPath + "/permission/query_pager");
     initSelect2("module_all", "选择模块查询", contextPath + "/module/query_all", "150");
     initSelect2("module_all_2", "选择所属模块", contextPath + "/module/query_all", "540");
+    $("#search").bind("click", initTable);
+    destoryValidator('addWin', 'addForm');
+    destoryValidator('editWin', 'editForm');
     $("#aduqPermission").show();
 }
 

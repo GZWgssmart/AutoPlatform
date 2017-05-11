@@ -5,7 +5,8 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", contextPath + "/role/query_pager");
-
+    destoryValidator('addWin', 'addForm');
+    destoryValidator('editWin', 'editForm');
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 
