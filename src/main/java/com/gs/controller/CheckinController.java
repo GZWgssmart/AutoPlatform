@@ -7,11 +7,13 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -50,11 +52,19 @@ public class CheckinController {
     @Resource
     private AppointmentService appointmentService;
 
+    private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE + ","
+            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE;
+
     @RequestMapping(value = "checkin_page", method = RequestMethod.GET)
     public String checkinPage() {
         if (SessionGetUtil.isUser()) {
-            logger.info("访问登记页面");
-            return "maintenanceReception/reception_register";
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("访问登记页面");
+                return "maintenanceReception/reception_register";
+            }
+            return "error/notPermission";
         } else {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
@@ -66,20 +76,28 @@ public class CheckinController {
     @RequestMapping(value = "checkin_pager", method = RequestMethod.GET)
     public Pager4EasyUI<Checkin> checkinPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("status") String status) {
         if (SessionGetUtil.isUser()) {
-            logger.info("分页查询登记记录");
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
-            List<Checkin> checkins = new ArrayList<Checkin>();
-            if (status.equals("ALL")) {
-                pager.setTotalRecords(checkinService.count());
-                checkins = checkinService.queryByPager(pager);
-            } else {
-                pager.setTotalRecords(checkinService.countByStatus(status));
-                checkins = checkinService.queryPagerByStatus(pager, status);
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页查询登记记录");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    List<Checkin> checkins = new ArrayList<Checkin>();
+                    if (status.equals("ALL")) {
+                        pager.setTotalRecords(checkinService.count(user));
+                        checkins = checkinService.queryByPager(pager, user);
+                    } else {
+                        pager.setTotalRecords(checkinService.countByStatus(status, user));
+                        checkins = checkinService.queryPagerByStatus(pager, status, user);
+                    }
+                    return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("查询失败，出现了异常");
+                return null;
             }
-
-            return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -93,21 +111,30 @@ public class CheckinController {
                                                        @Param("carPlate") String carPlate, @Param("maintainOrFix") String maintainOrFix,
                                                        @Param("companyId") String companyId) {
         if (SessionGetUtil.isUser()) {
-            logger.info("根据条件分页查询登记记录");
-            Checkin checkin = new Checkin();
-            checkin.setUserName(userName);
-            checkin.setUserPhone(userPhone);
-            checkin.setCarPlate(carPlate);
-            checkin.setMaintainOrFix(maintainOrFix);
-            checkin.setCompanyId(companyId);
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
-            List<Checkin> checkins = new ArrayList<Checkin>();
-            pager.setTotalRecords(checkinService.countByCondition(checkin));
-            checkins = checkinService.queryPagerByCondition(pager, checkin);
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("根据条件分页查询登记记录");
+                    User user = SessionGetUtil.getUser();
+                    Checkin checkin = new Checkin();
+                    checkin.setUserName(userName);
+                    checkin.setUserPhone(userPhone);
+                    checkin.setCarPlate(carPlate);
+                    checkin.setMaintainOrFix(maintainOrFix);
+                    checkin.setCompanyId(companyId);
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    List<Checkin> checkins = new ArrayList<Checkin>();
+                    pager.setTotalRecords(checkinService.countByCondition(checkin, user));
+                    checkins = checkinService.queryPagerByCondition(pager, checkin, user);
 
-            return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
+                    return new Pager4EasyUI<Checkin>(pager.getTotalRecords(), checkins);
+                }
+                return null;
+            } catch (Exception e) {
+            logger.info("查询失败，出现了异常");
+            return null;
+        }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -119,27 +146,30 @@ public class CheckinController {
     public ControllerResult addCheckin(Checkin checkin, String isApp) {
         if (SessionGetUtil.isUser()) {
             try {
-                logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录");
-                User loginUser = SessionGetUtil.getUser();
-                String checkinId = UUIDUtil.uuid();
+                if (CheckRoleUtil.checkRoles(editRole)) {
+                    logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录");
+                    User loginUser = SessionGetUtil.getUser();
+                    String checkinId = UUIDUtil.uuid();
 
-                checkin.setCheckinId(checkinId);
-                checkin.setCompanyId(loginUser.getCompanyId());
+                    checkin.setCheckinId(checkinId);
+                    checkin.setCompanyId(loginUser.getCompanyId());
 
-                MaintainRecord maintainRecord = new MaintainRecord();
-                String recordId = UUIDUtil.uuid();
-                maintainRecord.setRecordId(recordId);
-                maintainRecord.setSpeedStatus(Constants.CHECKIN);
-                maintainRecord.setCheckinId(checkinId);
-                maintainRecord.setCompanyId(loginUser.getCompanyId());
+                    MaintainRecord maintainRecord = new MaintainRecord();
+                    String recordId = UUIDUtil.uuid();
+                    maintainRecord.setRecordId(recordId);
+                    maintainRecord.setSpeedStatus(Constants.CHECKIN);
+                    maintainRecord.setCheckinId(checkinId);
+                    maintainRecord.setCompanyId(loginUser.getCompanyId());
 
-                if (isApp != null && !isApp.equals("") && isApp.equals("on")) {
-                    appointmentService.updateSpeedStatusById(Constants.CHECKIN, checkin.getAppointmentId());
+                    if (isApp != null && !isApp.equals("") && isApp.equals("on")) {
+                        appointmentService.updateSpeedStatusById(Constants.CHECKIN, checkin.getAppointmentId());
+                    }
+
+                    maintainRecordService.insert(maintainRecord);
+                    checkinService.insert(checkin);
+                    return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录已经自动生成");
                 }
-
-                maintainRecordService.insert(maintainRecord);
-                checkinService.insert(checkin);
-                return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录已经自动生成");
+                return ControllerResult.getFailResult("添加登记记录失败，没有该权限操作");
             } catch (Exception e) {
                 logger.info("添加登记记录失败，出现了一个错误");
                 return ControllerResult.getFailResult("添加登记记录失败，出现了一个错误");
@@ -155,9 +185,12 @@ public class CheckinController {
     public ControllerResult editCheckin(Checkin checkin) {
         if (SessionGetUtil.isUser()) {
             try {
-                logger.info("修改登记记录");
-                checkinService.update(checkin);
-                return ControllerResult.getSuccessResult("修改成功");
+                if (CheckRoleUtil.checkRoles(editRole)) {
+                    logger.info("修改登记记录");
+                    checkinService.update(checkin);
+                    return ControllerResult.getSuccessResult("修改成功");
+                }
+                return ControllerResult.getFailResult("修改失败，没有权限操作");
             } catch (Exception e) {
                 logger.info("修改失败，出现了一个错误");
                 return ControllerResult.getFailResult("修改失败，出现了一个错误");
@@ -173,13 +206,16 @@ public class CheckinController {
     public ControllerResult updateCheckinStatus(String checkinId, String status) {
         if (SessionGetUtil.isUser()) {
             try {
-                logger.info("更新登记记录的状态");
-                if (status.equals("Y")) {
-                    checkinService.inactive(checkinId);
-                } else {
-                    checkinService.active(checkinId);
+                if (CheckRoleUtil.checkRoles(editRole)) {
+                    logger.info("更新登记记录的状态");
+                    if (status.equals("Y")) {
+                        checkinService.inactive(checkinId);
+                    } else {
+                        checkinService.active(checkinId);
+                    }
+                    return ControllerResult.getSuccessResult("更新成功");
                 }
-                return ControllerResult.getSuccessResult("更新成功");
+                return ControllerResult.getFailResult("更新登记记录状态失败，没有权限操作");
             } catch (Exception e) {
                 logger.info("更新登记记录状态失败，出现了一个错误");
                 return ControllerResult.getFailResult("更新登记记录状态失败，出现了一个错误");

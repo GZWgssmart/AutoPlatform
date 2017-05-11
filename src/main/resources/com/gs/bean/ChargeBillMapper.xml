@@ -99,6 +99,9 @@
 				from t_charge_bill cb, t_maintain_record r, t_checkin c, t_car_plate p, t_car_brand b, t_car_color co, t_car_model m, t_company cpy
 				where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId and c.plateId = p.plateId and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and r.companyId = cpy.companyId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and cb.companyId = #{user.companyId}
+		</if>
 		order by cb.chargeCreatedTime desc
 	</select>
 
@@ -126,8 +129,11 @@
 				from t_charge_bill cb, t_maintain_record r, t_checkin c, t_car_plate p, t_car_brand b, t_car_color co, t_car_model m, t_company cpy
 				where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId and c.plateId = p.plateId and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and r.companyId = cpy.companyId
 		]]>
-		order by cb.chargeCreatedTime desc
-        limit #{beginIndex}, #{pageSize}
+		<if test="user.companyId != null and user.companyId != ''">
+			and cb.companyId = #{user.companyId}
+		</if>
+		order by cb.chargeCreatedTime desc, cb.companyId
+        limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="queryPagerByStatus" resultType="list" resultMap="chargeBillResultMap">
@@ -136,7 +142,10 @@
 				from t_charge_bill cb, t_maintain_record r, t_checkin c, t_car_plate p, t_car_brand b, t_car_color co, t_car_model m, t_company cpy
 				where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId and c.plateId = p.plateId and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and r.companyId = cpy.companyId and cb.chargeBillStatus = #{status}
 		]]>
-		order by cb.chargeCreatedTime desc
+		<if test="user.companyId != null and user.companyId != ''">
+			and cb.companyId = #{user.companyId}
+		</if>
+		order by cb.chargeCreatedTime desc, cb.companyId
         limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -146,6 +155,9 @@
 				from t_charge_bill cb, t_maintain_record r, t_checkin c, t_car_plate p, t_car_brand b, t_car_color co, t_car_model m, t_company cpy
 				where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId and c.plateId = p.plateId and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and r.companyId = cpy.companyId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and cb.companyId = #{user.companyId}
+		</if>
 		<if test="chargeBill.record.checkin.userName != null and chargeBill.record.checkin.userName != ''">
 			and c.userName like concat('%',#{chargeBill.record.checkin.userName},'%')
 		</if>
@@ -155,34 +167,43 @@
 		<if test="chargeBill.paymentMethod != 'all'">
 			and cb.paymentMethod = #{chargeBill.paymentMethod}
 		</if>
-		order by cb.chargeCreatedTime desc
+		order by cb.chargeCreatedTime desc, cb.companyId
         limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(*) from t_charge_bill
+			select count(*) from t_charge_bill where 1 = 1
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="countByStatus" resultType="int">
 		<![CDATA[
-			select count(*) from t_charge_bill where chargeBillStatus = #{status}
+			select count(*) from t_charge_bill where 1 = 1 and chargeBillStatus = #{status}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="countByCondition" resultType="int">
 		<![CDATA[
 			select count(*) from t_charge_bill cb, t_maintain_record r, t_checkin c where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId
 		]]>
-		<if test="record.checkin.userName != null and record.checkin.userName != ''">
-			and c.userName like concat('%',#{record.checkin.userName},'%')
+		<if test="user.companyId != null and user.companyId != ''">
+			and cb.companyId = #{user.companyId}
 		</if>
-		<if test="record.checkin.userPhone != null and record.checkin.userPhone != ''">
-			and c.userPhone like concat('%',#{record.checkin.userPhone},'%')
+		<if test="chargeBill.record.checkin.userName != null and chargeBill.record.checkin.userName != ''">
+			and c.userName like concat('%',#{chargeBill.record.checkin.userName},'%')
 		</if>
-		<if test="paymentMethod != 'all'">
-			and cb.paymentMethod = #{paymentMethod}
+		<if test="chargeBill.record.checkin.userPhone != null and chargeBill.record.checkin.userPhone != ''">
+			and c.userPhone like concat('%',#{chargeBill.record.checkin.userPhone},'%')
+		</if>
+		<if test="chargeBill.paymentMethod != 'all'">
+			and cb.paymentMethod = #{chargeBill.paymentMethod}
 		</if>
 	</select>
 

@@ -2,8 +2,10 @@ package com.gs.dao;
 
 import com.gs.bean.ChargeBill;
 import com.gs.bean.Checkin;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public interface ChargeBillDAO extends BaseDAO<String, ChargeBill>{
      * @param status
      * @return
      */
-    public int countByStatus(String status);
+    public int countByStatus(@Param("status") String status, @Param("user") User user);
 
     /**
      * 根据状态分页查询
@@ -29,14 +31,14 @@ public interface ChargeBillDAO extends BaseDAO<String, ChargeBill>{
      * @param status
      * @return
      */
-    public List<ChargeBill> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status);
+    public List<ChargeBill> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status, @Param("user") User user);
 
     /**
      * 根据查询条件计数
      * @param chargeBill
      * @return
      */
-    public int countByCondition(ChargeBill chargeBill);
+    public int countByCondition(@Param("chargeBill") ChargeBill chargeBill, @Param("user") User user);
 
     /**
      * 根据查询条件分页查询
@@ -44,7 +46,7 @@ public interface ChargeBillDAO extends BaseDAO<String, ChargeBill>{
      * @param chargeBill
      * @return
      */
-    public List<ChargeBill> queryPagerByCondition(@Param("pager") Pager pager, @Param("chargeBill") ChargeBill chargeBill);
+    public List<ChargeBill> queryPagerByCondition(@Param("pager") Pager pager, @Param("chargeBill") ChargeBill chargeBill, @Param("user") User user);
 
     /*
     * 默认查询本月车主用户消费统计

@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.Checkin;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,7 +19,7 @@ public interface CheckinService extends BaseService<String, Checkin>{
      * @param status
      * @return
      */
-    public int countByStatus(String status);
+    public int countByStatus(String status, User user);
 
     /**
      * 根据状态分页查询
@@ -26,14 +27,14 @@ public interface CheckinService extends BaseService<String, Checkin>{
      * @param status
      * @return
      */
-    public List<Checkin> queryPagerByStatus(Pager pager, String status);
+    public List<Checkin> queryPagerByStatus(Pager pager, String status, User user);
 
     /**
      * 根据查询条件计数
      * @param checkin
      * @return
      */
-    public int countByCondition(Checkin checkin);
+    public int countByCondition(Checkin checkin, User user);
 
     /**
      * 根据查询条件分页查询
@@ -41,14 +42,14 @@ public interface CheckinService extends BaseService<String, Checkin>{
      * @param checkin
      * @return
      */
-    public List<Checkin> queryPagerByCondition(Pager pager, Checkin checkin);
+    public List<Checkin> queryPagerByCondition(Pager pager, Checkin checkin, User user);
 
     /**
      * 根据查询userId查询回访状态
      * @param userId
      * @return
      */
-    public Checkin queryByTrackStatus(String userId);
+    public Checkin queryByTrackStatus(String userId, User user);
 
 
 }

@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.ChargeBill;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,7 +19,7 @@ public interface ChargeBillService extends BaseService<String, ChargeBill>{
      * @param status
      * @return
      */
-    public int countByStatus(String status);
+    public int countByStatus(String status, User user);
 
     /**
      * 根据状态分页查询
@@ -26,14 +27,14 @@ public interface ChargeBillService extends BaseService<String, ChargeBill>{
      * @param status
      * @return
      */
-    public List<ChargeBill> queryPagerByStatus(Pager pager, String status);
+    public List<ChargeBill> queryPagerByStatus(Pager pager, String status, User user);
 
     /**
      * 根据查询条件计数
      * @param chargeBill
      * @return
      */
-    public int countByCondition(ChargeBill chargeBill);
+    public int countByCondition(ChargeBill chargeBill, User user);
 
     /**
      * 根据查询条件分页查询
@@ -41,7 +42,7 @@ public interface ChargeBillService extends BaseService<String, ChargeBill>{
      * @param chargeBill
      * @return
      */
-    public List<ChargeBill> queryPagerByCondition(Pager pager, ChargeBill chargeBill);
+    public List<ChargeBill> queryPagerByCondition(Pager pager, ChargeBill chargeBill, User user);
 
     /*
    * 默认查询本月车主用户消费统计

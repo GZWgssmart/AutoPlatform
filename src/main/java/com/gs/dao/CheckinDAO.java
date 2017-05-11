@@ -1,8 +1,10 @@
 package com.gs.dao;
 
 import com.gs.bean.Checkin;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public interface CheckinDAO extends BaseDAO<String, Checkin>{
      * @param status
      * @return
      */
-    public int countByStatus(String status);
+    public int countByStatus(@Param("status") String status, @Param("user") User user);
 
     /**
      * 根据状态分页查询
@@ -29,14 +31,14 @@ public interface CheckinDAO extends BaseDAO<String, Checkin>{
      * @param status
      * @return
      */
-    public List<Checkin> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status);
+    public List<Checkin> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status, @Param("user") User user);
 
     /**
      * 根据查询条件计数
      * @param checkin
      * @return
      */
-    public int countByCondition(Checkin checkin);
+    public int countByCondition(@Param("checkin") Checkin checkin, @Param("user") User user);
 
     /**
      * 根据查询条件分页查询
@@ -44,13 +46,13 @@ public interface CheckinDAO extends BaseDAO<String, Checkin>{
      * @param checkin
      * @return
      */
-    public List<Checkin> queryPagerByCondition(@Param("pager") Pager pager, @Param("checkin") Checkin checkin);
+    public List<Checkin> queryPagerByCondition(@Param("pager") Pager pager, @Param("checkin") Checkin checkin, @Param("usre") User user);
 
     /**
      * 根据查询userId查询回访状态
      * @param userId
      * @return
      */
-    public Checkin queryByTrackStatus(@Param("userId") String userId);
+    public Checkin queryByTrackStatus(@Param("userId") String userId, @Param("user") User user);
 
 }

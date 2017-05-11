@@ -122,10 +122,13 @@
 		<![CDATA[
 			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
 				from t_checkin c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
-				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId
-				order by c.checkinCreatedTime desc, c.companyId
+				where 1 = 1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId
 		]]>
-		limit #{beginIndex}, #{pageSize}
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
+		order by c.checkinCreatedTime desc, c.companyId
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="queryPagerByStatus" resultType="list" resultMap="checkinResultMap">
@@ -133,8 +136,11 @@
 			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
 				from t_checkin c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
 				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId and checkinStatus = #{status}
-				order by c.checkinCreatedTime desc, c.companyId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
+		order by c.checkinCreatedTime desc, c.companyId
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -142,8 +148,11 @@
 		<![CDATA[
 			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
 				from t_checkin c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
-				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and c.companyId = cpy.companyId
+				where 1 = 1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and c.companyId = cpy.companyId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 		<if test="checkin.userName != null and checkin.userName != ''">
 			and c.userName like concat('%',#{checkin.userName},'%')
 		</if>
@@ -165,40 +174,52 @@
 
 	<select id="queryByTrackStatus" resultType="checkin" parameterType="string">
 		<![CDATA[
-			select * from t_checkin where userId= #{userId}
+			select * from t_checkin where 1 = 1 and userId= #{userId}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(*) from t_checkin
+			select count(*) from t_checkin where 1 = 1
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="countByStatus" resultType="int">
 		<![CDATA[
-			select count(*) from t_checkin where checkinStatus = #{status}
+			select count(*) from t_checkin where 1 = 1 and checkinStatus = #{status}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="countByCondition" resultType="int">
 		<![CDATA[
 			select count(*) from t_checkin where 1 = 1
 		]]>
-		<if test="userName != null and userName != ''">
-			and userName like concat('%',#{userName},'%')
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
 		</if>
-		<if test="userPhone != null and userPhone != ''">
-			and userPhone like concat('%',#{userPhone},'%')
+		<if test="checkin.userName != null and checkin.userName != ''">
+			and userName like concat('%',#{checkin.userName},'%')
 		</if>
-		<if test="carPlate != null and carPlate != ''">
-			and carPlate like concat('%',#{carPlate},'%')
+		<if test="checkin.userPhone != null and checkin.userPhone != ''">
+			and userPhone like concat('%',#{checkin.userPhone},'%')
 		</if>
-		<if test="maintainOrFix != 'all'">
-			and maintainOrFix = #{maintainOrFix}
+		<if test="checkin.carPlate != null and checkin.carPlate != ''">
+			and carPlate like concat('%',#{checkin.carPlate},'%')
 		</if>
-		<if test="companyId != null and companyId != '' and companyId != 'null'">
-			and companyId = #{companyId}
+		<if test="checkin.maintainOrFix != 'all'">
+			and maintainOrFix = #{checkin.maintainOrFix}
+		</if>
+		<if test="checkin.companyId != null and checkin.companyId != '' and checkin.companyId != 'null'">
+			and companyId = #{checkin.companyId}
 		</if>
 
 	</select>

@@ -1,6 +1,8 @@
 package com.gs.dao;
 
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
 import java.util.List;
@@ -91,13 +93,13 @@ public interface BaseDAO<PK extends Serializable, T> {
      * @param pager
      * @return
      */
-    public List<T> queryByPager(Pager pager);
+    public List<T> queryByPager(@Param("pager") Pager pager, @Param("user") User user);
 
     /**
      * 计数
      * @return
      */
-    public int count();
+    public int count(User user);
 
     /**
      * 冻结数据

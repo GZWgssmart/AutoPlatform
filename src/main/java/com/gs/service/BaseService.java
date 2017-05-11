@@ -1,5 +1,6 @@
 package com.gs.service;
 
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 
 import java.io.Serializable;
@@ -91,13 +92,13 @@ public interface BaseService<PK extends Serializable, T> {
      * @param pager
      * @return
      */
-    public List<T> queryByPager(Pager pager);
+    public List<T> queryByPager(Pager pager, User user);
 
     /**
      * 计数
      * @return
      */
-    public int count();
+    public int count(User user);
 
     /**
      * 冻结数据
