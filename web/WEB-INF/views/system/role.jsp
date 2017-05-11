@@ -26,7 +26,7 @@
            data-show-refresh="true"
            data-show-toggle="true"
            data-showColumns="true"
-           data-height="610">
+           data-height="520">
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>

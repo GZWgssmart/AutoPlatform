@@ -35,13 +35,13 @@ var type = '';
 
 function isGraphics(){
     $("#isGraphics").bootstrapSwitch({
-        onText: '折线图',
-        offText: '柱状图',
+        onText: '柱状图',
+        offText: '折线图',
         onColor: 'success',
         offColor: 'danger',
         size: 'normal',
         onSwitchChange: function (event, state) {
-            if (state == true) {
+            if (state == false) {
                 tempData = {
                     chart: {
                         type: 'column'
@@ -75,7 +75,7 @@ function isGraphics(){
                     series: []
                 };
                 switchsValidator();
-            } else if (state == false) {
+            } else if (state == true) {
                 tempData = {
                     chart: {
                         type: 'line'
@@ -108,19 +108,14 @@ function isGraphics(){
     });
 }
 
-
-
 var companyId='';
 $(function () {
     $("#checkWin").modal('show');
     validatorCompany();
     initSelect2("company", "请选择公司", "/company/company_all", "565");
     destoryValidator("checkWin","checkForm");
-    initDateTime("datatimepicker")
-    $("#myTab a").click(function(e){
-        $(this).tab("show");
-        $(".datatimepicker").val("");
-    });
+    initDateTime("datatimepicker");
+    initTab();
     isGraphics();
 });
 
@@ -129,14 +124,7 @@ function showCompany(){
     $("#checkWin").modal('show');
 }
 
-function check(){
-    $("#checkForm").data('bootstrapValidator').validate();
-    if ($("#checkForm").data('bootstrapValidator').isValid()) {
-        $("#companyButton").attr("disabled","disabled");
-    } else {
-        $("#companyButton").removeAttr("disabled");
-    }
-}
+
 
 function search(count){
     if(count == 1){
@@ -167,17 +155,7 @@ function search(count){
     }
 }
 
-function initDateTime(clazz) {
-    $('.' + clazz).datetimepicker({
-        language: 'zh-CN',
-        format: 'yyyy-mm-dd',
-        initialDate: new Date(),
-        autoclose: true,
-        todayHighlight: true,
-        minView: "month",//选择日期后，不会再跳转去选择时分秒
-        todayBtn: true//显示今日按钮
-    })
-}
+
 
 function validator( start, end, type,text){
     if($("#spans").text() != ''){
@@ -222,6 +200,34 @@ function switchsValidator(){
     }else{
         getColumnarChart("columnar", "/incomingOutgoing/query_default?companyId="+companyId, tempData,"default","收入与支出本月统计");
     }
+}
+
+function check(){
+    $("#checkForm").data('bootstrapValidator').validate();
+    if ($("#checkForm").data('bootstrapValidator').isValid()) {
+        $("#companyButton").attr("disabled","disabled");
+    } else {
+        $("#companyButton").removeAttr("disabled");
+    }
+}
+
+function initDateTime(clazz) {
+    $('.' + clazz).datetimepicker({
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd',
+        initialDate: new Date(),
+        autoclose: true,
+        todayHighlight: true,
+        minView: "month",//选择日期后，不会再跳转去选择时分秒
+        todayBtn: true//显示今日按钮
+    })
+}
+
+function initTab(){
+    $("#myTab a").click(function(e){
+        $(this).tab("show");
+        $(".datatimepicker").val("");
+    });
 }
 
 function checkCompany(company) {

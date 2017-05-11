@@ -48,16 +48,7 @@ public class CheckinController {
     private MaintainRecordService maintainRecordService;
 
     @Resource
-    private UserService userService;
-
-    @Resource
     private AppointmentService appointmentService;
-
-    @Resource
-    private UserRoleService userRoleService;
-
-    @Resource
-    private RoleService roleService;
 
     @RequestMapping(value = "checkin_page", method = RequestMethod.GET)
     public String checkinPage() {
@@ -131,28 +122,8 @@ public class CheckinController {
                 logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录");
                 User loginUser = SessionGetUtil.getUser();
                 String checkinId = UUIDUtil.uuid();
-                String userId = "";
-                if (checkin.getUserId() != null && checkin.getUserId() != "") {
-                    userId = checkin.getUserId();
-                } else {
-                    userId = UUIDUtil.uuid();
-                    User user = new User();
-                    user.setUserId(userId);
-                    user.setCompanyId(loginUser.getCompanyId());
-                    user.setUserPhone(checkin.getUserPhone());
-                    user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
-                    user.setUserName(checkin.getUserName());
 
-                    String roleId = roleService.queryByName(Constants.CAR_OWNER).getRoleId();
-                    UserRole userRole = new UserRole();
-                    userRole.setUserId(userId);
-                    userRole.setRoleId(roleId);
-
-                    userRoleService.insert(userRole);
-                    userService.insert(user);
-                }
                 checkin.setCheckinId(checkinId);
-                checkin.setUserId(userId);
                 checkin.setCompanyId(loginUser.getCompanyId());
 
                 MaintainRecord maintainRecord = new MaintainRecord();

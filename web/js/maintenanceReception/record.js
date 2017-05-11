@@ -51,6 +51,21 @@ function operateFormatter(value, row, index) {
     }
 
 }
+
+/** 格式化选择保养项目操作栏 */
+function formatterChoiceMaintain(value, row, index) {
+    return [
+        '<button type="button" class="choiceMaintain btn btn-primary btn-sm" style="margin-left:15px;" >选择</button>'
+    ].join('');
+}
+
+/** 格式化选择维修项目操作栏 */
+function formatterChoiceFix(value, row, index) {
+    return [
+        '<button type="button" class="choiceFix btn btn-primary btn-sm" style="margin-left:15px;" >选择</button>'
+    ].join('');
+}
+
 /** 点击事件监听 */
 window.operateEvents = {
          'click .updateActive': function (e, value, row, index) {
@@ -108,7 +123,72 @@ window.operateEvents = {
               var record = row;
               $("#editForm").fill(record);
               $("#editWin").modal('show');
-         }
+         },
+        'click .choiceMaintain': function (e, value, row, index) {
+            appointment = row;
+            setData(appointment, "appointment");
+            $('#isApp').bootstrapSwitch('state', true);
+            $("#appWin").modal('hide');
+        }
+}
+
+function choiceMaintainOrFixCommon(winId, row) {
+    var maintain = row;
+    var recordId = $("#detailRecordId").val();
+    $.get("/detail/query_detail?recordId=" + recordId + "&maintainId=" + maintain.maintainId,
+        function(data) {
+            if (data.result == "success") { // 没有记录
+                $.get("/detail/query_acc?maintainIds=" + maintain.maintainId,
+                    function(data) {
+                        if (data.result == "success") { // 有配件，可以添加
+                            $("#detailMaintainId").val(maintain.maintainId);
+                            $("#detailMaintainName").val(maintain.maintainName);
+                            maintainMoney = maintain.maintainMoney;
+                            $("#" + winId).modal('hide');
+                        } else if (data.result == "fail") { // 没有配件，添加失败
+                            swal("错误提示", data.message, "error");
+                        } else if (data.result == "notLogin") { // Session失效
+                            swal({
+                                    title: "登入失败",
+                                    text: data.message,
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "确认",
+                                    cancelButtonText: "取消",
+                                    closeOnConfirm: true,
+                                    closeOnCancel: true
+                                },
+                                function (isConfirm) {
+                                    if (isConfirm) {
+                                        top.location.href = "/login/show_login";
+                                    } else {
+                                    }
+                                });
+                        }
+                    }, "json");
+            } else if (data.result == "fail") { // 有记录
+                swal("错误提示", data.message, "error");
+            } else if (data.result == "notLogin") { // Session失效
+                swal({
+                        title: "登入失败",
+                        text: data.message,
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确认",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: true,
+                        closeOnCancel: true
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            top.location.href = "/login/show_login";
+                        } else {
+                        }
+                    });
+            }
+        },"json");
 }
 
 /** 显示编辑数据 */

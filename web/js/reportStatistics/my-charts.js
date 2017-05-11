@@ -30,3 +30,4 @@ function getPieChart(id, url, jsonData) {
 		Highcharts.chart(id, jsonData);
 	}, "json");
 }
+

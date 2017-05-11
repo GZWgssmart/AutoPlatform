@@ -173,9 +173,20 @@ public class CustomerController {
 
     @ResponseBody
     @RequestMapping(value = "customerInfo_update", method = RequestMethod.POST)
-    public ControllerResult info_update(User user, Role role){
+    public ControllerResult info_update(User user, MultipartFile file, HttpSession session) throws IOException {
         if (SessionGetUtil.isUser()) {
             logger.info("信息修改");
+            if(file != null){
+                String fileName = UUID.randomUUID().toString() + file.getOriginalFilename() ;
+                String filePath = FileUtil.uploadPath(session,"\\" + fileName);
+                String icon = "uploads/"+ fileName;
+                if(!file.isEmpty()){
+                    file.transferTo(new File(filePath));
+                    user.setUserIcon(icon);
+                }
+            }else{
+                user.setUserIcon("img/default.png");
+            }
             userService.update(user);
             return ControllerResult.getSuccessResult(" 修改成功");
         } else {

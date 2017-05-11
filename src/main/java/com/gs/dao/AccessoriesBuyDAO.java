@@ -38,4 +38,26 @@ public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy> {
 
     public int countByBuyTimeScope(@Param("accName") String accName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd);
 
+
+    /*
+    * 默认查询本月的下单统计
+    * */
+    public List<AccessoriesBuy> queryByDefaultCount(@Param("companyId")String companyId);
+
+    /*
+    * 根据年，月，季度，周，日查询所有下单统计
+    * */
+    public List<AccessoriesBuy> queryByConditionCount(@Param("startTime")String startTime,@Param("endTime")String endTime,
+                                                   @Param("type")String type, @Param("companyId")String companyId);
+
+    /*
+   * 默认查询本月的支付统计
+   * */
+    public List<AccessoriesBuy> queryByDefaultPay(@Param("companyId")String companyId);
+
+    /*
+    * 根据年，月，季度，周，日查询所有支付统计
+    * */
+    public List<AccessoriesBuy> queryByConditionPay(@Param("startTime")String startTime,@Param("endTime")String endTime,
+                                                      @Param("type")String type, @Param("companyId")String companyId);
 }

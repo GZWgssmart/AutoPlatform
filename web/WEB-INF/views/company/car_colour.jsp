@@ -16,11 +16,25 @@
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-colorpalette.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
-
 </head>
 <body>
 
 <div class="container">
+    <form id="formSearch" class="form-horizontal">
+        <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+            <div class="col-sm-2" style="margin-left: -15px;">
+                <input type="text" id="searchColorName" name="colorName" class="form-control" placeholder="请输入颜色名称" >
+            </div>
+            <div class="col-sm-2">
+                <button type="button" onclick="searchColor();" class="btn btn-primary">
+                    查询
+                </button>
+                <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </form>
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
            data-show-refresh="true"
@@ -72,8 +86,13 @@
                 </button>
             </a>
             <a>
-                <button onclick="modelAll();" type="button" class="btn btn-default">
+                <button onclick="colorAll();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部
+                </button>
+            </a>
+            <a>
+                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-search"></i> 条件查询
                 </button>
             </a>
         </div>
@@ -173,7 +192,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="updateProduct()" value="修改">
+                                <input type="button" class="btn btn-primary" onclick="edit();" value="修改">
                             </div>
                         </form>
                     </div>

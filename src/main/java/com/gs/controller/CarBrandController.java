@@ -39,6 +39,17 @@ public class CarBrandController {
     }
 
     @ResponseBody
+    @RequestMapping(value="search",method = RequestMethod.GET)
+    public Pager4EasyUI<CarBrand> searchByPager(@Param("brandName")String brandName,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(carBrandService.searchCount(brandName));
+        List<CarBrand>carBrandList = carBrandService.searchByPager(brandName,pager);
+        return new Pager4EasyUI<CarBrand>(pager.getTotalRecords(),carBrandList);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "uploadCarBrand",method = RequestMethod.POST)
     public ControllerResult uploadCarBrand(CarBrand carBrand){
             System.out.println("id:"+carBrand.getBrandId());

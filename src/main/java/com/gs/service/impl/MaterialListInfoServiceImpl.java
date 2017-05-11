@@ -89,4 +89,20 @@ public class MaterialListInfoServiceImpl implements MaterialListInfoService {
     public List<MaterialListInfo> termQueryPager(Pager pager, String userName, String startTime, String endTime) {
         return materialListInfoDAO.termQueryPager(pager, userName, startTime, endTime);
     }
+
+    public List<MaterialListInfo> queryBySpeedStatus(Pager pager, String recordId) {
+        return materialListInfoDAO.queryBySpeedStatus(pager, recordId);
+    }
+
+    public int countBySpeedStatus(String recordId) {
+        return materialListInfoDAO.countBySpeedStatus(recordId);
+    }
+
+    public List<MaterialListInfo> queryBySpeedStatusAndStatus(Pager pager, String recordId, String materialStatus) {
+        return materialListInfoDAO.queryBySpeedStatusAndStatus(pager, recordId, materialStatus);
+    }
+
+    public int statusCount(String recordId, String materialStatus) {
+        return materialListInfoDAO.statusCount(recordId, materialStatus);
+    }
 }

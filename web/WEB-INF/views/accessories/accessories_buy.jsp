@@ -262,11 +262,11 @@
                                        class="form-control" placeholder="没折扣可以不用输入"/>
                             </div>
 
-                            <div class="form-group">
-                            <label>配件供应商：</label>
-                            <input type="text" name="accessories.supply.supplyName" attr="accessoriesBuy.supply.supplyName" id="aCompanyName"
-                            class="form-control"/>
-                            </div>
+                            <%--<div class="form-group">--%>
+                            <%--<label>配件供应商：</label>--%>
+                            <%--<input type="text" name="accessories.supply.supplyName" attr="accessoriesBuy.supply.supplyName" id="aCompanyName"--%>
+                            <%--class="form-control"/>--%>
+                            <%--</div>--%>
 
                             <div class="form-group">
                                 <label>采购时间：</label>

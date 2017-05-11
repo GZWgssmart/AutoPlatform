@@ -43,4 +43,15 @@ public interface ChargeBillService extends BaseService<String, ChargeBill>{
      */
     public List<ChargeBill> queryPagerByCondition(Pager pager, ChargeBill chargeBill);
 
+    /*
+   * 默认查询本月车主用户消费统计
+   * */
+    public List<ChargeBill> queryByDefault(String maintainOrFix, String userId);
+
+    /*
+    * 根据年，月，季度，周，日查询所有工单
+    * */
+    public List<ChargeBill> queryByCondition(String startTime,String endTime,String maintainOrFix,
+                                             String type, String userId);
+
 }

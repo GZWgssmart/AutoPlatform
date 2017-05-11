@@ -96,6 +96,21 @@
 		]]>
 	</select>
 
+	<select id="searchByPager" resultType="list" resultMap="carModelResultMap" parameterType="com.gs.common.bean.Pager">
+		select brand.brandName,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId
+		<if test="brandId != null and brandId != ''">
+			and brand.brandId = #{brandId}
+		</if>
+		order by brand.brandName ASC limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="searchCount" resultType="int">
+		select count(modelId) from t_car_model m ,t_car_brand b where m.brandId = b.brandId
+		<if test="brandId != null and brandId != ''">
+			and b.brandId = #{brandId}
+		</if>
+	</select>
+
 	<update id="inactive" parameterType="string">
 		<![CDATA[
 			update t_car_model set modelStatus = "N" where modelId = #{modelId}

@@ -173,13 +173,13 @@ public class PeopleInfoController {
     public ControllerResult info_update(User user, MultipartFile file, HttpSession session, HttpServletRequest request, Company company) throws IOException {
         if (SessionGetUtil.isUser()) {
             logger.info("信息修改");
-            System.out.println(file);
             if(file != null){
-                String filePath =  FileUtil.uploadPath(session, UUID.randomUUID().toString()+"/"+file);
-                System.out.println(filePath);
+                String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
+                String filePath = FileUtil.uploadPath(session,"\\" + fileName);
+                String icon = "uploads/"+ fileName;
                 if(!file.isEmpty()){
                     file.transferTo(new File(filePath));
-                    user.setUserIcon(filePath);
+                    user.setUserIcon(icon);
                 }
             }else{
                 user.setUserIcon("img/default.png");
@@ -192,7 +192,6 @@ public class PeopleInfoController {
             return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
         }
     }
-
     @ResponseBody
     @RequestMapping(value = "peopleRole_update", method = RequestMethod.POST)
     public ControllerResult updateRole(UserRole userRole) {
@@ -228,6 +227,21 @@ public class PeopleInfoController {
     public List<ComboBox4EasyUI> queryUserAll() {
         logger.info("查询员工");
         List<User> users = userService.queryAll();
+        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+        for (User user : users) {
+            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+            comboBox4EasyUI.setId(user.getUserId());
+            comboBox4EasyUI.setText(user.getUserName());
+            comboBox4EasyUIs.add(comboBox4EasyUI);
+        }
+        return comboBox4EasyUIs;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "self_user", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> selfUser() {
+        logger.info("查询本公司员工");
+        List<User> users = userService.queryUser();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
         for (User user : users) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();

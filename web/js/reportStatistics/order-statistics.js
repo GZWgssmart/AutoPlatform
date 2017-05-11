@@ -3,7 +3,7 @@ var tempData = {
         type: 'line'
     },
     title: {
-        text: '员工工单本月统计'
+        text: '下单本月统计'
     },
     yAxis: {
         title: {
@@ -40,7 +40,7 @@ function isGraphics(){
                         type: 'column'
                     },
                     title: {
-                        text: '员工工单本月统计'
+                        text: '下单本月统计'
                     },
                     yAxis: {
                         min: 0,
@@ -74,7 +74,7 @@ function isGraphics(){
                         type: 'line'
                     },
                     title: {
-                        text: '员工工单本月统计'
+                        text: '下单本月统计'
                     },
                     yAxis: {
                         title: {
@@ -124,27 +124,27 @@ function search(count){
         type = 'year'
         var start = $("#start1").val();
         var end = $("#end1").val();
-        validator(start,end,type,"员工工单年统计");
+        validator(start,end,type,"下单年统计");
     }else if(count == 2){
         type = 'quarter'
         var start = $("#start2").val();
         var end = $("#end2").val();
-        validator(start,end,type,'员工工单季度统计');
+        validator(start,end,type,'下单季度统计');
     }else if(count == 3){
         type = 'month'
         var start = $("#start3").val();
         var end = $("#end3").val();
-        validator(start,end,type,'员工工单月统计');
+        validator(start,end,type,'下单月统计');
     }else if(count == 4){
         type = 'week'
         var start = $("#start4").val();
         var end = $("#end4").val();
-        validator(start,end,type,'员工工单周统计');
+        validator(start,end,type,'下单周统计');
     }else if(count == 5){
         type = 'day'
         var start = $("#start5").val();
         var end = $("#end5").val();
-        validator(start,end,type,'员工工单日统计');
+        validator(start,end,type,'员下单日统计');
     }
 }
 
@@ -152,9 +152,9 @@ function search(count){
 function validator( start, end, type,text){
     if($("#spans").text() != ''){
         if(start != '' && end != ''){
-            getLineBasicChart("columnar", "/peopleManage/query_condition?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
+            getLineBasicChart("columnar", "/accessoriesBuy/query_condition_count?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
         }else{
-            getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
+            getLineBasicChart("columnar", "/accessoriesBuy/query_default_count?companyId="+companyId, tempData,"default","员工工单本月统计");
         }
     }else{
         showCompany();
@@ -167,29 +167,29 @@ function switchsValidator(){
         type = 'year'
         var start = $("#start1").val();
         var end = $("#end1").val();
-        validator(start,end,type,"员工工单年统计");
+        validator(start,end,type,"下单年统计");
     }else if(type == 'quarter'){
         type = 'quarter';
         var start = $("#start2").val();
         var end = $("#end2").val();
-        validator(start,end,type,'员工工单季度统计');
+        validator(start,end,type,'下单季度统计');
     }else if(type == 'month') {
         type = 'month';
         var start = $("#start3").val();
         var end = $("#end3").val();
-        validator(start,end,type,'员工工单月统计');
+        validator(start,end,type,'下单月统计');
     }else if(type == 'week'){
         type = 'week';
         var start = $("#start4").val();
         var end = $("#end4").val();
-        validator(start,end,type,'员工工单周统计');
+        validator(start,end,type,'下单周统计');
     } else if(type == 'day') {
         type = 'day';
         var start = $("#start5").val();
         var end = $("#end5").val();
-        validator(start,end,type,'员工工单日统计');
+        validator(start,end,type,'下单日统计');
     }else{
-        getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
+        getLineBasicChart("columnar", "/accessoriesBuy/query_default_count?companyId="+companyId, tempData,"default","下单本月统计");
     }
 }
 
@@ -223,10 +223,9 @@ function validatorCompany(){
             var companyName = $("#company").find("option:selected").text();
             $('#spans').html("当前公司:"+companyName);
             $('#checkForm').data('bootstrapValidator').resetForm(true);
-            getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
+            getLineBasicChart("columnar", "/accessoriesBuy/query_default_count?companyId="+companyId, tempData,"default","下单本月统计");
         })
 }
-
 function check(){
     $("#checkForm").data('bootstrapValidator').validate();
     if ($("#checkForm").data('bootstrapValidator').isValid()) {

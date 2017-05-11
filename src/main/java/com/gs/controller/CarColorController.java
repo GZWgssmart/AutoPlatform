@@ -43,9 +43,22 @@ public class CarColorController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "searchByPager",method = RequestMethod.GET)
+    public Pager4EasyUI<CarColor> search(@Param("colorName")String colorName,@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        Pager pager = new Pager();
+        logger.info("模糊查询颜色");
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(carColorService.searchCount(colorName));
+        List<CarColor>carColorList = carColorService.searchByPager(colorName,pager);
+        return new Pager4EasyUI<CarColor>(pager.getTotalRecords(),carColorList);
+    }
+
+    @ResponseBody
     @RequestMapping(value = "uploadCarColor",method = RequestMethod.POST)
     public ControllerResult uploadCarColor(CarColor carColor){
-        carColorService.update(carColor);
+            carColorService.update(carColor);
+            System.out.println();
             logger.info("更新汽车颜色成功");
             return ControllerResult.getSuccessResult("更新汽车颜色成功");
     }

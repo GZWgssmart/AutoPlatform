@@ -53,18 +53,6 @@ $(document).ready(function () {
         }
     });
 
-    $("#appWin").on("hide.bs.modal", function () {
-
-        $('#isApp').bootstrapSwitch('state', false);
-
-    });
-
-    $("#userWin").on("hide.bs.modal", function () {
-
-        $('#choiceUser').bootstrapSwitch('state', false);
-
-    });
-
 
 });
 
@@ -130,6 +118,7 @@ function carWash(value, row, index) {
 
 /** 显示添加数据的窗口 */
 function showAddWin() {
+
     appointment = "";
     validator("addForm");
     initDateTimePicker("datetimepicker", "arriveTime", "addForm");
@@ -147,11 +136,13 @@ function getDate() {
 
 /** 关闭预约 */
 function closeAppWin() {
+    $('#isApp').bootstrapSwitch('state', false);
     $("#appWin").modal('hide');
 }
 
 /** 关闭选择车主信息 */
 function closeUserWin() {
+    $('#choiceUser').bootstrapSwitch('state', false);
     $("#userWin").modal('hide');
 }
 
@@ -162,12 +153,9 @@ function checkApp() {
         swal('选择失败', "只能选择一条数据", "error");
         return false;
     } else {
-
         appointment = selectRow[0];
         setData(appointment, "appointment");
-        $("#appWin").on("hide.bs.modal", function () {
-            $('#isApp').bootstrapSwitch('state', true);
-        });
+        $('#isApp').bootstrapSwitch('state', true);
         $("#appWin").modal('hide');
     }
 }
@@ -176,14 +164,12 @@ function checkApp() {
 function choiceUser() {
     var selectRow = $("#userTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('选择失败', "只能选择一条数据", "error");
+        swal('选择失败', "只能选择一个车主信息", "error");
         return false;
     } else {
         userInfo = selectRow[0];
         setData(userInfo, "userInfo");
-        $("#userWin").on("hide.bs.modal", function () {
-            $('#choiceUser').bootstrapSwitch('state', true);
-        });
+        $('#choiceUser').bootstrapSwitch('state', true);
         $("#userWin").modal('hide');
     }
 }
@@ -257,8 +243,22 @@ function operateFormatter(value, row, index) {
             '<button type="button" class="showEditWin btn btn-primary btn-sm" style="margin-right:15px;">编辑</button>'
         ].join('');
     }
-
 }
+
+/** 格式化预约信息操作栏 */
+function formatterChoiceApp(value, row, index) {
+    return [
+        '<button type="button" class="choiceApp btn btn-primary btn-sm" style="margin-left:15px;" >选择</button>'
+    ].join('');
+}
+
+/** 格式化车主信息操作栏 */
+function formatterChoiceUser(value, row, index) {
+    return [
+        '<button type="button" class="choiceUser btn btn-primary btn-sm" style="margin-left:15px;" >选择</button>'
+    ].join('');
+}
+
 /** 更改状态 */
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
@@ -321,6 +321,18 @@ window.operateEvents = {
         $('#editDatetimepicker').val(formatterDate(checkin.arriveTime));
         validator("editForm");
         $("#editWin").modal('show');
+    },
+    'click .choiceUser': function (e, value, row, index) {
+        userInfo = row;
+        setData(userInfo, "userInfo");
+        $('#choiceUser').bootstrapSwitch('state', true);
+        $("#userWin").modal('hide');
+    },
+    'click .choiceApp': function (e, value, row, index) {
+        appointment = row;
+        setData(appointment, "appointment");
+        $('#isApp').bootstrapSwitch('state', true);
+        $("#appWin").modal('hide');
     }
 }
 

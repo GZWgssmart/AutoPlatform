@@ -12,13 +12,19 @@ import java.util.List;
  * @since 2017-04-14 16:36:52
  */
 public interface PermissionService extends BaseService<String, Permission> {
+
+    /**根据模块编号来查询权限*/
     public List<Permission> queryByModuleId(String moduleId);
 
+    /**根据模块编号来分页*/
     public List<Permission> queryByModulePager(String moduleId, Pager pager);
 
+    /**根据状态来分页*/
     public List<Permission> queryByStatusPager(String status, Pager pager);
 
+    /**根据模块编号来统计*/
     public int countModule(String moduleId);
 
+    /**根据状态来统计*/
     public int countStatus(String status);
 }

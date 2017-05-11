@@ -1,17 +1,12 @@
 package com.gs.controller;
 
-import com.gs.bean.MaintainDetail;
-import com.gs.bean.MaintainFixAcc;
-import com.gs.bean.MaterialList;
-import com.gs.bean.WorkInfo;
+import com.gs.bean.*;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.SessionGetUtil;
-import com.gs.service.MaintainDetailService;
-import com.gs.service.MaintainFixAccService;
-import com.gs.service.MaterialListService;
-import com.gs.service.WorkInfoService;
+import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +45,9 @@ public class MaintainDetailController {
 
     @Resource
     private WorkInfoService workInfoService;
+
+    @Resource
+    private MaintainRecordService maintainRecordService;
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -115,6 +113,8 @@ public class MaintainDetailController {
                 }
                 WorkInfo workInfo = new WorkInfo();
                 workInfo.setRecordId(recordId);
+
+                maintainRecordService.updateSpeedStatusById(Constants.MAINTAIN_FIX, recordId);
                 workInfoService.insert(workInfo);
                 materialListService.batchInsert(materialLists);
                 return ControllerResult.getSuccessResult("用户已经确认签字，工单信息和物料清单已经自动生成");

@@ -63,8 +63,13 @@ public class SalaryController {
 
     @RequestMapping(value = "show_salary", method = RequestMethod.GET)
     public String salary() {
-        logger.info("工资管理页面");
-        return "financeManage/salary";
+        if(SessionGetUtil.isUser()) {
+            logger.info("工资管理页面");
+            return "financeManage/salary";
+        }else {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
     }
 
     @ResponseBody

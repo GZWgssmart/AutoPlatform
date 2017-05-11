@@ -17,6 +17,7 @@
         <result property="companyId" column="companyId"/>
         <result property="accBuyStatus" column="accBuyStatus"/>
         <result property="accBuyCheck" column="accBuyCheck"/>
+        <result property="coont" column="coont"/>
 
         <association property="accessories" javaType="com.gs.bean.Accessories">
             <id property="accId" column="accId"/>
@@ -33,7 +34,7 @@
             </association>
 
             <association property="supply" javaType="com.gs.bean.Supply">
-                <id property="supplyId" column="supplyId"></id>
+                <id property="supplyId" column="supplyId"/>
                 <result property="supplyName" column="supplyName"/>
             </association>
 
@@ -92,6 +93,71 @@
         ]]>
 	</update>
 
+    <select id="queryByDefaultCount"  resultMap="accessoriesBuyResultMap">
+        <![CDATA[
+           select count(ab.accBuyId) as coont ,ab.accBuyCreatedTime from t_accessories_buy ab
+             WHERE DATE_FORMAT(ab.accBuyCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and  ab.accBuyStatus = 'Y'
+           and ab.companyId = #{companyId}
+		]]>
+        GROUP BY day(ab.accBuyCreatedTime)
+    </select>
+
+    <select id="queryByConditionCount"  resultType="list" resultMap="accessoriesBuyResultMap">
+        <![CDATA[
+           select count(ab.accBuyId) as coont ,ab.accBuyCreatedTime from t_accessories_buy ab
+            where ab.accBuyCreatedTime >= #{startTime} and ab.accBuyCreatedTime <= #{endTime} and  ab.accBuyStatus = 'Y'
+           and ab.companyId = #{companyId}
+		]]>
+        <if test="type =='year'">
+            GROUP BY year(ab.accBuyCreatedTime)
+        </if>
+        <if test="type =='quarter'">
+            GROUP BY quarter(ab.accBuyCreatedTime)
+        </if>
+        <if test="type =='month'">
+            GROUP BY month(ab.accBuyCreatedTime)
+        </if>
+        <if test="type =='week'">
+            GROUP BY week(ab.accBuyCreatedTime)
+        </if>
+        <if test="type =='day'">
+            GROUP BY day(ab.accBuyCreatedTime)
+        </if>
+    </select>
+
+    <select id="queryByDefaultPay"  resultMap="accessoriesBuyResultMap">
+        <![CDATA[
+           select sum(ab.accBuyMoney) as accBuyMoney ,ab.accBuyCreatedTime from t_accessories_buy ab
+             WHERE DATE_FORMAT(ab.accBuyCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and  ab.accBuyStatus = 'Y'
+           and ab.companyId = #{companyId}
+		]]>
+        GROUP BY day(ab.accBuyCreatedTime)
+    </select>
+
+    <select id="queryByConditionPay"  resultType="list" resultMap="accessoriesBuyResultMap">
+        <![CDATA[
+           select sum(ab.accBuyMoney) as accBuyMoney ,ab.accBuyCreatedTime from t_accessories_buy ab
+            where ab.accBuyCreatedTime >= #{startTime} and ab.accBuyCreatedTime <= #{endTime} and  ab.accBuyStatus = 'Y'
+           and ab.companyId = #{companyId}
+		]]>
+        <if test="type =='year'">
+            GROUP BY year(ab.accBuyCreatedTime)
+        </if>
+        <if test="type =='quarter'">
+            GROUP BY quarter(ab.accBuyCreatedTime)
+        </if>
+        <if test="type =='month'">
+            GROUP BY month(ab.accBuyCreatedTime)
+        </if>
+        <if test="type =='week'">
+            GROUP BY week(ab.accBuyCreatedTime)
+        </if>
+        <if test="type =='day'">
+            GROUP BY day(ab.accBuyCreatedTime)
+        </if>
+    </select>
+
+
     <select id="queryAll" resultMap="accessoriesBuyResultMap">
 		select * from auto_platform.t_accessories_buy
 	</select>
@@ -122,7 +188,7 @@
           	ac.accId,
           	ac.accName,
             ac.supplyId,
-            sy.supplyName,
+--             sy.supplyName,
             ae.accTypeId,
             ae.accTypeName
         from
@@ -134,7 +200,7 @@
                 )
                 inner join t_accessories_type ae on ac.accTypeId = ae.accTypeId
           )
-          inner join t_supply sy on ac.supplyId = sy.supplyId
+--           inner join t_supply sy on ac.supplyId = sy.supplyId
         ) order by ab.accBuyTime desc
         limit
          #{beginIndex},#{pageSize}

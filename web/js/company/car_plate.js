@@ -12,6 +12,19 @@ function plateAll(){
     initTable("cusTable","/carPlate/queryByPager");
 }
 
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchPlateName").val('');
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
+
+function searchPlate(){
+    var plateName = $("#searchPlateName").val();
+    initTable("cusTable","/carPlate/searchPager?plateName="+plateName);
+}
+
+
 /**查询可用*/
 function statusUsableness(){
     var status = 'Y';

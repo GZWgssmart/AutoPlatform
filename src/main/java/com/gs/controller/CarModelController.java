@@ -46,7 +46,7 @@ public class CarModelController {
     @ResponseBody
     @RequestMapping(value = "carModel_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarModelAlls() {
-        logger.info("查询汽车车型");
+        logger.info("查询全部汽车车型");
         List<CarModel> CarModels = carModelService.queryAll();
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
         for (CarModel carModel : CarModels) {
@@ -84,6 +84,18 @@ public class CarModelController {
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(carModelService.count());
         List<CarModel> carModelList = carModelService.queryByPager(pager);
+        return new Pager4EasyUI<CarModel>(pager.getTotalRecords(),carModelList);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "searchPager", method = RequestMethod.GET)
+    public Pager4EasyUI<CarModel> search(@Param("brandId")String brandId,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        Pager pager = new Pager();
+        logger.info("模糊查询所有车型");
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(carModelService.searchCount(brandId));
+        List<CarModel> carModelList = carModelService.searchByPager(brandId,pager);
         return new Pager4EasyUI<CarModel>(pager.getTotalRecords(),carModelList);
     }
 

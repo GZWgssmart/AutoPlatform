@@ -10,7 +10,21 @@ $(document).ready(function () {
     initTable("cusTable","/carColor/queryByPager");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
+    destoryValidator("addWin","addForm");
+    destoryValidator("editWin","editForm");
 });
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchColorName").val('');
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
+
+function searchColor(){
+    var colorName = $("#searchColorName").val();
+    initTable("cusTable","/carColor/searchByPager?colorName="+colorName);
+}
 
 function colorAll(){
     initTable("cusTable","/carColor/queryByPager");
@@ -31,11 +45,15 @@ function statusAvailable(){
 /** 编辑数据 */
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
-    var product = selectRow[0];
-    $("#spans").css("background",product.colorHex);
-    validator("editForm");
-    $("#editForm").fill(product);
-    $("#editWin").modal('show');
+    if (selectRow.length != 1) {
+        swal('编辑失败', "只能选择一条数据进行编辑", "error");
+    }else{
+        var product = selectRow[0];
+        $("#spans").css("background",product.colorHex);
+        validator("editForm");
+        $("#editForm").fill(product);
+        $("#editWin").modal('show');
+    }
 
 }
 
@@ -192,7 +210,6 @@ function validator(formId) {
                 formSubmit("/carColor/insertCarColor", formId, "addWin");
             } else if (formId == "editForm") {
                 formSubmit("/carColor/uploadCarColor", formId, "editWin");
-
             }
         })
 

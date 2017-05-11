@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.common.util.SessionGetUtil;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +24,13 @@ public class IndexController {
 
     @RequestMapping(value = "home",method = RequestMethod.GET)
     public String home() {
-        logger.info("进入主页");
-        return "index/home";
+        if (SessionGetUtil.isUser()) {
+            logger.info("进入后台主页");
+            return "index/home";
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return "index/login";
+        }
     }
 
 }

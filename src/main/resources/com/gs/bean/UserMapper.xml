@@ -168,9 +168,22 @@
 	</select>
 
 
+	<select id="queryUser"  resultMap="userResultMap">
+		<![CDATA[
+			SELECT * FROM t_user u
+			INNER JOIN t_user_role ur ON ur.userId = u.userId
+			INNER JOIN t_role r ON r.roleId = ur.roleId
+			WHERE r.roleName like concat('company', '%') and u.companyId = #{companyId}
+		]]>
+	</select>
+
+
 	<select id="queryByUser"  resultMap="userResultMap">
 		<![CDATA[
-			  SELECT * FROM t_user WHERE companyId = #{companyId} order by userCreatedTime Desc
+			  SELECT * FROM t_user u
+			  INNER JOIN t_user_role ur ON ur.userId = u.userId
+			INNER JOIN t_role r ON r.roleId = ur.roleId
+			WHERE r.roleName like concat('company', '%') and u.companyId = #{companyId} order by userCreatedTime Desc
 		]]>
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
@@ -184,7 +197,10 @@
 
 	<select id="countByUser" resultType="int" parameterType="string">
 		<![CDATA[
-			SELECT COUNT(*) FROM t_user WHERE companyId = #{companyId}
+			SELECT COUNT(*) FROM t_user u
+			INNER JOIN t_user_role ur ON ur.userId = u.userId
+			INNER JOIN t_role r ON r.roleId = ur.roleId
+			WHERE r.roleName like concat('company', '%') and u.companyId = #{companyId}
 		]]>
 	</select>
 	<select id="queryCustomerPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">

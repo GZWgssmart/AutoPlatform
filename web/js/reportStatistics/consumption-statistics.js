@@ -1,22 +1,28 @@
 var tempData = {
     chart: {
-        type: 'line'
+        type: 'column'
     },
     title: {
-        text: '员工工单本月统计'
+        text: '收入与支出本月统计'
     },
     yAxis: {
+        min: 0,
         title: {
-            text: '条数 (条)'
+            text: '金额 (￥)'
         }
     },
-
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        '<td style="padding:0"><b>{point.y:.1f} ￥</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
     plotOptions: {
-        line: {
-            dataLabels: {
-                enabled: true          // 开启数据标签
-            },
-            enableMouseTracking: false // 关闭鼠标跟踪，对应的提示框、点击事件会失效
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
         }
     },
     credits: {
@@ -24,34 +30,35 @@ var tempData = {
     },
     series: []
 };
+
 var type = '';
 
 function isGraphics(){
     $("#isGraphics").bootstrapSwitch({
-        onText: '折线图',
-        offText: '柱状图',
+        onText: '柱状图',
+        offText: '折线图',
         onColor: 'success',
         offColor: 'danger',
         size: 'normal',
         onSwitchChange: function (event, state) {
-            if (state == true) {
+            if (state == false) {
                 tempData = {
                     chart: {
                         type: 'column'
                     },
                     title: {
-                        text: '员工工单本月统计'
+                        text: '收入与支出本月统计'
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: '条数 (条)'
+                            text: '金额 (￥)'
                         }
                     },
                     tooltip: {
                         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f} 条</b></td></tr>',
+                        '<td style="padding:0"><b>{point.y:.1f} ￥</b></td></tr>',
                         footerFormat: '</table>',
                         shared: true,
                         useHTML: true
@@ -68,17 +75,17 @@ function isGraphics(){
                     series: []
                 };
                 switchsValidator();
-            } else if (state == false) {
+            } else if (state == true) {
                 tempData = {
                     chart: {
                         type: 'line'
                     },
                     title: {
-                        text: '员工工单本月统计'
+                        text: '收入与支出本月统计'
                     },
                     yAxis: {
                         title: {
-                            text: '条数 (条)'
+                            text: '金额 (￥)'
                         }
                     },
 
@@ -102,21 +109,14 @@ function isGraphics(){
 }
 
 
-var companyId='';
 $(function () {
-    $("#checkWin").modal('show');
-    validatorCompany();
-    initSelect2("company", "请选择公司", "/company/company_all", "565");
     destoryValidator("checkWin","checkForm");
     initDateTime("datatimepicker");
     initTab();
     isGraphics();
+    getColumnarChart("columnar", "/bill/query_default", tempData,"default","维修保养消费本月统计");
 });
 
-function showCompany(){
-    validatorCompany();
-    $("#checkWin").modal('show');
-}
 
 
 function search(count){
@@ -124,117 +124,72 @@ function search(count){
         type = 'year'
         var start = $("#start1").val();
         var end = $("#end1").val();
-        validator(start,end,type,"员工工单年统计");
+        validator(start,end,type,"维修保养消费年统计");
     }else if(count == 2){
         type = 'quarter'
         var start = $("#start2").val();
         var end = $("#end2").val();
-        validator(start,end,type,'员工工单季度统计');
+        validator(start,end,type,'维修保养消费季度统计');
     }else if(count == 3){
         type = 'month'
         var start = $("#start3").val();
         var end = $("#end3").val();
-        validator(start,end,type,'员工工单月统计');
+        validator(start,end,type,'维修保养消费月统计');
     }else if(count == 4){
         type = 'week'
         var start = $("#start4").val();
         var end = $("#end4").val();
-        validator(start,end,type,'员工工单周统计');
+        validator(start,end,type,'维修保养消费周统计');
     }else if(count == 5){
         type = 'day'
         var start = $("#start5").val();
         var end = $("#end5").val();
-        validator(start,end,type,'员工工单日统计');
+        validator(start,end,type,'维修保养消费日统计');
     }
 }
+
 
 
 function validator( start, end, type,text){
-    if($("#spans").text() != ''){
-        if(start != '' && end != ''){
-            getLineBasicChart("columnar", "/peopleManage/query_condition?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
-        }else{
-            getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
-        }
+    if(start != '' && end != ''){
+        getColumnarChart("columnar", "/bill/query_condition?start=" + start +"&end=" + end + "&type=" + type, tempData,type,text);
     }else{
-        showCompany();
+        getColumnarChart("columnar", "/bill/query_default", tempData,"default","维修保养消费本月统计");
     }
-}
 
+}
 
 function switchsValidator(){
     if(type == 'year'){
         type = 'year'
         var start = $("#start1").val();
         var end = $("#end1").val();
-        validator(start,end,type,"员工工单年统计");
+        validator(start,end,type,"维修保养消费年统计");
     }else if(type == 'quarter'){
         type = 'quarter';
         var start = $("#start2").val();
         var end = $("#end2").val();
-        validator(start,end,type,'员工工单季度统计');
+        validator(start,end,type,'维修保养消费季度统计');
     }else if(type == 'month') {
         type = 'month';
         var start = $("#start3").val();
         var end = $("#end3").val();
-        validator(start,end,type,'员工工单月统计');
+        validator(start,end,type,'收维修保养消费月统计');
     }else if(type == 'week'){
         type = 'week';
         var start = $("#start4").val();
         var end = $("#end4").val();
-        validator(start,end,type,'员工工单周统计');
+        validator(start,end,type,'维修保养消费周统计');
     } else if(type == 'day') {
         type = 'day';
         var start = $("#start5").val();
         var end = $("#end5").val();
-        validator(start,end,type,'员工工单日统计');
+        validator(start,end,type,'维修保养消费日统计');
     }else{
-        getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
+        getColumnarChart("columnar", "/bill/query_default", tempData,"default","维修保养消费本月统计");
     }
 }
 
-function checkCompany(company) {
-    companyId = company.value;
-}
-
-function validatorCompany(){
-    $("#companyButton").removeAttr("disabled");
-    $('#checkForm').bootstrapValidator({
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            companyId: {
-                message: '验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '请选择公司'
-                    }
-                }
-
-            }
-        }
-    })
-
-        .on('success.form.bv', function (e) {
-            $("#checkWin").modal('hide');
-            var companyName = $("#company").find("option:selected").text();
-            $('#spans').html("当前公司:"+companyName);
-            $('#checkForm').data('bootstrapValidator').resetForm(true);
-            getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
-        })
-}
-
-function check(){
-    $("#checkForm").data('bootstrapValidator').validate();
-    if ($("#checkForm").data('bootstrapValidator').isValid()) {
-        $("#companyButton").attr("disabled","disabled");
-    } else {
-        $("#companyButton").removeAttr("disabled");
-    }
-}
 
 function initDateTime(clazz) {
     $('.' + clazz).datetimepicker({
@@ -254,3 +209,4 @@ function initTab(){
         $(".datatimepicker").val("");
     });
 }
+

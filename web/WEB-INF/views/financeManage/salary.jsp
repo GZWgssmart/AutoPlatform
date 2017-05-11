@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>收入类型管理</title>
+    <title>工资管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -277,9 +277,6 @@
                             <thead>
                             <tr>
                                 <th data-field="state" data-checkbox="true"></th>
-                                <th data-field="userId" data-sortable="true" data-formatter="random">
-                                    人员编号
-                                </th>
                                 <th data-field="userName">
                                     姓名
                                 </th>

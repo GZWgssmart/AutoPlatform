@@ -47,4 +47,14 @@ public class CarColorServiceImpl implements CarColorService {
 	public int statusCount(String status) {
 		return carColorDAO.statusCount(status);
 	}
+
+	@Override
+	public List<CarColor> searchByPager(@Param("colorName") String colorName, @Param("pager") Pager pager) {
+		return carColorDAO.searchByPager(colorName, pager);
+	}
+
+	@Override
+	public int searchCount(String colorName) {
+		return carColorDAO.searchCount(colorName);
+	}
 }

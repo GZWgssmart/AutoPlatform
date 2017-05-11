@@ -199,7 +199,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">手机号：</label>
-                                <input type="text" name="userPhone"
+                                <input type="text" maxlength="11" name="userPhone"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -237,7 +237,7 @@
                                 <input type="hidden" name="userId" attr="user.userId" />
                                 <div class="form_img">
                                     <div id="preview">
-                                        <img alt="image" attr="user.userIcon" name="file" style="border-radius: 50%;"/>
+                                        <img alt="image" id="icon" attr="user.userIcon" name="file" style="border-radius: 50%;"/>
                                     </div>
                                     <input type="file" name="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
                                 </div>
@@ -281,15 +281,15 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -14px">微信号：</label>
-                                            <input class="form-control" style="display: initial;" type="text" attr="user.wechatOpenId" name="wechatOpenId"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="wechatOpen" attr="user.wechatOpenId" name="wechatOpenId"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -8px">QQ号：</label>
-                                            <input class="form-control" style="display: initial;" type="text" attr="user.qqOpenId" name="qqOpenId"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="qqOpen" attr="user.qqOpenId" name="qqOpenId"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label">微博：</label>
-                                            <input class="form-control" style="display: initial;" type="text" attr="user.weiboOpenId" name="weiboOpenId"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="weiboOpen" attr="user.weiboOpenId" name="weiboOpenId"/>
                                         </div>
                                         <br />
                                         <br />

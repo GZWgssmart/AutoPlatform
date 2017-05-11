@@ -47,4 +47,14 @@ public class CarPlateServiceImpl implements CarPlateService {
 	public int countStatus(String status) {
 		return carPlateDAO.countStatus(status);
 	}
+
+	@Override
+	public List<CarPlate> searchByPager(@Param("plateName") String plateName, @Param("pager") Pager pager) {
+		return carPlateDAO.searchByPager(plateName, pager);
+	}
+
+	@Override
+	public int searchCount(String plateName) {
+		return carPlateDAO.searchCount(plateName);
+	}
 }

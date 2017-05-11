@@ -69,21 +69,17 @@ function Addacc() {
     if(selectRow.length!=1){
         swal('选择失败', "只能选择一条数据进行填写", "error");
     }else{
-
-        cout = $("#count").val();
+        // cout = $("#count").val();
         accId = selectRow.accId;
+        $("#maintenanceWin").modal('hidden');
+        $("#accWin").modal("show");
+        // alert(cout);
+        alert(accId);
     }
 }
 
-onclickRow:function onclickRowWin(row){
-    if(row.length!=1){
-
-        return false;
-    }else{
 
 
-    }
-}
 
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {

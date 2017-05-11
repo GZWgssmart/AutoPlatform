@@ -10,6 +10,7 @@ import com.gs.bean.UserRole;
 */
 public interface UserRoleService extends BaseService<String, UserRole>{
 
+    /**更新一个用户所对应的角色*/
     public void updateByRole(UserRole userRole);
 
 }

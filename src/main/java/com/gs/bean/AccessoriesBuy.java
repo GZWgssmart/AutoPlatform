@@ -24,6 +24,8 @@ public class AccessoriesBuy {
     private String companyId; // 公司ID
     private String accBuyCheck; // 审核状态
 
+    private double coont;       // 用于下单统计报表记录数
+
     private Accessories accessories; // 关联配件表
     private Company company; // 关联公司表
 
@@ -145,6 +147,14 @@ public class AccessoriesBuy {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public double getCoont() {
+        return coont;
+    }
+
+    public void setCoont(double coont) {
+        this.coont = coont;
     }
 
     @Override

@@ -4,7 +4,8 @@
 var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable", contextPath + "/materialList/query_pager");
+    var speedStatus = "维修保养中";
+    initTable("cusTable", contextPath + "/record/pager_speedStatus?speedStatus=" + speedStatus);
     initDateTimePickerNotValitor("form_datetime");
     $("#search").bind("click", initTable);
 });
@@ -27,7 +28,7 @@ window.operateEvents = {
         $.get(contextPath + "/materialList/update_status?id=" + row.materialId + "&status=" + status,
             function (data) {
                 if (data.result == "success") {
-                    $('#cusTable').bootstrapTable('refresh');
+                    $('#cusTable1').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
                 } else if (data.result == "notLogin") {
@@ -53,7 +54,7 @@ window.operateEvents = {
         $.get(contextPath + "/materialList/update_status?id=" + row.materialId + "&status=" + status,
             function (data) {
                 if (data.result == "success") {
-                    $('#cusTable').bootstrapTable('refresh');
+                    $('#cusTable1').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
                 } else if (data.result == "notLogin") {
@@ -80,15 +81,18 @@ function bySelectSearch() {
     var userName = $("#searchUserName").val();
     var startTime = $("#createTimeStart").val();
     var endTime = $("#createTimeEnd").val();
-    initTable("cusTable", contextPath + "/materialList/select_query?userName=" + userName + "&startTime=" + startTime + "&endTime=" + endTime);
+    initTableSetToolbar("cusTable1", contextPath + "/materialList/select_query?userName=" + userName + "&startTime=" + startTime + "&endTime=" + endTime, 'toolbar1');
 }
 
 function queryStatus(status) {
-    initTable('cusTable', contextPath + '/materialList/queryByStatus_materialList?status=' + status);
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    var record = selectRow[0];
+    var recordId = record.recordId;
+    initTableSetToolbar('cusTable1', contextPath + '/materialList/queryByStatus_materialList?status=' + status + '&recordId=' + recordId, 'toolbar1');
 }
 
 function queryAll() {
-    initTable('cusTable', contextPath + '/materialList/query_pager');
+    initTableSetToolbar('cusTable1', contextPath + '/materialList/query_pager', 'toolbar1');
 }
 
 /** 关闭搜索的form */
@@ -98,4 +102,26 @@ function closeSearchForm() {
     $("#searchUserName").val('');
     $("#searchDiv").hide();
     $("#showButton").show();
+}
+
+function showMaterialWin() {
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('错误提示', "只能选择一条数据查看维修保养明细", "error");
+        return false;
+    } else {
+        var record = selectRow[0];
+        var recordId = record.recordId;
+            initTableSetToolbar("cusTable1", contextPath + "/materialList/query_pager?recordId=" + recordId, "toolbar1");
+        $("#searchMaterialWin").modal('show');
+    }
+}
+
+/** 显示是否回访 */
+function formatterTrack(value, row, index) {
+    if (value == "Y") {
+        return "是";
+    } else {
+        return "<span style='color: red'>否</span>";
+    }
 }

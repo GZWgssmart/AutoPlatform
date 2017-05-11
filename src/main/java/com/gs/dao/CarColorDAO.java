@@ -18,4 +18,6 @@ import java.util.List;
 public interface CarColorDAO extends BaseDAO<String, CarColor>{
     public List<CarColor> queryByColorPager(@Param("status")String status, @Param("pager")Pager pager);
     public int statusCount(String status);
+    public List<CarColor> searchByPager(@Param("colorName")String colorName, @Param("pager")Pager pager);
+    public int searchCount(String colorName);
 }

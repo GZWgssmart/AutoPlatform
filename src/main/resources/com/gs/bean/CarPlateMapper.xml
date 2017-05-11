@@ -78,6 +78,16 @@
 		]]>
 	</select>
 
+	<select id="searchByPager" resultType="list" resultMap="carPlateResultMap" parameterType="com.gs.common.bean.Pager">
+		select * from t_car_plate where 1 = 1 and plateName like concat('%',#{plateName},'%') order by plateName asc limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="searchCount" resultType="int">
+		<![CDATA[
+		select count(plateId) from t_car_plate where 1 = 1 and plateName like concat('%',#{plateName},'%')
+		]]>
+	</select>
+
 	<update id="inactive" parameterType="string">
 		<![CDATA[
 			update t_car_plate set plateStatus = "N" where plateId = #{plateId}
@@ -96,7 +106,7 @@
 
 	<select id="countStatus" resultType="int">
 		<![CDATA[
-		select count(plateId) from t_car_plate where plateStatus = #{status}
+			select count(plateId) from t_car_plate where plateStatus = #{status}
 		]]>
 	</select>
 

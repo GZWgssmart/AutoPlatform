@@ -20,7 +20,7 @@
 	<insert id="insert"  parameterType="outgoingType">
 		<![CDATA[
 			insert into t_outgoing_type(outTypeId, outTypeName,outTypeStatus,outTypeCreatedTime,companyId)
-			values(uuid(), #{outTypeName},#{outTypeStatus},now(),#{companyId})
+			values(uuid(), #{outTypeName},'Y',now(),#{companyId})
 		]]>
 	</insert>
 

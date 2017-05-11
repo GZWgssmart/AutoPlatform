@@ -75,4 +75,6 @@ public interface UserService extends BaseService<String, User>{
     /**统计条件查询管理员的个数*/
     public int countSelectAdmin(String userName, String userPhone, String userEmail);
 
+    /*查询自己公司的员工*/
+    public List<User> queryUser();
 }

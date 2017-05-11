@@ -109,6 +109,11 @@ public class UserServiceImpl implements UserService {
 		return userDAO.countSelectAdmin(userName, userPhone, userEmail);
 	}
 
+	@Override
+	public List<User> queryUser() {
+		return userDAO.queryUser();
+	}
+
 
 	public void insertAdmin(User user) {
 		userDAO.insertAdmin(user);

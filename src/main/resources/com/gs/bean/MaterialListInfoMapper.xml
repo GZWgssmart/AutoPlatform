@@ -11,7 +11,7 @@
         <result column="userName" property="userName"/>
         <result column="userRequests" property="userRequests"/>
         <result column="maintainName" property="maintainName"/>
-        <result column="maintainMoney" property="maintainMoney"/>
+        <result column="accPrice" property="accPrice"/>
         <result column="accName" property="accName"/>
     </resultMap>
 
@@ -23,6 +23,34 @@
 			AND md.maintainId = mf.maintainId AND mr.checkinId = c.checkinId
 			order by ml.materialCreatedTime asc, c.userName
 		]]> limit #{beginIndex}, #{pageSize}
+    </select>
+
+    <select id="queryBySpeedStatus" resultMap="materialListInfoResultMap">
+        <![CDATA[
+            select ml.*, c.checkinId, c.userName, c.userRequests, mf.maintainName, a.accName, a.accPrice
+            from t_material_list ml, t_checkin c, t_maintain_fix mf, t_accessories a,
+            t_maintain_record mr,t_maintain_detail md, t_maintain_fix_acc mfa
+            where ml.recordId = mr.recordId and mr.checkinId = c.checkinId
+            and md.recordId = ml.recordId and ml.recordId = md.recordId and
+            md.maintainId = mf.maintainId and ml.accId = a.accId and
+            md.maintainId = mfa.maintainId and a.accId = mfa.accId and
+            mr.recordId = #{recordId}
+			order by ml.materialCreatedTime asc
+		]]> limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="queryBySpeedStatusAndStatus" resultMap="materialListInfoResultMap">
+        <![CDATA[
+            select ml.*, c.checkinId, c.userName, c.userRequests, mf.maintainName, a.accName, a.accPrice
+            from t_material_list ml, t_checkin c, t_maintain_fix mf, t_accessories a,
+            t_maintain_record mr,t_maintain_detail md, t_maintain_fix_acc mfa
+            where ml.recordId = mr.recordId and mr.checkinId = c.checkinId
+            and md.recordId = ml.recordId and ml.recordId = md.recordId and
+            md.maintainId = mf.maintainId and ml.accId = a.accId and
+            md.maintainId = mfa.maintainId and a.accId = mfa.accId and
+            mr.recordId = #{recordId} and ml.materialStatus = #{materialStatus}
+			order by ml.materialCreatedTime asc
+		]]> limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
     <select id="termQueryPager" resultMap="materialListInfoResultMap">
@@ -58,9 +86,9 @@
         ]]>
     </select>
 
-    <select id="statusCount" parameterType="string" resultType="int">
+    <select id="statusCount" resultType="int">
         <![CDATA[
-            select count(*) from t_material_list
+            select count(*) from t_material_list where recordId = #{recordId} and materialStatus = #{materialStatus};
         ]]>
     </select>
 
@@ -76,6 +104,12 @@
         <if test="userName != null and userName != '' ">
             and c.userName like concat('%',#{userName},'%')
         </if>
+    </select>
+
+    <select id="countBySpeedStatus" parameterType="string" resultType="int">
+        <![CDATA[
+            select count(*) from t_material_list where recordId = #{recordId}
+        ]]>
     </select>
 
     <update id="inactive" parameterType="string">
