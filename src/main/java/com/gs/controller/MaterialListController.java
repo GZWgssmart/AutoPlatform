@@ -2,9 +2,12 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.MaterialListInfo;
+import com.gs.bean.User;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.MaterialListInfoService;
 import org.apache.ibatis.annotations.Param;
@@ -30,11 +33,20 @@ public class MaterialListController {
     @Resource
     private MaterialListInfoService materialListInfoService;
 
+    private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," +
+            Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ARTIFICER;
+
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY;
+
     @RequestMapping(value = "info", method = RequestMethod.GET)
     private String showMaterialListInfo() {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
+        }
+        if (!CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("无权访问，想要访问请联系管理员!");
+            return "error/notPermission";
         }
         logger.info("显示物料清单信息");
         return "dispatchingPicking/material_list";
@@ -43,26 +55,28 @@ public class MaterialListController {
     @ResponseBody
     @RequestMapping(value = "query_pager", method = RequestMethod.GET)
     public Pager4EasyUI<MaterialListInfo> queryBySpeedStatus(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("recordId") String recordId) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
+        User user = SessionGetUtil.getUser();
         logger.info("分页查询当前维修记录物料清单");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(materialListInfoService.countBySpeedStatus(recordId));
-        List<MaterialListInfo> materialListInfos = materialListInfoService.queryBySpeedStatus(pager, recordId);
+        pager.setTotalRecords(materialListInfoService.countBySpeedStatus(recordId, user));
+        List<MaterialListInfo> materialListInfos = materialListInfoService.queryBySpeedStatus(pager, recordId, user);
         return new Pager4EasyUI<MaterialListInfo>(pager.getTotalRecords(), materialListInfos);
     }
 
     @ResponseBody
     @RequestMapping(value = "queryByStatus_materialList", method = RequestMethod.GET)
     public Pager4EasyUI<MaterialListInfo> queryByStatus(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("status") String status, @Param("recordId") String recordId) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
+        User user = SessionGetUtil.getUser();
         if (status.equals("Y")) {
             logger.info("分页查询可用的物料清单");
         } else {
@@ -71,24 +85,25 @@ public class MaterialListController {
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(materialListInfoService.statusCount(recordId, status));
-        List<MaterialListInfo> materialListInfos = materialListInfoService.queryBySpeedStatusAndStatus(pager, recordId, status);
+        pager.setTotalRecords(materialListInfoService.statusCount(recordId, status, user));
+        List<MaterialListInfo> materialListInfos = materialListInfoService.queryBySpeedStatusAndStatus(pager, recordId, status, user);
         return new Pager4EasyUI<MaterialListInfo>(pager.getTotalRecords(), materialListInfos);
     }
 
     @ResponseBody
     @RequestMapping(value = "select_query", method = RequestMethod.GET)
     public Pager4EasyUI<MaterialListInfo> selectQueryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("userName") String userName, @Param("startTime") String startTime, @Param("endTime") String endTime) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
+        User user = SessionGetUtil.getUser();
         logger.info("条件分页查询物料清单");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(materialListInfoService.termCount(userName, startTime, endTime));
-        List<MaterialListInfo> materialListInfos = materialListInfoService.termQueryPager(pager, userName, startTime, endTime);
+        pager.setTotalRecords(materialListInfoService.termCount(userName, startTime, endTime, user));
+        List<MaterialListInfo> materialListInfos = materialListInfoService.termQueryPager(pager, userName, startTime, endTime, user);
         return new Pager4EasyUI<MaterialListInfo>(pager.getTotalRecords(), materialListInfos);
     }
 
@@ -100,6 +115,10 @@ public class MaterialListController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("修改状态失败");
+                return ControllerResult.getFailResult("修改状态失败，没有该权限操作");
+            }
             if (status.equals("Y")) {
                 logger.info("激活物料清单状态");
                 materialListInfoService.active(id);

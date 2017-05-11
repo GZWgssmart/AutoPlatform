@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Permission;
+import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,12 +29,12 @@ public class PermissionServiceImpl implements PermissionService {
 	public int batchDelete(List<Permission> list) { return permissionDAO.batchDelete(list); }
 	public int update(Permission permission) { return permissionDAO.update(permission); }
 	public int batchUpdate(List<Permission> list) { return permissionDAO.batchUpdate(list); }
-	public List<Permission> queryAll() { return permissionDAO.queryAll(); }
-	public List<Permission> queryByStatus(String status) { return permissionDAO.queryByStatus(status); }
-	public Permission query(Permission permission) { return permissionDAO.query(permission); }
+	public List<Permission> queryAll(User user) { return permissionDAO.queryAll(user); }
+	public List<Permission> queryByStatus(String status, User user) { return permissionDAO.queryByStatus(status, user); }
+	public Permission query(Permission permission, User user) { return permissionDAO.query(permission, user); }
 	public Permission queryById(String id) { return permissionDAO.queryById(id); }
-	public List<Permission> queryByPager(Pager pager) { return permissionDAO.queryByPager(pager); }
-	public int count() { return permissionDAO.count(); }
+	public List<Permission> queryByPager(Pager pager, User user) { return permissionDAO.queryByPager(pager, user); }
+	public int count(User user) { return permissionDAO.count(user); }
 	public int inactive(String id) { return permissionDAO.inactive(id); }
 	public int active(String id) { return permissionDAO.active(id); }
 	public List<Permission> queryByModuleId(String moduleId) {

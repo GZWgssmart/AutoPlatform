@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.Module;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import org.apache.ibatis.annotations.Param;
@@ -18,8 +19,8 @@ import java.util.List;
 public interface ModuleDAO extends BaseDAO<String, Module> {
 
     /**根据状态来分页*/
-    public List<Module> queryByStatusPager(@Param("moduleStatus") String moduleStatus, @Param("pager") Pager pager);
+    public List<Module> queryByStatusPager(@Param("moduleStatus") String moduleStatus, @Param("pager") Pager pager, @Param("user") User user);
 
     /**根据状态来统计*/
-    public int countByStatus(String moduleStatus);
+    public int countByStatus(@Param("moduleStatus") String moduleStatus, @Param("user") User user);
 }

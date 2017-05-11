@@ -3,10 +3,12 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Role;
 import com.gs.bean.User;
+import com.gs.common.Constants;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.RoleService;
 import com.gs.service.UserService;
@@ -36,11 +38,18 @@ public class RoleController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(IncomingTypeController.class);
 
+    private String queryRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+    private String editRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+
     @RequestMapping(value = "info", method = RequestMethod.GET)
     private String showRoleInfo() {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
+        }
+        if (!CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("无权访问，想要访问请联系管理员!");
+            return "error/notPermission";
         }
         logger.info(" 人员角色管理页面");
         return "system/role";
@@ -54,6 +63,10 @@ public class RoleController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("添加失败");
+                return ControllerResult.getFailResult("添加失败，没有该权限操作");
+            }
             logger.info("角色添加");
             roleService.insert(role);
             return ControllerResult.getSuccessResult("添加成功");
@@ -67,16 +80,17 @@ public class RoleController {
     @ResponseBody
     @RequestMapping(value = "query_pager", method = RequestMethod.GET)
     public Pager4EasyUI<Role> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
+        User user = SessionGetUtil.getUser();
         logger.info("分页查询所有角色");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(roleService.count());
-        List<Role> roles = roleService.queryByPager(pager);
+        pager.setTotalRecords(roleService.count(user));
+        List<Role> roles = roleService.queryByPager(pager, user);
         return new Pager4EasyUI<Role>(pager.getTotalRecords(), roles);
     }
 
@@ -88,6 +102,10 @@ public class RoleController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("修改失败");
+                return ControllerResult.getFailResult("修改失败，没有该权限操作");
+            }
             logger.info("角色修改");
             roleService.update(role);
             return ControllerResult.getSuccessResult(" 修改成功");
@@ -105,6 +123,10 @@ public class RoleController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("修改状态失败");
+                return ControllerResult.getFailResult("修改状态失败，没有该权限操作");
+            }
             logger.info("状态修改");
             if (status.equals("Y")) {
                 roleService.inactive(id);
@@ -122,8 +144,8 @@ public class RoleController {
     @ResponseBody
     @RequestMapping(value = "query_cAdminAndSOAdmin", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCAdminAndSOAdmin() {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
         logger.info("查询添加管理员时需要的下拉条件");

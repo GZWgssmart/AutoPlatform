@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Role;
+import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,28 +29,23 @@ public class RoleServiceImpl implements RoleService {
 	public int batchDelete(List<Role> list) { return roleDAO.batchDelete(list); }
 	public int update(Role role) { return roleDAO.update(role); }
 	public int batchUpdate(List<Role> list) { return roleDAO.batchUpdate(list); }
-	public List<Role> queryAll() { return roleDAO.queryAll(); }
-	public List<Role> queryByStatus(String status) { return roleDAO.queryByStatus(status); }
-	public Role query(Role role) { return roleDAO.query(role); }
+	public List<Role> queryAll(User user) { return roleDAO.queryAll(user); }
+	public List<Role> queryByStatus(String status,User user) { return roleDAO.queryByStatus(status, user); }
+	public Role query(Role role,User user) { return roleDAO.query(role, user); }
 	public Role queryById(String id) { return roleDAO.queryById(id); }
-	public List<Role> queryByPager(Pager pager) { return roleDAO.queryByPager(pager); }
-	public int count() { return roleDAO.count(); }
+	public List<Role> queryByPager(Pager pager,User user) { return roleDAO.queryByPager(pager, user); }
+	public int count(User user) { return roleDAO.count(user); }
 	public int inactive(String id) { return roleDAO.inactive(id); }
 	public int active(String id) { return roleDAO.active(id); }
-
 	public List<Role> queryCAdminAndSOAdmin() {
 		return roleDAO.queryCAdminAndSOAdmin();
 	}
-
 	public Role queryByName(String roleName) {
 		return roleDAO.queryByName(roleName);
 	}
-
-	@Override
 	public Role queryByUserId(String userId) {
 		return roleDAO.queryByUserId(userId);
 	}
-
 	public List<Role> queryByCompanyRole() {
 		return roleDAO.queryByCompanyRole();
 	}

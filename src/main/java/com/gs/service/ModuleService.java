@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.Module;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import org.apache.ibatis.annotations.Param;
@@ -16,8 +17,8 @@ import java.util.List;
 public interface ModuleService extends BaseService<String, Module> {
 
     /**根据状态来分页*/
-    public List<Module> queryByStatusPager(String moduleStatus, Pager pager);
+    public List<Module> queryByStatusPager(String moduleStatus, Pager pager, User user);
 
     /**根据状态来统计*/
-    public int countByStatus(String moduleStatus);
+    public int countByStatus(String moduleStatus, User user);
 }

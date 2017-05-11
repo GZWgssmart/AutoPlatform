@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaterialListInfo;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.MaterialListInfoDAO;
 import com.gs.service.MaterialListInfoService;
@@ -17,6 +18,34 @@ public class MaterialListInfoServiceImpl implements MaterialListInfoService {
 
     @Resource
     private MaterialListInfoDAO materialListInfoDAO;
+
+    public List<MaterialListInfo> queryByStatus(Pager pager, String status, User user) {
+        return materialListInfoDAO.queryByStatus(pager,status,user);
+    }
+
+    public int termCount(String userName, String startTime, String endTime, User user) {
+        return materialListInfoDAO.termCount(userName,startTime,endTime,user);
+    }
+
+    public List<MaterialListInfo> termQueryPager(Pager pager, String userName, String startTime, String endTime, User user) {
+        return materialListInfoDAO.termQueryPager(pager,userName,startTime,endTime,user);
+    }
+
+    public List<MaterialListInfo> queryBySpeedStatus(Pager pager, String recordId, User user) {
+        return materialListInfoDAO.queryBySpeedStatus(pager,recordId,user);
+    }
+
+    public int countBySpeedStatus(String recordId, User user) {
+        return materialListInfoDAO.countBySpeedStatus(recordId,user);
+    }
+
+    public List<MaterialListInfo> queryBySpeedStatusAndStatus(Pager pager, String recordId, String materialStatus, User user) {
+        return materialListInfoDAO.queryBySpeedStatusAndStatus(pager,recordId,materialStatus,user);
+    }
+
+    public int statusCount(String recordId, String materialStatus, User user) {
+        return materialListInfoDAO.statusCount(recordId,materialStatus,user);
+    }
 
     public int insert(MaterialListInfo materialListInfo) {
         return 0;
@@ -46,15 +75,15 @@ public class MaterialListInfoServiceImpl implements MaterialListInfoService {
         return 0;
     }
 
-    public List<MaterialListInfo> queryAll() {
+    public List<MaterialListInfo> queryAll(User user) {
         return null;
     }
 
-    public List<MaterialListInfo> queryByStatus(String status) {
+    public List<MaterialListInfo> queryByStatus(String status, User user) {
         return null;
     }
 
-    public MaterialListInfo query(MaterialListInfo materialListInfo) {
+    public MaterialListInfo query(MaterialListInfo materialListInfo, User user) {
         return null;
     }
 
@@ -62,12 +91,12 @@ public class MaterialListInfoServiceImpl implements MaterialListInfoService {
         return null;
     }
 
-    public List<MaterialListInfo> queryByPager(Pager pager) {
-        return materialListInfoDAO.queryByPager(pager);
+    public List<MaterialListInfo> queryByPager(Pager pager, User user) {
+        return null;
     }
 
-    public int count() {
-        return materialListInfoDAO.count();
+    public int count(User user) {
+        return 0;
     }
 
     public int inactive(String id) {
@@ -76,33 +105,5 @@ public class MaterialListInfoServiceImpl implements MaterialListInfoService {
 
     public int active(String id) {
         return materialListInfoDAO.active(id);
-    }
-
-    public List<MaterialListInfo> queryByStatus(Pager pager, String status) {
-        return materialListInfoDAO.queryByStatus(pager, status);
-    }
-
-    public int termCount(String userName, String startTime, String endTime) {
-        return materialListInfoDAO.termCount(userName, startTime, endTime);
-    }
-
-    public List<MaterialListInfo> termQueryPager(Pager pager, String userName, String startTime, String endTime) {
-        return materialListInfoDAO.termQueryPager(pager, userName, startTime, endTime);
-    }
-
-    public List<MaterialListInfo> queryBySpeedStatus(Pager pager, String recordId) {
-        return materialListInfoDAO.queryBySpeedStatus(pager, recordId);
-    }
-
-    public int countBySpeedStatus(String recordId) {
-        return materialListInfoDAO.countBySpeedStatus(recordId);
-    }
-
-    public List<MaterialListInfo> queryBySpeedStatusAndStatus(Pager pager, String recordId, String materialStatus) {
-        return materialListInfoDAO.queryBySpeedStatusAndStatus(pager, recordId, materialStatus);
-    }
-
-    public int statusCount(String recordId, String materialStatus) {
-        return materialListInfoDAO.statusCount(recordId, materialStatus);
     }
 }

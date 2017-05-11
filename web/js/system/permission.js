@@ -89,6 +89,24 @@ function addById(permissionId, obj) {
     var str = "" + permissionId;
     $.get(contextPath + "/permission/addByRole_permission?permissionIds=" + str + "&roleId=" + roleId2,
         function (data) {
+            if (data.result == "fail") {
+                swal("错误提示", data.message, "error");
+            } else if (data.result == "notLogin") {
+                swal({
+                        title: "登入失败",
+                        text: data.message,
+                        type: "warning",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: true
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            top.location.href = "/login/show_login";
+                        }
+                    });
+            }
         }, "json");
     selectRole(roleObj2, roleId2);
     selectModule(moduleObj2, moduleId2);
@@ -100,6 +118,24 @@ function delById(permissionId, obj) {
     var str = "" + permissionId;
     $.get(contextPath + "/permission/delByRole_permission?permissionIds=" + str + "&roleId=" + roleId2,
         function (data) {
+            if (data.result == "fail") {
+                swal("错误提示", data.message, "error");
+            } else if (data.result == "notLogin") {
+                swal({
+                        title: "登入失败",
+                        text: data.message,
+                        type: "warning",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: true
+                    },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            top.location.href = "/login/show_login";
+                        }
+                    });
+            }
         }, "json");
     selectRole(roleObj2, roleId2);
     selectModule(moduleObj2, moduleId2);
@@ -111,6 +147,26 @@ function addAll() {
     if (ypAll.length > 0) {
         $.get(contextPath + "/permission/addByRole_permission?permissionIds=" + ypAll + "&roleId=" + roleId2,
             function (data) {
+                if (data.result == "success") {
+                    swal("成功提示", data.message, "success");
+                } else if (data.result == "fail") {
+                    swal("错误提示", data.message, "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
+                }
             }, "json");
         selectRole(roleObj2, roleId2);
         selectModule(moduleObj2, moduleId2);
@@ -123,6 +179,26 @@ function delAll() {
     if (npAll.length > 0) {
         $.get(contextPath + "/permission/delByRole_permission?permissionIds=" + npAll + "&roleId=" + roleId2,
             function (data) {
+                if (data.result == "success") {
+                    swal("成功提示", data.message, "success");
+                } else if (data.result == "fail") {
+                    swal("错误提示", data.message, "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
+                }
             }, "json");
         selectRole(roleObj2, roleId2);
         selectModule(moduleObj2, moduleId2);

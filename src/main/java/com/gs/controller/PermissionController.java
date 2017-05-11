@@ -2,9 +2,11 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.*;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.ModuleService;
 import com.gs.service.PermissionService;
@@ -40,6 +42,9 @@ public class PermissionController {
     @Resource
     private RolePermissionService rolePermissionService;
 
+    private String queryRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+    private String editRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+
     @RequestMapping(value = "info", method = RequestMethod.GET)
     public ModelAndView showPermissionInfo() {
         ModelAndView mav = new ModelAndView();
@@ -48,13 +53,19 @@ public class PermissionController {
             mav.setViewName("index/notLogin");
             return mav;
         }
+        if (!CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("无权访问，想要访问请联系管理员!");
+            mav.setViewName("error/notPermission");
+            return mav;
+        }
+        User user = SessionGetUtil.getUser();
         logger.info("显示权限信息");
         logger.info("查询所有角色");
         logger.info("查询所有模块");
         mav.setViewName("system/permission");
-        List<Role> roles = roleService.queryAll();
+        List<Role> roles = roleService.queryAll(user);
         mav.addObject("roles", roles);
-        List<Module> modules = moduleService.queryAll();
+        List<Module> modules = moduleService.queryAll(user);
         mav.addObject("modules", modules);
         return mav;
     }
@@ -62,24 +73,25 @@ public class PermissionController {
     @ResponseBody
     @RequestMapping(value = "query_pager", method = RequestMethod.GET)
     public Pager4EasyUI<Permission> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
+        User user = SessionGetUtil.getUser();
         logger.info("分页查询所有权限");
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(permissionService.count());
-        List<Permission> permissions = permissionService.queryByPager(pager);
+        pager.setTotalRecords(permissionService.count(user));
+        List<Permission> permissions = permissionService.queryByPager(pager, user);
         return new Pager4EasyUI<Permission>(pager.getTotalRecords(), permissions);
     }
 
     @ResponseBody
     @RequestMapping(value = "module_pager", method = RequestMethod.GET)
     public Pager4EasyUI<Permission> queryByModulePager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("moduleId") String moduleId) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
         logger.info("根据模块来分页查询权限");
@@ -94,8 +106,8 @@ public class PermissionController {
     @ResponseBody
     @RequestMapping(value = "status_pager", method = RequestMethod.GET)
     public Pager4EasyUI<Permission> queryByStatusPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("moduleId") String status) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
         if (status.equals("Y")) {
@@ -119,6 +131,10 @@ public class PermissionController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("更新状态失败");
+                return ControllerResult.getFailResult("更新状态失败，没有该权限操作");
+            }
             logger.info("更新权限状态");
             if (status.equals("Y")) {
                 permissionService.active(id);
@@ -140,6 +156,10 @@ public class PermissionController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("添加失败");
+                return ControllerResult.getFailResult("添加失败，没有该权限操作");
+            }
             logger.info("添加权限信息");
             permissionService.insert(permission);
             return ControllerResult.getSuccessResult("添加成功");
@@ -157,6 +177,10 @@ public class PermissionController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("修改失败");
+                return ControllerResult.getFailResult("修改失败，没有该权限操作");
+            }
             logger.info("修改权限信息");
             System.out.println("" + permission.getPermissionName() +
                     ", " + permission.getPermissionZHName() +
@@ -174,8 +198,8 @@ public class PermissionController {
     @ResponseBody
     @RequestMapping(value = "roleIdOrModuleId_permission", method = RequestMethod.GET)
     public List<PermissionInfo> queryByRoleIdOrModuleId(@Param("roleId") String roleId, @Param("moduleId") String moduleId) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
         logger.info("根据角色和模块查询拥有的权限");
@@ -209,6 +233,10 @@ public class PermissionController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("添加失败");
+                return ControllerResult.getFailResult("添加失败，没有该权限操作");
+            }
             if (permissionIds.length == 1) {
                 logger.info("添加单个权限");
             } else if (permissionIds.length > 1) {
@@ -237,6 +265,10 @@ public class PermissionController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("删除失败");
+                return ControllerResult.getFailResult("删除失败，没有该权限操作");
+            }
         if (permissionIds.length == 1) {
             logger.info("删除单个权限");
         } else if (permissionIds.length > 1) {

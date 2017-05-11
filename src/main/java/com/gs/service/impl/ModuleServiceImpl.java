@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Module;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager4EasyUI;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -29,18 +30,18 @@ public class ModuleServiceImpl implements ModuleService {
 	public int batchDelete(List<Module> list) { return moduleDAO.batchDelete(list); }
 	public int update(Module module) { return moduleDAO.update(module); }
 	public int batchUpdate(List<Module> list) { return moduleDAO.batchUpdate(list); }
-	public List<Module> queryAll() { return moduleDAO.queryAll(); }
-	public List<Module> queryByStatus(String status) { return moduleDAO.queryByStatus(status); }
-	public Module query(Module module) { return moduleDAO.query(module); }
+	public List<Module> queryAll(User user) { return moduleDAO.queryAll(user); }
+	public List<Module> queryByStatus(String status, User user) { return moduleDAO.queryByStatus(status, user); }
+	public Module query(Module module, User user) { return moduleDAO.query(module, user); }
 	public Module queryById(String id) { return moduleDAO.queryById(id); }
-	public List<Module> queryByPager(Pager pager) { return moduleDAO.queryByPager(pager); }
-	public int count() { return moduleDAO.count(); }
+	public List<Module> queryByPager(Pager pager, User user) { return moduleDAO.queryByPager(pager, user); }
+	public int count(User user) { return moduleDAO.count(user); }
 	public int inactive(String id) { return moduleDAO.inactive(id); }
 	public int active(String id) { return moduleDAO.active(id); }
-	public List<Module> queryByStatusPager(String moduleStatus, Pager pager) {
-		return moduleDAO.queryByStatusPager(moduleStatus, pager);
+	public List<Module> queryByStatusPager(String moduleStatus, Pager pager, User user) {
+		return moduleDAO.queryByStatusPager(moduleStatus, pager, user);
 	}
-	public int countByStatus(String moduleStatus) {
-		return moduleDAO.countByStatus(moduleStatus);
+	public int countByStatus(String moduleStatus, User user) {
+		return moduleDAO.countByStatus(moduleStatus, user);
 	}
 }
