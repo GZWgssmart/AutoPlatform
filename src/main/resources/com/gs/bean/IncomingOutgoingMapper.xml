@@ -104,7 +104,6 @@
 		<![CDATA[
            SELECT sum(inOutMoney) as inOutMoney,inOutCreatedTime,inOutId from t_incoming_outgoing
              WHERE DATE_FORMAT(inOutCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and  inOutStatus = 'Y'
-             and companyId = #{companyId}
 		]]>
         <if test="inOutType ==1">
             and outTypeId is not null
@@ -112,6 +111,9 @@
         <if test="inOutType ==2">
             and inTypeId is not null
         </if>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+		</if>
             GROUP BY day(inOutCreatedTime);
 	</select>
 
@@ -119,7 +121,6 @@
         <![CDATA[
            select sum(inOutMoney) as inOutMoney ,inOutCreatedTime from t_incoming_outgoing
             where inOutCreatedTime >= #{startTime} and inOutCreatedTime <= #{endTime} and  inOutStatus = 'Y'
-            and companyId = #{companyId}
 		]]>
         <if test="inOutType ==1">
             and outTypeId is not null
@@ -142,6 +143,9 @@
         <if test="type =='day'">
             GROUP BY day(inOutCreatedTime)
         </if>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+		</if>
     </select>
 
 	<select id="queryPagerStatus" resultType="list" resultMap="incomingOutgoingResultMap">
@@ -154,13 +158,20 @@
 				LEFT JOIN t_company c on io.companyId = c.companyId
 				where io.inOutStatus = #{status}
 		]]>
-		order by io.inOutCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
+		<if test="user.companyId != null and user.companyId != ''">
+			and io.companyId = #{user.companyId}
+		</if>
+		order by io.inOutCreatedTime Desc ,io.companyId
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="countStatus" resultType="int">
 		<![CDATA[
 			select count(*) from t_incoming_outgoing where inOutStatus = #{status}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="queryByStatus" resultMap="incomingOutgoingResultMap" parameterType="string">
@@ -190,14 +201,21 @@
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
 				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
 				LEFT JOIN t_company c on io.companyId = c.companyId
-				order by io.inOutCreatedTime Desc limit #{beginIndex}, #{pageSize}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and io.companyId = #{user.companyId}
+		</if>
+				order by io.inOutCreatedTime Desc , io.companyId
+		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
 			select count(*) from t_incoming_outgoing
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="queryByInOutType" resultType="list" resultMap="incomingOutgoingResultMap">
@@ -215,7 +233,10 @@
 		<if test="incomingOutgoing.inOutType ==2">
 			and io.inTypeId is null
 		</if>
-        order by io.inOutCreatedTime Desc
+		<if test="user.companyId != null and user.companyId != ''">
+			and io.companyId = #{user.companyId}
+		</if>
+        order by io.inOutCreatedTime Desc ,io.companyId
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -228,6 +249,9 @@
 		</if>
 		<if test="inOutType ==2">
 			and inTypeId is  null
+		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
 		</if>
 	</select>
 

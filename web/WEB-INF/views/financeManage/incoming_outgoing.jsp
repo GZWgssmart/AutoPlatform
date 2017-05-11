@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -53,21 +54,25 @@
             <th data-field="inOutStatus" data-formatter="status">
                 当前状态
             </th>
-            <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
-                操作
-            </th>
+            <shiro:hasAnyRoles name="companyAccounting, companyAdmin">
+                <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
+                    操作
+                </th>
+            </shiro:hasAnyRoles>
         </tr>
         </thead>
 
         <tbody>
 
         <div id="toolbar" class="btn-group">
-            <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
+            <shiro:hasAnyRoles name="companyAccounting, companyAdmin">
+                <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-plus"></i> 添加
+                </button></a>
+                <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-pencil"></i> 修改
+                </button></a>
+            </shiro:hasAnyRoles>
 
             <a><button onclick="queryByInOutType(1);" type="button" class="btn btn-default">
                 <i class="glyphicon glyphicon-search"></i> 查看支出

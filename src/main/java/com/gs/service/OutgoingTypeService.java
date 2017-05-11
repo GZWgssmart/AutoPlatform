@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.OutgoingType;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 
 import java.util.List;
@@ -15,6 +16,6 @@ public interface OutgoingTypeService extends BaseService<String, OutgoingType>{
 
     public OutgoingType queryByName(String outTypeName);
 
-    public List<OutgoingType> queryPagerStatus(String status,Pager pager);
-    public int countStatus(String status);
+    public List<OutgoingType> queryPagerStatus(String status,Pager pager,User user);
+    public int countStatus(String status,User user);
 }

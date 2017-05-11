@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.IncomingOutgoing;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 
 import java.util.List;
@@ -13,9 +14,9 @@ import java.util.List;
 */
 public interface IncomingOutgoingService extends BaseService<String, IncomingOutgoing>{
 
-    public List<IncomingOutgoing> queryByInOutType(Pager pager, IncomingOutgoing incomingOutgoing);
+    public List<IncomingOutgoing> queryByInOutType(Pager pager, IncomingOutgoing incomingOutgoing,User user);
 
-    public int countByInOutType(IncomingOutgoing incomingOutgoing);
+    public int countByInOutType(IncomingOutgoing incomingOutgoing,User user);
 
     public List<IncomingOutgoing> queryByDefault(int inOutType,String companyId);
 
@@ -24,6 +25,6 @@ public interface IncomingOutgoingService extends BaseService<String, IncomingOut
 
     public void addInsert(List<IncomingOutgoing> incomingOutgoings);
 
-    public List<IncomingOutgoing> queryPagerStatus(String status,Pager pager);
-    public int countStatus(String status);
+    public List<IncomingOutgoing> queryPagerStatus(String status,Pager pager,User user);
+    public int countStatus(String status,User user);
 }

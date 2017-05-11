@@ -96,11 +96,6 @@
         <tbody>
         <div id="toolbar" class="btn-group">
 
-            <a>
-                <button onclick="showChargeBillWin();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-print"></i> 打印收费单据
-                </button>
-            </a>
 
             <a>
                 <button onclick="searchStatus('/bill/pager?status=Y');" type="button" class="btn btn-default">

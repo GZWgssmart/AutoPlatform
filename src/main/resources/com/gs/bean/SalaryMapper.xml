@@ -80,7 +80,10 @@
 		<![CDATA[
 			select s.*,u.userId as user_id,u.userName from t_salary s ,t_user u where s.userId = u.userId
 		]]>
-		order by s.salaryCreatedTime Desc
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
+		</if>
+		order by s.salaryCreatedTime Desc ,u.companyId
 	</select>
 
 	<select id="queryByStatus" resultMap="salaryResultMap" parameterType="string">
@@ -118,13 +121,20 @@
 		<![CDATA[
 			select s.*,u.userId as user_id,u.userName from t_salary s ,t_user u where s.userId = u.userId
 		]]>
-		order by s.salaryCreatedTime Desc limit #{beginIndex}, #{pageSize}
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
+		</if>
+		order by s.salaryCreatedTime Desc ,u.companyId
+		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(*) from t_salary
+			select count(*) from t_salary s ,t_user u where s.userId = u.userId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="queryByPagerSearch" resultType="list" resultMap="salaryResultMap">
@@ -154,7 +164,11 @@
 		<if test="salary.salaryRange == 5">
 			and s.totalSalary <![CDATA[ >= 8500 ]]>
 		</if>
-		order by s.salaryCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
+		</if>
+		order by s.salaryCreatedTime Desc ,u.companyId
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="countSearch" resultType="int">
@@ -184,6 +198,9 @@
 		</if>
 		<if test="salaryRange == 5">
 			and s.totalSalary <![CDATA[ >= 8500 ]]>
+		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
 		</if>
 	</select>
 

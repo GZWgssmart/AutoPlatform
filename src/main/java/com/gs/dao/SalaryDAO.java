@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.Salary;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -26,7 +27,7 @@ public interface SalaryDAO extends BaseDAO<String, Salary>{
     /*
     * 条件查询
     * */
-    public List<Salary> queryByPagerSearch(@Param("pager")Pager pager, @Param("salary")Salary salary);
-    public int countSearch(Salary salary);
+    public List<Salary> queryByPagerSearch(@Param("pager")Pager pager, @Param("salary")Salary salary,@Param("user")User user);
+    public int countSearch(Salary salary,@Param("user")User user);
 
 }

@@ -88,13 +88,20 @@
 		<![CDATA[
 			select  * from t_outgoing_type ot LEFT JOIN t_company c on ot.companyId = c.companyId where  ot.outTypeStatus = #{status}
 		]]>
-		 order by ot.outTypeCreatedTime Desc limit #{pager.beginIndex}, #{pager.pageSize}
+		<if test="user.companyId != null and user.companyId != ''">
+			and ot.companyId = #{user.companyId}
+		</if>
+		 order by ot.outTypeCreatedTime Desc ,ot.companyId
+		 limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="countStatus" resultType="int">
 		<![CDATA[
 			select count(*) from t_outgoing_type where outTypeStatus = #{status}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="queryByName"  resultType="outgoingType">
@@ -110,13 +117,20 @@
 		<![CDATA[
 			select  * from t_outgoing_type ot LEFT JOIN t_company c on ot.companyId = c.companyId
 		]]>
-		order by ot.outTypeCreatedTime Desc limit #{beginIndex}, #{pageSize}
+		<if test="user.companyId != null and user.companyId != ''">
+			and ot.companyId = #{user.companyId}
+		</if>
+		order by ot.outTypeCreatedTime Desc ,ot.companyId
+		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
 			select count(*) from t_outgoing_type
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<update id="inactive" parameterType="string">

@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.IncomingOutgoing;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -19,9 +20,9 @@ public interface IncomingOutgoingDAO extends BaseDAO<String, IncomingOutgoing>{
     /*
     *  查询支出和收入
     * */
-    public List<IncomingOutgoing> queryByInOutType(@Param("pager")Pager pager,@Param("incomingOutgoing")IncomingOutgoing incomingOutgoing);
+    public List<IncomingOutgoing> queryByInOutType(@Param("pager")Pager pager,@Param("incomingOutgoing")IncomingOutgoing incomingOutgoing,@Param("user")User user);
 
-    public int countByInOutType(IncomingOutgoing incomingOutgoing);
+    public int countByInOutType(@Param("incomingOutgoing") IncomingOutgoing incomingOutgoing,@Param("user")User user);
 
     /*
     * 默认查询本月的财务统计
@@ -39,6 +40,6 @@ public interface IncomingOutgoingDAO extends BaseDAO<String, IncomingOutgoing>{
    * */
     public void addInsert(List<IncomingOutgoing> incomingOutgoings);
 
-    public List<IncomingOutgoing> queryPagerStatus(@Param("status")String status,@Param("pager")Pager pager);
-    public int countStatus(String status);
+    public List<IncomingOutgoing> queryPagerStatus(@Param("status")String status,@Param("pager")Pager pager,@Param("user")User user);
+    public int countStatus(@Param("status") String status,@Param("user")User user);
 }

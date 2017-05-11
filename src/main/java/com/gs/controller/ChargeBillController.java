@@ -65,6 +65,8 @@ public class ChargeBillController {
     private String queryRole1 = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ACCOUNTING + ","
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 
+    // 只有车主本人才可以查看消费统计
+    private String queryRoleCustomer = Constants.SESSION_CUSTOMER;
 
     @RequestMapping(value = "bill_page", method = RequestMethod.GET)
     public String chargeBillPage() {
@@ -297,22 +299,25 @@ public class ChargeBillController {
     @RequestMapping(value="query_default",method= RequestMethod.GET)
     public List<LineBasic> queryAll(){
         if(SessionGetUtil.isUser()) {
-            logger.info("默认查询本月车主用户消费统计，报表显示");
-            List<LineBasic> lineBasics = new ArrayList<LineBasic>();
-            User user = SessionGetUtil.getUser();
-            LineBasic lineBasic = new LineBasic();
-            LineBasic lineBasic1 = new LineBasic();
-            lineBasic.setName("保养");
-            dateDay("one", user.getUserId());
-            lineBasic.setData(HighchartsData.doubleDayOne);
-            lineBasic1.setName("维修");
-            dateDay("two", user.getUserId());
-            lineBasic1.setData(HighchartsData.doubleDayTwo);
-            lineBasic.setCategories(HighchartsData.strDay);
-            lineBasic1.setCategories(HighchartsData.strDay);
-            lineBasics.add(lineBasic);
-            lineBasics.add(lineBasic1);
-            return lineBasics;
+            if(CheckRoleUtil.checkRoles(queryRoleCustomer)) {
+                logger.info("默认查询本月车主用户消费统计，报表显示");
+                List<LineBasic> lineBasics = new ArrayList<LineBasic>();
+                User user = SessionGetUtil.getUser();
+                LineBasic lineBasic = new LineBasic();
+                LineBasic lineBasic1 = new LineBasic();
+                lineBasic.setName("保养");
+                dateDay("one", user.getUserId());
+                lineBasic.setData(HighchartsData.doubleDayOne);
+                lineBasic1.setName("维修");
+                dateDay("two", user.getUserId());
+                lineBasic1.setData(HighchartsData.doubleDayTwo);
+                lineBasic.setCategories(HighchartsData.strDay);
+                lineBasic1.setCategories(HighchartsData.strDay);
+                lineBasics.add(lineBasic);
+                lineBasics.add(lineBasic1);
+                return lineBasics;
+            }
+            return null;
         } else{
             logger.info("Session已失效，请重新登入");
             return null;
@@ -325,56 +330,59 @@ public class ChargeBillController {
     public List<LineBasic> queryCondition(@Param("start")String start,@Param("end")String end,
                                           @Param("type")String type){
         if(SessionGetUtil.isUser()) {
-            logger.info("根据年，月，季度，周，日查询所有车主用户消费统计，报表显示");
-            List<LineBasic> lineBasics = new ArrayList<LineBasic>();
-            LineBasic lineBasic = new LineBasic();
-            LineBasic lineBasic1 = new LineBasic();
-            lineBasic.setName("保养");
-            lineBasic1.setName("维修");
-            User user = SessionGetUtil.getUser();
-            if (start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")) {
-                if (type.equals("year")) {
-                    HighchartsData.setStrYear(start, end);
-                    dataCondition(start, end, "保养", type, "year", "one", user.getUserId());
-                    lineBasic.setData(HighchartsData.doubleYearOne);
-                    dataCondition(start, end, "维修", type, "year", "two", user.getUserId());
-                    lineBasic1.setData(HighchartsData.doubleYearTwo);
-                    lineBasic.setCategories(HighchartsData.strYear);
-                    lineBasic1.setCategories(HighchartsData.strYear);
-                } else if (type.equals("quarter")) {
-                    dataCondition(start, end, "保养", type, "quarter", "one", user.getUserId());
-                    lineBasic.setData(HighchartsData.doubleQuarterOne);
-                    dataCondition(start, end, "维修", type, "quarter", "two", user.getUserId());
-                    lineBasic1.setData(HighchartsData.doubleQuarterTwo);
-                    lineBasic.setCategories(HighchartsData.strQuarter);
-                    lineBasic1.setCategories(HighchartsData.strQuarter);
-                } else if (type.equals("month")) {
-                    dataCondition(start, end, "保养", type, "month", "one", user.getUserId());
-                    lineBasic.setData(HighchartsData.doubleMonthOne);
-                    dataCondition(start, end, "维修", type, "month", "two", user.getUserId());
-                    lineBasic1.setData(HighchartsData.doubleMonthTwo);
-                    lineBasic.setCategories(HighchartsData.strMonth);
-                    lineBasic1.setCategories(HighchartsData.strMonth);
-                } else if (type.equals("week")) {
-                    HighchartsData.setStrWeek(start, end);
-                    dataCondition(start, end, "保养", type, "week", "one", user.getUserId());
-                    lineBasic.setData(HighchartsData.doubleWeekOne);
-                    dataCondition(start, end, "维修", type, "week", "two", user.getUserId());
-                    lineBasic1.setData(HighchartsData.doubleWeekTwo);
-                    lineBasic.setCategories(HighchartsData.strWeek);
-                    lineBasic1.setCategories(HighchartsData.strWeek);
-                } else if (type.equals("day")) {
-                    dataCondition(start, end, "保养", type, "day", "one", user.getUserId());
-                    lineBasic.setData(HighchartsData.doubleDayOne);
-                    dataCondition(start, end, "维修", type, "day", "two", user.getUserId());
-                    lineBasic1.setData(HighchartsData.doubleDayTwo);
-                    lineBasic.setCategories(HighchartsData.strDay);
-                    lineBasic1.setCategories(HighchartsData.strDay);
+            if(CheckRoleUtil.checkRoles(queryRoleCustomer)) {
+                logger.info("根据年，月，季度，周，日查询所有车主用户消费统计，报表显示");
+                List<LineBasic> lineBasics = new ArrayList<LineBasic>();
+                LineBasic lineBasic = new LineBasic();
+                LineBasic lineBasic1 = new LineBasic();
+                lineBasic.setName("保养");
+                lineBasic1.setName("维修");
+                User user = SessionGetUtil.getUser();
+                if (start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")) {
+                    if (type.equals("year")) {
+                        HighchartsData.setStrYear(start, end);
+                        dataCondition(start, end, "保养", type, "year", "one", user.getUserId());
+                        lineBasic.setData(HighchartsData.doubleYearOne);
+                        dataCondition(start, end, "维修", type, "year", "two", user.getUserId());
+                        lineBasic1.setData(HighchartsData.doubleYearTwo);
+                        lineBasic.setCategories(HighchartsData.strYear);
+                        lineBasic1.setCategories(HighchartsData.strYear);
+                    } else if (type.equals("quarter")) {
+                        dataCondition(start, end, "保养", type, "quarter", "one", user.getUserId());
+                        lineBasic.setData(HighchartsData.doubleQuarterOne);
+                        dataCondition(start, end, "维修", type, "quarter", "two", user.getUserId());
+                        lineBasic1.setData(HighchartsData.doubleQuarterTwo);
+                        lineBasic.setCategories(HighchartsData.strQuarter);
+                        lineBasic1.setCategories(HighchartsData.strQuarter);
+                    } else if (type.equals("month")) {
+                        dataCondition(start, end, "保养", type, "month", "one", user.getUserId());
+                        lineBasic.setData(HighchartsData.doubleMonthOne);
+                        dataCondition(start, end, "维修", type, "month", "two", user.getUserId());
+                        lineBasic1.setData(HighchartsData.doubleMonthTwo);
+                        lineBasic.setCategories(HighchartsData.strMonth);
+                        lineBasic1.setCategories(HighchartsData.strMonth);
+                    } else if (type.equals("week")) {
+                        HighchartsData.setStrWeek(start, end);
+                        dataCondition(start, end, "保养", type, "week", "one", user.getUserId());
+                        lineBasic.setData(HighchartsData.doubleWeekOne);
+                        dataCondition(start, end, "维修", type, "week", "two", user.getUserId());
+                        lineBasic1.setData(HighchartsData.doubleWeekTwo);
+                        lineBasic.setCategories(HighchartsData.strWeek);
+                        lineBasic1.setCategories(HighchartsData.strWeek);
+                    } else if (type.equals("day")) {
+                        dataCondition(start, end, "保养", type, "day", "one", user.getUserId());
+                        lineBasic.setData(HighchartsData.doubleDayOne);
+                        dataCondition(start, end, "维修", type, "day", "two", user.getUserId());
+                        lineBasic1.setData(HighchartsData.doubleDayTwo);
+                        lineBasic.setCategories(HighchartsData.strDay);
+                        lineBasic1.setCategories(HighchartsData.strDay);
+                    }
                 }
+                lineBasics.add(lineBasic);
+                lineBasics.add(lineBasic1);
+                return lineBasics;
             }
-            lineBasics.add(lineBasic);
-            lineBasics.add(lineBasic1);
-            return lineBasics;
+            return null;
         } else{
             logger.info("Session已失效，请重新登入");
             return null;

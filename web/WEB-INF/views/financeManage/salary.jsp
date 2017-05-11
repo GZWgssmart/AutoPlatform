@@ -1,5 +1,5 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -50,9 +50,11 @@
             <th data-field="salaryTime" data-formatter="formatterDate">
                 发放时间
             </th>
+<shiro:hasAnyRoles name="companyAccounting, companyAdmin">
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
+    </shiro:hasAnyRoles>
         </tr>
         </thead>
 
@@ -84,6 +86,7 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
+<shiro:hasAnyRoles name="companyAccounting, companyAdmin">
             <a><button onclick="showAddWin()" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
@@ -93,6 +96,7 @@
             <a><button onclick="showImport()" type="button"  class="btn btn-default" >
                 <i class="glyphicon glyphicon-floppy-save"></i> 导入
             </button></a>
+    </shiro:hasAnyRoles>
             <a onclick="location.href='/salary/export'" href="javascript:;"><button type="button"  class="btn btn-default">
                 <i class="glyphicon glyphicon-floppy-open"></i> 导出
             </button></a>

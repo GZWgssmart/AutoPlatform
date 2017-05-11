@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.IncomingType;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 
 import java.util.List;
@@ -13,8 +14,8 @@ import java.util.List;
 */
 public interface IncomingTypeService extends BaseService<String, IncomingType>{
 
-    public List<IncomingType> queryPagerStatus(String status, Pager pager);
-    public int countStatus(String status);
+    public List<IncomingType> queryPagerStatus(String status, Pager pager,User user);
+    public int countStatus(String status,User user);
 
     public IncomingType queryByName(String inTypeName);
 }

@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.IncomingType;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.access.method.P;
@@ -17,8 +18,8 @@ import java.util.List;
 @Repository
 public interface IncomingTypeDAO extends BaseDAO<String, IncomingType>{
 
-    public List<IncomingType> queryPagerStatus(@Param("status")String status,@Param("pager")Pager pager);
-    public int countStatus(String status);
+    public List<IncomingType> queryPagerStatus(@Param("status")String status,@Param("pager")Pager pager,@Param("user")User user);
+    public int countStatus(@Param("status") String status,@Param("user")User user);
 
     public IncomingType queryByName(@Param("inTypeName") String inTypeName);
 

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -26,7 +27,12 @@
     <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
           type="text/css">
 </head>
-<body>
+<shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
+<body onload="adminQuery()">
+</shiro:hasAnyRoles>
+<shiro:hasAnyRoles name="companyAccounting, companyAdmin">
+<body onload="companyQuery()">
+</shiro:hasAnyRoles>
 <div class="container" style="margin-top:15px;">
     <ul class="nav nav-pills" id="myTab">
                <li  class="active"><a  data-toggle="tab" data-target="#year"   >按年查询</a></li>
@@ -45,14 +51,14 @@
                   <form id="formSearch" class="form-horizontal">
                       <div class="form-group">
                           <div class="col-sm-4">
-                              <input type="text" readonly placeholder="开始 : 可按 年 " id="start1"  name="startTime"
+                              <input type="text" readonly placeholder="请选择开始时间" id="start1"  name="startTime"
                                      class="form-control datatimepicker"/>
                           </div>
                           <div class="col-md-1">
                               <hr style="color:black"/>
                           </div>
                           <div class="col-sm-4">
-                              <input type="text" readonly placeholder="结束 : 可按 年 " id="end1" name="endTime"
+                              <input type="text" readonly placeholder="请选择结束始时间" id="end1" name="endTime"
                                      class="form-control datatimepicker"/>
                           </div>
 
@@ -68,14 +74,14 @@
                     <form  class="form-horizontal">
                         <div class="form-group"  >
                             <div class="col-sm-4">
-                                <input type="text" readonly placeholder="开始 : 可按 季度" id="start2" name="startTime"
+                                <input type="text" readonly placeholder="请选择开始时间" id="start2" name="startTime"
                                        class="form-control datatimepicker"/>
                             </div>
                             <div class="col-md-1">
                                 <hr style="color:black"/>
                             </div>
                             <div class="col-sm-4">
-                                <input type="text" readonly placeholder="结束 : 可按 季度" id="end2" name="endTime"
+                                <input type="text" readonly placeholder="请选择结束时间" id="end2" name="endTime"
                                        class="form-control datatimepicker"/>
                             </div>
 
@@ -91,14 +97,14 @@
                      <form  class="form-horizontal">
                          <div class="form-group" >
                              <div class="col-sm-4">
-                                 <input type="text" readonly placeholder="开始 : 可按 月 " id="start3" name="startTime"
+                                 <input type="text" readonly placeholder="请选择开始时间" id="start3" name="startTime"
                                         class="form-control datatimepicker"/>
                              </div>
                              <div class="col-md-1">
                                  <hr style="color:black"/>
                              </div>
                              <div class="col-sm-4">
-                                 <input type="text" readonly placeholder="结束 : 可按 月 " id="end3" name="endTime"
+                                 <input type="text" readonly placeholder="请选择结束时间" id="end3" name="endTime"
                                         class="form-control datatimepicker"/>
                              </div>
 
@@ -114,14 +120,14 @@
                      <form class="form-horizontal">
                          <div class="form-group"  >
                              <div class="col-sm-4">
-                                 <input type="text" readonly placeholder="开始 : 可按 周 " id="start4" name="startTime"
+                                 <input type="text" readonly placeholder="请选择开始时间 " id="start4" name="startTime"
                                         class="form-control datatimepicker"/>
                              </div>
                              <div class="col-md-1">
                                  <hr style="color:black"/>
                              </div>
                              <div class="col-sm-4">
-                                 <input type="text" readonly placeholder="结束 : 可按 周 " id="end4"  name="endTime"
+                                 <input type="text" readonly placeholder="请选择结束时间" id="end4"  name="endTime"
                                         class="form-control datatimepicker"/>
                              </div>
 
@@ -138,14 +144,14 @@
                   <form class="form-horizontal">
                       <div class="form-group" >
                           <div class="col-sm-4">
-                              <input type="text" readonly placeholder="开始 : 可按 日 " id="start5" name="startTime"
+                              <input type="text" readonly placeholder="请选择开始时间" id="start5" name="startTime"
                                      class="form-control datatimepicker"/>
                           </div>
                           <div class="col-md-1">
                               <hr style="color:black"/>
                           </div>
                           <div class="col-sm-4">
-                              <input type="text" readonly placeholder="结束 : 可按 日 " id="end5"  name="endTime"
+                              <input type="text" readonly placeholder="请选择结束时间" id="end5"  name="endTime"
                                      class="form-control datatimepicker"/>
                           </div>
 
