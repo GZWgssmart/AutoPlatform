@@ -153,10 +153,10 @@ public class AccessoriesSaleController {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     accessoriesSale.setAccSaleId(UUIDUtil.uuid());
                     accessoriesSaleService.insert(accessoriesSale);
-
+                    User user = SessionGetUtil.getUser();
                     int lCount = Integer.valueOf(lastCount);
 
-                    accessoriesService.updateIdle(accessoriesSale.getAccId(), lCount);
+                    accessoriesService.updateIdle(accessoriesSale.getAccId(), lCount, user);
 
                     return ControllerResult.getSuccessResult("添加成功");
 
