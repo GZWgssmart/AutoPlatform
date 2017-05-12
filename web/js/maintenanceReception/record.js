@@ -1,4 +1,3 @@
-
 var contextPath = '';
 var speedStatus;
 $(document).ready(function () {
@@ -55,91 +54,91 @@ function operateFormatter(value, row, index) {
 /** 格式化选择保养项目操作栏 */
 function formatterChoiceMaintain(value, row, index) {
     return [
-        '<button type="button" class="choiceMaintain btn btn-primary btn-sm" style="margin-left:15px;" >选择</button>'
+        '<button type="button" class="choiceMaintain btn btn-primary btn-sm">选择</button>'
     ].join('');
 }
 
 /** 格式化选择维修项目操作栏 */
 function formatterChoiceFix(value, row, index) {
     return [
-        '<button type="button" class="choiceFix btn btn-primary btn-sm" style="margin-left:15px;" >选择</button>'
+        '<button type="button" class="choiceFix btn btn-primary btn-sm">选择</button>'
     ].join('');
 }
 
 /** 点击事件监听 */
 window.operateEvents = {
-         'click .updateActive': function (e, value, row, index) {
-             $.get(contextPath + "/record/update_status?id=" + row.recordId + "&status=" + row.recordStatus,
-                 function(data){
-                     if(data.result == "success"){
-                         $('#cusTable').bootstrapTable('refresh');
-                     }else if(data.result == "fail"){
-                         swal(data.message, "", "error");
-                     } else if (data.result == "notLogin") {
-                         swal({
-                                 title: "登入失败",
-                                 text: data.message,
-                                 type: "warning",
-                                 showCancelButton: false,
-                                 confirmButtonColor: "#DD6B55",
-                                 confirmButtonText: "确认",
-                                 closeOnConfirm: true
-                             },
-                             function (isConfirm) {
-                                 if (isConfirm) {
-                                     top.location.href = "/login/show_login";
-                                 }
-                             });
-                     }
-                 },"json");
-         },
-          'click .updateInactive': function (e, value, row, index) {
-              $.get(contextPath + "/record/update_status?id=" + row.recordId + "&status=" + row.recordStatus,
-                  function(data){
-                      if(data.result == "success"){
-                          $('#cusTable').bootstrapTable('refresh');
-                      } else if(data.result == "fail"){
-                          swal(data.message, "", "error");
-                      } else if (data.result == "notLogin") {
-                          swal({
-                                  title: "登入失败",
-                                  text: data.message,
-                                  type: "warning",
-                                  showCancelButton: false,
-                                  confirmButtonColor: "#DD6B55",
-                                  confirmButtonText: "确认",
-                                  closeOnConfirm: true
-                              },
-                              function (isConfirm) {
-                                  if (isConfirm) {
-                                      top.location.href = "/login/show_login";
-                                  }
-                              });
-                      }
-                  },"json");
-          },
-          'click .showEditWin': function (e, value, row, index) {
+    'click .updateActive': function (e, value, row, index) {
+        $.get(contextPath + "/record/update_status?id=" + row.recordId + "&status=" + row.recordStatus,
+            function (data) {
+                if (data.result == "success") {
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
+                }
+            }, "json");
+    },
+    'click .updateInactive': function (e, value, row, index) {
+        $.get(contextPath + "/record/update_status?id=" + row.recordId + "&status=" + row.recordStatus,
+            function (data) {
+                if (data.result == "success") {
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
+                }
+            }, "json");
+    },
+    'click .showEditWin': function (e, value, row, index) {
 
-              var record = row;
-              $("#editForm").fill(record);
-              $("#editWin").modal('show');
-         },
-        'click .choiceMaintain': function (e, value, row, index) {
-            appointment = row;
-            setData(appointment, "appointment");
-            $('#isApp').bootstrapSwitch('state', true);
-            $("#appWin").modal('hide');
-        }
+        var record = row;
+        $("#editForm").fill(record);
+        $("#editWin").modal('show');
+    },
+    'click .choiceMaintain': function (e, value, row, index) {
+        choiceMaintainOrFixCommon("maintainWin", row);
+    },
+    'click .choiceFix': function (e, value, row, index) {
+        choiceMaintainOrFixCommon("fixWin", row);
+    }
 }
 
 function choiceMaintainOrFixCommon(winId, row) {
     var maintain = row;
     var recordId = $("#detailRecordId").val();
     $.get("/detail/query_detail?recordId=" + recordId + "&maintainId=" + maintain.maintainId,
-        function(data) {
+        function (data) {
             if (data.result == "success") { // 没有记录
                 $.get("/detail/query_acc?maintainIds=" + maintain.maintainId,
-                    function(data) {
+                    function (data) {
                         if (data.result == "success") { // 有配件，可以添加
                             $("#detailMaintainId").val(maintain.maintainId);
                             $("#detailMaintainName").val(maintain.maintainName);
@@ -188,7 +187,7 @@ function choiceMaintainOrFixCommon(winId, row) {
                         }
                     });
             }
-        },"json");
+        }, "json");
 }
 
 /** 显示编辑数据 */
@@ -242,7 +241,7 @@ function validator(formId) {
                     },
                     callback: {
                         message: "减价不能高于维修或保养的原价",
-                        callback: function(value, validator) {
+                        callback: function (value, validator) {
                             if (value <= 0) {
                                 return false;
                             } else {
@@ -407,10 +406,10 @@ function determineMaintainOrFix(tableId, winId, message) {
         var maintain = selectRow[0];
         var recordId = $("#detailRecordId").val();
         $.get("/detail/query_detail?recordId=" + recordId + "&maintainId=" + maintain.maintainId,
-            function(data) {
+            function (data) {
                 if (data.result == "success") { // 没有记录
                     $.get("/detail/query_acc?maintainIds=" + maintain.maintainId,
-                        function(data) {
+                        function (data) {
                             if (data.result == "success") { // 有配件，可以添加
                                 $("#detailMaintainId").val(maintain.maintainId);
                                 $("#detailMaintainName").val(maintain.maintainName);
@@ -459,7 +458,7 @@ function determineMaintainOrFix(tableId, winId, message) {
                             }
                         });
                 }
-            },"json");
+            }, "json");
 
     }
 }
@@ -514,7 +513,6 @@ function generateDetail() {
         }
 
 
-
         var carPlate = detail1.record.checkin.plate.plateName + "-" + detail1.record.checkin.carPlate;
         var userName = detail1.record.checkin.userName;
         var userPhone = detail1.record.checkin.userPhone;
@@ -536,7 +534,7 @@ function generateDetail() {
 /** 打印维修保养清单 */
 function printMaintainAndFix() {
 
-    var newWin=window.open('about:blank', '', '');
+    var newWin = window.open('about:blank', '', '');
     var titleHTML = document.getElementById('printDiv').innerHTML;// 拿打印div所有元素
     newWin.document.write("<html><head><title></title><link rel='stylesheet' type ='text/css' href='/css/my-table.css'></head><body>" + titleHTML + "</body></html>");
     newWin.document.location.reload();
@@ -558,7 +556,7 @@ function userConfirm() {
             closeOnConfirm: false,
             closeOnCancel: false
         },
-        function(isConfirm){
+        function (isConfirm) {
             if (isConfirm) {
                 var tableData = $('#detailTable').bootstrapTable('getData');
                 if (tableData.length > 0) {
@@ -571,9 +569,10 @@ function userConfirm() {
                             maintainIds += "," + tableData[i].maintain.maintainId;
                         }
                     }
-                    $.get("/detail/confirm?recordId=" + recordId + "&maintainIds=" + maintainIds,function(data) {
+                    $.get("/detail/confirm?recordId=" + recordId + "&maintainIds=" + maintainIds, function (data) {
                         if (data.result == "success") {
                             swal("确认成功", data.message, "success");
+                            $('#cusTable').bootstrapTable('refresh');
                             $("#searchDetailWin").modal('hide');
                         } else if (data.result == "fail") {
                             swal("确认失败", "出现了一个错误", "error");

@@ -442,7 +442,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                        <span class="glyphicon glyphicon-remove closeModal" onclick="closeAppWin()"></span>
                         <h3 class="m-t-none m-b">选择预约记录</h3>
                         <table class="table table-hover" id="appTable"
                                data-pagination="true"
@@ -522,7 +522,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                        <span class="glyphicon glyphicon-remove closeModal" onclick="closeUserWin()"></span>
                         <h3 class="m-t-none m-b">选择车主信息</h3>
                         <table class="table table-hover" id="userTable"
                                data-pagination="true"

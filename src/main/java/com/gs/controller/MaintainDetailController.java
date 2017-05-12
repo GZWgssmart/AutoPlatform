@@ -176,7 +176,7 @@ public class MaintainDetailController {
                     if (flag == 0) {
                         return ControllerResult.getSuccessResult("此维修保养记录不存在该项目，可正常添加");
                     } else {
-                        return ControllerResult.getFailResult("此维修保养记录已经存在该项目，不能再添加重复的配件");
+                        return ControllerResult.getFailResult("此维修保养记录已经存在该项目，不能添加重复的项目");
                     }
                 }
                 logger.info("判断此维修保养记录是否已经存在该项目失败，没有权限操作");
