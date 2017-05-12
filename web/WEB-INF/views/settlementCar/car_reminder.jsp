@@ -97,12 +97,12 @@
                         <option value="保养">保养</option>
                     </select>
                 </div>
-                <div class="col-sm-2">
-                    <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                </div>
+                <shiro:hasAnyRoles name="systemOrdinaryAdmin, systemSuperAdmin">
+                    <div class="col-sm-2">
+                        <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
+                        </select>
+                    </div>
+                </shiro:hasAnyRoles>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchCondition()" class="btn btn-primary">
                         查询
@@ -177,6 +177,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">结算提车</h3>
                         <form role="form" id="addForm">
                             <input type="hidden" id="addRecordId" attr="record.recordId" name="recordId"
@@ -246,6 +247,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">提车提醒</h3>
                         <form role="form" id="remindForm">
                             <input type="hidden" id="remindUserId" name="userId" class="form-control"/>

@@ -30,14 +30,14 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      * @param status
      * @return
      */
-    public List<MaintainRecord> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status, @Param("usr") User user);
+    public List<MaintainRecord> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status, @Param("user") User user);
 
     /**
      * 根据查询条件计数
      * @param record
      * @return
      */
-    public int countByCondition(@Param("record") MaintainRecord record, @Param("user") User user);
+    public int countByCondition(@Param("record") MaintainRecord record, @Param("user") User user, @Param("speedStatus") String[] speedStatus);
 
     /**
      * 根据查询条件分页查询
@@ -45,7 +45,7 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      * @param record
      * @return
      */
-    public List<MaintainRecord> queryPagerByCondition(@Param("pager") Pager pager, @Param("record") MaintainRecord record, @Param("user") User user);
+    public List<MaintainRecord> queryPagerByCondition(@Param("pager") Pager pager, @Param("record") MaintainRecord record, @Param("user") User user, @Param("speedStatus") String[] speedStatus);
 
     /**
      * 根据状态计数

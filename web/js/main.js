@@ -408,3 +408,8 @@ function gender(value, row, index) {
         return '未知'
     }
 }
+
+/** 关闭指定的win */
+function closeThisWin(winId) {
+    $("#" + winId).modal('hide');
+}

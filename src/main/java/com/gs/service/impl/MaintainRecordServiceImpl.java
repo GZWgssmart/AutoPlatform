@@ -94,11 +94,13 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
     }
 
     public int countByCondition(MaintainRecord record, User user) {
-        return maintainRecordDAO.countByCondition(record, user);
+        String[] speedStatus = record.getSpeedStatus().split(",");
+        return maintainRecordDAO.countByCondition(record, user, speedStatus);
     }
 
     public List<MaintainRecord> queryPagerByCondition(Pager pager, MaintainRecord record, User user) {
-        return maintainRecordDAO.queryPagerByCondition(pager, record, user);
+        String[] speedStatus = record.getSpeedStatus().split(",");
+        return maintainRecordDAO.queryPagerByCondition(pager, record, user, speedStatus);
     }
 
     public int countByTrackStatus(String status, User user) {

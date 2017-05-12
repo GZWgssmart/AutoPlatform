@@ -2,6 +2,8 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/bill/pager?status=ALL");
 
+    initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
+
     destoryValidator("editWin", "editForm");
 
 });
@@ -86,7 +88,8 @@ function searchCondition() {
     var userName = $("#searchUserName").val();
     var userPhone = $("#searchUserPhone").val();
     var paymentMethod = $("#searchPaymentMethod").val();
-    initTable("cusTable", "/bill/condition_pager?userName=" + userName + "&userPhone=" + userPhone + "&paymentMethod=" + paymentMethod);
+    var companyId = $("#searchCompanyId").val();
+    initTable("cusTable", "/bill/condition_pager?userName=" + userName + "&userPhone=" + userPhone + "&paymentMethod=" + paymentMethod + "&companyId=" + companyId);
 
 }
 
@@ -95,6 +98,7 @@ function closeSearchForm() {
     $("#searchUserName").val('');
     $("#searchUserPhone").val('');
     $("#searchPaymentMethod").val('all');
+    $('#searchCompanyId').html('').trigger("change");
     $("#searchDiv").hide();
     $("#showButton").show();
 }

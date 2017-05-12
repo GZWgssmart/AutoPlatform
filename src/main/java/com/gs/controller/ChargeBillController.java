@@ -100,23 +100,28 @@ public class ChargeBillController {
     @RequestMapping(value="pager",method= RequestMethod.GET)
     public Pager4EasyUI<ChargeBill> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("status") String status){
         if (SessionGetUtil.isUser()) {
-            if (CheckRoleUtil.checkRoles(queryRole) || CheckRoleUtil.checkRoles(queryRole1)) {
-                logger.info("分页查询指定状态的收费单据数据");
-                User user = SessionGetUtil.getUser();
-                Pager pager = new Pager();
-                pager.setPageNo(Integer.valueOf(pageNumber));
-                pager.setPageSize(Integer.valueOf(pageSize));
-                List<ChargeBill> chargeBillList = new ArrayList<ChargeBill>();
-                if (status.equals("ALL")) {
-                    pager.setTotalRecords(chargeBillService.count(user));
-                    chargeBillList = chargeBillService.queryByPager(pager, user);
-                } else {
-                    pager.setTotalRecords(chargeBillService.countByStatus(status, user));
-                    chargeBillList = chargeBillService.queryPagerByStatus(pager, status, user);
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole) || CheckRoleUtil.checkRoles(queryRole1)) {
+                    logger.info("分页查询指定状态的收费单据数据");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    List<ChargeBill> chargeBillList = new ArrayList<ChargeBill>();
+                    if (status.equals("ALL")) {
+                        pager.setTotalRecords(chargeBillService.count(user));
+                        chargeBillList = chargeBillService.queryByPager(pager, user);
+                    } else {
+                        pager.setTotalRecords(chargeBillService.countByStatus(status, user));
+                        chargeBillList = chargeBillService.queryPagerByStatus(pager, status, user);
+                    }
+                    return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBillList);
                 }
-                return new Pager4EasyUI<ChargeBill>(pager.getTotalRecords(), chargeBillList);
+                return null;
+            } catch (Exception e) {
+                logger.info("分页查询指定状态的收费单据数据失败，出现了一个异常");
+                return null;
             }
-            return null;
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -127,7 +132,7 @@ public class ChargeBillController {
     @RequestMapping(value = "condition_pager", method = RequestMethod.GET)
     public Pager4EasyUI<ChargeBill> queryPagerByCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
                                                        @Param("userName")String userName, @Param("userPhone")String userPhone,
-                                                       @Param("paymentMethod")String paymentMethod) {
+                                                       @Param("paymentMethod")String paymentMethod, @Param("companyId")String companyId) {
         if (SessionGetUtil.isUser()) {
             if (CheckRoleUtil.checkRoles(queryRole) || CheckRoleUtil.checkRoles(queryRole1)) {
                 logger.info("根据条件分页查询收费单据记录");
@@ -140,6 +145,7 @@ public class ChargeBillController {
                 checkin.setUserPhone(userPhone);
                 record.setCheckin(checkin);
                 chargeBill.setRecord(record);
+                chargeBill.setCompanyId(companyId);
 
                 Pager pager = new Pager();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -210,6 +216,8 @@ public class ChargeBillController {
                     incomingOutgoing.setInOutCreatedUser(loginUser.getUserId());
                     incomingOutgoing.setInOutMoney(chargeBill.getActualPayment());
                     incomingOutgoing.setCompanyId(loginUser.getCompanyId());
+
+                    chargeBill.setCompanyId(loginUser.getCompanyId());
 
                     incomingOutgoingService.insert(incomingOutgoing);
                     maintainRecordService.updatePickupTime(chargeBill.getRecordId());
@@ -285,7 +293,7 @@ public class ChargeBillController {
                     dataList.add(objs);
                 }
                 ExcelExport ex = new ExcelExport(title, rowsName, dataList, response);
-                if (chargeBills.size() <= 0) {
+                if (chargeBills.size() > 0) {
                     ex.exportData();
                 }
             }

@@ -160,20 +160,19 @@ UNIQUE KEY `plateName` (`plateName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*收费单据表*/
-
 DROP TABLE IF EXISTS `t_charge_bill`;
-
 CREATE TABLE `t_charge_bill` (
-`chargeBillId` varchar(36) NOT NULL COMMENT '收费单据编号，UUID,主键',
-`recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
-`chargeBillMoney` double(255,2) DEFAULT NULL COMMENT '收费总金额',
-`paymentMethod` varchar(20) DEFAULT NULL COMMENT '付款方式',
-`actualPayment` double(255,2) DEFAULT NULL COMMENT '实付款',
-`chargeTime` datetime DEFAULT NULL COMMENT '收费时间',
-`chargeCreatedTime` datetime DEFAULT NULL COMMENT '收费单据创建时间',
-`chargeBillDes` varchar(500) DEFAULT NULL COMMENT '收费单据描述',
-`chargeBillStatus` varchar(2) DEFAULT NULL COMMENT '收费状态,Y表示可用，N表示不可用',
-PRIMARY KEY (`chargeBillId`)
+  `chargeBillId` varchar(36) NOT NULL COMMENT '收费单据编号，UUID,主键',
+  `recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，来源于t_maintain_record表',
+  `chargeBillMoney` double(255,2) DEFAULT NULL COMMENT '收费总金额',
+  `paymentMethod` varchar(20) DEFAULT NULL COMMENT '付款方式',
+  `actualPayment` double(255,2) DEFAULT NULL COMMENT '实付款',
+  `chargeTime` datetime DEFAULT NULL COMMENT '收费时间',
+  `chargeCreatedTime` datetime DEFAULT NULL COMMENT '收费单据创建时间',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '公司的id，来源于t_company表',
+  `chargeBillDes` varchar(500) DEFAULT NULL COMMENT '收费单据描述',
+  `chargeBillStatus` varchar(2) DEFAULT NULL COMMENT '收费状态,Y表示可用，N表示不可用',
+  PRIMARY KEY (`chargeBillId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*登记表*/

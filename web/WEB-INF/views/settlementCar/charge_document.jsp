@@ -90,8 +90,12 @@
                         <option value="刷卡">刷卡</option>
                     </select>
                 </div>
-                <div class="col-sm-3">
-                </div>
+                <shiro:hasAnyRoles name="systemOrdinaryAdmin, systemSuperAdmin">
+                    <div class="col-sm-2">
+                        <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
+                        </select>
+                    </div>
+                </shiro:hasAnyRoles>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchCondition()" class="btn btn-primary">
                         查询
@@ -154,6 +158,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改收费单据</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" id="addChargeBillId" attr="chargeBill.chargeBillId" name="chargeBillId"
@@ -219,6 +224,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">
 
                         </h3>
