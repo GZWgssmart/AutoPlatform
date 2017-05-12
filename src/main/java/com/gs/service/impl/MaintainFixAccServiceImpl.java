@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaintainFixAcc;
+import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,12 +29,37 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 	public int batchDelete(List<MaintainFixAcc> list) { return maintainFixAccDAO.batchDelete(list); }
 	public int update(MaintainFixAcc maintainFixAcc) { return maintainFixAccDAO.update(maintainFixAcc); }
 	public int batchUpdate(List<MaintainFixAcc> list) { return maintainFixAccDAO.batchUpdate(list); }
-	public List<MaintainFixAcc> queryAll() { return maintainFixAccDAO.queryAll(); }
-	public List<MaintainFixAcc> queryByStatus(String status) { return maintainFixAccDAO.queryByStatus(status); }
-	public MaintainFixAcc query(MaintainFixAcc maintainFixAcc) { return maintainFixAccDAO.query(maintainFixAcc); }
-	public MaintainFixAcc queryById(String id) { return maintainFixAccDAO.queryById(id); }
-	public List<MaintainFixAcc> queryByPager(Pager pager) { return maintainFixAccDAO.queryByPager(pager); }
-	public int count() { return maintainFixAccDAO.count(); }
+
+	@Override
+	public List<MaintainFixAcc> queryAll(User user) {
+		return maintainFixAccDAO.queryAll(user);
+	}
+
+	@Override
+	public List<MaintainFixAcc> queryByStatus(String status, User user) {
+		return maintainFixAccDAO.queryByStatus(status, user);
+	}
+
+	@Override
+	public MaintainFixAcc query(MaintainFixAcc maintainFixAcc, User user) {
+		return maintainFixAccDAO.query(maintainFixAcc, user);
+	}
+
+	@Override
+	public MaintainFixAcc queryById(String id) {
+		return maintainFixAccDAO.queryById(id);
+	}
+
+	@Override
+	public List<MaintainFixAcc> queryByPager(Pager pager, User user) {
+		return maintainFixAccDAO.queryByPager(pager, user);
+	}
+
+	@Override
+	public int count(User user) {
+		return maintainFixAccDAO.count(user);
+	}
+
 	public int inactive(String id) { return maintainFixAccDAO.inactive(id); }
 	public int active(String id) { return maintainFixAccDAO.active(id); }
 

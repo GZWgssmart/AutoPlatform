@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarPlate;
+import com.gs.bean.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -29,12 +30,34 @@ public class CarPlateServiceImpl implements CarPlateService {
 	public int batchDelete(List<CarPlate> list) { return carPlateDAO.batchDelete(list); }
 	public int update(CarPlate carPlate) { return carPlateDAO.update(carPlate); }
 	public int batchUpdate(List<CarPlate> list) { return carPlateDAO.batchUpdate(list); }
-	public List<CarPlate> queryAll() { return carPlateDAO.queryAll(); }
-	public List<CarPlate> queryByStatus(String status) { return carPlateDAO.queryByStatus(status); }
-	public CarPlate query(CarPlate carPlate) { return carPlateDAO.query(carPlate); }
+
+	@Override
+	public List<CarPlate> queryAll(User user) {
+		return carPlateDAO.queryAll(user);
+	}
+
+	@Override
+	public List<CarPlate> queryByStatus(String status, User user) {
+		return carPlateDAO.queryByStatus(status, user);
+	}
+
+	@Override
+	public CarPlate query(CarPlate carPlate, User user) {
+		return carPlateDAO.query(carPlate, user);
+	}
+
 	public CarPlate queryById(String id) { return carPlateDAO.queryById(id); }
-	public List<CarPlate> queryByPager(Pager pager) { return carPlateDAO.queryByPager(pager); }
-	public int count() { return carPlateDAO.count(); }
+
+	@Override
+	public List<CarPlate> queryByPager(Pager pager, User user) {
+		return carPlateDAO.queryByPager(pager, user);
+	}
+
+	@Override
+	public int count(User user) {
+		return carPlateDAO.count(user);
+	}
+
 	public int inactive(String id) { return carPlateDAO.inactive(id); }
 	public int active(String id) { return carPlateDAO.active(id); }
 

@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarColor;
+import com.gs.bean.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -29,12 +30,34 @@ public class CarColorServiceImpl implements CarColorService {
 	public int batchDelete(List<CarColor> list) { return carColorDAO.batchDelete(list); }
 	public int update(CarColor carColor) { return carColorDAO.update(carColor); }
 	public int batchUpdate(List<CarColor> list) { return carColorDAO.batchUpdate(list); }
-	public List<CarColor> queryAll() { return carColorDAO.queryAll(); }
-	public List<CarColor> queryByStatus(String status) { return carColorDAO.queryByStatus(status); }
-	public CarColor query(CarColor carColor) { return carColorDAO.query(carColor); }
+
+	@Override
+	public List<CarColor> queryAll(User user) {
+		return carColorDAO.queryAll(user);
+	}
+
+	@Override
+	public List<CarColor> queryByStatus(String status, User user) {
+		return carColorDAO.queryByStatus(status, user);
+	}
+
+	@Override
+	public CarColor query(CarColor carColor, User user) {
+		return carColorDAO.query(carColor, user);
+	}
+
 	public CarColor queryById(String id) { return carColorDAO.queryById(id); }
-	public List<CarColor> queryByPager(Pager pager) { return carColorDAO.queryByPager(pager); }
-	public int count() { return carColorDAO.count(); }
+
+	@Override
+	public List<CarColor> queryByPager(Pager pager, User user) {
+		return carColorDAO.queryByPager(pager, user);
+	}
+
+	@Override
+	public int count(User user) {
+		return carColorDAO.count(user);
+	}
+
 	public int inactive(String id) { return carColorDAO.inactive(id); }
 	public int active(String id) { return carColorDAO.active(id); }
 

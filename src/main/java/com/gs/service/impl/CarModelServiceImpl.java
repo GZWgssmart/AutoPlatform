@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.CarModel;
+import com.gs.bean.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -29,12 +30,37 @@ public class CarModelServiceImpl implements CarModelService {
 	public int batchDelete(List<CarModel> list) { return carModelDAO.batchDelete(list); }
 	public int update(CarModel carModel) { return carModelDAO.update(carModel); }
 	public int batchUpdate(List<CarModel> list) { return carModelDAO.batchUpdate(list); }
-	public List<CarModel> queryAll() { return carModelDAO.queryAll(); }
-	public List<CarModel> queryByStatus(String status) { return carModelDAO.queryByStatus(status); }
-	public CarModel query(CarModel carModel) { return carModelDAO.query(carModel); }
-	public CarModel queryById(String id) { return carModelDAO.queryById(id); }
-	public List<CarModel> queryByPager(Pager pager) { return carModelDAO.queryByPager(pager); }
-	public int count() { return carModelDAO.count(); }
+
+	@Override
+	public List<CarModel> queryAll(User user) {
+		return carModelDAO.queryAll(user);
+	}
+
+	@Override
+	public List<CarModel> queryByStatus(String status, User user) {
+		return carModelDAO.queryByStatus(status, user);
+	}
+
+	@Override
+	public CarModel query(CarModel carModel, User user) {
+		return carModelDAO.query(carModel, user);
+	}
+
+	@Override
+	public CarModel queryById(String id) {
+		return carModelDAO.queryById(id);
+	}
+
+	@Override
+	public List<CarModel> queryByPager(Pager pager, User user) {
+		return carModelDAO.queryByPager(pager, user);
+	}
+
+	@Override
+	public int count(User user) {
+		return carModelDAO.count(user);
+	}
+
 	public int inactive(String id) { return carModelDAO.inactive(id); }
 	public int active(String id) { return carModelDAO.active(id); }
 
