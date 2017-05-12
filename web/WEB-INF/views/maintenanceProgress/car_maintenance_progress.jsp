@@ -93,6 +93,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改维修保养记录</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" attr="record.recordId" name="recordId" class="form-control"/>
@@ -139,6 +140,7 @@
             <div class="modal-body" style="padding: 0px;">
                 <div class="row">
                     <div class="col-sm-12">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">维修保养进度</h3>
                             <div class="step-header">
                                 <ul>
@@ -253,6 +255,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改维修保养记录</h3>
                         <form role="form" id="editDetailForm">
                             <input type="hidden" attr="detail.detailId" name="detailId" class="form-control"/>

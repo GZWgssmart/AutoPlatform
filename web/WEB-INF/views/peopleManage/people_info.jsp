@@ -89,6 +89,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改角色</h3>
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="user.userId" name="userId" />
@@ -119,6 +120,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加员工</h3>
                         <form role="form" id="addForm">
                             <input type="hidden" name="companyId" value="${sessionScope.user.companyId}">

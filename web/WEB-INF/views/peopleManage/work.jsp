@@ -51,7 +51,7 @@
             <th data-field="user.userName">
                 指派员工
             </th>
-            <th data-field="maintainRecord.checkin.company.companyName">
+            <th data-field="company.companyName">
                 汽修公司
             </th>
             <th data-field="workStatus" data-formatter="status">
@@ -84,6 +84,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">指派员工</h3>
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="work.workId" name="workId" />

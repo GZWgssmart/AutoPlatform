@@ -110,7 +110,7 @@
                         </li>
                     </ul>
                 </li>
-
+                <shiro:hasAnyRoles name="companyAdmin, companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, systemSuperAdmin, companyAccounting, companyBuyer, systemOrdinaryAdmin, companyEmp">
                 <li>
                     <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">车主管理</span><span
                             class="fa arrow"></span></a>
@@ -118,19 +118,31 @@
                         <li><a class="J_menuItem" href="<%=path%>/customer/customer_page">车主信息管理</a>
                     </ul>
                 </li>
+                </shiro:hasAnyRoles>
 
+                <shiro:hasAnyRoles name="companyAdmin, companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, systemSuperAdmin, companyAccounting, companyBuyer, systemOrdinaryAdmin, companyEmp">
                 <li>
                     <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">人员管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
+
+                    <shiro:hasAnyRoles name="systemOrdinaryAdmin, companyHumanManager, systemSuperAdmin, companyAdmin">
                         <li><a class="J_menuItem" href="<%=path%>/peopleManage/people_info">人员基本信息管理</a>
                         </li>
+                    </shiro:hasAnyRoles>
+
+                    <shiro:hasAnyRoles name="companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, companyAccounting, companyBuyer, companyEmp">
                         <li><a class="J_menuItem" href="<%=path%>/peopleManage/salary">工资管理</a>
                         </li>
+                    </shiro:hasAnyRoles>
+
+                        <shiro:hasAnyRoles name="companyAdmin, companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, systemSuperAdmin, companyAccounting, companyBuyer, systemOrdinaryAdmin, companyEmp">
                         <li><a class="J_menuItem" href="<%=path%>/peopleManage/work">工单查询</a>
                         </li>
+                    </shiro:hasAnyRoles>
                     </ul>
                 </li>
+                </shiro:hasAnyRoles>
 
                 <shiro:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, systemOrdinaryAdmin">
                     <li>
@@ -204,7 +216,7 @@
                         </li>
                     </ul>
                 </li>
-
+                <shiro:hasAnyRoles name="carOwner, companyReceive, companyArtificer, companyAdmin">
                 <li>
                     <a href="#"><i class="fa fa-hourglass-half"></i> <span class="nav-label">维修保养进度</span><span
                             class="fa arrow"></span></a>
@@ -213,6 +225,7 @@
                         </li>
                     </ul>
                 </li>
+                </shiro:hasAnyRoles>
 
                 <shiro:hasAnyRoles
                         name="companyAdmin, companyReceive, systemSuperAdmin, systemOrdinaryAdmin">
