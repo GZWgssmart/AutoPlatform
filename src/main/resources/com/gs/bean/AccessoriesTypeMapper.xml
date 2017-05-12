@@ -73,13 +73,13 @@
 		]]>
 	</select>
 
-	<select id="query" parameterType="accessoriesType" resultType="accessoriesType">
+	<select id="query" resultType="accessoriesType">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryById" parameterType="string" resultType="accessoriesType">
+	<select id="queryById" resultType="accessoriesType">
 		<![CDATA[
 
 		]]>
@@ -109,11 +109,8 @@
 
 	<select id="queryByCondition" resultType="list" resultMap="accessoriesTypeResultMap">
 		<![CDATA[
- 			select at.*, c.companyId, c.companyName from t_accessories_type at, t_company c where 1=1 and c.companyId = at.companyId
+ 			select at.*, c.companyId, c.companyName from t_accessories_type at, t_company c where c.companyId = at.companyId
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and at.companyId = #{user.companyId}
-		</if>
 		<if test="accessoriesType.accTypeName != null and accessoriesType.accTypeName !=''">
 			and at.accTypeName like concat('%', #{accessoriesType.accTypeName},'%')
 		</if>
@@ -122,6 +119,9 @@
 		</if>
 		<if test="accessoriesType.companyId != null and accessoriesType.companyId != '' and accessoriesType.companyId != 'null'">
 			and at.companyId = #{accessoriesType.companyId}
+		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and at.companyId = #{user.companyId}
 		</if>
 		order by at.accTypeDes desc, at.companyId
 		limit #{pager.beginIndex}, #{pager.pageSize}
@@ -149,14 +149,17 @@
 		<![CDATA[
 			select count(*) from t_accessories_type where 1 = 1
 		]]>
-		<if test="accTypeName != null and accTypeName != ''">
-			and accTypeName like concat('%',#{accTypeName},'%')
+		<if test="accessoriesType.accTypeName != null and accessoriesType.accTypeName != ''">
+			and accTypeName like concat('%',#{accessoriesType.accTypeName},'%')
 		</if>
-		<if test="accTypeDes != null and accTypeDes != ''">
-			and accTypeDes like concat('%',#{accTypeDes},'%')
+		<if test="accessoriesType.accTypeDes != null and accessoriesType.accTypeDes != ''">
+			and accTypeDes like concat('%',#{accessoriesType.accTypeDes},'%')
 		</if>
-		<if test="companyId != null and companyId != '' and companyId != 'null'">
-			and companyId = #{companyId}
+		<if test="accessoriesType.companyId != null and accessoriesType.companyId != '' and accessoriesType.companyId != 'null'">
+			and companyId = #{accessoriesType.companyId}
+		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
 		</if>
 	</select>
 

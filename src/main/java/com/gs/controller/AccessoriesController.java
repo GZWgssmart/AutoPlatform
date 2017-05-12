@@ -232,6 +232,7 @@ public class AccessoriesController {
         accessories.setAccName(accName);
         accessories.setAccTypeId(accTypeId);
         accessories.setCompanyId(companyId);
+        accessories.setAccCommodityCode(accCommodityCode);
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
