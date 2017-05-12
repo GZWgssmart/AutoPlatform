@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MessageSend;
+import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -29,20 +30,20 @@ public class MessageSendServiceImpl implements MessageSendService {
 	public int batchDelete(List<MessageSend> list) { return messageSendDAO.batchDelete(list); }
 	public int update(MessageSend messageSend) { return messageSendDAO.update(messageSend); }
 	public int batchUpdate(List<MessageSend> list) { return messageSendDAO.batchUpdate(list); }
-	public List<MessageSend> queryAll() { return messageSendDAO.queryAll(); }
-	public List<MessageSend> queryByStatus(String status) { return messageSendDAO.queryByStatus(status); }
-	public MessageSend query(MessageSend messageSend) { return messageSendDAO.query(messageSend); }
+	public List<MessageSend> queryAll(User user) { return messageSendDAO.queryAll(user); }
+	public List<MessageSend> queryByStatus(String status,User user) { return messageSendDAO.queryByStatus(status,user); }
+	public MessageSend query(MessageSend messageSend,User user) { return messageSendDAO.query(messageSend,user); }
 	public MessageSend queryById(String id) { return messageSendDAO.queryById(id); }
-	public List<MessageSend> queryByPager(Pager pager) { return messageSendDAO.queryByPager(pager); }
-	public int count() { return messageSendDAO.count(); }
+	public List<MessageSend> queryByPager(Pager pager,User user) { return messageSendDAO.queryByPager(pager,user); }
+	public int count(User user) { return messageSendDAO.count(user); }
 	public int inactive(String id) { return messageSendDAO.inactive(id); }
 	public int active(String id) { return messageSendDAO.active(id); }
 
-	public void batchUpdateBySendMsg(String[] idList, String sendMsg) {
-		messageSendDAO.batchUpdateBySendMsg(idList, sendMsg);
+	public void batchUpdateBySendMsg(String[] idList, String sendMsg, User user) {
+		messageSendDAO.batchUpdateBySendMsg(idList, sendMsg,user);
 	}
 
-	public void addMessageId(List<MessageSend> msd) {
-		messageSendDAO.addMessageId(msd);
+	public void addMessageId(List<MessageSend> msd,User user) {
+		messageSendDAO.addMessageId(msd,user);
 	}
 }

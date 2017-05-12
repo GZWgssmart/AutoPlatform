@@ -100,6 +100,10 @@
 		<![CDATA[
 		  select * from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and rem.companyId = #{user.companyId}
+		</if>
+		order by rem.remindCreatedTime desc
 		limit #{beginIndex}, #{pageSize}
 	</select>
 
@@ -107,6 +111,9 @@
 		<![CDATA[
 		  select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and rem.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<update id="inactive" parameterType="string">
@@ -123,6 +130,9 @@
 
 	<select id="countByCondition" resultType="int">
   		select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
+		<if test="user.companyId != null and user.companyId != ''">
+			and rem.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="queryPagerByCondition" resultType="list" resultMap="maintainRemindResultMap">
@@ -131,13 +141,16 @@
 			  from t_maintain_remind r,  t_checkin c, t_company cpy
 		      where 1 = 1 and c.userId = r.userId and c.companyId = cpy.companyId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and r.companyId = #{user.companyId}
+		</if>
 		<if test="remind.checkin.userName != null and remind.checkin.userName != ''">
 			and c.userName like concat('%',#{remind.checkin.userName},'%')
 		</if>
 		<if test="remind.remindType != null and remind.remindType != ''">
 			and r.remindType = #{remind.remindType}
 		</if>
-		order by r.remindCreatedTime desc
+		order by r.remindCreatedTime desc, c.companyId
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

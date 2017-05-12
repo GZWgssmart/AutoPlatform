@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaintainRemind;
+import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,22 +29,24 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 	public int batchDelete(List<MaintainRemind> list) { return maintainRemindDAO.batchDelete(list); }
 	public int update(MaintainRemind maintainRemind) { return maintainRemindDAO.update(maintainRemind); }
 	public int batchUpdate(List<MaintainRemind> list) { return maintainRemindDAO.batchUpdate(list); }
-	public List<MaintainRemind> queryAll() { return maintainRemindDAO.queryAll(); }
-	public List<MaintainRemind> queryByStatus(String status) { return maintainRemindDAO.queryByStatus(status); }
-	public MaintainRemind query(MaintainRemind maintainRemind) { return maintainRemindDAO.query(maintainRemind); }
+
+
+	public List<MaintainRemind> queryAll(User user) { return maintainRemindDAO.queryAll(user); }
+	public List<MaintainRemind> queryByStatus(String status,User user) { return maintainRemindDAO.queryByStatus(status,user); }
+	public MaintainRemind query(MaintainRemind maintainRemind,User user) { return maintainRemindDAO.query(maintainRemind,user); }
 	public MaintainRemind queryById(String id) { return maintainRemindDAO.queryById(id); }
-	public List<MaintainRemind> queryByPager(Pager pager) { return maintainRemindDAO.queryByPager(pager); }
-	public int count() { return maintainRemindDAO.count(); }
+	public List<MaintainRemind> queryByPager(Pager pager,User user) { return maintainRemindDAO.queryByPager(pager,user); }
+	public int count(User user) { return maintainRemindDAO.count(user); }
 	public int inactive(String id) { return maintainRemindDAO.inactive(id); }
 	public int active(String id) { return maintainRemindDAO.active(id); }
 
 	@Override
-	public int countByCondition(MaintainRemind remind) {
-		return maintainRemindDAO.countByCondition(remind);
+	public int countByCondition(MaintainRemind remind,User user) {
+		return maintainRemindDAO.countByCondition(remind,user);
 	}
 
 	@Override
-	public List<MaintainRemind> queryPagerByCondition(Pager pager, MaintainRemind remind) {
-		return maintainRemindDAO.queryPagerByCondition(pager, remind);
+	public List<MaintainRemind> queryPagerByCondition(Pager pager, MaintainRemind remind,User user) {
+		return maintainRemindDAO.queryPagerByCondition(pager, remind,user);
 	}
 }

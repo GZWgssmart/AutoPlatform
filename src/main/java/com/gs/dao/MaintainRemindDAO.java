@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.MaintainRemind;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -19,16 +20,18 @@ public interface MaintainRemindDAO extends BaseDAO<String, MaintainRemind>{
     /**
      * 根据查询条件计数
      * @param remind
+     * @param user
      * @return
      */
-    public int countByCondition(MaintainRemind remind);
+    public int countByCondition(@Param("remind")MaintainRemind remind,@Param("user") User user);
 
     /**
      * 根据查询条件分页查询
      * @param pager
      * @param remind
+     * @param user
      * @return
      */
-    public List<MaintainRemind> queryPagerByCondition(@Param("pager") Pager pager, @Param("remind") MaintainRemind remind);
+    public List<MaintainRemind> queryPagerByCondition(@Param("pager") Pager pager, @Param("remind") MaintainRemind remind,@Param("user") User user);
 
 }

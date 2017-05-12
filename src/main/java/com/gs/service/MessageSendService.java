@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.MessageSend;
+import com.gs.bean.User;
 
 import java.util.List;
 
@@ -12,8 +13,8 @@ import java.util.List;
 */
 public interface MessageSendService extends BaseService<String, MessageSend>{
 
-    public void batchUpdateBySendMsg( String[] idList, String sendMsg);
+    public void batchUpdateBySendMsg( String[] idList, String sendMsg,User user);
 
-    public void addMessageId(List<MessageSend> msd);
+    public void addMessageId(List<MessageSend> msd,User user);
 
 }

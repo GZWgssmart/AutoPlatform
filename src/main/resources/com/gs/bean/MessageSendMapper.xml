@@ -82,6 +82,9 @@
 		<![CDATA[
 			 select * from t_message_send s, t_checkin c where s.userId=c.userId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and s.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="queryByStatus" resultMap="messageSendResultMap" parameterType="string">
@@ -106,6 +109,9 @@
 		<![CDATA[
 		select * from t_message_send s, t_checkin c where s.userId=c.userId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and s.companyId = #{user.companyId}
+		</if>
 		limit #{beginIndex}, #{pageSize}
 	</select>
 
@@ -113,6 +119,9 @@
 		<![CDATA[
 		select count(*) from t_message_send s, t_checkin c where s.userId=c.userId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and s.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<update id="inactive" parameterType="string">

@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRecord;
 import com.gs.bean.MaintainRemind;
+import com.gs.bean.User;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
@@ -42,6 +43,10 @@ public class MessageReminderController {
 
     @RequestMapping(value = "show_MessageReminder", method = RequestMethod.GET)
     public String MessageReminder() {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("登陆已失效，请重新登入");
+            return "index/notLogin";
+        }
         logger.info("显示维修保养提醒页面");
         return "customer/maintenance_reminder";
     }
@@ -50,11 +55,16 @@ public class MessageReminderController {
     @RequestMapping(value="query_pager",method= RequestMethod.GET)
     public Pager4EasyUI<MaintainRemind> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         logger.info("分页查询所有提醒");
+        if (!SessionGetUtil.isUser()) {
+            logger.info("登陆已失效，请重新登入");
+            return null;
+        }
+        User Loginuser = SessionGetUtil.getUser();
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(maintainRemindService.count());
-        List<MaintainRemind> maintainRemindList = maintainRemindService.queryByPager(pager);
+        pager.setTotalRecords(maintainRemindService.count(Loginuser));
+        List<MaintainRemind> maintainRemindList = maintainRemindService.queryByPager(pager,Loginuser);
         return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), maintainRemindList);
     }
 
@@ -83,8 +93,9 @@ public class MessageReminderController {
             pager.setPageNo(Integer.valueOf(pageNumber));
             pager.setPageSize(Integer.valueOf(pageSize));
             List<MaintainRemind> reminds = new ArrayList<MaintainRemind>();
-            pager.setTotalRecords(maintainRemindService.countByCondition(remind));
-            reminds = maintainRemindService.queryPagerByCondition(pager, remind);
+            User LoginUser = SessionGetUtil.getUser();
+            pager.setTotalRecords(maintainRemindService.countByCondition(remind,LoginUser));
+            reminds = maintainRemindService.queryPagerByCondition(pager, remind,LoginUser);
 
             return new Pager4EasyUI<MaintainRemind>(pager.getTotalRecords(), reminds);
         } else {

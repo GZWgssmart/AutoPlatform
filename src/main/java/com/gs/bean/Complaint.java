@@ -16,8 +16,16 @@ public class Complaint{
 	private String complaintReply; 		//投诉回复内容
 	private Date complaintReplyTime; 	//投诉回复时间
 	private String complaintReplyUser;  //投诉回复人
+	private String companyId; 			//公司Id
 	private User admin; 				//管理员的User
 	private User customer;				//顾客的User
+
+	public String getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
 
 	public User getCustomer() {
 		return customer;

@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.Complaint;
+import com.gs.bean.User;
 
 /**
 *由Wjhsmart技术支持

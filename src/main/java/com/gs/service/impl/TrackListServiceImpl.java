@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.TrackList;
+import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,12 +29,12 @@ public class TrackListServiceImpl implements TrackListService {
 	public int batchDelete(List<TrackList> list) { return trackListDAO.batchDelete(list); }
 	public int update(TrackList trackList) { return trackListDAO.update(trackList); }
 	public int batchUpdate(List<TrackList> list) { return trackListDAO.batchUpdate(list); }
-	public List<TrackList> queryAll() { return trackListDAO.queryAll(); }
-	public List<TrackList> queryByStatus(String status) { return trackListDAO.queryByStatus(status); }
-	public TrackList query(TrackList trackList) { return trackListDAO.query(trackList); }
+	public List<TrackList> queryAll(User user) { return trackListDAO.queryAll(user); }
+	public List<TrackList> queryByStatus(String status,User user) { return trackListDAO.queryByStatus(status,user); }
+	public TrackList query(TrackList trackList,User user) { return trackListDAO.query(trackList,user); }
 	public TrackList queryById(String id) { return trackListDAO.queryById(id); }
-	public List<TrackList> queryByPager(Pager pager) { return trackListDAO.queryByPager(pager); }
-	public int count() { return trackListDAO.count(); }
+	public List<TrackList> queryByPager(Pager pager,User user) { return trackListDAO.queryByPager(pager,user); }
+	public int count(User user) { return trackListDAO.count(user); }
 	public int inactive(String id) { return trackListDAO.inactive(id); }
 	public int active(String id) { return trackListDAO.active(id); }
 

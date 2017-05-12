@@ -1,6 +1,8 @@
 package com.gs.dao;
 
 import com.gs.bean.Complaint;
+import com.gs.bean.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 /**
 *由Wjhsmart技术支持
@@ -13,9 +15,9 @@ public interface ComplaintDAO extends BaseDAO<String, Complaint>{
 
     /**
      * 回复更新
-     * @return
+     * @param complaint
      */
-    public void updateReply(Complaint complaint);
+    public void updateReply(@Param("complaint")Complaint complaint);
 
 
 }

@@ -1,6 +1,7 @@
 package com.gs.service;
 
 import com.gs.bean.MaintainRemind;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface MaintainRemindService extends BaseService<String, MaintainRemin
      * @param remind
      * @return
      */
-    public int countByCondition(MaintainRemind remind);
+    public int countByCondition(MaintainRemind remind,User user);
 
     /**
      * 根据查询条件分页查询
@@ -25,5 +26,5 @@ public interface MaintainRemindService extends BaseService<String, MaintainRemin
      * @param remind
      * @return
      */
-    public List<MaintainRemind> queryPagerByCondition(Pager pager, MaintainRemind remind);
+    public List<MaintainRemind> queryPagerByCondition(Pager pager, MaintainRemind remind,User user);
 }

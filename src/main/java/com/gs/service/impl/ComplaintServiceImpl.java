@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.Complaint;
+import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,12 +29,12 @@ public class ComplaintServiceImpl implements ComplaintService {
 	public int batchDelete(List<Complaint> list) { return complaintDAO.batchDelete(list); }
 	public int update(Complaint complaint) { return complaintDAO.update(complaint); }
 	public int batchUpdate(List<Complaint> list) { return complaintDAO.batchUpdate(list); }
-	public List<Complaint> queryAll() { return complaintDAO.queryAll(); }
-	public List<Complaint> queryByStatus(String status) { return complaintDAO.queryByStatus(status); }
-	public Complaint query(Complaint complaint) { return complaintDAO.query(complaint); }
+	public List<Complaint> queryAll(User user) { return complaintDAO.queryAll(user); }
+	public List<Complaint> queryByStatus(String status,User user) { return complaintDAO.queryByStatus(status,user); }
+	public Complaint query(Complaint complaint,User user) { return complaintDAO.query(complaint,user); }
 	public Complaint queryById(String id) { return complaintDAO.queryById(id); }
-	public List<Complaint> queryByPager(Pager pager) { return complaintDAO.queryByPager(pager); }
-	public int count() { return complaintDAO.count(); }
+	public List<Complaint> queryByPager(Pager pager,User user) { return complaintDAO.queryByPager(pager,user); }
+	public int count(User user) { return complaintDAO.count(user); }
 	public int inactive(String id) { return complaintDAO.inactive(id); }
 	public int active(String id) { return complaintDAO.active(id); }
 

@@ -10,6 +10,7 @@
 		<result column="complaintReply" property="complaintReply"/>
 		<result column="complaintReplyTime" property="complaintReplyTime"/>
 		<result column="complaintReplyUser" property="complaintReplyUser"/>
+		<result column="companyId" property="companyId"/>
 		<!--管理员Id-->
 		<association property="admin" javaType="com.gs.bean.User">
 			<id column="adminId" property="userId"/>
@@ -104,6 +105,9 @@
 		select c.*,u.userId as adminId,u.userName as adminName,u1.* from t_complaint c LEFT JOIN  t_user u on c.userId=u.userId  LEFT JOIN t_user u1 on
  		c.complaintReplyUser= u1.userId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
  		limit #{beginIndex}, #{pageSize}
 	</select>
 
@@ -111,6 +115,9 @@
 		<![CDATA[
 		select count(*) from t_complaint c, t_user u where c.userId=u.userId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<update id="inactive" parameterType="string">
