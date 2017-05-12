@@ -17,8 +17,8 @@ import java.util.List;
 public interface ModuleService extends BaseService<String, Module> {
 
     /**根据状态来分页*/
-    public List<Module> queryByStatusPager(String moduleStatus, Pager pager, User user);
+    public List<Module> queryByStatusPager(String moduleStatus, Pager pager);
 
     /**根据状态来统计*/
-    public int countByStatus(String moduleStatus, User user);
+    public int countByStatus(String moduleStatus);
 }

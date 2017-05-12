@@ -174,12 +174,11 @@ public class ModuleController {
         } else {
             logger.info("分页查询不可用的模块");
         }
-        User user = SessionGetUtil.getUser();
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(moduleService.countByStatus(status, user));
-        List<Module> modules = moduleService.queryByStatusPager(status, pager, user);
+        pager.setTotalRecords(moduleService.countByStatus(status));
+        List<Module> modules = moduleService.queryByStatusPager(status, pager);
         return new Pager4EasyUI<Module>(pager.getTotalRecords(), modules);
     }
 }

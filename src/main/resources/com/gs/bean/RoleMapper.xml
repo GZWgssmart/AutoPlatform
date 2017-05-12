@@ -85,9 +85,9 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="roleResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="roleResultMap">
 		<![CDATA[
-			SELECT * FROM t_role limit #{beginIndex}, #{pageSize}
+			SELECT * FROM t_role limit #{pager.beginIndex}, #{pager.pageSize}
 		]]>
 	</select>
 

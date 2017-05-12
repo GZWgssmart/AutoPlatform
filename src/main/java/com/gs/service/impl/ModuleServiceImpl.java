@@ -38,10 +38,10 @@ public class ModuleServiceImpl implements ModuleService {
 	public int count(User user) { return moduleDAO.count(user); }
 	public int inactive(String id) { return moduleDAO.inactive(id); }
 	public int active(String id) { return moduleDAO.active(id); }
-	public List<Module> queryByStatusPager(String moduleStatus, Pager pager, User user) {
-		return moduleDAO.queryByStatusPager(moduleStatus, pager, user);
+	public List<Module> queryByStatusPager(String moduleStatus, Pager pager) {
+		return moduleDAO.queryByStatusPager(moduleStatus, pager);
 	}
-	public int countByStatus(String moduleStatus, User user) {
-		return moduleDAO.countByStatus(moduleStatus, user);
+	public int countByStatus(String moduleStatus) {
+		return moduleDAO.countByStatus(moduleStatus);
 	}
 }

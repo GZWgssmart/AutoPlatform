@@ -74,13 +74,13 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="moduleResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="moduleResultMap">
 		<![CDATA[
-			select  * from t_module  limit #{beginIndex}, #{pageSize}
+			select  * from t_module  limit #{pager.beginIndex}, #{pager.pageSize}
 		]]>
 	</select>
 
-	<select id="queryByStatusPager" resultType="list" resultMap="moduleResultMap">
+	<select id="queryByStatusPager" resultMap="moduleResultMap">
 		<![CDATA[
 			select * from t_module where moduleStatus = #{moduleStatus} limit #{pager.beginIndex}, #{pager.pageSize}
 		]]>

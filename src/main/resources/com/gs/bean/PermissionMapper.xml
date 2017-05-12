@@ -68,13 +68,12 @@
         ]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="permissionResultMap"
-			parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="permissionResultMap">
 		<![CDATA[
 			select  p.*, m.moduleId, m.moduleName from t_permission p, t_module m
 			where p.moduleId = m.moduleId
 		]]>
-		limit #{beginIndex}, #{pageSize}
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
     <select id="queryByModuleId" parameterType="string" resultMap="permissionResultMap">
@@ -119,9 +118,7 @@
 
     <select id="count" resultType="int">
 		<![CDATA[
-
 			select count(*) from t_permission
-
         ]]>
 	</select>
 
