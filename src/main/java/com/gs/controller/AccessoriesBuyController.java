@@ -50,12 +50,18 @@ public class AccessoriesBuyController {
     @Resource
     private SupplyService supplyService;
 
-    // 可以看的角色：董事长、超级管理员、普通管理员
+    /**
+     * 可以看的角色
+     * 董事长、库管、采购员、超级管理员
+     */
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + ","
-            + Constants.COMPANY_BUYER + "," + Constants.SYSTEM_SUPER_ADMIN;
-
-    // 可以操作的角色：董事长、
-    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_BUYER;
+            + Constants.COMPANY_BUYER + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+    
+    /**
+     * 可以操作的角色
+     * 董事长、采购员、超级管理员
+     */
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_BUYER + "," + Constants.SYSTEM_SUPER_ADMIN;
 
     /**
      * 显示配件采购管理
@@ -69,6 +75,7 @@ public class AccessoriesBuyController {
                 logger.info("显示采购主页");
                 return "accessories/accessories_buy";
             }
+            return "error/notPermission";
         }
         logger.info("Session已失效，请重新登入");
         return "index/notLogin";
@@ -383,20 +390,27 @@ public class AccessoriesBuyController {
     @ResponseBody
     @RequestMapping(value = "query_default_count", method = RequestMethod.GET)
     public List<LineBasic> queryAll(@Param("companyId") String companyId) {
-        // if(SessionGetUtil.isUser()) {
-        logger.info("默认查询本月下单统计报表显示");
-        List<LineBasic> lineBasics = new ArrayList<LineBasic>();
-        LineBasic lineBasic = new LineBasic();
-        lineBasic.setName("下单");
-        dateDay(companyId, "count");
-        lineBasic.setData(HighchartsData.doubleDayOne);
-        lineBasic.setCategories(HighchartsData.strDay);
-        lineBasics.add(lineBasic);
-        return lineBasics;
-        /*} else{
+        if (SessionGetUtil.isUser()) {
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("默认查询本月下单统计报表显示");
+                List<LineBasic> lineBasics = new ArrayList<LineBasic>();
+                LineBasic lineBasic = new LineBasic();
+                User user = SessionGetUtil.getUser();
+                if (user.getCompanyId() != null && !user.getCompanyId().equals("")) {
+                    companyId = user.getCompanyId();
+                }
+                lineBasic.setName("下单");
+                dateDay(companyId, "count");
+                lineBasic.setData(HighchartsData.doubleDayOne);
+                lineBasic.setCategories(HighchartsData.strDay);
+                lineBasics.add(lineBasic);
+                return lineBasics;
+            }
+            return null;
+        } else {
             logger.info("Session已失效，请重新登入");
             return null;
-        }*/
+        }
 
     }
 
@@ -405,37 +419,44 @@ public class AccessoriesBuyController {
     public List<LineBasic> queryConditionCount(@Param("start") String start, @Param("end") String end,
                                                @Param("type") String type, @Param("companyId") String companyId) {
         if (SessionGetUtil.isUser()) {
-            logger.info("根据年，月，季度，周，日查询所有下单报表显示");
-            List<LineBasic> lineBasics = new ArrayList<LineBasic>();
-            LineBasic lineBasic = new LineBasic();
-            lineBasic.setName("下单");
-            if (start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")) {
-                if (type.equals("year")) {
-                    HighchartsData.setStrYear(start, end);
-                    dataCondition(start, end, "count", type, "year", "two", companyId);
-                    lineBasic.setData(HighchartsData.doubleYearTwo);
-                    lineBasic.setCategories(HighchartsData.strYear);
-                } else if (type.equals("quarter")) {
-                    dataCondition(start, end, "count", type, "quarter", "two", companyId);
-                    lineBasic.setData(HighchartsData.doubleQuarterTwo);
-                    lineBasic.setCategories(HighchartsData.strQuarter);
-                } else if (type.equals("month")) {
-                    dataCondition(start, end, "count", type, "month", "two", companyId);
-                    lineBasic.setData(HighchartsData.doubleMonthTwo);
-                    lineBasic.setCategories(HighchartsData.strMonth);
-                } else if (type.equals("week")) {
-                    HighchartsData.setStrWeek(start, end);
-                    dataCondition(start, end, "count", type, "week", "two", companyId);
-                    lineBasic.setData(HighchartsData.doubleWeekTwo);
-                    lineBasic.setCategories(HighchartsData.strWeek);
-                } else if (type.equals("day")) {
-                    dataCondition(start, end, "count", type, "day", "two", companyId);
-                    lineBasic.setData(HighchartsData.doubleDayTwo);
-                    lineBasic.setCategories(HighchartsData.strDay);
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("根据年，月，季度，周，日查询所有下单报表显示");
+                List<LineBasic> lineBasics = new ArrayList<LineBasic>();
+                LineBasic lineBasic = new LineBasic();
+                lineBasic.setName("下单");
+                User user = SessionGetUtil.getUser();
+                if (user.getCompanyId() != null && !user.getCompanyId().equals("")) {
+                    companyId = user.getCompanyId();
                 }
+                if (start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")) {
+                    if (type.equals("year")) {
+                        HighchartsData.setStrYear(start, end);
+                        dataCondition(start, end, "count", type, "year", "two", companyId);
+                        lineBasic.setData(HighchartsData.doubleYearTwo);
+                        lineBasic.setCategories(HighchartsData.strYear);
+                    } else if (type.equals("quarter")) {
+                        dataCondition(start, end, "count", type, "quarter", "two", companyId);
+                        lineBasic.setData(HighchartsData.doubleQuarterTwo);
+                        lineBasic.setCategories(HighchartsData.strQuarter);
+                    } else if (type.equals("month")) {
+                        dataCondition(start, end, "count", type, "month", "two", companyId);
+                        lineBasic.setData(HighchartsData.doubleMonthTwo);
+                        lineBasic.setCategories(HighchartsData.strMonth);
+                    } else if (type.equals("week")) {
+                        HighchartsData.setStrWeek(start, end);
+                        dataCondition(start, end, "count", type, "week", "two", companyId);
+                        lineBasic.setData(HighchartsData.doubleWeekTwo);
+                        lineBasic.setCategories(HighchartsData.strWeek);
+                    } else if (type.equals("day")) {
+                        dataCondition(start, end, "count", type, "day", "two", companyId);
+                        lineBasic.setData(HighchartsData.doubleDayTwo);
+                        lineBasic.setCategories(HighchartsData.strDay);
+                    }
+                }
+                lineBasics.add(lineBasic);
+                return lineBasics;
             }
-            lineBasics.add(lineBasic);
-            return lineBasics;
+            return null;
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -446,15 +467,22 @@ public class AccessoriesBuyController {
     @RequestMapping(value = "query_default_pay", method = RequestMethod.GET)
     public List<LineBasic> queryPay(@Param("companyId") String companyId) {
         if (SessionGetUtil.isUser()) {
-            logger.info("默认查询本月支付统计报表显示");
-            List<LineBasic> lineBasics = new ArrayList<LineBasic>();
-            LineBasic lineBasic = new LineBasic();
-            lineBasic.setName("支付");
-            dateDay(companyId, "pay");
-            lineBasic.setData(HighchartsData.doubleDayTwo);
-            lineBasic.setCategories(HighchartsData.strDay);
-            lineBasics.add(lineBasic);
-            return lineBasics;
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("默认查询本月支付统计报表显示");
+                List<LineBasic> lineBasics = new ArrayList<LineBasic>();
+                LineBasic lineBasic = new LineBasic();
+                User user = SessionGetUtil.getUser();
+                if (user.getCompanyId() != null && !user.getCompanyId().equals("")) {
+                    companyId = user.getCompanyId();
+                }
+                lineBasic.setName("支付");
+                dateDay(companyId, "pay");
+                lineBasic.setData(HighchartsData.doubleDayTwo);
+                lineBasic.setCategories(HighchartsData.strDay);
+                lineBasics.add(lineBasic);
+                return lineBasics;
+            }
+            return null;
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -467,37 +495,44 @@ public class AccessoriesBuyController {
     public List<LineBasic> queryConditionPay(@Param("start") String start, @Param("end") String end,
                                              @Param("type") String type, @Param("companyId") String companyId) {
         if (SessionGetUtil.isUser()) {
-            logger.info("根据年，月，季度，周，日查询所有支付报表显示");
-            List<LineBasic> lineBasics = new ArrayList<LineBasic>();
-            LineBasic lineBasic = new LineBasic();
-            lineBasic.setName("支付");
-            if (start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")) {
-                if (type.equals("year")) {
-                    HighchartsData.setStrYear(start, end);
-                    dataCondition(start, end, "pay", type, "year", "one", companyId);
-                    lineBasic.setData(HighchartsData.doubleYearOne);
-                    lineBasic.setCategories(HighchartsData.strYear);
-                } else if (type.equals("quarter")) {
-                    dataCondition(start, end, "pay", type, "quarter", "one", companyId);
-                    lineBasic.setData(HighchartsData.doubleQuarterOne);
-                    lineBasic.setCategories(HighchartsData.strQuarter);
-                } else if (type.equals("month")) {
-                    dataCondition(start, end, "pay", type, "month", "one", companyId);
-                    lineBasic.setData(HighchartsData.doubleMonthOne);
-                    lineBasic.setCategories(HighchartsData.strMonth);
-                } else if (type.equals("week")) {
-                    HighchartsData.setStrWeek(start, end);
-                    dataCondition(start, end, "pay", type, "week", "one", companyId);
-                    lineBasic.setData(HighchartsData.doubleWeekOne);
-                    lineBasic.setCategories(HighchartsData.strWeek);
-                } else if (type.equals("day")) {
-                    dataCondition(start, end, "pay", type, "day", "one", companyId);
-                    lineBasic.setData(HighchartsData.doubleDayOne);
-                    lineBasic.setCategories(HighchartsData.strDay);
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("根据年，月，季度，周，日查询所有支付报表显示");
+                List<LineBasic> lineBasics = new ArrayList<LineBasic>();
+                LineBasic lineBasic = new LineBasic();
+                lineBasic.setName("支付");
+                User user = SessionGetUtil.getUser();
+                if (user.getCompanyId() != null && !user.getCompanyId().equals("")) {
+                    companyId = user.getCompanyId();
                 }
+                if (start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")) {
+                    if (type.equals("year")) {
+                        HighchartsData.setStrYear(start, end);
+                        dataCondition(start, end, "pay", type, "year", "one", companyId);
+                        lineBasic.setData(HighchartsData.doubleYearOne);
+                        lineBasic.setCategories(HighchartsData.strYear);
+                    } else if (type.equals("quarter")) {
+                        dataCondition(start, end, "pay", type, "quarter", "one", companyId);
+                        lineBasic.setData(HighchartsData.doubleQuarterOne);
+                        lineBasic.setCategories(HighchartsData.strQuarter);
+                    } else if (type.equals("month")) {
+                        dataCondition(start, end, "pay", type, "month", "one", companyId);
+                        lineBasic.setData(HighchartsData.doubleMonthOne);
+                        lineBasic.setCategories(HighchartsData.strMonth);
+                    } else if (type.equals("week")) {
+                        HighchartsData.setStrWeek(start, end);
+                        dataCondition(start, end, "pay", type, "week", "one", companyId);
+                        lineBasic.setData(HighchartsData.doubleWeekOne);
+                        lineBasic.setCategories(HighchartsData.strWeek);
+                    } else if (type.equals("day")) {
+                        dataCondition(start, end, "pay", type, "day", "one", companyId);
+                        lineBasic.setData(HighchartsData.doubleDayOne);
+                        lineBasic.setCategories(HighchartsData.strDay);
+                    }
+                }
+                lineBasics.add(lineBasic);
+                return lineBasics;
             }
-            lineBasics.add(lineBasic);
-            return lineBasics;
+            return null;
         } else {
             logger.info("Session已失效，请重新登入");
             return null;

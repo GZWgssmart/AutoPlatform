@@ -44,11 +44,17 @@ public class AccessoriesSaleController {
     @Resource
     private AccessoriesService accessoriesService;
 
-    // 可以看的角色
+    /**
+     * 可以查看的角色
+     * 董事长、库管、销售员、超级管理员、普通管理员
+     */
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_SALES + ","
-            + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_REPERTORY;
+            + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_REPERTORY + "," + Constants.SYSTEM_ORDINARY_ADMIN;
 
-    // 可以操作的角色
+    /**
+     * 可以操作的角色
+     * 董事长、销售员、超级管理员
+     */
     private String editRole = Constants.COMPANY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_SALES;
 
     /**
@@ -63,8 +69,9 @@ public class AccessoriesSaleController {
                 logger.info("显示采购主页");
                 return "accessories/accessories_sale";
             }
+            return "error/notPermission";
         }
-        logger.info("Session已失效，请重新登入");
+        logger.info("Session已失效");
         return "index/notLogin";
     }
 

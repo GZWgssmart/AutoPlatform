@@ -89,7 +89,7 @@
 			select  * from t_outgoing_type ot LEFT JOIN t_company c on ot.companyId = c.companyId where  ot.outTypeStatus = #{status}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and ot.companyId = #{user.companyId}
+			and ot.companyId = #{user.companyId} 	OR ot.outTypeName = '工资支出'
 		</if>
 		 order by ot.outTypeCreatedTime Desc ,ot.companyId
 		 limit #{pager.beginIndex}, #{pager.pageSize}
@@ -100,7 +100,7 @@
 			select count(*) from t_outgoing_type where outTypeStatus = #{status}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+			and companyId = #{user.companyId} 	OR outTypeName = '工资支出'
 		</if>
 	</select>
 
@@ -113,23 +113,24 @@
 
 
 
-	<select id="queryByPager" resultType="list" resultMap="outgoingTypeResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="outgoingTypeResultMap" >
 		<![CDATA[
-			select  * from t_outgoing_type ot LEFT JOIN t_company c on ot.companyId = c.companyId
+			select  * from t_outgoing_type ot LEFT JOIN t_company c on ot.companyId = c.companyId where 1 = 1
+
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and ot.companyId = #{user.companyId}
+			and ot.companyId = #{user.companyId} 	OR ot.outTypeName = '工资支出'
 		</if>
 		order by ot.outTypeCreatedTime Desc ,ot.companyId
-		limit #{beginIndex}, #{pageSize}
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(*) from t_outgoing_type
+			select count(*) from t_outgoing_type where 1 = 1
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId} 	OR outTypeName = '工资支出'
 		</if>
 	</select>
 

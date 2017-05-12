@@ -245,7 +245,7 @@
                         </li>
                     </ul>
                 </li>
-
+            <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
                 <li>
                     <a href="#"><i class="glyphicon glyphicon-usd"></i> <span class="nav-label">财务管理</span><span
                             class="fa arrow"></span></a>
@@ -262,7 +262,8 @@
                         </li>
                     </ul>
                 </li>
-
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
                 <li>
                     <a href="#"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">报表统计</span><span
                             class="fa arrow"></span></a>
@@ -279,7 +280,7 @@
                         </li>
                     </ul>
                 </li>
-
+            </shiro:hasAnyRoles>
                 <li>
                     <a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         <span class="nav-label">系统管理</span><span

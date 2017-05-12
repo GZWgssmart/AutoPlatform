@@ -101,14 +101,22 @@ function isGraphics(){
 
 var companyId='';
 $(function () {
-    $("#checkWin").modal('show');
-    validatorCompany();
-    initSelect2("company", "请选择公司", "/company/company_all", "565");
-    destoryValidator("checkWin","checkForm");
+
     initDateTime("datatimepicker");
     initTab();
     isGraphics();
 });
+
+function adminQuery(){
+    $("#checkWin").modal('show');
+    validatorCompany();
+    initSelect2("company", "请选择公司", "/company/company_all", "565");
+    destoryValidator("checkWin","checkForm");
+}
+
+function companyQuery(){
+    getColumnarChart("columnar", "/accessoriesBuy/query_default_count", tempData,"default","下单本月统计");
+}
 
 function showCompany(){
     validatorCompany();
@@ -147,14 +155,23 @@ function search(count){
 
 
 function validator( start, end, type,text){
-    if($("#spans").text() != ''){
-        if(start != '' && end != ''){
-            getLineBasicChart("columnar", "/accessoriesBuy/query_condition_count?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
+
+    if($("#span").text()== 'admin'){
+        if($("#spans").text() != ''){
+            if(start != '' && end != ''){
+                getLineBasicChart("columnar", "/accessoriesBuy/query_condition_count?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
+            }else{
+                getLineBasicChart("columnar", "/accessoriesBuy/query_default_count?companyId="+companyId, tempData,"default","下单单本月统计");
+            }
         }else{
-            getLineBasicChart("columnar", "/accessoriesBuy/query_default_count?companyId="+companyId, tempData,"default","员工工单本月统计");
+            showCompany();
         }
-    }else{
-        showCompany();
+    }else if($("#span").text()== 'company'){
+        if(start != '' && end != ''){
+            getColumnarChart("columnar", "/accessoriesBuy/query_condition_count?start=" + start +"&end=" + end + "&type=" + type, tempData,type,text);
+        }else{
+            getColumnarChart("columnar", "/accessoriesBuy/query_default_count", tempData,"default","下单本月统计");
+        }
     }
 }
 

@@ -52,9 +52,6 @@
 			VALUES
 				(#{userId}, #{userName}, #{userNickname}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userSalary}, #{userIdentity}, now(), #{companyId}, 'Y', #{qqOpenId}, #{weiboOpenId}, #{wechatOpenId}, #{userDes}, #{userBirthday}, #{userLoginedTime})
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
-		</if>
 	</insert>
 
 
@@ -127,7 +124,7 @@
 			select * from t_role r WHERE r.roleName like concat('company', '%')
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+			and r.companyId = #{user.companyId}
 		</if>
 	</select>
 
@@ -211,16 +208,16 @@
 	</select>
 	<select id="queryCustomerPager" resultType="list" resultMap="userResultMap">
 		<![CDATA[
-			SELECT * FROM t_user u
+			SELECT u.* FROM t_user u
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName = 'carOwner'
-			ORDER BY userCreatedTime Desc
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+			and u.companyId = #{user.companyId}
 		</if>
-		limit #{pager.beginIndex}, #{pageSize}
+		ORDER BY userCreatedTime Desc
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="queryPeoplePager" resultType="list" resultMap="userResultMap">
@@ -233,8 +230,8 @@
 			AND u.companyId = #{companyId}
 			ORDER BY userCreatedTime Desc
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+		<if test="u.companyId != null and u.companyId != ''">
+			and u.companyId = #{u.companyId}
 		</if>
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
@@ -280,7 +277,7 @@
 			WHERE r.roleName LIKE CONCAT('carOwner')
 		]]>
 		<if test="companyId != null and companyId != ''">
-			and c.companyId = #{user.companyId}
+			and companyId = #{companyId}
 		</if>
 	</select>
 
@@ -293,8 +290,8 @@
 			WHERE r.roleName like concat('company', '%')
 			AND u.companyId = #{companyId}
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 	</select>
 

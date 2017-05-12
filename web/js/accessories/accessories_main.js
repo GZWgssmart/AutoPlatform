@@ -69,3 +69,12 @@ function enableSwitch(modalId, switchId) {
         $("#" + switchId).bootstrapSwitch("state", true);
     });
 }
+
+function closeSHForm() {
+    $("#formSearch").hide();
+}
+
+function showSHForm() {
+    $("#formSearch").show();
+    $("#searchDiv").show();
+}

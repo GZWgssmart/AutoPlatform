@@ -199,11 +199,12 @@ public class IncomingOutgoingController {
             if(CheckRoleUtil.checkRoles(queryRole)) {
                 if(CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("默认查询本月收支记录报表显示");
-                    User user = SessionGetUtil.getUser();
+
                     List<LineBasic> lineBasics = new ArrayList<LineBasic>();
                     LineBasic lineBasic = new LineBasic();
                     LineBasic lineBasic1 = new LineBasic();
                     lineBasic.setName("支出");
+                    User user = SessionGetUtil.getUser();
                     if(user.getCompanyId() != null && !user.getCompanyId().equals("")){
                         companyId = user.getCompanyId();
                     }
@@ -239,6 +240,10 @@ public class IncomingOutgoingController {
                 LineBasic lineBasic1 = new LineBasic();
                 lineBasic.setName("支出");
                 lineBasic1.setName("收入");
+                User user = SessionGetUtil.getUser();
+                if(user.getCompanyId() != null && !user.getCompanyId().equals("")){
+                    companyId = user.getCompanyId();
+                }
                 if (start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")) {
                     if (type.equals("year")) {
                         HighchartsData.setStrYear(start, end);

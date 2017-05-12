@@ -28,6 +28,6 @@ public interface SalaryDAO extends BaseDAO<String, Salary>{
     * 条件查询
     * */
     public List<Salary> queryByPagerSearch(@Param("pager")Pager pager, @Param("salary")Salary salary,@Param("user")User user);
-    public int countSearch(Salary salary,@Param("user")User user);
+    public int countSearch(@Param("salary")Salary salary,@Param("user")User user);
 
 }

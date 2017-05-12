@@ -39,25 +39,25 @@
         <thead>
         <tr>
             <th data-field="id" data-checkbox="true"></th>
-            <th  data-field="accName" data-sortable="true">
+            <th data-field="accName" data-sortable="true">
                 名称
             </th>
-            <th data-field="accTotal" >
+            <th data-field="accTotal">
                 数量
             </th>
-            <th data-field="accPrice" >
+            <th data-field="accPrice">
                 价格
             </th>
-            <th data-field="accDes" >
+            <th data-field="accDes">
                 描述
             </th>
-            <th data-field="accCommodityCode" >
+            <th data-field="accCommodityCode">
                 商品条码
             </th>
-            <th data-field="accUnit" >
+            <th data-field="accUnit">
                 计量单位
             </th>
-            <th data-field="accIdle" >
+            <th data-field="accIdle">
                 可用数量
             </th>
             <th data-field="accSalePrice">
@@ -69,19 +69,19 @@
             <th data-field="accBuyedTime" data-formatter="formatterDate">
                 最近一次购买时间
             </th>
-            <th data-field="supply.supplyName" >
+            <th data-field="supply.supplyName">
                 配件供应商
             </th>
             <th data-field="accCreatedTime" data-formatter="formatterDate">
                 创建时间
             </th>
-            <th data-field="accessoriesType.accTypeName" >
+            <th data-field="accessoriesType.accTypeName">
                 所属分类
             </th>
-            <th data-field="company.companyName" >
+            <th data-field="company.companyName">
                 所属公司
             </th>
-            <th data-field="accStatus" data-formatter="status" >
+            <th data-field="accStatus" data-formatter="status">
                 状态
             </th>
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
@@ -92,10 +92,11 @@
         <form id="formSearch" class="form-horizontal">
             <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
                 <div class="col-sm-2" style="margin-left: -15px;">
-                    <input type="text" id="searchAccName" name="accName" class="form-control" placeholder="请输入配件名称" >
+                    <input type="text" id="searchAccName" name="accName" class="form-control" placeholder="请输入配件名称">
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" id="searchAccCommodityCode" name="accCommodityCode" class="form-control" placeholder="请输入商品条码" >
+                    <input type="text" id="searchAccCommodityCode" name="accCommodityCode" class="form-control"
+                           placeholder="请输入商品条码">
                 </div>
                 <div class="col-sm-2">
                     <select class="js-example-tags form-control company" id="searchCompanyId" name="companyId">
@@ -117,9 +118,7 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
-        </div>
-        </tbody>
-        <!--
+            <!--
             <a>
                 <button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                     <i class="glyphicon glyphicon-plus"></i> 添加
@@ -132,17 +131,17 @@
             </a>
             -->
             <a>
-                <button onclick="queryStatus('Y')" type="button" class="btn btn-default" >
+                <button onclick="queryStatus('Y')" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查可用模块
                 </button>
             </a>
             <a>
-                <button onclick="queryStatus('N')" type="button" class="btn btn-default" >
+                <button onclick="queryStatus('N')" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查不可用模块
                 </button>
             </a>
             <a>
-                <button onclick="queryAll()" type="button" class="btn btn-default" >
+                <button onclick="queryAll()" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查询全部
                 </button>
             </a>
@@ -153,7 +152,6 @@
             </a>
         </div>
         </tbody>
-
     </table>
 </div>
 
@@ -168,11 +166,11 @@
                         <form role="form" id="addForm">
                             <div class="form-group">
                                 <label class="control-label">名称：</label>
-                                <input type="text"  name="accName" class="form-control"/>
+                                <input type="text" name="accName" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">数量：</label>
-                                <input type="text"  name="accTotal" class="form-control"/>
+                                <input type="text" name="accTotal" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">价格：</label>
@@ -181,7 +179,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">描述：</label>
-                                <textarea name="accDes" cols="20" rows="5" class="form-control" ></textarea>
+                                <textarea name="accDes" cols="20" rows="5" class="form-control"></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">商品条码：</label>
@@ -205,7 +203,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">最近一次领料时间：</label>
-                                <input size="16" type="text" name="accUsedTime" readonly class="form_datetime form-control datetimepicker" id="accUsedTime">
+                                <input size="16" type="text" name="accUsedTime" readonly
+                                       class="form_datetime form-control datetimepicker" id="accUsedTime">
                             </div>
                             <div class="form-group">
                                 <label class="control-label">最近一次购买时间：</label>
@@ -214,15 +213,18 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">供应商：</label>
-                                <select id="addSupply" class="js-example-tags form-control acc_supply" name="supplyId"></select>
+                                <select id="addSupply" class="js-example-tags form-control acc_supply"
+                                        name="supplyId"></select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">所属分类：</label>
-                                <select id="addAccessoriesType" class="js-example-tags form-control acc_accessoriesType" name="accTypeId"></select>
+                                <select id="addAccessoriesType" class="js-example-tags form-control acc_accessoriesType"
+                                        name="accTypeId"></select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">所属公司：</label>
-                                <select id="addCompany" class="js-example-tags form-control acc_company" name="companyId"></select>
+                                <select id="addCompany" class="js-example-tags form-control acc_company"
+                                        name="companyId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
@@ -249,23 +251,25 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">修改供应商</h3>
-                        <form role="form" id="editForm" >
-                            <input type="hidden" attr="accessories.accId" name="accId" id = "accId"/>
+                        <form role="form" id="editForm">
+                            <input type="hidden" attr="accessories.accId" name="accId" id="accId"/>
                             <div class="form-group">
                                 <label class="control-label">名称：</label>
-                                <input type="text" attr="accessories.accName"  name="accName" class="form-control"/>
+                                <input type="text" attr="accessories.accName" name="accName" class="form-control"/>
                                 <label class="control-label">数量：</label>
-                                <input type="text"  attr="accessories.accTotal" name="accTotal" class="form-control"/>
+                                <input type="text" attr="accessories.accTotal" name="accTotal" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">价格：</label>
                                 <input type="text" attr="accessories.accPrice" name="accPrice" class="form-control"/>
                                 <label class="control-label">描述：</label>
-                                <textarea attr="accessories.accDes" name="accDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>
+                                <textarea attr="accessories.accDes" name="accDes" type="textarea" cols="20" rows="5"
+                                          class="form-control"></textarea>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">商品条码：</label>
-                                <input type="text" attr="accessories.accCommodityCode" name="accCommodityCode" class="form-control"/>
+                                <input type="text" attr="accessories.accCommodityCode" name="accCommodityCode"
+                                       class="form-control"/>
                                 <label class="control-label">计量单位：</label>
                                 <input type="text" attr="accessories.accUnit" name="accUnit" class="form-control"/>
                             </div>
@@ -273,32 +277,40 @@
                                 <label class="control-label">可用数量：</label>
                                 <input type="text" attr="accessories.accIdle" name="accIdle" class="form-control"/>
                                 <label class="control-label">售价：</label>
-                                <input type="text" attr="accessories.accSalePrice"  name="accSalePrice" class="form-control"/>
+                                <input type="text" attr="accessories.accSalePrice" name="accSalePrice"
+                                       class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">最近一次领料时间：</label>
-                                <input id="editUsedTime" attr="accessories.accUsedTime" name="accUsedTime" class="form_datetime form-control datetimepicker1"/>
+                                <input id="editUsedTime" attr="accessories.accUsedTime" name="accUsedTime"
+                                       class="form_datetime form-control datetimepicker1"/>
 
                                 <label class="control-label">最近一次购买：</label>
-                                <input id="editBuyedTime" attr="accessories.accBuyedTime"  name="accBuyedTime" class="form_datetime form-control datetimepicker"/>
+                                <input id="editBuyedTime" attr="accessories.accBuyedTime" name="accBuyedTime"
+                                       class="form_datetime form-control datetimepicker"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">供应商：</label>
-                                <select id="editSupply" class="js-example-tags form-control acc_supply" name="supplyId"></select>
+                                <select id="editSupply" class="js-example-tags form-control acc_supply"
+                                        name="supplyId"></select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">配件分类：</label>
-                                <select id="editAccessoriesType" class="js-example-tags form-control acc_accessoriesType" name="accTypeId"></select>
+                                <select id="editAccessoriesType"
+                                        class="js-example-tags form-control acc_accessoriesType"
+                                        name="accTypeId"></select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">所属公司：</label>
-                                <select id="editCompany" class="js-example-tags form-control acc_company" name="companyId"></select>
+                                <select id="editCompany" class="js-example-tags form-control acc_company"
+                                        name="companyId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="editButton" class="btn btn-primary" value="修改" onclick="edit()">
+                                <input type="button" id="editButton" class="btn btn-primary" value="修改"
+                                       onclick="edit()">
                                 </input>
                             </div>
                         </form>

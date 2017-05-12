@@ -104,10 +104,6 @@ function isGraphics(){
 
 var companyId='';
 $(function () {
-    $("#checkWin").modal('show');
-    validatorCompany();
-    initSelect2("company", "请选择公司", "/company/company_all", "565");
-    destoryValidator("checkWin","checkForm");
     initDateTime("datatimepicker");
     initTab();
     isGraphics();
@@ -118,7 +114,16 @@ function showCompany(){
     $("#checkWin").modal('show');
 }
 
+function adminQuery(){
+    $("#checkWin").modal('show');
+    validatorCompany();
+    initSelect2("company", "请选择公司", "/company/company_all", "565");
+    destoryValidator("checkWin","checkForm");
+}
 
+function companyQuery(){
+    getColumnarChart("columnar", "/incomingOutgoing/query_default", tempData,"default","收入与支出本月统计");
+}
 
 function search(count){
     if(count == 1){
@@ -152,17 +157,23 @@ function search(count){
 
 
 function validator( start, end, type,text){
-    if($("#spans").text() != ''){
-        if(start != '' && end != ''){
-            getColumnarChart("columnar", "/incomingOutgoing/query_condition?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
+    if($("#span").text()== 'admin'){
+        if($("#spans").text() != ''){
+            if(start != '' && end != ''){
+                getColumnarChart("columnar", "/incomingOutgoing/query_condition?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
+            }else{
+                getColumnarChart("columnar", "/incomingOutgoing/query_default?companyId="+companyId, tempData,"default","收入与支出本月统计");
+            }
         }else{
-            getColumnarChart("columnar", "/incomingOutgoing/query_default?companyId="+companyId, tempData,"default","收入与支出本月统计");
+            showCompany();
         }
-    }else{
-        showCompany();
+    }else if($("#span").text()== 'company'){
+        if(start != '' && end != ''){
+            getColumnarChart("columnar", "/incomingOutgoing/query_condition?start=" + start +"&end=" + end + "&type=" + type, tempData,type,text);
+        }else{
+            getColumnarChart("columnar", "/incomingOutgoing/query_default", tempData,"default","收入与支出本月统计");
+        }
     }
-
-
 }
 
 function switchsValidator(){

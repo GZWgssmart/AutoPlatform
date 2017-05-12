@@ -193,7 +193,7 @@
 	</select>
 
 
-	<select id="queryByPager" resultType="list" resultMap="incomingOutgoingResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="incomingOutgoingResultMap" >
 		<![CDATA[
 			select io.*,i.inTypeId as inType_id, i.inTypeName,o.outTypeId as outType_id,o.outTypeName,u.userId ,
             u.userName,c.companyName,c.companyId as company_id  from t_incoming_outgoing io
@@ -206,15 +206,15 @@
 			and io.companyId = #{user.companyId}
 		</if>
 				order by io.inOutCreatedTime Desc , io.companyId
-		limit #{beginIndex}, #{pageSize}
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(*) from t_incoming_outgoing
+			select count(*) from t_incoming_outgoing where 1 = 1
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 	</select>
 
@@ -244,10 +244,10 @@
 		<![CDATA[
 			select count(*) from t_incoming_outgoing where 1 = 1
 		]]>
-		<if test="inOutType ==1">
+		<if test="incomingOutgoing.inOutType ==1">
 			and outTypeId is  null
 		</if>
-		<if test="inOutType ==2">
+		<if test="incomingOutgoing.inOutType ==2">
 			and inTypeId is  null
 		</if>
 		<if test="user.companyId != null and user.companyId != ''">

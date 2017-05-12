@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -26,7 +27,14 @@
     <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
           type="text/css">
 </head>
-<body>
+<shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
+<body onload="adminQuery()">
+<span id="span" hidden>admin</span>
+</shiro:hasAnyRoles>
+<shiro:hasAnyRoles name="companyBuyer, companyAdmin">
+<body onload="companyQuery()">
+<span id="span" hidden>company</span>
+</shiro:hasAnyRoles>
 <div class="container" style="margin-top:15px;">
     <ul class="nav nav-pills" id="myTab">
         <li  class="active"><a  data-toggle="tab" data-target="#year"   >按年查询</a></li>
@@ -34,11 +42,13 @@
         <li><a  data-toggle="tab" data-target="#month">按月查询</a></li>
         <li><a  data-toggle="tab"data-target="#week">按周查询</a></li>
         <li><a  data-toggle="tab"data-target="#day">按日查询</a></li>
+<shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
         <li><a  data-toggle="tab" onclick="showCompany()">选择公司</a></li>
         <li class="disabled" ><a id="spans" href ="javascript:return false;"></a></li>
         <div class="form-group" style="width: auto; display: inherit;">
             <input type="checkbox" id="isGraphics" name="isGraphics">
         </div>
+    </shiro:hasAnyRoles>
     </ul>
     <div class="tab-content" style="margin-top:10px;">
         <div class="tab-pane  fade in active" id="year">

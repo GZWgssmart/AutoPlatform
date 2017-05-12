@@ -87,7 +87,7 @@ public class IncomingTypeController {
             if(CheckRoleUtil.checkRoles(editRole)) {
                 logger.info("添加收入类型");
                 User user = SessionGetUtil.getUser();
-                user.setCompanyId(user.getCompanyId());
+                incomingType.setCompanyId(user.getCompanyId());
                 incomingTypeService.insert(incomingType);
                 return ControllerResult.getSuccessResult("添加收入类型成功");
             }

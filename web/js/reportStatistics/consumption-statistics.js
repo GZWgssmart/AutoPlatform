@@ -3,7 +3,7 @@ var tempData = {
         type: 'column'
     },
     title: {
-        text: '收入与支出本月统计'
+        text: '维修保养消费本月统计'
     },
     yAxis: {
         min: 0,
