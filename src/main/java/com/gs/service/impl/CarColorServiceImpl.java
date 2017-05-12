@@ -30,53 +30,33 @@ public class CarColorServiceImpl implements CarColorService {
 	public int batchDelete(List<CarColor> list) { return carColorDAO.batchDelete(list); }
 	public int update(CarColor carColor) { return carColorDAO.update(carColor); }
 	public int batchUpdate(List<CarColor> list) { return carColorDAO.batchUpdate(list); }
-
-	@Override
 	public List<CarColor> queryAll(User user) {
 		return carColorDAO.queryAll(user);
 	}
-
-	@Override
 	public List<CarColor> queryByStatus(String status, User user) {
 		return carColorDAO.queryByStatus(status, user);
 	}
-
-	@Override
 	public CarColor query(CarColor carColor, User user) {
 		return carColorDAO.query(carColor, user);
 	}
-
 	public CarColor queryById(String id) { return carColorDAO.queryById(id); }
-
-	@Override
 	public List<CarColor> queryByPager(Pager pager, User user) {
 		return carColorDAO.queryByPager(pager, user);
 	}
-
-	@Override
 	public int count(User user) {
 		return carColorDAO.count(user);
 	}
-
 	public int inactive(String id) { return carColorDAO.inactive(id); }
 	public int active(String id) { return carColorDAO.active(id); }
-
-	@Override
 	public List<CarColor> queryByColorPager(String status,Pager pager) {
 		return carColorDAO.queryByColorPager(status, pager);
 	}
-
-	@Override
 	public int statusCount(String status) {
 		return carColorDAO.statusCount(status);
 	}
-
-	@Override
-	public List<CarColor> searchByPager(@Param("colorName") String colorName, @Param("pager") Pager pager) {
+	public List<CarColor> searchByPager(String colorName,Pager pager) {
 		return carColorDAO.searchByPager(colorName, pager);
 	}
-
-	@Override
 	public int searchCount(String colorName) {
 		return carColorDAO.searchCount(colorName);
 	}

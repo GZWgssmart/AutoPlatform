@@ -59,7 +59,6 @@ public class CarBrandServiceImpl implements CarBrandService {
 		return count(user);
 	}
 
-
 	public int inactive(String id) { return carBrandDAO.inactive(id); }
 	public int active(String id) { return carBrandDAO.active(id); }
 

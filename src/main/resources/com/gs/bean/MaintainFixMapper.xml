@@ -85,34 +85,32 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="maintainFixResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="maintainFixResultMap">
 		<![CDATA[
 			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '维修'
-			 <if test="user.companyId != null and user.companyId != ''">
-				and c.companyId = #{user.companyId}
-			</if>
-			 limit #{pager.beginIndex}, #{pager.pageSize}
+
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
 
 	</select>
 
-	<select id="queryBymaintainPager" resultType="list" resultMap="maintainFixResultMap" parameterType="com.gs.common.bean.Pager">
-		<![CDATA[
+	<select id="queryBymaintainPager" resultType="list" resultMap="maintainFixResultMap">
 			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '保养'
-			<if test="c.companyId != null and user.companyId != ''">
-				and c.companyId = #{user.companyId}
+			<if test="user.companyId != null and user.companyId != ''">
+				and c.companyId = #{companyId}
 			</if>
 			limit #{pager.beginIndex}, #{pager.pageSize}
-		]]>
-
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
 			select count(*) from t_maintain_fix where maintainOrFix = "维修"
 		]]>
-		<if test="companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 	</select>
 
@@ -120,8 +118,8 @@
 		<![CDATA[
 			select count(*) from t_maintain_fix where maintainOrFix = "保养"
 		]]>
-		<if test="companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 	</select>
 

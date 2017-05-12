@@ -84,7 +84,7 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="carModelResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="carModelResultMap">
 		<![CDATA[
 			select brand.brandName,brand.brandId,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId order by brand.brandName ASC limit #{beginIndex}, #{pageSize}
 		]]>
@@ -96,7 +96,7 @@
 		]]>
 	</select>
 
-	<select id="searchByPager" resultType="list" resultMap="carModelResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="searchByPager" resultType="list" resultMap="carModelResultMap">
 		select brand.brandName,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId
 		<if test="brandId != null and brandId != ''">
 			and brand.brandId = #{brandId}
@@ -123,7 +123,7 @@
 		]]>
 	</update>
 
-	<select id="queryByModelStatusPager" resultType="list" resultMap="carModelResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByModelStatusPager" resultType="list" resultMap="carModelResultMap">
 		<![CDATA[
 			select brand.brandName,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId and model.modelStatus = #{status} limit #{pager.beginIndex}, #{pager.pageSize}
 		]]>

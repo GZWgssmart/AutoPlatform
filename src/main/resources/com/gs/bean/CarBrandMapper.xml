@@ -66,16 +66,18 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="carBrandResultMap" parameterType="com.gs.common.bean.Pager">
-		select * from t_car_brand order by brandName ASC limit #{beginIndex}, #{pageSize}
+	<select id="queryByPager" resultType="list" resultMap="carBrandResultMap">
+		select * from t_car_brand order by brandName ASC limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
-	<select id="searchByPager" resultType="list" resultMap="carBrandResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="searchByPager" resultType="list" resultMap="carBrandResultMap">
 		select * from t_car_brand where 1 = 1 and brandName like concat('%', #{brandName}, '%') order by brandName desc limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
+
 	<select id="count" resultType="int">
 		select count(brandId) from t_car_brand
 	</select>
+
 	<select id="searchCount" resultType="int">
 		select count(brandId) from t_car_brand where 1 = 1 and brandName like concat('%',#{brandName},'%')
 	</select>
@@ -87,17 +89,19 @@
 	<update id="active" parameterType="string">
 		update t_car_brand set brandStatus= 'Y' where brandId = #{brandId}
 	</update>
+
 	<select id="queryNameById" parameterType="string" resultType="String">
 		<![CDATA[
 			select brandName from t_car_brand where brandId = #{brandId}
 		]]>
 	</select>
 
-	<select id="queryByBrandPager" resultType="list" resultMap="carBrandResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByBrandPager" resultType="list" resultMap="carBrandResultMap">
 		select * from t_car_brand  where brandStatus = #{status} limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="statusCount" resultType="int">
 		select count(brandId) from t_car_brand where brandStatus = #{status}
 	</select>
+
 </mapper>

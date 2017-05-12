@@ -30,63 +30,40 @@ public class CarModelServiceImpl implements CarModelService {
 	public int batchDelete(List<CarModel> list) { return carModelDAO.batchDelete(list); }
 	public int update(CarModel carModel) { return carModelDAO.update(carModel); }
 	public int batchUpdate(List<CarModel> list) { return carModelDAO.batchUpdate(list); }
-
-	@Override
 	public List<CarModel> queryAll(User user) {
 		return carModelDAO.queryAll(user);
 	}
-
-	@Override
 	public List<CarModel> queryByStatus(String status, User user) {
 		return carModelDAO.queryByStatus(status, user);
 	}
-
-	@Override
 	public CarModel query(CarModel carModel, User user) {
 		return carModelDAO.query(carModel, user);
 	}
-
-	@Override
 	public CarModel queryById(String id) {
 		return carModelDAO.queryById(id);
 	}
-
-	@Override
 	public List<CarModel> queryByPager(Pager pager, User user) {
 		return carModelDAO.queryByPager(pager, user);
 	}
-
-	@Override
 	public int count(User user) {
 		return carModelDAO.count(user);
 	}
-
 	public int inactive(String id) { return carModelDAO.inactive(id); }
 	public int active(String id) { return carModelDAO.active(id); }
-
 	public List<CarModel> queryByBrandId(String brandId) {
 		return carModelDAO.queryByBrandId(brandId);
 	}
-
-	@Override
 	public List<CarModel> queryByModelStatusPager(String status,Pager pager) {
 		return carModelDAO.queryByModelStatusPager(status, pager);
 	}
-
-	@Override
 	public int statusCount(String status) {
 		return carModelDAO.statusCount(status);
 	}
-
-	@Override
 	public List<CarModel> searchByPager(String brandId,Pager pager) {
 		return carModelDAO.searchByPager(brandId, pager);
 	}
-
-	@Override
 	public int searchCount(String brandId) {
 		return carModelDAO.searchCount(brandId);
 	}
-
 
 }

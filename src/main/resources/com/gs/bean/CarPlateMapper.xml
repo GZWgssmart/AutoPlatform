@@ -68,7 +68,7 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="carPlateResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="carPlateResultMap">
 		select * from t_car_plate order by plateName asc limit #{beginIndex}, #{pageSize}
 	</select>
 
@@ -78,7 +78,7 @@
 		]]>
 	</select>
 
-	<select id="searchByPager" resultType="list" resultMap="carPlateResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="searchByPager" resultType="list" resultMap="carPlateResultMap">
 		select * from t_car_plate where 1 = 1 and plateName like concat('%',#{plateName},'%') order by plateName asc limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

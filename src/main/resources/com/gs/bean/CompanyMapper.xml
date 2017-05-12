@@ -75,29 +75,32 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="companyResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="companyResultMap">
 		<![CDATA[
 			select * from t_company where 1 = 1
-			<if test="companyId != null and user.companyId != ''">
-				and companyId = #{user.companyId}
-			</if>
-			limit #{pager.beginIndex}, #{pager.pageSize}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
 			select count(companyId) from t_company where 1 = 1
-			<if test="companyId != null and user.companyId != ''">
-				and companyId = #{user.companyId}
-			</if>
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="statusCount" resultType="int" parameterType="string">
 		<![CDATA[
 			select count(companyId) from t_company where companyStatus = #{status}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{companyId}
+		</if>
 	</select>
 
 	<update id="inactive" parameterType="string">
@@ -112,10 +115,14 @@
 		]]>
 	</update>
 
-	<select id="queryByStatusPager" resultMap="companyResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByStatusPager" resultMap="companyResultMap">
 		<![CDATA[
-			select * from t_company where companyStatus = #{status} limit #{pager.beginIndex}, #{pager.pageSize}
+			select * from t_company where companyStatus = #{status}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 </mapper>
