@@ -79,6 +79,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改维修项目</h3>
                         <form role="form" id="editForm">
                             <input name="maintainId" attr="maintain.maintainId" type="hidden">
@@ -133,6 +134,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加维修项目</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">

@@ -117,6 +117,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加公司</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
@@ -196,6 +197,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改公司</h3>
                         <form role="form" id="editForm" enctype="multipart/form-data">
                             <div class="form-group">
@@ -249,16 +251,11 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司logo：</label>
-                                <div class="col-lg-7">
-                                    <div class="ibox-title">
-                                        <div class="input-group" style="padding-left: 15px;">
-                                            <input id="edit_companyLogo" define="company.companyLogo" name="companyLogo"
-                                                   type="file" class="form-control" multiple
-                                                   class="file-loading"
-                                                   placeholder="请选择或输入一个你想上传的相册类型,默认当天日期为类型!"/>
-                                        </div>
-                                    </div>
+                                <div id="preview">
+                                    <img alt="image" id="icon" name="file" style="border-radius: 50%;"/>
                                 </div>
+                                <input type="file" name="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
+                                <button id="button" onclick="$('#previewImg').click();">修改LOGO</button>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司描述：</label>

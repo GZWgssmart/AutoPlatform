@@ -2,16 +2,23 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Company;
+import com.gs.bean.Role;
 import com.gs.bean.User;
+import com.gs.bean.UserRole;
 import com.gs.common.Constants;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.CheckRoleUtil;
+import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionGetUtil;
+import com.gs.common.util.UUIDUtil;
 import com.gs.dao.CompanyDAO;
 import com.gs.service.CompanyService;
+import com.gs.service.RoleService;
+import com.gs.service.UserRoleService;
+import com.gs.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -39,6 +46,15 @@ public class CompanyController {
 
     @Resource
     private CompanyService companyService;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private RoleService roleService;
+
+    @Resource
+    private UserRoleService userRoleService;
 
     private String CompanyQueryRole = Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_ADMIN;
     private String CompanyEditRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
@@ -173,7 +189,21 @@ public class CompanyController {
             try {
                 if(CheckRoleUtil.checkRoles(CompanyEditRole)){
                     logger.info("添加公司");
-                    company.setCompanyLogo("/upload/logo.jsp");
+                    String companyId = UUIDUtil.uuid();
+                    company.setCompanyId(companyId);
+                    User user = new User();
+                    String userId = UUIDUtil.uuid();
+                    user.setUserId(userId);
+                    user.setCompanyId(companyId);
+                    user.setUserName(company.getCompanyPricipal());
+                    user.setUserPhone(company.getCompanyTel());
+                    user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+                    Role role = roleService.queryByName(Constants.COMPANY_ADMIN);
+                    UserRole userRole = new UserRole();
+                    userRole.setUserId(userId);
+                    userRole.setRoleId(role.getRoleId());
+                    userService.insert(user);
+                    userRoleService.insert(userRole);
                     companyService.insert(company);
                     return ControllerResult.getSuccessResult("添加公司成功");
                 }else{

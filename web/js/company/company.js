@@ -255,45 +255,72 @@ function validator(formId) {
 }
 
 
-//初始化文件上传控件
-$(function () {
-    //0.初始化fileinput
-    var oFileInput = new FileInput();
-    oFileInput.Init("edit_companyLogo", "/company/uploadCompany");
-});
-
-//初始化fileinput
-var FileInput = function () {
-    var oFile = new Object();
-    //初始化fileinput控件（第一次初始化）
-    oFile.Init = function (ctrlName, uploadUrl) {
-        var control = $('#' + ctrlName);
-        //初始化上传控件的样式
-        control.fileinput({
-            language: 'zh', //设置语言
-            uploadUrl: uploadUrl, //上传的地址
-            allowedFileExtensions: ['jpg', 'gif', 'png'],//接收的文件后缀
-            showUpload: true, //是否显示上传按钮
-            showCaption: false,//是否显示标题
-            browseClass: "btn btn-primary", //按钮样式
-            dropZoneEnabled: true,//是否显示拖拽区域
-            //minImageWidth: 50, //图片的最小宽度
-            //minImageHeight: 50,//图片的最小高度
-            //maxImageWidth: 1000,//图片的最大宽度
-            //maxImageHeight: 1000,//图片的最大高度
-            //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-            //minFileCount: 0,
-            maxFileCount: 10, //表示允许同时上传的最大文件个数
-            enctype: 'multipart/form-data',
-            validateInitialCount: true,
-            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-        }).on("fileuploaded", function (event, data) {
-            // data 为controller返回的json
-            if (data.response.result == 'success') {
-                alert('处理成功');
-            }
-        });
+$('#editModal').ajaxSubmit({
+    url: '/peopleManage/peopleInfo_update',
+    type: 'post',
+    dataType: 'json',
+    success: function (data) {
+        if (data.result == "success") {
+            $('#myModal').modal('hide');
+            swal(data.message, "", "success");
+            $('#cusTable').bootstrapTable('refresh');
+            $('#editModal').data('bootstrapValidator').resetForm(true);
+        } else if (data.result == "fail") {
+            $('#myModal').modal('hide');
+            swal(data.message, "内容不匹配", "error");
+            $('#editModal').data('bootstrapValidator').resetForm(true);
+        }
     }
-    return oFile;
-};
+})
+
+
+//图片上传预览    IE是用了滤镜。
+function previewImage(file)
+{
+    var MAXWIDTH  = 100;
+    var MAXHEIGHT = 100;
+    var div = document.getElementById('preview');
+    if (file.files && file.files[0])
+    {
+        div.innerHTML ='<img id=imghead onclick=$("#previewImg").click()>';
+        var img = document.getElementById('imghead');
+        img.onload = function(){
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            img.width  =  rect.width;
+            img.height =  rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+            img.style.marginTop = rect.top+'px';
+        }
+        var reader = new FileReader();
+        reader.onload = function(evt){img.src = evt.target.result;}
+        reader.readAsDataURL(file.files[0]);
+    }
+    else //兼容IE
+    {
+        var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+        file.select();
+        var src = document.selection.createRange().text;
+        div.innerHTML = '<img id=imghead>';
+        var img = document.getElementById('imghead');
+        img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+        status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+        div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+    }
+}
+function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+    var param = {top:0, left:0, width:width, height:height};
+    if( width>maxWidth || height>maxHeight ){
+        rateWidth = width / maxWidth;
+        rateHeight = height / maxHeight;
+
+        if( rateWidth > rateHeight ){
+            param.width =  maxWidth;
+            param.height = Math.round(height / rateWidth);
+        }else{
+            param.width = Math.round(width / rateHeight);
+            param.height = maxHeight;
+        }
+    }
+    return param;
+}
