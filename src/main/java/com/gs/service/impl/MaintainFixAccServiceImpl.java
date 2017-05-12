@@ -29,40 +29,26 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 	public int batchDelete(List<MaintainFixAcc> list) { return maintainFixAccDAO.batchDelete(list); }
 	public int update(MaintainFixAcc maintainFixAcc) { return maintainFixAccDAO.update(maintainFixAcc); }
 	public int batchUpdate(List<MaintainFixAcc> list) { return maintainFixAccDAO.batchUpdate(list); }
-
-	@Override
 	public List<MaintainFixAcc> queryAll(User user) {
 		return maintainFixAccDAO.queryAll(user);
 	}
-
-	@Override
 	public List<MaintainFixAcc> queryByStatus(String status, User user) {
 		return maintainFixAccDAO.queryByStatus(status, user);
 	}
-
-	@Override
 	public MaintainFixAcc query(MaintainFixAcc maintainFixAcc, User user) {
 		return maintainFixAccDAO.query(maintainFixAcc, user);
 	}
-
-	@Override
 	public MaintainFixAcc queryById(String id) {
 		return maintainFixAccDAO.queryById(id);
 	}
-
-	@Override
 	public List<MaintainFixAcc> queryByPager(Pager pager, User user) {
 		return maintainFixAccDAO.queryByPager(pager, user);
 	}
-
-	@Override
 	public int count(User user) {
 		return maintainFixAccDAO.count(user);
 	}
-
 	public int inactive(String id) { return maintainFixAccDAO.inactive(id); }
 	public int active(String id) { return maintainFixAccDAO.active(id); }
-
 	public List<MaintainFixAcc> queryAllByMaintainId(String[] ids) {
 		return maintainFixAccDAO.queryAllByMaintainId(ids);
 	}

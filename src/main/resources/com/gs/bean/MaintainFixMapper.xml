@@ -100,7 +100,7 @@
 	<select id="queryBymaintainPager" resultType="list" resultMap="maintainFixResultMap">
 			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '保养'
 			<if test="user.companyId != null and user.companyId != ''">
-				and c.companyId = #{companyId}
+				and c.companyId = #{user.companyId}
 			</if>
 			limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
@@ -109,8 +109,8 @@
 		<![CDATA[
 			select count(*) from t_maintain_fix where maintainOrFix = "维修"
 		]]>
-		<if test="companyId != null and companyId != ''">
-			and companyId = #{companyId}
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
 		</if>
 	</select>
 
