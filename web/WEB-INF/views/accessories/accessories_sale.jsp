@@ -20,8 +20,8 @@
 
 </head>
 <body>
-<div class="container" style="width: 100%;">
-    <s:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin, companyRepertory">
+<div class="container">
+    <shiro:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin, companyRepertory, systemOrdinaryAdmin">
         <form id="formSearch" class="form-horizontal">
             <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
                 <div class="col-sm-2">
@@ -48,13 +48,13 @@
                     <button type="button" onclick="byAccNameSearch()" class="btn btn-primary">
                         查询
                     </button>
-                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                    <button type="button" onclick="closeSHForm()" class="btn btn-default">
                         关闭
                     </button>
                 </div>
             </div>
         </form>
-    </s:hasAnyRoles>
+    </shiro:hasAnyRoles>
 
     <table class="table table-hover" id="saleTable"
            data-pagination="true"
@@ -76,7 +76,9 @@
             <th data-field="accSaleMoney">销售最终价</th>
             <th data-field="userName">购买人</th>
             <th data-field="accSaleStatus" data-formatter="fmtSaleState">状态</th>
-            <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
+            <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, companySales">
+                <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
+            </shiro:hasAnyRoles>
         </tr>
         </thead>
         <tbody>
@@ -88,35 +90,29 @@
                         <i class="glyphicon glyphicon-plus"></i> 添加
                     </button>
                 </a>
-            </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin">
-            <a>
-                <button onclick="delteleSale();" type="button" id="remove" class="btn btn-danger">
-                    <i class="glyphicon glyphicon-trash"></i> 删除
-                </button>
-            </a>
+                <a>
+                    <button onclick="delteleSale();" type="button" id="remove" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i> 删除
+                    </button>
+                </a>
             </shiro:hasAnyRoles>
 
-            <shiro:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin, companyRepertory">
-            <a>
-                <button onclick="onlySale();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-shopping-cart"></i> 只看已销售
-                </button>
-            </a>
-            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles
+                    name="companyAdmin, companySales, systemSuperAdmin, companyRepertory, systemOrdinaryAdmin">
+                <a>
+                    <button onclick="onlySale();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-shopping-cart"></i> 只看已销售
+                    </button>
+                </a>
 
-            <shiro:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin, companyRepertory">
-            <a>
-                <button onclick="showSearchForm();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-filter"></i>条件查询
-                </button>
-            </a>
-            </shiro:hasAnyRoles>
-
-            <shiro:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin, companyRepertory">
-            <a>
-                <button onclick="allSales();" type="button" class="btn btn-default">查看所有</button>
-            </a>
+                <a>
+                    <button onclick="showSHForm();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-filter"></i>条件查询
+                    </button>
+                </a>
+                <a>
+                    <button onclick="allSales();" type="button" class="btn btn-default">查看所有</button>
+                </a>
             </shiro:hasAnyRoles>
         </div>
         </tbody>

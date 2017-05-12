@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="container" style="width: 100%;">
-    <s:hasAnyRoles name="companyAdmin, companyRepertory, companyBuyer, systemSuperAdmin">
+    <s:hasAnyRoles name="companyAdmin, companyRepertory, companyBuyer, systemSuperAdmin, systemOrdinaryAdmin">
         <form id="formSearch" class="form-horizontal">
             <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
                 <div class="col-sm-2">
@@ -42,7 +42,7 @@
                     <button type="button" onclick="byAccNameSearch()" class="btn btn-primary">
                         查询
                     </button>
-                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                    <button type="button" onclick="closeSHForm()" class="btn btn-default">
                         关闭
                     </button>
                 </div>
@@ -71,54 +71,49 @@
             <th data-field="accBuyMoney">采购最终价</th>
             <th data-field="accBuyCheck" data-formatter="fmtCheckState">审核状态</th>
             <th data-field="accBuyStatus" data-formatter="fmtBuyState">采购状态</th>
-            <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
+            <s:hasAnyRoles name="companyAdmin, systemSuperAdmin, companyBuyer">
+                <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
+            </s:hasAnyRoles>
         </tr>
         </thead>
         <tbody>
 
-            <div id="toolbar" class="btn-group" style="margin: 10px 0px 10px 0px;">
-                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin">
+        <div id="toolbar" class="btn-group" style="margin: 10px 0px 10px 0px;">
+            <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin">
                 <a data-toggle="modal">
                     <button type="button" onclick="showAccAddWin()" id="add" class="btn btn-default">
                         <i class="glyphicon glyphicon-plus"></i> 添加
                     </button>
                 </a>
-                </s:hasAnyRoles>
-                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin">
                 <a>
                     <button onclick="delteleBuy();" type="button" id="remove" class="btn btn-danger">
                         <i class="glyphicon glyphicon-trash"></i> 删除
                     </button>
                 </a>
-                </s:hasAnyRoles>
-                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory">
+            </s:hasAnyRoles>
+            <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory, systemOrdinaryAdmin">
                 <a>
                     <button onclick="onlyCheck();" type="button" class="btn btn-default">
                         <i class="glyphicon glyphicon-ok"></i> 只看已审核
                     </button>
                 </a>
-                </s:hasAnyRoles>
-                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory">
+
                 <a>
                     <button onclick="onlyBuy();" type="button" class="btn btn-default">
                         <i class="glyphicon glyphicon-shopping-cart"></i> 只看已采购
                     </button>
                 </a>
-                </s:hasAnyRoles>
-                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory">
                 <a>
-                    <button onclick="showSearchForm();" type="button" class="btn btn-default">
+                    <button onclick="showSHForm();" type="button" class="btn btn-default">
                         <i class="glyphicon glyphicon-filter"></i>条件查询
                     </button>
                 </a>
-                </s:hasAnyRoles>
-                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory">
                 <a>
                     <button onclick="allBuys();" type="button" class="btn btn-default">查看所有</button>
                 </a>
-                </s:hasAnyRoles>
+            </s:hasAnyRoles>
 
-            </div>
+        </div>
         </tbody>
     </table>
 </div>
@@ -413,6 +408,7 @@
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/bootstrapValidator.js"></script>
 
+<script src="<%=path %>/js/accessories/accessories_main.js"></script>
 <script src="<%=path %>/js/accessories/accessories_buy.js"></script>
 <script src="<%=path %>/js/accessories/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="<%=path %>/js/main.js"></script>

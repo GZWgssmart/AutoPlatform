@@ -262,7 +262,7 @@ function byAccNameSearch() {
     var SaleTimeStart = $("#SaleTimeStart").val();
     var SaleTimeEnd = $("#SaleTimeEnd").val();
     var uName = $("#usrName").val();
-    initTable("saleTable", "/accessoriesSale/search?accName=" + accName + "&SaleTimeStart=" +'&userName' +uName + SaleTimeStart + "&SaleTimeEnd=" + SaleTimeEnd);
+    initTable("saleTable", "/accessoriesSale/search?accName=" + accName + "&SaleTimeStart=" + '&userName' + uName + SaleTimeStart + "&SaleTimeEnd=" + SaleTimeEnd);
 }
 
 function getUserName() {
@@ -524,4 +524,3 @@ function showUserWin() {
     $("#userWin").modal('show');
 
 }
-
