@@ -76,13 +76,6 @@ window.operateEvents = {
                         });
                 }
             }, "json");
-    },
-    'click .showUpdateInfo': function (e, value, row, index) {
-        var work = row;
-        $("#editForm").fill(work);
-        $('#editCarBrand').html('<option value="' + work.user.userId + '">' + work.user.userName + '</option>').trigger("change");
-        validator("editForm");
-        $("#editWin").modal('show');
     }
 }
 

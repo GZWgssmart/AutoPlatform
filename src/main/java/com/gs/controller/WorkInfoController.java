@@ -1,10 +1,14 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.MaintainRecord;
 import com.gs.bean.User;
 import com.gs.bean.WorkInfo;
+import com.gs.common.Constants;
 import com.gs.common.bean.*;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
+import com.gs.service.MaintainRecordService;
 import com.gs.service.UserService;
 import com.gs.service.WorkInfoService;
 import org.apache.ibatis.annotations.Param;
@@ -37,50 +41,70 @@ public class WorkInfoController {
     @Resource
     private WorkInfoService workInfoService;
 
+    private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + ","
+            + Constants.COMPANY_RECEIVE + "," + Constants.COMPANY_ARTIFICER
+            + "," + Constants.COMPANY_SALES + "," + Constants.COMPANY_HUMAN_MANAGER
+            + "," + Constants.COMPANY_ACCOUNTING + "," + Constants.COMPANY_BUYER
+            + "," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_EMP;
+
+    private String editRole = Constants.SYSTEM_ORDINARY_ADMIN;
 
     @RequestMapping(value = "work", method = RequestMethod.GET)
     private String workInfo() {
         if (SessionGetUtil.isUser()) {
-            logger.info(" 工单显示");
-            return "peopleManage/work";
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info(" 工单显示");
+                return "peopleManage/work";
+            }
+            return "error/notPermission";
         } else {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
         }
     }
 
-    @ResponseBody
-    @RequestMapping(value = "workInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(WorkInfo workInfo){
-        if (SessionGetUtil.isUser()) {
-            logger.info("工单添加");
-            workInfoService.insert(workInfo);
-            return ControllerResult.getSuccessResult("添加成功");
-        } else {
-            logger.info("Session已失效，请重新登入");
-            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
-        }
-    }
 
     @ResponseBody
     @RequestMapping(value = "workInfo_pager", method= RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> info_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
-        logger.info("分页查询所有工单");
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(workInfoService.count());
-        List<WorkInfo> workInfo = workInfoService.queryByPager(pager);
-        return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfo);
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页查询所有工单");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(workInfoService.count(user));
+                    List<WorkInfo> workInfo = workInfoService.queryByPager(pager, user);
+                    return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfo);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
     }
 
     @ResponseBody
     @RequestMapping(value = "workInfo_update", method = RequestMethod.POST)
     public ControllerResult info_update(WorkInfo workInfo){
         if (SessionGetUtil.isUser()) {
-            logger.info("信息修改");
-            workInfoService.update(workInfo);
-            return ControllerResult.getSuccessResult(" 修改成功");
+            try {
+                if (CheckRoleUtil.checkRoles(editRole)) {
+                    logger.info("指派员工");
+                    workInfoService.update(workInfo);
+                    return ControllerResult.getSuccessResult(" 修改成功");
+                }
+                return ControllerResult.getFailResult("指派员工失败，没有该权限操作");
+            } catch (Exception e) {
+                logger.info("指派员工失败，出现了异常");
+                return ControllerResult.getFailResult("指派员工失败，出现了一个错误");
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
@@ -91,13 +115,21 @@ public class WorkInfoController {
     @RequestMapping(value = "workInfo_status", method = RequestMethod.GET)
     public ControllerResult info_status(@Param("id")String id, @Param("status")String status){
         if (SessionGetUtil.isUser()) {
-            logger.info("状态修改");
-            if(status.equals("Y")){
-                workInfoService.inactive(id);
-            } else {
-                workInfoService.active(id);
+            try {
+                if (CheckRoleUtil.checkRoles(editRole)) {
+                    logger.info("状态修改");
+                    if(status.equals("Y")){
+                        workInfoService.inactive(id);
+                    } else {
+                        workInfoService.active(id);
+                    }
+                    return ControllerResult.getSuccessResult(" 修改成功");
+                }
+                return ControllerResult.getFailResult("修改状态失败，没有权限操作");
+            } catch (Exception e) {
+                logger.info("修改状态失败，出现了一个错误");
+                return ControllerResult.getFailResult("修改状态失败，出现了一个错误");
             }
-            return ControllerResult.getSuccessResult(" 修改成功");
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");

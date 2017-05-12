@@ -11,9 +11,15 @@
 		<result property="workCreatedTime" column="workCreatedTime"></result>
 		<result property="workStatus" column="workStatus"></result>
 		<result property="coont" column="coont"></result>
+
+		<association property="company" javaType="com.gs.bean.Company">
+			<id property="companyId" column="companyId"/>
+			<id property="companyName" column="companyName"/>
+		</association>
+
 		<association property="user" javaType="com.gs.bean.User">
-			<id property="userId" column="u_userId"/>
-			<id property="userName" column="userName_emp"/>
+			<id property="userId" column="user_id"/>
+			<id property="userName" column="user_name"/>
 		</association>
 
 		<association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
@@ -21,7 +27,7 @@
 			<association property="checkin" javaType="com.gs.bean.Checkin">
 				<id property="checkinId" column="checkinId" />
 				<id property="maintainOrFix" column="maintainOrFix" />
-				<id property="userName" column="userName_customer" />
+				<id property="userName" column="userName" />
 			</association>
 		</association>
 
@@ -30,10 +36,13 @@
 	<insert id="insert"  parameterType="workInfo">
 		<![CDATA[
 			INSERT INTO t_work_info
-				(workId, recordId, userId, workAssignTime, workCreatedTime, workStatus)
+				(workId, recordId, workCreatedTime, workStatus)
 			VALUES
-				(uuid(), #{recordId}, #{userId}, #{workAssignTime}, now(), 'Y')
+				(uuid(), #{recordId}, now(), 'Y')
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 	</insert>
 
 	<insert id="batchInsert"  parameterType="list">
@@ -62,8 +71,7 @@
 
 	<update id="update" parameterType="workInfo">
 		<![CDATA[
-			UPDATE t_work_info SET
-				 workStatus = 'Y', workAssignTime = now(), userId = #{userId} WHERE workId = #{workId}
+			UPDATE t_work_info SET workAssignTime = now(), userId = #{userId} WHERE workId = #{workId}
 		]]>
 	</update>
 
@@ -99,17 +107,29 @@
 
 	<select id="queryByPager" resultType="list" resultMap="workInfoResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select wi.*, u.userId as u_userId, u.userName as userName_emp, mr.recordId, cy.companyId, c.checkinId, c.userName as userName_customer, c.maintainOrFix from t_work_info wi
-			LEFT JOIN t_maintain_record  mr on wi.recordId = mr.recordId
-		  	RIGHT JOIN t_company cy on cy.companyId = mr.companyId
-			LEFT JOIN t_checkin c on mr.checkinId = c.checkinId
-			LEFT JOIN t_user u on wi.userId = u.userId
-		]]>limit #{beginIndex}, #{pageSize}
+			SELECT wi.*, ch.userName, ch.checkinId, ch.maintainOrFix, c.companyId, c.companyName,u.userId as user_id,u.userName as user_name FROM t_work_info wi
+			INNER JOIN t_maintain_record mr ON mr.recordId = wi.recordId
+			INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+			INNER JOIN t_user u on u.userId = wi.userId
+			INNER JOIN t_company c ON c.companyId = mr.companyId
+			ORDER BY wi.workCreatedTime Desc
+		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
+		limit #{beginIndex}, #{pageSize}
 	</select>
 	<select id="count" resultType="int">
 		<![CDATA[
-			SELECT COUNT(*) FROM t_work_info
+			SELECT COUNT(*) FROM t_work_info wi
+			INNER JOIN t_maintain_record mr ON mr.recordId = wi.recordId
+			INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+			INNER JOIN t_user u on u.userId = wi.userId
+			INNER JOIN t_company c ON c.companyId = mr.companyId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="queryByDefault"  resultMap="workInfoResultMap">

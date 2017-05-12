@@ -52,6 +52,9 @@
 			VALUES
 				(#{userId}, #{userName}, #{userNickname}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userSalary}, #{userIdentity}, now(), #{companyId}, 'Y', #{qqOpenId}, #{weiboOpenId}, #{wechatOpenId}, #{userDes}, #{userBirthday}, #{userLoginedTime})
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 	</insert>
 
 
@@ -123,6 +126,9 @@
 		<![CDATA[
 			select * from t_role r WHERE r.roleName like concat('company', '%')
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="queryByStatus" resultMap="userResultMap" parameterType="string">
@@ -210,7 +216,11 @@
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName = 'carOwner'
 			ORDER BY userCreatedTime Desc
-		]]>limit #{beginIndex}, #{pageSize}
+		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
+		limit #{beginIndex}, #{pageSize}
 	</select>
 
 	<select id="queryPeoplePager" resultType="list" resultMap="userResultMap">
@@ -222,7 +232,11 @@
 			WHERE r.roleName like concat('company', '%')
 			AND u.companyId = #{companyId}
 			ORDER BY userCreatedTime Desc
-		]]>limit #{pager.beginIndex}, #{pager.pageSize}
+		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="queryByAdminPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
@@ -265,6 +279,9 @@
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName LIKE CONCAT('carOwner')
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="countCompanyEmp" parameterType="String" resultType="int">
@@ -276,6 +293,9 @@
 			WHERE r.roleName like concat('company', '%')
 			AND u.companyId = #{companyId}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="countAdmin" resultType="int">

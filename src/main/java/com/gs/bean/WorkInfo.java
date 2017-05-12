@@ -19,6 +19,7 @@ public class WorkInfo {
 	private User user;
 	private MaintainRecord maintainRecord;
 	private Checkin checkin;
+	private Company company;
 
 	public String getWorkId(){
 		return this.workId;
@@ -92,5 +93,13 @@ public class WorkInfo {
 
 	public void setCoont(double coont) {
 		this.coont = coont;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 }

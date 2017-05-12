@@ -39,10 +39,10 @@ public interface UserDAO extends BaseDAO<String, User>{
     public int  countSystemAdmin();
 
     /*分页查询所有车主*/
-    public List<User> queryCustomerPager(Pager pager);
+    public List<User> queryCustomerPager(@Param("pager")Pager pager, @Param("user")User user);
 
     /*分页查询所有员工*/
-    public List<User> queryPeoplePager(@Param("pager") Pager pager, @Param("companyId") String companyId);
+    public List<User> queryPeoplePager(@Param("pager") Pager pager, @Param("companyId") String companyId, @Param("user")User user);
 
     /*登陆*/
     public User queryLogin(User user);
@@ -70,7 +70,7 @@ public interface UserDAO extends BaseDAO<String, User>{
     public void updateLoginTime(String userId);
 
     /**统计当前登陆者公司的所有员工*/
-    public int countCompanyEmp(String companyId);
+    public int countCompanyEmp(@Param("companyId")String companyId, @Param("user")User user);
 
     /**修改管理员*/
     public void updateAdmin(User user);
@@ -82,5 +82,5 @@ public interface UserDAO extends BaseDAO<String, User>{
     public int countSelectAdmin(@Param("userName") String userName, @Param("userPhone") String userPhone, @Param("userEmail") String userEmail);
 
     /*查询自己公司的员工*/
-    public List<User> queryUser();
+    public List<User> queryUser(String companyId);
 }

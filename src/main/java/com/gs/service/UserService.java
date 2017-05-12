@@ -37,10 +37,10 @@ public interface UserService extends BaseService<String, User>{
     public int  countSystemAdmin();
 
     /*分页查询所有车主*/
-    public List<User> queryCustomerPager(Pager pager);
+    public List<User> queryCustomerPager(Pager pager, User user);
 
     /*分页查询所有员工*/
-    public List<User> queryPeoplePager(Pager pager, String companyId);
+    public List<User> queryPeoplePager(Pager pager, String companyId, User user);
 
     /*登陆*/
     public User queryLogin(User user);
@@ -55,7 +55,7 @@ public interface UserService extends BaseService<String, User>{
     public void updateLoginTime(String userId);
 
     /**统计当前登陆者公司的所有员工*/
-    public int countCompanyEmp(String companyId);
+    public int countCompanyEmp(String companyId, User user);
 
     /*验证手机号*/
     public int queryPhone(String userPhone);
@@ -76,5 +76,5 @@ public interface UserService extends BaseService<String, User>{
     public int countSelectAdmin(String userName, String userPhone, String userEmail);
 
     /*查询自己公司的员工*/
-    public List<User> queryUser();
+    public List<User> queryUser(String companyId);
 }
