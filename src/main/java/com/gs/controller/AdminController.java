@@ -4,9 +4,11 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.Role;
 import com.gs.bean.User;
 import com.gs.bean.UserRole;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
@@ -46,11 +48,18 @@ public class AdminController {
     @Resource
     private RoleService roleService;
 
+    private String queryRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+    private String editRole = Constants.SYSTEM_SUPER_ADMIN;
+
     @RequestMapping(value = "info", method = RequestMethod.GET)
     public String showAdminInfo() {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
+        }
+        if (!CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("无权访问，想要访问请联系管理员!");
+            return "error/notPermission";
         }
         logger.info("显示管理员信息");
         return "system/admin";
@@ -59,8 +68,8 @@ public class AdminController {
     @ResponseBody
     @RequestMapping(value = "query_pager", method = RequestMethod.GET)
     public Pager4EasyUI<User> queryAdminPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
         logger.info("分页查询所有管理员");
@@ -75,8 +84,8 @@ public class AdminController {
     @ResponseBody
     @RequestMapping(value = "company_pager", method = RequestMethod.GET)
     public Pager4EasyUI<User> queryCompanyAdminPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
         logger.info("分页查询汽修公司管理员");
@@ -91,8 +100,8 @@ public class AdminController {
     @ResponseBody
     @RequestMapping(value = "system_pager", method = RequestMethod.GET)
     public Pager4EasyUI<User> querySystemAdminPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
         logger.info("分页查询系统管理员");
@@ -107,8 +116,8 @@ public class AdminController {
     @ResponseBody
     @RequestMapping(value = "select_query", method = RequestMethod.GET)
     public Pager4EasyUI<User> selectQuery(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("userName") String userName, @Param("userPhone") String userPhone, @Param("userEmail") String userEmail) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
         logger.info("条件查询管理员");
@@ -127,8 +136,12 @@ public class AdminController {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        logger.info("添加管理员");
+        if (!CheckRoleUtil.checkRoles(editRole)) {
+            logger.info("添加失败");
+            return ControllerResult.getFailResult("添加失败，没有该权限操作");
+        }
         try {
+            logger.info("添加管理员");
             user.setUserId(UUIDUtil.uuid());
             user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
             userService.insertAdmin(user);
@@ -151,8 +164,12 @@ public class AdminController {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        logger.info("更新管理员");
+        if (!CheckRoleUtil.checkRoles(editRole)) {
+            logger.info("更新失败");
+            return ControllerResult.getFailResult("更新失败，没有该权限操作");
+        }
         try {
+            logger.info("更新管理员");
             userService.updateAdmin(user);
             return ControllerResult.getSuccessResult("更新成功");
         } catch (Exception e) {
@@ -167,6 +184,10 @@ public class AdminController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        if (!CheckRoleUtil.checkRoles(editRole)) {
+            logger.info("更新状态失败");
+            return ControllerResult.getFailResult("更新状态失败，没有该权限操作");
         }
         try {
             if (status.equals("Y")) {
