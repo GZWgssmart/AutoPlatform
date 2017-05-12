@@ -85,8 +85,11 @@
 
 	<select id="queryAll" resultMap="accessoriesResultMap">
 		<![CDATA[
-			select * from t_accessories
+			select * from t_accessories where 1 = 1
         ]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="queryByStatus" resultMap="accessoriesResultMap" parameterType="string">
@@ -101,27 +104,37 @@
         ]]>
 	</select>
 
-	<select id="queryById" parameterType="string" resultType="accessories">
+	<select id="queryById" resultType="accessories">
 		<![CDATA[
 			select * from t_accessories where accId = #{id}
         ]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
+		</if>
 	</select>
 
-	<select id="queryByIdPager" resultType="list" resultMap="accessoriesResultMap"
+	<select id="queryByIdPager" resultMap="accessoriesResultMap"
 			parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select * from t_accessories where accTypeId = #{id} limit #{pager.beginIndex}, #{pager.pageSize}
+			select * from t_accessories where accTypeId = #{id}
         ]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="accessoriesResultMap"
+	<select id="queryByPager" resultMap="accessoriesResultMap"
 			parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 			select c.*, s.supplyId, s.supplyName, ac.accTypeId, ac.accTypeName, cpy.companyId, cpy.companyName
-			from t_accessories c, t_supply s, t_accessories_type ac, t_company cpy
+			from t_accessories c, t_supply s, t_accessories_type ac, t_company cpy, t_user u
 			where 1=1 and c.supplyId = s.supplyId and c.accTypeId = ac.accTypeId and c.companyId = cpy.companyId
-			order by c.accCreatedTime desc, c.companyId
         ]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
+		</if>
+        order by c.accCreatedTime desc, c.companyId
 		limit #{beginIndex}, #{pageSize}
 	</select>
 

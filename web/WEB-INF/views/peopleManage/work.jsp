@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -56,16 +57,20 @@
             <th data-field="workStatus" data-formatter="status">
                 当前状态
             </th>
+            <shiro:hasAnyRoles name="systemOrdinaryAdmin">
             <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
+            </shiro:hasAnyRoles>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
+            <shiro:hasAnyRoles name="systemOrdinaryAdmin">
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 指派员工
             </button></a>
+            </shiro:hasAnyRoles>
         </div>
         </tbody>
     </table>

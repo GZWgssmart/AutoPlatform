@@ -2,6 +2,7 @@ package com.gs.service.impl;
 
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesType;
+import com.gs.bean.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -30,39 +31,38 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 	public int batchDelete(List<Accessories> list) { return accessoriesDAO.batchDelete(list); }
 	public int update(Accessories accessories) { return accessoriesDAO.update(accessories); }
 	public int batchUpdate(List<Accessories> list) { return accessoriesDAO.batchUpdate(list); }
-	public List<Accessories> queryAll() { return accessoriesDAO.queryAll(); }
-	public List<Accessories> queryByStatus(String status) { return accessoriesDAO.queryByStatus(status); }
-	public Accessories query(Accessories accessories) { return accessoriesDAO.query(accessories); }
+	public List<Accessories> queryAll(User user) { return accessoriesDAO.queryAll(user); }
+	public List<Accessories> queryByStatus(String status, User user) { return accessoriesDAO.queryByStatus(status, user); }
+	public Accessories query(Accessories accessories, User user) { return accessoriesDAO.query(accessories, user); }
 	public Accessories queryById(String id) { return accessoriesDAO.queryById(id); }
-	public List<Accessories> queryByPager(Pager pager) { return accessoriesDAO.queryByPager(pager); }
-	public int count() { return accessoriesDAO.count(); }
+	public List<Accessories> queryByPager(Pager pager, User user) { return accessoriesDAO.queryByPager(pager, user); }
+	public int count(User user) { return accessoriesDAO.count(user); }
 	public int inactive(String id) { return accessoriesDAO.inactive(id); }
 	public int active(String id) { return accessoriesDAO.active(id); }
-	public List<Accessories> queryByStatusPager(String accStatus, Pager pager) {
-		return accessoriesDAO.queryByStatusPager(accStatus, pager);
+	public List<Accessories> queryByStatusPager(String accStatus, Pager pager, User user) {
+		return accessoriesDAO.queryByStatusPager(accStatus, pager, user);
 	}
 
-	public int countByStatus(String status) {
-		return accessoriesDAO.countByStatus(status);
+	public int countByStatus(String status, User user) {
+		return accessoriesDAO.countByStatus(status, user);
 	}
 
-	public List<Accessories> queryByIdPager(String id, Pager pager) {
-		return accessoriesDAO.queryByIdPager(id,pager);
+	public List<Accessories> queryByIdPager(String id, Pager pager, User user) {
+		return accessoriesDAO.queryByIdPager(id,pager, user);
 	}
 
-	@Override
-	public int countByTypeId(String accTypeId) {
-		return accessoriesDAO.countByTypeId(accTypeId);
+	public int countByTypeId(String accTypeId, User user) {
+		return accessoriesDAO.countByTypeId(accTypeId, user);
 	}
 
-	public int countByCondition(Accessories accessories) { return accessoriesDAO.countByCondition(accessories); }
+	public int countByCondition(Accessories accessories, User user) { return accessoriesDAO.countByCondition(accessories, user); }
 
-	public List<Accessories> queryByCondition(Pager pager, Accessories accessories){
-		return accessoriesDAO.queryByCondition(pager, accessories);
+	public List<Accessories> queryByCondition(Pager pager, Accessories accessories, User user){
+		return accessoriesDAO.queryByCondition(pager, accessories, user);
 	}
 
-	public void updateIdle(String id,  int lastCount) {
-		accessoriesDAO.updateIdle(id, lastCount);
+	public void updateIdle(String id,  int lastCount, User user) {
+		accessoriesDAO.updateIdle(id, lastCount, user);
 	}
 
 }

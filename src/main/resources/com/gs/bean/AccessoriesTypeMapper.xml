@@ -85,15 +85,22 @@
 	<select id="queryByPager" resultType="list" resultMap="accessoriesTypeResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 			select u.*, c.companyId, c.companyName from t_accessories_type u, t_company c where 1=1 and c.companyId = u.companyId
-						order by u.accTypeDes Desc, u.companyId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
+		</if>
+		order by u.accTypeDes Desc, u.companyId
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="queryByStatusPager" resultMap="accessoriesTypeResultMap">
 		<![CDATA[
 			select at.*, c.companyId, c.companyName from t_accessories_type at, t_company c where c.companyId = at.companyId and at.accTypeStatus = #{accTypeStatus}
-			order by at.accTypeDes Desc, at.companyId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and at.companyId = #{user.companyId}
+		</if>
+		order by at.accTypeDes Desc, at.companyId
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -101,6 +108,9 @@
 		<![CDATA[
  			select at.*, c.companyId, c.companyName from t_accessories_type at, t_company c where 1=1 and c.companyId = at.companyId
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and at.companyId = #{user.companyId}
+		</if>
 		<if test="accessoriesType.accTypeName != null and accessoriesType.accTypeName !=''">
 			and at.accTypeName like concat('%', #{accessoriesType.accTypeName},'%')
 		</if>
@@ -116,14 +126,20 @@
 
 	<select id="count" resultType="int">
 	<![CDATA[
- 			select count(accTypeId) from t_accessories_type
+ 			select count(accTypeId) from t_accessories_type where 1 = 1
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and at.companyId = #{user.companyId}
+		</if>
 </select>
 
 	<select id="countByStatus" parameterType="String" resultType="int">
 		<![CDATA[
 			select count(*) from t_accessories_type where accTypeStatus = #{status}
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and at.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="countByCondition" resultType="int">

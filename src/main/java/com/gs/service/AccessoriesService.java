@@ -2,6 +2,7 @@ package com.gs.service;
 
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesType;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,14 +16,18 @@ import java.util.List;
 */
 public interface AccessoriesService extends BaseService<String, Accessories>{
 
-    public List<Accessories> queryByStatusPager(String accStatus, Pager pager);
-    public int countByStatus(String status);
-    public List<Accessories> queryByIdPager(@Param("id") String id, @Param("pager") Pager pager);
-    public int countByTypeId(String accTypeId);
+    public List<Accessories> queryByStatusPager(String accStatus, Pager pager, User user);
 
-    public int countByCondition(Accessories accessories);
-    public List<Accessories> queryByCondition(Pager pager, Accessories accessories);
+    public int countByStatus(String status, User user);
 
-    public void updateIdle(@Param("id") String id, @Param("lastCount") int lastCount);
+    public List<Accessories> queryByIdPager(@Param("id") String id, @Param("pager") Pager pager, User user);
+
+    public int countByTypeId(String accTypeId, User user);
+
+    public int countByCondition(Accessories accessories, User user);
+
+    public List<Accessories> queryByCondition(Pager pager, Accessories accessories, User user);
+
+    public void updateIdle(@Param("id") String id, @Param("lastCount") int lastCount, User user);
 
 }

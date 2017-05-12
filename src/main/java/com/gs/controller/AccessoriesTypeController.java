@@ -1,14 +1,13 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.Accessories;
-import com.gs.bean.AccessoriesType;
-import com.gs.bean.Module;
-import com.gs.bean.Supply;
+import com.gs.bean.*;
+import com.gs.common.Constants;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.AccessoriesTypeService;
@@ -35,11 +34,20 @@ public class AccessoriesTypeController {
     @Resource
     private AccessoriesTypeService accessoriesTypeService;
 
+    private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + ","
+            + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY;
+
     @RequestMapping(value = "type", method = RequestMethod.GET)
     private String type() {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
+        }
+        if (!CheckRoleUtil.checkRoles(queryRole)){
+            logger.info("无权访问，想要访问请联系管理员!");
+            return "error/notPermission";
         }
         logger.info("显示配件分类");
         return "accessories/accessories_type";
@@ -48,16 +56,17 @@ public class AccessoriesTypeController {
     @ResponseBody
     @RequestMapping(value = "pager", method = RequestMethod.GET)
     public Pager4EasyUI<AccessoriesType> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效，请重新登入");
             return null;
         }
         logger.info("分页查询");
+        User user = SessionGetUtil.getUser();
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(accessoriesTypeService.count());
-        List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryByPager(pager);
+        pager.setTotalRecords(accessoriesTypeService.count(user));
+        List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryByPager(pager, user);
         return new Pager4EasyUI<AccessoriesType>(pager.getTotalRecords(), accessoriesTypes);
     }
 
@@ -69,6 +78,10 @@ public class AccessoriesTypeController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)){
+                logger.info("添加失败");
+                return ControllerResult.getFailResult("添加失败，没有该权限操作");
+            }
             logger.info("添加");
             accessoriesType.setAccTypeId(UUIDUtil.uuid());
             System.out.println(accessoriesType);
@@ -89,6 +102,10 @@ public class AccessoriesTypeController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("更新失败");
+                return ControllerResult.getFailResult("更新失败,没有该权限的操作");
+            }
             logger.info("更新");
             accessoriesType.setAccTypeStatus("Y");
             accessoriesTypeService.update(accessoriesType);
@@ -108,6 +125,10 @@ public class AccessoriesTypeController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
+            if (!CheckRoleUtil.checkRoles(editRole)){
+                logger.info("更新状态失败");
+                return ControllerResult.getFailResult("更新状态失败,没有该权限的操作");
+            }
             logger.info("更新状态");
             if (status.equals("Y")) {
                 accessoriesTypeService.active(id);
@@ -124,12 +145,13 @@ public class AccessoriesTypeController {
     @ResponseBody
     @RequestMapping(value = "accessoriesType_All", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
-        if (!SessionGetUtil.isUser()) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效，请重新登入");
             return null;
         }
         logger.info("查询配件分类");
-        List<AccessoriesType> accessoriesTypeList = accessoriesTypeService.queryAll();
+        User user = SessionGetUtil.getUser();
+        List<AccessoriesType> accessoriesTypeList = accessoriesTypeService.queryAll(user);
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
         for (AccessoriesType accessoriesTypes : accessoriesTypeList) {
             ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
@@ -143,7 +165,7 @@ public class AccessoriesTypeController {
     @ResponseBody
     @RequestMapping(value = "queryByStatus_AccType", method = RequestMethod.GET)
     public Pager4EasyUI<AccessoriesType> queryByStatusAccType(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效，请重新登入");
             return null;
         }
@@ -152,12 +174,12 @@ public class AccessoriesTypeController {
         } else {
             logger.info("分页查询不可用的配件分类");
         }
-        System.out.printf(status + ", " + pageNumber + ", " + pageSize + ", " + accessoriesTypeService.countByStatus(status));
+        User user = SessionGetUtil.getUser();
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(accessoriesTypeService.countByStatus(status));
-        List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryByStatusPager(status, pager);
+        pager.setTotalRecords(accessoriesTypeService.countByStatus(status, user));
+        List<AccessoriesType> accessoriesTypes = accessoriesTypeService.queryByStatusPager(status, pager, user);
         return new Pager4EasyUI<AccessoriesType>(pager.getTotalRecords(), accessoriesTypes);
     }
 
@@ -166,11 +188,12 @@ public class AccessoriesTypeController {
     public Pager4EasyUI<AccessoriesType> queryByCondition(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,
                                                           @Param("accTypeName") String accTypeName, @Param("accTypeDes") String accTypeDes,
                                                           @Param("companyId") String companyId) {
-        if (!SessionGetUtil.isUser()) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效，请重新登入");
             return null;
         }
         logger.info("条件查询配件分类");
+        User user = SessionGetUtil.getUser();
         AccessoriesType accessoriesType = new AccessoriesType();
         accessoriesType.setAccTypeName(accTypeName);
         accessoriesType.setAccTypeDes(accTypeDes);
@@ -179,8 +202,8 @@ public class AccessoriesTypeController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         List<AccessoriesType> accessoriesTypes = new ArrayList<AccessoriesType>();
-        pager.setTotalRecords(accessoriesTypeService.countByCondition(accessoriesType));
-        accessoriesTypes = accessoriesTypeService.queryByCondition(pager, accessoriesType);
+        pager.setTotalRecords(accessoriesTypeService.countByCondition(accessoriesType, user));
+        accessoriesTypes = accessoriesTypeService.queryByCondition(pager, accessoriesType, user);
 
         return new Pager4EasyUI<AccessoriesType>(pager.getTotalRecords(), accessoriesTypes);
     }
