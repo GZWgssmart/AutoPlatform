@@ -131,12 +131,12 @@
 	<![CDATA[
  			select count(accTypeId) from t_accessories_type where 1 = 1
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 </select>
 
-	<select id="countByStatus" parameterType="String" resultType="int">
+	<select id="countByStatus" resultType="int">
 		<![CDATA[
 			select count(*) from t_accessories_type where accTypeStatus = #{status}
 		]]>

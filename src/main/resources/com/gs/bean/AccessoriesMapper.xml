@@ -87,8 +87,8 @@
 		<![CDATA[
 			select * from t_accessories where 1 = 1
         ]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 	</select>
 
@@ -178,13 +178,13 @@
 		<![CDATA[
 			select count(*) from t_accessories where 1 = 1
         ]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 	</select>
 	<select id="countByTypeId" resultType="int">
 		<![CDATA[
-			select count(accId) from t_accessories where  accTypeId = #{accTypeId}
+			select count(*) from t_accessories where  accTypeId = #{accTypeId}
         ]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and companyId = #{user.companyId}
