@@ -122,8 +122,7 @@
         ]]>
 	</select>
 
-    <select id="queryByPager" resultType="list" resultMap="appointmentResultMap"
-            parameterType="com.gs.common.bean.Pager">
+    <select id="queryByPager" resultType="list" resultMap="appointmentResultMap">
         <![CDATA[
 			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
 				from t_appointment c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
@@ -184,7 +183,7 @@
         <if test="appointment.maintainOrFix != 'all'">
             and c.maintainOrFix = #{appointment.maintainOrFix}
         </if>
-        <if test="appointment.companyId != null and appointment.companyId != ''">
+        <if test="appointment.companyId != null and appointment.companyId != '' and appointment.companyId != 'null' and appointment.companyId != 'undefined'">
             and c.companyId = #{appointment.companyId}
         </if>
         order by c.appCreatedTime desc, c.companyId
@@ -195,8 +194,8 @@
         <![CDATA[
 			select count(*) from t_appointment where 1 = 1 and speedStatus = '已预约'
 		]]>
-        <if test="user.companyId != null and user.companyId != ''">
-            and companyId = #{user.companyId}
+        <if test="companyId != null and companyId != ''">
+            and companyId = #{companyId}
         </if>
     </select>
 
@@ -228,8 +227,8 @@
         <if test="appointment.maintainOrFix != 'all'">
             and maintainOrFix = #{maintainOrFix}
         </if>
-        <if test="appointment.companyId != null and appointment.companyId != '' and appointment.companyId != 'null'">
-            and companyId = #{appointment.companyId}
+        <if test="appointment.companyId != null and appointment.companyId != '' and appointment.companyId != 'null' and appointment.companyId != 'undefined'">
+            and c.companyId = #{appointment.companyId}
         </if>
     </select>
 
