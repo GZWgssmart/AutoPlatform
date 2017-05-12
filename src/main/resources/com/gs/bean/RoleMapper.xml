@@ -104,7 +104,7 @@
 
 	<select id="queryByCompanyRole" resultMap="roleResultMap">
 		<![CDATA[
-			select * from t_role r WHERE r.roleName like concat('company', '%');
+			select * from t_role r WHERE r.roleName like concat('companyArtificer');
 		]]>
 	</select>
 
