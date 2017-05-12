@@ -46,8 +46,10 @@ public class MaintainFixController {
         }else{
             try {
                 if(CheckRoleUtil.checkRoles(editRole)){
+                    User user = SessionGetUtil.getUser();
                     logger.info("添加维修项目");
                     maintainFix.setMaintainOrFix("维修");
+                    maintainFix.setCompanyId(user.getCompanyId());
                     maintainFixService.insert(maintainFix);
                     return ControllerResult.getSuccessResult("添加成功");
                 }else{
@@ -71,7 +73,9 @@ public class MaintainFixController {
         }else{
             try {
                 if(CheckRoleUtil.checkRoles(editRole)){
+                    User user = SessionGetUtil.getUser();
                     logger.info("添加保养项目");
+                    maintainFix.setCompanyId(user.getCompanyId());
                     maintainFix.setMaintainOrFix("保养");
                     maintainFixService.insert(maintainFix);
                     return ControllerResult.getSuccessResult("添加成功");
@@ -112,7 +116,7 @@ public class MaintainFixController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "Status Modify", method = RequestMethod.GET)
+    @RequestMapping(value = "StatusModify", method = RequestMethod.GET)
     public ControllerResult companyStatusModify(@Param("id") String id, @Param("status") String status) {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效");
