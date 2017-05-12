@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.User;
 import com.gs.bean.UserRole;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -28,12 +29,12 @@ public class UserRoleServiceImpl implements UserRoleService {
 	public int batchDelete(List<UserRole> list) { return userRoleDAO.batchDelete(list); }
 	public int update(UserRole userRole) { return userRoleDAO.update(userRole); }
 	public int batchUpdate(List<UserRole> list) { return userRoleDAO.batchUpdate(list); }
-	public List<UserRole> queryAll() { return userRoleDAO.queryAll(); }
-	public List<UserRole> queryByStatus(String status) { return userRoleDAO.queryByStatus(status); }
-	public UserRole query(UserRole userRole) { return userRoleDAO.query(userRole); }
+	public List<UserRole> queryAll(User user) { return userRoleDAO.queryAll(user); }
+	public List<UserRole> queryByStatus(String status, User user) { return userRoleDAO.queryByStatus(status, user); }
+	public UserRole query(UserRole userRole, User user) { return userRoleDAO.query(userRole, user); }
 	public UserRole queryById(String id) { return userRoleDAO.queryById(id); }
-	public List<UserRole> queryByPager(Pager pager) { return userRoleDAO.queryByPager(pager); }
-	public int count() { return userRoleDAO.count(); }
+	public List<UserRole> queryByPager(Pager pager, User user) { return userRoleDAO.queryByPager(pager, user); }
+	public int count(User user) { return userRoleDAO.count(user); }
 	public int inactive(String id) { return userRoleDAO.inactive(id); }
 	public int active(String id) { return userRoleDAO.active(id); }
 
