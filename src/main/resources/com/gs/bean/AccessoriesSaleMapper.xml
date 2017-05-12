@@ -190,8 +190,7 @@
         ]]>
 	</select>
 
-    <select id="queryByPager" resultType="list" resultMap="accessoriesSaleResultMap"
-            parameterType="com.gs.common.bean.Pager">
+    <select id="queryByPager" resultType="list" resultMap="accessoriesSaleResultMap">
 		<![CDATA[
            SELECT
             ase.*,
@@ -220,15 +219,15 @@
 		    </if>
 
             limit
-             #{beginIndex},#{pageSize}
+             #{pager.beginIndex},#{pager.pageSize}
         ]]>
 
     </select>
 
     <select id="count" resultType="int">
         select count(*) from auto_platform.t_accessories_sale
-        <if test="user.companyId != null and user.companyId != ''">
-            and companyId = #{user.companyId}
+        <if test="companyId != null and companyId != ''">
+            and user.companyId = #{user.companyId}
         </if>
     </select>
 

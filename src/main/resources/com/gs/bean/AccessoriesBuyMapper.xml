@@ -197,7 +197,7 @@
 		select * from auto_platform.t_accessories_buy where accId = #{id}
 	</select>
 
-    <select id="queryByPager" resultType="list" resultMap="accessoriesBuyResultMap" parameterType="com.gs.common.bean.Pager">
+    <select id="queryByPager" resultType="list" resultMap="accessoriesBuyResultMap">
         <![CDATA[
         select
           	ab.*,
@@ -224,13 +224,13 @@
         </if>
 
         limit
-         #{beginIndex},#{pageSize}
+         #{pager.beginIndex},#{pager.pageSize}
         ]]>
     </select>
 
     <select id="count" resultType="int">
 		select count(*) from auto_platform.t_accessories_buy
-        <if test="user.companyId != null and user.companyId != ''">
+        <if test="companyId != null and companyId != ''">
             and companyId = #{user.companyId}
         </if>
 	</select>
