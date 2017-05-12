@@ -77,14 +77,16 @@ public class PeopleInfoController {
 
     @ResponseBody
     @RequestMapping(value = "peopleInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(User user, Company company, UserRole userRole){
+    public ControllerResult infoInsert(User user, Company company, UserRole userRole,HttpSession session){
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("信息添加");
                     String peopleId = UUIDUtil.uuid();
                     user.setUserId(peopleId);
-                    user.setCompanyId(company.getCompanyId());
+                    User user1 = (User)session.getAttribute("user");
+                    user.setCompanyId(user1.getCompanyId());
+                    user.setUserIcon("img/default.png");
                     Role role = roleService.queryByName("companyEmp");
                     userRole.setUserId(user.getUserId());
                     userRole.setRoleId(role.getRoleId());
@@ -196,8 +198,8 @@ public class PeopleInfoController {
                     Pager pager = new Pager();
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
-                    pager.setTotalRecords(userService.countCompanyEmp(SessionGetUtil.getUser().getCompanyId(), user));
-                    List<User> users = userService.queryPeoplePager(pager, SessionGetUtil.getUser().getCompanyId(), user);
+                    pager.setTotalRecords(userService.countCompanyEmp(user));
+                    List<User> users = userService.queryPeoplePager(pager, user);
                     return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
                 }
                 return null;
@@ -225,12 +227,11 @@ public class PeopleInfoController {
                         if(!file.isEmpty()){
                             file.transferTo(new File(filePath));
                             user.setUserIcon(icon);
+                            userService.update(user);
                         }
                     }else{
                         user.setUserIcon("img/default.png");
                     }
-                    user.setCompanyId(company.getCompanyId());
-                    userService.update(user);
                     return ControllerResult.getSuccessResult(" 修改成功");
                 }
                 return ControllerResult.getFailResult("修改信息失败，没有该权限操作");

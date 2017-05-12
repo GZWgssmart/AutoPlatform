@@ -91,6 +91,7 @@ public class CustomerController {
                     User user1 = (User)session.getAttribute("user");
                     user.setCompanyId(user1.getCompanyId());
                     user.setUserId(customerId);
+                    user.setUserIcon("img/default.png");
                     userRole.setUserId(user.getUserId());
                     userRole.setRoleId(role.getRoleId());
                     user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
@@ -223,7 +224,7 @@ public class CustomerController {
     @RequestMapping(value = "customerInfo_update", method = RequestMethod.POST)
     public ControllerResult info_update(User user, MultipartFile file, HttpSession session) throws IOException {
         if (SessionGetUtil.isUser()) {
-            try {
+//            try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("信息修改");
                     if(file != null){
@@ -233,18 +234,18 @@ public class CustomerController {
                         if(!file.isEmpty()){
                             file.transferTo(new File(filePath));
                             user.setUserIcon(icon);
+                            userService.update(user);
                         }
                     }else{
                         user.setUserIcon("img/default.png");
                     }
-                    userService.update(user);
                     return ControllerResult.getSuccessResult(" 修改成功");
                 }
                 return ControllerResult.getFailResult("修改信息失败，没有该权限操作");
-            } catch (Exception e) {
-                logger.info("修改信息失败，出现了异常");
-                return ControllerResult.getFailResult("修改信息失败，出现了一个错误");
-            }
+//            } catch (Exception e) {
+//                logger.info("修改信息失败，出现了异常");
+//                return ControllerResult.getFailResult("修改信息失败，出现了一个错误");
+//            }
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");

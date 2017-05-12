@@ -73,7 +73,7 @@ public class WorkInfoController {
     @RequestMapping(value = "workInfo_pager", method= RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> info_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         if (SessionGetUtil.isUser()) {
-            try {
+//            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询所有工单");
                     User user = SessionGetUtil.getUser();
@@ -85,10 +85,10 @@ public class WorkInfoController {
                     return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfo);
                 }
                 return null;
-            } catch (Exception e) {
-                logger.info("分页查询失败，出现了异常");
-                return null;
-            }
+//            } catch (Exception e) {
+//                logger.info("分页查询失败，出现了异常");
+//                return null;
+//            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;

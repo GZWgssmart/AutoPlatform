@@ -161,7 +161,7 @@ window.operateEvents = {
         loginedTime.value = user.userLoginedTime;
         $("#icon").attr("src","/"+user.userIcon);
         $("#form_loginedTime").val(formatterDate(user.userLoginedTime));
-        $("#role").val(row.role.roleDes);
+        $("#role").val(user.role.roleDes);
         $("#form_datetime").val(formatterDate(user.userCreatedTime));
         $("#editModal").fill(user);
         validator("editModal");

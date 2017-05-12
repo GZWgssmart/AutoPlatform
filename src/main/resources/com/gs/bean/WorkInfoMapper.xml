@@ -12,11 +12,6 @@
 		<result property="workStatus" column="workStatus"></result>
 		<result property="coont" column="coont"></result>
 
-		<association property="company" javaType="com.gs.bean.Company">
-			<id property="companyId" column="companyId"/>
-			<id property="companyName" column="companyName"/>
-		</association>
-
 		<association property="user" javaType="com.gs.bean.User">
 			<id property="userId" column="user_id"/>
 			<id property="userName" column="user_name"/>
@@ -28,6 +23,10 @@
 				<id property="checkinId" column="checkinId" />
 				<id property="maintainOrFix" column="maintainOrFix" />
 				<id property="userName" column="userName" />
+				<association property="company" javaType="com.gs.bean.Company">
+					<id property="companyId" column="companyId"/>
+					<id property="companyName" column="companyName"/>
+				</association>
 			</association>
 		</association>
 
@@ -104,17 +103,16 @@
 
 	<select id="queryByPager" resultType="list" resultMap="workInfoResultMap">
 		<![CDATA[
-			SELECT wi.*, ch.userName, ch.checkinId, ch.maintainOrFix, c.companyId, c.companyName,u.userId as user_id,u.userName as user_name FROM t_work_info wi
+			SELECT wi.*, ch.userName, ch.checkinId, ch.companyId, ch.maintainOrFix,u.userId as user_id,u.userName as user_name FROM t_work_info wi
 			INNER JOIN t_maintain_record mr ON mr.recordId = wi.recordId
 			INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
 			INNER JOIN t_user u on u.userId = wi.userId
-			INNER JOIN t_company c ON c.companyId = mr.companyId
-			ORDER BY wi.workCreatedTime Desc
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and wi.companyId = #{user.companyId}
+			and u.companyId = #{user.companyId}
 		</if>
-		limit #{pager.beginIndex}, #{pageSize}
+		ORDER BY wi.workCreatedTime Desc
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 	<select id="count" resultType="int">
 		<![CDATA[
@@ -122,10 +120,9 @@
 			INNER JOIN t_maintain_record mr ON mr.recordId = wi.recordId
 			INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
 			INNER JOIN t_user u on u.userId = wi.userId
-			INNER JOIN t_company c ON c.companyId = mr.companyId
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and wi.companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and u.companyId = #{companyId}
 		</if>
 	</select>
 

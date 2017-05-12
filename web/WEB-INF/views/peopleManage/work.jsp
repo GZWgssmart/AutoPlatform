@@ -51,7 +51,7 @@
             <th data-field="user.userName">
                 指派员工
             </th>
-            <th data-field="company.companyName">
+            <th data-field="maintainRecord.checkin.company.companyName">
                 汽修公司
             </th>
             <th data-field="workStatus" data-formatter="status">

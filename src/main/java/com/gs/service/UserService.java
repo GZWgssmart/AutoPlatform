@@ -40,7 +40,7 @@ public interface UserService extends BaseService<String, User>{
     public List<User> queryCustomerPager(Pager pager, User user);
 
     /*分页查询所有员工*/
-    public List<User> queryPeoplePager(Pager pager, String companyId, User user);
+    public List<User> queryPeoplePager(Pager pager, User user);
 
     /*登陆*/
     public User queryLogin(User user);
@@ -55,7 +55,7 @@ public interface UserService extends BaseService<String, User>{
     public void updateLoginTime(String userId);
 
     /**统计当前登陆者公司的所有员工*/
-    public int countCompanyEmp(String companyId, User user);
+    public int countCompanyEmp(User user);
 
     /*验证手机号*/
     public int queryPhone(String userPhone);

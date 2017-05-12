@@ -48,9 +48,9 @@
 	<insert id="insert"  parameterType="user">
 		<![CDATA[
 			INSERT INTO t_user
-				(userId, userName, userNickname, userEmail, userPwd, userGender, userAddress, userPhone, userSalary, userIdentity, userCreatedTime, companyId, userStatus, qqOpenId, weiboOpenId, wechatOpenId, userDes, userBirthday, userLoginedTime)
+				(userId, userName, userNickname, userIcon, userEmail, userPwd, userGender, userAddress, userPhone, userSalary, userIdentity, userCreatedTime, companyId, userStatus, qqOpenId, weiboOpenId, wechatOpenId, userDes, userBirthday, userLoginedTime)
 			VALUES
-				(#{userId}, #{userName}, #{userNickname}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userSalary}, #{userIdentity}, now(), #{companyId}, 'Y', #{qqOpenId}, #{weiboOpenId}, #{wechatOpenId}, #{userDes}, #{userBirthday}, #{userLoginedTime})
+				(#{userId}, #{userName}, #{userNickname}, #{userIcon}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userSalary}, #{userIdentity}, now(), #{companyId}, 'Y', #{qqOpenId}, #{weiboOpenId}, #{wechatOpenId}, #{userDes}, #{userBirthday}, #{userLoginedTime})
 		]]>
 	</insert>
 
@@ -176,7 +176,7 @@
 			SELECT * FROM t_user u
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
 			INNER JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') and u.companyId = #{companyId}
+			WHERE r.roleName like concat('companyArtificer') and u.companyId = #{companyId}
 		]]>
 	</select>
 
@@ -208,7 +208,7 @@
 	</select>
 	<select id="queryCustomerPager" resultType="list" resultMap="userResultMap">
 		<![CDATA[
-			SELECT u.* FROM t_user u
+			SELECT * FROM t_user u
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName = 'carOwner'
@@ -222,17 +222,16 @@
 
 	<select id="queryPeoplePager" resultType="list" resultMap="userResultMap">
 		<![CDATA[
-			SELECT u.* , c.companyId, c.companyName, r.roleDes,r.roleId FROM t_user u
+			SELECT u.*, c.companyId, c.companyName, r.roleDes,r.roleId FROM t_user u
 			INNER JOIN t_company c ON u.companyId = c.companyId
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName like concat('company', '%')
-			AND u.companyId = #{companyId}
-			ORDER BY userCreatedTime Desc
 		]]>
-		<if test="u.companyId != null and u.companyId != ''">
-			and u.companyId = #{u.companyId}
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
 		</if>
+		ORDER BY userCreatedTime Desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -277,7 +276,7 @@
 			WHERE r.roleName LIKE CONCAT('carOwner')
 		]]>
 		<if test="companyId != null and companyId != ''">
-			and companyId = #{companyId}
+			and u.companyId = #{companyId}
 		</if>
 	</select>
 
@@ -288,10 +287,9 @@
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName like concat('company', '%')
-			AND u.companyId = #{companyId}
 		]]>
 		<if test="companyId != null and companyId != ''">
-			and companyId = #{companyId}
+			and u.companyId = #{companyId}
 		</if>
 	</select>
 

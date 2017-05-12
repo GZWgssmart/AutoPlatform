@@ -196,7 +196,7 @@
                                 <input type="hidden" name="userId" attr="user.userId" />
                                 <div class="form_img">
                                     <div id="preview">
-                                        <img alt="image" id="icon" name="file" style="border-radius: 50%;"/>
+                                        <img id="icon" name="file" style="border-radius: 50%;"/>
                                     </div>
                                     <input type="file" name="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
                                 </div>
