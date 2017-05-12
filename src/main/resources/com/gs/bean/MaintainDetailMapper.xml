@@ -102,7 +102,7 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="maintainDetailResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="maintainDetailResultMap">
 		<![CDATA[
 			select d.*, r.recordId, r.checkinId, f.maintainId, f.maintainName, f.maintainMoney, c.checkinId, c.userName, c.maintainOrFix, c.userPhone
 				from t_maintain_detail d, t_maintain_record r, t_maintain_fix f, t_checkin c

@@ -118,7 +118,7 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="checkinResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="checkinResultMap">
 		<![CDATA[
 			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
 				from t_checkin c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
@@ -165,7 +165,7 @@
 		<if test="checkin.maintainOrFix != 'all'">
 			and c.maintainOrFix = #{checkin.maintainOrFix}
 		</if>
-		<if test="checkin.companyId != null and checkin.companyId != '' and checkin.companyId != 'null'">
+		<if test="checkin.companyId != null and checkin.companyId != '' and checkin.companyId != 'null' and checkin.companyId != 'undefined'">
 			and c.companyId = #{checkin.companyId}
 		</if>
 		order by c.checkinCreatedTime desc, c.companyId
@@ -185,8 +185,8 @@
 		<![CDATA[
 			select count(*) from t_checkin where 1 = 1
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 	</select>
 
@@ -218,7 +218,7 @@
 		<if test="checkin.maintainOrFix != 'all'">
 			and maintainOrFix = #{checkin.maintainOrFix}
 		</if>
-		<if test="checkin.companyId != null and checkin.companyId != '' and checkin.companyId != 'null'">
+		<if test="checkin.companyId != null and checkin.companyId != '' and checkin.companyId != 'null' and checkin.companyId != 'undefined'">
 			and companyId = #{checkin.companyId}
 		</if>
 

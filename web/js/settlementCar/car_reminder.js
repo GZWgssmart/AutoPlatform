@@ -1,9 +1,10 @@
 /**
  * Created by Administrator on 2017-04-30.
  */
+var speedStatus;
 $(document).ready(function () {
     //调用函数，初始化表格
-    var speedStatus = "未提醒";
+    speedStatus = "未提醒";
     initTable("cusTable", "/record/pager_speedStatus?speedStatus=" + speedStatus);
 
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
@@ -38,7 +39,6 @@ function searchCondition() {
     var carPlate = $("#searchCarPlate").val();
     var maintainOrFix = $("#searchMaintainOrFix").val();
     var companyId = $("#searchCompanyId").val();
-    var speedStatus = "待结算";
     initTable("cusTable", "/record/condition_pager?userName=" + userName + "&carPlate=" + carPlate + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId + "&speedStatus=" + speedStatus);
 
 }
@@ -61,22 +61,25 @@ function getDate() {
 
 /** 查看未提醒 */
 function notRemind() {
-    initTable("cusTable", "/record/pager_speedStatus?speedStatus=未提醒");
+    speedStatus = "未提醒";
+    initTable("cusTable", "/record/pager_speedStatus?speedStatus=" + speedStatus);
 }
 
 /** 查看已提醒 */
 function alreadyRemind() {
-    initTable("cusTable", "/record/pager_speedStatus?speedStatus=已提醒");
+    speedStatus = "已提醒";
+    initTable("cusTable", "/record/pager_speedStatus?speedStatus=" + speedStatus);
 }
 
 /** 查看已完成 */
 function alreadyComplete() {
-    initTable("cusTable", "/record/pager_speedStatus?speedStatus=已完成");
+    speedStatus = "已完成";
+    initTable("cusTable", "/record/pager_speedStatus?speedStatus=" + speedStatus);
 }
 
 /** 查看全部 */
 function allRemind() {
-    var speedStatus = "已提醒,未提醒,已完成";
+    speedStatus = "已提醒,未提醒,已完成";
     initTable("cusTable", "/record/pager_speedStatus?speedStatus=" + speedStatus);
 }
 

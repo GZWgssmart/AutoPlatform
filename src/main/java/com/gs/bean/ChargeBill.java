@@ -16,10 +16,12 @@ public class ChargeBill {
 	private double actualPayment; // 实付款
 	private Date chargeTime; // 收款时间
 	private Date chargeCreatedTime; // 收费单据创建时间
+	private String companyId; // 所属公司的id
 	private String chargeBillDes; // 收费单据描述
 	private String chargeBillStatus; // 收费单据状态
 
 	private MaintainRecord record;
+	private Company company;
 
 	public String getChargeBillId(){
 		return this.chargeBillId;
@@ -93,5 +95,21 @@ public class ChargeBill {
 
 	public void setActualPayment(double actualPayment) {
 		this.actualPayment = actualPayment;
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 }

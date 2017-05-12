@@ -108,8 +108,7 @@
         ]]>
 	</select>
 
-    <select id="queryByPager" resultType="list" resultMap="maintainRecordResultMap"
-            parameterType="com.gs.common.bean.Pager">
+    <select id="queryByPager" resultType="list" resultMap="maintainRecordResultMap">
 		<![CDATA[
 		  select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 		    from t_maintain_record r,  t_checkin c, t_company cpy
@@ -139,8 +138,11 @@
         <![CDATA[
 			select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 			  from t_maintain_record r,  t_checkin c, t_company cpy
-		      where 1 = 1 and c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.speedStatus = #{record.speedStatus}
+		      where 1 = 1 and c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.speedStatus in
 		]]>
+        <foreach item="item" index="index" collection="speedStatus" open="(" separator="," close=")">
+            #{item}
+        </foreach>
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
         </if>
@@ -156,10 +158,10 @@
         <if test="record.checkin.maintainOrFix != 'all'">
             and c.maintainOrFix = #{record.checkin.maintainOrFix}
         </if>
-        <if test="record.companyId != null and record.companyId != '' and record.companyId != 'null'">
+        <if test="record.companyId != null and record.companyId != '' and record.companyId != 'null' and record.companyId != 'undefined'">
             and r.companyId = #{record.companyId}
         </if>
-        order by r.recordCreatedTime desc
+        order by r.recordCreatedTime desc, r.companyId
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -196,8 +198,8 @@
 		<![CDATA[
 		  select count(*) from t_maintain_record where 1 = 1 and speedStatus = '已登记'
         ]]>
-        <if test="user.companyId != null and user.companyId != ''">
-            and companyId = #{user.companyId}
+        <if test="companyId != null and companyId != ''">
+            and companyId = #{companyId}
         </if>
 	</select>
 
@@ -212,8 +214,11 @@
 
     <select id="countByCondition" resultType="int">
         <![CDATA[
-			select count(*) from t_maintain_record r, t_checkin c where 1 = 1 and r.checkinId = c.checkinId and r.speedStatus = #{speedStatus}
+			select count(*) from t_maintain_record r, t_checkin c where 1 = 1 and r.checkinId = c.checkinId and r.speedStatus in
 		]]>
+        <foreach item="item" index="index" collection="speedStatus" open="(" separator="," close=")">
+            #{item}
+        </foreach>
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
         </if>
@@ -229,7 +234,7 @@
         <if test="record.checkin.maintainOrFix != 'all'">
             and c.maintainOrFix = #{record.checkin.maintainOrFix}
         </if>
-        <if test="record.companyId != null and record.companyId != '' and record.companyId != 'null'">
+        <if test="record.companyId != null and record.companyId != '' and record.companyId != 'null' and record.companyId != 'undefined'">
             and r.companyId = #{record.companyId}
         </if>
 
@@ -248,7 +253,7 @@
         <![CDATA[
 			select count(*) from t_maintain_record where 1 = 1 and recordStatus = 'Y' and speedStatus in
 		]]>
-        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+        <foreach item="item" index="index" collection="speedStatus" open="(" separator="," close=")">
             #{item}
         </foreach>
         <if test="user.companyId != null and user.companyId != ''">

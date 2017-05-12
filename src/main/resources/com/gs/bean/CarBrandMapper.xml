@@ -48,34 +48,34 @@
 		select * from t_car_brand
 	</select>
 
-	<select id="queryByStatus" resultMap="carBrandResultMap" parameterType="string">
+	<select id="queryByStatus" resultMap="carBrandResultMap">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="query" parameterType="carBrand" resultType="carBrand">
+	<select id="query" resultType="carBrand">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryById" parameterType="string" resultType="carBrand">
+	<select id="queryById" resultType="carBrand">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="carBrandResultMap">
+	<select id="queryByPager" resultMap="carBrandResultMap">
 		select * from t_car_brand order by brandName ASC limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
-	<select id="searchByPager" resultType="list" resultMap="carBrandResultMap">
-		select * from t_car_brand where 1 = 1 and brandName like concat('%', #{brandName}, '%') order by brandName desc limit #{pager.beginIndex}, #{pager.pageSize}
+	<select id="searchByPager" resultMap="carBrandResultMap">
+		select * from t_car_brand where brandName like concat('%', #{brandName}, '%') order by brandName desc limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
-		select count(brandId) from t_car_brand
+		select count(*) from t_car_brand
 	</select>
 
 	<select id="searchCount" resultType="int">

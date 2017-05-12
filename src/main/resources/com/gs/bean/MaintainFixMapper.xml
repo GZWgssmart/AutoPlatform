@@ -21,7 +21,9 @@
 
 	<insert id="insert"  parameterType="maintainFix">
 		<![CDATA[
-			insert into t_maintain_fix (maintainId,maintainName,maintainHour,maintainMoney,maintainManHourFee,maintainOrFix,maintainDes,maintainStatus,companyId) values (UUID(),#{maintainName},#{maintainHour},#{maintainMoney},#{maintainManHourFee},#{maintainOrFix},#{maintainDes},'Y',#{companyId})
+			insert into t_maintain_fix (maintainId, maintainName, maintainHour, maintainMoney, maintainManHourFee,
+			maintainOrFix, maintainDes, maintainStatus, companyId) values (UUID(), #{maintainName}, #{maintainHour},
+			#{maintainMoney},#{maintainManHourFee},#{maintainOrFix},#{maintainDes},'Y',#{companyId})
 		]]>
 	</insert>
 
@@ -65,30 +67,33 @@
 		<![CDATA[
 			select * from t_maintain_fix
 		]]>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+		</if>
 	</select>
 
-	<select id="queryByStatus" resultMap="maintainFixResultMap" parameterType="string">
+	<select id="queryByStatus" resultMap="maintainFixResultMap">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="query" parameterType="maintainFix" resultType="maintainFix">
+	<select id="query" resultType="maintainFix">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryById" parameterType="string" resultType="maintainFix">
+	<select id="queryById" resultType="maintainFix">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="maintainFixResultMap">
+	<select id="queryByPager" resultMap="maintainFixResultMap">
 		<![CDATA[
-			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '维修'
-
+			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and
+			mf.maintainOrFix = '维修'
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and c.companyId = #{user.companyId}
@@ -97,10 +102,13 @@
 
 	</select>
 
-	<select id="queryBymaintainPager" resultType="list" resultMap="maintainFixResultMap">
-			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and mf.maintainOrFix = '保养'
+	<select id="queryBymaintainPager" resultMap="maintainFixResultMap">
+		<![CDATA[
+			select mf.*, c.companyName from t_maintain_fix  mf, t_company  c where mf.companyId = c.companyId and
+			mf.maintainOrFix = '保养'
+		]]>
 			<if test="user.companyId != null and user.companyId != ''">
-				and c.companyId = #{companyId}
+				and c.companyId = #{user.companyId}
 			</if>
 			limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>

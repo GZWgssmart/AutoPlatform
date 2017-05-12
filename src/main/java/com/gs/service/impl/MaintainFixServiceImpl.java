@@ -30,43 +30,27 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 	public int batchDelete(List<MaintainFix> list) { return maintainFixDAO.batchDelete(list); }
 	public int update(MaintainFix maintainFix) { return maintainFixDAO.update(maintainFix); }
 	public int batchUpdate(List<MaintainFix> list) { return maintainFixDAO.batchUpdate(list); }
-
-	@Override
 	public List<MaintainFix> queryAll(User user) {
 		return maintainFixDAO.queryAll(user);
 	}
-
-	@Override
 	public List<MaintainFix> queryByStatus(String status, User user) {
 		return maintainFixDAO.queryByStatus(status, user);
 	}
-
-	@Override
 	public MaintainFix query(MaintainFix maintainFix, User user) {
 		return maintainFixDAO.query(maintainFix, user);
 	}
-
 	public MaintainFix queryById(String id) { return maintainFixDAO.queryById(id); }
-
-	@Override
 	public List<MaintainFix> queryByPager(Pager pager, User user) {
 		return maintainFixDAO.queryByPager(pager,user);
 	}
-
-	@Override
 	public int count(User user) {
 		return maintainFixDAO.count(user);
 	}
-
 	public int inactive(String id) { return maintainFixDAO.inactive(id); }
 	public int active(String id) { return maintainFixDAO.active(id); }
-
-	@Override
-	public List<MaintainFix> queryBymaintainPager(@Param("pager") Pager pager, @Param("user") User user) {
+	public List<MaintainFix> queryBymaintainPager(Pager pager, User user) {
 		return maintainFixDAO.queryBymaintainPager(pager, user);
 	}
-
-	@Override
 	public int MaintainCont(User user) {
 		return maintainFixDAO.MaintainCont(user);
 	}

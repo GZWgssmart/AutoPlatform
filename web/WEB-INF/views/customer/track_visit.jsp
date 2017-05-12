@@ -75,6 +75,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">跟踪回访</h3>
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="vistit.checkin.userId" name="complaintId" />
@@ -115,6 +116,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b" style="text-align: center;">添加回访记录</h3>
                         <form role="form" id="addForm" >
                         <input type="hidden" id="addCustomerId" name="userId" class="form-control customerId"/>
@@ -155,6 +157,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加回访</h3>
                         <table class="table table-hover" id="customerTable"
                                data-pagination="true"

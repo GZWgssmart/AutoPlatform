@@ -29,14 +29,17 @@ import java.util.List;
 @Controller
 @RequestMapping("/maintainFix")
 public class MaintainFixController {
+
     private Logger logger = (Logger) LoggerFactory.getLogger(MaintainFixController.class);
+
     @Resource
     private MaintainFixService maintainFixService;
 
     private String queryRole  = Constants.COMPANY_ADMIN +"," + Constants.SYSTEM_SUPER_ADMIN +"," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER +"," + Constants.COMPANY_ACCOUNTING
             + Constants.COMPANY_EMP + "," + Constants.COMPANY_SALES;
 
-    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_ARTIFICER;
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ARTIFICER;
+
     @ResponseBody
     @RequestMapping(value = "InsertMaintainItem", method = RequestMethod.POST)
     public ControllerResult InsertMaintainFix(MaintainFix maintainFix) {

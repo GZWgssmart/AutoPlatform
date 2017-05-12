@@ -1,6 +1,6 @@
 
 var contextPath = '';
-
+var speedStatus;
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/record/pager?status=ALL");
@@ -470,7 +470,7 @@ function searchCondition() {
     var carPlate = $("#searchCarPlate").val();
     var maintainOrFix = $("#searchMaintainOrFix").val();
     var companyId = $("#searchCompanyId").val();
-    var speedStatus = "已登记";
+    speedStatus = "已登记";
     initTable("cusTable", "/record/condition_pager?userName=" + userName + "&carPlate=" + carPlate + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId + "&speedStatus=" + speedStatus);
 
 }

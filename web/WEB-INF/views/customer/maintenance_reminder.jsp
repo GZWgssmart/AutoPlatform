@@ -97,6 +97,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b"style="text-align: center">修改维修保养提醒</h3>
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="reminder.remindId" name="remindId" />

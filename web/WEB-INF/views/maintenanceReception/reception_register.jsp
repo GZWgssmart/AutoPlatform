@@ -121,10 +121,12 @@
                         <option value="保养">保养</option>
                     </select>
                 </div>
-                <div class="col-sm-2">
-                    <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
-                    </select>
-                </div>
+                <shiro:hasAnyRoles name="systemOrdinaryAdmin, systemSuperAdmin">
+                    <div class="col-sm-2">
+                        <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
+                        </select>
+                    </div>
+                </shiro:hasAnyRoles>
 
                 <div class="col-sm-2">
                     <button type="button" onclick="searchCheckin()" class="btn btn-primary">
@@ -187,6 +189,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改登记</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" attr="checkin.checkinId" name="checkinId" class="form-control"/>
@@ -311,6 +314,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加记录</h3>
                         <div class="form-group" id="appDiv">
                             <label>是否预约：</label>
@@ -438,6 +442,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">选择预约记录</h3>
                         <table class="table table-hover" id="appTable"
                                data-pagination="true"
@@ -517,6 +522,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">选择车主信息</h3>
                         <table class="table table-hover" id="userTable"
                                data-pagination="true"

@@ -100,12 +100,12 @@
                         <option value="保养">保养</option>
                     </select>
                 </div>
-                <div class="col-sm-2">
-                    <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
-                    </select>
-                </div>
-                <div class="col-sm-2">
-                </div>
+                <shiro:hasAnyRoles name="systemOrdinaryAdmin, systemSuperAdmin">
+                    <div class="col-sm-2">
+                        <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
+                        </select>
+                    </div>
+                </shiro:hasAnyRoles>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchCondition()" class="btn btn-primary">
                         查询
@@ -173,6 +173,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改维修保养记录</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" attr="record.recordId" name="recordId" class="form-control"/>
@@ -224,6 +225,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">生成维修保养明细</h3>
                         <form role="form" id="detailForm">
                             <input type="hidden" id="detailRecordId" attr="record.recordId" name="recordId"
@@ -280,6 +282,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">查看维修保养明细</h3>
                         <table class="table table-hover" id="detailTable"
                                data-pagination="true"
@@ -365,6 +368,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改维修保养记录</h3>
                         <form role="form" id="editDetailForm">
                             <input type="hidden" attr="detail.detailId" name="detailId" class="form-control"/>
@@ -415,6 +419,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">选择保养项目</h3>
                         <table class="table table-hover" id="maintainTable"
                                data-pagination="true"
@@ -478,6 +483,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">选择维修项目</h3>
                         <table class="table table-hover" id="fixTable"
                                data-pagination="true"
@@ -540,6 +546,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">
 
                         </h3>
