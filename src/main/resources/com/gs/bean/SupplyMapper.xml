@@ -94,13 +94,13 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="supplyResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="supplyResultMap">
 		<![CDATA[
 		select s.*, t.supplyTypeName, c.companyName from t_supply s, t_supply_type t, t_company c
 		where 1 = 1 and s.supplyTypeId = t.supplyTypeId and s.companyId = c.companyId
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+			and s.companyId = #{user.companyId}
 		</if>
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
@@ -123,7 +123,7 @@
 			where 1=1 and c.companyId = s.companyId and t.supplyTypeId = s.supplyTypeId
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+			and s.companyId = #{user.companyId}
 		</if>
 		<if test="supply.supplyName != null and supply.supplyName != ''">
 			and s.supplyName like concat('%',#{supply.supplyName},'%')
@@ -131,10 +131,10 @@
 		<if test="supply.supplyPricipal != null and supply.supplyPricipal != ''">
 			and s.supplyPricipal like concat('%',#{supply.supplyPricipal},'%')
 		</if>
-		<if test="supply.supplyTypeId != null and supply.supplyTypeId != ''">
+		<if test="supply.supplyTypeId != null and supply.supplyTypeId != '' and supply.supplyTypeId != 'null' and supply.supplyTypeId != 'undefined'">
 			and s.supplyTypeId = #{supply.supplyTypeId}
 		</if>
-		<if test="supply.companyId != null and supply.companyId != ''">
+		<if test="supply.companyId != null and supply.companyId != '' and supply.companyId != 'null' and supply.companyId != 'undefined'">
 			and s.companyId = #{supply.companyId}
 		</if>
 		limit #{pager.beginIndex}, #{pager.pageSize}
@@ -144,8 +144,8 @@
 		<![CDATA[
 		select count(supplyId) from t_supply where 1 = 1
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 	</select>
 
@@ -163,10 +163,19 @@
 			select count(*) from t_supply where 1 = 1
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+			and companyId = #{user.companyId}
 		</if>
-		<if test="companyId != null and companyId != ''">
-			and companyId = #{companyId}
+        <if test="supply.supplyName != null and supply.supplyName != ''">
+            and supplyName like concat('%',#{supply.supplyName},'%')
+        </if>
+        <if test="supply.supplyPricipal != null and supply.supplyPricipal != ''">
+            and supplyPricipal like concat('%',#{supply.supplyPricipal},'%')
+        </if>
+        <if test="supply.supplyTypeId != null and supply.supplyTypeId != '' and supply.supplyTypeId != 'null' and supply.supplyTypeId != 'undefined'">
+            and supplyTypeId = #{supply.supplyTypeId}
+        </if>
+		<if test="supply.companyId != null and supply.companyId != '' and supply.companyId != 'null' and supply.company != 'undefined'">
+			and companyId = #{supply.companyId}
 		</if>
 	</select>
 

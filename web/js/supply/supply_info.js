@@ -211,7 +211,7 @@ function searchSupply() {
     var supplyTypeId = $("#searchSupplyTypeId").val();
     var companyId = $("#searchCompanyId").val();
 
-        initTable("cusTable", "/supply/conditionPager?supplyName=" + supplyName  + "&supplyPricipal="+ supplyPricipal + "&supplyTypeId=" + supplyTypeId + "&companyId=" + companyId);
+    initTable("cusTable", "/supply/conditionPager?supplyName=" + supplyName  + "&supplyPricipal="+ supplyPricipal + "&supplyTypeId=" + supplyTypeId + "&companyId=" + companyId);
 
 }
 

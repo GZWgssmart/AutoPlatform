@@ -60,7 +60,7 @@ public class SupplyTypeController {
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<SupplyType> queryByPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("status")String status) {
        if (SessionGetUtil.isUser()) {
-           try {
+//           try {
                if (CheckRoleUtil.checkRoles(queryRole)) {
                    logger.info("分页查询供应商分类");
                    User user = SessionGetUtil.getUser();
@@ -78,10 +78,10 @@ public class SupplyTypeController {
                    return new Pager4EasyUI<SupplyType>(pager.getTotalRecords(), supplyTypes);
                }
                return null;
-           } catch (Exception e) {
-               logger.info("查询失败，出现了异常");
-               return null;
-           }
+//           } catch (Exception e) {
+//               logger.info("查询失败，出现了异常");
+//               return null;
+//           }
        } else {
            logger.info("Session已失效，请重新登入");
            return null;
@@ -116,7 +116,7 @@ public class SupplyTypeController {
     public Pager4EasyUI<SupplyType> queryPagerByCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
                                                        @Param("supplyTypeName")String supplyTypeName, @Param("companyId")String companyId) {
         if (SessionGetUtil.isUser()) {
-            try {
+//            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("根据条件分页查询供应商分类");
                     User user = SessionGetUtil.getUser();
@@ -132,10 +132,10 @@ public class SupplyTypeController {
                     return new Pager4EasyUI<SupplyType>(pager.getTotalRecords(), supplyTypes);
                 }
                 return null;
-            } catch (Exception e) {
-                logger.info("查询失败，出现了异常");
-                return null;
-            }
+//            } catch (Exception e) {
+//                logger.info("查询失败，出现了异常");
+//                return null;
+//            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;

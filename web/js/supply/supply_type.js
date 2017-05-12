@@ -146,13 +146,15 @@ function validator(formId) {
 function searchSupplyType() {
     var supplyTypeName = $("#searchSupplyTypeName").val();
     var companyId = $("#searchCompanyId").val();
-    if (companyId != null && companyId != "") {
-        initTable("cusTable", "/supplyType/conditionPager?supplyTypeName=" + supplyTypeName + "&companyId=" + companyId);
-    } else {
-        swal("错误提示", "请选择一家汽修公司", "error");
-    }
+    initTable("cusTable", "/supplyType/conditionPager?supplyTypeName=" + supplyTypeName + "&companyId=" + companyId);
 
 }
 
-
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchSupplyTypeName").val('');
+    $('#searchCompanyId').html('').trigger("change");
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
 

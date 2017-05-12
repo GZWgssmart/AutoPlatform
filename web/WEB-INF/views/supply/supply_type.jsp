@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -43,9 +44,11 @@
             <th data-field="supplyTypeStatus" data-formatter="status" >
                 状态
             </th>
-            <th data-field="operation" data-formatter="operateFormatter" data-events="operateEvents">
-                操作
-            </th>
+            <shiro:hasRole name="companyAdmin">
+                <th data-field="operation" data-formatter="operateFormatter" data-events="operateEvents">
+                    操作
+                </th>
+            </shiro:hasRole>
         </tr>
         </thead>
         <form id="formSearch" class="form-horizontal">
@@ -53,11 +56,13 @@
                 <div class="col-sm-2" style="margin-left: -15px;">
                     <input type="text" id="searchSupplyTypeName" name="supplyTypeName" class="form-control" placeholder="供应商分类名称" >
                 </div>
-                <div class="col-sm-2">
-                    <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
-                    </select>
-                </div>
-                <div class="col-sm-6"></div>
+                <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
+                    <div class="col-sm-2">
+                        <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
+                        </select>
+                    </div>
+                </shiro:hasAnyRoles>
+                <div class="col-sm-8"></div>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchSupplyType()" class="btn btn-primary">
                         查询
@@ -71,16 +76,18 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a>
-                <button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
-                    <i class="glyphicon glyphicon-plus"></i> 添加
-                </button>
-            </a>
-            <a>
-                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                    <i class="glyphicon glyphicon-pencil"></i> 修改
-                </button>
-            </a>
+            <shiro:hasRole name="companyAdmin">
+                <a>
+                    <button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
+                        <i class="glyphicon glyphicon-plus"></i> 添加
+                    </button>
+                </a>
+                <a>
+                    <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-pencil"></i> 修改
+                    </button>
+                </a>
+            </shiro:hasRole>
             <a>
                 <button onclick="searchStatus('/supplyType/queryByPager?status=Y');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看可用记录
@@ -115,6 +122,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改供应商分类</h3>
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="supplyType.supplyTypeId" name="supplyTypeId" id = "supplyTypeId"/>
@@ -151,6 +159,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加供应商分类</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
