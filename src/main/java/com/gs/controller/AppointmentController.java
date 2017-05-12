@@ -8,6 +8,7 @@ import com.gs.common.Constants;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
@@ -41,7 +42,6 @@ import java.util.List;
 @RequestMapping("appointment")
 public class AppointmentController {
 
-
     private Logger logger = (Logger) LoggerFactory.getLogger(AppointmentController.class);
 
     @Resource
@@ -56,11 +56,19 @@ public class AppointmentController {
     @Resource
     private RoleService roleService;
 
+    private String queryRole = Constants.CAR_OWNER + "," + Constants.COMPANY_RECEIVE + ","
+            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+
+    private String editRole = Constants.SYSTEM_ORDINARY_ADMIN+ ","+Constants.CAR_OWNER+"," + Constants.COMPANY_RECEIVE;
+
     @RequestMapping(value = "appointment", method = RequestMethod.GET)
     public String appointment() {
         if (SessionGetUtil.isUser()) {
-            logger.info("预约管理");
-            return "maintenanceAppointment/appointment";
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("预约管理");
+                return "maintenanceAppointment/appointment";
+            }
+            return "error/notPermission";
         } else {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
@@ -69,24 +77,27 @@ public class AppointmentController {
 
     @ResponseBody
     @RequestMapping(value = "query_pager", method = RequestMethod.GET)
-    public Pager4EasyUI<Appointment> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("status") String status) {
+    public Pager4EasyUI<Appointment> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("status") String status,@Param("user") User user) {
         if (SessionGetUtil.isUser()) {
-            logger.info("分页查询预约");
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
-            List<Appointment> appointments = new ArrayList<Appointment>();
-            if (status.equals("ALL")) {
-                pager.setTotalRecords(appointmentService.count());
-                appointments = appointmentService.queryByPager(pager);
-            } else if (status.equals("P")) {
-                pager.setTotalRecords(appointmentService.count());
-                appointments = appointmentService.querySpeedStatus(pager);
-            } else {
-                pager.setTotalRecords(appointmentService.countByStatus(status));
-                appointments = appointmentService.queryPagerByStatus(pager, status);
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("分页查询预约");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                List<Appointment> appointments = new ArrayList<Appointment>();
+                if (status.equals("ALL")) {
+                    pager.setTotalRecords(appointmentService.count(user));
+                    appointments = appointmentService.queryByPager(pager,user);
+                } else if (status.equals("P")) {
+                    pager.setTotalRecords(appointmentService.count(user));
+                    appointments = appointmentService.querySpeedStatus(pager,user);
+                } else {
+                    pager.setTotalRecords(appointmentService.countByStatus(status,user));
+                    appointments = appointmentService.queryPagerByStatus(pager, status,user);
+                }
+                return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
             }
-            return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
+            return null;
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -98,23 +109,26 @@ public class AppointmentController {
     public Pager4EasyUI<Appointment> queryPagerByAppointment(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,
                                                              @Param("userName") String userName, @Param("userPhone") String userPhone,
                                                              @Param("carPlate") String carPlate, @Param("maintainOrFix") String maintainOrFix,
-                                                             @Param("companyId") String companyId) {
+                                                             @Param("companyId") String companyId,@Param("user") User user) {
         if (SessionGetUtil.isUser()) {
-            logger.info("根据条件分页查询预约记录");
-            Appointment appointment = new Appointment();
-            appointment.setUserName(userName);
-            appointment.setUserPhone(userPhone);
-            appointment.setCarPlate(carPlate);
-            appointment.setMaintainOrFix(maintainOrFix);
-            appointment.setCompanyId(companyId);
-            Pager pager = new Pager();
-            pager.setPageNo(Integer.valueOf(pageNumber));
-            pager.setPageSize(Integer.valueOf(pageSize));
-            List<Appointment> appointments = new ArrayList<Appointment>();
-            pager.setTotalRecords(appointmentService.countByCondition(appointment));
-            appointments = appointmentService.queryPagerByCondition(pager, appointment);
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("根据条件分页查询预约记录");
+                Appointment appointment = new Appointment();
+                appointment.setUserName(userName);
+                appointment.setUserPhone(userPhone);
+                appointment.setCarPlate(carPlate);
+                appointment.setMaintainOrFix(maintainOrFix);
+                appointment.setCompanyId(companyId);
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                List<Appointment> appointments = new ArrayList<Appointment>();
+                pager.setTotalRecords(appointmentService.countByCondition(appointment,user));
+                appointments = appointmentService.queryPagerByCondition(pager, appointment,user);
 
-            return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
+                return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
+            }
+            return null;
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -125,38 +139,24 @@ public class AppointmentController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult appointmentAdd(Appointment appointment) {
         if (SessionGetUtil.isUser()) {
-            try {
-                User loginUser = SessionGetUtil.getUser();
+            if(CheckRoleUtil.checkRoles(editRole)) {
+                try {
+                    User loginUser = SessionGetUtil.getUser();
 
-                logger.info("添加预约");
-                String userId = UUIDUtil.uuid();
-                appointment.setUserId(userId);
-                appointment.setSpeedStatus(Constants.APPOINTMENT);
-                appointment.setCompanyId(loginUser.getCompanyId());
+                    logger.info("添加预约");
+                    String userId = UUIDUtil.uuid();
+                    appointment.setUserId(userId);
+                    appointment.setSpeedStatus(Constants.APPOINTMENT);
+                    appointment.setCompanyId(loginUser.getCompanyId());
 
-                if (appointment.getUserId() == null && appointment.getUserId().equals("")) {
-                    User user = new User();
-                    user.setUserId(userId);
-                    user.setCompanyId(loginUser.getCompanyId());
-                    user.setUserPhone(appointment.getUserPhone());
-                    user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
-                    user.setUserName(appointment.getUserName());
-
-                    String roleId = roleService.queryByName(Constants.CAR_OWNER).getRoleId();
-                    UserRole userRole = new UserRole();
-                    userRole.setUserId(userId);
-                    userRole.setRoleId(roleId);
-
-                    userRoleService.insert(userRole);
-                    userService.insert(user);
+                    appointmentService.insert(appointment);
+                    return ControllerResult.getSuccessResult("添加成功");
+                } catch (Exception e) {
+                    logger.info("添加预约记入失败，出现了一个错误");
+                    return ControllerResult.getFailResult("添加预约记录失败，出现了一个错误");
                 }
-
-                appointmentService.insert(appointment);
-                return ControllerResult.getSuccessResult("添加成功");
-            } catch (Exception e) {
-                logger.info("添加登记记录失败，出现了一个错误");
-                return ControllerResult.getFailResult("添加登记记录失败，出现了一个错误");
             }
+            return ControllerResult.getFailResult("添加预约记入失败");
         }else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -167,9 +167,12 @@ public class AppointmentController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult appointmentUpdate(Appointment appointment) {
             if (SessionGetUtil.isUser()) {
-                logger.info("更新预约");
-                appointmentService.update(appointment);
-                return ControllerResult.getSuccessResult("更新成功");
+                if(CheckRoleUtil.checkRoles(editRole)) {
+                    logger.info("更新预约");
+                    appointmentService.update(appointment);
+                    return ControllerResult.getSuccessResult("更新成功");
+                }
+                return ControllerResult.getFailResult("添加预约记录失败，你没有权限");
             } else {
                 logger.info("Session已失效，请重新登入");
                 return null;
@@ -180,26 +183,29 @@ public class AppointmentController {
     @RequestMapping(value = "update_status", method = RequestMethod.GET)
     public ControllerResult updateAppointmentStatus(String appointmentId, String status) {
         if (SessionGetUtil.isUser()) {
-            logger.info("更新预约状态");
-            if (status.equals("Y")) {
-                appointmentService.inactive(appointmentId);
-            } else {
-                appointmentService.active(appointmentId);
+            if(CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("更新预约状态");
+                if (status.equals("Y")) {
+                    appointmentService.inactive(appointmentId);
+                } else {
+                    appointmentService.active(appointmentId);
+                }
+                return ControllerResult.getSuccessResult("更新成功");
             }
-            return ControllerResult.getSuccessResult("更新成功");
+            return ControllerResult.getFailResult("添加预约记录失败，你没有权限");
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
         }
     }
 
-
     @ResponseBody
     @RequestMapping(value = "appointment_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryMaintenanceAppointmentAll() {
                 if (SessionGetUtil.isUser()) {
                     logger.info("查询所有预约信息");
-                    List<Appointment> appointments = appointmentService.queryAll();
+                    User user = SessionGetUtil.getUser();
+                    List<Appointment> appointments = appointmentService.queryAll(user);
                     List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
                     for (Appointment appointment : appointments) {
                         ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
@@ -214,17 +220,6 @@ public class AppointmentController {
                 }
     }
 
-    @ResponseBody
-    @RequestMapping(value = "id", method = RequestMethod.GET)
-    public Appointment queryById(String id) {
-         if (SessionGetUtil.isUser()) {
-             logger.info("根据id查询预约信息");
-             return appointmentService.queryById(id);
-         } else {
-             logger.info("Session已失效，请重新登入");
-             return null;
-         }
-    }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

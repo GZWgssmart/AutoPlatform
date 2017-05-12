@@ -1,6 +1,7 @@
 package com.gs.dao;
 
 import com.gs.bean.Appointment;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -16,14 +17,15 @@ import java.util.List;
 @Repository
 public interface AppointmentDAO extends BaseDAO<String, Appointment>{
 
-    public int countByStatus(String status);
+    public int countByStatus(@Param("status")String status, @Param("user")User user);
 
-    public List<Appointment> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status);
-    public List<Appointment> querySpeedStatus(@Param("pager")Pager pager );
+    public List<Appointment> queryPagerByStatus(@Param("pager") Pager pager, @Param("status") String status,@Param("user") User user);
 
-    public int countByCondition(Appointment appointment);
+    public List<Appointment> querySpeedStatus(@Param("pager")Pager pager,@Param("user") User user );
 
-    public List<Appointment> queryPagerByCondition(@Param("pager") Pager pager, @Param("appointment") Appointment appointment);
+    public int countByCondition(@Param("appointment") Appointment appointment,@Param("user") User user);
+
+    public List<Appointment> queryPagerByCondition(@Param("pager") Pager pager, @Param("appointment") Appointment appointment,@Param("user") User user);
 
     public int updateSpeedStatusById(@Param("speedStatus") String speedStatus, @Param("id") String id);
 

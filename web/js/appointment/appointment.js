@@ -141,15 +141,6 @@ function showEditWin() {
     }
 }
 
-/** 给datetimepicker添加默认值 */
-function getDate(){if (
-    appointment != null && appointment != "" && appointment != undefined) {
-
-    } else {
-        $("#addDatetimepicker").val(new Date());
-    }
-}
-
 /** 返回按钮 */
 function operateFormatter(value, row, index) {
     if (row.appoitmentStatus == 'Y') {
@@ -232,6 +223,16 @@ window.operateEvents = {
         validator("editForm");
         $("#editWin").modal('show');
     }
+}
+
+/**  条件查询*/
+function searchCheckin() {
+    var companyId = $("#searchCompanyId").val();
+    var userName = $("#searchUserName").val();
+    var userPhone = $("#searchUserPhone").val();
+    var carPlate = $("#searchCarPlate").val();
+    var maintainOrFix = $("#searchMaintainOrFix").val();
+    initTable("cusTable", "/appointment/appointment_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate +  "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
 }
 
 /** 关闭搜索的form */
@@ -375,16 +376,6 @@ function validator(formId) {
                 formSubmit("/appointment/edit", formId, "editWin");
             }
         })
-}
-
-/**  条件查询*/
-function searchCheckin() {
-    var userName = $("#searchUserName").val();
-    var userPhone = $("#searchUserPhone").val();
-    var carPlate = $("#searchCarPlate").val();
-    var maintainOrFix = $("#searchMaintainOrFix").val();
-    var companyId = $("#searchCompanyId").val();
-    initTable("cusTable", "/appointment/appointment_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate +  "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
 }
 
 
