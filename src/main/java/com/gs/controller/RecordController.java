@@ -6,9 +6,7 @@ import com.gs.bean.MaintainRecord;
 import com.gs.bean.User;
 import com.gs.bean.info.SendRemind;
 import com.gs.common.Constants;
-import com.gs.common.bean.ControllerResult;
-import com.gs.common.bean.Pager;
-import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.bean.*;
 import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.MaintainRecordService;
@@ -58,6 +56,11 @@ public class RecordController {
 
     // 可以操作的角色：董事长、接待员、技师
     private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE + "," + Constants.COMPANY_ARTIFICER;
+
+
+    // 可以查看的角色：董事长、财务员、超级管理员、普通管理员
+    private String queryRole1 = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ACCOUNTING + ","
+            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 
     @RequestMapping(value = "record_page", method = RequestMethod.GET)
     public String recordPage() {
@@ -345,12 +348,202 @@ public class RecordController {
 
     }
 
+    @ResponseBody
+    @RequestMapping(value="query_default",method= RequestMethod.GET)
+    public List<LineBasic> queryAll(@Param("companyId")String companyId){
+        if(SessionGetUtil.isUser()) {
+            if(CheckRoleUtil.checkRoles(queryRole1)) {
+                logger.info("默认查询本月维修保养记录报表显示");
+                List<LineBasic> lineBasics = new ArrayList<LineBasic>();
+                LineBasic lineBasic = new LineBasic();
+                LineBasic lineBasic1 = new LineBasic();
+                User user = SessionGetUtil.getUser();
+                if(user.getCompanyId() != null && !user.getCompanyId().equals("")){
+                    companyId = user.getCompanyId();
+                }
+                lineBasic.setName("保养");
+                dateDay("one", companyId);
+                lineBasic.setData(HighchartsData.doubleDayOne);
+                lineBasic1.setName("维修");
+                dateDay("two", companyId);
+                lineBasic1.setData(HighchartsData.doubleDayTwo);
+                lineBasic.setCategories(HighchartsData.strDay);
+                lineBasic1.setCategories(HighchartsData.strDay);
+                lineBasics.add(lineBasic);
+                lineBasics.add(lineBasic1);
+                return lineBasics;
+            }
+            return null;
+        } else{
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value="query_condition",method= RequestMethod.GET)
+    public List<LineBasic> queryCondition(@Param("start")String start,@Param("end")String end,
+                                          @Param("type")String type,@Param("companyId")String companyId){
+        if(SessionGetUtil.isUser()) {
+            if(CheckRoleUtil.checkRoles(queryRole1)) {
+                logger.info("根据年，月，季度，周，日查询所有维修保养记录显示");
+                List<LineBasic> lineBasics = new ArrayList<LineBasic>();
+                LineBasic lineBasic = new LineBasic();
+                LineBasic lineBasic1 = new LineBasic();
+                lineBasic.setName("保养");
+                lineBasic1.setName("维修");
+                User user = SessionGetUtil.getUser();
+                if (user.getCompanyId() != null && !user.getCompanyId().equals("")) {
+                    companyId = user.getCompanyId();
+                }
+                if (start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")) {
+                    if (type.equals("year")) {
+                        HighchartsData.setStrYear(start, end);
+                        dataCondition(start, end, "保养", type, "year", "one", companyId);
+                        lineBasic.setData(HighchartsData.doubleYearOne);
+                        dataCondition(start, end, "维修", type, "year", "two", companyId);
+                        lineBasic1.setData(HighchartsData.doubleYearTwo);
+                        lineBasic.setCategories(HighchartsData.strYear);
+                        lineBasic1.setCategories(HighchartsData.strYear);
+                    } else if (type.equals("quarter")) {
+                        dataCondition(start, end, "保养", type, "quarter", "one", companyId);
+                        lineBasic.setData(HighchartsData.doubleQuarterOne);
+                        dataCondition(start, end, "维修", type, "quarter", "two", companyId);
+                        lineBasic1.setData(HighchartsData.doubleQuarterTwo);
+                        lineBasic.setCategories(HighchartsData.strQuarter);
+                        lineBasic1.setCategories(HighchartsData.strQuarter);
+                    } else if (type.equals("month")) {
+                        dataCondition(start, end, "保养", type, "month", "one", companyId);
+                        lineBasic.setData(HighchartsData.doubleMonthOne);
+                        dataCondition(start, end, "维修", type, "month", "two", companyId);
+                        lineBasic1.setData(HighchartsData.doubleMonthTwo);
+                        lineBasic.setCategories(HighchartsData.strMonth);
+                        lineBasic1.setCategories(HighchartsData.strMonth);
+                    } else if (type.equals("week")) {
+                        HighchartsData.setStrWeek(start, end);
+                        dataCondition(start, end, "保养", type, "week", "one", companyId);
+                        lineBasic.setData(HighchartsData.doubleWeekOne);
+                        dataCondition(start, end, "维修", type, "week", "two", companyId);
+                        lineBasic1.setData(HighchartsData.doubleWeekTwo);
+                        lineBasic.setCategories(HighchartsData.strWeek);
+                        lineBasic1.setCategories(HighchartsData.strWeek);
+                    } else if (type.equals("day")) {
+                        dataCondition(start, end, "保养", type, "day", "one", companyId);
+                        lineBasic.setData(HighchartsData.doubleDayOne);
+                        dataCondition(start, end, "维修", type, "day", "two", companyId);
+                        lineBasic1.setData(HighchartsData.doubleDayTwo);
+                        lineBasic.setCategories(HighchartsData.strDay);
+                        lineBasic1.setCategories(HighchartsData.strDay);
+                    }
+                }
+                lineBasics.add(lineBasic);
+                lineBasics.add(lineBasic1);
+                return lineBasics;
+            }
+            return null;
+        } else{
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+
+    /*  默认查询本月的工单
+    * */
+    public void dateDay(String type,String companyId){
+        HighchartsData.doubleDayTwo = new double[31];
+        HighchartsData.doubleDayOne = new double[31];
+        List<MaintainRecord> maintainRecords = null;
+        if(type.equals("one")){
+            maintainRecords = maintainRecordService.queryByDefault("保养",companyId);
+        }else if(type.equals("two")){
+            maintainRecords = maintainRecordService.queryByDefault("维修",companyId);
+        }
+        int i = 0;
+        double[] doubles = new double[maintainRecords.size()];
+        String[] strs = new String[maintainRecords.size()];
+        for(MaintainRecord io: maintainRecords) {
+            doubles[i] = io.getCoont();
+            strs[i] = HighchartsData.dateFormat(io.getRecordCreatedTime(),"day");
+            i++;
+        }
+        for(int j = 0,len = HighchartsData.strDay.length; j <len ; j++){
+            for(int k = 0; k < strs.length; k++){
+                if(HighchartsData.strDay[j].equals(strs[k])){
+                    if(type.equals("two")){
+                        HighchartsData.doubleDayTwo[j] = doubles[k];
+                    }else if(type.equals("one")){
+                        HighchartsData.doubleDayOne[j] = doubles[k];
+                    }
+
+                }
+            }
+        }
+
+
+    }
+    /*
+    *  按年，季度，月，周，日，查询 工单
+    * */
+    public void dataCondition(String start,String end,String maintainOrFix,String type,String date,String species,String companyId){
+        HighchartsData.doubleDayTwo = new double[31];
+        HighchartsData.doubleDayOne = new double[31];
+        HighchartsData. doubleMonthTwo = new double[12];
+        HighchartsData.doubleMonthOne = new double[12];
+        HighchartsData.doubleQuarterTwo = new double[4];
+        HighchartsData.doubleQuarterOne = new double[4];
+        HighchartsData.doubleYearTwo = new double[HighchartsData.yearLen];
+        HighchartsData.doubleYearOne = new double[HighchartsData.yearLen];
+        HighchartsData.doubleWeekTwo = new double[HighchartsData.weekLen];
+        HighchartsData.doubleWeekOne = new double[HighchartsData.weekLen];
+        List<MaintainRecord> maintainRecords = maintainRecordService.queryByCondition(start,end,maintainOrFix,type,companyId);;
+        int i = 0;
+        double[] doubles = new double[maintainRecords.size()];
+        String[] strs = new String[maintainRecords.size()];
+        HighchartsData.len = 0;
+        for(MaintainRecord io: maintainRecords) {
+            doubles[i] = io.getCoont();
+            if(date.equals("month")) {
+                strs[i] = HighchartsData.dateFormat(io.getRecordCreatedTime(), "month");
+                HighchartsData.len = HighchartsData.strMonth.length;
+            }else if(date.equals("day")){
+                strs[i] = HighchartsData.dateFormat(io.getRecordCreatedTime(), "day");
+                HighchartsData.len = HighchartsData.strDay.length;
+            }else if(date.equals("quarter")){
+                strs[i] = HighchartsData.dateFormat(io.getRecordCreatedTime(), "quarter");
+                HighchartsData.len = HighchartsData.strQuarter.length;
+            }else if(date.equals("year")){
+                strs[i] = HighchartsData.dateFormat(io.getRecordCreatedTime(),"year");
+                HighchartsData.len = HighchartsData.strYear.length;
+            }else if(date.equals("week")){
+                strs[i] = "第"+String.valueOf(HighchartsData.getWeek(HighchartsData.dateFormat(io.getRecordCreatedTime())))+"周";
+                HighchartsData.len = HighchartsData.strWeek.length;
+            }
+            i++;
+        }
+        if(date.equals("quarter")) {
+            HighchartsData.getQuarter(strs,doubles,species);
+        }else if(date.equals("month")){
+            HighchartsData.getMonth(strs,doubles,species);
+        }else if(date.equals("day")){
+            HighchartsData.getDay(strs,doubles,species);
+        }else if(date.equals("year")){
+            HighchartsData. getYear(strs,doubles,species);
+        }else if(date.equals("week")){
+            HighchartsData.getWeek(strs,doubles,species);
+        }
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
+
+
+
 
 }
 

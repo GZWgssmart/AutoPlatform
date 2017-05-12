@@ -62,7 +62,7 @@
 
 	<select id="queryAll" resultMap="outgoingTypeResultMap">
 		<![CDATA[
-			select * from t_outgoing_type
+			select * from t_outgoing_type where outTypeStatus = 'Y'
 		]]>
 	</select>
 

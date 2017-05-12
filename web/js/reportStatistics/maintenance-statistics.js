@@ -3,7 +3,7 @@ var tempData = {
         type: 'line'
     },
     title: {
-        text: '员工工单本月统计'
+        text: '维修保养记录本月统计'
     },
     yAxis: {
         title: {
@@ -40,7 +40,7 @@ function isGraphics(){
                         type: 'column'
                     },
                     title: {
-                        text: '员工工单本月统计'
+                        text: '维修保养记录本月统计'
                     },
                     yAxis: {
                         min: 0,
@@ -71,7 +71,7 @@ function isGraphics(){
                         type: 'line'
                     },
                     title: {
-                        text: '员工工单本月统计'
+                        text: '维修保养记录本月统计'
                     },
                     yAxis: {
                         title: {
@@ -118,7 +118,7 @@ function adminQuery(){
 }
 
 function companyQuery(){
-    getColumnarChart("columnar", "/peopleManage/query_default", tempData,"default","员工工单本月统计");
+    getColumnarChart("columnar", "/record/query_default", tempData,"default","维修保养记录本月统计");
 }
 
 function search(count){
@@ -126,27 +126,27 @@ function search(count){
         type = 'year'
         var start = $("#start1").val();
         var end = $("#end1").val();
-        validator(start,end,type,"员工工单年统计");
+        validator(start,end,type,"维修保养记录年统计");
     }else if(count == 2){
         type = 'quarter'
         var start = $("#start2").val();
         var end = $("#end2").val();
-        validator(start,end,type,'员工工单季度统计');
+        validator(start,end,type,'维修保养记录季度统计');
     }else if(count == 3){
         type = 'month'
         var start = $("#start3").val();
         var end = $("#end3").val();
-        validator(start,end,type,'员工工单月统计');
+        validator(start,end,type,'维修保养记录月统计');
     }else if(count == 4){
         type = 'week'
         var start = $("#start4").val();
         var end = $("#end4").val();
-        validator(start,end,type,'员工工单周统计');
+        validator(start,end,type,'维修保养记录周统计');
     }else if(count == 5){
         type = 'day'
         var start = $("#start5").val();
         var end = $("#end5").val();
-        validator(start,end,type,'员工工单日统计');
+        validator(start,end,type,'维修保养记录日统计');
     }
 }
 
@@ -158,22 +158,21 @@ function search(count){
         if($("#span").text()== 'admin'){
             if($("#spans").text() != ''){
                 if(start != '' && end != ''){
-                    getLineBasicChart("columnar", "/peopleManage/query_condition?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
+                    getLineBasicChart("columnar", "/record/query_condition?start=" + start +"&end=" + end + "&type=" + type + "&companyId="+companyId, tempData,type,text);
                 }else{
-                    getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
+                    getLineBasicChart("columnar", "/record/query_default?companyId="+companyId, tempData,"default","维修保养记录本月统计");
                 }
             }else{
                 showCompany();
             }
         }else if($("#span").text()== 'company'){
             if(start != '' && end != ''){
-                getColumnarChart("columnar", "/peopleManage/query_condition?start=" + start +"&end=" + end + "&type=" + type, tempData,type,text);
+                getColumnarChart("columnar", "/record/query_condition?start=" + start +"&end=" + end + "&type=" + type, tempData,type,text);
             }else{
-                getColumnarChart("columnar", "/peopleManage/query_default", tempData,"default","员工工单本月统计");
+                getColumnarChart("columnar", "/record/query_default", tempData,"default","维修保养记录本月统计");
             }
         }
-
-}
+    }
 
 
 function switchsValidator(){
@@ -181,29 +180,29 @@ function switchsValidator(){
         type = 'year'
         var start = $("#start1").val();
         var end = $("#end1").val();
-        validator(start,end,type,"员工工单年统计");
+        validator(start,end,type,"维修保养记录年统计");
     }else if(type == 'quarter'){
         type = 'quarter';
         var start = $("#start2").val();
         var end = $("#end2").val();
-        validator(start,end,type,'员工工单季度统计');
+        validator(start,end,type,'维修保养记录季度统计');
     }else if(type == 'month') {
         type = 'month';
         var start = $("#start3").val();
         var end = $("#end3").val();
-        validator(start,end,type,'员工工单月统计');
+        validator(start,end,type,'维修保养记录月统计');
     }else if(type == 'week'){
         type = 'week';
         var start = $("#start4").val();
         var end = $("#end4").val();
-        validator(start,end,type,'员工工单周统计');
+        validator(start,end,type,'维修保养记录周统计');
     } else if(type == 'day') {
         type = 'day';
         var start = $("#start5").val();
         var end = $("#end5").val();
-        validator(start,end,type,'员工工单日统计');
+        validator(start,end,type,'维修保养记录日统计');
     }else{
-        getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
+        getLineBasicChart("columnar", "/record/query_default?companyId="+companyId, tempData,"default","维修保养记录本月统计");
     }
 }
 
@@ -237,7 +236,7 @@ function validatorCompany(){
             var companyName = $("#company").find("option:selected").text();
             $('#spans').html("当前公司:"+companyName);
             $('#checkForm').data('bootstrapValidator').resetForm(true);
-            getLineBasicChart("columnar", "/peopleManage/query_default?companyId="+companyId, tempData,"default","员工工单本月统计");
+            getLineBasicChart("columnar", "/record/query_default?companyId="+companyId, tempData,"default","维修保养记录本月统计");
         })
 }
 

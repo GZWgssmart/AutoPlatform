@@ -131,5 +131,15 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.updatePickupTime(recordId);
     }
 
+    @Override
+    public List<MaintainRecord> queryByDefault(String maintainOrFix, String companyId) {
+        return maintainRecordDAO.queryByDefault(maintainOrFix,companyId);
+    }
+
+    @Override
+    public List<MaintainRecord> queryByCondition(String startTime, String endTime, String maintainOrFix, String type, String companyId) {
+        return maintainRecordDAO.queryByCondition(startTime,endTime,maintainOrFix,type,companyId);
+    }
+
 
 }

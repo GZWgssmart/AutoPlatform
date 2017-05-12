@@ -21,6 +21,7 @@ public class MaintainRecord {
     private String companyId; // 公司的ID
     private String recordStatus;  // 维修保养记录状态
     private String speedStatus; // 标识当前进度
+    private double coont;
 
     private Checkin checkin; // 登记表
     private Company company; // 公司
@@ -135,5 +136,13 @@ public class MaintainRecord {
 
     public void setSpeedStatus(String speedStatus) {
         this.speedStatus = speedStatus;
+    }
+
+    public double getCoont() {
+        return coont;
+    }
+
+    public void setCoont(double coont) {
+        this.coont = coont;
     }
 }

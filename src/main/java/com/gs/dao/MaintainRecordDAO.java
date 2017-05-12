@@ -98,4 +98,15 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord>{
      * @return
      */
     public int updatePickupTime(String recordId);
+
+    /*
+* 默认查询本月的维修保养记录统计
+* */
+    public List<MaintainRecord> queryByDefault(@Param("maintainOrFix") String maintainOrFix, @Param("companyId")String companyId);
+
+    /*
+    * 根据年，月，季度，周，日查询所有维修保养统计
+    * */
+    public List<MaintainRecord> queryByCondition(@Param("startTime")String startTime,@Param("endTime")String endTime,@Param("maintainOrFix")String maintainOrFix,
+                                           @Param("type")String type, @Param("companyId")String companyId);
 }

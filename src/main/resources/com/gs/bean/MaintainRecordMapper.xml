@@ -14,6 +14,7 @@
         <result column="recordDes" property="recordDes"/>
         <result column="recordStatus" property="recordStatus"/>
         <result column="speedStatus" property="speedStatus"/>
+        <result column="coont" property="coont"></result>
         <!--接待表Id-->
         <association property="checkin" javaType="com.gs.bean.Checkin">
             <id column="checkinId" property="checkinId"/>
@@ -260,6 +261,57 @@
             and companyId = #{user.companyId}
         </if>
     </select>
+
+    <select id="queryByDefault"  resultMap="maintainRecordResultMap">
+        <![CDATA[
+            select count(mr.recordId) as coont ,mr.recordCreatedTime from t_maintain_record mr,t_checkin c
+             WHERE DATE_FORMAT(mr.recordCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and  mr.recordStatus = 'Y'
+            and mr.checkinId = c.checkinId and mr.speedStatus = '已完成'
+		]]>
+        <if test="maintainOrFix =='保养'">
+            and c.maintainOrFix = '保养'
+        </if>
+        <if test="maintainOrFix =='维修'">
+            and c.maintainOrFix = '维修'
+        </if>
+        <if test="companyId != null and companyId != ''">
+            and mr.companyId = #{companyId}
+        </if>
+        GROUP BY day(mr.recordCreatedTime)
+    </select>
+
+    <select id="queryByCondition"  resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+           select count(mr.recordId) as coont ,mr.recordCreatedTime from t_maintain_record mr,t_checkin c
+            where mr.recordCreatedTime >= #{startTime} and mr.recordCreatedTime <= #{endTime} and  mr.recordStatus = 'Y'
+           and mr.checkinId = c.checkinId and mr.speedStatus = '已完成'
+		]]>
+        <if test="maintainOrFix =='保养'">
+            and c.maintainOrFix = '保养'
+        </if>
+        <if test="maintainOrFix =='维修'">
+            and c.maintainOrFix = '维修'
+        </if>
+        <if test="companyId != null and companyId != ''">
+            and mr.companyId = #{companyId}
+        </if>
+        <if test="type =='year'">
+            GROUP BY year(mr.recordCreatedTime)
+        </if>
+        <if test="type =='quarter'">
+            GROUP BY quarter(mr.recordCreatedTime)
+        </if>
+        <if test="type =='month'">
+            GROUP BY month(mr.recordCreatedTime)
+        </if>
+        <if test="type =='week'">
+            GROUP BY week(mr.recordCreatedTime)
+        </if>
+        <if test="type =='day'">
+            GROUP BY day(mr.recordCreatedTime)
+        </if>
+    </select>
+
 
     <update id="inactive" parameterType="string">
 		<![CDATA[

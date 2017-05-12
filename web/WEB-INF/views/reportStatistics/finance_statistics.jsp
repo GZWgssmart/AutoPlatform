@@ -45,10 +45,11 @@
             <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
                 <li><a  data-toggle="tab" onclick="showCompany()">选择公司</a></li>
                 <li class="disabled" ><a id="spans" href ="javascript:return false;"></a></li>
-                <div class="form-group" style="width: auto; display: inherit;">
-                    <input type="checkbox" id="isGraphics" name="isGraphics">
-                </div>
+
                 </shiro:hasAnyRoles>
+        <div class="form-group" style="width: auto; display: inherit;">
+            <input type="checkbox" id="isGraphics" name="isGraphics">
+        </div>
        　　 </ul>
           <div class="tab-content" style="margin-top:10px;">
               <div class="tab-pane  fade in active" id="year">

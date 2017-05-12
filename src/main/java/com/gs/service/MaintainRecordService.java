@@ -93,4 +93,15 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      * @return
      */
     public int updatePickupTime(String recordId);
+
+    /*
+* 默认查询本月的维修保养记录统计
+* */
+    public List<MaintainRecord> queryByDefault(String maintainOrFix,String companyId);
+
+    /*
+    * 根据年，月，季度，周，日查询所有维修保养统计
+    * */
+    public List<MaintainRecord> queryByCondition(String startTime,String endTime,String maintainOrFix,
+                                                 String type, String companyId);
 }
