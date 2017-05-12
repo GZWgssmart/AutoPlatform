@@ -29,9 +29,11 @@
 </head>
 <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
 <body onload="adminQuery()">
+<span id="span" hidden>admin</span>
 </shiro:hasAnyRoles>
 <shiro:hasAnyRoles name="companyAccounting, companyAdmin">
 <body onload="companyQuery()">
+<span id="span" hidden>company</span>
 </shiro:hasAnyRoles>
 <div class="container" style="margin-top:15px;">
     <ul class="nav nav-pills" id="myTab">
@@ -40,11 +42,13 @@
                <li><a  data-toggle="tab" data-target="#month">按月查询</a></li>
                <li><a  data-toggle="tab"data-target="#week">按周查询</a></li>
                 <li><a  data-toggle="tab"data-target="#day">按日查询</a></li>
+            <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
                 <li><a  data-toggle="tab" onclick="showCompany()">选择公司</a></li>
                 <li class="disabled" ><a id="spans" href ="javascript:return false;"></a></li>
                 <div class="form-group" style="width: auto; display: inherit;">
                     <input type="checkbox" id="isGraphics" name="isGraphics">
                 </div>
+                </shiro:hasAnyRoles>
        　　 </ul>
           <div class="tab-content" style="margin-top:10px;">
               <div class="tab-pane  fade in active" id="year">
@@ -173,6 +177,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">选择公司</h3>
                         <form role="form" id="checkForm" >
                             <div class="form-group">

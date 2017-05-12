@@ -117,7 +117,7 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="salaryResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="salaryResultMap" >
 		<![CDATA[
 			select s.*,u.userId as user_id,u.userName from t_salary s ,t_user u where s.userId = u.userId
 		]]>
@@ -125,15 +125,15 @@
 			and u.companyId = #{user.companyId}
 		</if>
 		order by s.salaryCreatedTime Desc ,u.companyId
-		limit #{beginIndex}, #{pageSize}
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
 			select count(*) from t_salary s ,t_user u where s.userId = u.userId
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and u.companyId = #{companyId}
 		</if>
 	</select>
 
@@ -179,24 +179,24 @@
 		<if test="user.userName != null and user.userName != 'null'">
 			and u.userName like concat('%',#{user.userName},'%')
 		</if>
-		<if test="salaryRange == 0">
+		<if test="salary.salaryRange == 0">
 		</if>
-		<if test="salaryRange == 1">
+		<if test="salary.salaryRange == 1">
 			and s.totalSalary <![CDATA[ <= 2500 ]]>
 		</if>
-		<if test="salaryRange == 2">
+		<if test="salary.salaryRange == 2">
 			and s.totalSalary <![CDATA[ >= 2500 ]]>
 			and s.totalSalary <![CDATA[ <= 4500 ]]>
 		</if>
-		<if test="salaryRange == 3">
+		<if test="salary.salaryRange == 3">
 			and s.totalSalary <![CDATA[ >= 4500 ]]>
 			and s.totalSalary <![CDATA[ <= 6500 ]]>
 		</if>
-		<if test="salaryRange == 4">
+		<if test="salary.salaryRange == 4">
 			and s.totalSalary <![CDATA[ >= 6500 ]]>
 			and s.totalSalary <![CDATA[ <= 8500 ]]>
 		</if>
-		<if test="salaryRange == 5">
+		<if test="salary.salaryRange == 5">
 			and s.totalSalary <![CDATA[ >= 8500 ]]>
 		</if>
 		<if test="user.companyId != null and user.companyId != ''">
