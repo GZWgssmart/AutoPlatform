@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaterialUse;
+import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,12 +29,12 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	public int batchDelete(List<MaterialUse> list) { return materialUseDAO.batchDelete(list); }
 	public int update(MaterialUse materialUse) { return materialUseDAO.update(materialUse); }
 	public int batchUpdate(List<MaterialUse> list) { return materialUseDAO.batchUpdate(list); }
-	public List<MaterialUse> queryAll() { return materialUseDAO.queryAll(); }
-	public List<MaterialUse> queryByStatus(String status) { return materialUseDAO.queryByStatus(status); }
-	public MaterialUse query(MaterialUse materialUse) { return materialUseDAO.query(materialUse); }
+	public List<MaterialUse> queryAll(User user) { return materialUseDAO.queryAll(user); }
+	public List<MaterialUse> queryByStatus(String status, User user) { return materialUseDAO.queryByStatus(status, user); }
+	public MaterialUse query(MaterialUse materialUse, User user) { return materialUseDAO.query(materialUse, user); }
 	public MaterialUse queryById(String id) { return materialUseDAO.queryById(id); }
-	public List<MaterialUse> queryByPager(Pager pager) { return materialUseDAO.queryByPager(pager); }
-	public int count() { return materialUseDAO.count(); }
+	public List<MaterialUse> queryByPager(Pager pager, User user) { return materialUseDAO.queryByPager(pager, user); }
+	public int count(User user) { return materialUseDAO.count(user); }
 	public int inactive(String id) { return materialUseDAO.inactive(id); }
 	public int active(String id) { return materialUseDAO.active(id); }
 

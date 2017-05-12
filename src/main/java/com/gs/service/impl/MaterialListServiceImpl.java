@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaterialList;
+import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,12 +29,12 @@ public class MaterialListServiceImpl implements MaterialListService {
 	public int batchDelete(List<MaterialList> list) { return materialListDAO.batchDelete(list); }
 	public int update(MaterialList materialList) { return materialListDAO.update(materialList); }
 	public int batchUpdate(List<MaterialList> list) { return materialListDAO.batchUpdate(list); }
-	public List<MaterialList> queryAll() { return materialListDAO.queryAll(); }
-	public List<MaterialList> queryByStatus(String status) { return materialListDAO.queryByStatus(status); }
-	public MaterialList query(MaterialList materialList) { return materialListDAO.query(materialList); }
+	public List<MaterialList> queryAll(User user) { return materialListDAO.queryAll(user); }
+	public List<MaterialList> queryByStatus(String status, User user) { return materialListDAO.queryByStatus(status, user); }
+	public MaterialList query(MaterialList materialList, User user) { return materialListDAO.query(materialList, user); }
 	public MaterialList queryById(String id) { return materialListDAO.queryById(id); }
-	public List<MaterialList> queryByPager(Pager pager) { return materialListDAO.queryByPager(pager); }
-	public int count() { return materialListDAO.count(); }
+	public List<MaterialList> queryByPager(Pager pager, User user) { return materialListDAO.queryByPager(pager, user); }
+	public int count(User user) { return materialListDAO.count(user); }
 	public int inactive(String id) { return materialListDAO.inactive(id); }
 	public int active(String id) { return materialListDAO.active(id); }
 

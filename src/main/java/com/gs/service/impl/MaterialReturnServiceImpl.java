@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.MaterialReturn;
+import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -28,12 +29,12 @@ public class MaterialReturnServiceImpl implements MaterialReturnService {
 	public int batchDelete(List<MaterialReturn> list) { return materialReturnDAO.batchDelete(list); }
 	public int update(MaterialReturn materialReturn) { return materialReturnDAO.update(materialReturn); }
 	public int batchUpdate(List<MaterialReturn> list) { return materialReturnDAO.batchUpdate(list); }
-	public List<MaterialReturn> queryAll() { return materialReturnDAO.queryAll(); }
-	public List<MaterialReturn> queryByStatus(String status) { return materialReturnDAO.queryByStatus(status); }
-	public MaterialReturn query(MaterialReturn materialReturn) { return materialReturnDAO.query(materialReturn); }
+	public List<MaterialReturn> queryAll(User user) { return materialReturnDAO.queryAll(user); }
+	public List<MaterialReturn> queryByStatus(String status, User user) { return materialReturnDAO.queryByStatus(status, user); }
+	public MaterialReturn query(MaterialReturn materialReturn, User user) { return materialReturnDAO.query(materialReturn, user); }
 	public MaterialReturn queryById(String id) { return materialReturnDAO.queryById(id); }
-	public List<MaterialReturn> queryByPager(Pager pager) { return materialReturnDAO.queryByPager(pager); }
-	public int count() { return materialReturnDAO.count(); }
+	public List<MaterialReturn> queryByPager(Pager pager, User user) { return materialReturnDAO.queryByPager(pager, user); }
+	public int count(User user) { return materialReturnDAO.count(user); }
 	public int inactive(String id) { return materialReturnDAO.inactive(id); }
 	public int active(String id) { return materialReturnDAO.active(id); }
 
