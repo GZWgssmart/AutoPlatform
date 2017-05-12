@@ -2,6 +2,7 @@ package com.gs.dao;
 
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesType;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -17,15 +18,15 @@ import java.util.List;
 @Repository
 public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
 
-    public List<Accessories> queryByStatusPager(@Param("accStatus") String accStatus, @Param("pager") Pager pager);
-    public int countByStatus(String status);
+    public List<Accessories> queryByStatusPager(@Param("accStatus") String accStatus, @Param("pager") Pager pager, @Param("user") User user);
+    public int countByStatus(@Param("status") String status, @Param("user") User user);
 
-    public List<Accessories> queryByIdPager(@Param("id") String id, @Param("pager") Pager pager);
-    public int countByTypeId(String accTypeId);
+    public List<Accessories> queryByIdPager(@Param("id") String id, @Param("pager") Pager pager, @Param("user") User user);
+    public int countByTypeId(String accTypeId, User user);
 
-    public int countByCondition(Accessories accessories);
-    public List<Accessories> queryByCondition(@Param("pager") Pager pager, @Param("accessories") Accessories accessories);
+    public int countByCondition(@Param("accessories") Accessories accessories, @Param("user") User user);
+    public List<Accessories> queryByCondition(@Param("pager") Pager pager, @Param("accessories") Accessories accessories, @Param("user") User user);
 
-    public void updateIdle(@Param("id") String id,  @Param("lastCount") int  lastCount);
+    public void updateIdle(@Param("id") String id,  @Param("lastCount") int  lastCount, @Param("user") User user);
 
 }
