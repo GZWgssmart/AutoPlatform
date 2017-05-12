@@ -209,7 +209,7 @@
 			WHERE r.roleName like concat('company', '%') and u.companyId = #{companyId}
 		]]>
 	</select>
-	<select id="queryCustomerPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryCustomerPager" resultType="list" resultMap="userResultMap">
 		<![CDATA[
 			SELECT * FROM t_user u
 			INNER JOIN t_user_role ur ON ur.userId = u.userId
@@ -220,7 +220,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and c.companyId = #{user.companyId}
 		</if>
-		limit #{beginIndex}, #{pageSize}
+		limit #{pager.beginIndex}, #{pageSize}
 	</select>
 
 	<select id="queryPeoplePager" resultType="list" resultMap="userResultMap">
