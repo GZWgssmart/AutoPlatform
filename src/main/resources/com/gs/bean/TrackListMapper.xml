@@ -11,6 +11,7 @@
 		<result column="serviceEvaluate" property="serviceEvaluate"/>
 		<result column="trackUser" property="trackUser"/>
 		<result column="trackCreatedTime" property="trackCreatedTime"/>
+		<result column="companyId" property="companyId"/>
 		<!--维修保养记录表-->
 		<association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
 			<id column="checkinId" property="checkinId"/>
@@ -100,14 +101,17 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="trackListResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="trackListResultMap" >
 		<![CDATA[
 		select l.userId as customerId,c.userPhone as customerPhone, l.trackUser as adminId, l.*, u.userName as adminName, c.userName as customerName
 		from t_checkin c, t_user u, t_track_list l, t_maintain_record r
 		where l.trackUser=u.userId and c.userId = l.userId and r.checkinId=c.checkinId and
 		c.checkinStatus ='Y' and r.recordStatus ='Y' order by l.trackCreatedTime desc
 		]]>
-		limit #{beginIndex}, #{pageSize}
+		<if test="user.companyId != null and user.companyId != ''">
+			and l.companyId = #{user.companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
@@ -116,6 +120,9 @@
 		where l.trackUser=u.userId and c.userId = l.userId and r.checkinId=c.checkinId and
 		c.checkinStatus ='Y' and r.recordStatus ='Y' and r.trackStatus = 'N'
 		]]>
+		<if test="companyId != null and companyId != ''">
+			and l.companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<update id="inactive" parameterType="string">

@@ -39,11 +39,11 @@ public class MessageSendServiceImpl implements MessageSendService {
 	public int inactive(String id) { return messageSendDAO.inactive(id); }
 	public int active(String id) { return messageSendDAO.active(id); }
 
-	public void batchUpdateBySendMsg(String[] idList, String sendMsg, User user) {
-		messageSendDAO.batchUpdateBySendMsg(idList, sendMsg,user);
+	public void batchUpdateBySendMsg(String[] idList, String sendMsg) {
+		messageSendDAO.batchUpdateBySendMsg(idList, sendMsg);
 	}
 
-	public void addMessageId(List<MessageSend> msd,User user) {
-		messageSendDAO.addMessageId(msd,user);
+	public void addMessageId(List<MessageSend> msd) {
+		messageSendDAO.addMessageId(msd);
 	}
 }

@@ -17,19 +17,17 @@ import java.util.List;
 public interface MessageSendDAO extends BaseDAO<String, MessageSend>{
 
     /**
-     * 根据查询条件计数
+     * 根据查询车主Id更新短信信息
      * @param idList
      * @param sendMsg
-     * @param user
      * @return
      */
     public void batchUpdateBySendMsg(@Param("idList") String[] idList,
-                                     @Param("sendMsg")String sendMsg,@Param("user")User user);
+                                     @Param("sendMsg")String sendMsg);
     /**
-     * 根据查询条件计数
+     * 根据车主Id添加信息Id
      * @param msd
-     * @param user
      * @return
      */
-    public void addMessageId(@Param("msd")List<MessageSend> msd,@Param("user")User user);
+    public void addMessageId(List<MessageSend> msd);
 }

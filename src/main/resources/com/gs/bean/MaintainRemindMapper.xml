@@ -96,7 +96,7 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="maintainRemindResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="maintainRemindResultMap">
 		<![CDATA[
 		  select * from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
 		]]>
@@ -104,14 +104,14 @@
 			and rem.companyId = #{user.companyId}
 		</if>
 		order by rem.remindCreatedTime desc
-		limit #{beginIndex}, #{pageSize}
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
 		  select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
+		<if test="companyId != null and companyId != ''">
 			and rem.companyId = #{user.companyId}
 		</if>
 	</select>
@@ -130,7 +130,7 @@
 
 	<select id="countByCondition" resultType="int">
   		select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
-		<if test="user.companyId != null and user.companyId != ''">
+		<if test="companyId != null and companyId != ''">
 			and rem.companyId = #{user.companyId}
 		</if>
 	</select>

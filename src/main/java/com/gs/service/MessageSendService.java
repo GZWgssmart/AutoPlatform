@@ -13,8 +13,8 @@ import java.util.List;
 */
 public interface MessageSendService extends BaseService<String, MessageSend>{
 
-    public void batchUpdateBySendMsg( String[] idList, String sendMsg,User user);
+    public void batchUpdateBySendMsg( String[] idList, String sendMsg);
 
-    public void addMessageId(List<MessageSend> msd,User user);
+    public void addMessageId(List<MessageSend> msd);
 
 }

@@ -105,21 +105,21 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="messageSendResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="messageSendResultMap">
 		<![CDATA[
 		select * from t_message_send s, t_checkin c where s.userId=c.userId
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and s.companyId = #{user.companyId}
 		</if>
-		limit #{beginIndex}, #{pageSize}
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
 		select count(*) from t_message_send s, t_checkin c where s.userId=c.userId
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
+		<if test="companyId != null and companyId != ''">
 			and s.companyId = #{user.companyId}
 		</if>
 	</select>

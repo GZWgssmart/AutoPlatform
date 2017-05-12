@@ -100,7 +100,7 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="complaintResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="queryByPager" resultType="list" resultMap="complaintResultMap">
 		<![CDATA[
 		select c.*,u.userId as adminId,u.userName as adminName,u1.* from t_complaint c LEFT JOIN  t_user u on c.userId=u.userId  LEFT JOIN t_user u1 on
  		c.complaintReplyUser= u1.userId
@@ -108,14 +108,14 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and c.companyId = #{user.companyId}
 		</if>
- 		limit #{beginIndex}, #{pageSize}
+ 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
 		select count(*) from t_complaint c, t_user u where c.userId=u.userId
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
+		<if test="companyId != null and companyId != ''">
 			and c.companyId = #{user.companyId}
 		</if>
 	</select>

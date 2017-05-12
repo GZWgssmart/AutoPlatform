@@ -16,9 +16,17 @@ public class TrackList {
 	private String trackUser; //跟踪回访用户 来源t_user表
 	private Date trackCreatedTime;  //回访时间
 	private User admin;//管理员
+	private String companyId; //公司Id
 	private MaintainRecord maintainRecord; // 维修保养记录表
 	private Checkin checkin;//登记表
 
+
+	public String getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(String companyId) {
+		this.companyId = companyId;
+	}
 
 	public MaintainRecord getMaintainRecord() {
 		return maintainRecord;
