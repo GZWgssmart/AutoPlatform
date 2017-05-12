@@ -60,19 +60,19 @@
 		select * from t_car_model
 	</select>
 
-	<select id="queryByStatus" resultMap="carModelResultMap" parameterType="string">
+	<select id="queryByStatus" resultMap="carModelResultMap">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="query" parameterType="carModel" resultType="carModel">
+	<select id="query" resultType="carModel">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryById" parameterType="string" resultType="carModel">
+	<select id="queryById" resultType="carModel">
 		<![CDATA[
 			select * from t_car_model where modelId = #{id}
 		]]>
@@ -84,20 +84,25 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="carModelResultMap">
+	<select id="queryByPager" resultMap="carModelResultMap">
 		<![CDATA[
-			select brand.brandName,brand.brandId,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId order by brand.brandName ASC limit #{beginIndex}, #{pageSize}
+			select brand.brandName,brand.brandId,model.modelId,model.modelName,model.modelDes,model.modelStatus
+			from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId
 		]]>
+		order by brand.brandName ASC limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(modelId) from t_car_model m ,t_car_brand b where m.brandId = b.brandId
+			select count(*) from t_car_model m ,t_car_brand b where m.brandId = b.brandId
 		]]>
 	</select>
 
-	<select id="searchByPager" resultType="list" resultMap="carModelResultMap">
-		select brand.brandName,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId
+	<select id="searchByPager" resultMap="carModelResultMap">
+		<![CDATA[
+	  		select brand.brandName,model.modelId,model.modelName,model.modelDes,model.modelStatus
+			from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId
+		]]>
 		<if test="brandId != null and brandId != ''">
 			and brand.brandId = #{brandId}
 		</if>
@@ -105,7 +110,9 @@
 	</select>
 
 	<select id="searchCount" resultType="int">
-		select count(modelId) from t_car_model m ,t_car_brand b where m.brandId = b.brandId
+		<![CDATA[
+			select count(*) from t_car_model m ,t_car_brand b where m.brandId = b.brandId
+		]]>
 		<if test="brandId != null and brandId != ''">
 			and b.brandId = #{brandId}
 		</if>
@@ -123,15 +130,19 @@
 		]]>
 	</update>
 
-	<select id="queryByModelStatusPager" resultType="list" resultMap="carModelResultMap">
+	<select id="queryByModelStatusPager" resultMap="carModelResultMap">
 		<![CDATA[
-			select brand.brandName,model.modelId,model.modelName,model.modelDes,model.modelStatus from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId and model.modelStatus = #{status} limit #{pager.beginIndex}, #{pager.pageSize}
+			select brand.brandName,model.modelId,model.modelName,model.modelDes,model.modelStatus
+			from t_car_brand brand ,t_car_model model where brand.brandId = model.brandId and
+			model.modelStatus = #{status}
 		]]>
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="statusCount" resultType="int">
 		<![CDATA[
-			select count(modelId) from t_car_model m ,t_car_brand b where m.brandId = b.brandId and m.modelStatus = #{status}
+			select count(*) from t_car_model m ,t_car_brand b where m.brandId = b.brandId and
+			m.modelStatus = #{status}
 		]]>
 	</select>
 </mapper>

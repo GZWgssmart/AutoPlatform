@@ -50,41 +50,41 @@
 		select * from t_car_plate
 	</select>
 
-	<select id="queryByStatus" resultMap="carPlateResultMap" parameterType="string">
+	<select id="queryByStatus" resultMap="carPlateResultMap">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="query" parameterType="carPlate" resultType="carPlate">
+	<select id="query" resultType="carPlate">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryById" parameterType="string" resultType="carPlate">
+	<select id="queryById" resultType="carPlate">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="carPlateResultMap">
-		select * from t_car_plate order by plateName asc limit #{beginIndex}, #{pageSize}
+	<select id="queryByPager" resultMap="carPlateResultMap">
+		select * from t_car_plate order by plateName asc limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-		select count(plateId) from t_car_plate
+		select count(*) from t_car_plate
 		]]>
 	</select>
 
-	<select id="searchByPager" resultType="list" resultMap="carPlateResultMap">
-		select * from t_car_plate where 1 = 1 and plateName like concat('%',#{plateName},'%') order by plateName asc limit #{pager.beginIndex}, #{pager.pageSize}
+	<select id="searchByPager" resultMap="carPlateResultMap">
+		select * from t_car_plate where plateName like concat('%',#{plateName},'%') order by plateName asc limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="searchCount" resultType="int">
 		<![CDATA[
-		select count(plateId) from t_car_plate where 1 = 1 and plateName like concat('%',#{plateName},'%')
+		select count(*) from t_car_plate where 1 = 1 and plateName like concat('%',#{plateName},'%')
 		]]>
 	</select>
 
@@ -100,13 +100,13 @@
 		]]>
 	</update>
 
-	<select id="byStatusPager" resultType="list" resultMap="carPlateResultMap" parameterType="com.gs.common.bean.Pager">
+	<select id="byStatusPager" resultMap="carPlateResultMap">
 		select * from t_car_plate where plateStatus = #{status} limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="countStatus" resultType="int">
 		<![CDATA[
-			select count(plateId) from t_car_plate where plateStatus = #{status}
+			select count(*) from t_car_plate where plateStatus = #{status}
 		]]>
 	</select>
 

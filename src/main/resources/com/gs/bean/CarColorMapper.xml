@@ -50,36 +50,36 @@
 		select * from t_car_color
 	</select>
 
-	<select id="queryByStatus" resultMap="carColorResultMap" parameterType="string">
+	<select id="queryByStatus" resultMap="carColorResultMap">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="query" parameterType="carColor" resultType="carColor">
+	<select id="query" resultType="carColor">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryById" parameterType="string" resultType="carColor">
+	<select id="queryById" resultType="carColor">
 		<![CDATA[
 
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="carColorResultMap">
-		select * from t_car_color  limit #{beginIndex}, #{pageSize}
+	<select id="queryByPager" resultMap="carColorResultMap">
+		select * from t_car_color  limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
-		select count(colorId) from t_car_color
+		select count(*) from t_car_color
 	</select>
-	<select id="searchByPager" resultType="list" resultMap="carColorResultMap">
-		select * from t_car_color  where 1 = 1 and colorName like concat('%', #{colorName}, '%') limit #{pager.beginIndex}, #{pager.pageSize}
+	<select id="searchByPager" resultMap="carColorResultMap">
+		select * from t_car_color  where colorName like concat('%', #{colorName}, '%') limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 	<select id="searchCount" resultType="int">
-		select count(colorId) from t_car_color where 1 = 1 and colorName like concat('%',#{colorName},'%')
+		select count(*) from t_car_color where colorName like concat('%',#{colorName},'%')
 	</select>
 
 	<update id="inactive" parameterType="string">
@@ -94,11 +94,11 @@
 		]]>
 	</update>
 
-	<select id="queryByColorPager" resultType="list" resultMap="carColorResultMap">
+	<select id="queryByColorPager" resultMap="carColorResultMap">
 		select * from t_car_color where colorStatus = #{status} limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="statusCount" resultType="int">
-		select count(colorId) from t_car_color where colorStatus = #{status}
+		select count(*) from t_car_color where colorStatus = #{status}
 	</select>
 </mapper>
