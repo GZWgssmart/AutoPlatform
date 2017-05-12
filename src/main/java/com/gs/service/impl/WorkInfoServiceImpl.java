@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.User;
 import com.gs.bean.WorkInfo;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -28,12 +29,12 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	public int batchDelete(List<WorkInfo> list) { return workInfoDAO.batchDelete(list); }
 	public int update(WorkInfo workInfo) { return workInfoDAO.update(workInfo); }
 	public int batchUpdate(List<WorkInfo> list) { return workInfoDAO.batchUpdate(list); }
-	public List<WorkInfo> queryAll() { return workInfoDAO.queryAll(); }
-	public List<WorkInfo> queryByStatus(String status) { return workInfoDAO.queryByStatus(status); }
-	public WorkInfo query(WorkInfo workInfo) { return workInfoDAO.query(workInfo); }
+	public List<WorkInfo> queryAll(User user) { return workInfoDAO.queryAll(user); }
+	public List<WorkInfo> queryByStatus(String status, User user) { return workInfoDAO.queryByStatus(status, user); }
+	public WorkInfo query(WorkInfo workInfo, User user) { return workInfoDAO.query(workInfo, user); }
 	public WorkInfo queryById(String id) { return workInfoDAO.queryById(id); }
-	public List<WorkInfo> queryByPager(Pager pager) { return workInfoDAO.queryByPager(pager); }
-	public int count() { return workInfoDAO.count(); }
+	public List<WorkInfo> queryByPager(Pager pager, User user) { return workInfoDAO.queryByPager(pager, user); }
+	public int count(User user) { return workInfoDAO.count(user); }
 	public int inactive(String id) { return workInfoDAO.inactive(id); }
 	public int active(String id) { return workInfoDAO.active(id); }
 
