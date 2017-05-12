@@ -148,16 +148,21 @@ public class RoleController {
             logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
-        logger.info("查询添加管理员时需要的下拉条件");
-        List<Role> roles = roleService.queryCAdminAndSOAdmin();
-        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
-        for (Role r : roles) {
-            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(r.getRoleId());
-            comboBox4EasyUI.setText(r.getRoleDes());
-            comboBox4EasyUIs.add(comboBox4EasyUI);
+        try {
+            logger.info("查询添加管理员时需要的下拉条件");
+            List<Role> roles = roleService.queryCAdminAndSOAdmin();
+            List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+            for (Role r : roles) {
+                ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                comboBox4EasyUI.setId(r.getRoleId());
+                comboBox4EasyUI.setText(r.getRoleDes());
+                comboBox4EasyUIs.add(comboBox4EasyUI);
+            }
+            return comboBox4EasyUIs;
+        } catch (Exception e) {
+            logger.info("发生异常，获取中断！");
+            return null;
         }
-        return comboBox4EasyUIs;
     }
 
 }

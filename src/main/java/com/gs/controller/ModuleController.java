@@ -75,17 +75,22 @@ public class ModuleController {
             logger.info("Session已失效或权限不足，无法查看！");
             return null;
         }
-        logger.info("查询所有模块");
-        User user = SessionGetUtil.getUser();
-        List<Module> modules = moduleService.queryAll(user);
-        List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
-        for (Module m : modules) {
-            ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-            comboBox4EasyUI.setId(m.getModuleId());
-            comboBox4EasyUI.setText(m.getModuleName());
-            comboBox4EasyUIs.add(comboBox4EasyUI);
+        try {
+            logger.info("查询所有模块");
+            User user = SessionGetUtil.getUser();
+            List<Module> modules = moduleService.queryAll(user);
+            List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+            for (Module m : modules) {
+                ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                comboBox4EasyUI.setId(m.getModuleId());
+                comboBox4EasyUI.setText(m.getModuleName());
+                comboBox4EasyUIs.add(comboBox4EasyUI);
+            }
+            return comboBox4EasyUIs;
+        } catch (Exception e) {
+            logger.info("发生异常，获取中断！");
+            return null;
         }
-        return comboBox4EasyUIs;
     }
 
     @ResponseBody
