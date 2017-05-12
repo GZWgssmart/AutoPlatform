@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% String path = request.getContextPath();%>
+<%@ taglib prefix="s" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -20,32 +21,34 @@
 </head>
 <body>
 <div class="container" style="width: 100%;">
-    <form id="formSearch" class="form-horizontal">
-        <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
-            <div class="col-sm-2">
-                <input size="16" type="text" readonly
-                       class="form_datetime form-control " id="buyTimeStart" placeholder="请选择开始时间">
-                <span class="add-on"><i class="icon-remove"></i></span>
-            </div>
-            <div class="col-sm-2">
-                <input size="16" type="text" readonly
-                       class="form_datetime form-control " id="buyTimeEnd" placeholder="请选择结束时间">
-            </div>
+    <s:hasAnyRoles name="companyAdmin, companyRepertory, companyBuyer, systemSuperAdmin">
+        <form id="formSearch" class="form-horizontal">
+            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+                <div class="col-sm-2">
+                    <input size="16" type="text" readonly
+                           class="form_datetime form-control " id="buyTimeStart" placeholder="请选择开始时间">
+                    <span class="add-on"><i class="icon-remove"></i></span>
+                </div>
+                <div class="col-sm-2">
+                    <input size="16" type="text" readonly
+                           class="form_datetime form-control " id="buyTimeEnd" placeholder="请选择结束时间">
+                </div>
 
-            <div class="col-sm-2" style="margin-left: -15px;">
-                <input type="text" id="sAccName" class="form-control" placeholder="请输入配件名">
-            </div>
+                <div class="col-sm-2" style="margin-left: -15px;">
+                    <input type="text" id="sAccName" class="form-control" placeholder="请输入配件名">
+                </div>
 
-            <div class="col-sm-2">
-                <button type="button" onclick="byAccNameSearch()" class="btn btn-primary">
-                    查询
-                </button>
-                <button type="button" onclick="closeSearchForm()" class="btn btn-default">
-                    关闭
-                </button>
+                <div class="col-sm-2">
+                    <button type="button" onclick="byAccNameSearch()" class="btn btn-primary">
+                        查询
+                    </button>
+                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                        关闭
+                    </button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </s:hasAnyRoles>
 
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
@@ -72,43 +75,50 @@
         </tr>
         </thead>
         <tbody>
-        <div id="toolbar" class="btn-group" style="margin: 10px 0px 10px 0px;">
-            <a data-toggle="modal">
-                <button type="button" onclick="showAccAddWin()" id="add" class="btn btn-default">
-                    <i class="glyphicon glyphicon-plus"></i> 添加
-                </button>
-            </a>
 
-            <a>
-                <button onclick="delteleBuy();" type="button" id="remove" class="btn btn-danger">
-                    <i class="glyphicon glyphicon-trash"></i> 删除
-                </button>
-            </a>
+            <div id="toolbar" class="btn-group" style="margin: 10px 0px 10px 0px;">
+                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin">
+                <a data-toggle="modal">
+                    <button type="button" onclick="showAccAddWin()" id="add" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i> 添加
+                    </button>
+                </a>
+                </s:hasAnyRoles>
+                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin">
+                <a>
+                    <button onclick="delteleBuy();" type="button" id="remove" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i> 删除
+                    </button>
+                </a>
+                </s:hasAnyRoles>
+                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory">
+                <a>
+                    <button onclick="onlyCheck();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-ok"></i> 只看已审核
+                    </button>
+                </a>
+                </s:hasAnyRoles>
+                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory">
+                <a>
+                    <button onclick="onlyBuy();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-shopping-cart"></i> 只看已采购
+                    </button>
+                </a>
+                </s:hasAnyRoles>
+                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory">
+                <a>
+                    <button onclick="showSearchForm();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-filter"></i>条件查询
+                    </button>
+                </a>
+                </s:hasAnyRoles>
+                <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory">
+                <a>
+                    <button onclick="allBuys();" type="button" class="btn btn-default">查看所有</button>
+                </a>
+                </s:hasAnyRoles>
 
-            <a>
-                <button onclick="onlyCheck();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-ok"></i> 只看已审核
-                </button>
-            </a>
-
-            <a>
-                <button onclick="onlyBuy();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-shopping-cart"></i> 只看已采购
-                </button>
-            </a>
-
-
-            <a>
-                <button onclick="showSearchForm();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-filter"></i>条件查询
-                </button>
-            </a>
-
-            <a>
-                <button onclick="allBuys();" type="button" class="btn btn-default">查看所有</button>
-            </a>
-
-        </div>
+            </div>
         </tbody>
     </table>
 </div>
@@ -163,8 +173,9 @@
                             </div>
 
                             <div class="form-group">
-                            <label>供应商：</label>
-                            <input type="text" name="accessories.supply.supplyName" attr="accessoriesBuy.accessories.supply.supplyName" class="form-control"/>
+                                <label>供应商：</label>
+                                <input type="text" name="accessories.supply.supplyName"
+                                       attr="accessoriesBuy.accessories.supply.supplyName" class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -227,7 +238,8 @@
 
                             <div class="form-group">
                                 <label>配件条码：</label>
-                                <input type="text" name="accessories.accCommodityCode" class="form-control" id="accCommodityCode"
+                                <input type="text" name="accessories.accCommodityCode" class="form-control"
+                                       id="accCommodityCode"
                                        attr="acc.accCommodityCode"/>
                             </div>
 
@@ -276,13 +288,15 @@
 
                             <div class="form-group">
                                 <label>总价：</label>
-                                <input type="text" name="accBuyTotal" id="accBuyTotal" onfocus="autoCalculation(this)" readonly
+                                <input type="text" name="accBuyTotal" id="accBuyTotal" onfocus="autoCalculation(this)"
+                                       readonly
                                        class="form-control" placeholder="点击自动计算"/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
-                                <input type="text" name="accBuyMoney" id="accBuyMoney" onfocus="autoCalculation(this)" readonly
+                                <input type="text" name="accBuyMoney" id="accBuyMoney" onfocus="autoCalculation(this)"
+                                       readonly
                                        class="form-control" placeholder="点击自动计算"/>
                             </div>
 

@@ -65,6 +65,7 @@
 
     <delete id="deleteById" parameterType="string">
 		delete from auto_platform.t_accessories_buy where accBuyId = #{id}
+
 	</delete>
 
     <delete id="batchDelete" parameterType="list">
@@ -97,8 +98,10 @@
         <![CDATA[
            select count(ab.accBuyId) as coont ,ab.accBuyCreatedTime from t_accessories_buy ab
              WHERE DATE_FORMAT(ab.accBuyCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and  ab.accBuyStatus = 'Y'
-           and ab.companyId = #{companyId}
 		]]>
+        <if test="companyId != null and companyId != ''">
+          and ab.companyId = #{companyId}
+        </if>
         GROUP BY day(ab.accBuyCreatedTime)
     </select>
 
@@ -106,8 +109,10 @@
         <![CDATA[
            select count(ab.accBuyId) as coont ,ab.accBuyCreatedTime from t_accessories_buy ab
             where ab.accBuyCreatedTime >= #{startTime} and ab.accBuyCreatedTime <= #{endTime} and  ab.accBuyStatus = 'Y'
-           and ab.companyId = #{companyId}
 		]]>
+        <if test="companyId != null and companyId != ''">
+            and ab.companyId = #{companyId}
+        </if>
         <if test="type =='year'">
             GROUP BY year(ab.accBuyCreatedTime)
         </if>
@@ -123,14 +128,17 @@
         <if test="type =='day'">
             GROUP BY day(ab.accBuyCreatedTime)
         </if>
+
     </select>
 
     <select id="queryByDefaultPay"  resultMap="accessoriesBuyResultMap">
         <![CDATA[
            select sum(ab.accBuyMoney) as accBuyMoney ,ab.accBuyCreatedTime from t_accessories_buy ab
              WHERE DATE_FORMAT(ab.accBuyCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and  ab.accBuyStatus = 'Y'
-           and ab.companyId = #{companyId}
 		]]>
+        <if test="companyId != null and companyId != ''">
+            and ab.companyId = #{companyId}
+        </if>
         GROUP BY day(ab.accBuyCreatedTime)
     </select>
 
@@ -138,7 +146,7 @@
         <![CDATA[
            select sum(ab.accBuyMoney) as accBuyMoney ,ab.accBuyCreatedTime from t_accessories_buy ab
             where ab.accBuyCreatedTime >= #{startTime} and ab.accBuyCreatedTime <= #{endTime} and  ab.accBuyStatus = 'Y'
-           and ab.companyId = #{companyId}
+
 		]]>
         <if test="type =='year'">
             GROUP BY year(ab.accBuyCreatedTime)
@@ -155,6 +163,11 @@
         <if test="type =='day'">
             GROUP BY day(ab.accBuyCreatedTime)
         </if>
+
+        <if test="companyId != null and companyId != ''">
+            and ab.companyId = #{companyId}
+        </if>
+
     </select>
 
 
@@ -164,6 +177,9 @@
 
     <select id="queryByStatus" resultMap="accessoriesBuyResultMap" parameterType="string">
 		select * from auto_platform.t_accessories_buy where accBuyStatus = #{status}
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
 	</select>
 
     <select id="queryByCheckStatus" resultMap="accessoriesBuyResultMap" parameterType="string">
@@ -202,6 +218,11 @@
           )
 --           inner join t_supply sy on ac.supplyId = sy.supplyId
         ) order by ab.accBuyTime desc
+
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
+
         limit
          #{beginIndex},#{pageSize}
         ]]>
@@ -209,32 +230,53 @@
 
     <select id="count" resultType="int">
 		select count(*) from auto_platform.t_accessories_buy
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
 	</select>
 
     <update id="inactive" parameterType="string">
 		update auto_platform.t_accessories_buy set accBuyStatus = 'N' WHERE accBuyId = #{id}
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
 	</update>
 
     <update id="active" parameterType="string">
 		update auto_platform.t_accessories_buy set accBuyStatus = 'Y' WHERE accBuyId = #{id}
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
 	</update>
 
     <select id="queryByBuyStatePager" resultType="list" resultMap="accessoriesBuyResultMap"
             parameterType="com.gs.common.bean.Pager">
         select * from auto_platform.t_accessories_buy where accBuyStatus = 'Y' limit #{beginIndex},#{pageSize}
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
     <select id="queryByCheckStatePager" resultType="list" resultMap="accessoriesBuyResultMap"
             parameterType="com.gs.common.bean.Pager">
         select * from auto_platform.t_accessories_buy where accBuyCheck = 'Y' limit #{beginIndex},#{pageSize}
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
     <select id="countByBuyState" resultType="int">
         select count(accBuyCount) from auto_platform.t_accessories_buy where accBuyStatus = 'Y'
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
     <select id="countByCheckState" resultType="int">
         select count(accBuyCheck) from auto_platform.t_accessories_buy where accBuyCheck = 'Y'
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
     <select id="countByAccName" resultType="int">
@@ -242,6 +284,9 @@
         ab.accId = ac.accId) inner join t_accessories_type ae on ac.accTypeId = ae.accTypeId where 1 = 1
         <if test="accName != null and accName  != '' ">
             and ac.accName like concat(concat('%',#{accName}),'%')
+        </if>
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
         </if>
     </select>
 
@@ -254,6 +299,9 @@
             and ac.accName like concat(concat('%',#{accName}),'%')
         </if>
         order by ac.accBuyedTime Desc
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
         limit
         #{pager.beginIndex},#{pager.pageSize}
     </select>
@@ -265,6 +313,9 @@
             and ac.accName like concat(concat('%',#{accName}),'%')
         </if>
         order by ab.accBuyTime desc
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
         limit #{pager.beginIndex},#{pager.pageSize}
     </select>
 
@@ -272,8 +323,13 @@
         select count(*) from (t_accessories_buy ab inner join t_accessories ac on ab.accId = ac.accId) inner join t_accessories_type ae on ac.accTypeId = ae.accTypeId
         where
         (ab.accBuyTime &gt;= #{buyTimeStart} and ab.accBuyTime &lt;= #{buyTimeEnd})
+
         <if test="accName != null and accName != '' ">
             and ac.accName like concat(concat('%',#{accName}),'%')
+        </if>
+
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
         </if>
     </select>
 

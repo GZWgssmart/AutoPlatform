@@ -2,6 +2,7 @@ package com.gs.service.impl;
 
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesBuy;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.AccessoriesBuyDAO;
 import com.gs.service.AccessoriesBuyService;
@@ -51,28 +52,28 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
         return accessoriesBuyDAO.batchUpdate(list);
     }
 
-    public List<AccessoriesBuy> queryAll() {
-        return accessoriesBuyDAO.queryAll();
+    public List<AccessoriesBuy> queryAll(User user) {
+        return accessoriesBuyDAO.queryAll(user);
     }
 
-    public List<AccessoriesBuy> queryByStatus(String status) {
-        return accessoriesBuyDAO.queryByStatus(status);
+    public List<AccessoriesBuy> queryByStatus(String status, User user) {
+        return accessoriesBuyDAO.queryByStatus(status, user);
     }
 
-    public AccessoriesBuy query(AccessoriesBuy accessoriesBuy) {
-        return accessoriesBuyDAO.query(accessoriesBuy);
+    public AccessoriesBuy query(AccessoriesBuy accessoriesBuy, User user) {
+        return accessoriesBuyDAO.query(accessoriesBuy, user);
     }
 
     public AccessoriesBuy queryById(String id) {
         return accessoriesBuyDAO.queryById(id);
     }
 
-    public List<AccessoriesBuy> queryByPager(Pager pager) {
-        return accessoriesBuyDAO.queryByPager(pager);
+    public List<AccessoriesBuy> queryByPager(Pager pager, User user) {
+        return accessoriesBuyDAO.queryByPager(pager, user);
     }
 
-    public int count() {
-        return accessoriesBuyDAO.count();
+    public int count(User user) {
+        return accessoriesBuyDAO.count(user);
     }
 
     public int inactive(String id) {
@@ -84,60 +85,60 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
     }
 
 
-    public int batchDeleteAcc(String[] ids) {
-        return accessoriesBuyDAO.batchDeleteAcc(ids);
+    public int batchDeleteAcc(String[] ids, User user) {
+        return accessoriesBuyDAO.batchDeleteAcc(ids, user);
     }
 
-    public List<Accessories> queryByCheckStates(String checkState) {
-        return accessoriesBuyDAO.queryByCheckStates(checkState);
+    public List<Accessories> queryByCheckStates(String checkState, User user) {
+        return accessoriesBuyDAO.queryByCheckStates(checkState, user);
     }
 
-    public int countByBuyState(String buyState) {
-        return accessoriesBuyDAO.countByBuyState(buyState);
+    public int countByBuyState(String buyState, User user) {
+        return accessoriesBuyDAO.countByBuyState(buyState, user);
     }
 
-    public int countByCheckState(String checkState) {
-        return accessoriesBuyDAO.countByCheckState(checkState);
+    public int countByCheckState(String checkState, User user) {
+        return accessoriesBuyDAO.countByCheckState(checkState, user);
     }
 
-    public List<AccessoriesBuy> queryByBuyStatePager(Pager pager) {
-        return accessoriesBuyDAO.queryByBuyStatePager(pager);
+    public List<AccessoriesBuy> queryByBuyStatePager(Pager pager, User user) {
+        return accessoriesBuyDAO.queryByBuyStatePager(pager, user);
     }
 
-    public List<AccessoriesBuy> queryByCheckStatePager(Pager pager) {
-        return accessoriesBuyDAO.queryByCheckStatePager(pager);
+    public List<AccessoriesBuy> queryByCheckStatePager(Pager pager, User user) {
+        return accessoriesBuyDAO.queryByCheckStatePager(pager, user);
     }
 
-    public int countByAccName(String accName) {
-        return accessoriesBuyDAO.countByAccName(accName);
+    public int countByAccName(String accName, User user) {
+        return accessoriesBuyDAO.countByAccName(accName, user);
     }
 
-    public List<AccessoriesBuy> queryByAccNamePager(Pager pager, String accName) {
-        return accessoriesBuyDAO.queryByAccNamePager(pager, accName);
+    public List<AccessoriesBuy> queryByAccNamePager(Pager pager, String accName, User user) {
+        return accessoriesBuyDAO.queryByAccNamePager(pager, accName, user);
     }
 
-    public List<AccessoriesBuy> queryByBuyTimeScopeByAccNamePager(Pager pager, String accName, String buyTimeStart, String buyTimeEnd) {
-        return accessoriesBuyDAO.queryByBuyTimeScopeByAccNamePager(pager, accName, buyTimeStart, buyTimeEnd);
+    public List<AccessoriesBuy> queryByBuyTimeScopeByAccNamePager(Pager pager, String accName, String buyTimeStart, String buyTimeEnd, User user) {
+        return accessoriesBuyDAO.queryByBuyTimeScopeByAccNamePager(pager, accName, buyTimeStart, buyTimeEnd, user);
     }
 
-    public int countByBuyTimeScope(String accName, String buyTimeStart, String buyTimeEnd) {
-        return accessoriesBuyDAO.countByBuyTimeScope(accName, buyTimeStart, buyTimeEnd);
+    public int countByBuyTimeScope(String accName, String buyTimeStart, String buyTimeEnd, User user) {
+        return accessoriesBuyDAO.countByBuyTimeScope(accName, buyTimeStart, buyTimeEnd, user);
     }
 
-    public List<AccessoriesBuy> queryByDefaultCount( String companyId) {
+    public List<AccessoriesBuy> queryByDefaultCount(String companyId) {
         return accessoriesBuyDAO.queryByDefaultCount(companyId);
     }
 
-    public List<AccessoriesBuy> queryByConditionCount( String startTime, String endTime, String type,  String companyId) {
-        return accessoriesBuyDAO.queryByConditionCount(startTime,endTime,type,companyId);
+    public List<AccessoriesBuy> queryByConditionCount(String startTime, String endTime, String type, String companyId) {
+        return accessoriesBuyDAO.queryByConditionCount(startTime, endTime, type, companyId);
     }
 
-    public List<AccessoriesBuy> queryByDefaultPay( String companyId) {
+    public List<AccessoriesBuy> queryByDefaultPay(String companyId) {
         return accessoriesBuyDAO.queryByDefaultPay(companyId);
     }
 
-    public List<AccessoriesBuy> queryByConditionPay( String startTime,  String endTime,  String type,  String companyId) {
-        return accessoriesBuyDAO.queryByConditionPay(startTime,endTime,type,companyId);
+    public List<AccessoriesBuy> queryByConditionPay(String startTime, String endTime, String type, String companyId) {
+        return accessoriesBuyDAO.queryByConditionPay(startTime, endTime, type, companyId);
     }
 
 

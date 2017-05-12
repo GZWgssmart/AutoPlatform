@@ -54,6 +54,7 @@
 		(accSaleId, accId, accSaledTime, accSaleCount, accSalePrice, accSaleTotal, accSaleDiscount, accSaleMoney, accSaleCreatedTime, companyId, accSaleStatus, userId, userName, userPhone)
 		values
 		(#{accSaleId}, #{accId}, #{accSaledTime}, #{accSaleCount}, #{accSalePrice}, #{accSaleTotal}, #{accSaleDiscount}, #{accSaleMoney}, now(), #{companyId}, 'Y', #{userId}, #{userName}, #{userPhone})
+
 	</insert>
 
     <insert id="batchInsert" parameterType="list">
@@ -94,19 +95,85 @@
 
     <select id="queryAll" resultMap="accessoriesSaleResultMap">
 		<![CDATA[
-
 		select * from auto_platform.t_accessories_sale;
-
         ]]>
 	</select>
 
-    <select id="queryByStatus" resultMap="accessoriesSaleResultMap" parameterType="string">
-		<![CDATA[
+    <select id="queryByStatus" resultType="list" resultMap="accessoriesSaleResultMap">
 
-		select * from t_accessories_sale where accSaleStatus = #{status}
+    </select>
 
+    <select id="queryOnlySale" resultType="list" resultMap="accessoriesSaleResultMap">
+        <![CDATA[
+            SELECT
+                ase.*,
+                ace.accName,
+                ate.accTypeId,
+                ate.accTypeName,
+                usr.userName,
+                ace.accId,
+                ace.accUnit,
+                ace.accIdle,
+                ace.accTotal
+            FROM
+                (((t_accessories_sale ase INNER JOIN t_accessories ace ON ase.accId = ace.accId)INNER JOIN t_accessories_type ate ON ace.accTypeId = ate.accTypeId) LEFT JOIN t_user usr ON ase.userId = usr.userId)
+            WHERE
+                ase.accSaleStatus = #{status}
+
+            <if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+            </if>
+
+            order by ase.accSaledTime
+            limit
+            #{pager.beginIndex},#{pager.pageSize}
         ]]>
-	</select>
+    </select>
+
+    <select id="onlySaleCount" resultType="int">
+        SELECT
+        count(ase.accSaleId)
+        FROM
+            (
+                (
+                    (
+                        t_accessories_sale ase
+                        INNER JOIN t_accessories ace ON ase.accId = ace.accId
+                    )
+                    INNER JOIN t_accessories_type ate ON ace.accTypeId = ate.accTypeId
+                )
+                LEFT JOIN t_user usr ON ase.userId = usr.userId
+            )
+        WHERE
+	    ase.accSaleStatus = 'Y'
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
+    </select>
+
+    <select id="queryByName" resultType="list" resultMap="accessoriesSaleResultMap">
+        SELECT
+        ase.*,
+        ace.accName,
+        ate.accTypeId,
+        ate.accTypeName,
+        usr.userName,
+        ace.accId,
+        ace.accUnit,
+        ace.accIdle,
+        ace.accTotal
+        FROM(((t_accessories_sale aseINNER JOIN t_accessories ace ON ase.accId = ace.accId) INNER JOIN t_accessories_type ate ON ace.accTypeId = ate.accTypeId) LEFT JOIN t_user usr ON ase.userId = usr.userId)
+        WHERE
+        <if test="name != null and name != '' ">
+            ase.userName like concat(concat('%',#{name}),'%')
+        </if>
+        order by ase.accSaledTime
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
+        limit
+        #{pager.beginIndex},#{pager.pageSize}
+    </select>
 
     <select id="query" parameterType="accessoriesSale" resultType="accessoriesSale">
 		<![CDATA[
@@ -116,16 +183,16 @@
 
     <select id="queryById" parameterType="string" resultType="accessoriesSale">
 		<![CDATA[
-
 		select * from t_accessories_type where accSaleId = #{id}
-
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
         ]]>
 	</select>
 
     <select id="queryByPager" resultType="list" resultMap="accessoriesSaleResultMap"
             parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-
            SELECT
             ase.*,
             ace.accName,
@@ -134,7 +201,9 @@
             usr.userName,
             ace.accId,
             ace.accUnit,
-            ace.accIdle
+            ace.accIdle,
+            ace.accTotal
+
             FROM
                 (
                     (
@@ -145,15 +214,22 @@
                 )
             LEFT JOIN t_user usr ON ase.userId = usr.userId
             order by ase.accSaledTime
+
+            <if test="user.companyId != null and user.companyId != ''">
+			  and companyId = #{user.companyId}
+		    </if>
+
             limit
              #{beginIndex},#{pageSize}
-
         ]]>
 
     </select>
 
     <select id="count" resultType="int">
         select count(*) from auto_platform.t_accessories_sale
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
     <update id="inactive" parameterType="string">
@@ -171,6 +247,62 @@
     <select id="queryByUserIdIsSameResult" resultType="int">
 --         select count(*) from t_accessories_sale ase inner join t_user usr on ase.userId = usr.userId where usr.userId = #{id}
         select count(*) from t_accessories_sale ase where ase.userId = #{id} and ase.userName = #{userName}
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
+    </select>
+
+    <select id="queryBySaleTimeScopeByAccNamePager" resultType="list">
+        SELECT
+        *
+        FROM
+        (
+        (
+        (
+        t_accessories_sale ase
+        INNER JOIN t_accessories acs ON ase.accId = acs.accId
+        )
+        INNER JOIN t_accessories_type act ON acs.accTypeId = act.accTypeId
+        )
+        LEFT JOIN t_user usr ON ase.userId = usr.userId
+        )
+        WHERE
+        ase.accSaledTime >= '2017-04-20 11:27:01' and ase.accSaledTime >= '2017-05-11 11:27:01' OR
+        <if test="accName != null and accName != ''">
+            (acs.accName like concat(concat('%',#{accName}),'%'))
+        </if>
+        AND
+        <if test="userName != null and userName != ''">
+            ase.userName like concat(concat('%',#{userName}),'%'))
+        </if>
+        order by desc
+
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
+
+        limit
+        #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="bySaleTimeScopeCount" resultType="int">
+        SELECT
+        count(ase.accSaleId)
+        FROM
+        (((t_accessories_sale ase INNER JOIN t_accessories acs ON ase.accId = acs.accId) INNER JOIN t_accessories_type
+        act ON acs.accTypeId = act.accTypeId) LEFT JOIN t_user usr ON ase.userId = usr.userId)
+        WHERE
+        ase.accSaledTime >= saleTimeStart and ase.accSaledTime >= saleTimeEnd OR
+        <if test="accName != null and accName != ''">
+            (acs.accName like concat(concat('%',#{accName}),'%'))
+        </if>
+        AND
+        <if test="userName != null and userName != ''">
+            ase.userName like concat(concat('%',#{userName}),'%'))
+        </if>
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
 </mapper>

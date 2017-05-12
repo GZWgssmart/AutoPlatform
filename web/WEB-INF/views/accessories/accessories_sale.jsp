@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% String path = request.getContextPath();%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -20,32 +21,40 @@
 </head>
 <body>
 <div class="container" style="width: 100%;">
-    <form id="formSearch" class="form-horizontal">
-        <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
-            <div class="col-sm-2">
-                <input size="16" type="text" readonly
-                       class="form_datetime form-control " id="SaleTimeStart" placeholder="请选择开始时间">
-                <span class="add-on"><i class="icon-remove"></i></span>
-            </div>
-            <div class="col-sm-2">
-                <input size="16" type="text" readonly
-                       class="form_datetime form-control " id="SaleTimeEnd" placeholder="请选择结束时间">
-            </div>
+    <s:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin, companyRepertory">
+        <form id="formSearch" class="form-horizontal">
+            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+                <div class="col-sm-2">
+                    <input size="16" type="text" readonly
+                           class="form_datetime form-control " id="SaleTimeStart" name="SaleTimeStart"
+                           placeholder="请选择开始时间">
+                    <span class="add-on"><i class="icon-remove"></i></span>
+                </div>
+                <div class="col-sm-2">
+                    <input size="16" type="text" readonly
+                           class="form_datetime form-control " id="SaleTimeEnd" name="SaleTimeEnd"
+                           placeholder="请选择结束时间">
+                </div>
 
-            <div class="col-sm-2" style="margin-left: -15px;">
-                <input type="text" id="sAccName" class="form-control" placeholder="请输入配件名">
-            </div>
+                <div class="col-sm-2" style="margin-left: -15px;">
+                    <input type="text" id="sAccName" class="form-control" placeholder="请输入配件名">
+                </div>
 
-            <div class="col-sm-2">
-                <button type="button" onclick="byAccNameSearch()" class="btn btn-primary">
-                    查询
-                </button>
-                <button type="button" onclick="closeSearchForm()" class="btn btn-default">
-                    关闭
-                </button>
+                <div class="col-sm-2" style="margin-left: -15px;">
+                    <input type="text" id="usrName" class="form-control" placeholder="请输入购买人">
+                </div>
+
+                <div class="col-sm-2">
+                    <button type="button" onclick="byAccNameSearch()" class="btn btn-primary">
+                        查询
+                    </button>
+                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                        关闭
+                    </button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </s:hasAnyRoles>
 
     <table class="table table-hover" id="saleTable"
            data-pagination="true"
@@ -58,7 +67,7 @@
             <th data-field="state" data-checkbox="true"></th>
             <th data-field="accessories.accName">配件名称</th>
             <th data-field="accessories.accessoriesType.accTypeName">配件类别</th>
-            <th data-field="accSaleTotal">销售数量</th>
+            <th data-field="accSaleCount">销售数量</th>
             <th data-field="accSalePrice">销售单价</th>
             <th data-field="accSaleDiscount">销售折扣</th>
             <th data-field="accSaledTime" data-formatter="formatterDate">销售时间</th>
@@ -71,42 +80,44 @@
         </tr>
         </thead>
         <tbody>
-        <div id="toolbar" class="btn-group" style="margin: 10px 0px 10px 0px;">
-            <a data-toggle="modal">
-                <button type="button" onclick="showAccAddWin()" id="add" class="btn btn-default">
-                    <i class="glyphicon glyphicon-plus"></i> 添加
-                </button>
-            </a>
 
+        <div id="toolbar" class="btn-group" style="margin: 10px 0px 10px 0px;">
+            <shiro:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin">
+                <a data-toggle="modal">
+                    <button type="button" onclick="showAccAddWin()" id="add" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i> 添加
+                    </button>
+                </a>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin">
             <a>
                 <button onclick="delteleSale();" type="button" id="remove" class="btn btn-danger">
                     <i class="glyphicon glyphicon-trash"></i> 删除
                 </button>
             </a>
+            </shiro:hasAnyRoles>
 
-            <a>
-                <button onclick="onlyCheck();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-ok"></i> 只看已审核
-                </button>
-            </a>
-
+            <shiro:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin, companyRepertory">
             <a>
                 <button onclick="onlySale();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-shopping-cart"></i> 只看已销售
                 </button>
             </a>
+            </shiro:hasAnyRoles>
 
-
+            <shiro:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin, companyRepertory">
             <a>
                 <button onclick="showSearchForm();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-filter"></i>条件查询
                 </button>
             </a>
+            </shiro:hasAnyRoles>
 
+            <shiro:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin, companyRepertory">
             <a>
                 <button onclick="allSales();" type="button" class="btn btn-default">查看所有</button>
             </a>
-
+            </shiro:hasAnyRoles>
         </div>
         </tbody>
     </table>
@@ -138,26 +149,33 @@
                             </div>
 
                             <div class="form-group">
-                                <label>类别：</label>
+                                <label>销售类别：</label>
                                 <input type="text" name="accessories.accessoriesType.accTypeName"
                                        attr="accessoriesSale.accessories.accessoriesType.accTypeName"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
-                                <label>数量：</label>
+                                <label>销售数量：（库存剩余数量）：</label>
+                                <span>
+                                    <input type="text" attr="accessoriesSale.accessories.accTotal" name="accLastCount"
+                                           id="eLastCount"
+                                           style="border: none; background-color: white;"
+                                           disabled/>
+                                </span>
                                 <input type="text" name="accSaleCount" attr="accessoriesSale.accSaleCount"
+                                       id="saleCount"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
-                                <label>单价：</label>
+                                <label>销售单价：</label>
                                 <input type="text" name="accSalePrice" attr="accessoriesSale.accSalePrice"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
-                                <label>折扣：</label>
+                                <label>销售折扣：</label>
                                 <input type="text" name="accSaleDiscount" attr="accessoriesSale.accSaleDiscount"
                                        class="form-control"/>
                             </div>
@@ -170,13 +188,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label>总价：</label>
+                                <label>销售总价：</label>
                                 <input type="text" name="accSaleTotal" attr="accessoriesSale.accSaleTotal"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
-                                <label>最终价：</label>
+                                <label>销售最终价：</label>
                                 <input type="text" name="accSaleMoney" attr="accessoriesSale.accSaleMoney"
                                        class="form-control"/>
                             </div>
@@ -253,10 +271,11 @@
                             <div class="form-group">
                                 <label> 销售数量：（库存剩余数量）：</label>
                                 <span>
-                                    <input type="number" attr="acc.accIdle" name="accLastCount" id="lastCount" style="border: none;"
-                                           readonly/>
+                                    <input type="number" attr="acc.accTotal" name="accLastCount" id="aLastCount"
+                                           style="border: none; background-color: white;"
+                                           disabled/>
                                 </span>
-                                <input type="text" name="accSaleCount" id="accSaleCount" attr="acc.accSaleTotal"
+                                <input type="text" name="accSaleCount" id="aSaleCount" attr="acc.accSaleTotal"
                                        placeholder="此为空则默认为库存配件剩余数量"
                                        class="form-control"/>
                             </div>
@@ -474,6 +493,7 @@
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/bootstrapValidator.js"></script>
 
+<script src="<%=path %>/js/accessories/accessories_main.js"></script>
 <script src="<%=path %>/js/accessories/accessories_sale.js"></script>
 <script src="<%=path %>/js/accessories/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="<%=path %>/js/main.js"></script>

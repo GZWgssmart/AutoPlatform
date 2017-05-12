@@ -2,6 +2,7 @@ package com.gs.dao;
 
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesBuy;
+import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import org.apache.ibatis.annotations.Param;
@@ -17,26 +18,26 @@ import java.util.List;
  */
 @Repository
 public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy> {
-    public int batchDeleteAcc(@Param("ids") String[] ids);
+    public int batchDeleteAcc(@Param("ids") String[] ids, @Param("user") User user);
 
-    public List<Accessories> queryByCheckStates(@Param("checkState") String checkState);
+    public List<Accessories> queryByCheckStates(@Param("checkState") String checkState, @Param("user") User user);
 
-    public int countByBuyState(@Param("buyState") String buyState);
+    public int countByBuyState(@Param("buyState") String buyState, @Param("user") User user);
 
-    public int countByCheckState(@Param("checkState") String checkState);
+    public int countByCheckState(@Param("checkState") String checkState, @Param("user") User user);
 
-    public List<AccessoriesBuy> queryByBuyStatePager(Pager pager);
+    public List<AccessoriesBuy> queryByBuyStatePager(Pager pager, @Param("user") User user);
 
-    public List<AccessoriesBuy> queryByCheckStatePager(Pager pager);
+    public List<AccessoriesBuy> queryByCheckStatePager(Pager pager, @Param("user") User user);
 
-    public int countByAccName(@Param("accName") String accName);
+    public int countByAccName(@Param("accName") String accName, @Param("user") User user);
 
-    public List<AccessoriesBuy> queryByAccNamePager(@Param("pager") Pager pager, @Param("accName") String accName);
+    public List<AccessoriesBuy> queryByAccNamePager(@Param("pager") Pager pager, @Param("accName") String accName, @Param("user") User user);
 
     // 在选择购买时间范围内根据名称来查找
-    public List<AccessoriesBuy> queryByBuyTimeScopeByAccNamePager(@Param("pager") Pager pager, @Param("accName") String accName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd);
+    public List<AccessoriesBuy> queryByBuyTimeScopeByAccNamePager(@Param("pager") Pager pager, @Param("accName") String accName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd, @Param("user") User user);
 
-    public int countByBuyTimeScope(@Param("accName") String accName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd);
+    public int countByBuyTimeScope(@Param("accName") String accName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd, @Param("user") User user);
 
 
     /*

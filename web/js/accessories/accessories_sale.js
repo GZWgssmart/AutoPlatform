@@ -1,17 +1,23 @@
 var isUser = false;
 var lCount = "";
+
+var alCount = ""; // 配件总数量
+
 var userId = "";
+var msg = "只能是数字";
+
+var aTotal = "";
+var aIdle = "";
 
 $.ajaxSetup({
     async: true
 });
 
 $(document).ready(function () {
-    initDateTimePicker("form_datetime", "");
+    initDateTimePicker("form_datetime", "SaleTimeStart", "formSearch");
     initTable("saleTable", "/accessoriesSale/pager");
 
-    inintBsSwitch("#isUser");
-
+    initBsSwitchSale("isUser", switchChange);
     disableSwitch("userWin", "isUser");
 
     destoryValidator("addWin", "addForm");
@@ -20,34 +26,21 @@ $(document).ready(function () {
 
 });
 
-function inintBsSwitch(id) {
-    $(id).bootstrapSwitch({
-        onText: '是',
-        offText: '否',
-        onColor: 'success',
-        offColor: 'danger',
-        size: 'normal',
-        onSwitchChange: function (event, state) {
-            if (state == true) {
-                isUser = true;
-                showUserWin();
-            } else if (state == false) {
-                isUser = false;
-            }
-        }
-    });
+function initBsSwitchSale(id, onSwitchChange) {
+    inintBsSwitch.call(this, id, onSwitchChange);
 }
 
-function disableSwitch(modalId, switchId) {
-    $("#" + modalId).on("hide.bs.modal", function () {
-        $("#" + switchId).bootstrapSwitch("state", false);
-    });
+function switchChange(event, state) {
+    onSwitchChange.call(this, event, state);
 }
 
-function enableSwitch(modalId, switchId) {
-    $("#" + modalId).on("hide.bs.modal", function () {
-        $("#" + switchId).bootstrapSwitch("state", true);
-    });
+override :switchChange = function (event, state) {
+    if (state == true) {
+        isUser = true;
+        showUserWin();
+    } else if (state == false) {
+        isUser = false;
+    }
 }
 
 function disableInput() {
@@ -63,6 +56,12 @@ function enableInput() {
     $("input[name='accSaleCount']").prop("disabled", false);
     $("input[name='accSaleTotal']").prop("disabled", false);
     $("input[name='accSaleMoney']").prop("disabled", false);
+}
+
+function disableEditInput() {
+    $("input[name='accessories.accName']").prop("disabled", true);
+    $("input[name='accUnit']").prop("disabled", true);
+    $("input[name='accessories.accessoriesType.accTypeName']").prop("disabled", true);
 }
 
 /** 编辑数据 */
@@ -97,7 +96,8 @@ function updateAccessoriesSaleInfo(formId) {
 }
 
 function addAccessoriesSaleInfo(formId) {
-    $.post("/accessoriesSale/addSale",
+    var lCount = $("#lastCount").val();
+    $.post("/accessoriesSale/addSale?lastCount=" + lCount,
         $("#addForm").serialize(),
         function (data) {
             if (data.result == "success") {
@@ -146,9 +146,18 @@ window.operateEvents = {
     },
     'click .showEditWin': function (e, value, row, index) {
         var accessoriesSale = row;
+        console.log(accessoriesSale);
         $("#editForm").fill(accessoriesSale);
+
+        aTotal = accessoriesSale.accessories.accTotal;
+        aIdle = aTotal - accessoriesSale.accSaleCount;
+
+        $("#lastCount").val(aIdle);
+
         $("#saleTime").val(formatterDate(accessoriesSale.accSaledTime));
+        disableEditInput();
         showAccEditWin();
+
     }
 }
 
@@ -156,7 +165,9 @@ function showAccessories() {
     initTableNotTollbar("accTable", "/accessories/pager");
     validator("accForm");
     $("#accWin").modal("show");
+    autoEditCalculationCount("aLastCount", "aSaleCount", alCount);
 }
+
 
 function addAcc() {
     var selectRow = $("#accTable").bootstrapTable('getSelections');
@@ -164,8 +175,9 @@ function addAcc() {
         swal('添加失败', "请至少选择一条数据后关闭本窗口", "error");
     } else {
         var acc = selectRow[0];
+        lCount = acc.accTotal;
         $("#addForm").fill(acc);
-        lCount = acc.accIdle;
+        alCount = acc.accTotal;
         $("#accWin").modal("hide");
         enableInput();
     }
@@ -179,7 +191,6 @@ function addUser() {
         var user = selectRow[0];
         userId = user.userId;
         $("#addForm").fill(user);
-        $("#addForm").bootstrapValidator('validate');
         enableSwitch("userWin", "isUser");
         $("#userWin").modal("hide");
     }
@@ -205,9 +216,9 @@ function fmtCheckState(value) {
 
 function fmtSaleState(value) {
     if (value == 'Y') {
-        return "已采购";
+        return "已销售";
     } else {
-        return "未采购";
+        return "未销售";
     }
 }
 
@@ -238,23 +249,20 @@ function delteleSale() {
     }
 }
 
-function onlyCheck() {
-    initTable("cusTable", "/accessoriesSale/onlyCheck");
-}
-
 function onlySale() {
-    initTable("cusTable", "/accessoriesSale/onlySale");
+    initTable("saleTable", "/accessoriesSale/onlySale");
 }
 
 function allSales() {
-    initTable("cusTable", "/accessoriesSale/pager");
+    initTable("saleTable", "/accessoriesSale/pager");
 }
 
 function byAccNameSearch() {
     var accName = $("#sAccName").val();
     var SaleTimeStart = $("#SaleTimeStart").val();
     var SaleTimeEnd = $("#SaleTimeEnd").val();
-    initTable("cusTable", "/accessoriesSale/byAccNameSearch?accName=" + accName + "&SaleTimeStart=" + SaleTimeStart + "&SaleTimeEnd=" + SaleTimeEnd);
+    var uName = $("#usrName").val();
+    initTable("saleTable", "/accessoriesSale/search?accName=" + accName + "&SaleTimeStart=" +'&userName' +uName + SaleTimeStart + "&SaleTimeEnd=" + SaleTimeEnd);
 }
 
 function getUserName() {
@@ -341,18 +349,7 @@ function validator(formId) {
                 validators: {
                     regexp: {
                         regexp: /^[0-9]+$/,
-                        message: '只能是数字'
-                    }
-                    ,
-                    callback: {
-                        message: "销售数量不能大于库存数量",
-                        callback: function (value, validator) {
-                            if (value > lCount) {
-                                return false;
-                            } else {
-                                return true;
-                            }
-                        }
+                        message: msg
                     }
                 }
             }
@@ -451,42 +448,41 @@ function clearTempData() {
 }
 
 function showAccAddWin() {
-
     disableInput();
-    var sc = $("#accSaleCount").val();
+    $("#aLastCount").attr("placeholder", "无法读取库存数量");
     clearTempData();
     validator("addForm");
     $("#addWin").modal("show");
-    autoCalculationCount("#accSaleCount");
-    if (sc == null || sc == "") {
-        $("#lastCount").val("暂无法读取剩余数量");
-    }
+
+
 }
 
 function showAccEditWin() {
     clearTempData();
     validator("editForm");
     $("#editWin").modal("show");
+
+    autoEditCalculationCount("aLastCount", "aSaleCount", aIdle);
 }
 
 function autoCalculationCount(id) {
-    $(id).bind("input", function () {
-        var lastCount = $("#lastCount").val();
-        var saleCount = $("#accSaleCount").val();
+    $("#" + id).bind("input", function () {
+        var lastCount = $("#aLastCount").val();
+        var saleCount = $("#aSaleCount").val();
         var result = "";
         if (lastCount == null && lastCount == "") {
             $("#lastCount").val("无法读取库存数量");
         } else {
             if (saleCount != null && saleCount != "") {
                 result = lCount - saleCount;
-                $("#lastCount").val(result);
+                $("#aLastCount").val(result);
                 if (result < 0 || saleCount == "NaN") {
-                    $("#lastCount").val(lCount);
+                    $("#aLastCount").val(lCount);
                 } else if (result > lCount) {
-                    $("#lastCount").val(lCount);
+                    $("#aLastCount").val(lCount);
                 }
             } else if (saleCount == "" || saleCount == null || saleCount == "NaN") {
-                $("#lastCount").val(lCount);
+                $("#aLastCount").val(lCount);
             }
         }
     })

@@ -1,6 +1,7 @@
 package com.gs.service.impl;
 
 import com.gs.bean.AccessoriesSale;
+import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -50,28 +51,28 @@ public class AccessoriesSaleServiceImpl implements AccessoriesSaleService {
         return accessoriesSaleDAO.batchUpdate(list);
     }
 
-    public List<AccessoriesSale> queryAll() {
-        return accessoriesSaleDAO.queryAll();
+    public List<AccessoriesSale> queryAll(User user) {
+        return accessoriesSaleDAO.queryAll(user);
     }
 
-    public List<AccessoriesSale> queryByStatus(String status) {
-        return accessoriesSaleDAO.queryByStatus(status);
+    public List<AccessoriesSale> queryByStatus(String status, User user) {
+        return accessoriesSaleDAO.queryByStatus(status, user);
     }
 
-    public AccessoriesSale query(AccessoriesSale accessoriesSale) {
-        return accessoriesSaleDAO.query(accessoriesSale);
+    public AccessoriesSale query(AccessoriesSale accessoriesSale, User user) {
+        return accessoriesSaleDAO.query(accessoriesSale, user);
     }
 
     public AccessoriesSale queryById(String id) {
         return accessoriesSaleDAO.queryById(id);
     }
 
-    public List<AccessoriesSale> queryByPager(Pager pager) {
-        return accessoriesSaleDAO.queryByPager(pager);
+    public List<AccessoriesSale> queryByPager(Pager pager, User user) {
+        return accessoriesSaleDAO.queryByPager(pager, user);
     }
 
-    public int count() {
-        return accessoriesSaleDAO.count();
+    public int count(User user) {
+        return accessoriesSaleDAO.count(user);
     }
 
     public int inactive(String id) {
@@ -82,7 +83,31 @@ public class AccessoriesSaleServiceImpl implements AccessoriesSaleService {
         return accessoriesSaleDAO.active(id);
     }
 
-    public int queryByUserIdIsSameResult(String id, String userName) {
-        return accessoriesSaleDAO.queryByUserIdIsSameResult(id, userName);
+    public int queryByUserIdIsSameResult(String id, String userName, User user) {
+        return accessoriesSaleDAO.queryByUserIdIsSameResult(id, userName, user);
+    }
+
+    public List<AccessoriesSale> queryByName(Pager pager, String name, User user) {
+        return accessoriesSaleDAO.queryByName(pager, name, user);
+    }
+
+    public int byNameCount(User user) {
+        return accessoriesSaleDAO.byNameCount(user);
+    }
+
+    public List<AccessoriesSale> queryOnlySale(Pager pager, String status, User user) {
+        return accessoriesSaleDAO.queryOnlySale(pager, status, user);
+    }
+
+    public int onlySaleCount(User user) {
+        return accessoriesSaleDAO.onlySaleCount(user);
+    }
+
+    public List<AccessoriesSale> queryBySaleTimeScopeByAccNamePager(Pager pager, String accName, String userName, String saleTimeStart, String saleTimeEnd, User user) {
+        return accessoriesSaleDAO.queryBySaleTimeScopeByAccNamePager(pager, accName, userName, saleTimeStart, saleTimeEnd, user);
+    }
+
+    public int bySaleTimeScopeCount(String accName, String userName, String saleTimeStart, String saleTimeEnd, User user) {
+        return accessoriesSaleDAO.bySaleTimeScopeCount(accName, userName, saleTimeStart, saleTimeEnd, user);
     }
 }
