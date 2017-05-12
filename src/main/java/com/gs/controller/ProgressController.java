@@ -40,7 +40,7 @@ public class ProgressController {
     private MaintainRecordService maintainRecordService;
 
     private String queryRole = Constants.CAR_OWNER + "," + Constants.COMPANY_RECEIVE + ","
-            + Constants.COMPANY_ARTIFICER + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+            + Constants.COMPANY_ARTIFICER + "," + "," + Constants.COMPANY_ADMIN;
 
     private Logger logger = (Logger) LoggerFactory.getLogger(ProgressController.class);
 

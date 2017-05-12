@@ -63,7 +63,7 @@ public class CustomerController {
             + "," + Constants.COMPANY_BUYER + "," + Constants.SYSTEM_ORDINARY_ADMIN
             + "," + Constants.COMPANY_EMP;
 
-    private String editRole = Constants.SYSTEM_ORDINARY_ADMIN;
+    private String editRole = Constants.COMPANY_ADMIN;
 
 
     @RequestMapping(value = "customer_page", method = RequestMethod.GET)

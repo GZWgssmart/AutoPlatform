@@ -58,7 +58,7 @@ public class PeopleInfoController {
     private String queryRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER
             + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN;
 
-    private String editRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER;
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER;
 
 
     @RequestMapping(value = "people_info", method = RequestMethod.GET)

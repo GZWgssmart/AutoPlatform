@@ -57,7 +57,7 @@
             <th data-field="userStatus" data-formatter="status">
                 当前状态
             </th>
-            <shiro:hasAnyRoles name="systemOrdinaryAdmin, companyHumanManager">
+            <shiro:hasAnyRoles name="companyAdmin, companyHumanManager">
             <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
@@ -66,12 +66,12 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="systemOrdinaryAdmin, companyHumanManager">
+            <shiro:hasAnyRoles name="companyAdmin, companyHumanManager">
             <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="systemOrdinaryAdmin, companyHumanManager">
+            <shiro:hasAnyRoles name="companyAdmin, companyHumanManager">
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改角色
             </button></a>

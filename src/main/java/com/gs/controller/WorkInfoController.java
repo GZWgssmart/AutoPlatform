@@ -45,9 +45,9 @@ public class WorkInfoController {
             + Constants.COMPANY_RECEIVE + "," + Constants.COMPANY_ARTIFICER
             + "," + Constants.COMPANY_SALES + "," + Constants.COMPANY_HUMAN_MANAGER
             + "," + Constants.COMPANY_ACCOUNTING + "," + Constants.COMPANY_BUYER
-            + "," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_EMP;
+            + "," + Constants.COMPANY_EMP + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
 
-    private String editRole = Constants.SYSTEM_ORDINARY_ADMIN;
+    private String editRole = Constants.COMPANY_ADMIN;
 
     @RequestMapping(value = "work", method = RequestMethod.GET)
     private String workInfo() {
