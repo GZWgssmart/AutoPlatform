@@ -63,8 +63,8 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
         return outgoingTypeDAO.query(outgoingType,user);
     }
 
-    public OutgoingType queryById(String id,User user) {
-        return outgoingTypeDAO.queryById(id,user);
+    public OutgoingType queryById(String id) {
+        return outgoingTypeDAO.queryById(id);
     }
 
     public List<OutgoingType> queryByPager(Pager pager,User user) {

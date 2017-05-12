@@ -63,8 +63,8 @@ public class IncomingTypeServiceImpl implements IncomingTypeService {
         return incomingTypeDAO.query(incomingType,user);
     }
 
-    public IncomingType queryById(String id,User user) {
-        return incomingTypeDAO.queryById(id,user);
+    public IncomingType queryById(String id) {
+        return incomingTypeDAO.queryById(id);
     }
 
     public List<IncomingType> queryByPager(Pager pager,User user) {

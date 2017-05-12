@@ -63,8 +63,8 @@ public class IncomingOutgoingServiceImpl implements IncomingOutgoingService {
         return incomingOutgoingDAO.query(incomingOutgoing,user);
     }
 
-    public IncomingOutgoing queryById(String id,User user) {
-        return incomingOutgoingDAO.queryById(id,user);
+    public IncomingOutgoing queryById(String id) {
+        return incomingOutgoingDAO.queryById(id);
     }
 
     public List<IncomingOutgoing> queryByPager(Pager pager,User user) {

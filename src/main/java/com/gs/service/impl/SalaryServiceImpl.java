@@ -65,8 +65,8 @@ public class SalaryServiceImpl implements SalaryService {
         return salaryDAO.query(salary,user);
     }
 
-    public Salary queryById(String id,User user) {
-        return salaryDAO.queryById(id,user);
+    public Salary queryById(String id) {
+        return salaryDAO.queryById(id);
     }
 
     public List<Salary> queryByPager(Pager pager,User user) {
