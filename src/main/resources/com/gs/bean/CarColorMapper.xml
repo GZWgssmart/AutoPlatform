@@ -47,7 +47,7 @@
 	</update>
 
 	<select id="queryAll" resultMap="carColorResultMap">
-		select * from t_car_color
+		select * from t_car_color where colorStatus = 'Y'
 	</select>
 
 	<select id="queryByStatus" resultMap="carColorResultMap">

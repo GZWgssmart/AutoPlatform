@@ -57,7 +57,7 @@
 	</update>
 
 	<select id="queryAll" resultMap="carModelResultMap">
-		select * from t_car_model
+		select * from t_car_model where modelStatus = 'Y'
 	</select>
 
 	<select id="queryByStatus" resultMap="carModelResultMap">

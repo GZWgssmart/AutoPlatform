@@ -53,7 +53,13 @@
 
 	<update id="update" parameterType="maintainFix">
 		<![CDATA[
-			update t_maintain_fix set maintainName = #{maintainName} , maintainHour = #{maintainHour} , maintainMoney = #{maintainMoney} , maintainManHourFee = #{maintainManHourFee} , maintainOrFix = #{maintainOrFix} , maintainDes = #{maintainDes} , companyId = #{companyId} , maintainStatus = 'Y' where maintainId = #{maintainId}
+			update t_maintain_fix set maintainName = #{maintainName} ,
+			 maintainHour = #{maintainHour} ,
+			 maintainMoney = #{maintainMoney} ,
+			 maintainManHourFee = #{maintainManHourFee} ,
+			 maintainOrFix = #{maintainOrFix} ,
+			 maintainDes = #{maintainDes} , companyId = #{companyId} ,
+			 maintainStatus = 'Y' where maintainId = #{maintainId}
 		]]>
 	</update>
 

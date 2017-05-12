@@ -189,6 +189,7 @@ public class CompanyController {
             try {
                 if(CheckRoleUtil.checkRoles(CompanyEditRole)){
                     logger.info("添加公司");
+                    company.setCompanyLogo("/upload/logo.png");
                     String companyId = UUIDUtil.uuid();
                     company.setCompanyId(companyId);
                     User user = new User();
@@ -197,6 +198,7 @@ public class CompanyController {
                     user.setCompanyId(companyId);
                     user.setUserName(company.getCompanyPricipal());
                     user.setUserPhone(company.getCompanyTel());
+                    user.setUserAddress(company.getCompanyAddress());
                     user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
                     Role role = roleService.queryByName(Constants.COMPANY_ADMIN);
                     UserRole userRole = new UserRole();

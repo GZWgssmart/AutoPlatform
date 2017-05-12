@@ -84,8 +84,9 @@
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改保养项目</h3>
                         <form role="form" id="editForm">
-                            <input name="maintainId" attr="maintain.maintainId" type="hidden">
-                            <input name="maintainOrFix" attr="maintain.maintainOrFix" type="hidden">
+                            <input name="maintainId" attr="maintain.maintainId" type="hidden"/>
+                            <input name="maintainOrFix" attr="maintain.maintainOrFix" type="hidden"/>
+                            <input name="companyId" attr="maintain.companyId" type="hidden"/>
                             <div class="form-group">
                                 <label>保养项目名称：</label>
                                 <input type="text"   name="maintainName" attr="maintain.maintainName" class="form-control"/>
@@ -105,11 +106,11 @@
                                 <input type="text"  name="maintainManHourFee" attr="maintain.maintainManHourFee"
                                        class="form-control"/>
                             </div>
-                            <div class="form-group" >
-                                <label>公司名称</label>
-                                <select class="js-example-tags form-control company"  name="companyId" style="width:150px;">
-                                </select>
-                            </div>
+                            <%--<div class="form-group" >--%>
+                                <%--<label>公司名称</label>--%>
+                                <%--<select class="js-example-tags form-control company"  name="companyId" style="width:150px;">--%>
+                                <%--</select>--%>
+                            <%--</div>--%>
                             <div class="form-group">
                                 <label>保养项目描述:</label>
                                 <textarea  name="maintainDes" type="textarea" cols="20" rows="5" class="form-control" attr="maintain.maintainDes"></textarea>
@@ -158,11 +159,11 @@
                                 <input type="text"  name="maintainManHourFee"
                                        class="form-control"/>
                             </div>
-                            <div class="form-group" >
-                                <label>公司名称</label>
-                                <select class="js-example-tags form-control company" name="companyId" value="company.companyId" style="width:150px;">
-                                </select>
-                            </div>
+                            <%--<div class="form-group" >--%>
+                                <%--<label>公司名称</label>--%>
+                                <%--<select class="js-example-tags form-control company" name="companyId" value="company.companyId" style="width:150px;">--%>
+                                <%--</select>--%>
+                            <%--</div>--%>
                             <div class="form-group">
                                 <label>保养项目描述:</label>
                                 <textarea  name="maintainDes" type="textarea" cols="20" rows="5" class="form-control"></textarea>

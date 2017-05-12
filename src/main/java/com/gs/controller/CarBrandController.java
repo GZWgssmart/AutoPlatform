@@ -41,6 +41,11 @@ public class CarBrandController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CarBrandController.class);
 
+    /***
+     *
+     * @param carBrand
+     * @return 添加汽车品牌
+     */
     @ResponseBody
     @RequestMapping(value = "insertCarBrand", method = RequestMethod.POST)
     public ControllerResult insertCarBrand(CarBrand carBrand) {
@@ -65,6 +70,13 @@ public class CarBrandController {
 
     }
 
+    /**
+     *
+     * @param brandName
+     * @param pageNumber
+     * @param pageSize
+     * @return 条件查询
+     */
     @ResponseBody
     @RequestMapping(value = "search", method = RequestMethod.GET)
     public Pager4EasyUI<CarBrand> searchByPager(@Param("brandName") String brandName, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
@@ -80,6 +92,11 @@ public class CarBrandController {
         return new Pager4EasyUI<CarBrand>(pager.getTotalRecords(), carBrandList);
     }
 
+    /**
+     *
+     * @param carBrand
+     * @return 更新汽车品牌
+     */
     @ResponseBody
     @RequestMapping(value = "uploadCarBrand", method = RequestMethod.POST)
     public ControllerResult uploadCarBrand(CarBrand carBrand) {
@@ -104,6 +121,12 @@ public class CarBrandController {
 
     }
 
+    /**
+     *
+     * @param pageNumber
+     * @param pageSize
+     * @return 分页查询
+     */
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<CarBrand> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
@@ -121,6 +144,10 @@ public class CarBrandController {
         return new Pager4EasyUI<CarBrand>(pager.getTotalRecords(), carBrandList);
     }
 
+    /**
+     *
+     * @return 用于显示下拉菜单
+     */
     @ResponseBody
     @RequestMapping(value = "car_brand_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarBrandAll() {
@@ -141,6 +168,11 @@ public class CarBrandController {
         return comboBox4EasyUIs;
     }
 
+    /**
+     *
+     * @param brandId
+     * @return 根据汽车id查询汽车品牌
+     */
     @ResponseBody
     @RequestMapping(value = "name", method = RequestMethod.GET)
     public String queryName(String brandId) {
@@ -152,6 +184,12 @@ public class CarBrandController {
         return carBrandService.queryNameById(brandId);
     }
 
+    /**
+     *
+     * @param id
+     * @param status
+     * @return 冻结激活
+     */
     @ResponseBody
     @RequestMapping(value = "brandStatusModify", method = RequestMethod.GET)
     public ControllerResult brandStatusModify(@Param("id") String id, @Param("status") String status) {
@@ -181,6 +219,13 @@ public class CarBrandController {
 
     }
 
+    /**
+     *
+     * @param status
+     * @param pageNumber
+     * @param pageSize
+     * @return 根据状态查询出汽车品牌
+     */
     @ResponseBody
     @RequestMapping(value = "queryByStatusPager", method = RequestMethod.GET)
     public Pager4EasyUI<CarBrand> queryByStatusPager(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {

@@ -47,7 +47,7 @@
 	</update>
 
 	<select id="queryAll" resultMap="carPlateResultMap">
-		select * from t_car_plate
+		select * from t_car_plate where plateStatus = 'Y'
 	</select>
 
 	<select id="queryByStatus" resultMap="carPlateResultMap">

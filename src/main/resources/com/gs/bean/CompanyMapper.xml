@@ -52,7 +52,7 @@
 
 	<select id="queryAll" resultMap="companyResultMap">
 		<![CDATA[
-			select * from t_company
+			select * from t_company where companyStatus = 'Y'
 		]]>
 	</select>
 
