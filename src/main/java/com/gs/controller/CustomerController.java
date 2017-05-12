@@ -81,14 +81,15 @@ public class CustomerController {
     }
     @ResponseBody
     @RequestMapping(value = "customerInfo_insert", method = RequestMethod.POST)
-    public ControllerResult infoInsert(User user, UserRole userRole, Company company){
+    public ControllerResult infoInsert(User user, UserRole userRole, Company company,HttpSession session){
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("信息添加");
                     String customerId = UUIDUtil.uuid();
                     Role role = roleService.queryByName("carOwner");
-                    user.setCompanyId(company.getCompanyId());
+                    User user1 = (User)session.getAttribute("user");
+                    user.setCompanyId(user1.getCompanyId());
                     user.setUserId(customerId);
                     userRole.setUserId(user.getUserId());
                     userRole.setRoleId(role.getRoleId());

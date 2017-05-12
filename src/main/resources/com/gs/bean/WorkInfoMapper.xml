@@ -40,9 +40,6 @@
 			VALUES
 				(uuid(), #{recordId}, now(), 'Y')
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
-		</if>
 	</insert>
 
 	<insert id="batchInsert"  parameterType="list">
@@ -115,7 +112,7 @@
 			ORDER BY wi.workCreatedTime Desc
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+			and wi.companyId = #{user.companyId}
 		</if>
 		limit #{pager.beginIndex}, #{pageSize}
 	</select>
@@ -128,7 +125,7 @@
 			INNER JOIN t_company c ON c.companyId = mr.companyId
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+			and wi.companyId = #{user.companyId}
 		</if>
 	</select>
 
@@ -136,13 +133,16 @@
 		<![CDATA[
            select count(wi.workId) as coont ,wi.workCreatedTime from t_work_info wi,t_maintain_record mr,t_checkin c
              WHERE DATE_FORMAT(wi.workCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and  wi.workStatus = 'Y'
-           and wi.recordId = mr.recordId and mr.checkinId = c.checkinId and mr.companyId = #{companyId}
+           and wi.recordId = mr.recordId and mr.checkinId = c.checkinId
 		]]>
 		<if test="maintainOrFix =='保养'">
 			and c.maintainOrFix = '保养'
 		</if>
 		<if test="maintainOrFix =='维修'">
 			and c.maintainOrFix = '维修'
+		</if>
+		<if test="companyId != null and companyId != ''">
+			and wi.companyId = #{companyId}
 		</if>
 		GROUP BY day(wi.workCreatedTime)
 	</select>
@@ -151,13 +151,16 @@
 		<![CDATA[
            select count(wi.workId) as coont ,wi.workCreatedTime from t_work_info wi,t_maintain_record mr,t_checkin c
             where wi.workCreatedTime >= #{startTime} and wi.workCreatedTime <= #{endTime} and  wi.workStatus = 'Y'
-           and wi.recordId = mr.recordId and mr.checkinId = c.checkinId and mr.companyId = #{companyId}
+           and wi.recordId = mr.recordId and mr.checkinId = c.checkinId
 		]]>
 		<if test="maintainOrFix =='保养'">
 			and c.maintainOrFix = '保养'
 		</if>
 		<if test="maintainOrFix =='维修'">
 			and c.maintainOrFix = '维修'
+		</if>
+		<if test="companyId != null and companyId != ''">
+			and wi.companyId = #{companyId}
 		</if>
 		<if test="type =='year'">
 			GROUP BY year(wi.workCreatedTime)
