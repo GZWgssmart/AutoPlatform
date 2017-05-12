@@ -169,7 +169,7 @@
 				from t_appointment c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
 				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and c.companyId = cpy.companyId and c.speedStatus = '已预约'
 		]]>
-        <if test="user.companyId != null and user.companyId != ''">
+        <if test="user.companyId != null and user.companyId != ''and user.companyId != 'undefined'">
             and c.companyId = #{user.companyId}
         </if>
         <if test="appointment.userName != null and appointment.userName != ''">
@@ -205,7 +205,7 @@
 			select count(*) from t_appointment where appoitmentStatus = #{status} and speedStatus = '已预约'
 		]]>
         <if test="user.companyId != null and user.companyId != ''">
-            and c.companyId = #{user.companyId}
+            and companyId = #{user.companyId}
         </if>
     </select>
 
@@ -214,7 +214,7 @@
 			select count(*) from t_appointment where 1 = 1 and speedStatus = '已预约'
 		]]>
         <if test="user.companyId != null and user.companyId != ''">
-            and c.companyId = #{user.companyId}
+            and companyId = #{user.companyId}
         </if>
         <if test="appointment.userName != null and appointment.userName != ''">
             and userName like concat('%',#{userName},'%')

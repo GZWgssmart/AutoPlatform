@@ -1,13 +1,9 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.Company;
-import com.gs.bean.User;
-import com.gs.bean.UserRole;
+import com.gs.bean.*;
 import com.gs.common.Constants;
-import com.gs.common.bean.ComboBox4EasyUI;
-import com.gs.common.bean.ControllerResult;
-import com.gs.common.bean.Pager;
+import com.gs.common.bean.*;
 import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionGetUtil;
@@ -55,11 +51,12 @@ public class AppointmentController {
 
     @Resource
     private RoleService roleService;
-
+    // 董事长、接待员、超级管理员、普通管理员,车主
     private String queryRole = Constants.CAR_OWNER + "," + Constants.COMPANY_RECEIVE + ","
-            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
-
-    private String editRole = Constants.SYSTEM_ORDINARY_ADMIN+ ","+Constants.CAR_OWNER+"," + Constants.COMPANY_RECEIVE;
+            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN+","+Constants.COMPANY_ADMIN;
+    //董事长、接待员、超级管理员、普通管理员,车主
+    private String editRole = Constants.SYSTEM_ORDINARY_ADMIN+ ","+Constants.CAR_OWNER+","
+            + Constants.COMPANY_RECEIVE+ "," + Constants.SYSTEM_SUPER_ADMIN+","+Constants.COMPANY_ADMIN;
 
     @RequestMapping(value = "appointment", method = RequestMethod.GET)
     public String appointment() {
@@ -77,27 +74,33 @@ public class AppointmentController {
 
     @ResponseBody
     @RequestMapping(value = "query_pager", method = RequestMethod.GET)
-    public Pager4EasyUI<Appointment> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("status") String status,@Param("user") User user) {
+    public Pager4EasyUI<Appointment> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("status") String status) {
         if (SessionGetUtil.isUser()) {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
-                logger.info("分页查询预约");
-                Pager pager = new Pager();
-                pager.setPageNo(Integer.valueOf(pageNumber));
-                pager.setPageSize(Integer.valueOf(pageSize));
-                List<Appointment> appointments = new ArrayList<Appointment>();
-                if (status.equals("ALL")) {
-                    pager.setTotalRecords(appointmentService.count(user));
-                    appointments = appointmentService.queryByPager(pager,user);
-                } else if (status.equals("P")) {
-                    pager.setTotalRecords(appointmentService.count(user));
-                    appointments = appointmentService.querySpeedStatus(pager,user);
-                } else {
-                    pager.setTotalRecords(appointmentService.countByStatus(status,user));
-                    appointments = appointmentService.queryPagerByStatus(pager, status,user);
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页查询预约");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    List<Appointment> appointments = new ArrayList<Appointment>();
+                    if (status.equals("ALL")) {
+                        pager.setTotalRecords(appointmentService.count(user));
+                        appointments = appointmentService.queryByPager(pager, user);
+                    } else if (status.equals("P")) {
+                        pager.setTotalRecords(appointmentService.count(user));
+                        appointments = appointmentService.querySpeedStatus(pager, user);
+                    } else {
+                        pager.setTotalRecords(appointmentService.countByStatus(status, user));
+                        appointments = appointmentService.queryPagerByStatus(pager, status, user);
+                    }
+                    return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
                 }
-                return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
+                return null;
+            } catch (Exception e) {
+                logger.info("查询失败，出现了异常");
+                return null;
             }
-            return null;
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -109,26 +112,32 @@ public class AppointmentController {
     public Pager4EasyUI<Appointment> queryPagerByAppointment(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,
                                                              @Param("userName") String userName, @Param("userPhone") String userPhone,
                                                              @Param("carPlate") String carPlate, @Param("maintainOrFix") String maintainOrFix,
-                                                             @Param("companyId") String companyId,@Param("user") User user) {
+                                                             @Param("companyId") String companyId) {
         if (SessionGetUtil.isUser()) {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
-                logger.info("根据条件分页查询预约记录");
-                Appointment appointment = new Appointment();
-                appointment.setUserName(userName);
-                appointment.setUserPhone(userPhone);
-                appointment.setCarPlate(carPlate);
-                appointment.setMaintainOrFix(maintainOrFix);
-                appointment.setCompanyId(companyId);
-                Pager pager = new Pager();
-                pager.setPageNo(Integer.valueOf(pageNumber));
-                pager.setPageSize(Integer.valueOf(pageSize));
-                List<Appointment> appointments = new ArrayList<Appointment>();
-                pager.setTotalRecords(appointmentService.countByCondition(appointment,user));
-                appointments = appointmentService.queryPagerByCondition(pager, appointment,user);
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("根据条件分页查询预约记录");
+                    User user = SessionGetUtil.getUser();
+                    Appointment appointment = new Appointment();
+                    appointment.setUserName(userName);
+                    appointment.setUserPhone(userPhone);
+                    appointment.setCarPlate(carPlate);
+                    appointment.setMaintainOrFix(maintainOrFix);
+                    appointment.setCompanyId(companyId);
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    List<Appointment> appointments = new ArrayList<Appointment>();
+                    pager.setTotalRecords(appointmentService.countByCondition(appointment, user));
+                    appointments = appointmentService.queryPagerByCondition(pager, appointment, user);
 
-                return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
+                    return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("查询失败，出现了异常");
+                return null;
             }
-            return null;
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
