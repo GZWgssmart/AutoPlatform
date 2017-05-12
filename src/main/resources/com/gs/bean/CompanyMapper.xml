@@ -66,6 +66,9 @@
 		<![CDATA[
 			select * from t_company
 		]]>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+		</if>
 		Ma
 	</select>
 
@@ -75,31 +78,31 @@
 		]]>
 	</select>
 
-	<select id="queryByPager" resultType="list" resultMap="companyResultMap">
+	<select id="queryByPager" resultMap="companyResultMap">
 		<![CDATA[
 			select * from t_company where 1 = 1
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{companyId}
+			and companyId = #{user.companyId}
 		</if>
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(companyId) from t_company where 1 = 1
+			select count(*) from t_company where 1 = 1
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 	</select>
 
-	<select id="statusCount" resultType="int" parameterType="string">
+	<select id="statusCount" resultType="int">
 		<![CDATA[
-			select count(companyId) from t_company where companyStatus = #{status}
+			select count(*) from t_company where companyStatus = #{status}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{companyId}
+			and companyId = #{user.companyId}
 		</if>
 	</select>
 
