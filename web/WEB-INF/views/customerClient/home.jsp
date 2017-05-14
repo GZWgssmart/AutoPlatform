@@ -73,7 +73,7 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span class="nav-label">维修保养接待管理</span><span
+                    <a href="#"><i class="fa fa-hand-lizard-o"></i> <span class="nav-label">维修保养接待管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path %>/appointment/appointment">我的接待</a>
@@ -82,7 +82,7 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">维修保养管理</span><span
+                    <a href="#"><i class="glyphicon glyphicon-wrench"></i> <span class="nav-label">维修保养管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">我的维修保养记录</a>
@@ -116,7 +116,7 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">投诉</span><span
+                    <a href="#"><i class="glyphicon glyphicon-envelope"></i> <span class="nav-label">投诉</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path%>/complaint/show_complaint">我的投诉</a>

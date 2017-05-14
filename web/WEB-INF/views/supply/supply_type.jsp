@@ -35,13 +35,13 @@
             <th data-field="supplyTypeName" data-sortable="true">
                 分类名称
             </th>
-            <th data-field="supplyTypeDes" >
+            <th data-field="supplyTypeDes">
                 分类描述
             </th>
-            <th data-field="company.companyName" >
+            <th data-field="company.companyName">
                 公司
             </th>
-            <th data-field="supplyTypeStatus" data-formatter="status" >
+            <th data-field="supplyTypeStatus" data-formatter="status">
                 状态
             </th>
             <shiro:hasRole name="companyAdmin">
@@ -52,9 +52,10 @@
         </tr>
         </thead>
         <form id="formSearch" class="form-horizontal">
-            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+            <div class="form-group col-sm-12" id="searchDiv" style="margin-top:15px; display: none; padding-left: 0px;">
                 <div class="col-sm-2" style="margin-left: -15px;">
-                    <input type="text" id="searchSupplyTypeName" name="supplyTypeName" class="form-control" placeholder="供应商分类名称" >
+                    <input type="text" id="searchSupplyTypeName" name="supplyTypeName" class="form-control"
+                           placeholder="供应商分类名称">
                 </div>
                 <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
                     <div class="col-sm-2">
@@ -62,7 +63,6 @@
                         </select>
                     </div>
                 </shiro:hasAnyRoles>
-                <div class="col-sm-8"></div>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchSupplyType()" class="btn btn-primary">
                         查询
@@ -78,7 +78,7 @@
         <div id="toolbar" class="btn-group">
             <shiro:hasRole name="companyAdmin">
                 <a>
-                    <button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
+                    <button onclick="showAddWin();" type="button" id="add" class="btn btn-default">
                         <i class="glyphicon glyphicon-plus"></i> 添加
                     </button>
                 </a>
@@ -89,31 +89,33 @@
                 </a>
             </shiro:hasRole>
             <a>
-                <button onclick="searchStatus('/supplyType/queryByPager?status=Y');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/supplyType/queryByPager?status=Y');" type="button"
+                        class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看可用记录
                 </button>
             </a>
             <a>
-                <button onclick="searchStatus('/supplyType/queryByPager?status=N');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/supplyType/queryByPager?status=N');" type="button"
+                        class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看不可用记录
                 </button>
             </a>
             <a>
-                <button onclick="searchStatus('/supplyType/queryByPager?status=ALL');" type="button" class="btn btn-default">
+                <button onclick="searchStatus('/supplyType/queryByPager?status=ALL');" type="button"
+                        class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部
                 </button>
             </a>
             <a>
-            <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
-                <i class="glyphicon glyphicon-search"></i> 条件查询
-            </button>
+                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-search"></i> 条件查询
+                </button>
             </a>
         </div>
         </tbody>
 
     </table>
 </div>
-
 
 
 <div id="editWin" class="modal fade" aria-hidden="true">
@@ -124,15 +126,17 @@
                     <div class="col-sm-12 b-r">
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改供应商分类</h3>
-                        <form role="form" id="editForm" >
-                            <input type="hidden" attr="supplyType.supplyTypeId" name="supplyTypeId" id = "supplyTypeId"/>
+                        <form role="form" id="editForm">
+                            <input type="hidden" attr="supplyType.supplyTypeId" name="supplyTypeId" id="supplyTypeId"/>
                             <div class="form-group">
                                 <label>供应商分类名称：</label>
-                                <input type="text" attr="supplyType.supplyTypeName" name="supplyTypeName" id="supplyTypeName" class="form-control"/>
+                                <input type="text" attr="supplyType.supplyTypeName" name="supplyTypeName"
+                                       id="supplyTypeName" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>供应商分类描述：</label>
-                                <textarea class="form-control" attr="supplyType.supplyTypeDes" type="textarea" name="supplyTypeDes"
+                                <textarea class="form-control" attr="supplyType.supplyTypeDes" type="textarea"
+                                          name="supplyTypeDes"
                                           rows="3"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
@@ -141,7 +145,8 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="editButton" onclick="edit()" class="btn btn-primary" value="修改">
+                                <input type="button" id="editButton" onclick="edit()" class="btn btn-primary"
+                                       value="修改">
                                 </input>
                             </div>
                         </form>

@@ -97,7 +97,6 @@
                         </select>
                     </div>
                 </shiro:hasAnyRoles>
-                <div class="col-sm-4"></div>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchSupply()" class="btn btn-primary">
                         查询
@@ -167,7 +166,7 @@
                             </div>
                             <div class="form-group">
                                <label>电话：</label>
-                                <input type="text"  attr="supply.supplyTel" name="supplyTel" class="form-control"/>
+                                <input type="text"  attr="supply.supplyTel" name="supplyTel" maxlength="11" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>负责人：</label>

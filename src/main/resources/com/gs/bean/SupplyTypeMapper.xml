@@ -115,7 +115,7 @@
 		<if test="supplyType.supplyTypeName != null and supplyType.supplyTypeName != ''">
 			and t.supplyTypeName like concat('%',#{supplyType.supplyTypeName},'%')
 		</if>
-		<if test="supplyType.companyId != null and supplyType.companyId != '' and supplyType.companyId != 'null' and supplyType.company != 'undefined'">
+		<if test="supplyType.companyId != null and supplyType.companyId != '' and supplyType.companyId != 'null' and supplyType.companyId != 'undefined'">
 			and t.companyId = #{supplyType.companyId}
 		</if>
 		limit #{pager.beginIndex}, #{pager.pageSize}

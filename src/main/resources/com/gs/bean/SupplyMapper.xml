@@ -154,7 +154,7 @@
 		select count(supplyId) from t_supply where supplyStatus = #{status}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+			and companyId = #{user.companyId}
 		</if>
 	</select>
 
