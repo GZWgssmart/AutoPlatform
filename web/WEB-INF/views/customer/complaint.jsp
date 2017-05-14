@@ -63,12 +63,14 @@
         <tbody>
         <div id="toolbar" class="btn-group">
             <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
+                <i class="glyphicon glyphicon-plus"></i> 添加投诉
+            </button></a>
+            <a><button onclick="showEditContent();" type="button" id="editContent" class="btn btn-default">
+                <i class="glyphicon glyphicon-pencil"></i>修改投诉内容
             </button></a>
             <a><button onclick="showAdminWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i>回复
+                <i class="glyphicon glyphicon-pencil"></i>投诉回复
             </button></a>
-
         </div>
         </tbody>
 
@@ -77,19 +79,19 @@
 
 
 
-<%--<div id="editWin" class="modal fade" aria-hidden="true">
+<div id="editWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改投诉信息</h3>
-                        <form role="form" id="updateForm" >
-                            <input type="hidden" class="userId" name="userId"/>
-                            <input type="hidden" class="complaintId" name="complaintId"/>
+                        <form role="form" id="editForm" >
+                            <input type="hidden" class="complaintId" attr="complaint.complaintId"  name="complaintId"/>
                             <div class="form-group">
                                 <label>投诉内容：</label>
-                                <textarea class="form-control" name="complaintReply" id="complaintReplyEidt"></textarea>
+                                <textarea class="form-control" name="complaintContent" id="complaintContentEidt"></textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
@@ -107,7 +109,7 @@
             </div>
         </div>
     </div>
-</div>--%>
+</div>
 
 <div id="addWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
@@ -119,7 +121,7 @@
                         <h3 class="m-t-none m-b">添加投诉</h3>
                         <form role="form" id="addForm" >
                             <input type="hidden" class="userId" name="userId"/>
-                            <input type="hidden" class="complaintId" name="complaintId"/>
+                            <input type="hidden" class="complaintId"  name="complaintId"/>
                             <div class="form-group">
                                 <label>投诉内容：</label>
                                 <textarea class="form-control" name="complaintContent" id="complaint"></textarea>
@@ -172,6 +174,8 @@
         </div>
     </div>
 </div>
+
+
 
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>

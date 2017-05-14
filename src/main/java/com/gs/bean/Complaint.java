@@ -20,6 +20,7 @@ public class Complaint{
 	private User admin; 				//管理员的User
 	private User customer;				//顾客的User
 
+
 	public String getCompanyId() {
 		return companyId;
 	}
@@ -90,4 +91,20 @@ public class Complaint{
 		this.complaintReplyUser=complaintReplyUser;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Complaint{" +
+				"complaintId='" + complaintId + '\'' +
+				", userId='" + userId + '\'' +
+				", complaintContent='" + complaintContent + '\'' +
+				", complaintCreatedTime=" + complaintCreatedTime +
+				", complaintReply='" + complaintReply + '\'' +
+				", complaintReplyTime=" + complaintReplyTime +
+				", complaintReplyUser='" + complaintReplyUser + '\'' +
+				", companyId='" + companyId + '\'' +
+				", admin=" + admin +
+				", customer=" + customer +
+				'}';
+	}
 }

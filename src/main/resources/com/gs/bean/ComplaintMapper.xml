@@ -19,7 +19,7 @@
 		<!--客户Id-->
 		<association property="customer" javaType="com.gs.bean.User">
 			<id column="userId" property="userId"/>
-			<result column="userName" property="userName"/>
+			<result column="customerName" property="userName"/>
 		</association>
 	</resultMap>
 
@@ -57,18 +57,18 @@
 
 	<update id="update" parameterType="complaint">
 		<![CDATA[
-		update t_complaint set userId = #{userId},complaintContent = #{complaintContent},complaintCreatedTime= #{complaintCreatedTime},
-		complaintReply =#{complaintReply},complaintReplyTime =#{complaintReplyTime},complaintReplyUser=#{complaintReplyUser}
+		update t_complaint set  complaintContent = #{complaintContent}, complaintCreatedTime= now()
 		where complaintId = #{complaintId}
 		]]>
 	</update>
 
 	<update id="updateReply" parameterType="complaint">
 		<![CDATA[
-		update t_complaint set complaintReply = #{complaintReply}, complaintReplyTime = now(), complaintReplyUser = #{userId}
-		where complaintId =#{complaintId}
+		update t_complaint set  complaintReply = #{complaintReply}, complaintReplyTime= now()
+		where complaintId = #{complaintId}
 		]]>
 	</update>
+
 
 	<update id="batchUpdate" parameterType="list">
 		<![CDATA[
@@ -102,10 +102,10 @@
 
 	<select id="queryByPager" resultType="list" resultMap="complaintResultMap">
 		<![CDATA[
-		select c.*,u.userId as adminId,u.userName as adminName,u1.* from t_complaint c LEFT JOIN  t_user u on c.userId=u.userId  LEFT JOIN t_user u1 on
+		select c.*,u.userId as adminId,u.userName as adminName,u1.userName as customerName from t_complaint c LEFT JOIN  t_user u on c.userId=u.userId  LEFT JOIN t_user u1 on
  		c.complaintReplyUser= u1.userId
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
+		<if test="user.companyId != null and user.companyId != '' ">
 			and c.companyId = #{user.companyId}
 		</if>
  		limit #{pager.beginIndex}, #{pager.pageSize}
@@ -116,7 +116,7 @@
 		select count(*) from t_complaint c, t_user u where c.userId=u.userId
 		]]>
 		<if test="companyId != null and companyId != ''">
-			and c.companyId = #{user.companyId}
+			and c.companyId = #{companyId}
 		</if>
 	</select>
 

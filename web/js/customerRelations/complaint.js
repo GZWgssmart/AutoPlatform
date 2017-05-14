@@ -33,7 +33,7 @@ function showAdminWin() {
     validator("adminForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('编辑失败', "只能选择一条数据进行回复", "error");
+        swal('编辑失败', "请选择一条投诉记录进行回复", "error");
         return false;
     } else {
         var Reply = selectRow[0];
@@ -42,18 +42,21 @@ function showAdminWin() {
     }
 }
 
-/** 编辑数据提醒 */
-function showEditWin() {
+/** 编辑投诉内容 */
+function showEditContent() {
+    validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('编辑失败', "只能选择一条数据进行编辑", "error");
+        swal('编辑失败', "请选择一条投诉记录进行编辑", "error");
         return false;
     } else {
-        var incomingType = selectRow[0];
-        $("#updateForm").fill(incomingType);
+        var complaint = selectRow[0];
+        $("#editForm").fill(complaint);
         $("#editWin").modal('show');
     }
 }
+
+
 
 /*表格获取行操作*/
 function operateFormatter(value, row, index) {
@@ -116,13 +119,12 @@ function validator(formId) {
                 formSubmit("/complaint/add_customer", formId, "addWin");
 
             } else if (formId == "editForm") {
-                formSubmit("/complaint/edit_complaint", formId, "editWin");
+                formSubmit("/complaint/edit_complaintContent", formId, "editWin");
 
             } else if (formId == "adminForm") {
                 formSubmit("/complaint/add_admin", formId, "adminWin");
 
             }
-
 
         })
 

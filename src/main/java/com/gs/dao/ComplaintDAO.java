@@ -15,9 +15,11 @@ public interface ComplaintDAO extends BaseDAO<String, Complaint>{
 
     /**
      * 回复更新
-     * @param complaint
+     *
      */
-    public void updateReply(@Param("complaint")Complaint complaint);
+    public void updateReply(Complaint complaint);
+
+
 
 
 }

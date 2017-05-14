@@ -112,7 +112,7 @@
 		  select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
 		]]>
 		<if test="companyId != null and companyId != ''">
-			and rem.companyId = #{user.companyId}
+			and rem.companyId = #{companyId}
 		</if>
 	</select>
 
@@ -131,7 +131,7 @@
 	<select id="countByCondition" resultType="int">
   		select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
 		<if test="companyId != null and companyId != ''">
-			and rem.companyId = #{user.companyId}
+			and rem.companyId = #{companyId}
 		</if>
 	</select>
 

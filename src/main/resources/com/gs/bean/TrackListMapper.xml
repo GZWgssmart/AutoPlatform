@@ -121,7 +121,7 @@
 		c.checkinStatus ='Y' and r.recordStatus ='Y' and r.trackStatus = 'N'
 		]]>
 		<if test="companyId != null and companyId != ''">
-			and l.companyId = #{user.companyId}
+			and l.companyId = #{companyId}
 		</if>
 	</select>
 

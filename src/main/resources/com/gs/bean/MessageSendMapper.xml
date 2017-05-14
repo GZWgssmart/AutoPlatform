@@ -120,7 +120,7 @@
 		select count(*) from t_message_send s, t_checkin c where s.userId=c.userId
 		]]>
 		<if test="companyId != null and companyId != ''">
-			and s.companyId = #{user.companyId}
+			and s.companyId = #{companyId}
 		</if>
 	</select>
 
