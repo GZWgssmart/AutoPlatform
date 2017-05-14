@@ -52,7 +52,7 @@
 
 	<select id="queryAll" resultMap="moduleResultMap">
 		<![CDATA[
-			select * from t_module
+			select * from t_module where moduleStatus = 'Y'
 		]]>
 	</select>
 

@@ -51,7 +51,7 @@
 
 	<select id="queryAll" resultMap="roleResultMap">
 		<![CDATA[
-			select * from t_role
+			select * from t_role where roleStatus = 'Y'
 		]]>
 	</select>
 
