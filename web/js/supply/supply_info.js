@@ -21,6 +21,7 @@ function showEditWin() {
     } else {
         var supply = selectRow[0];
         $("#editForm").fill(supply);
+        $("#editSupplyAddress").val("北京市/北京市/东城区");
         $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");
         $("#editWin").modal('show');
     }

@@ -19,6 +19,12 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
+    <style>
+        .address{
+            width: 50%;
+        }
+    </style>
 </head>
 <body>
 
@@ -174,7 +180,7 @@
                             </div>
                             <div class="form-group">
                                 <label>地址：</label>
-                                <input type="text" attr="supply.supplyAddress"  name="supplyAddress" class="form-control"/>
+                                <input data-toggle="city-picker" id="editSupplyAddress" class="address" name="supplyAddress"/>
                             </div>
                             <div class="form-group">
                                 <label>开户银行全称：</label>
@@ -234,7 +240,7 @@
                             </div>
                             <div class="form-group">
                                 <label>电话：</label>
-                                <input type="text"  name="supplyTel" class="form-control"/>
+                                <input type="text"  name="supplyTel" maxlength="11" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>负责人：</label>
@@ -242,7 +248,7 @@
                             </div>
                             <div class="form-group">
                                 <label>地址：</label>
-                                <input type="text"  name="supplyAddress" class="form-control"/>
+                                <input data-toggle="city-picker" class="address" name="supplyAddress"/>
                             </div>
                             <div class="form-group">
                                 <label>开户银行全称：</label>
@@ -298,6 +304,8 @@
 <script src="<%=path %>/js/jquery.formFill.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/supply/supply_info.js"></script>
+<script src="<%=path %>/js/city-picker.data.js"></script>
+<script src="<%=path %>/js/city-picker.js"></script>
 <script type="text/javascript">
 
 </script>
