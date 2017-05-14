@@ -127,7 +127,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and c.companyId = #{user.companyId}
 		</if>
-		order by c.checkinCreatedTime desc, c.companyId
+		order by c.companyId desc, c.checkinStatus desc, c.checkinCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -140,7 +140,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and c.companyId = #{user.companyId}
 		</if>
-		order by c.checkinCreatedTime desc, c.companyId
+		order by c.companyId desc, c.checkinStatus desc, c.checkinCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -168,7 +168,7 @@
 		<if test="checkin.companyId != null and checkin.companyId != '' and checkin.companyId != 'null' and checkin.companyId != 'undefined'">
 			and c.companyId = #{checkin.companyId}
 		</if>
-		order by c.checkinCreatedTime desc, c.companyId
+		order by c.companyId desc, c.checkinStatus desc, c.checkinCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
