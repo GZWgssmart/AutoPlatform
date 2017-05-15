@@ -90,6 +90,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and t.companyId = #{user.companyId}
 		</if>
+        order by t.companyId desc, t.supplyTypeStatus desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -101,6 +102,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and t.companyId = #{user.companyId}
 		</if>
+        order by t.companyId desc, t.supplyTypeStatus desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -118,6 +120,7 @@
 		<if test="supplyType.companyId != null and supplyType.companyId != '' and supplyType.companyId != 'null' and supplyType.companyId != 'undefined'">
 			and t.companyId = #{supplyType.companyId}
 		</if>
+        order by t.companyId desc, t.supplyTypeStatus desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
