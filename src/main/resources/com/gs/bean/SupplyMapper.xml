@@ -177,7 +177,7 @@
         <if test="supply.supplyTypeId != null and supply.supplyTypeId != '' and supply.supplyTypeId != 'null' and supply.supplyTypeId != 'undefined'">
             and supplyTypeId = #{supply.supplyTypeId}
         </if>
-		<if test="supply.companyId != null and supply.companyId != '' and supply.companyId != 'null' and supply.company != 'undefined'">
+		<if test="supply.companyId != null and supply.companyId != '' and supply.companyId != 'null' and supply.companyId != 'undefined'">
 			and companyId = #{supply.companyId}
 		</if>
 	</select>
