@@ -56,7 +56,7 @@ public class AccessoriesBuyController {
      */
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + ","
             + Constants.COMPANY_BUYER + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
-    
+
     /**
      * 可以操作的角色
      * 董事长、采购员、超级管理员
@@ -78,7 +78,8 @@ public class AccessoriesBuyController {
             return "error/notPermission";
         }
         logger.info("Session已失效，请重新登入");
-        return "index/notLogin";
+//        return "index/notLogin";
+        return "accessories/accessories_buy";
     }
 
     @ResponseBody
@@ -86,95 +87,85 @@ public class AccessoriesBuyController {
     private ControllerResult isAccAdd(AccessoriesBuy accessoriesBuy, @Param("state") String state) {
 
         if (SessionGetUtil.isUser()) {
-            try {
-                if (CheckRoleUtil.checkRoles(queryRole)) {
-                    User user = SessionGetUtil.getUser();
-                    logger.info("添加采购信息");
+//            try {
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("添加采购信息");
+                User user = SessionGetUtil.getUser();
+                String accId = accessoriesBuy.getAccId();
 
-                    String accId = accessoriesBuy.getAccId();
+                Accessories acc = accessoriesBuy.getAccessories();
 
-                    Accessories acc = accessoriesBuy.getAccessories();
+                AccessoriesBuy ab = accessoriesBuyService.queryById(accId);
 
-                    AccessoriesBuy ab = accessoriesBuyService.queryById(accId);
-                    Accessories ac = accessoriesService.queryById(accId);
+                if (state.equals("true")) {  // 如果为 true 库存添加
+                    logger.info("库存添加");
 
-                    if (state.equals("true")) {  // 如果为 true 库存添加
-                        logger.info("库存添加");
-
-                        if (ab == null) {
-                            accessoriesBuy.setAccBuyCount(acc.getAccIdle() + accessoriesBuy.getAccBuyCount());
-                            accessoriesBuy.setCompanyId(ac.getCompanyId());
-                            accessoriesBuy.setAccUnit(ac.getAccUnit());
-
-                            accessoriesBuyService.insert(accessoriesBuy);
-
-                            return ControllerResult.getSuccessResult("添加成功");
-
-                        } else if (ab.getAccId().equals(ac.getAccId())) {
-                            return ControllerResult.getFailResult("不能重复添加同一条数据");
-                        }
-
-                    } else if (state.equals("false")) { // 如果为false采购添加
-                        logger.info("采购添加");
-
-                        acc.setAccId(UUIDUtil.uuid());
-                        acc.setAccName(accessoriesBuy.getAccessories().getAccName());
-                        acc.setAccUnit(accessoriesBuy.getAccUnit());
-
-                        AccessoriesType accessoriesType = acc.getAccessoriesType();
-                        accessoriesType.setAccTypeName(acc.getAccessoriesType().getAccTypeName());
-                        accessoriesType.setAccTypeId(UUIDUtil.uuid());
-
-                        accessoriesBuy.setAccessories(acc);
-                        accessoriesBuy.setAccId(acc.getAccId());
-                        acc.setAccTypeId(accessoriesType.getAccTypeId());
-
-                        Supply supply = acc.getSupply();
+                    if (ab == null) {
+                        accessoriesBuy.setAccBuyCount(acc.getAccIdle() + accessoriesBuy.getAccBuyCount());
+                        accessoriesBuy.setCompanyId(user.getCompanyId());
 
                         accessoriesBuyService.insert(accessoriesBuy);
-                        accessoriesService.insert(acc);
-                        accessoriesTypeService.insert(accessoriesType);
-//            supplyService.insert(supply);
 
                         return ControllerResult.getSuccessResult("添加成功");
+
                     }
+
+                } else if (state.equals("false")) { // 如果为false采购添加
+                    logger.info("采购添加");
+
+                    acc.setAccId(UUIDUtil.uuid());
+                    acc.setAccName(accessoriesBuy.getAccessories().getAccName());
+                    acc.setAccUnit(accessoriesBuy.getAccUnit());
+                    acc.setAccTotal(accessoriesBuy.getAccBuyCount());
+                    acc.setAccBuyedTime(accessoriesBuy.getAccBuyTime());
+                    acc.setAccPrice(accessoriesBuy.getAccBuyPrice());
+                    acc.setAccIdle(accessoriesBuy.getAccBuyCount());
+
+
+                    accessoriesBuy.setAccessories(acc);
+                    accessoriesBuy.setAccId(acc.getAccId());
+                    accessoriesBuy.setCompanyId(user.getCompanyId());
+
+                    acc.setCompanyId(accessoriesBuy.getCompanyId());
+
+                    accessoriesBuyService.insert(accessoriesBuy);
+                    accessoriesService.insert(acc);
+
                     return ControllerResult.getSuccessResult("添加成功");
                 }
-                return null;
-            } catch (Exception e) {
-                logger.info("出现异常" + e.getStackTrace());
-                return null;
+                return ControllerResult.getSuccessResult("添加成功");
             }
-        } else {
-            logger.info("session失效重新登入");
             return null;
+//            } catch (Exception e) {
+//                logger.info("添加失败【145】，出现异常" + e.getStackTrace().toString());
+//                return null;
         }
-
-
+//        } else {
+        logger.info("session失效重新登入");
+        return ControllerResult.getFailResult("添加失败");
     }
+
 
     @ResponseBody
     @RequestMapping(value = "pager", method = RequestMethod.GET)
-
     private Pager4EasyUI<AccessoriesBuy> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-
         if (SessionGetUtil.isUser()) {
-            try {
-                if (CheckRoleUtil.checkRoles(queryRole)) {
-                    User user = SessionGetUtil.getUser();
-                    logger.info("分页查询采购信息");
-                    Pager pager = new Pager();
-                    pager.setPageNo(Integer.valueOf(pageNumber));
-                    pager.setPageSize(Integer.valueOf(pageSize));
-                    pager.setTotalRecords(accessoriesBuyService.count(user));
-                    List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByPager(pager, user);
-                    return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
-                }
-                return null;
-            } catch (Exception e) {
-                logger.info("出现异常" + e.getStackTrace());
-                return null;
+//            try {
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                User user = SessionGetUtil.getUser();
+                logger.info("分页查询采购信息");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(accessoriesBuyService.count(user));
+                List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByPager(pager, user);
+                return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
             }
+            return null;
+//            } catch (Exception e) {
+//                logger.info("出现异常【164】" + e.getStackTrace().toString());
+//                return null;
+//            }
         } else {
             logger.info("session失效重新登入");
             return null;
@@ -224,29 +215,29 @@ public class AccessoriesBuyController {
     public ControllerResult updateAccessoriesBuyInfo(AccessoriesBuy accessoriesBuy) {
 
         if (SessionGetUtil.isUser()) {
-            try {
-                if (CheckRoleUtil.checkRoles(queryRole)) {
-                    Accessories acc = accessoriesBuy.getAccessories();
-                    AccessoriesType accessoriesType = acc.getAccessoriesType();
+//            try {
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                Accessories acc = accessoriesBuy.getAccessories();
 
-                    int total = accessoriesBuy.getAccBuyCount() + acc.getAccIdle();
+                int total = accessoriesBuy.getAccBuyCount() + acc.getAccIdle();
 
-                    acc.setAccIdle(total);
-                    accessoriesBuy.setAccBuyCount(total);
-                    acc.setAccUnit(accessoriesBuy.getAccUnit());
-                    acc.setAccTypeId(accessoriesType.getAccTypeId());
+                acc.setAccTotal(total);
+                accessoriesBuy.setAccBuyCount(total);
+                acc.setAccUnit(accessoriesBuy.getAccUnit());
 
-                    accessoriesBuyService.update(accessoriesBuy);
-                    accessoriesService.update(acc);
-                    accessoriesTypeService.update(accessoriesType);
+                acc.setAccTypeId(acc.getAccTypeId());
+                acc.setSupplyId(accessoriesBuy.getAccessories().getSupplyId());
 
-                    return ControllerResult.getSuccessResult("更新成功");
-                }
-                return ControllerResult.getFailResult("没有此权限访问");
-            } catch (Exception e) {
-                logger.info("出现异常" + e.getStackTrace());
-                return ControllerResult.getFailResult("出现了一个错误");
+                accessoriesBuyService.update(accessoriesBuy);
+                accessoriesService.update(acc);
+
+                return ControllerResult.getSuccessResult("更新成功");
             }
+            return ControllerResult.getFailResult("没有此权限访问");
+//            } catch (Exception e) {
+//                logger.info("出现异常【239】" + e.getStackTrace());
+//                return ControllerResult.getFailResult("出现了一个错误");
+//            }
         } else {
             logger.info("session失效重新登入");
             return ControllerResult.getFailResult("登入失效，重新登入");

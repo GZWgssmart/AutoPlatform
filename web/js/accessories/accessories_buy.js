@@ -4,30 +4,41 @@ $(document).ready(function () {
     initDateTimePicker("form_datetime", "");
     initTable("cusTable", "/accessoriesBuy/pager");
 
-    $("#isAcc").bootstrapSwitch({
-        onText: '是',
-        offText: '否',
-        onColor: 'success',
-        offColor: 'danger',
-        size: 'normal',
-        onSwitchChange: function (event, state) {
-            if (state == true) {
-                disableInput();
-                isAcc = true;
-                showAccessories();
-            } else if (state == false) {
-                enableInput();
-                isAcc = false;
-            }
-        }
-    });
+    initSelect2("supply", "请选择供应商", "/supply/queryAll", 550);
+    initSelect2("accTypeA", "请选择配件类别", "/accessoriesType/accessoriesType_All", 550);
+
+    initBsSwitchBuy("isAcc", switchChange);
 
     disableSwitch("accWin", "isAcc");
+
 
     destoryValidator("addWin", "addForm");
     destoryValidator("accWin", "accForm");
     destoryValidator("editWin", "editForm");
 });
+
+function initBsSwitchBuy(id, onSwitchChange) {
+    initBsSwitch.call(this, id, onSwitchChange);
+}
+
+function switchChange(event, state) {
+    onSwitchChange.call(this, event, state);
+}
+
+override :switchChange = function (event, state) {
+    if (state == true) {
+        disableInput();
+        isAcc = true;
+        showAccessories();
+    } else if (state == false) {
+        enableInput();
+        isAcc = false;
+    }
+}
+
+function closwSwitchCleanData(switchId) {
+
+}
 
 // 获取某个表单内的所有inputName值
 function formInput(formId) {
@@ -75,6 +86,7 @@ function enableInput() {
     $("input[name='accessories.accessoriesType.accTypeName']").prop("disabled", false);
     $("input[name='accessories.accCommodityCode']").prop("disabled", false);
 }
+
 
 /** 编辑数据 */
 function showEditWin() {
@@ -162,11 +174,32 @@ window.operateEvents = {
     },
     'click .showEditWin': function (e, value, row, index) {
         var accessoriesBuy = row;
+        console.log(accessoriesBuy);
         $("#editForm").fill(accessoriesBuy);
+        $('#supplyType').html('<option value="' + accessoriesBuy.accessories.supply.supplyId + '">' + accessoriesBuy.accessories.supply.supplyName + '</option>').trigger("change");
+        $('#eAccType').html('<option value="' + accessoriesBuy.accessories.accessoriesType.accTypeId + '">' + accessoriesBuy.accessories.accessoriesType.accTypeName + '</option>').trigger("change");
         $("#buyTime").val(formatterDate(accessoriesBuy.accBuyTime));
         showAccEditWin();
     }
 }
+
+function fmtAccOperate(value, row, index) {
+    return [
+        '<button type="button" class="slData btn btn-primary  btn-sm" style="margin-right:15px;" >选择</button>'
+    ].join('');
+}
+
+window.operateAccEvents = {
+    'click .slData': function (e, value, row, index) {
+        var acc = row;
+        $("#accBuyTime").val(formatterDate(acc.accUsedTime));
+        // autoCalculation1(formId, count, price, discount, names);
+        $("#addForm").fill(acc);
+        enableSwitch("accWin", "isAcc");
+        $("#accWin").modal("hide");
+    }
+}
+
 function showAccessories() {
     initTableNotTollbar("accTable", "/accessories/pager");
     $("#accWin").modal("show");
@@ -175,14 +208,14 @@ function showAccessories() {
 function addAccBuy() {
     var selectRow = $("#accTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        disableSwitch("accWin","isAcc");
+        disableSwitch("accWin", "isAcc");
         swal('添加失败', "请至少选择一条数据后关闭本窗口", "error");
     } else {
         var acc = selectRow[0];
         $("#accBuyTime").val(formatterDate(acc.accUsedTime));
         // autoCalculation1(formId, count, price, discount, names);
         $("#addForm").fill(acc);
-        enableSwitch("accWin","isAcc");
+        enableSwitch("accWin", "isAcc");
         $("#accWin").modal("hide");
     }
     disableSwitch();
@@ -290,11 +323,6 @@ function validator(formId) {
                     notEmpty: {
                         message: '不能为空'
                     },
-                    stringLength: {
-                        min: 0,
-                        max: 8,
-                        message: '字数不可以超过8个字符'
-                    }
                 },
 
             },

@@ -27,7 +27,7 @@ $(document).ready(function () {
 });
 
 function initBsSwitchSale(id, onSwitchChange) {
-    inintBsSwitch.call(this, id, onSwitchChange);
+    initBsSwitch.call(this, id, onSwitchChange);
 }
 
 function switchChange(event, state) {
@@ -165,7 +165,6 @@ function showAccessories() {
     initTableNotTollbar("accTable", "/accessories/pager");
     validator("accForm");
     $("#accWin").modal("show");
-    autoEditCalculationCount("aLastCount", "aSaleCount", alCount);
 }
 
 
@@ -177,8 +176,9 @@ function addAcc() {
         var acc = selectRow[0];
         lCount = acc.accTotal;
         $("#addForm").fill(acc);
-        alCount = acc.accTotal;
+        // $("#accBuyedTime").val(formatterDate(acc.accBuyedTime));
         $("#accWin").modal("hide");
+        autoEditCalculationCount("aLastCount", "aSaleCount", acc.accTotal);
         enableInput();
     }
 }
@@ -517,6 +517,30 @@ function autoCalculation(iId) {
             }
         }
     }
+}
+
+/**
+ * 自动计算库存剩余数量
+ * @param totalCount 库存总数量
+ * @param saleCount 销售数量
+ * @param alCount 库存总数量
+ */
+function autoEditCalculationCount(totalCount, saleCount, alCount) {
+    var tCount = $("#" + totalCount).val();
+    var sCount = "";
+    var rs = "";
+    $("#" + saleCount).bind("input ", function () {
+        sCount = $("#" + saleCount).val();
+        if (sCount != null && sCount != "") {
+            rs = alCount - sCount;
+            $("#" + totalCount).val(rs);
+            if (sCount > alCount || sCount < 0) {
+                $("#" + totalCount).val(alCount);
+            }
+        } else {
+            $("#" + totalCount).val(alCount);
+        }
+    })
 }
 
 function showUserWin() {

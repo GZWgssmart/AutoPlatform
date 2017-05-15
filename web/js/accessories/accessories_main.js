@@ -2,7 +2,7 @@
  * Created by Levc on 2017/5/10.
  */
 // 初始化开关按钮
-function inintBsSwitch(id, onSwitchChange) {
+function initBsSwitch(id, onSwitchChange) {
     $('#' + id).bootstrapSwitch({
         onText: '是',
         offText: '否',
@@ -38,23 +38,23 @@ function eachNames(names, finName) {
 }
 
 // 自动计算库存数量
-function autoEditCalculationCount(totalCount, saleCount, alCount) {
-    var aCount = alCount;
-    var tCount = $("#" + totalCount).val();
-    var sCount = "";
-    var rs = "";
-
-    $("#" + saleCount).bind("input ", function () {
-        sCount = $("#" + saleCount).val();
-        if (sCount != null && sCount != "") {
-            rs = aCount - sCount;
-            $("#" + totalCount).val(rs);
-        } else if (sCount == "" && sCount == null) {
-            console.log(aCount);
-            $("#" + totalCount).val(aCount);
-        }
-    })
-}
+// function autoEditCalculationCount(totalCount, saleCount, alCount) {
+//     var aCount = alCount;
+//     var tCount = $("#" + totalCount).val();
+//     var sCount = "";
+//     var rs = "";
+//
+//     $("#" + saleCount).bind("input ", function () {
+//         sCount = $("#" + saleCount).val();
+//         if (sCount != null && sCount != "") {
+//             rs = aCount - sCount;
+//             $("#" + totalCount).val(rs);
+//         } else if (sCount == "" && sCount == null) {
+//             console.log(aCount);
+//             $("#" + totalCount).val(aCount);
+//         }
+//     })
+// }
 
 // 禁用开关
 function disableSwitch(modalId, switchId) {

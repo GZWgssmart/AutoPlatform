@@ -2,6 +2,7 @@
 <% String path = request.getContextPath();%>
 <%@ taglib prefix="s" uri="http://shiro.apache.org/tags" %>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,10 +18,12 @@
     <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
           type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
+    <style>
 
+    </style>
 </head>
 <body>
-<div class="container" style="width: 100%;">
+<div class="container">
     <s:hasAnyRoles name="companyAdmin, companyRepertory, companyBuyer, systemSuperAdmin, systemOrdinaryAdmin">
         <form id="formSearch" class="form-horizontal">
             <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
@@ -62,6 +65,7 @@
             <th data-field="accessories.accName">配件名称</th>
             <th data-field="accessories.accessoriesType.accTypeName">配件类别</th>
             <th data-field="accessories.supply.supplyName">供应商</th>
+            <th data-field="accessories.company.companyName">配件所属公司</th>
             <th data-field="accBuyCount">采购数量</th>
             <th data-field="accBuyPrice">采购单价</th>
             <th data-field="accBuyDiscount">采购折扣</th>
@@ -157,7 +161,7 @@
 
                             <div class="form-group">
                                 <label>单价：</label>
-                                <input type="number" name="accBuyPrice" attr="accessoriesBuy.accBuyPrice"
+                                <input type="text" name="accBuyPrice" attr="accessoriesBuy.accBuyPrice"
                                        class="form-control"/>
                             </div>
 
@@ -168,9 +172,16 @@
                             </div>
 
                             <div class="form-group">
-                                <label>供应商：</label>
-                                <input type="text" name="accessories.supply.supplyName"
-                                       attr="accessoriesBuy.accessories.supply.supplyName" class="form-control"/>
+                                <label>配件类别：</label>
+                                <select id="eAccType" class="js-example-tags form-control accTypeA"
+                                        name="accessories.accTypeId" attr="acc.accessoriesType.accTypeName"></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>配件供应商：</label>
+                                <select id="supplyType" class="js-example-tags form-control supply"
+                                        name="accessories.supplyId"
+                                        attr="accessoriesBuy.accessories.supply.supplyName"></select>
                             </div>
 
                             <div class="form-group">
@@ -227,8 +238,21 @@
                             </div>
                             <div class="form-group">
                                 <label>配件名称：</label>
-                                <input type="text" name="accessories.accName" class="form-control" id="accName"
+                                <input type="text" name="accessories.accName" class="form-control " id="accName"
                                        attr="acc.accName"/>
+                            </div>
+                            <div class="form-group">
+                                <label>配件描述：</label>
+                                <textarea name="accessories.accDes" class="form-control" rows="3" id="accDes"
+                                          style="resize: none;"
+                                          attr="acc.accDes"></textarea>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>配件供应商：</label>
+                                <select id="supply" class="js-example-tags form-control supply"
+                                        name="accessories.supplyId" style="width: 100%;"></select>
                             </div>
 
                             <div class="form-group">
@@ -246,9 +270,9 @@
 
                             <div class="form-group">
                                 <label>类别：</label>
-                                <input type="text" name="accessories.accessoriesType.accTypeName" id="accTypeName"
-                                       attr="acc.accessoriesType.accTypeName"
-                                       class="form-control"/>
+                                <select id="accType" class="js-example-tags form-control accTypeA"
+                                        name="accessories.accTypeId" attr="acc.accessoriesType.accTypeName"
+                                        style="width: 100%;"></select>
                             </div>
 
                             <div class="form-group">
@@ -259,7 +283,7 @@
 
                             <div class="form-group">
                                 <label>单价：</label>
-                                <input type="number" name="accBuyPrice" id="accBuyPrice" attr="acc.accPrice"
+                                <input type="text" name="accBuyPrice" id="accBuyPrice" attr="acc.accPrice"
                                        class="form-control"/>
                             </div>
 
@@ -269,11 +293,6 @@
                                        class="form-control" placeholder="没折扣可以不用输入"/>
                             </div>
 
-                            <%--<div class="form-group">--%>
-                            <%--<label>配件供应商：</label>--%>
-                            <%--<input type="text" name="accessories.supply.supplyName" attr="accessoriesBuy.supply.supplyName" id="aCompanyName"--%>
-                            <%--class="form-control"/>--%>
-                            <%--</div>--%>
 
                             <div class="form-group">
                                 <label>采购时间：</label>
@@ -373,6 +392,9 @@
                                     </th>
                                     <th data-field="accStatus" data-formatter="status">
                                         状态
+                                    </th>
+                                    <th data-formatter="fmtAccOperate" data-events="operateAccEvents">
+                                        操作
                                     </th>
                                 </tr>
                                 </thead>

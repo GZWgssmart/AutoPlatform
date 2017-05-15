@@ -435,7 +435,7 @@
                                     <th data-field="accUsedTime" data-formatter="formatterDate">
                                         最近一次领料时间
                                     </th>
-                                    <th data-field="accSaledTime" data-formatter="formatterDate">
+                                    <th data-field="accBuyedTime" data-formatter="formatterDate">
                                         最近一次购买时间
                                     </th>
                                     <th data-field="supply.supplyName">
