@@ -70,10 +70,10 @@
             <th data-field="companyWebsite" >
                 公司官网URL
             </th>
-            <th data-field="companyLogo" >
+            <th data-field="companyLogo" data-formatter="formatterImg">
                 公司logo
             </th>
-            <th data-field="companyOpenDate" >
+            <th data-field="companyOpenDate" data-formatter="companyOpDateFormatter">
                 公司创建时间
             </th>
             <th data-field="companySize" >
@@ -237,6 +237,7 @@
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改公司</h3>
                         <form role="form" id="editForm" enctype="multipart/form-data">
+                            <input type="hidden" name="companyId" attr="company.companyId"/>
                             <div class="form-group">
                                 <label class="control-label">公司名称：</label>
                                 <input type="text"   name="companyName" class="form-control" attr="company.companyName"/>
@@ -272,8 +273,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司创建时间</label>
-                                <input size="16" type="text" name="companyOpenDate" readonly
-                                       class="form_datetime form-control " id="establishTime2" attr="company.companyOpenDate">
+                                <input type="text" name="companyOpenDate" readonly
+                                       class="form_datetime form-control " id="editCompanyOpenDate">
                                 <span class="add-on"><i class="icon-th"></i></span>
                             </div>
                             <div class="form-group">
@@ -289,7 +290,7 @@
                             <div class="form-group">
                                 <label class="control-label">公司logo：</label>
                                 <div id="preview">
-                                    <img alt="image" id="icon" name="file" style="border-radius: 50%;"/>
+                                    <img id="icon" name="file" style="width:120px;height:60px;"/>
                                 </div>
                                 <input type="file" name="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
                                 <button id="button" onclick="$('#previewImg').click();">修改LOGO</button>
@@ -302,7 +303,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" value="修改">
+                                <input type="button" id="editButton" class="btn btn-primary" value="修改">
                                 </input>
                             </div>
                         </form>
@@ -322,6 +323,7 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
+<script src="<%=path %>/js/jquery.form.min.js"></script>
 <script src="<%=path%>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>

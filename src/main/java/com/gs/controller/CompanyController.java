@@ -58,7 +58,7 @@ public class CompanyController {
     private UserRoleService userRoleService;
 
     private String CompanyQueryRole = Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_ADMIN;
-    private String CompanyEditRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+    private String CompanyEditRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN;
     private String carCommonRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN;
     @RequestMapping(value = "home", method = RequestMethod.GET)
     private String home() {
@@ -190,7 +190,7 @@ public class CompanyController {
             try {
                 if(CheckRoleUtil.checkRoles(CompanyEditRole)){
                     logger.info("添加公司");
-                    company.setCompanyLogo("/upload/logo.png");
+                    company.setCompanyLogo("uploads/logo.jpg");
                     String companyId = UUIDUtil.uuid();
                     company.setCompanyId(companyId);
                     User user = new User();
@@ -221,36 +221,30 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "uploadCompany", method = RequestMethod.POST)
-    public ControllerResult uploadCarModel(Company company, MultipartFile companyLogo, HttpSession session) {
+    public ControllerResult upload(Company company, MultipartFile file,HttpSession session) {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        try {
-            if(CheckRoleUtil.checkRoles(CompanyEditRole)){
-                //判断文件是否为空
-                if (!companyLogo.isEmpty()) {
-                    try {
-                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-                        String date = df.format(new Date());// new Date()为获取当前系统时间
-                        // 文件保存路径
-                        String filePath = FileUtil.uploadPath(session,date) + UUID.randomUUID().toString() + companyLogo.getOriginalFilename();
-                        // 转存文件
-                        companyLogo.transferTo(new File(filePath));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                companyService.update(company);
+        if (CheckRoleUtil.checkRoles(CompanyEditRole)) {
+            try {
                 logger.info("更新公司成功");
-                return ControllerResult.getSuccessResult("更新公司成功");
-            }else{
-                return ControllerResult.getFailResult("更新公司失败，您没有权限操作");
-            }
+                    String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
+                    String filePath = FileUtil.uploadPath(session, "\\" + fileName);
+                    String logo = "uploads/" + fileName;
+                    if (!file.isEmpty()) {
+                        file.transferTo(new File(filePath));
+                        company.setCompanyLogo(logo);
+                    }
+                    companyService.update(company);
+                    return ControllerResult.getSuccessResult("更新公司成功");
 
-        } catch (Exception e) {
-            logger.info("更新失败，出现了一个错误");
-            return ControllerResult.getFailResult("更新失败，出现了一个错误");
+            } catch (Exception e) {
+                logger.info("更新失败，出现了一个错误");
+                return ControllerResult.getFailResult("更新失败，出现了一个错误");
+            }
+        }else{
+            return null;
         }
     }
 

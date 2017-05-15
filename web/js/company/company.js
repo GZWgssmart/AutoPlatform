@@ -9,6 +9,9 @@ $(document).ready(function () {
     destoryValidator("editWin","editForm");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
+
+    initDateTimePicker("form_datetime","companyOpenDate","editForm");
+    initDateTimePicker("form_datetime","companyOpenDate","addForm");
 });
 function companyAll(){
     initTable("cusTable","/company/queryByPager");
@@ -33,7 +36,8 @@ function showEditWin() {
     } else {
         var product = selectRow[0];
         $('#companys').html('<option value="' + product.companySize + '">' + product.companySize + '</option>').trigger("change");
-        initDateTimePicker("form_datetime","","editForm");
+        $('#editCompanyOpenDate').val(formatterDate(product.companyOpenDate));
+        $("#icon").attr("src","/" + product.companyLogo);
         $("#editForm").fill(product);
         $("#editWin").modal('show');
         validator("editForm");
@@ -54,9 +58,22 @@ function operating(value, row, index) {
     }
 }
 
+function formatterImg(value, row, index){
+    if(row.companyLogo !=null){
+        return [
+            '<img style="width:120px;height:60px;" src="/'+ value +'">'
+        ]
+    }
+}
+
+function companyOpDateFormatter(value, row, index){
+    if(row.companyOpenDate !=null){
+       var date =  formatterDate(value);
+        return date;
+    }
+}
 
 function showAddWin(){
-    initDateTimePicker("form_datetime","","addForm");
     $('#companys').html('').trigger("change");
     $("#addWin").modal('show');
     validator("addForm");
@@ -119,6 +136,8 @@ window.operateEvents = {
     'click .showUpdateIncomingType1': function (e, value, row, index) {
     var incomingType = row;
     $('#companys').html('<option value="' + incomingType.companySize + '">' + incomingType.companySize + '</option>').trigger("change");initDateTimePicker("form_datetime","","editForm");
+    $("#icon").attr("src","/" + incomingType.companyLogo);
+    $('#editCompanyOpenDate').val(formatterDate(incomingType.companyOpenDate));
     $("#editForm").fill(incomingType);
     $("#editWin").modal('show');
     validator("editForm");
@@ -243,17 +262,39 @@ function validator(formId) {
                     },number:true
                 }
             }
-
         }
     })
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/company/InsertCompany", formId, "addWin");
             } else if (formId == "editForm") {
-                formSubmit("/company/uploadCompany", formId, "editWin");
-                oFileInput.Init("edit_companyLogo", "/company/uploadCompany");
-            }
-        })
+                $("#editButton").on("click", function () {
+                    $("#editForm").data('bootstrapValidator').validate();
+                    if ($("#editForm").data('bootstrapValidator').isValid()) {
+                        $("#editButton").attr("disabled","disabled");
+                    } else {
+                        $("#editButton").removeAttr("disabled");
+                    }
+                    $('#editForm').ajaxSubmit({
+                        url: '/company/uploadCompany',
+                        type: 'post',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.result == "success") {
+                                $('#editWin').modal('hide');
+                                swal(data.message, "", "success");
+                                $('#cusTable').bootstrapTable('refresh');
+                                $('#editForm').data('bootstrapValidator').resetForm(true);
+                            } else if (data.result == "fail") {
+                                $('#editWin').modal('hide');
+                                swal(data.message, "", "error");
+                                $('#editForm').data('bootstrapValidator').resetForm(true);
+                            }
+                        }
+                    })
+                })
+        }
+    })
 }
 
 /** 关闭搜索的form */
@@ -269,33 +310,13 @@ function searchCompany(){
     initTable("cusTable","/company/search?companyName="+ companyName + "&userName=" + userName);
 }
 
-function companyEdit(){
-    $('#editWin').ajaxSubmit({
-        url: '/company/uploadCompany',
-        type: 'post',
-        dataType: 'json',
-        success: function (data) {
-            if (data.result == "success") {
-                // $('#editWin').modal('hide');
-                swal(data.message, "", "success");
-                // $('#cusTable').bootstrapTable('refresh');
-                // $('#editModal').data('bootstrapValidator').resetForm(true);
-            } else if (data.result == "fail") {
-                // $('#myModal').modal('hide');
-                swal(data.message, "", "error");
-                // $('#editModal').data('bootstrapValidator').resetForm(true);
-            }
-        }
-    })
-}
-
 
 
 //图片上传预览    IE是用了滤镜。
 function previewImage(file)
 {
     var MAXWIDTH  = 100;
-    var MAXHEIGHT = 100;
+    var MAXHEIGHT = 50;
     var div = document.getElementById('preview');
     if (file.files && file.files[0])
     {
@@ -325,6 +346,7 @@ function previewImage(file)
         div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
     }
 }
+
 function clacImgZoomParam( maxWidth, maxHeight, width, height ){
     var param = {top:0, left:0, width:width, height:height};
     if( width>maxWidth || height>maxHeight ){
