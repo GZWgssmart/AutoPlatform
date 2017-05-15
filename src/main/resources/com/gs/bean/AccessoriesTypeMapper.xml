@@ -123,7 +123,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and at.companyId = #{user.companyId}
 		</if>
-		order by at.accTypeDes desc, at.companyId
+		order by at.companyId desc, at.accTypeDes
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

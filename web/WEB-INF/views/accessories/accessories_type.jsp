@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -53,9 +54,11 @@
             <th data-field="accTypeStatus" data-formatter="status">
                 状态
             </th>
+            <shiro:hasAnyRoles name="companyAdmin, companyRepertory">
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
+            </shiro:hasAnyRoles>
         </tr>
         </thead>
         <form id="formSearch" class="form-horizontal">
@@ -82,6 +85,7 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
+            <shiro:hasAnyRoles name="companyAdmin, companyRepertory">
             <a>
                 <button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                     <i class="glyphicon glyphicon-plus"></i> 添加
@@ -92,6 +96,7 @@
                     <i class="glyphicon glyphicon-pencil"></i> 修改
                 </button>
             </a>
+            </shiro:hasAnyRoles>
             <a>
                 <button onclick="queryStatus('Y')" type="button" class="btn btn-default" >
                     <i class="glyphicon glyphicon-search"></i> 查可用模块
@@ -124,6 +129,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加配件分类</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
@@ -161,6 +167,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改配件分类</h3>
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="accessoriesType.accTypeId" name="accTypeId" id = "accTypeId"/>

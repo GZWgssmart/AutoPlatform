@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -84,9 +85,11 @@
             <th data-field="accStatus" data-formatter="status">
                 状态
             </th>
+            <shiro:hasAnyRoles name="companyAdmin, companyRepertory">
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
+            </shiro:hasAnyRoles>
         </tr>
         </thead>
         <form id="formSearch" class="form-horizontal">
@@ -162,6 +165,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加配件</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
@@ -250,6 +254,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改供应商</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" attr="accessories.accId" name="accId" id="accId"/>

@@ -126,13 +126,13 @@
 	<select id="queryByPager" resultMap="accessoriesResultMap">
 		<![CDATA[
 			select c.*, s.supplyId, s.supplyName, ac.accTypeId, ac.accTypeName, cpy.companyId, cpy.companyName
-			from t_accessories c, t_supply s, t_accessories_type ac, t_company cpy, t_user u
+			from t_accessories c, t_supply s, t_accessories_type ac, t_company cpy
 			where 1=1 and c.supplyId = s.supplyId and c.accTypeId = ac.accTypeId and c.companyId = cpy.companyId
         ]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and c.companyId = #{user.companyId}
 		</if>
-        order by c.accCreatedTime desc, c.companyId
+        order by c.companyId desc, c.accCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -145,7 +145,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and ac.companyId = #{user.companyId}
 		</if>
-		order by ac.accCreatedTime Desc, ac.companyId
+		order by ac.companyId Desc, ac.accCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -170,7 +170,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and ac.companyId = #{user.companyId}
 		</if>
-		order by ac.accCreatedTime desc, ac.companyId
+		order by ac.companyId desc, ac.accCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
