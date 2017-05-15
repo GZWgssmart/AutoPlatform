@@ -20,6 +20,7 @@
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/maintenanceProgress/jquery.step.css" rel="stylesheet" type="text/css">
 
@@ -88,6 +89,13 @@
                         <h3 class="m-t-none m-b">指派员工</h3>
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="work.workId" name="workId" />
+                            <input type="hidden" attr="work.maintainRecord.recordId" name="recordId" />
+                            <div class="form-group">
+                                <label class="control-label">预计结束时间：</label>
+                                <input type="text" name="endTime" readonly
+                                       class="form_datetime form-control"
+                                       id="workEndTime">
+                            </div>
                             <div class="form-group">
                                 <label class="control-label">员工指派：</label>
                                 <select id="editUser" class="js-example-tags form-control work_user" name="userId"></select>
@@ -124,6 +132,8 @@
 <script src="<%=path %>/js/peopleManage/work.js"></script>
 <script src="<%=path %>/js/select2.full.min.js"></script>
 <script src="<%=path %>/js/zh-CN.js"></script>
+<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
+<script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/city-picker.data.js"></script>
 <script src="<%=path %>/js/city-picker.js"></script>

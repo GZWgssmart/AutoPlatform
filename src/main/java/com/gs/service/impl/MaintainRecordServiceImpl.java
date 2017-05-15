@@ -115,6 +115,10 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         maintainRecordDAO.updateTrackStatus(trackStatus, checkinId);
     }
 
+    public void updateTime(MaintainRecord maintainRecord) {
+        maintainRecordDAO.updateTime(maintainRecord);
+    }
+
     public int updateSpeedStatusById(String speedStatus, String id) {
         return maintainRecordDAO.updateSpeedStatusById(speedStatus, id);
     }

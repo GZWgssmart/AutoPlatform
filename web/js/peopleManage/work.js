@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    initDateTimePicker("form_datetime","endTime","editForm");
     //调用函数，初始化表格
     initTable("cusTable", "/peopleManage/workInfo_pager");
     //当点击查询按钮的时候执行
@@ -7,7 +8,6 @@ $(document).ready(function () {
     initSelect2("work_user", "请选择员工", "/peopleManage/self_user", 565);
     destoryValidator("editWin","editForm");
 });
-
 
 
 function operateFormatter(value, row, index) {
@@ -89,6 +89,7 @@ function showEditWin() {
     if (selectRow.length > 0) {
         var work = selectRow[0];
         $("#editForm").fill(work);
+        $("#workEndTime").val(formatterDate(work.maintainRecord.endTime));
         $("#editWin").modal("show");
     } else {
         swal('指派失败', "只能选择一条数据进行指派", "error");

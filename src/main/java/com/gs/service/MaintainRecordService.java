@@ -64,6 +64,11 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      */
     public void updateTrackStatus(String trackStatus, String checkinId);
 
+
+    /*修改预计结束时间*/
+    public void updateTime(MaintainRecord maintainRecord);
+
+
     /**
      * 根据id更新记录的进度
      * @param speedStatus 当前进度

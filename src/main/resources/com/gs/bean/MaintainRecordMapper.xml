@@ -70,6 +70,13 @@
         ]]>
 	</update>
 
+    <update id="updateTime" parameterType="maintainRecord">
+        <![CDATA[
+          update t_maintain_record
+            set startTime = now(), endTime = #{endTime} where recordId = #{recordId}
+        ]]>
+    </update>
+
     <update id="updateTrackStatus" parameterType="string">
         <![CDATA[
           update t_maintain_record

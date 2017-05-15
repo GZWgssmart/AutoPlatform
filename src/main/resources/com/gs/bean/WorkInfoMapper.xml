@@ -13,7 +13,7 @@
 		<result property="coont" column="coont"></result>
 
 		<association property="user" javaType="com.gs.bean.User">
-			<id property="userId" column="user_id"/>
+			<id property="userId" column="userId"/>
 			<id property="userName" column="user_name"/>
 		</association>
 
@@ -24,6 +24,7 @@
 
 		<association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
 			<id property="recordId" column="recordId"/>
+			<id property="endTime" column="endTime"/>
 			<association property="checkin" javaType="com.gs.bean.Checkin">
 				<id property="checkinId" column="checkinId" />
 				<id property="maintainOrFix" column="maintainOrFix" />
@@ -104,14 +105,14 @@
 
 	<select id="queryByPager" resultType="list" resultMap="workInfoResultMap">
 		<![CDATA[
-			SELECT wi.*, ch.userName, ch.checkinId, c.companyId, c.companyName, ch.maintainOrFix,u.userId as user_id,u.userName as user_name FROM t_work_info wi
-			INNER JOIN t_maintain_record mr ON mr.recordId = wi.recordId
-			INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-			INNER JOIN t_user u on u.userId = wi.userId
-			INNER JOIN t_company c ON c.companyId = ch.companyId
+			SELECT wi.*, ch.userName, mr.endTime, ch.maintainOrFix, c.companyName, u.userName AS user_name FROM t_work_info wi
+			LEFT JOIN t_maintain_record mr ON mr.recordId = wi.recordId
+			LEFT JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+			LEFT JOIN t_user u ON u.userId = wi.userId
+			LEFT JOIN t_company c ON c.companyId = mr.companyId
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+			and mr.companyId = #{user.companyId}
 		</if>
 		ORDER BY wi.workCreatedTime Desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
@@ -119,12 +120,13 @@
 	<select id="count" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) FROM t_work_info wi
-			INNER JOIN t_maintain_record mr ON mr.recordId = wi.recordId
-			INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-			INNER JOIN t_user u on u.userId = wi.userId
+			LEFT JOIN t_maintain_record mr ON mr.recordId = wi.recordId
+			LEFT JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+			LEFT JOIN t_user u on u.userId = wi.userId
+			LEFT JOIN t_company c ON c.companyId = mr.companyId
 		]]>
 		<if test="companyId != null and companyId != ''">
-			and u.companyId = #{companyId}
+			and mr.companyId = #{companyId}
 		</if>
 	</select>
 

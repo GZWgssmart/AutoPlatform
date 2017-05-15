@@ -223,9 +223,9 @@
 	<select id="queryPeoplePager" resultType="list" resultMap="userResultMap">
 		<![CDATA[
 			SELECT u.*, c.companyId, c.companyName, r.roleDes,r.roleId FROM t_user u
-			INNER JOIN t_company c ON u.companyId = c.companyId
-			INNER JOIN t_user_role ur ON ur.userId = u.userId
-			INNER JOIN t_role r ON r.roleId = ur.roleId
+			LEFT JOIN t_company c ON u.companyId = c.companyId
+			LEFT JOIN t_user_role ur ON ur.userId = u.userId
+			LEFT JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName like concat('company', '%')
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
@@ -283,9 +283,9 @@
 	<select id="countCompanyEmp" parameterType="String" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) FROM t_user u
-			INNER JOIN t_company c ON u.companyId = c.companyId
-			INNER JOIN t_user_role ur ON ur.userId = u.userId
-			INNER JOIN t_role r ON r.roleId = ur.roleId
+			LEFT JOIN t_company c ON u.companyId = c.companyId
+			LEFT JOIN t_user_role ur ON ur.userId = u.userId
+			LEFT JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName like concat('company', '%')
 		]]>
 		<if test="companyId != null and companyId != ''">

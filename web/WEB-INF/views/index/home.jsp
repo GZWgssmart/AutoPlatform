@@ -136,7 +136,7 @@
                         </li>
                     </shiro:hasAnyRoles>
 
-                        <shiro:hasAnyRoles name="companyAdmin, companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, systemSuperAdmin, companyAccounting, companyBuyer, systemOrdinaryAdmin, companyEmp">
+                        <shiro:hasAnyRoles name="companyAdmin, companyArtificer,  systemSuperAdmin, systemOrdinaryAdmin">
                         <li><a class="J_menuItem" href="<%=path%>/peopleManage/work">工单查询</a>
                         </li>
                     </shiro:hasAnyRoles>

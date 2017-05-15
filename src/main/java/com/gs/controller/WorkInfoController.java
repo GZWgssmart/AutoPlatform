@@ -13,6 +13,7 @@ import com.gs.service.UserService;
 import com.gs.service.WorkInfoService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.session.Session;
+import org.joda.time.DateTime;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -42,11 +43,14 @@ public class WorkInfoController {
     @Resource
     private WorkInfoService workInfoService;
 
-    private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + ","
-            + Constants.COMPANY_RECEIVE + "," + Constants.COMPANY_ARTIFICER
-            + "," + Constants.COMPANY_SALES + "," + Constants.COMPANY_HUMAN_MANAGER
-            + "," + Constants.COMPANY_ACCOUNTING + "," + Constants.COMPANY_BUYER
-            + "," + Constants.COMPANY_EMP + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+    @Resource
+    private MaintainRecordService maintainRecordService;
+
+    private String queryRole = Constants.COMPANY_ADMIN  + "," + Constants.COMPANY_ARTIFICER
+            + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+
+    private String queryRole2 = Constants.COMPANY_ARTIFICER;
+
 
     private String editRole = Constants.COMPANY_ADMIN;
 
@@ -73,7 +77,7 @@ public class WorkInfoController {
     @RequestMapping(value = "workInfo_pager", method= RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> info_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询所有工单");
                     User user = SessionGetUtil.getUser();
@@ -85,10 +89,10 @@ public class WorkInfoController {
                     return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfo);
                 }
                 return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -97,13 +101,14 @@ public class WorkInfoController {
 
     @ResponseBody
     @RequestMapping(value = "workInfo_update", method = RequestMethod.POST)
-    public ControllerResult info_update(WorkInfo workInfo){
+    public ControllerResult info_update(WorkInfo workInfo,MaintainRecord maintainRecord){
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("指派员工");
                     workInfoService.update(workInfo);
-                    return ControllerResult.getSuccessResult(" 修改成功");
+                    maintainRecordService.updateTime(maintainRecord);
+                    return ControllerResult.getSuccessResult("修改成功");
                 }
                 return ControllerResult.getFailResult("指派员工失败，没有该权限操作");
             } catch (Exception e) {

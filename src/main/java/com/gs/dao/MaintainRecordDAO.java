@@ -110,6 +110,9 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
      */
     public int updatePickupTime(String recordId);
 
+    /*修改预计结束时间*/
+    public void updateTime(MaintainRecord maintainRecord);
+
     /*
     * 默认查询本月的维修保养记录统计
     * */
