@@ -31,4 +31,7 @@ public interface MaterialListInfoService extends BaseService<String, MaterialLis
 
     /**根据维修记录编号和状态统计物料清单*/
     public int statusCount(String recordId, String materialStatus, User user);
+
+    /**根据物料清单编号更新物料清单数量*/
+    public void updateCount(MaterialListInfo materialListInfo);
 }

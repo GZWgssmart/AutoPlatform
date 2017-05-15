@@ -47,6 +47,10 @@ public class MaterialListInfoServiceImpl implements MaterialListInfoService {
         return materialListInfoDAO.statusCount(recordId,materialStatus,user);
     }
 
+    public void updateCount(MaterialListInfo materialListInfo) {
+        materialListInfoDAO.updateCount(materialListInfo);
+    }
+
     public int insert(MaterialListInfo materialListInfo) {
         return 0;
     }

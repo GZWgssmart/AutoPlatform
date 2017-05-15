@@ -36,7 +36,7 @@ public class MaterialListController {
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," +
             Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ARTIFICER;
 
-    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY;
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," + Constants.COMPANY_ARTIFICER;
 
     @RequestMapping(value = "info", method = RequestMethod.GET)
     private String showMaterialListInfo() {
@@ -105,6 +105,27 @@ public class MaterialListController {
         pager.setTotalRecords(materialListInfoService.termCount(userName, startTime, endTime, user));
         List<MaterialListInfo> materialListInfos = materialListInfoService.termQueryPager(pager, userName, startTime, endTime, user);
         return new Pager4EasyUI<MaterialListInfo>(pager.getTotalRecords(), materialListInfos);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update_count", method = RequestMethod.POST)
+    public ControllerResult updateCount(MaterialListInfo materialListInfo) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        /*try {*/
+            if (!CheckRoleUtil.checkRoles(editRole)) {
+                logger.info("更新数量失败");
+                return ControllerResult.getFailResult("更新数量失败，没有该权限操作");
+            }
+            logger.info("更新数量");
+            materialListInfoService.updateCount(materialListInfo);
+            return ControllerResult.getSuccessResult("更新成功");
+        /*} catch (Exception e) {
+            logger.info("更新失败，出现了一个错误");
+            return ControllerResult.getFailResult("更新失败，出现了一个错误");
+        }*/
     }
 
     @ResponseBody

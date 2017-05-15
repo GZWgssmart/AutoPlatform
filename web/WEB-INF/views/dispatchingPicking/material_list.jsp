@@ -170,6 +170,11 @@
                             <tbody>
                             <div id="toolbar1" class="btn-group">
                                 <a>
+                                    <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                                        <i class="glyphicon glyphicon-pencil"></i> 修改
+                                    </button>
+                                </a>
+                                <a>
                                     <button onclick="queryAll()" type="button" class="btn btn-default">
                                         <i class="glyphicon glyphicon-search"></i>
                                         查询全部
@@ -210,11 +215,43 @@
             </div>
         </div>
     </div>
+    <div id="editWin" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 b-r">
+                            <h3 class="m-t-none m-b">修改物料数量</h3>
+                            <form role="form" id="editForm">
+                                <input type="hidden" attr="materialListInfo.materialId" name="materialId"/>
+                                <div class="form-group">
+                                    <label>物料数量：</label>
+                                    <input attr="materialListInfo.materialCount" type="number" name="materialCount"
+                                           class="form-control"/>
+                                </div>
+
+                                <div class="modal-footer" style="overflow:hidden;">
+                                    <button onclick="closeEditWin();" type="button" class="btn btn-default">
+                                        关闭
+                                    </button>
+                                    <input type="button" onclick="edit()" id="editButton" class="btn btn-primary"
+                                           value="修改">
+                                    </input>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>

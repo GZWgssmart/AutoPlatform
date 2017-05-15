@@ -36,4 +36,6 @@ public interface MaterialListInfoDAO  extends BaseDAO<String, MaterialListInfo> 
     /**根据维修记录编号和状态统计物料清单*/
     public int statusCount(@Param("recordId") String recordId, @Param("materialStatus") String materialStatus, @Param("user") User user);
 
+    /**根据物料清单编号更新物料清单数量*/
+    public void updateCount(MaterialListInfo materialListInfo);
 }

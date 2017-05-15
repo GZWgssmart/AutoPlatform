@@ -10,6 +10,58 @@ $(document).ready(function () {
     $("#search").bind("click", initTable);
 });
 
+function showEditWin() {
+    validator("editForm");
+    var selectRow1 = $("#cusTable1").bootstrapTable('getSelections');
+    if (selectRow1.length < 1) {
+        swal('编辑失败', "必须选择一条数据进行编辑", "error");
+        return false;
+    } else if (selectRow1.length > 1) {
+        swal('编辑失败', "只能选择一条数据进行编辑", "error");
+        return false;
+    } else {
+        var materialListInfo = selectRow1[0];
+        $("#editForm").fill(materialListInfo);
+        $("#editWin").modal('show');
+    }
+}
+
+function closeEditWin() {
+    $("#editWin").modal('hide');
+}
+
+/** 表单验证 */
+function validator(formId) {
+    $("#editButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            materialCount: {
+                message: '物料数量验证失败',
+                validators: {
+                    notEmpty: {
+                        message: '物料数量不能为空'
+                    },regexp: {
+                        regexp: /^\+?[1-9]\d*$/,
+                        message: '只能输入大于零的数量!'
+                    }
+                }
+            }
+        }
+    })
+        .on('success.form.bv', function (e) {
+            if (formId == "editForm") {
+                formSubmit(contextPath + "/materialList/update_count", formId, "editWin");
+                $('#cusTable1').bootstrapTable('refresh');
+            }
+        })
+
+}
+
 function operateFormatter(value, row, index) {
     if (row.materialStatus == 'Y') {
         return [
@@ -92,7 +144,10 @@ function queryStatus(status) {
 }
 
 function queryAll() {
-    initTableSetToolbar('cusTable1', contextPath + '/materialList/query_pager', 'toolbar1');
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+        var record = selectRow[0];
+        var recordId = record.recordId;
+        initTableSetToolbar("cusTable1", contextPath + "/materialList/query_pager?recordId=" + recordId, "toolbar1");
 }
 
 /** 关闭搜索的form */
@@ -114,6 +169,7 @@ function showMaterialWin() {
         var recordId = record.recordId;
             initTableSetToolbar("cusTable1", contextPath + "/materialList/query_pager?recordId=" + recordId, "toolbar1");
         $("#searchMaterialWin").modal('show');
+        destoryValidator('editWin', 'editForm');
     }
 }
 

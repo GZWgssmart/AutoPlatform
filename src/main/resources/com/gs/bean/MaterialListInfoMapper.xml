@@ -138,6 +138,12 @@
         </if>
     </select>
 
+    <update id="updateCount" parameterType="materialListInfo" >
+        <![CDATA[
+            update t_material_list set materialCount = #{materialCount} where materialId = #{materialId}
+        ]]>
+    </update>
+
     <update id="inactive" parameterType="string">
         <![CDATA[
 			update t_material_list set materialStatus = 'N' where materialId = #{materialId}
