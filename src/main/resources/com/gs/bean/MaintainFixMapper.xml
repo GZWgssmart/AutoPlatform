@@ -71,10 +71,25 @@
 
 	<select id="queryAll" resultMap="maintainFixResultMap">
 		<![CDATA[
-			select * from t_maintain_fix
+			select * from t_maintain_fix where maintainStatus = 'Y'
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and companyId = #{companyId}
+		</if>
+	</select>
+
+	<select id="queryByType" resultMap="maintainFixResultMap">
+		<![CDATA[
+			select * from t_maintain_fix where maintainStatus = 'Y'
+		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
+		<if test="maintainOrFix == '保养'">
+			and maintainOrFix = '保养'
+		</if>
+		<if test="maintainOrFix == '维修'">
+			and maintainOrFix = '维修'
 		</if>
 	</select>
 

@@ -8,6 +8,7 @@
 		<id column="detailId" property="detailId"/>
 		<result column="maintainDiscount" property="maintainDiscount"/>
 		<result column="detailCreatedTime" property="detailCreatedTime"/>
+		<result column="coont" property="coont"/>
 		<!--维修保养记录-->
 		<association property="record" javaType="com.gs.bean.MaintainRecord">
 			<id property="recordId" column="recordId"/>
@@ -150,6 +151,63 @@
 		<![CDATA[
 			select count(*) from t_maintain_detail where recordId = #{recordId} and maintainId = #{maintainId}
 		]]>
+	</select>
+
+
+	<select id="queryByDefault"  resultMap="maintainDetailResultMap">
+		<![CDATA[
+           select count(d.detailId) as coont ,d.detailCreatedTime from t_maintain_fix mf ,t_maintain_detail d
+             WHERE DATE_FORMAT(d.detailCreatedTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+           and mf.maintainId = d.maintainId and  mf.maintainStatus = 'Y'
+		]]>
+		<if test="maintainOrFix =='保养'">
+			and mf.maintainOrFix = '保养'
+		</if>
+		<if test="maintainOrFix =='维修'">
+			and mf.maintainOrFix = '维修'
+		</if>
+		<if test="companyId != null and companyId != ''">
+			and mf.companyId = #{companyId}
+		</if>
+		<if test="maintainId != null and maintainId != ''">
+			and d.maintainId = #{maintainId}
+		</if>
+		GROUP BY day(d.detailCreatedTime)
+	</select>
+
+	<select id="queryByCondition"  resultType="list" resultMap="maintainDetailResultMap">
+		<![CDATA[
+           select count(d.detailId) as coont ,d.detailCreatedTime from t_maintain_fix mf ,t_maintain_detail d
+            where d.detailCreatedTime >= #{startTime} and d.detailCreatedTime <= #{endTime}
+           and mf.maintainId = d.maintainId and  mf.maintainStatus = 'Y'
+		]]>
+		<if test="maintainOrFix =='保养'">
+			and mf.maintainOrFix = '保养'
+		</if>
+		<if test="maintainOrFix =='维修'">
+			and mf.maintainOrFix = '维修'
+		</if>
+		<if test="companyId != null and companyId != ''">
+			and mf.companyId = #{companyId}
+		</if>
+		<if test="maintainId != null and maintainId != ''">
+			and d.maintainId = #{maintainId}
+		</if>
+		<if test="type =='year'">
+			GROUP BY year(d.detailCreatedTime)
+		</if>
+		<if test="type =='quarter'">
+			GROUP BY quarter(d.detailCreatedTime)
+		</if>
+		<if test="type =='month'">
+			GROUP BY month(d.detailCreatedTime)
+		</if>
+		<if test="type =='week'">
+			GROUP BY week(d.detailCreatedTime)
+		</if>
+		<if test="type =='day'">
+			GROUP BY day(d.detailCreatedTime)
+		</if>
 	</select>
 
 </mapper>

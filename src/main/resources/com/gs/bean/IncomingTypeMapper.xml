@@ -79,7 +79,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and it.companyId = #{user.companyId} or it.inTypeName = '维修保养收入'
 		</if>
-		order by it.inTypeCreatedTime Desc ,it.companyId
+		order by it.companyId desc, it.inTypeStatus desc, it.inTypeCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -119,7 +119,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and it.companyId = #{user.companyId} or it.inTypeName = '维修保养收入'
 		</if>
-		order by it.inTypeCreatedTime Desc ,it.companyId
+		order by it.companyId desc, it.inTypeStatus desc, it.inTypeCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

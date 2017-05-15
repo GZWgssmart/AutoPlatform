@@ -83,7 +83,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
 		</if>
-		order by s.salaryCreatedTime Desc ,u.companyId
+		order by u.companyId Desc ,s.salaryCreatedTime
 	</select>
 
 	<select id="queryByStatus" resultMap="salaryResultMap" parameterType="string">
@@ -124,7 +124,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
 		</if>
-		order by s.salaryCreatedTime Desc ,u.companyId
+		order by u.companyId Desc ,s.salaryCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -167,7 +167,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
 		</if>
-		order by s.salaryCreatedTime Desc ,u.companyId
+		order by u.companyId Desc ,s.salaryCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

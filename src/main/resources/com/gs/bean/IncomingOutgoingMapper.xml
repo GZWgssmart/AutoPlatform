@@ -161,7 +161,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and io.companyId = #{user.companyId}
 		</if>
-		order by io.inOutCreatedTime Desc ,io.companyId
+		order by io.companyId desc, io.inOutStatus desc, io.inOutCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -205,7 +205,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and io.companyId = #{user.companyId}
 		</if>
-				order by io.inOutCreatedTime Desc , io.companyId
+			order by io.companyId desc, io.inOutStatus desc, io.inOutCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -236,7 +236,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and io.companyId = #{user.companyId}
 		</if>
-        order by io.inOutCreatedTime Desc ,io.companyId
+        order by io.companyId desc, io.inOutStatus desc, io.inOutCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
