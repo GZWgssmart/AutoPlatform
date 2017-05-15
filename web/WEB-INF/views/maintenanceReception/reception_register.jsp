@@ -60,20 +60,20 @@
             <th data-field="plate.plateName">
                 汽车车牌
             </th>
+            <th data-field="carPlate">
+                车牌号码
+            </th>
             <th data-field="oilCount">
                 汽车油量（L）
+            </th>
+            <th data-field="carMileage">
+                汽车行驶里程（KM）
             </th>
             <th data-field="carWash" data-formatter="carWash">
                 是否洗车
             </th>
-            <th data-field="carPlate">
-                车牌号码
-            </th>
             <th data-field="arriveTime" data-formatter="formatterDate">
                 到店时间
-            </th>
-            <th data-field="carMileage">
-                汽车行驶里程（km）
             </th>
             <th data-field="carThings">
                 车上物品描述

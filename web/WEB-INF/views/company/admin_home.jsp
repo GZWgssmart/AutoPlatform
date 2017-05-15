@@ -1,0 +1,379 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Administrator
+  Date: 2017/4/1
+  Time: 9:14
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+%>
+<html>
+<head>
+    <title>管理员主页</title>
+    <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="<%=path %>/css/plugins/footable/footable.core.css" rel="stylesheet">
+
+    <link href="<%=path %>/css/animate.min.css" rel="stylesheet">
+    <link href="<%=path %>/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div class="container">
+    <h3 style="text-align: center;">赣州汽修公司</h3>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title panel-primary">
+                        <h5>最新预约信息</h5>
+
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table id="appTable" class="footable table table-stripped toggle-arrow-tiny"
+                               data-page-size="8">
+                            <thead>
+                            <tr>
+
+                                <th data-toggle="true">车主姓名</th>
+                                <th>车主电话</th>
+                                <th>汽车品牌</th>
+                                <th>汽车颜色</th>
+                                <th>汽车车型</th>
+                                <th>汽车车牌</th>
+                                <th>车牌号码</th>
+                                <th data-hide="all">汽车油量（L）</th>
+                                <th data-hide="all">行驶里程（KM）</th>
+                                <th data-hide="all">是否洗车</th>
+                                <th data-hide="all">到店时间</th>
+                                <th data-hide="all">车上物品描述</th>
+                                <th data-hide="all">汽车完好度描述</th>
+                                <th data-hide="all">用户要求描述</th>
+                                <th data-hide="all">维修|保养</th>
+                                <th data-hide="all">登记时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>邱康</td>
+                                <td>18279799343</td>
+                                <td>宝马</td>
+                                <td>黑色</td>
+                                <td>奇骏</td>
+                                <td>赣A</td>
+                                <td>23442</td>
+                                <td>22</td>
+                                <td>123</td>
+                                <td>是</td>
+                                <td>2017-06-13</td>
+                                <td>没有物品</td>
+                                <td>特别完好</td>
+                                <td>没有要求</td>
+                                <td>保养</td>
+                                <td>2017-12-13 80:23</td>
+                            </tr>
+                            <tr>
+                                <td>邱康</td>
+                                <td>18279799343</td>
+                                <td>宝马</td>
+                                <td>黑色</td>
+                                <td>奇骏</td>
+                                <td>赣A</td>
+                                <td>23442</td>
+                                <td>22</td>
+                                <td>123</td>
+                                <td>是</td>
+                                <td>2017-06-13</td>
+                                <td>没有物品</td>
+                                <td>特别完好</td>
+                                <td>没有要求</td>
+                                <td>保养</td>
+                                <td>2017-12-13 80:23</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title panel-success">
+                        <h5>最新的登记记录信息</h5>
+
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table id="checkinTable" class="footable table table-stripped toggle-arrow-tiny"
+                               data-page-size="8">
+                            <thead>
+                            <tr>
+
+                                <th data-toggle="true">车主姓名</th>
+                                <th>车主电话</th>
+                                <th>汽车品牌</th>
+                                <th>汽车颜色</th>
+                                <th>汽车车型</th>
+                                <th>汽车车牌</th>
+                                <th>车牌号码</th>
+                                <th data-hide="all">汽车油量（L）</th>
+                                <th data-hide="all">行驶里程（KM）</th>
+                                <th data-hide="all">是否洗车</th>
+                                <th data-hide="all">到店时间</th>
+                                <th data-hide="all">车上物品描述</th>
+                                <th data-hide="all">汽车完好度描述</th>
+                                <th data-hide="all">用户要求描述</th>
+                                <th data-hide="all">维修|保养</th>
+                                <th data-hide="all">登记时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>邱康</td>
+                                <td>18279799343</td>
+                                <td>宝马</td>
+                                <td>黑色</td>
+                                <td>奇骏</td>
+                                <td>赣A</td>
+                                <td>23442</td>
+                                <td>22</td>
+                                <td>123</td>
+                                <td>是</td>
+                                <td>2017-06-13</td>
+                                <td>没有物品</td>
+                                <td>特别完好</td>
+                                <td>没有要求</td>
+                                <td>保养</td>
+                                <td>2017-12-13 80:23</td>
+                            </tr>
+                            <tr>
+                                <td>邱康</td>
+                                <td>18279799343</td>
+                                <td>宝马</td>
+                                <td>黑色</td>
+                                <td>奇骏</td>
+                                <td>赣A</td>
+                                <td>23442</td>
+                                <td>22</td>
+                                <td>123</td>
+                                <td>是</td>
+                                <td>2017-06-13</td>
+                                <td>没有物品</td>
+                                <td>特别完好</td>
+                                <td>没有要求</td>
+                                <td>保养</td>
+                                <td>2017-12-13 80:23</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title panel-warning">
+                        <h5>待提醒的车主</h5>
+
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table id="remindTable" class="footable table table-stripped toggle-arrow-tiny"
+                               data-page-size="8">
+                            <thead>
+                            <tr>
+
+                                <th data-toggle="true">车主姓名</th>
+                                <th>车主电话</th>
+                                <th>汽车品牌</th>
+                                <th>汽车颜色</th>
+                                <th>汽车车型</th>
+                                <th>汽车车牌</th>
+                                <th>车牌号码</th>
+                                <th data-hide="all">汽车油量（L）</th>
+                                <th data-hide="all">行驶里程（KM）</th>
+                                <th data-hide="all">是否洗车</th>
+                                <th data-hide="all">到店时间</th>
+                                <th data-hide="all">车上物品描述</th>
+                                <th data-hide="all">汽车完好度描述</th>
+                                <th data-hide="all">用户要求描述</th>
+                                <th data-hide="all">维修|保养</th>
+                                <th data-hide="all">登记时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>邱康</td>
+                                <td>18279799343</td>
+                                <td>宝马</td>
+                                <td>黑色</td>
+                                <td>奇骏</td>
+                                <td>赣A</td>
+                                <td>23442</td>
+                                <td>22</td>
+                                <td>123</td>
+                                <td>是</td>
+                                <td>2017-06-13</td>
+                                <td>没有物品</td>
+                                <td>特别完好</td>
+                                <td>没有要求</td>
+                                <td>保养</td>
+                                <td>2017-12-13 80:23</td>
+                            </tr>
+                            <tr>
+                                <td>邱康</td>
+                                <td>18279799343</td>
+                                <td>宝马</td>
+                                <td>黑色</td>
+                                <td>奇骏</td>
+                                <td>赣A</td>
+                                <td>23442</td>
+                                <td>22</td>
+                                <td>123</td>
+                                <td>是</td>
+                                <td>2017-06-13</td>
+                                <td>没有物品</td>
+                                <td>特别完好</td>
+                                <td>没有要求</td>
+                                <td>保养</td>
+                                <td>2017-12-13 80:23</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title panel-danger">
+                        <h5>车主投诉</h5>
+
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table id="complaintTable" class="footable table table-stripped toggle-arrow-tiny"
+                               data-page-size="8">
+                            <thead>
+                            <tr>
+
+                                <th data-toggle="true">车主姓名</th>
+                                <th>车主电话</th>
+                                <th>汽车品牌</th>
+                                <th>汽车颜色</th>
+                                <th>汽车车型</th>
+                                <th>汽车车牌</th>
+                                <th>车牌号码</th>
+                                <th data-hide="all">汽车油量（L）</th>
+                                <th data-hide="all">行驶里程（KM）</th>
+                                <th data-hide="all">是否洗车</th>
+                                <th data-hide="all">到店时间</th>
+                                <th data-hide="all">车上物品描述</th>
+                                <th data-hide="all">汽车完好度描述</th>
+                                <th data-hide="all">用户要求描述</th>
+                                <th data-hide="all">维修|保养</th>
+                                <th data-hide="all">登记时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>邱康</td>
+                                <td>18279799343</td>
+                                <td>宝马</td>
+                                <td>黑色</td>
+                                <td>奇骏</td>
+                                <td>赣A</td>
+                                <td>23442</td>
+                                <td>22</td>
+                                <td>123</td>
+                                <td>是</td>
+                                <td>2017-06-13</td>
+                                <td>没有物品</td>
+                                <td>特别完好</td>
+                                <td>没有要求</td>
+                                <td>保养</td>
+                                <td>2017-12-13 80:23</td>
+                            </tr>
+                            <tr>
+                                <td>邱康</td>
+                                <td>18279799343</td>
+                                <td>宝马</td>
+                                <td>黑色</td>
+                                <td>奇骏</td>
+                                <td>赣A</td>
+                                <td>23442</td>
+                                <td>22</td>
+                                <td>123</td>
+                                <td>是</td>
+                                <td>2017-06-13</td>
+                                <td>没有物品</td>
+                                <td>特别完好</td>
+                                <td>没有要求</td>
+                                <td>保养</td>
+                                <td>2017-12-13 80:23</td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+</div>
+
+<%@ include file="../common/rightMenu.jsp" %>
+<script src="<%=path %>/js/contextmenu.js"></script>
+<script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrap.min.js"></script>
+<script src="<%=path %>/js/bootstrap-table.js"></script>
+<script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
+<script src="<%=path %>/js/plugins/footable/footable.all.min.js"></script>
+<script src="<%=path %>/js/content.min.js?v=1.0.0"></script>
+<script src="<%=path %>/js/main.js"></script>
+<script src="<%=path %>/js/company/admin_home.js"></script>
+</body>
+</html>

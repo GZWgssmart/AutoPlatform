@@ -67,7 +67,7 @@ public class CompanyController {
             return "index/notLogin";
         }
         logger.info("访问公司的主页");
-        return "company/home";
+        return "company/admin_home";
     }
 
     @RequestMapping(value = "info", method = RequestMethod.GET)
