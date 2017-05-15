@@ -212,7 +212,7 @@ CREATE TABLE `t_company` (
 `companyId` varchar(36) NOT NULL COMMENT '公司id',
 `companyName` varchar(100) NOT NULL COMMENT '公司名称',
 `companyAddress` varchar(150) NOT NULL COMMENT '公司地址',
-`companyTel` varchar(11) NOT NULL COMMENT '公司联系方式',
+`companyTel` varchar(13) NOT NULL COMMENT '公司联系方式',
 `companyPricipal` varchar(20) DEFAULT NULL COMMENT '公司负责人',
 `companyWebsite` varchar(100) DEFAULT NULL COMMENT '公司官网URL',
 `companyLogo` varchar(200) DEFAULT '/img/company_logo.png' COMMENT '公司logo图片',

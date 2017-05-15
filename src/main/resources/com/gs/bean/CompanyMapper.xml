@@ -97,6 +97,31 @@
 		</if>
 	</select>
 
+	<select id="searchByPager" resultMap="companyResultMap">
+		<![CDATA[
+			select * from t_company where 1 = 1
+		]]>
+		<if test="companyName!=null and companyName != ''">
+			and companyName like concat('%',#{companyName},'%')
+		</if>
+		<if test="userName!= null and userName != ''">
+			and companyPricipal like concat('%',#{userName},'%')
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="searchCount" resultType="int">
+		<![CDATA[
+			select count(*) from t_company where 1 = 1
+		]]>
+		<if test="companyName!=null and companyName != ''">
+			and companyName like concat('%',#{companyName},'%')
+		</if>
+		<if test="userName!= null and userName != ''">
+			and companyPricipal like concat('%',#{userName},'%')
+		</if>
+	</select>
+
 	<select id="statusCount" resultType="int">
 		<![CDATA[
 			select count(*) from t_company where companyStatus = #{status}

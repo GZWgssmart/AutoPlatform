@@ -33,9 +33,10 @@ function showEditWin() {
     } else {
         var product = selectRow[0];
         $('#companys').html('<option value="' + product.companySize + '">' + product.companySize + '</option>').trigger("change");
+        initDateTimePicker("form_datetime","","editForm");
         $("#editForm").fill(product);
-        validator("editForm");
         $("#editWin").modal('show');
+        validator("editForm");
     }
 }
 
@@ -57,8 +58,8 @@ function operating(value, row, index) {
 function showAddWin(){
     initDateTimePicker("form_datetime","","addForm");
     $('#companys').html('').trigger("change");
-    validator("addForm");
     $("#addWin").modal('show');
+    validator("addForm");
 }
 
 
@@ -117,9 +118,10 @@ window.operateEvents = {
     },
     'click .showUpdateIncomingType1': function (e, value, row, index) {
     var incomingType = row;
-    validator("editForm");
+    $('#companys').html('<option value="' + incomingType.companySize + '">' + incomingType.companySize + '</option>').trigger("change");initDateTimePicker("form_datetime","","editForm");
     $("#editForm").fill(incomingType);
     $("#editWin").modal('show');
+    validator("editForm");
 }
 }
 
@@ -254,24 +256,39 @@ function validator(formId) {
         })
 }
 
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#searchCompanyName").val('');
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
 
-$('#editModal').ajaxSubmit({
-    url: '/peopleManage/peopleInfo_update',
-    type: 'post',
-    dataType: 'json',
-    success: function (data) {
-        if (data.result == "success") {
-            $('#myModal').modal('hide');
-            swal(data.message, "", "success");
-            $('#cusTable').bootstrapTable('refresh');
-            $('#editModal').data('bootstrapValidator').resetForm(true);
-        } else if (data.result == "fail") {
-            $('#myModal').modal('hide');
-            swal(data.message, "内容不匹配", "error");
-            $('#editModal').data('bootstrapValidator').resetForm(true);
+function searchCompany(){
+    var companyName = $("#searchCompanyName").val();
+    var userName = $("#searchUserName").val();
+    initTable("cusTable","/company/search?companyName="+ companyName + "&userName=" + userName);
+}
+
+function companyEdit(){
+    $('#editWin').ajaxSubmit({
+        url: '/company/uploadCompany',
+        type: 'post',
+        dataType: 'json',
+        success: function (data) {
+            if (data.result == "success") {
+                // $('#editWin').modal('hide');
+                swal(data.message, "", "success");
+                // $('#cusTable').bootstrapTable('refresh');
+                // $('#editModal').data('bootstrapValidator').resetForm(true);
+            } else if (data.result == "fail") {
+                // $('#myModal').modal('hide');
+                swal(data.message, "", "error");
+                // $('#editModal').data('bootstrapValidator').resetForm(true);
+            }
         }
-    }
-})
+    })
+}
+
 
 
 //图片上传预览    IE是用了滤镜。

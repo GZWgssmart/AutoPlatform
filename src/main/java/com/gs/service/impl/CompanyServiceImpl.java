@@ -54,4 +54,13 @@ public class CompanyServiceImpl implements CompanyService {
 	public int statusCount(@Param("status") String status, @Param("user") User user) {
 		return companyDAO.statusCount(status, user);
 	}
+
+	public List<Company> searchByPager(String companyName, String userName,Pager pager) {
+		return companyDAO.searchByPager(companyName, userName, pager);
+	}
+
+	public int searchCount(String companyName,String userName) {
+		return companyDAO.searchCount(companyName,userName);
+	}
+
 }

@@ -2,6 +2,7 @@
 <%
     String path = request.getContextPath();
 %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 
 <html>
 <head>
@@ -53,39 +54,43 @@
             <th data-field="brandStatus" data-formatter="status">
                 汽车品牌状态
             </th>
-            <th data-field="co" data-formatter="operating" data-events="operateEvents">
-                操作
-            </th>
+            <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
+                <th data-field="co" data-formatter="operating" data-events="operateEvents">
+                    操作
+                </th>
+            </shiro:hasAnyRoles>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a><button type="button" onclick="showAddWin();" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
-            <a>
-                <button onclick="statusUsableness();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i>查看可用汽车品牌
-                </button>
-            </a>
-            <a>
-                <button onclick="statusAvailable();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i>查看不可用汽车品牌
-                </button>
-            </a>
-            <a>
-                <button onclick="brandAll();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i>查看全部
-                </button>
-            </a>
-            <a>
-                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-search"></i> 条件查询
-                </button>
-            </a>
+            <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
+                <a><button type="button" onclick="showAddWin();" id="add" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-plus"></i> 添加
+                </button></a>
+                <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-pencil"></i> 修改
+                </button></a>
+            </shiro:hasAnyRoles>
+                <a>
+                    <button onclick="statusUsableness();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>查看可用汽车品牌
+                    </button>
+                </a>
+                <a>
+                    <button onclick="statusAvailable();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>查看不可用汽车品牌
+                    </button>
+                </a>
+                <a>
+                    <button onclick="brandAll();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>查看全部
+                    </button>
+                </a>
+                <a>
+                    <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-search"></i> 条件查询
+                    </button>
+                </a>
         </div>
         </tbody>
 

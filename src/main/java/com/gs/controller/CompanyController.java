@@ -10,10 +10,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.util.CheckRoleUtil;
-import com.gs.common.util.EncryptUtil;
-import com.gs.common.util.SessionGetUtil;
-import com.gs.common.util.UUIDUtil;
+import com.gs.common.util.*;
 import com.gs.dao.CompanyDAO;
 import com.gs.service.CompanyService;
 import com.gs.service.RoleService;
@@ -29,11 +26,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Administrator on 2017/4/1.
@@ -181,7 +182,7 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "InsertCompany", method = RequestMethod.POST)
-    public ControllerResult InsetCompany(Company company) {
+    public ControllerResult InsetCompany(@Param("company") Company company, @Param("userPhone") String userPhone) {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -195,9 +196,9 @@ public class CompanyController {
                     User user = new User();
                     String userId = UUIDUtil.uuid();
                     user.setUserId(userId);
+                    user.setUserPhone(userPhone);
                     user.setCompanyId(companyId);
                     user.setUserName(company.getCompanyPricipal());
-                    user.setUserPhone(company.getCompanyTel());
                     user.setUserAddress(company.getCompanyAddress());
                     user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
                     Role role = roleService.queryByName(Constants.COMPANY_ADMIN);
@@ -211,7 +212,6 @@ public class CompanyController {
                 }else{
                     return ControllerResult.getFailResult("添加公司失败,您没有权限操作");
                 }
-
             } catch (Exception e) {
                 logger.info("添加失败，出现了一个错误");
                 return ControllerResult.getFailResult("添加失败，出现了一个错误");
@@ -221,13 +221,26 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "uploadCompany", method = RequestMethod.POST)
-    public ControllerResult uploadCarModel(Company company, MultipartFile companyLogo) {
+    public ControllerResult uploadCarModel(Company company, MultipartFile companyLogo, HttpSession session) {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
             if(CheckRoleUtil.checkRoles(CompanyEditRole)){
+                //判断文件是否为空
+                if (!companyLogo.isEmpty()) {
+                    try {
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                        String date = df.format(new Date());// new Date()为获取当前系统时间
+                        // 文件保存路径
+                        String filePath = FileUtil.uploadPath(session,date) + UUID.randomUUID().toString() + companyLogo.getOriginalFilename();
+                        // 转存文件
+                        companyLogo.transferTo(new File(filePath));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 companyService.update(company);
                 logger.info("更新公司成功");
                 return ControllerResult.getSuccessResult("更新公司成功");
@@ -333,6 +346,22 @@ public class CompanyController {
         pager.setTotalRecords(companyService.statusCount(status,user));
         List<Company> companys = companyService.queryByStatusPager(status, pager,user);
         return new Pager4EasyUI<Company>(pager.getTotalRecords(), companys);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public Pager4EasyUI<Company> companySearch(@Param("companyName")String companyName, @Param("userName")String userName, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(CompanyQueryRole)) {
+            logger.info("session已失效或者权限不足");
+            return null;
+        }
+        Pager pager = new Pager();
+        User user = SessionGetUtil.getUser();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(companyService.searchCount(companyName, userName));
+        List<Company> companyList = companyService.searchByPager(companyName,userName,pager);
+        return new Pager4EasyUI<Company>(pager.getTotalRecords(), companyList);
     }
 
 

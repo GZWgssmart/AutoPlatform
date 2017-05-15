@@ -2,6 +2,7 @@
 <%
     String path = request.getContextPath();
 %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -19,13 +20,31 @@
     <link href="<%=path %>/css/fileinput.css" rel="stylesheet" type="text/css">
     <style>
         .address{
-            width: 53%;
+            width: 50%;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <form id="formSearch" class="form-horizontal">
+        <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+            <div class="col-sm-2" style="margin-left: -15px;">
+                <input type="text" id="searchCompanyName" class="form-control" placeholder="请输入公司名称" >
+            </div>
+            <div class="col-sm-2" style="margin-left: -15px;">
+                <input type="text" id="searchUserName" class="form-control" placeholder="请输入负责人名称" >
+            </div>
+            <div class="col-sm-2">
+                <button type="button" onclick="searchCompany();" class="btn btn-primary">
+                    查询
+                </button>
+                <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </form>
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
            data-show-refresh="true"
@@ -72,36 +91,49 @@
             <th data-field="companyStatus" data-formatter="status">
                 公司状态
             </th>
-            <th data-field="co" data-formatter="operating" data-events="operateEvents">
-                操作
-            </th>
+            <shiro:hasAnyRoles name="systemSuperAdmin,systemOrdinaryAdmin">
+                <th data-field="co" data-formatter="operating" data-events="operateEvents">
+                    操作
+                </th>
+            </shiro:hasAnyRoles>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
+        <shiro:hasAnyRoles name="systemSuperAdmin,systemOrdinaryAdmin">
             <a>
                 <button type="button" id="add" onclick = "showAddWin();" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i>添加</button>
             </a>
-            <a>
-                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改</button>
-            </a>
-            <a>
-                <button onclick="statusUsableness();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i>查看可用公司
-                </button>
-            </a>
-            <a>
-                <button onclick="statusAvailable();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i>查看不可用公司
-                </button>
-            </a>
-            <a>
-                <button onclick="companyAll();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i>查看全部
-                </button>
-            </a>
+        </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="companyAdmin,systemSuperAdmin,systemOrdinaryAdmin">
+                <a>
+                    <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-pencil"></i> 修改</button>
+                </a>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="systemSuperAdmin,systemOrdinaryAdmin">
+                <a>
+                    <button onclick="statusUsableness();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>查看可用公司
+                    </button>
+                </a>
+                <a>
+                    <button onclick="statusAvailable();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>查看不可用公司
+                    </button>
+                </a>
+                <a>
+                    <button onclick="companyAll();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>查看全部
+                    </button>
+                </a>
+                <a>
+                    <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-search"></i> 条件查询
+                    </button>
+                </a>
+            </shiro:hasAnyRoles>
         </div>
         </tbody>
 
@@ -131,13 +163,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">公司联系方式：</label>
+                                <label class="control-label">公司咨询电话：</label>
                                 <input type="text"  name="companyTel"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司负责人：</label>
                                 <input type="text"  name="companyPricipal"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">公司负责人手机号码：</label>
+                                <input type="text" id="userPhone" name="userPhone" maxlength="11"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -265,7 +302,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" class="btn btn-primary" onclick="edit();" value="修改">
+                                <input type="button" class="btn btn-primary" value="修改">
                                 </input>
                             </div>
                         </form>

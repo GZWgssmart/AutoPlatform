@@ -19,4 +19,6 @@ import java.util.List;
 public interface CompanyDAO extends BaseDAO<String, Company>{
     public List<Company> queryByStatusPager(@Param("status") String status, @Param("pager") Pager pager,@Param("user")User user);
     public int statusCount(@Param("status")String status,@Param("user")User user);
+    public List<Company> searchByPager(@Param("companyName")String companyName, @Param("userName")String userName,@Param("pager")Pager pager);
+    public int searchCount(@Param("companyName") String companyName,@Param("userName") String userName);
 }

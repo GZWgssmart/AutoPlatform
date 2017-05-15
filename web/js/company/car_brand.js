@@ -22,6 +22,7 @@ function searchBrand(){
     var brandName = $("#searchBrandName").val();
     initTable("cusTable","/carBrand/search?brandName="+brandName);
 }
+
 function showAddWin(){
     validator("addForm");
     $("#addWin").modal('show');

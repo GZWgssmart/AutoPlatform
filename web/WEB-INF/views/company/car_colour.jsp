@@ -2,6 +2,7 @@
 <%
     String path = request.getContextPath();
 %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -58,13 +59,16 @@
             <th data-field="colorStatus" data-formatter="status">
                 汽车颜色状态
             </th>
-            <th data-field="co" data-formatter="operating" data-events="operateEvents">
-                操作
-            </th>
+            <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
+                <th data-field="co" data-formatter="operating" data-events="operateEvents">
+                    操作
+                </th>
+            </shiro:hasAnyRoles>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
+        <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
             <a data-toggle="modal">
                 <button type="button" id="add" onclick="showAddWin();" class="btn btn-default">
                     <i class="glyphicon glyphicon-plus"></i> 添加
@@ -75,6 +79,7 @@
                     <i class="glyphicon glyphicon-pencil"></i> 修改
                 </button>
             </a>
+        </shiro:hasAnyRoles>
             <a>
                 <button onclick="statusUsableness();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i>查看可用颜色
