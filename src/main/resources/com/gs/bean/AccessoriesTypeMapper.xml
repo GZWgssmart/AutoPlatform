@@ -92,7 +92,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
 		</if>
-		order by u.accTypeDes Desc, u.companyId
+		order by u.companyId Desc, u.accTypeDes
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
