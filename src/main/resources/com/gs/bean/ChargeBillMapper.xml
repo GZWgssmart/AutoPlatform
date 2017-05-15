@@ -108,7 +108,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and cb.companyId = #{user.companyId}
 		</if>
-		order by cb.companyId desc, cb.chargeBillStatus desc, cb.chargeCreatedTime
+		order by cb.companyId desc, cb.chargeBillStatus desc, cb.chargeCreatedTime desc
 	</select>
 
 	<select id="queryByStatus" resultMap="chargeBillResultMap" parameterType="string">
@@ -138,7 +138,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and cb.companyId = #{user.companyId}
 		</if>
-		order by cb.companyId desc, cb.chargeBillStatus desc, cb.chargeCreatedTime
+		order by cb.companyId desc, cb.chargeBillStatus desc, cb.chargeCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -151,7 +151,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and cb.companyId = #{user.companyId}
 		</if>
-		order by cb.companyId desc, cb.chargeBillStatus desc, cb.chargeCreatedTime
+		order by cb.companyId desc, cb.chargeBillStatus desc, cb.chargeCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -176,7 +176,7 @@
 		<if test="chargeBill.companyId != null and chargeBill.companyId != '' and chargeBill.companyId != 'null' and chargeBill.companyId != 'undefined'">
 			and cb.companyId = #{chargeBill.companyId}
 		</if>
-		order by cb.companyId desc, cb.chargeBillStatus desc, cb.chargeCreatedTime
+		order by cb.companyId desc, cb.chargeBillStatus desc, cb.chargeCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

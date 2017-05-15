@@ -90,7 +90,7 @@
         <if test="user.companyId != null and user.companyId != ''">
             and companyId = #{user.companyId}
         </if>
-        order by companyId desc, recordStatus desc, recordCreatedTime
+        order by companyId desc, recordStatus desc, recordCreatedTime desc
 	</select>
 
     <select id="queryByStatus" resultMap="maintainRecordResultMap" parameterType="string">
@@ -120,7 +120,7 @@
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
         </if>
-        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime
+        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -133,7 +133,7 @@
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
         </if>
-        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime
+        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -164,7 +164,7 @@
         <if test="record.companyId != null and record.companyId != '' and record.companyId != 'null' and record.companyId != 'undefined'">
             and r.companyId = #{record.companyId}
         </if>
-        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime
+        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -177,7 +177,7 @@
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
         </if>
-        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime
+        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -193,7 +193,7 @@
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
         </if>
-        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime
+        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -206,7 +206,7 @@
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
         </if>
-        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime
+        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
