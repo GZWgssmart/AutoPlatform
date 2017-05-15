@@ -47,7 +47,7 @@ public class WorkInfoController {
     private MaintainRecordService maintainRecordService;
 
     private String queryRole = Constants.COMPANY_ADMIN  + "," + Constants.COMPANY_ARTIFICER
-            + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+            + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
 
     private String queryRole2 = Constants.COMPANY_ARTIFICER;
 
