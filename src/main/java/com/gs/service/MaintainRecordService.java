@@ -104,4 +104,19 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
     * */
     public List<MaintainRecord> queryByCondition(String startTime,String endTime,String maintainOrFix,
                                                  String type, String companyId);
+
+    /**
+     * 根据员工的id查询该员工负责的维修保养记录，计算个数
+     * @param user
+     * @return
+     */
+    public int countByUserId(User user);
+
+    /**
+     * 根据员工的id查询该员工负责的维修保养记录，分页查询
+     * @param pager
+     * @param user
+     * @return
+     */
+    public List<MaintainRecord> queryPagerByUserId(Pager pager, User user);
 }

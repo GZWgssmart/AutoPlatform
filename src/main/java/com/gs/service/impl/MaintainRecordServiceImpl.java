@@ -141,5 +141,15 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.queryByCondition(startTime,endTime,maintainOrFix,type,companyId);
     }
 
+    @Override
+    public int countByUserId(User user) {
+        return maintainRecordDAO.countByUserId(user);
+    }
+
+    @Override
+    public List<MaintainRecord> queryPagerByUserId(Pager pager, User user) {
+        return maintainRecordDAO.queryPagerByUserId(pager, user);
+    }
+
 
 }

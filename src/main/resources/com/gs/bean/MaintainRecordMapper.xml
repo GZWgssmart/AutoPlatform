@@ -196,6 +196,19 @@
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
+    <select id="queryPagerByUserId" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+		  select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
+		    from t_maintain_record r,  t_checkin c, t_company cpy, t_work_info i
+		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordId = i.recordId and r.speedStatus = '维修保养中' and i.userId = #{user.userId}
+        ]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and r.companyId = #{user.companyId}
+        </if>
+        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
     <select id="count" resultType="int">
 		<![CDATA[
 		  select count(*) from t_maintain_record where 1 = 1 and speedStatus = '已登记'
@@ -260,6 +273,15 @@
         </foreach>
         <if test="user.companyId != null and user.companyId != ''">
             and companyId = #{user.companyId}
+        </if>
+    </select>
+
+    <select id="countByUserId" resultType="int">
+        <![CDATA[
+		  select count(*) from t_maintain_record r, t_work_info i where 1 = 1 and r.recordId = i.recordId and r.speedStatus = '维修保养中' and i.userId = #{user.userId}
+        ]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and r.companyId = #{user.companyId}
         </if>
     </select>
 

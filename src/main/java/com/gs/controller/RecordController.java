@@ -62,6 +62,14 @@ public class RecordController {
     private String queryRole1 = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ACCOUNTING + ","
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 
+    // 可以查看的角色：董事长、技师、 库管、超级管理员、普通管理员
+    private String queryRole2 = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ARTIFICER + ","
+            + Constants.COMPANY_REPERTORY + "," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+
+    // 可以操作的角色：董事长、库管
+    private String editRole1 = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY;
+
+
     @RequestMapping(value = "record_page", method = RequestMethod.GET)
     public String recordPage() {
         if (SessionGetUtil.isUser()) {
@@ -235,6 +243,41 @@ public class RecordController {
                 return null;
             } catch (Exception e) {
                 logger.info("分页查询进度状态的维修保养记录管理失败，出现了一个异常");
+                return null;
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "pager_picking",method= RequestMethod.GET)
+    public Pager4EasyUI<MaintainRecord> queryPagerByUserId(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole2)) {
+                    logger.info("根据员工id分页查询维修保养中的维修保养记录");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    List<MaintainRecord> maintainRecordList = new ArrayList<MaintainRecord>();
+                    if (CheckRoleUtil.checkRoles(Constants.COMPANY_ARTIFICER)) {
+                        String speedStatus = Constants.MAINTAIN_FIX;
+                        String[] ss = speedStatus.split(",");
+                        pager.setTotalRecords(maintainRecordService.countBySpeedStatus(ss, user));
+                        maintainRecordList = maintainRecordService.queryPagerBySpeedStatus(pager, ss, user);
+                    } else {
+                        pager.setTotalRecords(maintainRecordService.countByUserId(user));
+                        maintainRecordList = maintainRecordService.queryPagerByUserId(pager, user);
+                    }
+
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("根据员工id分页查询维修保养中的维修保养记录失败，出现了一个异常");
                 return null;
             }
         } else {
