@@ -1,8 +1,9 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.MaterialListInfo;
+import com.gs.bean.info.MaterialListInfo;
 import com.gs.bean.User;
+import com.gs.bean.info.MaterialUseInfo;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -10,15 +11,16 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.MaterialListInfoService;
+import com.gs.service.MaterialUseInfoService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,10 +35,15 @@ public class MaterialListController {
     @Resource
     private MaterialListInfoService materialListInfoService;
 
+    @Resource
+    private MaterialUseInfoService muiService;
+
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," +
             Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ARTIFICER;
 
     private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," + Constants.COMPANY_ARTIFICER;
+
+    private String editRole1 = Constants.COMPANY_ARTIFICER + "," + Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY;
 
     @RequestMapping(value = "info", method = RequestMethod.GET)
     private String showMaterialListInfo() {
@@ -151,6 +158,35 @@ public class MaterialListController {
         } catch (Exception e) {
             logger.info("操作失败，出现了一个错误");
             return ControllerResult.getFailResult("操作失败，出现了一个错误");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "add_material", method = RequestMethod.GET)
+    public ControllerResult addByRecordIdMu(@Param("recordId") String recordId, @Param("accIds") String[] accIds, @Param("accCounts") int[] accCounts) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        try {
+            /*if (!CheckRoleUtil.checkRoles(editRole1)) {
+                logger.info("申请失败");
+                return ControllerResult.getFailResult("申请失败，没有该权限操作");
+            }*/
+            logger.info("申请领料");
+            List<MaterialUseInfo> materialUseInfos = new ArrayList<MaterialUseInfo>();
+            for (int i = 0, length = accIds.length; i < length; i++) {
+                MaterialUseInfo mui = new MaterialUseInfo();
+                mui.setRecordId(recordId);
+                mui.setAccId(accIds[i]);
+                mui.setAccCount(accCounts[i]);
+                materialUseInfos.add(mui);
+            }
+            muiService.addByRecordIdMu(materialUseInfos);
+            return ControllerResult.getSuccessResult("申请成功");
+        } catch (Exception e) {
+            logger.info("申请失败，出现了一个错误");
+            return ControllerResult.getFailResult("申请失败，出现了一个错误");
         }
     }
 }

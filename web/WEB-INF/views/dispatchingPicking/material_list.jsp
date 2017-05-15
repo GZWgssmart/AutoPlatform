@@ -121,7 +121,7 @@
                                 <th data-field="materialCount">
                                     物料数量
                                 </th>
-                                <th data-field="maintainMoney">
+                                <th data-field="jisuan" data-formatter="countPrice">
                                     基本费用
                                 </th>
                                 <th data-field="materialCreatedTime" data-formatter="formatterDate">
@@ -172,6 +172,11 @@
                                 <a>
                                     <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                                         <i class="glyphicon glyphicon-pencil"></i> 修改
+                                    </button>
+                                </a>
+                                <a>
+                                    <button onclick="showGetMaterial()" type="button" class="btn btn-default">
+                                        <i class="glyphicon glyphicon-plus"></i> 申请领料
                                     </button>
                                 </a>
                                 <a>

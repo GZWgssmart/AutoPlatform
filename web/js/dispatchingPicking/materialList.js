@@ -45,7 +45,7 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '物料数量不能为空'
-                    },regexp: {
+                    }, regexp: {
                         regexp: /^\+?[1-9]\d*$/,
                         message: '只能输入大于零的数量!'
                     }
@@ -145,9 +145,13 @@ function queryStatus(status) {
 
 function queryAll() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
-        var record = selectRow[0];
-        var recordId = record.recordId;
-        initTableSetToolbar("cusTable1", contextPath + "/materialList/query_pager?recordId=" + recordId, "toolbar1");
+    var record = selectRow[0];
+    var recordId = record.recordId;
+    initTableSetToolbar("cusTable1", contextPath + "/materialList/query_pager?recordId=" + recordId, "toolbar1");
+}
+
+function countPrice(value, row, index) {
+    return "" + (row.accPrice * row.materialCount);
 }
 
 /** 关闭搜索的form */
@@ -167,7 +171,7 @@ function showMaterialWin() {
     } else {
         var record = selectRow[0];
         var recordId = record.recordId;
-            initTableSetToolbar("cusTable1", contextPath + "/materialList/query_pager?recordId=" + recordId, "toolbar1");
+        initTableSetToolbar("cusTable1", contextPath + "/materialList/query_pager?recordId=" + recordId, "toolbar1");
         $("#searchMaterialWin").modal('show');
         destoryValidator('editWin', 'editForm');
     }
@@ -179,5 +183,44 @@ function formatterTrack(value, row, index) {
         return "是";
     } else {
         return "<span style='color: red'>否</span>";
+    }
+}
+
+function showGetMaterial() {
+    var record = $("#cusTable").bootstrapTable('getSelections')[0];
+    var recordId = record.recordId;
+    var materialLists = $("#cusTable1").bootstrapTable('getData');
+    var accIds = new Array();
+    var accCounts = new Array();
+    if (materialLists.length > 0) {
+        $.each(materialLists, function (index, item) {
+            accIds[index] = materialLists[index].accId;
+            accCounts[index] = materialLists[index].materialCount;
+        });
+        $.get(contextPath + "/materialList/add_material?recordId=" + recordId + "&accIds=" + accIds + "&accCounts=" + accCounts,
+            function (data) {
+                if (data.result == "success") {
+                    swal("成功提示", data.message, "success");
+                } else if (data.result == "fail") {
+                    swal("错误提示", data.message, "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
+                }
+            }, "json");
+    } else {
+        swal('申请失败', "当前记录没有物料", "error");
     }
 }

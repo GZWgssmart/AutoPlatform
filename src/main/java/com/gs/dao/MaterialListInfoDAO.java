@@ -1,6 +1,6 @@
 package com.gs.dao;
 
-import com.gs.bean.MaterialListInfo;
+import com.gs.bean.info.MaterialListInfo;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;

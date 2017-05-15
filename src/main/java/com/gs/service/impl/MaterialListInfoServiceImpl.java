@@ -1,6 +1,6 @@
 package com.gs.service.impl;
 
-import com.gs.bean.MaterialListInfo;
+import com.gs.bean.info.MaterialListInfo;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import com.gs.dao.MaterialListInfoDAO;

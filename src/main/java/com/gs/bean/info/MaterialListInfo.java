@@ -1,4 +1,4 @@
-package com.gs.bean;
+package com.gs.bean.info;
 
 import java.util.Date;
 
@@ -13,8 +13,17 @@ public class MaterialListInfo {
     private String userName;
     private String userRequests;
     private String maintainName;
+    private String accId;
     private double accPrice;
     private String accName;
+
+    public String getAccId() {
+        return accId;
+    }
+
+    public void setAccId(String accId) {
+        this.accId = accId;
+    }
 
     public String getMaterialId() {
         return materialId;

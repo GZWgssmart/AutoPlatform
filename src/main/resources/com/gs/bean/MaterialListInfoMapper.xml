@@ -11,6 +11,7 @@
         <result column="userName" property="userName"/>
         <result column="userRequests" property="userRequests"/>
         <result column="maintainName" property="maintainName"/>
+        <result column="accId" property="accId" />
         <result column="accPrice" property="accPrice"/>
         <result column="accName" property="accName"/>
     </resultMap>

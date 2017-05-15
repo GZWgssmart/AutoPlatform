@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gs.dao.MaterialUseInfoDAO">
+    <resultMap id="materialUseInfoResultMap" type="materialUseInfo">
+        <id column="materialUseId" property="materialUseId"/>
+        <result column="recordId" property="recordId"/>
+        <result column="accId" property="accId"/>
+        <result column="accCount" property="accCount"/>
+        <result column="accPrice" property="accPrice"/>
+        <result column="accName" property="accName"/>
+        <result column="userName" property="userName"/>
+        <result column="userRequests" property="userRequests"/>
+        <result column="empName" property="empName"/>
+        <result column="maintainName" property="maintainName"/>
+        <result column="muCreatedTime" property="muCreatedTime"/>
+        <result column="muUseDate" property="muUseDate"/>
+    </resultMap>
+
+    <insert id="addByRecordIdMu">
+        <selectKey resultType="int" keyProperty="materialUseId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_material_use
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (uuid(),#{item.recordId},#{item.accId}, #{item.accCount}, now(), now())
+        </foreach>
+    </insert>
+
+</mapper>
