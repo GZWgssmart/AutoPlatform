@@ -44,6 +44,9 @@
             <th data-field="checkin.carPlate">
                 登记车牌号
             </th>
+            <th data-field="user"  data-formatter="formatterUser">
+                是否注册用户
+            </th>
             <th data-field="checkin.carMileage">
                 汽车行驶里程
             </th>
@@ -209,7 +212,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">实付款（元）：</label>
-                                <input id="addActualPayment" type="number" name="actualPayment" maxlength="5"
+                                <input id="addActualPayment" type="text" name="actualPayment" maxlength="5"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -255,14 +258,14 @@
                             <input type="hidden" id="remindCarPlate" name="carPlate" class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">提醒方式：</label>
-                                <select class="js-example-tags form-control remindMethod" name="remindMethod">
-                                    <option value="email">邮箱</option>
+                                <select id="remindMethod" class="js-example-tags form-control remindMethod" name="remindMethod">
                                     <option value="message">短信</option>
+                                    <option value="email">邮箱</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">提醒标题：</label>
-                                <input type="text" name="remindTitle" value="维修保养提车提醒" class="form-control"/>
+                                <input type="text" id="remindTitle" name="remindTitle" class="form-control"/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">

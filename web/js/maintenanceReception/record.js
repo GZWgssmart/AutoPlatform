@@ -242,7 +242,7 @@ function validator(formId) {
                     callback: {
                         message: "减价不能高于维修或保养的原价",
                         callback: function (value, validator) {
-                            if (value <= 0) {
+                            if (value < 0) {
                                 return false;
                             } else {
                                 if (maintainMoney == null || maintainMoney == "" || maintainMoney == undefined || maintainMoney == 0) {

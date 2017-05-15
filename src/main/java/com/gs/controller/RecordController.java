@@ -381,11 +381,12 @@ public class RecordController {
                     String[] remindMethod = sendRemind.getRemindMethod().split(",");
                     String[] carPlates = sendRemind.getCarPlate().split(",");
                     List<Mail> mails = new ArrayList<Mail>();
-                    for (int i = 0, len = recordIds.length; i < len; i++) {
-                        User user = userService.queryById(userIds[i]);
+                    for (int i = 0, len = userIds.length; i < len; i++) {
+                        logger.info("给已注册用户发送提醒");
                         if (remindMethod.length == 2) {
                             logger.info("发送短信和邮箱提醒");
                         } else {
+                            User user = userService.queryById(userIds[i]);
                             if (remindMethod[0].equals("email")) {
                                 logger.info("发送邮箱提醒");
                                 if (user.getUserEmail() != null && !user.getUserEmail().equals("")) {
@@ -401,7 +402,6 @@ public class RecordController {
                                         multipart.addBodyPart(part1);
                                         mail.setMultipart(multipart);
                                         mails.add(mail);
-                                        maintainRecordService.updateSpeedStatusById(Constants.ALREADY_REMIND, recordIds[i]);
                                     } catch (MessagingException e) {
                                         logger.info("发送提车提醒失败，出现了一个错误");
                                         return ControllerResult.getFailResult("邮箱提醒发送失败");
@@ -413,7 +413,15 @@ public class RecordController {
                                 logger.info("发送短信提醒");
                             }
                         }
+                        maintainRecordService.updateSpeedStatusById(Constants.ALREADY_REMIND, recordIds[i]);
 
+                    }
+                    for (int i = userIds.length; i < recordIds.length; i++) {
+                        logger.info("给未注册用户发送短信提醒");
+                        if (remindMethod[0].equals("message")) {
+                            logger.info("发送短信提醒");
+                        }
+                        maintainRecordService.updateSpeedStatusById(Constants.ALREADY_REMIND, recordIds[i]);
                     }
                     new Thread(new SendEmailThread(mails)).start();
                     return ControllerResult.getSuccessResult("提车提醒已成功发送");

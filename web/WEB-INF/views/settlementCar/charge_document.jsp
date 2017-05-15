@@ -170,7 +170,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">收费总金额：</label>
-                                <input id="editChargeBillMoney" attr="chargeBill.chargeBillMoney" type="number"
+                                <input id="editChargeBillMoney" attr="chargeBill.chargeBillMoney" type="text"
                                        name="chargeBillMoney" maxlength="5" class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -185,7 +185,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">实付款：</label>
-                                <input id="editActualPayment" attr="chargeBill.actualPayment" type="number"
+                                <input id="editActualPayment" attr="chargeBill.actualPayment" type="text"
                                        name="actualPayment" maxlength="5" class="form-control"/>
                             </div>
                             <div class="form-group">

@@ -103,6 +103,7 @@ function showAddWin() {
                     $("#addWin").modal('show');
                     $("#addForm").fill(record);
                     $("#addChargeBillMoney").val(count);
+                    $("#addActualPayment").val(count);
                 } else {
                     swal('结算失败', "该车主没有做维修保养项目", "error");
                     return false;
@@ -114,6 +115,17 @@ function showAddWin() {
     }
 }
 
+/** 返回是否是注册车主 */
+function formatterUser(value, row, index) {
+    if (row.checkin.userId != null && row.checkin.userId != "") {
+        return "是";
+    } else {
+        return "<span style='color: red;'>否</span>";
+    }
+
+}
+
+var userFlag = true; // 用来标识车主是否是已注册车主，只有已注册车主才能发送邮箱提醒
 /** 显示提车提醒的win */
 function showRemindWin() {
     validator("remindForm");
@@ -122,6 +134,7 @@ function showRemindWin() {
         swal('提醒失败', "至少要选择一条记录", "error");
         return false;
     } else {
+        userFlag = true;
         var len = selectRow.length;
         var ids = "";
         var flag = true;
@@ -133,21 +146,29 @@ function showRemindWin() {
             if (selectRow[0].speedStatus != selectRow[i].speedStatus) {
                 flag = false;
             } else {
-                if (selectRow[i].speedStatus == "已提醒" || selectRow[i].speedStatus == "已完成") {
+                if (record.speedStatus == "已提醒" || record.speedStatus == "已完成") {
                     flag = false;
+                } else {
+                    if (record.checkin.userId == null || record.checkin.userId == "") { // 有非注册用户
+                        userFlag = false;
+                    }
+                    if (ids == "") {
+                        ids = record.checkin.userId;
+                    } else {
+                        ids += "," + record.checkin.userId;
+                    }
+                    if (recordIds == "") {
+                        recordIds = record.recordId;
+                        carPlate = record.checkin.carPlate;
+                        userName = record.checkin.userName;
+                    } else {
+                        recordIds += "," + record.recordId;
+                        carPlate += "," + record.checkin.carPlate;
+                        userName += "、" + record.checkin.userName;
+                    }
                 }
             }
-            if (ids == "") {
-                ids = record.checkin.userId;
-                recordIds = record.recordId;
-                carPlate = record.checkin.carPlate;
-                userName = record.checkin.userName;
-            } else {
-                ids += "," + record.checkin.userId;
-                recordIds += "," + record.recordId;
-                carPlate += "," + record.checkin.carPlate;
-                userName += "," + record.checkin.userName;
-            }
+
 
         }
         if (flag) {
@@ -160,16 +181,17 @@ function showRemindWin() {
                     confirmButtonText: "确认",
                     cancelButtonText: "取消",
                     closeOnConfirm: true,
-                    closeOnCancel: false
+                    closeOnCancel: true
                 },
                 function (isConfirm) {
                     if (isConfirm) {
                         $("#remindUserId").val(ids);
                         $("#remindRecordId").val(recordIds);
                         $("#remindCarPlate").val(carPlate);
+                        $("#remindTitle").val("维修保养提车提醒");
+                        $('#remindMethod').val("message");
                         $("#remindWin").modal('show');
                     } else {
-                        swal("取消操作", "您已经取消操作", "error");
                     }
                 });
         } else {
@@ -183,6 +205,7 @@ function showRemindWin() {
 function showAllRemindWin() {
     validator("remindForm");
     var selectRow = $("#cusTable").bootstrapTable('getData');
+    userFlag = true;
     var len = selectRow.length;
     var ids = "";
     var recordIds = "";
@@ -191,22 +214,29 @@ function showAllRemindWin() {
     var userName = "";
     for (var i = 0; i < len; i++) {
         var record = selectRow[i];
-        if (selectRow[i].speedStatus == "已提醒" || selectRow[i].speedStatus == "已完成") {
-            continue;
-        }
-        if (ids == "") {
-            ids = record.checkin.userId;
-            recordIds = record.recordId;
-            carPlate = record.checkin.carPlate;
-            userName = record.checkin.userName;
-        } else {
-            ids += "," + record.checkin.userId;
-            recordIds += "," + record.recordId;
-            carPlate += "," + record.checkin.carPlate;
-            userName += "," + record.checkin.userName;
-        }
-        count++;
 
+        if (record.speedStatus == "已提醒" || record.speedStatus == "已完成") {
+            continue;
+        } else {
+            if (record.checkin.userId == null || record.checkin.userId == "") { // 有非注册用户
+                userFlag = false;
+            }
+            if (ids == "") {
+                ids = record.checkin.userId;
+            } else {
+                ids += "," + record.checkin.userId;
+            }
+            if (userName == "") {
+                recordIds = record.recordId;
+                carPlate = record.checkin.carPlate;
+                userName = record.checkin.userName;
+            } else {
+                recordIds += "," + record.recordId;
+                carPlate += "," + record.checkin.carPlate;
+                userName += "、" + record.checkin.userName;
+            }
+            count++;
+        }
     }
     if (count <= 0) {
         swal('提醒失败', "没有未提醒的记录", "error");
@@ -220,16 +250,17 @@ function showAllRemindWin() {
                 confirmButtonText: "确认",
                 cancelButtonText: "取消",
                 closeOnConfirm: true,
-                closeOnCancel: false
+                closeOnCancel: true
             },
             function (isConfirm) {
                 if (isConfirm) {
                     $("#remindUserId").val(ids);
                     $("#remindRecordId").val(recordIds);
                     $("#remindCarPlate").val(carPlate);
+                    $("#remindTitle").val("维修保养提车提醒");
+                    $('#remindMethod').val("message");
                     $("#remindWin").modal('show');
                 } else {
-                    swal("取消操作", "您已经取消操作", "error");
                 }
             });
 
@@ -302,6 +333,30 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '至少选择一种提醒方式'
+                    },
+                    callback: {
+                        message: "未注册的车主用户不能发送邮箱提醒哦",
+                        callback: function (value, validator) {
+                            if (value != null && value != "") {
+                                var len = value.length;
+                                if (userFlag) {
+                                    return true;
+                                } else {
+                                    if (len == 1) {
+                                        if (value == "email") {
+                                            return false;
+                                        } else {
+                                            return true;
+                                        }
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                            } else {
+                                return false;
+                            }
+
+                        }
                     }
 
                 }

@@ -394,7 +394,7 @@
                                 <label class="control-label">折扣&nbsp;|&nbsp;减价：</label>
                                 <input type="text" maxlength="4" attr="detail.maintainDiscount" name="maintainDiscount"
                                        class="form-control"/>
-                                <span style="font-size: 12px; color: green;">小于1大于0是折扣，大于等于1则是减价</span>
+                                <span style="font-size: 12px; color: green;">输入小于1大于0是折扣，输入大于等于1则是减价,无折扣或减价输入0</span>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
