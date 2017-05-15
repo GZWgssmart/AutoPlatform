@@ -37,4 +37,16 @@ public interface MaintainDetailService extends BaseService<String, MaintainDetai
      */
     public int queryIsDetail(String recordId, String maintainId);
 
+    /*
+ * 默认查询本月的维修保养次数统计
+ * */
+    public List<MaintainDetail> queryByDefault( String maintainOrFix, String companyId
+                                                ,String maintainId );
+
+    /*
+    * 根据年，月，季度，周，日查询维修保养次数统计
+    * */
+    public List<MaintainDetail> queryByCondition(String startTime,String endTime,String maintainOrFix,
+                                                 String type, String companyId,String maintainId);
+
 }

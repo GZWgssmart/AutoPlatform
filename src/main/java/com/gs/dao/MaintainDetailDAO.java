@@ -40,4 +40,16 @@ public interface MaintainDetailDAO extends BaseDAO<String, MaintainDetail>{
      */
     public int queryIsDetail(@Param("recordId") String recordId, @Param("maintainId") String maintainId);
 
+    /*
+    * 默认查询本月的维修保养次数统计
+    * */
+    public List<MaintainDetail> queryByDefault(@Param("maintainOrFix") String maintainOrFix, @Param("companyId")String companyId
+                                               ,@Param("maintainId")String maintainId );
+
+    /*
+    * 根据年，月，季度，周，日查询维修保养次数统计
+    * */
+    public List<MaintainDetail> queryByCondition(@Param("startTime")String startTime,@Param("endTime")String endTime,@Param("maintainOrFix")String maintainOrFix,
+                                           @Param("type")String type, @Param("companyId")String companyId,@Param("maintainId")String maintainId);
+
 }

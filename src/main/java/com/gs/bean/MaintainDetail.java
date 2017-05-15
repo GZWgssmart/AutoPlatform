@@ -16,6 +16,8 @@ public class MaintainDetail{
 	private Date detailCreatedTime; // 明细创建时间
 	private double price; // 现价
 
+	private double coont;		// 统计维修保养项目记录数
+
 	private MaintainRecord record; // 记录
 	private MaintainFix maintain; // 项目
 
@@ -81,5 +83,13 @@ public class MaintainDetail{
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public double getCoont() {
+		return coont;
+	}
+
+	public void setCoont(double coont) {
+		this.coont = coont;
 	}
 }

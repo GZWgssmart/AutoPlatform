@@ -54,4 +54,9 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 	public int MaintainCont(User user) {
 		return maintainFixDAO.MaintainCont(user);
 	}
+
+	@Override
+	public List<MaintainFix> queryByType(User user, String maintainOrFix) {
+		return maintainFixDAO.queryByType(user,maintainOrFix);
+	}
 }

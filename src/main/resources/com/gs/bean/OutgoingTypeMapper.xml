@@ -91,7 +91,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and ot.companyId = #{user.companyId} 	OR ot.outTypeName = '工资支出'
 		</if>
-		 order by ot.outTypeCreatedTime Desc ,ot.companyId
+		 order by ot.companyId desc ,ot.outTypeStatus desc , ot.outTypeCreatedTime
 		 limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -121,7 +121,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and ot.companyId = #{user.companyId} 	OR ot.outTypeName = '工资支出'
 		</if>
-		order by ot.outTypeCreatedTime Desc ,ot.companyId
+		order by ot.companyId desc ,ot.outTypeStatus desc , ot.outTypeCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

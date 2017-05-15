@@ -95,4 +95,14 @@ public class MaintainDetailServiceImpl implements MaintainDetailService {
     public int queryIsDetail(String recordId, String maintainId) {
         return maintainDetailDAO.queryIsDetail(recordId, maintainId);
     }
+
+    @Override
+    public List<MaintainDetail> queryByDefault(String maintainOrFix, String companyId, String maintainId) {
+        return maintainDetailDAO.queryByDefault(maintainOrFix,companyId,maintainId);
+    }
+
+    @Override
+    public List<MaintainDetail> queryByCondition(String startTime, String endTime, String maintainOrFix, String type, String companyId, String maintainId) {
+        return maintainDetailDAO.queryByCondition(startTime,endTime,maintainOrFix,type,companyId,maintainId);
+    }
 }
