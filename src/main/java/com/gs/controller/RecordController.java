@@ -252,6 +252,40 @@ public class RecordController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "pager_speedAndPickingStatus",method= RequestMethod.GET)
+    public Pager4EasyUI<MaintainRecord> queryPagerBySpeedAndPickingStatus(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("speedStatus")String speedStatus){
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole2)) {
+                    logger.info("分页查询进度状态和领料状态的维修保养记录管理");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    List<MaintainRecord> maintainRecordList = new ArrayList<MaintainRecord>();
+                    if (!CheckRoleUtil.checkRoles(Constants.COMPANY_ARTIFICER)) {
+                        String[] ss = speedStatus.split(",");
+                        String pickingStatus = Constants.NOT_APPLY;
+                        pager.setTotalRecords(maintainRecordService.countBySpeedStatusAndPickingStatus(ss, pickingStatus, user));
+                        maintainRecordList = maintainRecordService.queryPagerBySpeedStatusAndPickingStatus(ss, pager, pickingStatus, user);
+                    } else {
+                        pager.setTotalRecords(maintainRecordService.countByUserId(user));
+                        maintainRecordList = maintainRecordService.queryPagerByUserId(pager, user);
+                    }
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("分页查询进度状态和领料状态的维修保养记录管理失败，出现了一个异常");
+                return null;
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "pager_picking",method= RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> queryPagerByUserId(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         if (SessionGetUtil.isUser()) {
@@ -263,7 +297,7 @@ public class RecordController {
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
                     List<MaintainRecord> maintainRecordList = new ArrayList<MaintainRecord>();
-                    if (CheckRoleUtil.checkRoles(Constants.COMPANY_ARTIFICER)) {
+                    if (!CheckRoleUtil.checkRoles(Constants.COMPANY_ARTIFICER)) {
                         String speedStatus = Constants.MAINTAIN_FIX;
                         String[] ss = speedStatus.split(",");
                         pager.setTotalRecords(maintainRecordService.countBySpeedStatus(ss, user));
@@ -347,33 +381,39 @@ public class RecordController {
                     String[] remindMethod = sendRemind.getRemindMethod().split(",");
                     String[] carPlates = sendRemind.getCarPlate().split(",");
                     List<Mail> mails = new ArrayList<Mail>();
-                    for (int i = 0, len = userIds.length; i < len; i++) {
+                    for (int i = 0, len = recordIds.length; i < len; i++) {
                         User user = userService.queryById(userIds[i]);
                         if (remindMethod.length == 2) {
-
+                            logger.info("发送短信和邮箱提醒");
                         } else {
                             if (remindMethod[0].equals("email")) {
-                                Mail mail = new Mail();
-                                mail.setRecipients(user.getUserEmail());
-                                mail.setSubject(sendRemind.getRemindTitle());
-                                mail.setType(Mail.HTML);
-                                Multipart multipart = new MimeMultipart();
-                                BodyPart part1 = new MimeBodyPart();
-                                sendRemind.setRemindContent("<p>尊敬的" + user.getUserName() + "车主，车牌号为" + carPlates[i] + ",您的爱车已经整装待发，如果您有时间，请来领它回家哦^_^，如有问题，请联系0797-5201314</p>");
-                                try {
-                                    part1.setContent(sendRemind.getRemindContent(), mail.getType());
-                                    multipart.addBodyPart(part1);
-                                    mail.setMultipart(multipart);
-                                    mails.add(mail);
-                                } catch (MessagingException e) {
-                                    e.printStackTrace();
-                                    return ControllerResult.getFailResult("邮箱提醒发送失败");
+                                logger.info("发送邮箱提醒");
+                                if (user.getUserEmail() != null && !user.getUserEmail().equals("")) {
+                                    Mail mail = new Mail();
+                                    mail.setRecipients(user.getUserEmail());
+                                    mail.setSubject(sendRemind.getRemindTitle());
+                                    mail.setType(Mail.HTML);
+                                    Multipart multipart = new MimeMultipart();
+                                    BodyPart part1 = new MimeBodyPart();
+                                    sendRemind.setRemindContent("<p>尊敬的" + user.getUserName() + "车主，车牌号为" + carPlates[i] + ",您的爱车已经整装待发，如果您有时间，请来领它回家哦^_^，如有问题，请联系0797-5201314</p>");
+                                    try {
+                                        part1.setContent(sendRemind.getRemindContent(), mail.getType());
+                                        multipart.addBodyPart(part1);
+                                        mail.setMultipart(multipart);
+                                        mails.add(mail);
+                                        maintainRecordService.updateSpeedStatusById(Constants.ALREADY_REMIND, recordIds[i]);
+                                    } catch (MessagingException e) {
+                                        logger.info("发送提车提醒失败，出现了一个错误");
+                                        return ControllerResult.getFailResult("邮箱提醒发送失败");
+                                    }
+                                } else {
+
                                 }
                             } else if (remindMethod[0].equals("message")) {
-
+                                logger.info("发送短信提醒");
                             }
                         }
-                        maintainRecordService.updateSpeedStatusById(Constants.ALREADY_REMIND, recordIds[i]);
+
                     }
                     new Thread(new SendEmailThread(mails)).start();
                     return ControllerResult.getSuccessResult("提车提醒已成功发送");

@@ -160,5 +160,15 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.updatePickingStatusById(pickingStatus, id);
     }
 
+    @Override
+    public int countBySpeedStatusAndPickingStatus(String[] speedStatus, String pickingStatus, User user) {
+        return maintainRecordDAO.countBySpeedStatusAndPickingStatus(speedStatus, pickingStatus, user);
+    }
+
+    @Override
+    public List<MaintainRecord> queryPagerBySpeedStatusAndPickingStatus(String[] speedStatus, Pager pager, String pickingStatus, User user) {
+        return maintainRecordDAO.queryPagerBySpeedStatusAndPickingStatus(speedStatus, pager, pickingStatus, user);
+    }
+
 
 }

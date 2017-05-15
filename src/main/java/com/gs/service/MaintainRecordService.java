@@ -134,4 +134,21 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      */
     public int updatePickingStatusById(String pickingStatus, String id);
 
+    /**
+     * 根据进度状态和领料状态计数
+     *
+     * @param speedStatus
+     * @return
+     */
+    public int countBySpeedStatusAndPickingStatus(String[] speedStatus, String pickingStatus, User user);
+
+    /**
+     * 根据进度状态和领料状态分页查询
+     *
+     * @param pager
+     * @param speedStatus
+     * @return
+     */
+    public List<MaintainRecord> queryPagerBySpeedStatusAndPickingStatus(String[] speedStatus, Pager pager, String pickingStatus, User user);
+
 }

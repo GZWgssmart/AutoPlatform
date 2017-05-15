@@ -325,7 +325,7 @@ CREATE TABLE `t_maintain_record` (
   `recordDes` varchar(500) DEFAULT NULL COMMENT '维修保养记录描述',
   `recordStatus` varchar(2) DEFAULT 'Y' COMMENT '维修保养记录状态，Y表示可用，N表示不可用',
   `speedStatus` varchar(10) NOT NULL DEFAULT '已登记' COMMENT '标识这条记录的当前进度，如登记完，维修中或保养中，待结算，已完成',
-  `pickingStatus` varchar(10) NOT NULL DEFAULT '未审核' COMMENT '标识这条记录的领料审核状态，有三种状态：未审核，已通过，未通过'
+  `pickingStatus` varchar(10) NOT NULL DEFAULT '未申请' COMMENT '标识这条记录的领料审核状态，有三种状态：未审核，已通过，未通过'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

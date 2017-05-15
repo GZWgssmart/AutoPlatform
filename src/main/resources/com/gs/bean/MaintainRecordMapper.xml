@@ -204,6 +204,22 @@
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
+    <select id="queryPagerBySpeedStatusAndPickingStatus" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+			select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.userId, c.userRequests, c.maintainOrFix, cpy.companyId, cpy.companyName
+			  from t_maintain_record r,  t_checkin c, t_company cpy
+			  where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordStatus = 'Y' and r.pickingStatus != ${pickingStatus} and r.speedStatus in
+		]]>
+        <foreach item="item" index="index" collection="speedStatus" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="user.companyId != null and user.companyId != ''">
+            and r.companyId = #{user.companyId}
+        </if>
+        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
     <select id="queryPagerByUserId" resultType="list" resultMap="maintainRecordResultMap">
         <![CDATA[
 		  select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
@@ -275,6 +291,18 @@
     <select id="countBySpeedStatus" resultType="int">
         <![CDATA[
 			select count(*) from t_maintain_record where 1 = 1 and recordStatus = 'Y' and speedStatus in
+		]]>
+        <foreach item="item" index="index" collection="speedStatus" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
+    </select>
+
+    <select id="countBySpeedStatusAndPickingStatus" resultType="int">
+        <![CDATA[
+			select count(*) from t_maintain_record where 1 = 1 and recordStatus = 'Y' and pickingStatus != #{pickingStatus} and speedStatus in
 		]]>
         <foreach item="item" index="index" collection="speedStatus" open="(" separator="," close=")">
             #{item}
