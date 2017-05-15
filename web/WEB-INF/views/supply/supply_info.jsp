@@ -187,7 +187,7 @@
                             </div>
                             <div class="form-group">
                                 <label>开户卡号：</label>
-                                <input type="text" attr="supply.supplyBankNo" name="supplyBankNo" class="form-control"/>
+                                <input type="text" attr="supply.supplyBankNo" name="supplyBankNo" maxlength="19" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>支付宝：</label>
@@ -255,7 +255,7 @@
                             </div>
                             <div class="form-group">
                                 <label>开户卡号：</label>
-                                <input type="text" name="supplyBankNo" class="form-control"/>
+                                <input type="text" name="supplyBankNo" maxlength="19" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>支付宝：</label>
