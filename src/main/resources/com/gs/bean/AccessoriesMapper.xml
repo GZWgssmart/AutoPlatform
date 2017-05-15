@@ -145,7 +145,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and ac.companyId = #{user.companyId}
 		</if>
-		order by ac.companyId Desc, ac.accCreatedTime
+		order by ac.companyId Desc, ac.accCreatedTime desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -170,7 +170,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and ac.companyId = #{user.companyId}
 		</if>
-		order by ac.companyId desc, ac.accCreatedTime
+		order by ac.companyId desc, ac.accCreatedTime desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

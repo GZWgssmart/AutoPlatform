@@ -62,7 +62,7 @@
         </tr>
         </thead>
         <form id="formSearch" class="form-horizontal">
-            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+            <div class="form-group col-sm-12" id="searchDiv" style="margin-top:15px; display: none;">
                 <div class="col-sm-2" style="margin-left: -15px;">
                     <input type="text" id="searchAccTypeName" name="accTypeName" class="form-control" placeholder="请输入配件分类名称" >
                 </div>
