@@ -63,7 +63,7 @@
 			select * from t_accessories_type
 		]]>
 		<if test="companyId != null and companyId != ''">
-			and companyId = #{companyId}
+			WHERE companyId = #{companyId}
 		</if>
 	</select>
 
@@ -103,7 +103,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and at.companyId = #{user.companyId}
 		</if>
-		order by at.accTypeDes Desc, at.companyId
+		order by at.companyId Desc, at.accTypeDes
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
