@@ -114,7 +114,7 @@ public class MaterialListController {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        /*try {*/
+        try {
             if (!CheckRoleUtil.checkRoles(editRole)) {
                 logger.info("更新数量失败");
                 return ControllerResult.getFailResult("更新数量失败，没有该权限操作");
@@ -122,10 +122,10 @@ public class MaterialListController {
             logger.info("更新数量");
             materialListInfoService.updateCount(materialListInfo);
             return ControllerResult.getSuccessResult("更新成功");
-        /*} catch (Exception e) {
+        } catch (Exception e) {
             logger.info("更新失败，出现了一个错误");
             return ControllerResult.getFailResult("更新失败，出现了一个错误");
-        }*/
+        }
     }
 
     @ResponseBody
