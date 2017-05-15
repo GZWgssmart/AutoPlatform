@@ -28,6 +28,12 @@ function initSelect2(clazz, title, url, width) {
     });
 }
 
+/** 初始化三级地区联动 */
+function initCityPicker(id) {
+    $('#' + id).citypicker('destroy');
+    $('#' + id).citypicker();
+}
+
 /** 初始化DatatimePicker */
 function initDateTimePicker(clazz, name, formId) {
     $('.' + clazz).datetimepicker({
@@ -41,7 +47,7 @@ function initDateTimePicker(clazz, name, formId) {
         $('#' + formId).data('bootstrapValidator')
             .updateStatus(name, 'NOT_VALIDATED',null)
             .validateField(name);
-    });;
+    });
 }
 
 /** 初始化DatatimePicker，不需要验证的 */

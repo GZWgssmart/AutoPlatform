@@ -20,11 +20,6 @@
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
-    <style>
-        .address{
-            width: 50%;
-        }
-    </style>
 </head>
 <body>
 
@@ -180,7 +175,7 @@
                             </div>
                             <div class="form-group">
                                 <label>地址：</label>
-                                <input data-toggle="city-picker" id="editSupplyAddress" class="address" name="supplyAddress"/>
+                                <input id="editAddress" attr="supply.supplyAddress" type="text" class="col-sm-6" name="supplyAddress"/>
                             </div>
                             <div class="form-group">
                                 <label>开户银行全称：</label>
@@ -213,7 +208,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton" class="btn btn-primary" value="修改" onclick="edit()">
+                                <input type="button" id="editButton" class="btn btn-primary" value="修改" onclick="edit()">
                                 </input>
                             </div>
                         </form>

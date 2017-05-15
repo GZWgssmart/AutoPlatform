@@ -6,9 +6,6 @@ $(document).ready(function () {
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin", "editForm");
-
-    //当点击查询按钮的时候执行
-    $("#search").bind("click", initTable);
 });
 
 /** 编辑数据 */
@@ -21,7 +18,7 @@ function showEditWin() {
     } else {
         var supply = selectRow[0];
         $("#editForm").fill(supply);
-        $("#editSupplyAddress").val("北京市/北京市/东城区");
+        initCityPicker("editAddress");
         $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
@@ -187,6 +184,12 @@ function validator(formId) {
                         regexp: /^[A-Za-z0-9-]+$/,
                         message: '微信不能是中文，微信是由数字字母中划线组成'
                     }
+
+                }
+            },
+            supplyAddress1: {
+                validators: {
+
 
                 }
             }
