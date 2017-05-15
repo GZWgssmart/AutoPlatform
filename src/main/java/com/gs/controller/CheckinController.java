@@ -159,7 +159,6 @@ public class CheckinController {
                     MaintainRecord maintainRecord = new MaintainRecord();
                     String recordId = UUIDUtil.uuid();
                     maintainRecord.setRecordId(recordId);
-                    maintainRecord.setSpeedStatus(Constants.CHECKIN);
                     maintainRecord.setCheckinId(checkinId);
                     maintainRecord.setCompanyId(loginUser.getCompanyId());
 

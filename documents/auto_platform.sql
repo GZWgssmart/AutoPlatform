@@ -311,22 +311,23 @@ PRIMARY KEY (`mainAccId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*维修保养记录表*/
-
 DROP TABLE IF EXISTS `t_maintain_record`;
 CREATE TABLE `t_maintain_record` (
-`recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，UUID,主键',
-`checkinId` varchar(36) DEFAULT NULL COMMENT '维修保养登记编号，来源于t_checkin表',
-`startTime` datetime DEFAULT NULL COMMENT '维修保养开始时间',
-`endTime` datetime DEFAULT NULL COMMENT '维修保养预估结束时间',
-`actualEndTime` datetime DEFAULT NULL COMMENT '维修保养实际结束时间',
-`recordCreatedTime` datetime DEFAULT NULL COMMENT '维修保养记录创建时间',
-`trackStatus` varchar(2) DEFAULT NULL COMMENT '是否回访，默认是N，Y表示已经回访',
-`pickupTime` datetime DEFAULT NULL COMMENT '维修保养结束车主提车时间',
-`companyId` varchar(36) DEFAULT NULL COMMENT '来源于t_company表公司Id',
-`recordDes` varchar(500) DEFAULT NULL COMMENT '维修保养记录描述',
-`recordStatus` varchar(2) DEFAULT NULL COMMENT '维修保养记录状态，Y表示可用，N表示不可用',
-`speedStatus` varchar(10) NOT NULL COMMENT '标识这条记录的当前进度，如登记完，维修中或保养中，待结算，已完成'
+  `recordId` varchar(36) DEFAULT NULL COMMENT '维修保养记录编号，UUID,主键',
+  `checkinId` varchar(36) DEFAULT NULL COMMENT '维修保养登记编号，来源于t_checkin表',
+  `startTime` datetime DEFAULT NULL COMMENT '维修保养开始时间',
+  `endTime` datetime DEFAULT NULL COMMENT '维修保养预估结束时间',
+  `actualEndTime` datetime DEFAULT NULL COMMENT '维修保养实际结束时间',
+  `recordCreatedTime` datetime DEFAULT NULL COMMENT '维修保养记录创建时间',
+  `trackStatus` varchar(2) DEFAULT NULL COMMENT '是否回访，默认是N，Y表示已经回访',
+  `pickupTime` datetime DEFAULT NULL COMMENT '维修保养结束车主提车时间',
+  `companyId` varchar(36) DEFAULT NULL COMMENT '来源于t_company表公司Id',
+  `recordDes` varchar(500) DEFAULT NULL COMMENT '维修保养记录描述',
+  `recordStatus` varchar(2) DEFAULT 'Y' COMMENT '维修保养记录状态，Y表示可用，N表示不可用',
+  `speedStatus` varchar(10) NOT NULL DEFAULT '已登记' COMMENT '标识这条记录的当前进度，如登记完，维修中或保养中，待结算，已完成',
+  `pickingStatus` varchar(10) NOT NULL DEFAULT '未审核' COMMENT '标识这条记录的领料审核状态，有三种状态：未审核，已通过，未通过'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 /*维修保养提醒记录表*/
 

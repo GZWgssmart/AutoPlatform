@@ -119,4 +119,14 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      * @return
      */
     public List<MaintainRecord> queryPagerByUserId(Pager pager, User user);
+
+    /**
+     * 根据id更新记录的进度
+     *
+     * @param pickingStatus 领料状态
+     * @param id          维修保养记录的id
+     * @return
+     */
+    public int updatePickingStatusById(String pickingStatus, String id);
+
 }

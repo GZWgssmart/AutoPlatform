@@ -14,6 +14,7 @@
         <result column="recordDes" property="recordDes"/>
         <result column="recordStatus" property="recordStatus"/>
         <result column="speedStatus" property="speedStatus"/>
+        <result column="pickingStatus" property="pickingStatus"/>
         <result column="coont" property="coont"></result>
         <!--接待表Id-->
         <association property="checkin" javaType="com.gs.bean.Checkin">
@@ -33,8 +34,8 @@
     </resultMap>
     <insert id="insert" parameterType="maintainRecord">
 		<![CDATA[
-          insert into t_maintain_record(recordId, checkinId, startTime, endTime, actualEndTime, recordCreatedTime, pickupTime, companyId, recordDes, recordStatus, trackStatus, speedStatus)
-            values(#{recordId}, #{checkinId}, #{startTime}, #{endTime}, #{actualEndTime}, now(), #{pickupTime}, #{companyId}, #{recordDes}, 'Y', 'N', #{speedStatus})
+          insert into t_maintain_record(recordId, checkinId, startTime, endTime, actualEndTime, recordCreatedTime, pickupTime, companyId, recordDes, recordStatus, trackStatus)
+            values(#{recordId}, #{checkinId}, #{startTime}, #{endTime}, #{actualEndTime}, now(), #{pickupTime}, #{companyId}, #{recordDes}, 'Y', 'N')
         ]]>
 	</insert>
 
@@ -356,6 +357,14 @@
         <![CDATA[
 
 		  update t_maintain_record set speedStatus = #{speedStatus} where recordId = #{id}
+
+        ]]>
+    </update>
+
+    <update id="updatePickingStatusById">
+        <![CDATA[
+
+		  update t_maintain_record set pickingStatus = #{pickingStatus} where recordId = #{id}
 
         ]]>
     </update>

@@ -135,4 +135,14 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
      * @return
      */
     public List<MaintainRecord> queryPagerByUserId(@Param("pager") Pager pager, @Param("user") User user);
+
+    /**
+     * 根据id更新记录的进度
+     *
+     * @param pickingStatus 领料状态
+     * @param id          维修保养记录的id
+     * @return
+     */
+    public int updatePickingStatusById(@Param("pickingStatus") String pickingStatus, @Param("id") String id);
+
 }

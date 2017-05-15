@@ -151,5 +151,10 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.queryPagerByUserId(pager, user);
     }
 
+    @Override
+    public int updatePickingStatusById(String pickingStatus, String id) {
+        return maintainRecordDAO.updatePickingStatusById(pickingStatus, id);
+    }
+
 
 }

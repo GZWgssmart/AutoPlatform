@@ -60,4 +60,10 @@ public class Constants {
 
     public static final String  MAINTENANCE_IN = "维修保养收入";
 
+    public static final String NOT_AUDITED = "未审核";
+
+    public static final String ADOPT = "已通过";
+
+    public static final String NOT_ADOPT = "未通过";
+
 }
