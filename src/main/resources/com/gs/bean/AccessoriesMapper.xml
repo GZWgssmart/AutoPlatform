@@ -245,7 +245,7 @@
 			update t_accessories set
 		]]>
 		<foreach collection="list" item="item" index="index" separator="," >
-			accTotal = #{item.accTotal}, accIdle = #{accIdle}, accUsedTime = #{accUsedTime} where accId = #{accId}
+			accTotal = #{item.accTotal}, accIdle = #{item.accIdle}, accUsedTime = now() where accId = #{item.accId}
 		</foreach>
 	</update>
 

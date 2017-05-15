@@ -3,9 +3,7 @@
  */
 var contextPath = '';
 $(document).ready(function () {
-    //调用函数，初始化表格
-    var speedStatus = "维修保养中";
-    initTable("cusTable", contextPath + "/record/pager_speedStatus?speedStatus=" + speedStatus);
+    initTable("cusTable", contextPath + "/record/pager_picking");
     initDateTimePickerNotValitor("form_datetime");
     $("#search").bind("click", initTable);
 });

@@ -1,7 +1,10 @@
 package com.gs.dao;
 
 
+import com.gs.bean.User;
 import com.gs.bean.info.MaterialUseInfo;
+import com.gs.common.bean.Pager;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,6 +15,15 @@ import java.util.List;
 @Repository
 public interface MaterialUseInfoDAO {
 
+    /**根据维修记录编号查询全部*/
+    public List<MaterialUseInfo> queryAll(@Param("recordId") String recordId, @Param("user") User user);
+
     /**添加这条维修保养记录下的所有物料申请*/
     public void addByRecordIdMu(List<MaterialUseInfo> muis);
+
+    /**根据维修记录编号分页*/
+    public List<MaterialUseInfo> queryBySpeedStatus(@Param("pager") Pager pager, @Param("recordId") String recordId, @Param("user") User user);
+
+    /**根据维修记录编号统计*/
+    public int countBySpeedStatus(@Param("recordId") String recordId, @Param("user") User user);
 }

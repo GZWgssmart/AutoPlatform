@@ -17,7 +17,7 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"/>
-
+    <link href="<%=path %>/css/main.css" rel="stylesheet"/>
 </head>
 <body>
 
@@ -37,38 +37,11 @@
             <th data-field="checkin.carPlate">
                 登记车牌号
             </th>
-            <th data-field="checkin.carMileage">
-                汽车行驶里程
-            </th>
-            <th data-field="startTime" data-formatter="formatterDate">
-                维修保养开始时间
-            </th>
-            <th data-field="endTime" data-formatter="formatterDate">
-                预估结束时间
-            </th>
-            <th data-field="actualEndTime" data-formatter="formatterDate">
-                实际结束时间
-            </th>
-            <th data-field="recordCreatedTime" data-formatter="formatterDate">
-                创建记录时间
-            </th>
-            <th data-field="pickupTime" data-formatter="formatterDate">
-                提车时间
-            </th>
             <th data-field="checkin.maintainOrFix">
                 保养&nbsp;|&nbsp;维修
             </th>
             <th data-field="speedStatus">
                 当前进度
-            </th>
-            <th data-field="trackStatus" data-formatter="formatterTrack">
-                是否回访
-            </th>
-            <th data-field="recordDes">
-                记录描述
-            </th>
-            <th data-field="company.companyName">
-                汽修公司
             </th>
             <th data-field="recordStatus" data-formatter="status">
                 记录状态

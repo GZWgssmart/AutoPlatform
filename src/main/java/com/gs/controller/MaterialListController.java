@@ -10,8 +10,10 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
+import com.gs.service.MaintainRecordService;
 import com.gs.service.MaterialListInfoService;
 import com.gs.service.MaterialUseInfoService;
+import com.gs.service.RoleService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -38,10 +40,16 @@ public class MaterialListController {
     @Resource
     private MaterialUseInfoService muiService;
 
+    @Resource
+    private MaintainRecordService mrs;
+
+    @Resource
+    private RoleService rs;
+
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," +
             Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ARTIFICER;
 
-    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," + Constants.COMPANY_ARTIFICER;
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY;
 
     private String editRole1 = Constants.COMPANY_ARTIFICER + "," + Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY;
 
@@ -122,7 +130,7 @@ public class MaterialListController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
-            if (!CheckRoleUtil.checkRoles(editRole)) {
+            if (!CheckRoleUtil.checkRoles(editRole1)) {
                 logger.info("更新数量失败");
                 return ControllerResult.getFailResult("更新数量失败，没有该权限操作");
             }
@@ -169,10 +177,10 @@ public class MaterialListController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
-            /*if (!CheckRoleUtil.checkRoles(editRole1)) {
+            if (!CheckRoleUtil.checkRoles(editRole1)) {
                 logger.info("申请失败");
                 return ControllerResult.getFailResult("申请失败，没有该权限操作");
-            }*/
+            }
             logger.info("申请领料");
             List<MaterialUseInfo> materialUseInfos = new ArrayList<MaterialUseInfo>();
             for (int i = 0, length = accIds.length; i < length; i++) {
@@ -183,6 +191,7 @@ public class MaterialListController {
                 materialUseInfos.add(mui);
             }
             muiService.addByRecordIdMu(materialUseInfos);
+            mrs.updatePickingStatusById(Constants.NOT_AUDITED, recordId);
             return ControllerResult.getSuccessResult("申请成功");
         } catch (Exception e) {
             logger.info("申请失败，出现了一个错误");
