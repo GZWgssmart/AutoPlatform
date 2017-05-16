@@ -21,9 +21,6 @@ function addCustomer(){
     if(selectRow.length < 1){
         swal('操作错误', "至少选择一个车主", "error");
     }else{
-        var customer = selectRow[0];
-        $(".customerId").val(customer.checkin.userId);
-        $(".visit_user").val(customer.checkin.userName);
         addMessageId();
         $("#customerWin").modal('hide');
     }
@@ -32,6 +29,7 @@ function addCustomer(){
 var userId = new Array();
 /**插入Id*/
 function addMessageId(){
+    alert("6666666666666")
     var selectRow = $("#customerTable").bootstrapTable('getSelections');
     if(selectRow.length>0){
         for(var i = 0; i<selectRow.length;i++){

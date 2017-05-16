@@ -54,13 +54,13 @@
         <tbody>
         <div id="toolbar" class="btn-group">
             <a><button onclick="showCustomer()" type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
+                <i class="glyphicon glyphicon-plus"></i> 添加用户
             </button></a>
             <a><button onclick="showEditWin(1);" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
+                <i class="glyphicon glyphicon-pencil"></i> 修改短信发送内容
             </button></a>
             <a><button onclick="showEditWin(2);" type="button" id="All" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 发送所有
+                <i class="glyphicon glyphicon-pencil"></i> 一键发送
             </button></a>
         </div>
         </tbody>
