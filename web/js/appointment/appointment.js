@@ -45,10 +45,10 @@ function isUserChoice() {
 
 /** 给添加的form表单设置值 */
 function setData(userInfo, flag) {
-        $("#userDiv").hide();
-        $("#addUserName").val(userInfo.userName);
-        $("#addUserPhone").val(userInfo.userPhone);
-        $("#addUserId").val(userInfo.userId);
+    $("#userDiv").hide();
+    $("#addUserName").val(userInfo.userName);
+    $("#addUserPhone").val(userInfo.userPhone);
+    $("#addUserId").val(userInfo.userId);
 }
 
 
@@ -79,12 +79,10 @@ function editCheckBrand(combo) {
 /** 关闭选择车主信息 */
 function closeUserWin() {
     $('#choiceUser').bootstrapSwitch('state', false);
-    $("#userWin").modal('hide');
 }
 
 /** 清除添加的form表单信息 */
 function clearAddForm() {
-    $("#appDiv").show();
     $("#userDiv").show();
     $('#addCarBrand').html('').trigger("change");
     $('#addCarColor').html('').trigger("change");
@@ -363,35 +361,7 @@ function validator(formId) {
     })
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                $.post("/appointment/add",
-                    $("#" + formId).serialize(),
-                    function (data) {
-                        if (data.result == "success") {
-                            $('#addWin').modal('hide');
-                            $('#cusTable').bootstrapTable('refresh');
-                        } else if (data.result == "fail") {
-                            swal("错误提示", data.message, "error");
-                        } else if (data.result == "notLogin") {
-                            swal({
-                                    title: "登入失败",
-                                    text: data.message,
-                                    type: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#DD6B55",
-                                    confirmButtonText: "确认",
-                                    cancelButtonText: "取消",
-                                    closeOnConfirm: true,
-                                    closeOnCancel: true
-
-                                },
-                                function (isConfirm) {
-                                    if (isConfirm) {
-                                        top.location.href = "/login/show_login";
-                                    } else {
-                                    }
-                                });
-                        }
-                    }, "json");
+                formSubmit("/appointment/add", formId, "addWin");
                 clearAddForm();
             } else if (formId == "editForm") {
                 formSubmit("/appointment/edit", formId, "editWin");

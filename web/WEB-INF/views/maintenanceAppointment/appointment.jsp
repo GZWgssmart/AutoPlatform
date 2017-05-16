@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%
     String path = request.getContextPath();
 %>
@@ -70,17 +72,19 @@
             <th data-field="speedStatus">
                 当前进度
             </th>
+            <shiro:hasAnyRoles name="companyAdmin, companyReceive">
             <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
+            </shiro:hasAnyRoles>
         </thead>
         <form id="formSearch" class="form-horizontal">
             <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
                 <div class="col-sm-2" style="margin-left: -15px;">
-                    <input type="text" id="searchUserName" name="userName" class="form-control" placeholder="请输入车主姓名" >
+                    <input type="text" id="searchUserName" name="userName" class="form-control" placeholder="请输入车主姓名">
                 </div>
                 <div class="col-sm-2">
-                    <input type="text" id="searchUserPhone" name="userPhone" class="form-control" placeholder="请输入车主电话" >
+                    <input type="text" id="searchUserPhone" name="userPhone" class="form-control" placeholder="请输入车主电话">
                 </div>
                 <div class="col-sm-2">
                     <input type="text" id="searchCarPlate" name="carPlate" class="form-control" placeholder="请输入车牌号码">
@@ -92,10 +96,12 @@
                         <option value="保养">保养</option>
                     </select>
                 </div>
-                <div class="col-sm-2">
-                    <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
-                    </select>
-                </div>
+                <shiro:hasAnyRoles name="systemOrdinaryAdmin, systemSuperAdmin">
+                    <div class="col-sm-2">
+                        <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
+                        </select>
+                    </div>
+                </shiro:hasAnyRoles>
 
                 <div class="col-sm-2">
                     <button type="button" onclick="searchCheckin()" class="btn btn-primary">
@@ -108,16 +114,18 @@
             </div>
         </form>
         <div id="toolbar" class="btn-group">
-            <a>
-                <button onclick="showAddWin();" type="button" id="add" class="btn btn-default">
-                    <i class="glyphicon glyphicon-plus"></i> 添加
-                </button>
-            </a>
-            <a>
-                <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                    <i class="glyphicon glyphicon-pencil"></i> 修改
-                </button>
-            </a>
+            <shiro:hasAnyRoles name="companyAdmin, companyReceive">
+                <a>
+                    <button onclick="showAddWin();" type="button" id="add" class="btn btn-default">
+                        <i class="glyphicon glyphicon-plus"></i> 添加
+                    </button>
+                </a>
+                <a>
+                    <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                        <i class="glyphicon glyphicon-pencil"></i> 修改
+                    </button>
+                </a>
+            </shiro:hasAnyRoles>
             <a>
                 <button onclick="searchStatus('/appointment/query_pager?status=Y');" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看可用记录
@@ -236,14 +244,14 @@
                     <div class="col-sm-12 b-r">
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加预约</h3>
+
+                        <div class="form-group" id="userDiv">
+                            <label>是否注册车主：</label>
+                            <input type="checkbox" id="choiceUser" name="user" onchange="isUserChoice()">
+                        </div>
+
                         <form role="form" id="addForm">
-
                             <input type="hidden" id="addUserId" name="userId" class="form-control"/>
-                            <div class="form-group" id="appDiv">
-                                <label>是否已注册车主：</label>
-                                <input type="checkbox" id="isApp" name="isApp" onchange="isAppChoice()">
-                            </div>
-
                             <div class="form-group">
                                 <label>车主姓名：</label>
                                 <input type="text" id="addUserName" name="userName" class="form-control"/>
@@ -312,52 +320,56 @@
     </div>
 </div>
 
-<div id="appWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
+<div id="userWin" class="modal fade" aria-hidden="true" style="overflow:scroll" data-backdrop="static" keyboard:false>
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
-                        <h3 class="m-t-none m-b">选择车主</h3>
-                        <table class="table table-hover" id="appTable"
+                        <span class="glyphicon glyphicon-remove closeModal" onclick="closeUserWin()"></span>
+                        <h3 class="m-t-none m-b">选择车主信息</h3>
+                        <table class="table table-hover" id="userTable"
                                data-pagination="true"
                                data-show-refresh="true"
                                data-show-toggle="true"
                                data-showColumns="true"
-                               data-height="550">
+                               data-height="500">
                             <thead>
                             <tr>
                                 <th data-field="state" data-checkbox="true"></th>
-                                <th data-field="userCreatedTime" data-sortable="true">
-                                    车主编号
-                                </th>
-                                <th data-field="userNickname" >
+                                <th data-field="userNickname">
                                     昵称
                                 </th>
-                                <th data-field="userName" >
+                                <th data-field="userName">
                                     姓名
                                 </th>
-                                <th data-field="userEmail" >
+                                <th data-field="userEmail">
                                     邮箱
                                 </th>
-                                <th data-field="userGender" data-formatter="gender" >
+                                <th data-field="userGender" data-formatter="gender">
                                     性别
                                 </th>
-                                <th data-field="userPhone" >
+                                <th data-field="userPhone">
                                     手机号
                                 </th>
                                 <th data-field="userStatus" data-formatter="status">
                                     当前状态
                                 </th>
+                                <th data-field="caozuo" data-formatter="formatterChoiceUser"
+                                    data-events="operateEvents">
+                                    操作
+                                </th>
                             </tr>
                             </thead>
+                            <tbody>
+                            </tbody>
+
                         </table>
-                        <div style="height: 100px;"></div>
+                        <div style="height: 50px;"></div>
                         <div class="modal-footer" style="overflow:hidden;">
-                            <button type="button" class="btn btn-default" onclick="closeAppWin()">关闭
+                            <button type="button" class="btn btn-default" onclick="closeUserWin()">关闭
                             </button>
-                            <input type="button" class="btn btn-primary" onclick="checkApp()" value="确定">
+                            <input type="button" class="btn btn-primary" onclick="choiceUser()" value="确定">
                             </input>
                         </div>
                     </div>
