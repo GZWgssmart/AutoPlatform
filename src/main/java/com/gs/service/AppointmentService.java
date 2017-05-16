@@ -20,5 +20,12 @@ public interface AppointmentService extends BaseService<String, Appointment>{
     public List<Appointment> queryPagerByCondition(Pager pager, Appointment appointment,User user);
 
     public int updateSpeedStatusById(String speedStatus, String id);
+    /**
+     * 查询指定的前{top}条数据
+     * @param top
+     * @param user
+     * @return
+     */
+    public List<Appointment> queryPagerByTop(int top, User user);
 
 }

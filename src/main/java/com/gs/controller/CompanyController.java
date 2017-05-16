@@ -1,10 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.Company;
-import com.gs.bean.Role;
-import com.gs.bean.User;
-import com.gs.bean.UserRole;
+import com.gs.bean.*;
 import com.gs.common.Constants;
 import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
@@ -12,10 +9,7 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.*;
 import com.gs.dao.CompanyDAO;
-import com.gs.service.CompanyService;
-import com.gs.service.RoleService;
-import com.gs.service.UserRoleService;
-import com.gs.service.UserService;
+import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -24,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -57,17 +52,25 @@ public class CompanyController {
     @Resource
     private UserRoleService userRoleService;
 
+    @Resource
+    private AppointmentService appointmentService;
+
     private String CompanyQueryRole = Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_ADMIN;
     private String CompanyEditRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN;
     private String carCommonRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN;
     @RequestMapping(value = "home", method = RequestMethod.GET)
-    private String home() {
+    private ModelAndView home() {
+        ModelAndView mav = new ModelAndView();
+        User user = SessionGetUtil.getUser();
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
-            return "index/notLogin";
+            mav.setViewName("index/notLogin");
+            return mav;
         }
+        mav.setViewName("company/home");
         logger.info("访问公司的主页");
-        return "company/admin_home";
+        mav.addObject("apps", appointmentService.queryPagerByTop(5, user));
+        return mav;
     }
 
     @RequestMapping(value = "info", method = RequestMethod.GET)

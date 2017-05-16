@@ -98,6 +98,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentDAO.updateSpeedStatusById(speedStatus, id);
     }
 
+    @Override
+    public List<Appointment> queryPagerByTop(int top, User user) {
+        return appointmentDAO.queryPagerByTop(top, user);
+    }
+
     public List<Appointment> queryPagerByStatus(Pager pager, String status,User user) {
         return appointmentDAO.queryPagerByStatus(pager, status, user);
     }
