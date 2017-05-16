@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRecord;
 import com.gs.bean.User;
+import com.gs.bean.WorkInfo;
 import com.gs.bean.info.SendRemind;
 import com.gs.common.Constants;
 import com.gs.common.bean.*;
@@ -11,6 +12,7 @@ import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.MaintainRecordService;
 import com.gs.service.UserService;
+import com.gs.service.WorkInfoService;
 import com.gs.thread.SendEmailThread;
 import com.jh.email.Mail;
 import org.apache.ibatis.annotations.Param;
@@ -49,6 +51,9 @@ public class RecordController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private WorkInfoService workInfoService;
 
     // 可以查看的角色：董事长、接待员、普通管理员、超级管理员、技师
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE + ","
@@ -328,10 +333,13 @@ public class RecordController {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("更新维修保养记录状态");
+                    WorkInfo wi = workInfoService.queryByRecordId(id);
                     if (status.equals("Y")) {
                         maintainRecordService.inactive(id);
+                        workInfoService.inactive(wi.getWorkId());
                     } else if (status.equals("N")) {
                         maintainRecordService.active(id);
+                        workInfoService.active(wi.getWorkId());
 
                     }
                     return ControllerResult.getSuccessResult("更新成功");
