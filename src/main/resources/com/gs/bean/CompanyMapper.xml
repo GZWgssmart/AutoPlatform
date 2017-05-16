@@ -67,12 +67,11 @@
 
 	<select id="query" parameterType="company" resultType="company">
 		<![CDATA[
-			select * from t_company
+			select * from t_company where 1 = 1
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and companyId = #{companyId}
 		</if>
-		Ma
 	</select>
 
 	<select id="queryById" parameterType="string" resultType="company">

@@ -15,6 +15,7 @@
 		<association property="admin" javaType="com.gs.bean.User">
 			<id column="adminId" property="userId"/>
 			<result column="adminName" property="userName"/>
+			<result column="adminPhone" property="userPhone"/>
 		</association>
 		<!--客户Id-->
 		<association property="customer" javaType="com.gs.bean.User">
@@ -132,5 +133,18 @@
 
 		]]>
 	</update>
+
+	<select id="queryByTop" resultType="list" resultMap="complaintResultMap">
+		<![CDATA[
+		select c.*, u.userId as adminId, u.userName as adminName, u.userPhone as adminPhone
+			from t_complaint c, t_user u
+			where 1 = 1 and c.userId = u.userId
+		]]>
+		<if test="user.companyId != null and user.companyId != '' ">
+			and c.companyId = #{user.companyId}
+		</if>
+		order by c.complaintCreatedTime desc
+		limit 0, #{top}
+	</select>
 
 </mapper>

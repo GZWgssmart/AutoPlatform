@@ -306,61 +306,23 @@
                         <thead>
                         <tr>
 
-                            <th data-toggle="true">车主姓名</th>
-                            <th>车主电话</th>
-                            <th>汽车品牌</th>
-                            <th>汽车颜色</th>
-                            <th>汽车车型</th>
-                            <th>汽车车牌</th>
-                            <th>车牌号码</th>
-                            <th data-hide="all">汽车油量（L）</th>
-                            <th data-hide="all">行驶里程（KM）</th>
-                            <th data-hide="all">是否洗车</th>
-                            <th data-hide="all">到店时间</th>
-                            <th data-hide="all">车上物品描述</th>
-                            <th data-hide="all">汽车完好度描述</th>
-                            <th data-hide="all">用户要求描述</th>
-                            <th data-hide="all">维修|保养</th>
-                            <th data-hide="all">登记时间</th>
+                            <th data-toggle="true">客户姓名</th>
+                            <th>客户电话</th>
+                            <th>投诉内容</th>
+                            <th>投诉时间</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>邱康</td>
-                            <td>18279799343</td>
-                            <td>宝马</td>
-                            <td>黑色</td>
-                            <td>奇骏</td>
-                            <td>赣A</td>
-                            <td>23442</td>
-                            <td>22</td>
-                            <td>123</td>
-                            <td>是</td>
-                            <td>2017-06-13</td>
-                            <td>没有物品</td>
-                            <td>特别完好</td>
-                            <td>没有要求</td>
-                            <td>保养</td>
-                            <td>2017-12-13 80:23</td>
-                        </tr>
-                        <tr>
-                            <td>邱康</td>
-                            <td>18279799343</td>
-                            <td>宝马</td>
-                            <td>黑色</td>
-                            <td>奇骏</td>
-                            <td>赣A</td>
-                            <td>23442</td>
-                            <td>22</td>
-                            <td>123</td>
-                            <td>是</td>
-                            <td>2017-06-13</td>
-                            <td>没有物品</td>
-                            <td>特别完好</td>
-                            <td>没有要求</td>
-                            <td>保养</td>
-                            <td>2017-12-13 80:23</td>
-                        </tr>
+                        <c:forEach items="${requestScope.complaints}" var="complaint">
+                            <tr>
+                                <td>${complaint.admin.userName}</td>
+                                <td>${complaint.admin.userPhone}</td>
+                                <td>${complaint.complaintContent}</td>
+                                <td>
+                                    <fmt:formatDate value="${complaint.complaintCreatedTime}" pattern="yyyy-MM-dd HH:mm" />
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                         <tfoot>
                         </tfoot>
