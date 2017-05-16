@@ -81,8 +81,6 @@
 				userPhone = #{userPhone},brandId = #{brandId},colorId = #{colorId},modelId = #{modelId},plateId = #{plateId},
 				carPlate = #{carPlate},arriveTime = #{arriveTime},maintainOrFix = #{maintainOrFix},
 				appCreatedTime = now(),appoitmentStatus = 'Y' where appointmentId = #{appointmentId}
-
-
         ]]>
 	</update>
 
@@ -145,7 +143,7 @@
         <if test="user.companyId != null and user.companyId != ''">
             and c.companyId = #{user.companyId}
         </if>
-        order by c.appCreatedTime desc, c.companyId
+        order by c.appCreatedTime desc, c.companyId desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -158,7 +156,7 @@
         <if test="user.companyId != null and user.companyId != ''">
             and c.companyId = #{user.companyId}
         </if>
-        order by c.appCreatedTime desc, c.companyId
+        order by c.appCreatedTime desc, c.companyId desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -168,7 +166,7 @@
 				from t_appointment c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
 				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and c.companyId = cpy.companyId and c.speedStatus = '已预约'
 		]]>
-        <if test="user.companyId != null and user.companyId != ''and user.companyId != 'undefined'">
+        <if test="user.companyId != null and user.companyId != ''">
             and c.companyId = #{user.companyId}
         </if>
         <if test="appointment.userName != null and appointment.userName != ''">
@@ -186,7 +184,7 @@
         <if test="appointment.companyId != null and appointment.companyId != '' and appointment.companyId != 'null' and appointment.companyId != 'undefined'">
             and c.companyId = #{appointment.companyId}
         </if>
-        order by c.appCreatedTime desc, c.companyId
+        order by c.companyId desc, c.appCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
@@ -228,7 +226,7 @@
             and maintainOrFix = #{maintainOrFix}
         </if>
         <if test="appointment.companyId != null and appointment.companyId != '' and appointment.companyId != 'null' and appointment.companyId != 'undefined'">
-            and c.companyId = #{appointment.companyId}
+            and companyId = #{appointment.companyId}
         </if>
     </select>
 

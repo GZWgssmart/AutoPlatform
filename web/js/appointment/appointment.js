@@ -227,12 +227,12 @@ window.operateEvents = {
 
 /**  条件查询*/
 function searchCheckin() {
-    var companyId = $("#searchCompanyId").val();
     var userName = $("#searchUserName").val();
     var userPhone = $("#searchUserPhone").val();
     var carPlate = $("#searchCarPlate").val();
     var maintainOrFix = $("#searchMaintainOrFix").val();
-    initTable("cusTable", "/appointment/appointment_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate +  "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
+    var companyId = $("#searchCompanyId").val();
+    initTable("cusTable", "/appointment/appointment_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
 }
 
 /** 关闭搜索的form */
