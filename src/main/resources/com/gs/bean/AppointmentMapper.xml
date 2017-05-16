@@ -226,16 +226,16 @@
             and companyId = #{user.companyId}
         </if>
         <if test="appointment.userName != null and appointment.userName != ''">
-            and userName like concat('%',#{userName},'%')
+            and userName like concat('%',#{appointment.userName},'%')
         </if>
         <if test="appointment.userPhone != null and appointment.userPhone != ''">
-            and userPhone like concat('%',#{userPhone},'%')
+            and userPhone like concat('%',#{appointment.userPhone},'%')
         </if>
         <if test="appointment.carPlate != null and appointment.carPlate != ''">
-            and carPlate like concat('%',#{carPlate},'%')
+            and carPlate like concat('%',#{appointment.carPlate},'%')
         </if>
         <if test="appointment.maintainOrFix != 'all'">
-            and maintainOrFix = #{maintainOrFix}
+            and maintainOrFix = #{appointment.maintainOrFix}
         </if>
         <if test="appointment.companyId != null and appointment.companyId != '' and appointment.companyId != 'null' and appointment.companyId != 'undefined'">
             and companyId = #{appointment.companyId}
