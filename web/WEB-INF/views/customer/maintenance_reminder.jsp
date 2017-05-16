@@ -38,7 +38,7 @@
             <th data-field="checkin.userName">
                 用户名:
             </th>
-            <th data-field="maintainRecord.actualEndTime" data-formatter="formatterDate">
+            <th data-field="lastMaintainTime" data-formatter="formatterDate">
                 上次保养时间
             </th>
             <th data-field="checkin.carMileage">

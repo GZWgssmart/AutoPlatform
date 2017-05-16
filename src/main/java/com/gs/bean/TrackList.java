@@ -19,7 +19,14 @@ public class TrackList {
 	private String companyId; //公司Id
 	private MaintainRecord maintainRecord; // 维修保养记录表
 	private Checkin checkin;//登记表
+	private String userPhone; //用户手机号
 
+	public String getUserPhone() {
+		return userPhone;
+	}
+	public void setUserPhone(String userPhone) {
+		this.userPhone = userPhone;
+	}
 
 	public String getCompanyId() {
 		return companyId;

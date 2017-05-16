@@ -56,7 +56,7 @@
             <a><button onclick="showCustomer()" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加用户
             </button></a>
-            <a><button onclick="showEditWin(1);" type="button" id="edit" class="btn btn-default">
+            <a><button onclick="showEditWin(1,'select');" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改短信发送内容
             </button></a>
             <a><button onclick="showEditWin(2);" type="button" id="All" class="btn btn-default">
