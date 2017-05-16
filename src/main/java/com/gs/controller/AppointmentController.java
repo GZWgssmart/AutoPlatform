@@ -26,6 +26,7 @@ import com.gs.service.AppointmentService;
 import com.gs.bean.Appointment;
 import com.gs.common.bean.Pager4EasyUI;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import sun.misc.Request;
 
 import java.text.DateFormat;
@@ -73,6 +74,20 @@ public class AppointmentController {
         }
     }
 
+    @RequestMapping(value = "my_app", method = RequestMethod.GET)
+    private ModelAndView carOwerAppointment() {
+        ModelAndView mav = new ModelAndView();
+        User user = SessionGetUtil.getUser();
+        if (!SessionGetUtil.isUser()) {
+            mav.setViewName("index/notLogin");
+            return mav;
+        }
+        logger.info("车主用户查看我的预约");
+        mav.setViewName("customerClient/appointment");
+        mav.addObject("apps", appointmentService.queryMyName(user));
+        return mav;
+    }
+
     @ResponseBody
     @RequestMapping(value = "query_pager", method = RequestMethod.GET)
     public Pager4EasyUI<Appointment> queryPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("status") String status) {
@@ -106,19 +121,6 @@ public class AppointmentController {
             logger.info("Session已失效，请重新登入");
             return null;
         }
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "pager", method = RequestMethod.GET)
-    public Pager4EasyUI<Appointment> Pager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        logger.info("分页查询");
-        User user = SessionGetUtil.getUser();
-        Pager pager = new Pager();
-        pager.setPageNo(Integer.valueOf(pageNumber));
-        pager.setPageSize(Integer.valueOf(pageSize));
-        pager.setTotalRecords(appointmentService.count(user));
-        List<Appointment> appointments = appointmentService.queryMyName(pager, user);
-        return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
     }
 
     @ResponseBody
