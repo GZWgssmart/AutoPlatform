@@ -433,12 +433,12 @@ public class PeopleInfoController {
     public List<ComboBox4EasyUI> selfUser(HttpSession session) {
         try {
             logger.info("查询本公司员工");
-            List<Role> roles = roleService.queryByCompanyRole();
+            List<User> users = userService.queryByCompanyRole();
             List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
-            for (Role role : roles) {
+            for (User user : users) {
                 ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-                comboBox4EasyUI.setId(role.getRoleId());
-                comboBox4EasyUI.setText(role.getRoleDes());
+                comboBox4EasyUI.setId(user.getUserId());
+                comboBox4EasyUI.setText(user.getUserName());
                 comboBox4EasyUIs.add(comboBox4EasyUI);
             }
             return comboBox4EasyUIs;

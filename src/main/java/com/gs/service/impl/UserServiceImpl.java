@@ -209,6 +209,10 @@ public class UserServiceImpl implements UserService {
         return userDAO.selectQueryEmp(pager, user, role, company);
     }
 
+    public List<User> queryByCompanyRole() {
+        return userDAO.queryByCompanyRole();
+    }
+
 
     public void insertAdmin(User user) {
         userDAO.insertAdmin(user);

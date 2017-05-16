@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,11 +47,9 @@ public class WorkInfoController {
     @Resource
     private MaintainRecordService maintainRecordService;
 
-    private String queryRole = Constants.COMPANY_ADMIN  + "," + Constants.COMPANY_ARTIFICER
-            + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+    private String queryRole = Constants.COMPANY_ADMIN  + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
 
     private String queryRole2 = Constants.COMPANY_ARTIFICER;
-
 
     private String editRole = Constants.COMPANY_ADMIN;
 
@@ -61,7 +60,7 @@ public class WorkInfoController {
     @RequestMapping(value = "work", method = RequestMethod.GET)
     private String workInfo() {
         if (SessionGetUtil.isUser()) {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
+            if (CheckRoleUtil.checkRoles(queryRole) || CheckRoleUtil.checkRoles(queryRole2)) {
                 logger.info(" 工单显示");
                 return "peopleManage/work";
             }
@@ -75,9 +74,9 @@ public class WorkInfoController {
 
     @ResponseBody
     @RequestMapping(value = "workInfo_pager", method= RequestMethod.GET)
-    public Pager4EasyUI<WorkInfo> info_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    public Pager4EasyUI<WorkInfo> info_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
-            try {
+//            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询所有工单");
                     User user = SessionGetUtil.getUser();
@@ -87,12 +86,21 @@ public class WorkInfoController {
                     pager.setTotalRecords(workInfoService.count(user));
                     List<WorkInfo> workInfo = workInfoService.queryByPager(pager, user);
                     return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfo);
+                } else if (CheckRoleUtil.checkRoles(queryRole2)){
+                    logger.info("技师查询自己的工单");
+                    User user = (User)session.getAttribute("user");
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(workInfoService.countWorkUserId(user.getUserId()));
+                    List<WorkInfo> workInfos = workInfoService.queryWorkUserId(pager,user.getUserId());
+                    return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfos);
                 }
                 return null;
-            } catch (Exception e) {
-                logger.info("分页查询失败，出现了异常");
-                return null;
-            }
+//            } catch (Exception e) {
+//                logger.info("分页查询失败，出现了异常");
+//                return null;
+//            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -122,6 +130,16 @@ public class WorkInfoController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "workInfo_byId", method = RequestMethod.GET)
+    public void workById(WorkInfo workInfo) {
+        try {
+              workInfoService.queryById(workInfo.getWorkId());
+        } catch (Exception e) {
+            logger.info("根据工单Id查询失败，出现了一个错误");
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "workInfo_status", method = RequestMethod.GET)
     public ControllerResult info_status(@Param("id")String id, @Param("status")String status){
         if (SessionGetUtil.isUser()) {
@@ -129,9 +147,9 @@ public class WorkInfoController {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("状态修改");
                     if(status.equals("Y")){
-                        workInfoService.inactive(id);
+                        maintainRecordService.inactive(id);
                     } else {
-                        workInfoService.active(id);
+                        maintainRecordService.active(id);
                     }
                     return ControllerResult.getSuccessResult(" 修改成功");
                 }

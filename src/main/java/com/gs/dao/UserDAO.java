@@ -123,4 +123,6 @@ public interface UserDAO extends BaseDAO<String, User>{
     /*条件查询员工*/
     public List<User> selectQueryEmp(@Param("pager") Pager pager, @Param("user")User user, @Param("role")Role role, @Param("company")Company company);
 
+    /*查询自己公司的技师*/
+    public List<User> queryByCompanyRole();
 }
