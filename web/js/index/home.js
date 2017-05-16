@@ -21,3 +21,7 @@ function showRemindPage() {
 function showComplaintPage() {
     document.getElementById("complaint").click();
 }
+/** 访问公司页面*/
+function showCompanyPage() {
+    document.getElementById("company").click();
+}

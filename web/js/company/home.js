@@ -7,6 +7,7 @@ $(document).ready(function () {
     $("#appTable").footable();
     $("#remindTable").footable();
     $("#complaintTable").footable();
+    $("#companyTable").footable();
 });
 
 function searchApp() {
@@ -20,4 +21,7 @@ function searchRemind() {
 }
 function searchComplaint() {
     parent.showComplaintPage();
+}
+function searchCompany() {
+    parent.showCompanyPage();
 }

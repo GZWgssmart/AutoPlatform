@@ -75,17 +75,6 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(value = "home", method = RequestMethod.GET)
-    public String home() {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
-            return "index/login";
-        }
-        logger.info("进入管理员后台主页");
-        return "index/home";
-    }
-
-
     @RequestMapping("logout")
     public String logout(HttpSession session) {
         logger.info("注销");
