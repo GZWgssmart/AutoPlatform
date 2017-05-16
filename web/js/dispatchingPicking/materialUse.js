@@ -13,17 +13,17 @@ $(document).ready(function () {
 
 function showMUWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
-    if (selectRow[0].pickingStatus == "通过") {
-        $("#showMuWinBtn").show();
-    } else {
-        $("#showMuWinBtn").hide();
-    }
     if (selectRow.length != 1) {
         swal('错误提示', "请选择一条数据查看领料明细", "error");
         return false;
     } else {
         var record = selectRow[0];
         var recordId = record.recordId;
+        if (record.pickingStatus == "通过") {
+            $("#showMuWinBtn").show();
+        } else {
+            $("#showMuWinBtn").hide();
+        }
         initTableSetToolbar("cusTable1", contextPath + "/materialUse/query_pager?recordId=" + recordId, "toolbar1");
         $("#searchMUWin").modal('show');
         destoryValidator("editWin", "editForm");
@@ -41,7 +41,7 @@ function achieve() {
         swal('错误提示', "请选择一条数据", "error");
         return false;
     } else {
-        if (record.speedStatus != "已完成") {
+        if (record.speedStatus == "已登记" || record.speedStatus == "维修保养中") {
             $.get(contextPath + '/record/achieve_record?recordId=' + record.recordId, function (data) {
                 if (data.result == "success") {
                     $('#cusTable').bootstrapTable('refresh');
