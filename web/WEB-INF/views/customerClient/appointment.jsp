@@ -384,6 +384,6 @@
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/accessories/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="<%=path %>/js/main.js"></script>
-<script src="<%=path%>/js/appointment/appointment.js"></script>
+<script src="<%=path%>/js/customerClient/appointment.js"></script>
 </body>
 </html>

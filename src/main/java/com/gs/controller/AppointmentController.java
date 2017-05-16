@@ -26,6 +26,7 @@ import com.gs.service.AppointmentService;
 import com.gs.bean.Appointment;
 import com.gs.common.bean.Pager4EasyUI;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.misc.Request;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -105,6 +106,19 @@ public class AppointmentController {
             logger.info("Session已失效，请重新登入");
             return null;
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "pager", method = RequestMethod.GET)
+    public Pager4EasyUI<Appointment> Pager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        logger.info("分页查询");
+        User user = SessionGetUtil.getUser();
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(appointmentService.count(user));
+        List<Appointment> appointments = appointmentService.queryMyName(pager, user);
+        return new Pager4EasyUI<Appointment>(pager.getTotalRecords(), appointments);
     }
 
     @ResponseBody
