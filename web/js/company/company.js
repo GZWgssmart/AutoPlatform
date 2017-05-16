@@ -230,7 +230,10 @@ function validator(formId) {
                 validators: {
                     url:{
                         url:true,
-                        message:'url格式有误,例如http:www.baibau.com'
+                        message: 'url格式有误,例如http://www.baibau.com,https://www.baidu.com'
+                    },
+                    notEmpty: {
+                        message: '公司官网URL不能为空'
                     }
                 }
 
