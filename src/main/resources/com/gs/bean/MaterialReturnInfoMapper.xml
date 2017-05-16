@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gs.dao.MaterialReturnInfoDAO">
+    <resultMap id="materialReturnInfoResultMap" type="materialUseInfo">
+        <id column="materialReturnId" property="materialReturnId"/>
+        <result column="recordId" property="recordId"/>
+        <result column="accId" property="accId"/>
+        <result column="accCount" property="accCount"/>
+        <result column="accPrice" property="accPrice"/>
+        <result column="accName" property="accName"/>
+        <result column="userName" property="userName"/>
+        <result column="userRequests" property="userRequests"/>
+        <result column="empName" property="empName"/>
+        <result column="maintainName" property="maintainName"/>
+        <result column="mrCreatedTime" property="mrCreatedTime"/>
+        <result column="mrUseDate" property="mrUseDate"/>
+    </resultMap>
+
+    <insert id="insertReturn" parameterType="materialReturnInfo">
+        <![CDATA[
+            insert into t_material_return values(uuid(), #{recordId}, #{accId}, #{accCount}, now(), now());
+        ]]>
+    </insert>
+
+    <select id="isRecordExist" resultType="int">
+        <![CDATA[
+            select count(*) from t_material_return where recordId = #{recordId} and accId = #{accId};
+        ]]>
+    </select>
+
+</mapper>

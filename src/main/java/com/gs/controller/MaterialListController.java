@@ -176,7 +176,7 @@ public class MaterialListController {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        try {
+        /*try {*/
             if (!CheckRoleUtil.checkRoles(editRole1)) {
                 logger.info("申请失败");
                 return ControllerResult.getFailResult("申请失败，没有该权限操作");
@@ -193,9 +193,9 @@ public class MaterialListController {
             muiService.addByRecordIdMu(materialUseInfos);
             mrs.updatePickingStatusById(Constants.NOT_AUDITED, recordId);
             return ControllerResult.getSuccessResult("申请成功");
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             logger.info("申请失败，出现了一个错误");
             return ControllerResult.getFailResult("申请失败，出现了一个错误");
-        }
+        }*/
     }
 }

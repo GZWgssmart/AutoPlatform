@@ -1,9 +1,12 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.Accessories;
 import com.gs.bean.MaintainRecord;
 import com.gs.bean.User;
+import com.gs.bean.info.MaterialReturnInfo;
 import com.gs.bean.info.MaterialUseInfo;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
@@ -13,6 +16,7 @@ import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.AccessoriesService;
 import com.gs.service.MaintainRecordService;
+import com.gs.service.MaterialReturnInfoService;
 import com.gs.service.MaterialUseInfoService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -23,7 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Xiao-Qiang on 2017/4/17.
@@ -45,6 +51,9 @@ public class MaterialUseController {
 
     @Resource
     private MaterialUseInfoService muis;
+
+    @Resource
+    private MaterialReturnInfoService mris;
 
     @Resource
     private AccessoriesService as;
@@ -111,6 +120,63 @@ public class MaterialUseController {
             logger.info("更新失败，出现了一个错误");
             return ControllerResult.getFailResult("更新失败，出现了一个错误");
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIs_CountThan", method = RequestMethod.GET)
+    public String queryIsCountThan(@Param("accCount")String accCount, @Param("materialUseId")String materialUseId) {
+        try {
+            int accCount2 = Integer.valueOf(accCount);
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            MaterialUseInfo mui = muis.queryByIdAccCount(materialUseId);
+            int accCount1 = mui.getAccCount();
+            if (accCount2 > accCount1) {
+                    result = false;
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("退料数量验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "add_return", method = RequestMethod.GET)
+    public ControllerResult addReturn(String[] mrStr) {
+        logger.info("添加退料并增加配件库存");
+        MaterialReturnInfo materialReturnInfo = new MaterialReturnInfo();
+        materialReturnInfo.setRecordId(mrStr[0]);
+        materialReturnInfo.setAccId(mrStr[1]);
+        materialReturnInfo.setAccCount(Integer.valueOf(mrStr[2]));
+        mris.insertReturn(materialReturnInfo);
+        List<Accessories> accessories = new ArrayList<Accessories>();
+            Accessories a = new Accessories();
+            a.setAccId(mrStr[1]);
+            Accessories a2 = as.queryByIdTotalAndIdle(a.getAccId());
+            a.setAccTotal(a2.getAccTotal() + Integer.valueOf(mrStr[2]));
+            a.setAccIdle(a2.getAccIdle() + Integer.valueOf(mrStr[2]));
+            accessories.add(a);
+        as.updateTotalAndIdle(accessories);
+        return ControllerResult.getSuccessResult("添加成功!");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "is_recordExist", method = RequestMethod.GET)
+    public String isRecordExist(@Param("recordId") String recordId, @Param("accId") String accId) {
+        int bear = mris.isRecordExist(recordId, accId);
+        if (bear > 0) {
+            return "0";
+        }
+        return "1";
     }
 
 }

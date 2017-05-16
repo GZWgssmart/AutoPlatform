@@ -62,6 +62,12 @@
                     查询领料明细
                 </button>
             </a>
+            <a>
+                <button onclick="achieve();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>
+                    确认完成
+                </button>
+            </a>
         </div>
         </tbody>
 
@@ -105,6 +111,9 @@
                                 <th data-field="muUseDate" data-formatter="formatterDate">
                                     创建时间
                                 </th>
+                                <%--<th data-field="isReturn" data-formatter="isRM">
+                                    是否退料
+                                </th>--%>
                             </tr>
                             </thead>
                             <tbody>
@@ -130,11 +139,43 @@
             </div>
         </div>
     </div>
+    <div id="editWin" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 b-r">
+                            <h3 class="m-t-none m-b">修改物料数量</h3>
+                            <form role="form" id="editForm">
+                                <input type="hidden" attr="materialUseInfo.accId" name="accId"/>
+                                <div class="form-group">
+                                    <label>退料数量：</label>
+                                    <input attr="materialUseInfo.accCount" id="returnCount" type="number" name="accCount"
+                                           class="form-control"/>
+                                </div>
+
+                                <div class="modal-footer" style="overflow:hidden;">
+                                    <button onclick="closeEditWin();" type="button" class="btn btn-default">
+                                        关闭
+                                    </button>
+                                    <input type="button" onclick="returnMaterial()" id="editButton" class="btn btn-primary"
+                                           value="退料">
+                                    </input>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>

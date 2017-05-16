@@ -34,4 +34,8 @@ public class MaterialUseInfoServiceImpl implements MaterialUseInfoService {
     public int countBySpeedStatus(String recordId, User user) {
         return muiDAO.countBySpeedStatus(recordId, user);
     }
+
+    public MaterialUseInfo queryByIdAccCount(String materialUseId) {
+        return muiDAO.queryByIdAccCount(materialUseId);
+    }
 }
