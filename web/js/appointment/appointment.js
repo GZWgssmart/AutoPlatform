@@ -364,7 +364,7 @@ function validator(formId) {
                 formSubmit("/appointment/add", formId, "addWin");
                 clearAddForm();
             } else if (formId == "editForm") {
-                formSubmit("/appointment/edit", formId, "editWin");
+                formSubmit("/appointment/update", formId, "editWin");
             }
         })
 }
