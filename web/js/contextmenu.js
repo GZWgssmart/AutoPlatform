@@ -35,9 +35,6 @@ document.oncontextmenu = function(e) {
     if (oX > 980) {
         oX = 980;
     }
-    if (oY > 300) {
-        oY = 300;
-    }
     menu.style.left = oX + "px";
     menu.style.right = "";
     menu.style.top = oY + "px";
