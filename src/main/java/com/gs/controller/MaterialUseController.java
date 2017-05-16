@@ -43,7 +43,9 @@ public class MaterialUseController {
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," +
             Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ARTIFICER;
 
-    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," + Constants.COMPANY_ARTIFICER;
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY;
+
+    private String editRole1 = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," + Constants.COMPANY_ARTIFICER;
 
 
     @Resource
@@ -51,9 +53,6 @@ public class MaterialUseController {
 
     @Resource
     private MaterialUseInfoService muis;
-
-    @Resource
-    private MaterialReturnInfoService mris;
 
     @Resource
     private AccessoriesService as;
@@ -150,33 +149,32 @@ public class MaterialUseController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "add_return", method = RequestMethod.GET)
-    public ControllerResult addReturn(String[] mrStr) {
-        logger.info("添加退料并增加配件库存");
-        MaterialReturnInfo materialReturnInfo = new MaterialReturnInfo();
-        materialReturnInfo.setRecordId(mrStr[0]);
-        materialReturnInfo.setAccId(mrStr[1]);
-        materialReturnInfo.setAccCount(Integer.valueOf(mrStr[2]));
-        mris.insertReturn(materialReturnInfo);
-        List<Accessories> accessories = new ArrayList<Accessories>();
-            Accessories a = new Accessories();
-            a.setAccId(mrStr[1]);
-            Accessories a2 = as.queryByIdTotalAndIdle(a.getAccId());
-            a.setAccTotal(a2.getAccTotal() + Integer.valueOf(mrStr[2]));
-            a.setAccIdle(a2.getAccIdle() + Integer.valueOf(mrStr[2]));
-            accessories.add(a);
-        as.updateTotalAndIdle(accessories);
-        return ControllerResult.getSuccessResult("添加成功!");
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "is_recordExist", method = RequestMethod.GET)
-    public String isRecordExist(@Param("recordId") String recordId, @Param("accId") String accId) {
-        int bear = mris.isRecordExist(recordId, accId);
-        if (bear > 0) {
-            return "0";
+    @RequestMapping(value = "add_material", method = RequestMethod.GET)
+    public ControllerResult addByRecordIdMu(@Param("recordId") String recordId, @Param("accIds") String[] accIds, @Param("accCounts") int[] accCounts) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        return "1";
+        try {
+            if (!CheckRoleUtil.checkRoles(editRole1)) {
+                logger.info("申请失败");
+                return ControllerResult.getFailResult("申请失败，没有该权限操作");
+            }
+            logger.info("申请领料");
+            List<MaterialUseInfo> materialUseInfos = new ArrayList<MaterialUseInfo>();
+            for (int i = 0, length = accIds.length; i < length; i++) {
+                MaterialUseInfo mui = new MaterialUseInfo();
+                mui.setRecordId(recordId);
+                mui.setAccId(accIds[i]);
+                mui.setAccCount(accCounts[i]);
+                materialUseInfos.add(mui);
+            }
+            muis.addByRecordIdMu(materialUseInfos);
+            mrs.updatePickingStatusById(Constants.NOT_AUDITED, recordId);
+            return ControllerResult.getSuccessResult("申请成功");
+        } catch (Exception e) {
+            logger.info("申请失败，出现了一个错误");
+            return ControllerResult.getFailResult("申请失败，出现了一个错误");
+        }
     }
-
 }

@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gs.dao.MaterialReturnInfoDAO">
-    <resultMap id="materialReturnInfoResultMap" type="materialUseInfo">
+    <resultMap id="materialReturnInfoResultMap" type="materialReturnInfo">
         <id column="materialReturnId" property="materialReturnId"/>
         <result column="recordId" property="recordId"/>
         <result column="accId" property="accId"/>
@@ -15,7 +15,7 @@
         <result column="empName" property="empName"/>
         <result column="maintainName" property="maintainName"/>
         <result column="mrCreatedTime" property="mrCreatedTime"/>
-        <result column="mrUseDate" property="mrUseDate"/>
+        <result column="mrReturnDate" property="mrReturnDate"/>
     </resultMap>
 
     <insert id="insertReturn" parameterType="materialReturnInfo">
@@ -28,6 +28,34 @@
         <![CDATA[
             select count(*) from t_material_return where recordId = #{recordId} and accId = #{accId};
         ]]>
+    </select>
+
+    <select id="queryBySpeedStatus" resultMap="materialReturnInfoResultMap">
+        <![CDATA[
+            select mrr.*, c.checkinId, c.userName, c.userRequests, mf.maintainName, a.accName, a.accPrice
+            from t_material_return mrr, t_checkin c, t_maintain_fix mf, t_accessories a,
+            t_maintain_record mr,t_maintain_detail md, t_maintain_fix_acc mfa
+            where mrr.recordId = mr.recordId and mr.checkinId = c.checkinId
+            and md.recordId = mrr.recordId and mrr.recordId = md.recordId and
+            md.maintainId = mf.maintainId and mrr.accId = a.accId and
+            md.maintainId = mfa.maintainId and a.accId = mfa.accId and
+            mr.recordId = #{recordId}
+		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and mr.companyId = #{user.companyId}
+        </if>
+        order by mrr.mrReturnDate asc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="countBySpeedStatus" resultType="int">
+        <![CDATA[
+            select count(*) from t_material_return mrr, t_maintain_record mr where mrr.recordId = #{recordId}
+            and mr.recordId = mrr.recordId
+        ]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and mr.companyId = #{user.companyId}
+        </if>
     </select>
 
 </mapper>

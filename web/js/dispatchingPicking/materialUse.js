@@ -36,11 +36,11 @@ function countPrice(value, row, index) {
 
 function achieve() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
-    var record = selectRow[0];
     if (selectRow.length != 1) {
         swal('错误提示', "请选择一条数据", "error");
         return false;
     } else {
+        var record = selectRow[0];
         if (record.speedStatus == "已登记" || record.speedStatus == "维修保养中") {
             $.get(contextPath + '/record/achieve_record?recordId=' + record.recordId, function (data) {
                 if (data.result == "success") {
@@ -51,7 +51,7 @@ function achieve() {
                 }
             }, 'json');
         } else {
-            swal('错误提示', "请不要重复完成!", "error");
+            swal('错误提示', "请不要重复确认!", "error");
             return false;
         }
     }
@@ -133,7 +133,7 @@ function returnMaterial() {
     mrStr[0] = materialUseInfo.recordId;
     mrStr[1] = materialUseInfo.accId;
     mrStr[2] = returnCount;
-    $.get(contextPath + '/materialUse/add_return?mrStr=' + mrStr, function (data) {
+    $.get(contextPath + '/materialReturn/add_return?mrStr=' + mrStr, function (data) {
         if (data.result == "success") {
             swal(data.message, "", "success");
             closeEditWin();
@@ -148,14 +148,11 @@ function showReturnMaterial() {
     var row = $("#cusTable1").bootstrapTable('getSelections');
     var materialUseInfo = row[0];
     var record = $("#cusTable").bootstrapTable('getSelections')[0];
-    if (row.length < 1) {
-        swal('编辑失败', "必须选择一条数据", "error");
-        return false;
-    } else if (row.length > 1) {
-        swal('编辑失败', "一次只能选择一条数据", "error");
+    if (row.length != 1) {
+        swal('编辑失败', "请选择一条数据", "error");
         return false;
     } else {
-        $.get(contextPath + '/materialUse/is_recordExist?recordId=' + record.recordId + '&accId=' + materialUseInfo.accId, function (data) {
+        $.get(contextPath + '/materialReturn/is_recordExist?recordId=' + record.recordId + '&accId=' + materialUseInfo.accId, function (data) {
             if (data == "1") {
                 if (record.speedStatus == "未提醒" || record.speedStatus == "已提醒" || record.speedStatus == "已完成") {
                     var recordId = record.recordId;
@@ -164,7 +161,7 @@ function showReturnMaterial() {
                     $("#editForm").fill(materialUseInfo);
                     $("#editWin").modal('show');
                 } else {
-                    swal('退料失败', "该记录未完成不能退料!", "error");
+                    swal('退料失败', "该工作未完成不能退料!", "error");
                     return false;
                 }
             } else {
@@ -219,13 +216,13 @@ function validator(formId) {
                 }
             }
         }
-    })
+    })/*
         .on('success.form.bv', function (e) {
             if (formId == "editForm") {
-                formSubmit(contextPath + "/materialUse/add_materialReturn", formId, "editWin");
+                formSubmit(contextPath + "/materialReturn/add_materialReturn", formId, "editWin");
                 $('#cusTable1').bootstrapTable('refresh');
             }
-        })
+        })*/
 
 }
 

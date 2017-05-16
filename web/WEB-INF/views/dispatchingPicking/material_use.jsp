@@ -64,7 +64,7 @@
             </a>
             <a>
                 <button onclick="achieve();" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i>
+                    <i class="glyphicon glyphicon-ok"></i>
                     确认完成
                 </button>
             </a>

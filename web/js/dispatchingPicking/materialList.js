@@ -12,11 +12,8 @@ $(document).ready(function () {
 function showEditWin() {
     validator("editForm");
     var selectRow1 = $("#cusTable1").bootstrapTable('getSelections');
-    if (selectRow1.length < 1) {
-        swal('编辑失败', "必须选择一条数据进行编辑", "error");
-        return false;
-    } else if (selectRow1.length > 1) {
-        swal('编辑失败', "只能选择一条数据进行编辑", "error");
+    if (selectRow1.length != 1) {
+        swal('编辑失败', "请选择一条数据进行编辑", "error");
         return false;
     } else {
         var record = $("#cusTable").bootstrapTable('getSelections')[0];
@@ -170,7 +167,7 @@ function closeSearchForm() {
 function showMaterialWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('错误提示', "只能选择一条数据查看维修保养明细", "error");
+        swal('错误提示', "请选择一条数据查看维修保养明细", "error");
         return false;
     } else {
         var record = selectRow[0];
@@ -202,7 +199,7 @@ function showGetMaterial() {
                 accIds[index] = materialLists[index].accId;
                 accCounts[index] = materialLists[index].materialCount;
             });
-            $.get(contextPath + "/materialList/add_material?recordId=" + recordId + "&accIds=" + accIds + "&accCounts=" + accCounts,
+            $.get(contextPath + "/materialUse/add_material?recordId=" + recordId + "&accIds=" + accIds + "&accCounts=" + accCounts,
                 function (data) {
                     if (data.result == "success") {
                         swal("成功提示", data.message, "success");
@@ -233,4 +230,12 @@ function showGetMaterial() {
     } else {
         swal('申请失败', "当前记录没有物料", "error");
     }
+}
+
+function isUse(value, row, index) {
+    var record = $("#cusTable").bootstrapTable('getSelections')[0];
+    if (record.pickingStatus == '未申请') {
+        return '未申请';
+    }
+    return '已申请';
 }

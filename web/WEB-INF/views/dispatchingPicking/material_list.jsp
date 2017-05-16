@@ -104,6 +104,9 @@
                                 <th data-field="materialStatus" data-formatter="status">
                                     状态
                                 </th>
+                                <th data-field="isAdd" data-formatter="isUse">
+                                    是否申请
+                                </th>
                                 <shiro:hasAnyRoles name="companyAdmin, companyRepertory">
                                 <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                                     操作
