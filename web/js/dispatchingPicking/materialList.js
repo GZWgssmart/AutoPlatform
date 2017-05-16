@@ -18,9 +18,14 @@ function showEditWin() {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
-        var materialListInfo = selectRow1[0];
-        $("#editForm").fill(materialListInfo);
-        $("#editWin").modal('show');
+        var record = $("#cusTable").bootstrapTable('getSelections')[0];
+        if (record.pickingStatus == "未申请") {
+            var materialListInfo = selectRow1[0];
+            $("#editForm").fill(materialListInfo);
+            $("#editWin").modal('show');
+        } else {
+            swal('编辑失败', "只能编辑未申请的清单", "error");
+        }
     }
 }
 
@@ -191,33 +196,37 @@ function showGetMaterial() {
     var accIds = new Array();
     var accCounts = new Array();
     if (materialLists.length > 0) {
-        $.each(materialLists, function (index, item) {
-            accIds[index] = materialLists[index].accId;
-            accCounts[index] = materialLists[index].materialCount;
-        });
-        $.get(contextPath + "/materialList/add_material?recordId=" + recordId + "&accIds=" + accIds + "&accCounts=" + accCounts,
-            function (data) {
-                if (data.result == "success") {
-                    swal("成功提示", data.message, "success");
-                } else if (data.result == "fail") {
-                    swal("错误提示", data.message, "error");
-                } else if (data.result == "notLogin") {
-                    swal({
-                            title: "登入失败",
-                            text: data.message,
-                            type: "warning",
-                            showCancelButton: false,
-                            confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确认",
-                            closeOnConfirm: true
-                        },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                top.location.href = "/login/show_login";
-                            }
-                        });
-                }
-            }, "json");
+        if (record.pickingStatus == "未申请") {
+            $.each(materialLists, function (index, item) {
+                accIds[index] = materialLists[index].accId;
+                accCounts[index] = materialLists[index].materialCount;
+            });
+            $.get(contextPath + "/materialList/add_material?recordId=" + recordId + "&accIds=" + accIds + "&accCounts=" + accCounts,
+                function (data) {
+                    if (data.result == "success") {
+                        swal("成功提示", data.message, "success");
+                    } else if (data.result == "fail") {
+                        swal("错误提示", data.message, "error");
+                    } else if (data.result == "notLogin") {
+                        swal({
+                                title: "登入失败",
+                                text: data.message,
+                                type: "warning",
+                                showCancelButton: false,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "确认",
+                                closeOnConfirm: true
+                            },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    top.location.href = "/login/show_login";
+                                }
+                            });
+                    }
+                }, "json");
+        } else {
+            swal('申请失败', "当前记录已经申请过了", "error");
+        }
     } else {
         swal('申请失败', "当前记录没有物料", "error");
     }
