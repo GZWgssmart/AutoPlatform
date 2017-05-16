@@ -67,7 +67,7 @@
             <th data-field="companyPricipal" >
                 公司负责人
             </th>
-            <th data-field="companyWebsite" >
+            <th data-field="companyWebsite">
                 公司官网URL
             </th>
             <th data-field="companyLogo" data-formatter="formatterImg">
@@ -180,7 +180,7 @@
                             <div class="form-group">
                                 <label class="control-label">公司官网</label>
                                 <input type="text"  name="companyWebsite"
-                                       class="form-control"/>
+                                       class="form-control" id="url_input"/>
                             </div>
                             <div class="form-group" >
                                 <label class="control-label">公司规模</label>

@@ -43,8 +43,8 @@ public class CarModelController {
     @ResponseBody
     @RequestMapping(value = "car_model_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarModelAll(String brandId) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
-            logger.info("Session已失效或者权限不足");
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效");
             return null;
         }
         logger.info("查询汽车车型");
@@ -62,8 +62,8 @@ public class CarModelController {
     @ResponseBody
     @RequestMapping(value = "carModel_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarModelAlls() {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
-            logger.info("Session已失效或者权限不足");
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效");
             return null;
         }
         logger.info("查询全部汽车车型");
