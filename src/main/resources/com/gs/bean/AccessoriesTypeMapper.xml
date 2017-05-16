@@ -175,4 +175,14 @@
 		]]>
 	</update>
 
+	<select id="queryByCompany" resultMap="accessoriesTypeResultMap">
+		<![CDATA[
+			select * from t_accessories_type
+			where accTypeStatus = 'Y'
+		]]>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+		</if>
+	</select>
+
 </mapper>

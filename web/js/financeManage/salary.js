@@ -7,8 +7,8 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/salary/query_pager");
 
-    initDateTimePicker("datatimepicker","salaryTime","editForm");
-    initDateTimePicker("datatimepicker","salaryTime","addForm");
+
+
     destoryValidator("editWin","editForm");
     destoryValidator("addWin","addForm");
     destoryValidator("importSalaryWin","importSalaryForm");
@@ -22,6 +22,7 @@ function showEditWin() {
         return false;
     } else {
         var salary = selectRow[0];
+        initDateTimePicker("datatimepicker","salaryTime","editForm");
         validator("editForm");
         $("#editForm").fill(salary);
         $("#editTime").val(formatterDate(salary.salaryTime));
@@ -34,6 +35,7 @@ function getDate() {
 }
 
 function showAddWin() {
+    initDateTimePicker("datatimepicker","salaryTime","addForm");
     validator("addForm");
     $(".userId").val("");
     $(".userName").val("");
@@ -55,6 +57,7 @@ window.operateEvents = {
     'click .showUpdateIncomingType1': function (e, value, row, index) {
         var salary = row;
         validator("editForm");
+        initDateTimePicker("datatimepicker","salaryTime","editForm");
         $("#editForm").fill(salary);
         $("#editTime").val(formatterDate(salary.salaryTime));
         $("#editWin").modal('show');

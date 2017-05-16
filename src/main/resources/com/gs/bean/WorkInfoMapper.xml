@@ -293,7 +293,7 @@
 			and c.maintainOrFix = '维修'
 		</if>
 		<if test="companyId != null and companyId != ''">
-			and wi.companyId = #{companyId}
+			and mr.companyId = #{companyId}
 		</if>
 		GROUP BY day(wi.workCreatedTime)
 	</select>
@@ -311,7 +311,7 @@
 			and c.maintainOrFix = '维修'
 		</if>
 		<if test="companyId != null and companyId != ''">
-			and wi.companyId = #{companyId}
+			and mr.companyId = #{companyId}
 		</if>
 		<if test="type =='year'">
 			GROUP BY year(wi.workCreatedTime)

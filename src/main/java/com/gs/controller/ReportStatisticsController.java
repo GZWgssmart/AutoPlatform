@@ -127,6 +127,20 @@ public class ReportStatisticsController {
         }
     }
 
+    @RequestMapping(value = "stock_page", method = RequestMethod.GET)
+    public String showStock() {
+        if(SessionGetUtil.isUser()) {
+            if(CheckRoleUtil.checkRoles(queryRoleAcc)) {
+                logger.info("显示库存统计页面");
+                return "reportStatistics/stock_statistics";
+            }
+            return "error/notPermission";
+        }else{
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
+    }
+
     @RequestMapping(value = "accessories_page", method = RequestMethod.GET)
     public String showAccessories() {
         if(SessionGetUtil.isUser()) {

@@ -96,10 +96,10 @@
             <a><button onclick="showImport()" type="button"  class="btn btn-default" >
                 <i class="glyphicon glyphicon-floppy-save"></i> 导入
             </button></a>
-    </shiro:hasAnyRoles>
-            <a onclick="location.href='/salary/export'" href="javascript:;"><button type="button"  class="btn btn-default">
+                <a onclick="location.href='/salary/export'" href="javascript:;"><button type="button"  class="btn btn-default">
                 <i class="glyphicon glyphicon-floppy-open"></i> 导出
             </button></a>
+    </shiro:hasAnyRoles>
             <a>
                 <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
                     <i class="glyphicon glyphicon-search"></i> 条件查询

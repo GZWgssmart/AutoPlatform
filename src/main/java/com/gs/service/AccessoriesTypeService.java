@@ -21,4 +21,9 @@ public interface AccessoriesTypeService extends BaseService<String, AccessoriesT
     public int countByCondition(AccessoriesType accessoriesType, User user);
     public List<AccessoriesType> queryByCondition(Pager pager, AccessoriesType accessoriesType, User user);
 
+    /*
+   * 查询某个公司下的所有配件分类
+   * */
+    public List<AccessoriesType> queryByCompany(String companyId);
+
 }

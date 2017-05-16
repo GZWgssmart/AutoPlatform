@@ -249,4 +249,61 @@
 		</foreach>
 	</update>
 
+	<select id="queryByConditionTotal"  resultType="list" resultMap="accessoriesResultMap">
+		<![CDATA[
+			select sum(a.accTotal) as accTotal,a.accCreatedTime from t_accessories a
+            where a.accCreatedTime >= #{startTime} and a.accCreatedTime <= #{endTime} and  a.accStatus = 'Y'
+		]]>
+		<if test="companyId != null and companyId != ''">
+			and a.companyId = #{companyId}
+		</if>
+		<if test="accTypeId != null and accTypeId != ''">
+			and a.accTypeId = #{accTypeId}
+		</if>
+		<if test="type =='year'">
+			GROUP BY year(a.accCreatedTime)
+		</if>
+		<if test="type =='quarter'">
+			GROUP BY quarter(a.accCreatedTime)
+		</if>
+		<if test="type =='month'">
+			GROUP BY month(a.accCreatedTime)
+		</if>
+		<if test="type =='week'">
+			GROUP BY week(a.accCreatedTime)
+		</if>
+		<if test="type =='day'">
+			GROUP BY day(a.accCreatedTime)
+		</if>
+	</select>
+
+	<select id="queryByConditionIdle"  resultType="list" resultMap="accessoriesResultMap">
+		<![CDATA[
+			select sum(a.accIdle) as accIdle ,a.accBuyedTime from t_accessories a
+            where a.accBuyedTime >= #{startTime} and a.accBuyedTime <= #{endTime} and  a.accStatus = 'Y'
+		]]>
+		<if test="companyId != null and companyId != ''">
+			and a.companyId = #{companyId}
+		</if>
+		<if test="accTypeId != null and accTypeId != ''">
+			and a.accTypeId = #{accTypeId}
+		</if>
+		<if test="type =='year'">
+			GROUP BY year(a.accBuyedTime)
+		</if>
+		<if test="type =='quarter'">
+			GROUP BY quarter(a.accBuyedTime)
+		</if>
+		<if test="type =='month'">
+			GROUP BY month(a.accBuyedTime)
+		</if>
+		<if test="type =='week'">
+			GROUP BY week(a.accBuyedTime)
+		</if>
+		<if test="type =='day'">
+			GROUP BY day(a.accBuyedTime)
+		</if>
+	</select>
+
+
 </mapper>

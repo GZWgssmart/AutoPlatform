@@ -36,4 +36,16 @@ public interface AccessoriesService extends BaseService<String, Accessories>{
     /**查询出对应配件编号对应的库存及可用数量*/
     public Accessories queryByIdTotalAndIdle(String accId);
 
+    /*
+    * 根据年，月，季度，周，日查询所有配件总数量
+    * */
+    public List<Accessories> queryByConditionTotal(String startTime,String endTime,
+                                                   String type,String companyId,String accTypeId);
+
+    /*
+    * 根据年，月，季度，周，日查询所有配件可用数量
+    * */
+    public List<Accessories> queryByConditionIdle(String startTime,String endTime,
+                                                  String type,String companyId,String accTypeId);
+
 }

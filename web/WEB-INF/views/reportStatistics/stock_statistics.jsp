@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>维修保养项目统计</title>
+    <title>库存统计</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -49,7 +49,7 @@
         </shiro:hasAnyRoles>
         <div class="form-group" style="width: auto; display: inherit;">
             <input type="checkbox" id="isGraphics" name="isGraphics">
-            <input type="checkbox" id="isMaintainFix">
+            <input type="checkbox" id="isQuantity">
         </div>
 
     </ul>
@@ -220,7 +220,7 @@
 <script src="<%=path %>/js/select2.full.min.js"></script>
 <script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/reportStatistics/my-charts.js"></script>
-<script src="<%=path %>/js/reportStatistics/maintenance-items-statistics.js"></script>
+<script src="<%=path %>/js/reportStatistics/stock-statistics.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 </body>
 </html>
