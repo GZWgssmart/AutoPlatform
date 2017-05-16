@@ -193,6 +193,86 @@ public class CustomerController {
     }
 
 
+    @ResponseBody
+    @RequestMapping(value = "customerInfo_pagerStatus", method= RequestMethod.GET)
+    public Pager4EasyUI<User> info_pagerStatus(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页查询所有不可用车主");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(userService.countStatus(user));
+                    List<User> users = userService.queryCustomerPagerStatus(pager, user);
+                    return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("查询失败，出现了异常");
+                return null;
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "customerInfo", method= RequestMethod.GET)
+    public Pager4EasyUI<User> customerInfo_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页查询所有车主");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(userService.countCustomer(user));
+                    List<User> users = userService.queryCustomer(pager, user);
+                    return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("查询失败，出现了异常");
+                return null;
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "selectCustomerInfo", method= RequestMethod.GET)
+    public Pager4EasyUI<User> selectCustomerInfo_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("userPhone")String userPhone, @Param("userName")String userName){
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("条件查询车主");
+                    User user = new User();
+                    user.setUserPhone(userPhone);
+                    user.setUserName(userName);
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(userService.selectCountCustomer(user));
+                    List<User> users = userService.selectCustomer(pager, user);
+                    return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("查询失败，出现了异常");
+                return null;
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "customerInfo_pager", method= RequestMethod.GET)
@@ -200,7 +280,7 @@ public class CustomerController {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
-                    logger.info("分页查询所有车主");
+                    logger.info("分页查询所有可用车主");
                     User user = SessionGetUtil.getUser();
                     Pager pager = new Pager();
                     pager.setPageNo(Integer.valueOf(pageNumber));
@@ -222,9 +302,9 @@ public class CustomerController {
 
     @ResponseBody
     @RequestMapping(value = "customerInfo_update", method = RequestMethod.POST)
-    public ControllerResult info_update(User user, MultipartFile file, HttpSession session) throws IOException {
+    public ControllerResult info_update(String uIcon, User user, MultipartFile file, HttpSession session) throws IOException {
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("信息修改");
                     if(file != null){
@@ -234,18 +314,20 @@ public class CustomerController {
                         if(!file.isEmpty()){
                             file.transferTo(new File(filePath));
                             user.setUserIcon(icon);
-                            userService.update(user);
+                        }else{
+                            user.setUserIcon("img/default.png");
                         }
                     }else{
-                        user.setUserIcon("img/default.png");
+                        user.setUserIcon(uIcon);
                     }
+                    userService.update(user);
                     return ControllerResult.getSuccessResult(" 修改成功");
                 }
                 return ControllerResult.getFailResult("修改信息失败，没有该权限操作");
-//            } catch (Exception e) {
-//                logger.info("修改信息失败，出现了异常");
-//                return ControllerResult.getFailResult("修改信息失败，出现了一个错误");
-//            }
+            } catch (Exception e) {
+                logger.info("修改信息失败，出现了异常");
+                return ControllerResult.getFailResult("修改信息失败，出现了一个错误");
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");

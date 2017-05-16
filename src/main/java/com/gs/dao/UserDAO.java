@@ -1,10 +1,13 @@
 package com.gs.dao;
 
+import com.gs.bean.Company;
+import com.gs.bean.Role;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -83,4 +86,41 @@ public interface UserDAO extends BaseDAO<String, User>{
 
     /*查询自己公司的员工*/
     public List<User> queryUser(String companyId);
+
+    /*分页查询所有不可用车主个数*/
+    public int countStatus(User user);
+
+    /*分页查询所有不可用车主*/
+    public List<User> queryCustomerPagerStatus(@Param("pager") Pager pager, @Param("user")User user);
+
+    /*分页查询所有车主个数*/
+    public int countCustomer(User user);
+
+    /*分页查询所有车主*/
+    public List<User> queryCustomer(@Param("pager") Pager pager, @Param("user")User user);
+
+    /*条件查询车主个数*/
+    public int selectCountCustomer(User user);
+
+    /*条件查询车主*/
+    public List<User> selectCustomer(@Param("pager") Pager pager, @Param("user")User user);
+
+    /*分页查询所有不可用员工个数*/
+    public int countStatusEmp(User user);
+
+    /*分页查询所有不可用员工*/
+    public List<User> queryPeoplePagerStatus(@Param("pager") Pager pager, @Param("user")User user);
+
+    /*分页查询所有员工个数*/
+    public int countAllEmp(User user);
+
+    /*分页查询所有员工*/
+    public List<User> queryPeoplePagerAll(@Param("pager") Pager pager, @Param("user")User user);
+
+    /*条件查询员工个数*/
+    public int countSelectQueryEmp(@Param("user")User user, @Param("role")Role role, @Param("company")Company company);
+
+    /*条件查询员工*/
+    public List<User> selectQueryEmp(@Param("pager") Pager pager, @Param("user")User user, @Param("role")Role role, @Param("company")Company company);
+
 }

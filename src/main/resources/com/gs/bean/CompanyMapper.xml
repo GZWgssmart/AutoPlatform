@@ -65,7 +65,7 @@
 		]]>
 	</select>
 
-	<select id="query" parameterType="company" resultType="company">
+	<select id="query" resultType="company">
 		<![CDATA[
 			select * from t_company where 1 = 1
 		]]>
@@ -76,7 +76,7 @@
 
 	<select id="queryById" parameterType="string" resultType="company">
 		<![CDATA[
-
+			select * from t_company where 1 = 1 and companyId = #{id}
 		]]>
 	</select>
 
@@ -153,6 +153,13 @@
 			and companyId = #{user.companyId}
 		</if>
 		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="queryByTop" resultMap="companyResultMap">
+		<![CDATA[
+			select * from t_company where 1 = 1
+		]]>
+		limit 0, #{top}
 	</select>
 
 </mapper>

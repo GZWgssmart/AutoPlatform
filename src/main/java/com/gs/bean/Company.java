@@ -14,6 +14,7 @@ public class Company{
 	private String companyAddress;//公司地址
 	private String companyTel;//公司联系方式
 	private String companyPricipal;//公司负责人
+	private String companyPricipalPhone; // 公司负责人电话
 	private String companyWebsite;//公司官方网址
 	private String companyLogo;//公司头像
 	private Date companyOpenDate;//公司创建时间
@@ -114,22 +115,11 @@ public class Company{
 		this.companyStatus=companyStatus;
 	}
 
-	@Override
-	public String toString() {
-		return "Company{" +
-				"companyId='" + companyId + '\'' +
-				", companyName='" + companyName + '\'' +
-				", companyAddress='" + companyAddress + '\'' +
-				", companyTel='" + companyTel + '\'' +
-				", companyPricipal='" + companyPricipal + '\'' +
-				", companyWebsite='" + companyWebsite + '\'' +
-				", companyLogo='" + companyLogo + '\'' +
-				", companyOpenDate=" + companyOpenDate +
-				", companySize='" + companySize + '\'' +
-				", companyLongitude='" + companyLongitude + '\'' +
-				", companyLatitude='" + companyLatitude + '\'' +
-				", companyDes='" + companyDes + '\'' +
-				", companyStatus='" + companyStatus + '\'' +
-				'}';
+	public String getCompanyPricipalPhone() {
+		return companyPricipalPhone;
+	}
+
+	public void setCompanyPricipalPhone(String companyPricipalPhone) {
+		this.companyPricipalPhone = companyPricipalPhone;
 	}
 }

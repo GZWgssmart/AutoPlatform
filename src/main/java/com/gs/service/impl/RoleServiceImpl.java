@@ -49,4 +49,8 @@ public class RoleServiceImpl implements RoleService {
 	public List<Role> queryByCompanyRole() {
 		return roleDAO.queryByCompanyRole();
 	}
+
+	public List<Role> queryRole() {
+		return roleDAO.queryRole();
+	}
 }

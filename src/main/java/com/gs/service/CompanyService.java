@@ -18,4 +18,5 @@ public interface CompanyService extends BaseService<String, Company>{
     public int statusCount(@Param("status")String status,@Param("user")User user);
     public List<Company> searchByPager(@Param("companyName")String companyName, @Param("userName")String userName,@Param("pager")Pager pager);
     public int searchCount(@Param("companyName") String companyName,@Param("userName") String userName);
+    public List<Company> queryByTop(int top);
 }

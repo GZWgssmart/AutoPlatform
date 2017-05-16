@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Xiao-Qiang
-  Date: 2017/5/5
-  Time: 16:00
+  User: iJangoGuo
+  Date: 2017/5/15
+  Time: 20:21
   To change this template use File | Settings | File Templates.
 --%>
 <!DOCTYPE HTML>
@@ -50,6 +50,7 @@
 
     <!-- Theme style  -->
     <link rel="stylesheet" href="<%=path%>/css/style.css">
+
     <!-- Modernizr JS -->
     <script src="<%=path%>/js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
@@ -116,6 +117,7 @@
                                             <li class="gtco-second"><a href="#" data-tab="login">登陆</a></li>
                                         </ul>
                                         <div class="tab-content">
+
                                             <div class="tab-content-inner active" data-content="signup">
                                                 <form role="form" id="regist_form" method="post">
                                                     <div class="row form-group">
@@ -146,8 +148,8 @@
                                             </div>
 
                                             <div class="tab-content-inner" data-content="login">
-                                                <div id="errMsg" style="color: red; text-align: left;"></div>
-                                                <form class="m-t" role="form" id="login_form" method="post">
+                                                <div id="errMsg" style="color: red"></div>
+                                                <form id="login_form" method="post">
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
                                                             <label for="username">用户名</label>
@@ -163,12 +165,13 @@
 
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
-                                                            <button type="button" class="btn btn-primary block full-width m-b" onclick="login()">登录</button>
+                                                            <input type="button" onclick="login()" class="btn btn-primary" value="登陆"/>
                                                             <input type="reset"  class="btn btn-primary" value="重置" />
                                                         </div>
                                                     </div>
                                                 </form>
                                             </div>
+
 
                                         </div>
                                     </div>
@@ -481,7 +484,7 @@
 
                     <div class="col-md-4">
                         <div class="gtco-widget">
-                            <h3>关于我们 <span class="footer-logo"><span>.<span></span></h3>
+                            <h3>关于我们 <span class="footer-logo"><span>.</span></span></h3>
                             <p>汽修店信息化水平普遍偏低，工作效率低，信息的管理混乱，没有实现自动化，没有完善的数据统计，汽修店员工对计算机软件系统缺乏了解。汽车维修保养管理系统需要提供简洁易懂的用户界面，提供简单易用的流程。</p>
                         </div>
                     </div>
@@ -559,6 +562,7 @@
 <script src="<%=path%>/js/magnific-popup-options.js"></script>
 <!-- Main -->
 <script src="<%=path%>/js/webmain.js"></script>
+
 
 </body>
 </html>

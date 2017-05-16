@@ -63,4 +63,9 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDAO.searchCount(companyName,userName);
 	}
 
+	@Override
+	public List<Company> queryByTop(int top) {
+		return companyDAO.queryByTop(top);
+	}
+
 }
