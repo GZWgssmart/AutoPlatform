@@ -208,11 +208,12 @@ public class MaintainFixController {
             if(CheckRoleUtil.checkRoles(queryRole1)) {
                 logger.info("默认查询本月维修保养项目次数统计");
                 User user = SessionGetUtil.getUser();
-                List<MaintainFix> maintainFices = maintainFixService.queryByType(user,maintain);
+
                 List<LineBasic> lineBasics = new ArrayList<LineBasic>();
                 if(user.getCompanyId() != null && !user.getCompanyId().equals("")){
                     companyId = user.getCompanyId();
                 }
+                List<MaintainFix> maintainFices = maintainFixService.queryByType(companyId,maintain);
                 for(MaintainFix m: maintainFices){
                     LineBasic lineBasic = new LineBasic();
                     lineBasic.setName(m.getMaintainName());
@@ -240,10 +241,10 @@ public class MaintainFixController {
                 logger.info("根据年，月，季度，周，日查询维修保养项目次数统计");
                 List<LineBasic> lineBasics = new ArrayList<LineBasic>();
                 User user = SessionGetUtil.getUser();
-                List<MaintainFix> maintainFices = maintainFixService.queryByType(user,maintain);
                 if (user.getCompanyId() != null && !user.getCompanyId().equals("")) {
                     companyId = user.getCompanyId();
                 }
+                List<MaintainFix> maintainFices = maintainFixService.queryByType(companyId,maintain);
                 if (start != null && !start.equals("") && end != null && !end.equals("") && type != null && !type.equals("")) {
                     if (type.equals("year")) {
                         HighchartsData.setStrYear(start, end);
