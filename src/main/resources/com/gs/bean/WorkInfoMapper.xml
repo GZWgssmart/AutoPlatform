@@ -99,8 +99,33 @@
 
 	<select id="queryById" parameterType="string" resultType="workInfo">
 		<![CDATA[
-
+			SELECT * FROM t_work_info WHERE workId = #{workId}
 		]]>
+	</select>
+
+	<select id="countWorkUserId" resultType="int">
+		<![CDATA[
+			select count(*) from t_work_info wi
+			INNER JOIN t_maintain_record mr ON mr.recordId = wi.recordId
+			INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+			INNER JOIN t_user u ON u.userId = wi.userId
+			INNER JOIN t_company c ON c.companyId = mr.companyId
+			where  u.userId = #{userId}
+		]]>
+	</select>
+
+	<select id="queryWorkUserId" resultMap="workInfoResultMap">
+		<![CDATA[
+			SELECT wi.*, ch.userName, mr.endTime, ch.maintainOrFix, c.companyName, u.userName AS user_name from
+			t_work_info wi
+			INNER JOIN t_maintain_record mr ON mr.recordId = wi.recordId
+			INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+			INNER JOIN t_user u ON u.userId = wi.userId
+			INNER JOIN t_company c ON c.companyId = mr.companyId
+			where u.userId = #{userId}
+		]]>
+		order by wi.workCreatedTime Desc
+		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="queryByPager" resultType="list" resultMap="workInfoResultMap">

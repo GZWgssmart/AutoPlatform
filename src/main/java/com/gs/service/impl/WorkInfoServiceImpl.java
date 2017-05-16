@@ -38,6 +38,14 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	public int inactive(String id) { return workInfoDAO.inactive(id); }
 	public int active(String id) { return workInfoDAO.active(id); }
 
+	public List<WorkInfo> queryWorkUserId(Pager pager, String userId) {
+		return workInfoDAO.queryWorkUserId(pager, userId);
+	}
+
+	public int countWorkUserId(String userId) {
+		return workInfoDAO.countWorkUserId(userId);
+	}
+
 	@Override
 	public List<WorkInfo> queryByDefault(String maintainOrFix, String companyId) {
 		return workInfoDAO.queryByDefault(maintainOrFix,companyId);
