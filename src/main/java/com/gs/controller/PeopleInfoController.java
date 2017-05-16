@@ -10,6 +10,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.*;
+import com.gs.service.CompanyService;
 import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
@@ -48,6 +49,10 @@ public class PeopleInfoController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private CompanyService companyService;
+
 
     @Resource
     private UserRoleService userRoleService;
@@ -193,7 +198,7 @@ public class PeopleInfoController {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
-                    logger.info("分页查询所有员工");
+                    logger.info("分页查询所有可用员工");
                     User user = SessionGetUtil.getUser();
                     Pager pager = new Pager();
                     pager.setPageNo(Integer.valueOf(pageNumber));
@@ -213,9 +218,98 @@ public class PeopleInfoController {
         }
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "peopleInfo_pagerStatus", method= RequestMethod.GET)
+    public Pager4EasyUI<User> infoStatus_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页查询所有不可用员工");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(userService.countStatusEmp(user));
+                    List<User> users = userService.queryPeoplePagerStatus(pager, user);
+                    return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "peopleInfoAll", method= RequestMethod.GET)
+    public Pager4EasyUI<User> infoAll_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页查询所有员工");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(userService.countAllEmp(user));
+                    List<User> users = userService.queryPeoplePagerAll(pager, user);
+                    return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "selectPeopleInfo", method= RequestMethod.GET)
+    public Pager4EasyUI<User> selectInfo_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("userPhone")String userPhone, @Param("userName")String userName, @Param("userEmail")String userEmail, @Param("roleName")String roleName, @Param("companyName")String companyName){
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页条件查询员工");
+                    User user = new User();
+                    user.setUserPhone(userPhone);
+                    user.setUserName(userName);
+                    user.setUserEmail(userEmail);
+                    Role role = new Role();
+                    role.setRoleId(roleName);
+                    Company company = new Company();
+                    company.setCompanyId(companyName);
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(userService.countSelectQueryEmp(user, role, company));
+                    List<User> users = userService.selectQueryEmp(pager, user, role, company);
+                    return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+
     @ResponseBody
     @RequestMapping(value = "peopleInfo_update", method = RequestMethod.POST)
-    public ControllerResult info_update(User user, MultipartFile file, HttpSession session, HttpServletRequest request, Company company) throws IOException {
+    public ControllerResult info_update(String uIcon, User user, MultipartFile file, HttpSession session, HttpServletRequest request, Company company) throws IOException {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
@@ -227,11 +321,13 @@ public class PeopleInfoController {
                         if(!file.isEmpty()){
                             file.transferTo(new File(filePath));
                             user.setUserIcon(icon);
-                            userService.update(user);
+                        } else {
+                            user.setUserIcon("img/default.png");
                         }
                     }else{
-                        user.setUserIcon("img/default.png");
+                        user.setUserIcon(uIcon);
                     }
+                    userService.update(user);
                     return ControllerResult.getSuccessResult(" 修改成功");
                 }
                 return ControllerResult.getFailResult("修改信息失败，没有该权限操作");
@@ -312,17 +408,37 @@ public class PeopleInfoController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "user_company", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> userCompany() {
+        try {
+            logger.info("查询全部公司");
+            User user = SessionGetUtil.getUser();
+            List<Company> roles = companyService.queryAll(user);
+            List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+            for (Company company : roles) {
+                ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                comboBox4EasyUI.setId(company.getCompanyId());
+                comboBox4EasyUI.setText(company.getCompanyName());
+                comboBox4EasyUIs.add(comboBox4EasyUI);
+            }
+            return comboBox4EasyUIs;
+        } catch (Exception e) {
+            logger.info("查询角色失败，出现了一个错误");
+            return null;
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "self_user", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> selfUser(HttpSession session) {
         try {
             logger.info("查询本公司员工");
-            User user1 = (User)session.getAttribute("user");
-            List<User> users = userService.queryUser(user1.getCompanyId());
+            List<Role> roles = roleService.queryByCompanyRole();
             List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
-            for (User user : users) {
+            for (Role role : roles) {
                 ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
-                comboBox4EasyUI.setId(user.getUserId());
-                comboBox4EasyUI.setText(user.getUserName());
+                comboBox4EasyUI.setId(role.getRoleId());
+                comboBox4EasyUI.setText(role.getRoleDes());
                 comboBox4EasyUIs.add(comboBox4EasyUI);
             }
             return comboBox4EasyUIs;
@@ -333,10 +449,30 @@ public class PeopleInfoController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "queryRole_all", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> roleAll() {
+        try {
+            logger.info("查询所有公司角色");
+            List<Role> roles = roleService.queryRole();
+            List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+            for (Role role : roles) {
+                ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                comboBox4EasyUI.setId(role.getRoleId());
+                comboBox4EasyUI.setText(role.getRoleDes());
+                comboBox4EasyUIs.add(comboBox4EasyUI);
+            }
+            return comboBox4EasyUIs;
+        } catch (Exception e) {
+            logger.info("查询所有公司角色失败，出现了一个错误");
+            return null;
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "role_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryRoleAll() {
         try {
-            logger.info("查询角色");
+            logger.info("查询部分公司角色");
             List<Role> roles = roleService.queryByCompanyRole();
             List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
             for (Role role : roles) {

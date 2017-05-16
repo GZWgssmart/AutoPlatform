@@ -4,6 +4,8 @@ $(document).ready(function () {
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
     initSelect2("user_role", "请选择角色", "/peopleManage/role_all", 565);
+    initSelect2("user_roleName", "请选择角色", "/peopleManage/queryRole_all", 150);
+    initSelect2("user_company", "请选择公司", "/peopleManage/user_company", 150);
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin","editForm");
     destoryValidator("myModal","editModal");
@@ -186,9 +188,48 @@ function editModal() {
 
 
 
+/** 查看不可用 */
+function showStatus_N() {
+    initTable("cusTable", "/peopleManage/peopleInfo_pagerStatus");
+}
+
+/** 查看可用 */
+function showStatus_Y() {
+    initTable("cusTable", "/peopleManage/peopleInfo_pager");
+}
+
+/** 查看全部员工 */
+function showStatus() {
+    initTable("cusTable", "/peopleManage/peopleInfoAll");
+}
+
+
+
+/** 条件查询全部员工 */
+function selectPeople() {
+    var userPhone = $("#userPhone").val();
+    var userName = $("#userName").val();
+    var userEmail = $("#userEmail").val();
+    var roleName = $("#roleName").val();
+    var companyName = $("#companyName").val();
+    initTable("cusTable", "/peopleManage/selectPeopleInfo?userPhone="+userPhone + "&userName="+userName + "&userEmail="+userEmail + "&roleName="+roleName + "&companyName="+companyName);
+}
+
+
+function closePeople() {
+    $("#formPeople").hide();
+}
+
+function selectPeopleWin() {
+    $("#formPeople").show();
+    $("#peopleDiv").show();
+}
+
+
+
 
 /**编辑数据 */
-function showEditWin() {
+function showEdit() {
     validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
@@ -208,7 +249,7 @@ function defaultPwd() {
 }
 
 /**提交添加数据 */
-function showAddWin() {
+function showAdd() {
     validator("addForm");
     $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');

@@ -28,6 +28,37 @@
 <body>
 
 <div class="container">
+
+    <form id="formPeople" class="form-horizontal">
+        <div class="form-group" id="peopleDiv" style="margin-top:15px; display: none;">
+            <div class="col-sm-2">
+                <input type="text" id="userPhone" class="form-control" placeholder="请输入手机号">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" id="userName" class="form-control" placeholder="请输入姓名">
+            </div>
+            <div class="col-sm-2">
+                <input type="text" id="userEmail" class="form-control" placeholder="请输入邮箱">
+            </div>
+            <div class="col-sm-2">
+                <select id="roleName" class="js-example-tags form-control user_roleName" name="roleId"></select>
+            </div>
+            <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
+                <div class="col-sm-2">
+                    <select id="companyName" class="js-example-tags form-control user_company" name="companyId"></select>
+                </div>
+            </shiro:hasAnyRoles>
+            <div class="col-sm-2">
+                <button type="button" onclick="selectPeople()" class="btn btn-primary">
+                    查询
+                </button>
+                <button type="button" onclick="closePeople()" class="btn btn-default">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </form>
+
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
            data-show-refresh="true"
@@ -58,24 +89,36 @@
                 当前状态
             </th>
             <shiro:hasAnyRoles name="companyAdmin, companyHumanManager">
-            <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
-                操作
-            </th>
+                <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
+                    操作
+                </th>
             </shiro:hasAnyRoles>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
             <shiro:hasAnyRoles name="companyAdmin, companyHumanManager">
-            <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
+                <a><button onclick="showAdd();" type="button" id="add" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-plus"></i> 添加
+                </button></a>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="companyAdmin, companyHumanManager">
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改角色
-            </button></a>
+                <a><button onclick="showEdit();" type="button" id="edit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-pencil"></i> 修改角色
+                </button></a>
             </shiro:hasAnyRoles>
+            <a><button onclick="showStatus_N();" type="button" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> 查看不可用
+            </button></a>
+            <a><button onclick="showStatus_Y();" type="button" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> 查看可用
+            </button></a>
+            <a><button onclick="showStatus();" type="button" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> 查看全部员工
+            </button></a>
+            <a><button onclick="selectPeopleWin();" type="button" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> 条件查询
+            </button></a>
         </div>
         </tbody>
     </table>
@@ -196,9 +239,10 @@
                         <div class="form_info">
                             <form role="form" method="post" id="editModal" class="form_form" onkeydown="if(event.keyCode==13){return false;}" enctype="multipart/form-data">
                                 <input type="hidden" name="userId" attr="user.userId" />
+                                <input type="hidden" name="uIcon" attr="user.userIcon"/>
                                 <div class="form_img">
                                     <div id="preview">
-                                        <img id="icon" name="file" style="border-radius: 50%;"/>
+                                        <img id="icon" attr="user.userIcon" name="file" style="border-radius: 50%;"/>
                                     </div>
                                     <input type="file" name="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
                                 </div>

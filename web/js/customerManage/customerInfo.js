@@ -158,6 +158,7 @@ window.operateEvents = {
         editPhone = user.userPhone;
         editIdentity = user.userIdentity;
         var loginedTime = document.getElementById("form_loginedTime");
+        $("#ffile").val(user.userIcon);
         loginedTime.value = user.userLoginedTime;
         $("#icon").attr("src","/"+user.userIcon);
         $("#form_loginedTime").val(formatterDate(user.userLoginedTime));
@@ -212,20 +213,38 @@ function editModal() {
 
 
 
-/**编辑数据 */
-function showEditWin() {
-    validator("editForm");
-    var selectRow = $("#cusTable").bootstrapTable('getSelections');
-    if (selectRow.length != 1) {
-        swal('编辑失败', "只能选择一条数据进行编辑", "error");
-        return false;
-    } else {
-        var user = selectRow[0];
-        var gender = document.getElementById("usergender");
-        gender.value = user.userGender;
-        $("#editForm").fill(user);
-        $("#editWin").modal('show');
-    }
+/** 查看不可用 */
+function showStatusWin_N() {
+    initTable("cusTable", "/customer/customerInfo_pagerStatus");
+}
+
+/** 查看可用 */
+function showStatusWin_Y() {
+    initTable("cusTable", "/customer/customerInfo_pager");
+}
+
+/** 查看全部车主 */
+function showStatusWin() {
+    initTable("cusTable", "/customer/customerInfo");
+}
+
+
+
+/** 条件查询全部车主 */
+function selectCustomer() {
+    var userPhone = $("#userPhone").val();
+    var userName = $("#userName").val();
+    initTable("cusTable", "/customer/selectCustomerInfo?userPhone="+userPhone + "&userName="+userName);
+}
+
+
+function closeCustomer() {
+    $("#formCustomer").hide();
+}
+
+function selectCustomerWin() {
+    $("#formCustomer").show();
+    $("#customerDiv").show();
 }
 
 function defaultPwd() {
