@@ -77,7 +77,7 @@
                     <a href="#"><i class="fa fa-hand-lizard-o"></i> <span class="nav-label">维修保养接待管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/customerClient/checkin">我的接待</a>
+                        <li><a class="J_menuItem" href="<%=path %>/checkin/my_checkin">我的接待</a>
                         </li>
                     </ul>
                 </li>

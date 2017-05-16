@@ -20,6 +20,7 @@
 
     <link href="<%=path %>/css/animate.min.css" rel="stylesheet">
     <link href="<%=path %>/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
 </head>
 <body>
 <div class="container">
@@ -27,7 +28,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title panel-success">
-                    <h5>我的接待</h5>
+                    <h5>我的接待记录</h5>
 
                     <div class="ibox-tools">
                         <a class="collapse-link">
@@ -62,7 +63,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${requestScope.checkins}" var="checkin">
+                        <c:forEach items="${requestScope.chs}" var="checkin">
                             <tr>
                                 <td>${checkin.userName}</td>
                                 <td>${checkin.userPhone}</td>
@@ -127,7 +128,6 @@
 <script src="<%=path %>/js/content.min.js?v=1.0.0"></script>
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/company/home.js"></script>
-<script src="<%=path %>/js/customerClient/checkin.js"></script>
-
+<script src="<%=path%>/js/customerClient/checkin.js"></script>
 </body>
 </html>

@@ -59,4 +59,6 @@ public interface CheckinService extends BaseService<String, Checkin>{
      */
     public List<Checkin> queryByTop(int top, User user);
 
+    public List<Checkin> queryMyName(User user);
+
 }
