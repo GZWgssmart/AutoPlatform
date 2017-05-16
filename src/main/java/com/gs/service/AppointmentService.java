@@ -28,6 +28,6 @@ public interface AppointmentService extends BaseService<String, Appointment>{
      */
     public List<Appointment> queryPagerByTop(int top, User user);
 
-    public List<Appointment> queryMyName(Pager pager, User user);
+    public List<Appointment> queryMyName(User user);
 
 }

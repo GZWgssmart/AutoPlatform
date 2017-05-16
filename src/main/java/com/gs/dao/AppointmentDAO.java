@@ -37,5 +37,5 @@ public interface AppointmentDAO extends BaseDAO<String, Appointment>{
      */
     public List<Appointment> queryPagerByTop(@Param("top") int top, @Param("user") User user);
 
-    public List<Appointment> queryMyName(@Param("pager") Pager pager, @Param("user") User user);
+    public List<Appointment> queryMyName(@Param("user") User user);
 }

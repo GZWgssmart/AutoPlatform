@@ -111,7 +111,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentDAO.querySpeedStatus(pager,user);
     }
 
-    public List<Appointment> queryMyName(Pager pager, User user){
-        return appointmentDAO.queryMyName(pager, user);
+    public List<Appointment> queryMyName(User user){
+        return appointmentDAO.queryMyName(user);
     }
 }

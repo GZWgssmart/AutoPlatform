@@ -33,12 +33,6 @@ public class CustomerClientController {
             return "customerClient/home";
     }
 
-    @RequestMapping(value = "appointment", method = RequestMethod.GET)
-    private String appointment() {
-        logger.info("我的预约");
-        return "customerClient/appointment";
-    }
-
     @RequestMapping(value ="checkin", method = RequestMethod.GET)
     private String checkin() {
         logger.info("我的接待");
