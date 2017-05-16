@@ -39,12 +39,6 @@ public class LoginController {
     @Resource
     private RoleService roleService;
 
-    @RequestMapping(value = "show_login", method = RequestMethod.GET)
-    public String showLogin() {
-        logger.info("显示登陆页面");
-        return "index/login";
-    }
-
     @ResponseBody
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ControllerResult login(@Param("number")String number, @Param("pwd")String pwd) {
@@ -64,9 +58,14 @@ public class LoginController {
                     subject.login(new UsernamePasswordToken(u.getUserPhone(), u.getUserPwd()));
                     Session session = subject.getSession();
                     session.setAttribute("user", u);
-                    return ControllerResult.getSuccessResult("登陆成功!");
+                    return ControllerResult.getSuccessResult("adminHome");
                 } else {
-                    return ControllerResult.getFailResult("登录失败,只能是管理员登入!");
+                    userService.updateLoginTime(u.getUserId());
+                    u.setUserLoginedTime(new Date());
+                    subject.login(new UsernamePasswordToken(u.getUserPhone(), u.getUserPwd()));
+                    Session session = subject.getSession();
+                    session.setAttribute("user", u);
+                    return ControllerResult.getSuccessResult("customerHome");
                 }
             } else {
                 return ControllerResult.getFailResult("登录失败,账号或密码错误!");
@@ -82,7 +81,7 @@ public class LoginController {
             logger.info("Session已失效，请重新登入");
             return "index/login";
         }
-        logger.info("进入后台主页");
+        logger.info("进入管理员后台主页");
         return "index/home";
     }
 
@@ -93,6 +92,6 @@ public class LoginController {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         subject.getSession().removeAttribute("user");
-        return "index/login";
+        return "index/index";
     }
 }

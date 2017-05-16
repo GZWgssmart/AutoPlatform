@@ -15,9 +15,12 @@ function login() {
     $.post(contextPath + "/login/login",
         $("#login_form").serialize(),
         function (data) {
-            var result = data.result;
-            if(result == "success") {
-                window.location.href = contextPath + "/home";
+            if(data.result == "success") {
+                if (data.message == "adminHome") {
+                    window.location.href = contextPath + "/adminHome";
+                } else if (data.message == "customerHome") {
+                    window.location.href = contextPath + "/customerHome";
+                }
             } else {
                 $("#errMsg").html(data.message);
             }
