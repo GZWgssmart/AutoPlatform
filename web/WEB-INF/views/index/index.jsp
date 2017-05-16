@@ -50,7 +50,6 @@
 
     <!-- Theme style  -->
     <link rel="stylesheet" href="<%=path%>/css/style.css">
-
     <!-- Modernizr JS -->
     <script src="<%=path%>/js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
@@ -147,6 +146,7 @@
                                             </div>
 
                                             <div class="tab-content-inner" data-content="login">
+                                                <div id="errMsg" style="color: red; text-align: left;"></div>
                                                 <form class="m-t" role="form" id="login_form" method="post">
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
