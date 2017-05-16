@@ -41,4 +41,9 @@ public class ComplaintServiceImpl implements ComplaintService {
 	public void updateReply(Complaint complaint) {
 		complaintDAO.updateReply(complaint);
 	}
+
+	@Override
+	public List<Complaint> queryByTop(int top, User user) {
+		return complaintDAO.queryByTop(top, user);
+	}
 }

@@ -102,4 +102,9 @@ public class CheckinServiceImpl implements CheckinService {
     public Checkin queryByTrackStatus(String userId, User user) {
         return checkinDAO.queryByTrackStatus(userId, user);
     }
+
+    @Override
+    public List<Checkin> queryByTop(int top, User user) {
+        return checkinDAO.queryByTop(top, user);
+    }
 }

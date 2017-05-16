@@ -36,8 +36,8 @@
 
 	<insert id="insert"  parameterType="trackList">
 		<![CDATA[
-		insert into t_track_list (trackId,userId,trackContent,serviceEvaluate,trackUser,trackCreatedTime)
-		values(UUID(),#{userId},#{trackContent},#{serviceEvaluate},#{trackUser},NOW());
+		insert into t_track_list (trackId,userId,trackContent,serviceEvaluate,trackUser,trackCreatedTime,companyId)
+		values(UUID(),#{userId},#{trackContent},#{serviceEvaluate},#{trackUser},NOW(),#{companyId});
 		]]>
 	</insert>
 
@@ -106,11 +106,12 @@
 		select l.userId as customerId,c.userPhone as customerPhone, l.trackUser as adminId, l.*, u.userName as adminName, c.userName as customerName
 		from t_checkin c, t_user u, t_track_list l, t_maintain_record r
 		where l.trackUser=u.userId and c.userId = l.userId and r.checkinId=c.checkinId and
-		c.checkinStatus ='Y' and r.recordStatus ='Y' order by l.trackCreatedTime desc
+		c.checkinStatus ='Y' and r.recordStatus ='Y'
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and l.companyId = #{user.companyId}
 		</if>
+		order by l.trackCreatedTime desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

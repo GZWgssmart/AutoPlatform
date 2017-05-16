@@ -82,8 +82,8 @@
 		<![CDATA[
 			select * from t_maintain_fix where maintainStatus = 'Y'
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 		<if test="maintainOrFix == '保养'">
 			and maintainOrFix = '保养'

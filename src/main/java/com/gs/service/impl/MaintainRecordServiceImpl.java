@@ -146,13 +146,13 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
     }
 
     @Override
-    public int countByUserId(User user) {
-        return maintainRecordDAO.countByUserId(user);
+    public int countByUserId(User user, String pickingStatus) {
+        return maintainRecordDAO.countByUserId(user, pickingStatus);
     }
 
     @Override
-    public List<MaintainRecord> queryPagerByUserId(Pager pager, User user) {
-        return maintainRecordDAO.queryPagerByUserId(pager, user);
+    public List<MaintainRecord> queryPagerByUserId(Pager pager, User user, String pickingStatus) {
+        return maintainRecordDAO.queryPagerByUserId(pager, user, pickingStatus);
     }
 
     @Override

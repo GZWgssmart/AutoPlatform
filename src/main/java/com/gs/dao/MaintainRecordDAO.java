@@ -129,7 +129,7 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
      * @param user
      * @return
      */
-    public int countByUserId(@Param("user") User user);
+    public int countByUserId(@Param("user") User user, @Param("pickingStatus") String pickingStatus);
 
     /**
      * 根据员工的id查询该员工负责的维修保养记录，分页查询
@@ -137,7 +137,7 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
      * @param user
      * @return
      */
-    public List<MaintainRecord> queryPagerByUserId(@Param("pager") Pager pager, @Param("user") User user);
+    public List<MaintainRecord> queryPagerByUserId(@Param("pager") Pager pager, @Param("user") User user, @Param("pickingStatus") String pickingStatus);
 
     /**
      * 根据id更新记录的进度

@@ -54,7 +54,7 @@
             <th data-field="plateStatus" data-formatter="status">
                 车牌状态
             </th>
-            <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
+            <shiro:hasAnyRoles name="systemSuperAdmin,systemOrdinaryAdmin">
                 <th data-field="co" data-formatter="operating" data-events="operateEvents">
                     操作
                 </th>
@@ -63,7 +63,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
+            <shiro:hasAnyRoles name="systemSuperAdmin,systemOrdinaryAdmin">
                 <a>
                     <button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                         <i class="glyphicon glyphicon-plus"></i> 添加

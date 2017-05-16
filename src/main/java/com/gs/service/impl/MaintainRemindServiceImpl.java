@@ -49,4 +49,9 @@ public class MaintainRemindServiceImpl implements MaintainRemindService {
 	public List<MaintainRemind> queryPagerByCondition(Pager pager, MaintainRemind remind,User user) {
 		return maintainRemindDAO.queryPagerByCondition(pager, remind,user);
 	}
+
+	@Override
+	public List<MaintainRemind> queryByTop(int top, User user) {
+		return maintainRemindDAO.queryByTop(top, user);
+	}
 }

@@ -33,7 +33,7 @@ public class CarModelController {
             Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER +"," +
             Constants.COMPANY_ACCOUNTING + Constants.COMPANY_EMP + "," + Constants.COMPANY_SALES;
 
-    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ARTIFICER;
+    private String editRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CarModelController.class);
 
@@ -43,8 +43,8 @@ public class CarModelController {
     @ResponseBody
     @RequestMapping(value = "car_model_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarModelAll(String brandId) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
-            logger.info("Session已失效或者权限不足");
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效");
             return null;
         }
         logger.info("查询汽车车型");
@@ -62,8 +62,8 @@ public class CarModelController {
     @ResponseBody
     @RequestMapping(value = "carModel_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarModelAlls() {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
-            logger.info("Session已失效或者权限不足");
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效");
             return null;
         }
         logger.info("查询全部汽车车型");

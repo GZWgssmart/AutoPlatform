@@ -93,12 +93,12 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
         return accessoriesBuyDAO.queryByCheckStates(checkState, user);
     }
 
-    public int countByBuyState(String buyState, User user) {
-        return accessoriesBuyDAO.countByBuyState(buyState, user);
+    public int countByBuyState(User user) {
+        return accessoriesBuyDAO.countByBuyState(user);
     }
 
-    public int countByCheckState(String checkState, User user) {
-        return accessoriesBuyDAO.countByCheckState(checkState, user);
+    public int countByCheckState(User user) {
+        return accessoriesBuyDAO.countByCheckState(user);
     }
 
     public List<AccessoriesBuy> queryByBuyStatePager(Pager pager, User user) {

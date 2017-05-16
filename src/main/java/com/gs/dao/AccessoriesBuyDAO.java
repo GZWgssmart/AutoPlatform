@@ -22,13 +22,13 @@ public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy> {
 
     public List<Accessories> queryByCheckStates(@Param("checkState") String checkState, @Param("user") User user);
 
-    public int countByBuyState(@Param("buyState") String buyState, @Param("user") User user);
+    public int countByBuyState(@Param("user") User user);
 
-    public int countByCheckState(@Param("checkState") String checkState, @Param("user") User user);
+    public int countByCheckState(@Param("user") User user);
 
-    public List<AccessoriesBuy> queryByBuyStatePager(Pager pager, @Param("user") User user);
+    public List<AccessoriesBuy> queryByBuyStatePager(@Param("pager") Pager pager, @Param("user") User user);
 
-    public List<AccessoriesBuy> queryByCheckStatePager(Pager pager, @Param("user") User user);
+    public List<AccessoriesBuy> queryByCheckStatePager(@Param("pager")Pager pager, @Param("user") User user);
 
     public int countByAccName(@Param("accName") String accName, @Param("user") User user);
 

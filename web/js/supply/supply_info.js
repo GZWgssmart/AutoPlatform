@@ -96,8 +96,8 @@ function validator(formId) {
                     },
                     stringLength: {
                         min: 2,
-                        max: 4,
-                        message: '供应商名称长度必须在2到30位之间'
+                        max: 20,
+                        message: '供应商名称长度必须在2到20位之间'
                     }
                 }
             },

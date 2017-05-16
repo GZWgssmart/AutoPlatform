@@ -26,7 +26,7 @@ public class IndexController {
     public String adminHome() {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
-            return "index/login";
+            return "index/index";
         }
         logger.info("进入管理员后台主页");
         return "index/home";
@@ -36,7 +36,7 @@ public class IndexController {
     public String customerHome() {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
-            return "index/login";
+            return "index/index";
         }
         logger.info("进入车主后台主页");
         return "customerClient/home";

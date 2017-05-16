@@ -124,7 +124,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
 		</if>
-		order by u.companyId Desc ,s.salaryCreatedTime
+		order by u.companyId Desc ,s.salaryCreatedTime desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -167,7 +167,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
 		</if>
-		order by u.companyId Desc ,s.salaryCreatedTime
+		order by u.companyId Desc ,s.salaryCreatedTime desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

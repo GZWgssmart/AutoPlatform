@@ -88,7 +88,7 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a class="J_menuItem" href="<%=path %>/company/info">公司信息管理</a>
+                            <a id="company" class="J_menuItem" href="<%=path %>/company/info">公司信息管理</a>
                         </li>
                         <li>
                             <a class="J_menuItem" href="<%=path %>/company/brand">汽车品牌管理</a>
@@ -110,38 +110,43 @@
                         </li>
                     </ul>
                 </li>
-                <shiro:hasAnyRoles name="companyAdmin, companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, systemSuperAdmin, companyAccounting, companyBuyer, systemOrdinaryAdmin, companyEmp">
-                <li>
-                    <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">车主管理</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path%>/customer/customer_page">车主信息管理</a>
-                    </ul>
-                </li>
+                <shiro:hasAnyRoles
+                        name="companyAdmin, companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, systemSuperAdmin, companyAccounting, companyBuyer, systemOrdinaryAdmin, companyEmp">
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">车主管理</span><span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="<%=path%>/customer/customer_page">车主信息管理</a>
+                        </ul>
+                    </li>
                 </shiro:hasAnyRoles>
 
-                <shiro:hasAnyRoles name="companyAdmin, companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, systemSuperAdmin, companyAccounting, companyBuyer, systemOrdinaryAdmin, companyEmp">
-                <li>
-                    <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">人员管理</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
+                <shiro:hasAnyRoles
+                        name="companyAdmin, companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, systemSuperAdmin, companyAccounting, companyBuyer, systemOrdinaryAdmin, companyEmp">
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">人员管理</span><span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
 
-                    <shiro:hasAnyRoles name="systemOrdinaryAdmin, companyHumanManager, systemSuperAdmin, companyAdmin">
-                        <li><a class="J_menuItem" href="<%=path%>/peopleManage/people_info">人员基本信息管理</a>
-                        </li>
-                    </shiro:hasAnyRoles>
+                            <shiro:hasAnyRoles
+                                    name="systemOrdinaryAdmin, companyHumanManager, systemSuperAdmin, companyAdmin">
+                                <li><a class="J_menuItem" href="<%=path%>/peopleManage/people_info">人员基本信息管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
 
-                    <shiro:hasAnyRoles name="companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, companyAccounting, companyBuyer, companyEmp">
-                        <li><a class="J_menuItem" href="<%=path%>/peopleManage/salary">工资管理</a>
-                        </li>
-                    </shiro:hasAnyRoles>
+                            <shiro:hasAnyRoles
+                                    name="companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, companyAccounting, companyBuyer, companyEmp">
+                                <li><a class="J_menuItem" href="<%=path%>/peopleManage/salary">工资管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
 
-                        <shiro:hasAnyRoles name="companyAdmin, companyArtificer,  systemSuperAdmin, systemOrdinaryAdmin">
-                        <li><a class="J_menuItem" href="<%=path%>/peopleManage/work">工单查询</a>
-                        </li>
-                    </shiro:hasAnyRoles>
-                    </ul>
-                </li>
+                            <shiro:hasAnyRoles
+                                    name="companyAdmin, companyArtificer,  systemSuperAdmin, systemOrdinaryAdmin">
+                                <li><a class="J_menuItem" href="<%=path%>/peopleManage/work">工单查询</a>
+                                </li>
+                            </shiro:hasAnyRoles>
+                        </ul>
+                    </li>
                 </shiro:hasAnyRoles>
 
                 <shiro:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, systemOrdinaryAdmin">
@@ -163,32 +168,36 @@
                     </li>
                 </shiro:hasAnyRoles>
 
-                <shiro:hasAnyRoles name="companyAdmin, companyRepertory, companyBuyer, systemSuperAdmin, systemOrdinaryAdmin, companySales">
-                <li>
-                    <a href="#"><i class="glyphicon glyphicon-wrench"></i> <span class="nav-label">配件管理</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <shiro:hasAnyRoles name="companyAdmin, companyRepertory, systemSuperAdmin, systemOrdinaryAdmin">
-                        <li><a class="J_menuItem" href="<%=path %>/accessoriesType/type">配件分类管理</a>
-                        </li>
-                        </shiro:hasAnyRoles>
-                        <li><a class="J_menuItem" href="<%=path%>/accessoriesBuy/showAccessoriesBuyHome">配件采购管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/accessoriesSale/showAccessoriesSaleHome">配件销售管理</a>
-                        </li>
-                        <shiro:hasAnyRoles name="companyAdmin, companyRepertory, companyBuyer, systemSuperAdmin, systemOrdinaryAdmin">
-                        <li><a class="J_menuItem" href="<%=path %>/accessories/stock">库存管理</a>
-                        </li>
-                        </shiro:hasAnyRoles>
-                    </ul>
-                </li>
+                <shiro:hasAnyRoles
+                        name="companyAdmin, companyRepertory, companyBuyer, systemSuperAdmin, systemOrdinaryAdmin, companySales">
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-wrench"></i> <span class="nav-label">配件管理</span><span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <shiro:hasAnyRoles
+                                    name="companyAdmin, companyRepertory, systemSuperAdmin, systemOrdinaryAdmin">
+                                <li><a class="J_menuItem" href="<%=path %>/accessoriesType/type">配件分类管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
+                            <li><a class="J_menuItem" href="<%=path%>/accessoriesBuy/showAccessoriesBuyHome">配件采购管理</a>
+                            </li>
+                            <li><a class="J_menuItem"
+                                   href="<%=path%>/accessoriesSale/showAccessoriesSaleHome">配件销售管理</a>
+                            </li>
+                            <shiro:hasAnyRoles
+                                    name="companyAdmin, companyRepertory, companyBuyer, systemSuperAdmin, systemOrdinaryAdmin">
+                                <li><a class="J_menuItem" href="<%=path %>/accessories/stock">库存管理</a>
+                                </li>
+                            </shiro:hasAnyRoles>
+                        </ul>
+                    </li>
                 </shiro:hasAnyRoles>
 
                 <li>
                     <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span class="nav-label">维修保养预约</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/appointment/appointment">预约管理</a>
+                        <li><a id="app" class="J_menuItem" href="<%=path %>/appointment/appointment">预约管理</a>
                         </li>
                     </ul>
                 </li>
@@ -201,7 +210,7 @@
                         <ul class="nav nav-second-level">
                             <shiro:hasAnyRoles
                                     name="companyAdmin, companyReceive, systemSuperAdmin, systemOrdinaryAdmin">
-                                <li><a class="J_menuItem" href="<%=path %>/checkin/checkin_page">接待登记管理</a>
+                                <li><a id="checkin" class="J_menuItem" href="<%=path %>/checkin/checkin_page">接待登记管理</a>
                                 </li>
                             </shiro:hasAnyRoles>
                             <li><a id="maintain" class="J_menuItem" href="<%=path%>/record/record_page">维修保养记录管理</a>
@@ -210,27 +219,31 @@
                     </li>
                 </shiro:hasAnyRoles>
 
-                <li>
-                    <a href="#"><i class="fa fa-odnoklassniki"></i> <span class="nav-label">派工领料</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/materialList/info">物料清单</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path %>/materialUse/info">领料管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path %>/materialReturn/info">退料管理</a>
-                        </li>
-                    </ul>
-                </li>
+                <shiro:hasAnyRoles
+                        name="systemSuperAdmin, systemOrdinaryAdmin, companyAdmin, companyRepertory, companyArtificer">
+                    <li>
+                        <a href="#"><i class="fa fa-odnoklassniki"></i> <span class="nav-label">派工领料</span><span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="<%=path %>/materialList/info">物料清单</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path %>/materialUse/info">领料管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path %>/materialReturn/info">退料管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                </shiro:hasAnyRoles>
+
                 <shiro:hasAnyRoles name="carOwner, companyReceive, companyArtificer, companyAdmin">
-                <li>
-                    <a href="#"><i class="fa fa-hourglass-half"></i> <span class="nav-label">维修保养进度</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/progress/progress_page">车辆维修保养进度管理</a>
-                        </li>
-                    </ul>
-                </li>
+                    <li>
+                        <a href="#"><i class="fa fa-hourglass-half"></i> <span class="nav-label">维修保养进度</span><span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="<%=path %>/progress/progress_page">车辆维修保养进度管理</a>
+                            </li>
+                        </ul>
+                    </li>
                 </shiro:hasAnyRoles>
 
                 <shiro:hasAnyRoles
@@ -252,11 +265,11 @@
                     <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">客户关系管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养提醒管理</a>
+                        <li><a id="remind" class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养提醒管理</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/reportStatistics/consumption_page">消费统计管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉管理</a>
+                        <li><a id="complaint" class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉管理</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/trackVisit/show_trackVisit">跟踪回访管理</a>
                         </li>
@@ -264,59 +277,63 @@
                         </li>
                     </ul>
                 </li>
-            <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
-                <li>
-                    <a href="#"><i class="glyphicon glyphicon-usd"></i> <span class="nav-label">财务管理</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path%>/incomingType/show_incomingType">收入类型管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/outgoingType/show_outgoingType">支出类型管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/incomingOutgoing/show_incomingOutgoing">收支记录管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/salary/show_salary">工资管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path %>/bill/statement_page">对账单管理</a>
-                        </li>
-                    </ul>
-                </li>
-            </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
-                <li>
-                    <a href="#"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">报表统计</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/maintenance_page">维修保养统计</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/staff_page">员工工单统计</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/maintenanceItems_page">维修保养项目统计</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/accessories_page">配件使用统计</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/finance_page">财务统计</a>
-                        </li>
-                    </ul>
-                </li>
-            </shiro:hasAnyRoles>
-                <li>
-                    <a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                        <span class="nav-label">系统管理</span><span
+                <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-usd"></i> <span class="nav-label">财务管理</span><span
                                 class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path%>/role/info">角色管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path %>/admin/info">管理员管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path %>/module/info">模块管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path %>/permission/info">权限管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path %>/process/info">流程管理</a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="<%=path%>/incomingType/show_incomingType">收入类型管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path%>/outgoingType/show_outgoingType">支出类型管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path%>/incomingOutgoing/show_incomingOutgoing">收支记录管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path%>/salary/show_salary">工资管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path %>/bill/statement_page">对账单管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                </shiro:hasAnyRoles>
+                <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
+                    <li>
+                        <a href="#"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">报表统计</span><span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="<%=path%>/reportStatistics/maintenance_page">维修保养统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path%>/reportStatistics/staff_page">员工工单统计</a>
+                            </li>
+                            <li><a class="J_menuItem"
+                                   href="<%=path%>/reportStatistics/maintenanceItems_page">维修保养项目统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path%>/reportStatistics/accessories_page">配件使用统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path%>/reportStatistics/finance_page">财务统计</a>
+                            </li>
+                        </ul>
+                    </li>
+                </shiro:hasAnyRoles>
+
+                <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
+                    <li>
+                        <a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            <span class="nav-label">系统管理</span><span
+                                    class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a class="J_menuItem" href="<%=path%>/role/info">角色管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path %>/admin/info">管理员管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path %>/module/info">模块管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path %>/permission/info">权限管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path %>/process/info">流程管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                </shiro:hasAnyRoles>
 
             </ul>
         </div>

@@ -179,7 +179,17 @@
                             </div>
                             <div class="form-group">
                                 <label>开户银行全称：</label>
-                                <input type="text" attr="supply.supplyBank" name="supplyBank" class="form-control"/>
+                                <select class="js-example-tags form-control" attr="supply.supplyBank" type="select-one"
+                                        name="supplyBank">
+                                    <option value="中国工商银行">中国工商银行</option>
+                                    <option value="中国农业银行">中国农业银行</option>
+                                    <option value="中国银行">中国银行</option>
+                                    <option value="中国建设银行">中国建设银行</option>
+                                    <option value="交通银行">交通银行</option>
+                                    <option value="中国农业银行">中国农业银行</option>
+                                    <option value="招商银行">招商银行</option>
+                                    <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>开户人：</label>
@@ -247,7 +257,17 @@
                             </div>
                             <div class="form-group">
                                 <label>开户银行全称：</label>
-                                <input type="text"  name="supplyBank" class="form-control"/>
+                                <select class="js-example-tags form-control" type="select-one" name="supplyBank">
+                                    <option value="">请选择</option>
+                                    <option value="中国工商银行">中国工商银行</option>
+                                    <option value="中国农业银行">中国农业银行</option>
+                                    <option value="中国银行">中国银行</option>
+                                    <option value="中国建设银行">中国建设银行</option>
+                                    <option value="交通银行">交通银行</option>
+                                    <option value="中国农业银行">中国农业银行</option>
+                                    <option value="招商银行">招商银行</option>
+                                    <option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>开户人：</label>

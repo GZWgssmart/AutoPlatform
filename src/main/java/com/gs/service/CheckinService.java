@@ -51,5 +51,12 @@ public interface CheckinService extends BaseService<String, Checkin>{
      */
     public Checkin queryByTrackStatus(String userId, User user);
 
+    /**
+     * 根据指定的{top}查询前{top}条数据
+     * @param top
+     * @param user
+     * @return
+     */
+    public List<Checkin> queryByTop(int top, User user);
 
 }

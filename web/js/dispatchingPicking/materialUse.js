@@ -4,7 +4,7 @@
 
 var contextPath = '';
 $(document).ready(function () {
-    initTable("cusTable", contextPath + "/record/pager_picking");
+    initTable("cusTable", contextPath + "/record/pager_speedAndPickingStatus?speedStatus=维修保养中");
     initDateTimePickerNotValitor("form_datetime");
     $("#search").bind("click", initTable);
 });
@@ -32,6 +32,8 @@ function operateFormatter(value, row, index) {
             '<button type="button" class="updatePS_1 btn btn-success  btn-sm">通过</button>',
             ' <button type="button" class="updatePS_2 btn btn-danger btn-sm" style="margin-right:15px;">回绝</button>'
         ].join('');
+    } else if (row.pickingStatus == '未申请') {
+        return ['暂无'].join('');
     } else {
         return ['已完成'].join('');
     }

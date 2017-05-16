@@ -43,35 +43,4 @@ public class CustomerClientWebController {
 
     }
 
-    @ResponseBody
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public ControllerResult login(@Param("number")String number, @Param("pwd")String pwd) {
-        logger.info("登陆");
-        if (number != null && !number.equals("") && pwd != null && !pwd.equals("")) {
-            Subject subject = SecurityUtils.getSubject();
-            User user = new User();
-            user.setUserEmail(number);
-            user.setUserPhone(number);
-            user.setUserPwd(EncryptUtil.md5Encrypt(pwd));
-            User u = userService.queryLogin(user);
-            if (u != null) {
-                Role role = roleService.queryByUserId(u.getUserId());
-                if (!role.getRoleName().equals(Constants.CAR_OWNER)) {
-                    userService.updateLoginTime(u.getUserId());
-                    u.setUserLoginedTime(new Date());
-                    subject.login(new UsernamePasswordToken(u.getUserPhone(), u.getUserPwd()));
-                    Session session = subject.getSession();
-                    session.setAttribute("user", u);
-                    return ControllerResult.getSuccessResult("登陆成功!");
-                } else {
-                    return ControllerResult.getFailResult("登录失败,只能是管理员登入!");
-                }
-            } else {
-                return ControllerResult.getFailResult("登录失败,账号或密码错误!");
-            }
-        } else {
-            return ControllerResult.getFailResult("登录失败,请输入账号或密码!");
-        }
-    }
-
 }

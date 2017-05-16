@@ -26,10 +26,10 @@
 		<selectKey resultType="int" keyProperty="messageId" order="AFTER">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
-		insert into t_message_send (messageId,userId)
+		insert into t_message_send (messageId,userId,companyId)
 		values
 		<foreach collection="list" item="item" index="index" separator="," >
-			(uuid(),#{item.userId})
+			(uuid(),#{item.userId},#{item.companyId})
 		</foreach>
 	</insert>
 

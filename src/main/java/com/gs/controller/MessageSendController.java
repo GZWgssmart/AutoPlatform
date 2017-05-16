@@ -105,8 +105,10 @@ public class MessageSendController {
         }
         try {
             List<MessageSend> msList = new ArrayList<MessageSend>();
+                User user = SessionGetUtil.getUser();
             for (int i = 0; i < userId.length; i++) {
                 MessageSend m = new MessageSend();
+                m.setCompanyId(user.getCompanyId());
                 m.setUserId(userId[i]);
                 msList.add(m);
             }

@@ -38,6 +38,7 @@ function showEditWin() {
         $('#companys').html('<option value="' + product.companySize + '">' + product.companySize + '</option>').trigger("change");
         $('#editCompanyOpenDate').val(formatterDate(product.companyOpenDate));
         $("#icon").attr("src","/" + product.companyLogo);
+        initCityPicker("address");
         $("#editForm").fill(product);
         $("#editWin").modal('show');
         validator("editForm");
@@ -138,6 +139,7 @@ window.operateEvents = {
     $('#companys').html('<option value="' + incomingType.companySize + '">' + incomingType.companySize + '</option>').trigger("change");initDateTimePicker("form_datetime","","editForm");
     $("#icon").attr("src","/" + incomingType.companyLogo);
     $('#editCompanyOpenDate').val(formatterDate(incomingType.companyOpenDate));
+    initCityPicker("address");
     $("#editForm").fill(incomingType);
     $("#editWin").modal('show');
     validator("editForm");
@@ -162,9 +164,9 @@ function validator(formId) {
                         message: '公司名称不能为空'
                     },
                     stringLength: {
-                        min: 2,
+                        min: 4,
                         max: 20,
-                        message: '公司名称长度必须在2到4位之间'
+                        message: '公司名称长度必须在4到20位之间'
                     }
                 }
             },
@@ -188,9 +190,9 @@ function validator(formId) {
                         message: '公司地址不能为空'
                     },
                     stringLength: {
-                        min: 1,
+                        min: 10,
                         max: 200,
-                        message: '公司地址长度必须在1到200位之间'
+                        message: '公司地址长度必须在10到200位之间'
                     }
                 }
             },
@@ -202,7 +204,11 @@ function validator(formId) {
                     },
                     regexp: {
                         regexp: /^\d{3,4}-?\d{7,9}$/,
-                        message: '号码格式错误'
+                        message: '公司号码格式错误'
+                    },stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: '公司号码长度必须在8到11位之间'
                     }
                 }
             },
@@ -213,21 +219,24 @@ function validator(formId) {
                         message: '公司负责人不能为空'
                     },
                     stringLength: {
-                        min: 1,
+                        min: 2,
                         max: 200,
-                        message: '公司负责人长度必须在1到10位之间'
+                        message: '公司负责人长度必须在2到10位之间'
                     }
                 }
             },
             companyWebsite: {
                 message: '公司官网URL失败',
                 validators: {
-                    required: true,
-                    url: true,
+                    url:{
+                        url:true,
+                        message: 'url格式有误,例如http://www.baibau.com,https://www.baidu.com'
+                    },
                     notEmpty: {
                         message: '公司官网URL不能为空'
                     }
                 }
+
             },
             companyOpenDate:{
                 message: '公司创建时间',
@@ -248,10 +257,13 @@ function validator(formId) {
             companyLongitude:{
                 message: '公司经度失败',
                 validators: {
+                    number:{
+                        number:true,
+                        message: '公司经度格式错误'
+                    } ,
                     notEmpty: {
                         message: '公司经度不能为空'
                     },
-                    number:true
                 }
             },
             companyLatitude:{
@@ -259,7 +271,22 @@ function validator(formId) {
                 validators:{
                     notEmpty:{
                         message:'纬度不能为空'
-                    },number:true
+                    },
+                    number:{
+                        number:true,
+                        message: '公司纬度格式错误'
+                    }
+                }
+            },
+            companyPricipalPhone: {
+                validators: {
+                    notEmpty: {
+                        message: '负责人手机号不能为空'
+                    },
+                    regexp: {
+                        regexp: /^1(3|4|5|7|8)\d{9}$/,
+                        message: '手机号格式错误'
+                    }
                 }
             }
         }
@@ -315,8 +342,8 @@ function searchCompany(){
 //图片上传预览    IE是用了滤镜。
 function previewImage(file)
 {
-    var MAXWIDTH  = 100;
-    var MAXHEIGHT = 50;
+    var MAXWIDTH  = 120;
+    var MAXHEIGHT = 60;
     var div = document.getElementById('preview');
     if (file.files && file.files[0])
     {

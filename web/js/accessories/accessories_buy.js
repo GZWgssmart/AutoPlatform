@@ -4,8 +4,8 @@ $(document).ready(function () {
     initDateTimePicker("form_datetime", "");
     initTable("cusTable", "/accessoriesBuy/pager");
 
-    initSelect2("supply", "请选择供应商", "/supply/queryAll", 550);
-    initSelect2("accTypeA", "请选择配件类别", "/accessoriesType/accessoriesType_All", 550);
+    initSelect2("supply", "请选择供应商", "/supply/queryAll", 560);
+    initSelect2("accTypeA", "请选择配件类别", "/accessoriesType/accessoriesType_All", 560);
 
     initBsSwitchBuy("isAcc", switchChange);
 
@@ -39,27 +39,6 @@ override :switchChange = function (event, state) {
 function closwSwitchCleanData(switchId) {
 
 }
-
-// 获取某个表单内的所有inputName值
-function formInput(formId) {
-    var ne = [];
-    $("#" + formId + " input").each(function () {
-        ne.push(this.name);
-    })
-    return ne;
-}
-
-function eachNames(names, finName) {
-    var ne = "";
-    $.each(names, function (name, value) {
-        if (value == finName) {
-            ne = value;
-            return false;
-        }
-    });
-    return ne;
-}
-
 
 function disableSwitch(modalId, switchId) {
     $("#" + modalId).on("hide.bs.modal", function () {
@@ -180,6 +159,7 @@ window.operateEvents = {
         $('#eAccType').html('<option value="' + accessoriesBuy.accessories.accessoriesType.accTypeId + '">' + accessoriesBuy.accessories.accessoriesType.accTypeName + '</option>').trigger("change");
         $("#buyTime").val(formatterDate(accessoriesBuy.accBuyTime));
         showAccEditWin();
+        autoCalculation1("eAccBuyCount", "eAccBuyPrice", "eAccBuyDiscount");
     }
 }
 
@@ -213,9 +193,9 @@ function addAccBuy() {
     } else {
         var acc = selectRow[0];
         $("#accBuyTime").val(formatterDate(acc.accUsedTime));
-        // autoCalculation1(formId, count, price, discount, names);
         $("#addForm").fill(acc);
         enableSwitch("accWin", "isAcc");
+
         $("#accWin").modal("hide");
     }
     disableSwitch();
@@ -303,6 +283,45 @@ function validator(formId) {
                         min: 0,
                         max: 15,
                         message: '不能超过15个字符'
+                    }
+                }
+            },
+
+            'accessories.accTypeId': {
+                validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    },
+                }
+            },
+
+            'accessories.accCommodityCode': {
+                validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    },
+                    stringLength: {
+                        min: 0,
+                        max: 13,
+                        message: '不可以超过13个数字'
+                    }
+                }
+            },
+
+            'accessories.supplyId': {
+                validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    }
+                }
+            },
+
+            accDes: {
+                validators: {
+                    stringLength: {
+                        min: 0,
+                        max: 500,
+                        message: '字数不可以超过500个字符'
                     }
                 }
             },
@@ -427,24 +446,51 @@ function clearTempData() {
 }
 
 function showAccAddWin() {
-    clearTempData();
+    // clearTempData();
     validator("addForm");
     $("#addWin").modal('show');
 }
 
 function showAccEditWin() {
-    clearTempData();
+    // clearTempData();
     validator("editForm");
     $("#editWin").modal('show');
 }
 
-function autoCalculation1(count, price, discount, names) {
-
+/**
+ * 自动计算价格
+ * @param buyCount 购买数量
+ * @param buyPrice 购买价格
+ * @param buyDiscount 购买折扣
+ */
+function autoCalculation1(buyCount, buyPrice, buyDiscount) {
+    var bCount = "";
+    var bPrice = ""
+    var bDiscount = "";
+    var rs = "";
+    var urs = "";
+    $("#" + buyCount + ",#" + buyPrice + ",#" + buyDiscount).bind("input onfocus", function () {
+        bCount = $("#" + buyCount).val();
+        bPrice = $("#" + buyPrice).val();
+        bDiscount = $("#" + buyDiscount).val();
+        if (bCount != null && bCount != "" && bPrice != null && bPrice != "" && bDiscount != null && bDiscount != "") {
+            rs = (bCount * bPrice) * bDiscount;
+            urs = bCount * bPrice;
+            $("#eAccBuyTotal").val(urs);
+            $("#eAccBuyMoney").val(rs);
+            if (bDiscount == null && bDiscount == "") {
+                var rs = bCount * bPrice;
+                $("#eAccBuyTotal").val(rs);
+            }
+        } else {
+            $("#eAccBuyTotal").val("0");
+            $("#eAccBuyMoney").val("0");
+        }
+    })
 }
 
 function autoCalculation(iId) {
     var id = iId.id;
-    console.log(id);
     count = $("#accBuyCount").val();
     var price = $("#accBuyPrice").val();
     var discount = $("#accBuyDiscount").val();

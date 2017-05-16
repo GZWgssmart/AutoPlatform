@@ -35,7 +35,7 @@ public class CarColorController {
             Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER +"," +
             Constants.COMPANY_ACCOUNTING + Constants.COMPANY_EMP + "," + Constants.COMPANY_SALES;
 
-    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ARTIFICER;
+    private String editRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CarColorController.class);
 
@@ -128,8 +128,8 @@ public class CarColorController {
     @ResponseBody
     @RequestMapping(value = "car_color_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarColorAll() {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
-            logger.info("Session已失效或者权限不足");
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效");
             return null;
         }
         logger.info("查询汽车颜色");

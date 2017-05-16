@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -42,15 +43,14 @@
             <th data-field="speedStatus">
                 当前进度
             </th>
-            <th data-field="recordStatus" data-formatter="status">
-                记录状态
-            </th>
             <th data-field="pickingStatus">
                 领料状态
             </th>
-            <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
-                操作
-            </th>
+            <shiro:hasAnyRoles name="companyAdmin, companyRepertory">
+                <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
+                    操作
+                </th>
+            </shiro:hasAnyRoles>
         </tr>
         </thead>
 

@@ -22,6 +22,7 @@
         <association property="accessories" javaType="com.gs.bean.Accessories">
             <id property="accId" column="accId"/>
             <result property="accName" column="accName"/>
+            <result property="accCommodityCode" column="accCommodityCode"/>
 
             <association property="accessoriesType" javaType="com.gs.bean.AccessoriesType">
                 <id property="accTypeId" column="accTypeId"/>
@@ -190,7 +191,9 @@
     <select id="query" parameterType="accessoriesBuy" resultType="accessoriesBuy">
 		<![CDATA[
 
+
         select * from t_accessories_buy
+
 
         ]]>
 	</select>
@@ -205,6 +208,7 @@
             ab.*, ac.accId,
             ac.accName,
             ac.supplyId,
+            ac.accCommodityCode,
             sy.supplyName,
             ae.accTypeId,
             ae.accTypeName,
@@ -250,22 +254,68 @@
 
     </update>
 
-    <select id="queryByBuyStatePager" resultType="list" resultMap="accessoriesBuyResultMap"
-            parameterType="com.gs.common.bean.Pager">
-        select * from auto_platform.t_accessories_buy where accBuyStatus = 'Y'
+    <select id="queryByBuyStatePager" resultType="list" resultMap="accessoriesBuyResultMap">
+        SELECT
+        ab.*, ac.accId,
+        ac.accName,
+        ac.supplyId,
+        ac.accCommodityCode,
+        sy.supplyName,
+        ae.accTypeId,
+        ae.accTypeName,
+        cpy.companyName
+        FROM
+        (
+            (
+                (
+                    (
+                        t_accessories_buy ab
+                        INNER JOIN t_accessories ac ON ab.accId = ac.accId
+                    )
+                INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
+                )
+            INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
+            )
+        INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
+        )
+        where ab.accBuyStatus = 'Y'
         <if test="user.companyId != null and user.companyId != ''">
-            and companyId = #{user.companyId}
+            and ab.companyId = #{user.companyId}
         </if>
-        limit #{beginIndex},#{pageSize}
+        order by ab.accBuyTime desc
+        limit #{pager.beginIndex},#{pager.pageSize}
     </select>
 
-    <select id="queryByCheckStatePager" resultType="list" resultMap="accessoriesBuyResultMap"
-            parameterType="com.gs.common.bean.Pager">
-        select * from auto_platform.t_accessories_buy where accBuyCheck = 'Y'
+    <select id="queryByCheckStatePager" resultType="list" resultMap="accessoriesBuyResultMap">
+        SELECT
+        ab.*, ac.accId,
+        ac.accName,
+        ac.supplyId,
+        ac.accCommodityCode,
+        sy.supplyName,
+        ae.accTypeId,
+        ae.accTypeName,
+        cpy.companyName
+        FROM
+        (
+            (
+                (
+                    (
+                        t_accessories_buy ab
+                        INNER JOIN t_accessories ac ON ab.accId = ac.accId
+                    )
+                INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
+                )
+            INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
+            )
+        INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
+        )
+        where ab.accBuyCheck = 'Y'
         <if test="user.companyId != null and user.companyId != ''">
-            and companyId = #{user.companyId}
+            and ab.companyId = #{user.companyId}
         </if>
-        limit #{beginIndex},#{pageSize}
+        order by ab.accBuyTime desc
+        limit #{pager.beginIndex},#{pager.pageSize}
     </select>
 
     <select id="countByBuyState" resultType="int">
@@ -310,31 +360,50 @@
     </select>
 
     <select id="queryByBuyTimeScopeByAccNamePager" resultType="list" resultMap="accessoriesBuyResultMap">
-        select * from (t_accessories_buy ab inner join t_accessories ac on ab.accId = ac.accId) inner join
-        t_accessories_type ae on ac.accTypeId = ae.accTypeId where
-        (ab.accBuyTime &gt;= #{buyTimeStart} and ab.accBuyTime &lt;= #{buyTimeEnd})
+        SELECT
+        ab.*,
+        ac.accId,
+        ac.accName,
+        ac.supplyId,
+        ac.accCommodityCode,
+        sy.supplyName,
+        ae.accTypeId,
+        ae.accTypeName,
+        cpy.companyName
+        FROM
+        (
+            (
+                (
+                    (
+                        t_accessories_buy ab
+                        INNER JOIN t_accessories ac ON ab.accId = ac.accId
+                    )
+                    INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
+                )
+                INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
+            )
+            INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
+        )
+        where 1 = 1
+        <if test="buyTimeStart != null and buyTimeStart != ''">
+          and (ab.accBuyTime &gt;= #{buyTimeStart} and ab.accBuyTime &lt;= #{buyTimeEnd})
+        </if>
         <if test="accName != null and accName != '' ">
-            and ac.accName like concat(concat('%',#{accName}),'%')
+          and ac.accName like concat(concat('%',#{accName}),'%')
         </if>
         order by ab.accBuyTime desc
-        <if test="user.companyId != null and user.companyId != ''">
-            and companyId = #{user.companyId}
-        </if>
         limit #{pager.beginIndex},#{pager.pageSize}
     </select>
 
     <select id="countByBuyTimeScope" resultType="int">
-        select count(*) from (t_accessories_buy ab inner join t_accessories ac on ab.accId = ac.accId) inner join
-        t_accessories_type ae on ac.accTypeId = ae.accTypeId
+        SELECT
+        count(ab.accBuyId)
+        FROM
+        t_accessories_buy ab
         where
-        (ab.accBuyTime &gt;= #{buyTimeStart} and ab.accBuyTime &lt;= #{buyTimeEnd})
-
+            (ab.accBuyTime &gt;= #{buyTimeStart} and ab.accBuyTime &lt;= #{buyTimeEnd})
         <if test="accName != null and accName != '' ">
             and ac.accName like concat(concat('%',#{accName}),'%')
-        </if>
-
-        <if test="user.companyId != null and user.companyId != ''">
-            and companyId = #{user.companyId}
         </if>
     </select>
 

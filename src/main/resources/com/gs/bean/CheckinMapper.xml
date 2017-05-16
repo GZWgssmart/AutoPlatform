@@ -236,4 +236,17 @@
 		]]>
 	</update>
 
+	<select id="queryByTop" resultType="list" resultMap="checkinResultMap">
+		<![CDATA[
+			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
+				from t_checkin c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
+				where 1 = 1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId
+		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and c.companyId = #{user.companyId}
+		</if>
+		order by c.checkinStatus desc, c.checkinCreatedTime desc
+		limit 0, #{top}
+	</select>
+
 </mapper>

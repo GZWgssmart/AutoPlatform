@@ -18,6 +18,7 @@
 			<id property="checkinId" column="checkinId"></id>
 			<id property="userId" column="userId"/>
 			<id property="userName" column="userName"/>
+			<id property="userPhone" column="userPhone"/>
 			<id property="carMileage" column="carMileage"/>
 		</association>
 		<association property="maintainRecord" javaType="com.gs.bean.MaintainRecord">
@@ -152,6 +153,17 @@
 		</if>
 		order by c.companyId desc, r.remindCreatedTime desc,
 		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="queryByTop" resultType="list" resultMap="maintainRemindResultMap">
+		<![CDATA[
+		  select * from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus = 'Y'
+		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and rem.companyId = #{user.companyId}
+		</if>
+		order by red.recordStatus desc, rem.remindCreatedTime desc
+		limit 0, #{top}
 	</select>
 
 </mapper>

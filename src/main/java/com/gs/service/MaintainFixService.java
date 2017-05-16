@@ -20,5 +20,5 @@ public interface MaintainFixService extends BaseService<String, MaintainFix>{
     /*
    * 查询项目是维修还是保养
    * */
-    public List<MaintainFix> queryByType(User user,String maintainOrFix);
+    public List<MaintainFix> queryByType(String companyId,String maintainOrFix);
 }

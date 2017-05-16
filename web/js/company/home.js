@@ -7,4 +7,21 @@ $(document).ready(function () {
     $("#appTable").footable();
     $("#remindTable").footable();
     $("#complaintTable").footable();
+    $("#companyTable").footable();
 });
+
+function searchApp() {
+    parent.showAppointmentPage();
+}
+function searchCheckin() {
+    parent.showCheckinPage();
+}
+function searchRemind() {
+    parent.showRemindPage();
+}
+function searchComplaint() {
+    parent.showComplaintPage();
+}
+function searchCompany() {
+    parent.showCompanyPage();
+}

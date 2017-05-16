@@ -51,21 +51,25 @@ public class LoginController {
             user.setUserPwd(EncryptUtil.md5Encrypt(pwd));
             User u = userService.queryLogin(user);
             if (u != null) {
-                Role role = roleService.queryByUserId(u.getUserId());
-                if (!role.getRoleName().equals(Constants.CAR_OWNER)) {
-                    userService.updateLoginTime(u.getUserId());
-                    u.setUserLoginedTime(new Date());
-                    subject.login(new UsernamePasswordToken(u.getUserPhone(), u.getUserPwd()));
-                    Session session = subject.getSession();
-                    session.setAttribute("user", u);
-                    return ControllerResult.getSuccessResult("adminHome");
+                if (u.getUserStatus().equals("Y")) {
+                    Role role = roleService.queryByUserId(u.getUserId());
+                    if (!role.getRoleName().equals(Constants.CAR_OWNER)) {
+                        userService.updateLoginTime(u.getUserId());
+                        u.setUserLoginedTime(new Date());
+                        subject.login(new UsernamePasswordToken(u.getUserPhone(), u.getUserPwd()));
+                        Session session = subject.getSession();
+                        session.setAttribute("user", u);
+                        return ControllerResult.getSuccessResult("adminHome");
+                    } else {
+                        userService.updateLoginTime(u.getUserId());
+                        u.setUserLoginedTime(new Date());
+                        subject.login(new UsernamePasswordToken(u.getUserPhone(), u.getUserPwd()));
+                        Session session = subject.getSession();
+                        session.setAttribute("user", u);
+                        return ControllerResult.getSuccessResult("customerHome");
+                    }
                 } else {
-                    userService.updateLoginTime(u.getUserId());
-                    u.setUserLoginedTime(new Date());
-                    subject.login(new UsernamePasswordToken(u.getUserPhone(), u.getUserPwd()));
-                    Session session = subject.getSession();
-                    session.setAttribute("user", u);
-                    return ControllerResult.getSuccessResult("customerHome");
+                    return ControllerResult.getFailResult("登录失败,此账号已被冻结!");
                 }
             } else {
                 return ControllerResult.getFailResult("登录失败,账号或密码错误!");
@@ -74,17 +78,6 @@ public class LoginController {
             return ControllerResult.getFailResult("登录失败,请输入账号或密码!");
         }
     }
-
-    @RequestMapping(value = "home", method = RequestMethod.GET)
-    public String home() {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
-            return "index/login";
-        }
-        logger.info("进入管理员后台主页");
-        return "index/home";
-    }
-
 
     @RequestMapping("logout")
     public String logout(HttpSession session) {

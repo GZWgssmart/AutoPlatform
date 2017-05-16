@@ -269,8 +269,9 @@ public class RecordController {
                         pager.setTotalRecords(maintainRecordService.countBySpeedStatusAndPickingStatus(ss, pickingStatus, user));
                         maintainRecordList = maintainRecordService.queryPagerBySpeedStatusAndPickingStatus(ss, pager, pickingStatus, user);
                     } else {
-                        pager.setTotalRecords(maintainRecordService.countByUserId(user));
-                        maintainRecordList = maintainRecordService.queryPagerByUserId(pager, user);
+                        String pickingStatus = Constants.NOT_APPLY;
+                        pager.setTotalRecords(maintainRecordService.countByUserId(user, pickingStatus));
+                        maintainRecordList = maintainRecordService.queryPagerByUserId(pager, user, pickingStatus);
                     }
                     return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
                 }
@@ -303,8 +304,8 @@ public class RecordController {
                         pager.setTotalRecords(maintainRecordService.countBySpeedStatus(ss, user));
                         maintainRecordList = maintainRecordService.queryPagerBySpeedStatus(pager, ss, user);
                     } else {
-                        pager.setTotalRecords(maintainRecordService.countByUserId(user));
-                        maintainRecordList = maintainRecordService.queryPagerByUserId(pager, user);
+                        pager.setTotalRecords(maintainRecordService.countByUserId(user, ""));
+                        maintainRecordList = maintainRecordService.queryPagerByUserId(pager, user, "");
                     }
 
                     return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);

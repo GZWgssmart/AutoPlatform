@@ -56,7 +56,7 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 	}
 
 	@Override
-	public List<MaintainFix> queryByType(User user, String maintainOrFix) {
-		return maintainFixDAO.queryByType(user,maintainOrFix);
+	public List<MaintainFix> queryByType(String companyId, String maintainOrFix) {
+		return maintainFixDAO.queryByType(companyId,maintainOrFix);
 	}
 }

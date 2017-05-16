@@ -1,9 +1,12 @@
 package com.gs.service.impl;
 
+import com.gs.bean.Company;
+import com.gs.bean.Role;
 import com.gs.bean.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 import com.gs.dao.UserDAO;
@@ -156,6 +159,54 @@ public class UserServiceImpl implements UserService {
 
     public List<User> queryUser(String companyId) {
         return userDAO.queryUser(companyId);
+    }
+
+    public int countStatus(User user) {
+        return userDAO.countStatus(user);
+    }
+
+    public List<User> queryCustomerPagerStatus(Pager pager, User user) {
+        return userDAO.queryCustomerPagerStatus(pager, user);
+    }
+
+    public int countCustomer(User user) {
+        return userDAO.countCustomer(user);
+    }
+
+    public List<User> queryCustomer(Pager pager, User user) {
+        return userDAO.queryCustomer(pager, user);
+    }
+
+    public int selectCountCustomer(User user) {
+        return userDAO.selectCountCustomer(user);
+    }
+
+    public List<User> selectCustomer(Pager pager, User user) {
+        return userDAO.selectCustomer(pager, user);
+    }
+
+    public int countStatusEmp(User user) {
+        return userDAO.countStatusEmp(user);
+    }
+
+    public List<User> queryPeoplePagerStatus(Pager pager, User user) {
+        return userDAO.queryPeoplePagerStatus(pager, user);
+    }
+
+    public int countAllEmp(User user) {
+        return userDAO.countAllEmp(user);
+    }
+
+    public List<User> queryPeoplePagerAll(Pager pager, User user) {
+        return userDAO.queryPeoplePagerAll(pager, user);
+    }
+
+    public int countSelectQueryEmp(User user, Role role, Company company) {
+        return userDAO.countSelectQueryEmp(user, role, company);
+    }
+
+    public List<User> selectQueryEmp(Pager pager, User user, Role role, Company company) {
+        return userDAO.selectQueryEmp(pager, user, role, company);
     }
 
 
