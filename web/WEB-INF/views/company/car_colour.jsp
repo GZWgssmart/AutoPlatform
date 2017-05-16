@@ -59,7 +59,7 @@
             <th data-field="colorStatus" data-formatter="status">
                 汽车颜色状态
             </th>
-            <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
+            <shiro:hasAnyRoles name="systemSuperAdmin,systemOrdinaryAdmin">
                 <th data-field="co" data-formatter="operating" data-events="operateEvents">
                     操作
                 </th>
@@ -68,7 +68,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-        <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
+        <shiro:hasAnyRoles name="systemSuperAdmin,systemOrdinaryAdmin">
             <a data-toggle="modal">
                 <button type="button" id="add" onclick="showAddWin();" class="btn btn-default">
                     <i class="glyphicon glyphicon-plus"></i> 添加

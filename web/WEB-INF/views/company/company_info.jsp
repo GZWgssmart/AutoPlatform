@@ -159,7 +159,7 @@
                             <div class="form-group">
                                 <label class="control-label">公司地址：</label>
                                 <div style="position: relative;">
-                                    <input data-toggle="city-picker" class="address" name="companyAddress"/>
+                                    <input data-toggle="city-picker" class="col-sm-6" name="companyAddress"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -174,7 +174,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司负责人手机号码：</label>
-                                <input type="text" id="userPhone" name="userPhone" maxlength="11"
+                                <input type="text" id="userPhone" name="companyPricipalPhone" maxlength="11"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -244,8 +244,9 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司地址：</label>
-                                <input type="text"  name="companyAddress"
-                                       class="form-control" attr="company.companyAddress"/>
+                                <div style="position: relative;">
+                                    <input id="address" type="text" class="col-sm-6" attr="company.companyAddress" name="companyAddress"/>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司联系方式：</label>

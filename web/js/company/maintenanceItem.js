@@ -33,6 +33,10 @@ function showAddWin(){
     $("input[type=reset]").trigger("click");
 }
 
+/**
+ * 显示 配件窗口
+ * */
+var maintenanceltemId
 function showAddacc(){
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
@@ -40,7 +44,7 @@ function showAddacc(){
         return false;
     } else {
         var product = selectRow[0];
-        $("#Form").fill(product);
+        maintenanceltemId = product.maintainId;
         $("#maintenanceWin").modal('show');
     }
 }
@@ -64,29 +68,30 @@ function operating(value, row, index) {
     }
 }
 
-var cout;
-var accId;
-function Addacc() {
-    var maintainId = $("#maintainId").val();
-    var selectRow = $("#cusTable2").bootstrapTable('getSelections');
-    if(selectRow.length!=1){
-        swal('选择失败', "只能选择一条数据进行填写", "error");
-    }else{
-        // cout = $("#count").val();
-        accId = selectRow.accId;
-        $("#maintenanceWin").modal('hidden');
-        $("#accWin").modal("show");
-        // alert(cout);
-        alert(accId);
-        id();
+var AccessoriesId
+function operationWin(value,row,index){
+    alert(row.accId);
+    if(row.accId != null){
+        return[
+            '<button type="button" class="btn btn-default  btn-sm btn-success" onclick="showAccWin();">选择配件</button>'
+        ]
     }
 }
 
-function id(){
-    var rows = $("#cusTable2").bootstrapTable('getSelections');
-    var row = rows[0];
-    var accId = row.accessories.accId;
-    alert(accId);
+function showAccWin(){
+   $("#accWin").modal('show');
+    var Row = $("#cusTable2").bootstrapTable('getSelections');
+    var acc = Row[0]
+    var accId = null;
+}
+
+function Addacc() {
+   var count = $("#count").val();
+   if(Id != null || maintenanceltemId != null||count != null){
+       alert(count);
+       alert(AccessoriesId);
+       alert(maintenanceltemId);
+   }
 }
 
 window.operateEvents = {
