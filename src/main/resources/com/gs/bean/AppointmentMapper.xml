@@ -139,13 +139,12 @@
         <![CDATA[
           select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
 				from t_appointment c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
-				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId and c.speedStatus = '已预约'
+				where 1=1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId and c.speedStatus = '已预约' and c.appoitmentStatus = 'Y'
         ]]>
-        <if test="user.userName != null and user.userName != ''">
-            and c.userName = #{user.userName}
+        <if test="user.userId != null and user.userId != ''">
+            and c.userId = #{user.userId}
         </if>
         order by c.userName desc, c.appCreatedTime
-        limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
     <select id="querySpeedStatus" resultType="list" resultMap="appointmentResultMap">
