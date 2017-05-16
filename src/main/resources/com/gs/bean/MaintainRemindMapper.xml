@@ -103,7 +103,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and rem.companyId = #{user.companyId}
 		</if>
-		order by rem.remindCreatedTime desc
+		order by rem.companyId desc, rem.remindCreatedTime desc, red.recordStatus desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -150,7 +150,7 @@
 		<if test="remind.remindType != null and remind.remindType != ''">
 			and r.remindType = #{remind.remindType}
 		</if>
-		order by r.remindCreatedTime desc, c.companyId
+		order by c.companyId desc, r.remindCreatedTime desc,
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

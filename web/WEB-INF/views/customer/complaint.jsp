@@ -153,7 +153,6 @@
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加回复</h3>
                         <form role="form" id="adminForm" >
-                            <input type="hidden" class="complaintReplyUser" name="complaintReplyUser"/>
                             <input type="hidden" class="complaintId" attr="Reply.complaintId" name="complaintId"/>
                             <div class="form-group">
                                 <label>回复内容：</label>

@@ -64,7 +64,8 @@
 
 	<update id="updateReply" parameterType="complaint">
 		<![CDATA[
-		update t_complaint set  complaintReply = #{complaintReply}, complaintReplyTime= now()
+		update t_complaint set  complaintReply = #{complaintReply}, complaintReplyTime= now(), companyId =#{companyId},
+		complaintReplyUser = #{complaintReplyUser}
 		where complaintId = #{complaintId}
 		]]>
 	</update>

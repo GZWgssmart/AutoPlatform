@@ -36,6 +36,7 @@ function operateFormatter(value, row, index) {
 }
 window.operateEvents = {
     'click .showUpdate': function (e, value, row, index) {
+        validator("editForm");
         var reminder = row;
         $("#editForm").fill(reminder);
         $('#editLastMaintainTime').val(formatterDate(reminder.lastMaintainTime));
