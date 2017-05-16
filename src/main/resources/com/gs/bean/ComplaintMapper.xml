@@ -26,8 +26,8 @@
 
 	<insert id="insert"  parameterType="complaint">
 		<![CDATA[
-		insert into t_complaint (complaintId,userId,complaintContent,complaintCreatedTime)
- 		VALUES(UUID(),#{userId},#{complaintContent},NOW())
+		insert into t_complaint (complaintId,userId,complaintContent,complaintCreatedTime,companyId)
+ 		VALUES(UUID(),#{userId},#{complaintContent},NOW(),#{companyId})
 		]]>
 	</insert>
 
@@ -107,7 +107,7 @@
  		c.complaintReplyUser= u1.userId
 		]]>
 		<if test="user.companyId != null and user.companyId != '' ">
-			and c.companyId = #{user.companyId}
+			where c.companyId = #{user.companyId}
 		</if>
  		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>

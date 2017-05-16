@@ -77,11 +77,11 @@ public class TrackVisitController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         try {
-            User user = (User) session.getAttribute("user");
+            User user = SessionGetUtil.getUser();
             trackList.setTrackUser(user.getUserId());
+            trackList.setCompanyId(user.getCompanyId());
             trackListService.insert(trackList);
-            User LoginUser = SessionGetUtil.getUser();
-            Checkin checkin = checkinService.queryByTrackStatus(trackList.getUserId(),LoginUser);
+            Checkin checkin = checkinService.queryByTrackStatus(trackList.getUserId(),user);
             maintainRecordService.updateTrackStatus("Y",checkin.getCheckinId());
             return ControllerResult.getSuccessResult("添加成功");
         } catch (Exception e) {
