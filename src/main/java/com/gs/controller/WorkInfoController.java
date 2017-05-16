@@ -76,7 +76,7 @@ public class WorkInfoController {
     @RequestMapping(value = "workInfo_pager", method= RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> info_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询所有工单");
                     User user = SessionGetUtil.getUser();
@@ -97,6 +97,80 @@ public class WorkInfoController {
                     return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfos);
                 }
                 return null;
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "workInfo_Status_Y", method= RequestMethod.GET)
+    public Pager4EasyUI<WorkInfo> info_pager_Y(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页查询所有可用工单");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(workInfoService.count_Y(user));
+                    List<WorkInfo> workInfo = workInfoService.queryByPager_Y(pager, user);
+                    return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfo);
+                } else if (CheckRoleUtil.checkRoles(queryRole2)){
+                    logger.info("技师查询自己可用的工单");
+                    User user = (User)session.getAttribute("user");
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(workInfoService.countWorkUserId_Y(user.getUserId()));
+                    List<WorkInfo> workInfos = workInfoService.queryWorkUserId_Y(pager,user.getUserId());
+                    return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfos);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+
+
+
+    @ResponseBody
+    @RequestMapping(value = "workInfo_Status_N", method= RequestMethod.GET)
+    public Pager4EasyUI<WorkInfo> info_pager_N(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
+        if (SessionGetUtil.isUser()) {
+//            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页查询所有不可用工单");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(workInfoService.count_N(user));
+                    List<WorkInfo> workInfo = workInfoService.queryByPager_N(pager, user);
+                    return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfo);
+                } else if (CheckRoleUtil.checkRoles(queryRole2)){
+                    logger.info("技师查询自己不可用的工单");
+                    User user = (User)session.getAttribute("user");
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(workInfoService.countWorkUserId_N(user.getUserId()));
+                    List<WorkInfo> workInfos = workInfoService.queryWorkUserId_N(pager,user.getUserId());
+                    return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfos);
+                }
+                return null;
 //            } catch (Exception e) {
 //                logger.info("分页查询失败，出现了异常");
 //                return null;
@@ -106,6 +180,7 @@ public class WorkInfoController {
             return null;
         }
     }
+
 
     @ResponseBody
     @RequestMapping(value = "workInfo_update", method = RequestMethod.POST)
@@ -147,9 +222,9 @@ public class WorkInfoController {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("状态修改");
                     if(status.equals("Y")){
-                        maintainRecordService.inactive(id);
+                        workInfoService.inactive(id);
                     } else {
-                        maintainRecordService.active(id);
+                        workInfoService.active(id);
                     }
                     return ControllerResult.getSuccessResult(" 修改成功");
                 }

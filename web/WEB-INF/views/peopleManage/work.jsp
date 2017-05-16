@@ -72,6 +72,15 @@
                 <i class="glyphicon glyphicon-pencil"></i> 指派员工
             </button></a>
             </shiro:hasAnyRoles>
+            <a><button onclick="showWork_N();" type="button" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> 查看不可用
+            </button></a>
+            <a><button onclick="showWork_Y();" type="button" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> 查看可用
+            </button></a>
+            <a><button onclick="showWork();" type="button" class="btn btn-default">
+                <i class="glyphicon glyphicon-search"></i> 查看全部工单
+            </button></a>
         </div>
         </tbody>
     </table>

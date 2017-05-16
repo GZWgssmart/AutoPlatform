@@ -46,6 +46,38 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 		return workInfoDAO.countWorkUserId(userId);
 	}
 
+	public List<WorkInfo> queryByPager_N(Pager pager, User user) {
+		return workInfoDAO.queryByPager_N(pager, user);
+	}
+
+	public int count_N(User user) {
+		return workInfoDAO.count_N(user);
+	}
+
+	public List<WorkInfo> queryWorkUserId_N(Pager pager, String userId) {
+		return workInfoDAO.queryWorkUserId_N(pager, userId);
+	}
+
+	public int countWorkUserId_N(String userId) {
+		return workInfoDAO.countWorkUserId_N(userId);
+	}
+
+	public List<WorkInfo> queryByPager_Y(Pager pager, User user) {
+		return workInfoDAO.queryByPager_Y(pager, user);
+	}
+
+	public int count_Y(User user) {
+		return workInfoDAO.count_Y(user);
+	}
+
+	public List<WorkInfo> queryWorkUserId_Y(Pager pager, String userId) {
+		return workInfoDAO.queryWorkUserId_Y(pager, userId);
+	}
+
+	public int countWorkUserId_Y(String userId) {
+		return workInfoDAO.countWorkUserId_Y(userId);
+	}
+
 	@Override
 	public List<WorkInfo> queryByDefault(String maintainOrFix, String companyId) {
 		return workInfoDAO.queryByDefault(maintainOrFix,companyId);

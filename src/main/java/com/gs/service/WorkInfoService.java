@@ -21,6 +21,33 @@ public interface WorkInfoService extends BaseService<String, WorkInfo>{
     // 技师查询自己的工单个数
     public int countWorkUserId(String userId);
 
+
+    // 分页查询不可用的工单
+    public List<WorkInfo> queryByPager_N(Pager pager, User user);
+
+    // 分页查询不可用的工单个数
+    public int count_N(User user);
+
+    // 技师查询自己可用的工单
+    public List<WorkInfo> queryWorkUserId_N(Pager pager, String userId);
+
+    // 技师查询自己可用的工单个数
+    public int countWorkUserId_N(String userId);
+
+
+    // 分页查询可用的工单
+    public List<WorkInfo> queryByPager_Y(Pager pager, User user);
+
+    // 分页查询可用的工单个数
+    public int count_Y(User user);
+
+    // 技师查询自己可用的工单
+    public List<WorkInfo> queryWorkUserId_Y(Pager pager, String userId);
+
+    // 技师查询自己可用的工单个数
+    public int countWorkUserId_Y(String userId);
+
+
     /*
    * 默认查询本月的工单统计
    * */
