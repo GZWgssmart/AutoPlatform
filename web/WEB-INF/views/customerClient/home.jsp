@@ -54,6 +54,7 @@
                             </li>
                             <li><a class="J_menuItem" href="profile.html">个人资料</a>
                             </li>
+                            <li><a class="J_menuItem" href="change_password.html">更改密码</a>
                             <li class="divider"></li>
                             <li><a href="<%=path %>/login/logout">安全退出</a>
                             </li>
@@ -67,7 +68,7 @@
                     <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span class="nav-label">维修保养预约管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/appointment/appointment">我的预约</a>
+                        <li><a class="J_menuItem" href="<%=path %>/customerClient/appointment">我的预约</a>
                         </li>
                     </ul>
                 </li>
@@ -76,7 +77,7 @@
                     <a href="#"><i class="fa fa-hand-lizard-o"></i> <span class="nav-label">维修保养接待管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/appointment/appointment">我的接待</a>
+                        <li><a class="J_menuItem" href="<%=path %>/customerClient/checkin">我的接待</a>
                         </li>
                     </ul>
                 </li>
@@ -89,7 +90,7 @@
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">我的维修保养明细</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">我的维修保养进度</a>
+                        <li><a class="J_menuItem" href="<%=path%>/customerClient/progress">我的维修保养进度</a>
                         </li>
                     </ul>
                 </li>
@@ -126,7 +127,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <%--<li>
                     <a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         <span class="nav-label">系统管理</span><span
                                 class="fa arrow"></span></a>
@@ -136,8 +137,8 @@
                         <li><a class="J_menuItem" href="<%=path %>/admin/info">修改密码</a>
                         </li>
                     </ul>
-                </li>
-
+                </li>--%>
+progress   checkin   appointment
             </ul>
         </div>
     </nav>
