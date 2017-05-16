@@ -148,6 +148,7 @@
                                             </div>
 
                                             <div class="tab-content-inner" data-content="login">
+                                                <div id="errMsg" style="color: red"></div>
                                                 <form id="login_form" method="post">
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
