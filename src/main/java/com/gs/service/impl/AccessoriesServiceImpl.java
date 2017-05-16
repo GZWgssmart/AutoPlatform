@@ -73,4 +73,14 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 		return accessoriesDAO.queryByIdTotalAndIdle(accId);
 	}
 
+	@Override
+	public List<Accessories> queryByConditionTotal(String startTime, String endTime, String type, String companyId,String accTypeId) {
+		return accessoriesDAO.queryByConditionTotal(startTime,endTime,type,companyId,accTypeId);
+	}
+
+	@Override
+	public List<Accessories> queryByConditionIdle(String startTime, String endTime, String type, String companyId,String accTypeId) {
+		return accessoriesDAO.queryByConditionIdle(startTime,endTime,type,companyId,accTypeId);
+	}
+
 }

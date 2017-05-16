@@ -4,27 +4,24 @@
 
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable","/company/queryByPager");
-    destoryValidator("addWin","addForm");
-    destoryValidator("editWin","editForm");
-    //当点击查询按钮的时候执行
-    $("#search").bind("click", initTable);
+    initTable("cusTable", "/company/queryByPager");
+    destoryValidator("addWin", "addForm");
+    destoryValidator("editWin", "editForm");
 
-    initDateTimePicker("form_datetime","companyOpenDate","editForm");
-    initDateTimePicker("form_datetime","companyOpenDate","addForm");
+
 });
-function companyAll(){
-    initTable("cusTable","/company/queryByPager");
+function companyAll() {
+    initTable("cusTable", "/company/queryByPager");
 }
 /**查看不可用的公司*/
-function statusUsableness(){
+function statusUsableness() {
     var ids = 'Y';
-    initTable("cusTable","/company/queryStatusPager?status="+ids);
+    initTable("cusTable", "/company/queryStatusPager?status=" + ids);
 }
 /**查看可用的公司*/
-function statusAvailable(){
+function statusAvailable() {
     var ids = "N";
-    initTable("cusTable","/company/queryStatusPager?status="+ids);
+    initTable("cusTable", "/company/queryStatusPager?status=" + ids);
 }
 
 /** 编辑数据 */
@@ -35,9 +32,10 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
+        initDateTimePicker("form_datetime", "companyOpenDate", "editForm");
         $('#companys').html('<option value="' + product.companySize + '">' + product.companySize + '</option>').trigger("change");
         $('#editCompanyOpenDate').val(formatterDate(product.companyOpenDate));
-        $("#icon").attr("src","/" + product.companyLogo);
+        $("#icon").attr("src", "/" + product.companyLogo);
         initCityPicker("address");
         $("#editForm").fill(product);
         $("#editWin").modal('show');
@@ -59,25 +57,26 @@ function operating(value, row, index) {
     }
 }
 
-function formatterImg(value, row, index){
-    if(row.companyLogo !=null){
+function formatterImg(value, row, index) {
+    if (row.companyLogo != null) {
         return [
-            '<img style="width:120px;height:60px;" src="/'+ value +'">'
+            '<img style="width:120px;height:60px;" src="/' + value + '">'
         ]
     }
 }
 
-function companyOpDateFormatter(value, row, index){
-    if(row.companyOpenDate !=null){
-       var date =  formatterDate(value);
+function companyOpDateFormatter(value, row, index) {
+    if (row.companyOpenDate != null) {
+        var date = formatterDate(value);
         return date;
     }
 }
 
-function showAddWin(){
+function showAddWin() {
+    validator("addForm");
+    initDateTimePicker("form_datetime", "companyOpenDate", "addForm");
     $('#companys').html('').trigger("change");
     $("#addWin").modal('show');
-    validator("addForm");
 }
 
 
@@ -135,15 +134,16 @@ window.operateEvents = {
             }, "json");
     },
     'click .showUpdateIncomingType1': function (e, value, row, index) {
-    var incomingType = row;
-    $('#companys').html('<option value="' + incomingType.companySize + '">' + incomingType.companySize + '</option>').trigger("change");initDateTimePicker("form_datetime","","editForm");
-    $("#icon").attr("src","/" + incomingType.companyLogo);
-    $('#editCompanyOpenDate').val(formatterDate(incomingType.companyOpenDate));
-    initCityPicker("address");
-    $("#editForm").fill(incomingType);
-    $("#editWin").modal('show');
-    validator("editForm");
-}
+        var incomingType = row;
+        $('#companys').html('<option value="' + incomingType.companySize + '">' + incomingType.companySize + '</option>').trigger("change");
+        initDateTimePicker("form_datetime", "", "editForm");
+        $("#icon").attr("src", "/" + incomingType.companyLogo);
+        $('#editCompanyOpenDate').val(formatterDate(incomingType.companyOpenDate));
+        initCityPicker("address");
+        $("#editForm").fill(incomingType);
+        $("#editWin").modal('show');
+        validator("editForm");
+    }
 }
 
 
@@ -173,13 +173,10 @@ function validator(formId) {
             companyDes: {
                 message: '公司描述失败',
                 validators: {
-                    notEmpty: {
-                        message: '公司描述不能为空'
-                    },
                     stringLength: {
-                        min: 1,
+                        min: 0,
                         max: 500,
-                        message: '公司描述长度必须在1到500位之间'
+                        message: '公司描述长度不能操作500位数'
                     }
                 }
             },
@@ -201,14 +198,10 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '公司联系方式不能为空'
-                    },
-                    regexp: {
-                        regexp: /^\d{3,4}-?\d{7,9}$/,
-                        message: '公司号码格式错误'
-                    },stringLength: {
-                        min: 11,
-                        max: 11,
-                        message: '公司号码长度必须在8到11位之间'
+                    }, stringLength: {
+                        min: 13,
+                        max: 13,
+                        message: '公司号码长度必须是13位'
                     }
                 }
             },
@@ -220,16 +213,16 @@ function validator(formId) {
                     },
                     stringLength: {
                         min: 2,
-                        max: 200,
-                        message: '公司负责人长度必须在2到10位之间'
+                        max: 4,
+                        message: '公司负责人长度必须在2到4位之间'
                     }
                 }
             },
             companyWebsite: {
                 message: '公司官网URL失败',
                 validators: {
-                    url:{
-                        url:true,
+                    url: {
+                        url: true,
                         message: 'url格式有误,例如http://www.baibau.com,https://www.baidu.com'
                     },
                     notEmpty: {
@@ -238,7 +231,7 @@ function validator(formId) {
                 }
 
             },
-            companyOpenDate:{
+            companyOpenDate: {
                 message: '公司创建时间',
                 validators: {
                     notEmpty: {
@@ -246,7 +239,7 @@ function validator(formId) {
                     }
                 }
             },
-            companySize:{
+            companySize: {
                 message: '公司规模失败',
                 validators: {
                     notEmpty: {
@@ -254,27 +247,27 @@ function validator(formId) {
                     }
                 }
             },
-            companyLongitude:{
+            companyLongitude: {
                 message: '公司经度失败',
                 validators: {
-                    number:{
-                        number:true,
+                    number: {
+                        number: true,
                         message: '公司经度格式错误'
-                    } ,
+                    },
                     notEmpty: {
                         message: '公司经度不能为空'
-                    },
+                    }
                 }
             },
-            companyLatitude:{
-                message:'公司纬度失败',
-                validators:{
-                    notEmpty:{
-                        message:'纬度不能为空'
-                    },
-                    number:{
-                        number:true,
+            companyLatitude: {
+                message: '公司纬度失败',
+                validators: {
+                    number: {
+                        number: true,
                         message: '公司纬度格式错误'
+                    },
+                    notEmpty: {
+                        message: '公司纬度不能为空'
                     }
                 }
             },
@@ -298,7 +291,7 @@ function validator(formId) {
                 $("#editButton").on("click", function () {
                     $("#editForm").data('bootstrapValidator').validate();
                     if ($("#editForm").data('bootstrapValidator').isValid()) {
-                        $("#editButton").attr("disabled","disabled");
+                        $("#editButton").attr("disabled", "disabled");
                     } else {
                         $("#editButton").removeAttr("disabled");
                     }
@@ -320,8 +313,8 @@ function validator(formId) {
                         }
                     })
                 })
-        }
-    })
+            }
+        })
 }
 
 /** 关闭搜索的form */
@@ -331,62 +324,74 @@ function closeSearchForm() {
     $("#showButton").show();
 }
 
-function searchCompany(){
+function searchCompany() {
     var companyName = $("#searchCompanyName").val();
     var userName = $("#searchUserName").val();
-    initTable("cusTable","/company/search?companyName="+ companyName + "&userName=" + userName);
+    initTable("cusTable", "/company/search?companyName=" + companyName + "&userName=" + userName);
 }
 
 
-
 //图片上传预览    IE是用了滤镜。
-function previewImage(file)
-{
-    var MAXWIDTH  = 120;
+function previewImage(file) {
+    var MAXWIDTH = 120;
     var MAXHEIGHT = 60;
     var div = document.getElementById('preview');
-    if (file.files && file.files[0])
-    {
-        div.innerHTML ='<img id=imghead onclick=$("#previewImg").click()>';
+    if (file.files && file.files[0]) {
+        div.innerHTML = '<img id=imghead onclick=$("#previewImg").click()>';
         var img = document.getElementById('imghead');
-        img.onload = function(){
+        img.onload = function () {
             var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-            img.width  =  rect.width;
-            img.height =  rect.height;
+            img.width = rect.width;
+            img.height = rect.height;
 //                 img.style.marginLeft = rect.left+'px';
-            img.style.marginTop = rect.top+'px';
+            img.style.marginTop = rect.top + 'px';
         }
         var reader = new FileReader();
-        reader.onload = function(evt){img.src = evt.target.result;}
+        reader.onload = function (evt) {
+            img.src = evt.target.result;
+        }
         reader.readAsDataURL(file.files[0]);
     }
     else //兼容IE
     {
-        var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+        var sFilter = 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
         file.select();
         var src = document.selection.createRange().text;
         div.innerHTML = '<img id=imghead>';
         var img = document.getElementById('imghead');
         img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
         var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-        status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
-        div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+        status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
+        div.innerHTML = "<div id=divhead style='width:" + rect.width + "px;height:" + rect.height + "px;margin-top:" + rect.top + "px;" + sFilter + src + "\"'></div>";
     }
 }
 
-function clacImgZoomParam( maxWidth, maxHeight, width, height ){
-    var param = {top:0, left:0, width:width, height:height};
-    if( width>maxWidth || height>maxHeight ){
+function clacImgZoomParam(maxWidth, maxHeight, width, height) {
+    var param = {top: 0, left: 0, width: width, height: height};
+    if (width > maxWidth || height > maxHeight) {
         rateWidth = width / maxWidth;
         rateHeight = height / maxHeight;
 
-        if( rateWidth > rateHeight ){
-            param.width =  maxWidth;
+        if (rateWidth > rateHeight) {
+            param.width = maxWidth;
             param.height = Math.round(height / rateWidth);
-        }else{
+        } else {
             param.width = Math.round(width / rateHeight);
             param.height = maxHeight;
         }
     }
     return param;
+}
+
+/** 选择公司位置 */
+function showMap() {
+    $("#mapWin").modal("show");
+}
+
+/** 确定 */
+function determine() {
+    var temp = $("#result_").val().split(",");
+    $("#addLongitude").val(temp[0]).trigger("change");
+    $("#addLatitude").val(temp[1]).trigger("change");
+    $("#mapWin").modal("hide");
 }

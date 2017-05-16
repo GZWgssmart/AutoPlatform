@@ -1,4 +1,4 @@
-var customer;
+var userInfo;
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/appointment/query_pager?status=ALL");
@@ -11,7 +11,7 @@ $(document).ready(function () {
     destoryValidator("addWin","addForm");
     destoryValidator("editWin","editForm");
 
-    $("#isApp").bootstrapSwitch({
+    $("#choiceUser").bootstrapSwitch({
         onText: '是',
         offText: '否',
         onColor: 'success',
@@ -21,20 +21,36 @@ $(document).ready(function () {
         onSwitchChange: function (event, state) {
             if (state == true) {
                 //调用函数，初始化表格
-                initTableNotTollbar("appTable", "/customer/customerInfo_pager");
-                $("#appWin").modal('show');
+                initTableNotTollbar("userTable", "/customer/customerInfo_pager");
+                $("#userWin").modal('show');
             } else if (state == false) {
             }
         }
     });
 
-    $("#appWin").on("hide.bs.modal", function () {
-
-        $('#isApp').bootstrapSwitch('state', false);
-
-    });
-
 });
+
+/** 监听是否从系统中选择监听事件 */
+function isUserChoice() {
+    if ($('#choiceUser').bootstrapSwitch('state')) {
+        if (userInfo != null && userInfo != "" && userInfo != undefined) {
+            setData(userInfo, "userInfo");
+        }
+    } else {
+        if (userInfo != null && userInfo != "" && userInfo != undefined) {
+            clearAddForm();
+        }
+    }
+}
+
+/** 给添加的form表单设置值 */
+function setData(userInfo, flag) {
+    $("#userDiv").hide();
+    $("#addUserName").val(userInfo.userName);
+    $("#addUserPhone").val(userInfo.userPhone);
+    $("#addUserId").val(userInfo.userId);
+}
+
 
 /** 添加选择品牌 */
 function checkBrand(combo) {
@@ -45,35 +61,6 @@ function checkBrand(combo) {
         initSelect2("car_model", "请选择车型", "/carModel/car_model_all?brandId=" + brandId, "565");
     } else {
         $("#carModelDiv").hide();
-    }
-}
-
-/** 监听switch的监听事件 */
-function isAppChoice() {
-    if ($('#isApp').bootstrapSwitch('state')) {
-        if (customer != null && customer != "" && customer != undefined) {
-            setData(customer,"customer");
-        }
-    } else {
-        if (customer != null && customer != "" && customer != undefined) {
-            clearAddForm();
-        }
-    }
-}
-
-/** 选择车主*/
-function checkApp() {
-    var selectRow = $("#appTable").bootstrapTable('getSelections');
-    if (selectRow.length != 1) {
-        swal('选择失败', "只能选择一条数据", "error");
-        return false;
-    } else {
-        customer = selectRow[0];
-        setData(customer,"customer");
-        $("#appWin").on("hide.bs.modal", function () {
-            $('#isApp').bootstrapSwitch('state', true);
-        });
-        $("#appWin").modal('hide');
     }
 }
 
@@ -89,9 +76,38 @@ function editCheckBrand(combo) {
     }
 }
 
+/** 关闭选择车主信息 */
+function closeUserWin() {
+    $('#choiceUser').bootstrapSwitch('state', false);
+}
+
+/** 清除添加的form表单信息 */
+function clearAddForm() {
+    $("#userDiv").show();
+    $('#addCarBrand').html('').trigger("change");
+    $('#addCarColor').html('').trigger("change");
+    $('#addCarModel').html('').trigger("change");
+    $('#addCarPlate').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
+}
+
+/** 选择车主信息 */
+function choiceUser() {
+    var selectRow = $("#userTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择失败', "只能选择一个车主信息", "error");
+        return false;
+    } else {
+        userInfo = selectRow[0];
+        setData(userInfo, "userInfo");
+        $('#choiceUser').bootstrapSwitch('state', true);
+        $("#userWin").modal('hide');
+    }
+}
+
 /** 显示添加数据的窗口 */
 function showAddWin() {
-    customer = "";
+    userInfo = "";
     validator("addForm");
     initDateTimePicker("datetimepicker", "arriveTime","addForm");
     $("#addWin").modal('show');
@@ -99,8 +115,8 @@ function showAddWin() {
 
 /** 关闭选择 */
 function closeAppWin() {
+    $('#isApp').bootstrapSwitch('state', false);
     $("#appWin").modal('hide');
-    $("#addWin").modal('show')
 }
 
 /** 给添加的form表单设置值 */
@@ -111,14 +127,11 @@ function setData(customer) {
     $("#addUserId").val(customer.userId);
 
 }
-
-/** 清除添加的form表单信息 */
-function clearAddForm() {
-    $("#appDiv").show();
-    $('#addUserName').html('').trigger("change");
-    $('#addUserPhone').html('').trigger("change");
-    $('#addUserId').html('').trigger("change");
-    $("input[type=reset]").trigger("click");
+/** 格式化车主信息操作栏 */
+function formatterChoiceUser(value, row, index) {
+    return [
+        '<button type="button" class="choiceUser btn btn-primary btn-sm" style="margin-left:15px;" >选择</button>'
+    ].join('');
 }
 
 /** 编辑数据 */
@@ -222,17 +235,23 @@ window.operateEvents = {
         $('#editDatetimepicker').val(formatterDate(appointment.arriveTime));
         validator("editForm");
         $("#editWin").modal('show');
-    }
+    },
+    'click .choiceUser': function (e, value, row, index) {
+        userInfo = row;
+        setData(userInfo, "userInfo");
+        $('#choiceUser').bootstrapSwitch('state', true);
+        $("#userWin").modal('hide');
+    },
 }
 
 /**  条件查询*/
 function searchCheckin() {
-    var companyId = $("#searchCompanyId").val();
     var userName = $("#searchUserName").val();
     var userPhone = $("#searchUserPhone").val();
     var carPlate = $("#searchCarPlate").val();
     var maintainOrFix = $("#searchMaintainOrFix").val();
-    initTable("cusTable", "/appointment/appointment_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate +  "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
+    var companyId = $("#searchCompanyId").val();
+    initTable("cusTable", "/appointment/appointment_pager?userName=" + userName + "&userPhone=" + userPhone + "&carPlate=" + carPlate + "&maintainOrFix=" + maintainOrFix + "&companyId=" + companyId);
 }
 
 /** 关闭搜索的form */
@@ -342,38 +361,10 @@ function validator(formId) {
     })
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                $.post("/appointment/add",
-                    $("#" + formId).serialize(),
-                    function (data) {
-                        if (data.result == "success") {
-                            $('#addWin').modal('hide');
-                            $('#cusTable').bootstrapTable('refresh');
-                        } else if (data.result == "fail") {
-                            swal("错误提示", data.message, "error");
-                        } else if (data.result == "notLogin") {
-                            swal({
-                                    title: "登入失败",
-                                    text: data.message,
-                                    type: "warning",
-                                    showCancelButton: true,
-                                    confirmButtonColor: "#DD6B55",
-                                    confirmButtonText: "确认",
-                                    cancelButtonText: "取消",
-                                    closeOnConfirm: true,
-                                    closeOnCancel: true
-
-                                },
-                                function (isConfirm) {
-                                    if (isConfirm) {
-                                        top.location.href = "/login/show_login";
-                                    } else {
-                                    }
-                                });
-                        }
-                    }, "json");
+                formSubmit("/appointment/add", formId, "addWin");
                 clearAddForm();
             } else if (formId == "editForm") {
-                formSubmit("/appointment/edit", formId, "editWin");
+                formSubmit("/appointment/update", formId, "editWin");
             }
         })
 }

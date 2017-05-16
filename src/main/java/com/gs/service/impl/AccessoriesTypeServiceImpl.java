@@ -51,4 +51,9 @@ public class AccessoriesTypeServiceImpl implements AccessoriesTypeService {
 		return accessoriesTypeDAO.queryByCondition(pager, accessoriesType, user);
 	}
 
+	@Override
+	public List<AccessoriesType> queryByCompany(String companyId) {
+		return accessoriesTypeDAO.queryByCompany(companyId);
+	}
+
 }

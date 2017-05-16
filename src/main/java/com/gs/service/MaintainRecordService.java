@@ -115,7 +115,7 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      * @param user
      * @return
      */
-    public int countByUserId(User user, String pickingStatus);
+    public int countByUserId(User user, String pickingStatus, String[] speedStatus);
 
     /**
      * 根据员工的id查询该员工负责的维修保养记录，分页查询
@@ -123,7 +123,7 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      * @param user
      * @return
      */
-    public List<MaintainRecord> queryPagerByUserId(Pager pager, User user, String pickingStatus);
+    public List<MaintainRecord> queryPagerByUserId(Pager pager, User user, String pickingStatus, String[] speedStatus);
 
     /**
      * 根据id更新记录的进度

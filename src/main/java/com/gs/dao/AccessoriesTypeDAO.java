@@ -24,4 +24,8 @@ public interface AccessoriesTypeDAO extends BaseDAO<String, AccessoriesType>{
     public int countByCondition(@Param("accessoriesType") AccessoriesType accessoriesType, @Param("user") User user);
     public List<AccessoriesType> queryByCondition(@Param("pager") Pager Pager, @Param("accessoriesType") AccessoriesType accessoriesType, @Param("user") User user);
 
+    /*
+    * 查询某个公司下的所有配件分类
+    * */
+    public List<AccessoriesType> queryByCompany(@Param("companyId")String companyId);
 }

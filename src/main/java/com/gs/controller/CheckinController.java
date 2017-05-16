@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -72,6 +73,20 @@ public class CheckinController {
             return "index/notLogin";
         }
 
+    }
+
+    @RequestMapping(value = "my_checkin", method = RequestMethod.GET)
+    public ModelAndView carOwerAppointment(){
+        ModelAndView mav = new ModelAndView();
+        User user = SessionGetUtil.getUser();
+        if (!SessionGetUtil.isUser()){
+            mav.setViewName("index/notLogin");
+            return mav;
+        }
+        logger.info("车主用户查看我的接待");
+        mav.setViewName("customerClient/checkin");
+        mav.addObject("chs", checkinService.queryMyName(user));
+        return mav;
     }
 
     @ResponseBody

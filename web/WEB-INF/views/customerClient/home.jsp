@@ -68,7 +68,7 @@
                     <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span class="nav-label">维修保养预约管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/customerClient/appointment">我的预约</a>
+                        <li><a class="J_menuItem" href="<%=path %>/appointment/my_app">我的预约</a>
                         </li>
                     </ul>
                 </li>
@@ -77,7 +77,7 @@
                     <a href="#"><i class="fa fa-hand-lizard-o"></i> <span class="nav-label">维修保养接待管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/customerClient/checkin">我的接待</a>
+                        <li><a class="J_menuItem" href="<%=path %>/checkin/my_checkin">我的接待</a>
                         </li>
                     </ul>
                 </li>
@@ -87,8 +87,6 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">我的维修保养记录</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">我的维修保养明细</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/customerClient/progress">我的维修保养进度</a>
                         </li>
@@ -121,8 +119,6 @@
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path%>/complaint/show_complaint">我的投诉</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/trackVisit/show_trackVisit">跟踪回访</a>
                         </li>
                     </ul>
                 </li>

@@ -224,8 +224,11 @@
         <![CDATA[
 		  select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 		    from t_maintain_record r,  t_checkin c, t_company cpy, t_work_info i
-		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordId = i.recordId and r.speedStatus = '维修保养中' and r.pickingStatus != #{pickingStatus} and i.userId = #{user.userId}
+		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.recordId = i.recordId and r.pickingStatus != #{pickingStatus} and i.userId = #{user.userId} and r.speedStatus in
         ]]>
+        <foreach item="item" index="index" collection="speedStatus" open="(" separator="," close=")">
+            #{item}
+        </foreach>
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
         </if>
@@ -314,8 +317,11 @@
 
     <select id="countByUserId" resultType="int">
         <![CDATA[
-		  select count(*) from t_maintain_record r, t_work_info i where 1 = 1 and r.recordId = i.recordId and r.speedStatus = '维修保养中' and r.pickingStatus != #{pickingStatus} and i.userId = #{user.userId}
+		  select count(*) from t_maintain_record r, t_work_info i where 1 = 1 and r.recordId = i.recordId and r.pickingStatus != #{pickingStatus} and i.userId = #{user.userId} and r.speedStatus in
         ]]>
+        <foreach item="item" index="index" collection="speedStatus" open="(" separator="," close=")">
+            #{item}
+        </foreach>
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
         </if>

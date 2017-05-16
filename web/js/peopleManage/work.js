@@ -1,10 +1,6 @@
 $(document).ready(function () {
-    initDateTimePicker("form_datetime","endTime","editForm");
     //调用函数，初始化表格
     initTable("cusTable", "/peopleManage/workInfo_pager");
-    //当点击查询按钮的时候执行
-    $("#search").bind("click", initTable);
-
     initSelect2("work_user", "请选择员工", "/peopleManage/self_user", 565);
     destoryValidator("editWin","editForm");
 });
@@ -79,15 +75,29 @@ window.operateEvents = {
     }
 }
 
+/** 查看不可用 */
+function showWork_N() {
+    initTable("cusTable", "/peopleManage/workInfo_Status_N");
+}
 
+/** 查看可用 */
+function showWork_Y() {
+    initTable("cusTable", "/peopleManage/workInfo_Status_Y");
+}
+
+/** 查看全部工单 */
+function showWork() {
+    initTable("cusTable", "/peopleManage/workInfo_pager");
+}
 
 
 /**编辑数据 */
 function showEditWin() {
-    validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length > 0) {
         var work = selectRow[0];
+        initDateTimePickerNotValitor("form_datetime");
+        validator("editForm");
         $("#editForm").fill(work);
         $("#workEndTime").val(formatterDate(work.maintainRecord.endTime));
         $("#editWin").modal("show");
@@ -107,6 +117,7 @@ function validator(formId) {
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
+
     })
         .on('success.form.bv', function (e) {
             if (formId == "editForm") {

@@ -62,4 +62,6 @@ public interface CheckinDAO extends BaseDAO<String, Checkin>{
      * @return
      */
     public List<Checkin> queryByTop(@Param("top") int top, @Param("user") User user);
+
+    public List<Checkin> queryMyName(@Param("user") User user);
 }

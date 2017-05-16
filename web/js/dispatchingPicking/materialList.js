@@ -3,7 +3,8 @@
  */
 var contextPath = '';
 $(document).ready(function () {
-    initTable("cusTable", contextPath + "/record/pager_picking");
+    var speedStatus = "维修保养中,未提醒,已提醒,已完成"
+    initTable("cusTable", contextPath + "/record/pager_picking?speedStatus=" + speedStatus);
     initDateTimePickerNotValitor("form_datetime");
     $("#search").bind("click", initTable);
 });
@@ -205,6 +206,8 @@ function showGetMaterial() {
                 function (data) {
                     if (data.result == "success") {
                         swal("成功提示", data.message, "success");
+                        $("#searchMaterialWin").modal('hide');
+                        $('#cusTable').bootstrapTable('refresh');
                     } else if (data.result == "fail") {
                         swal("错误提示", data.message, "error");
                     } else if (data.result == "notLogin") {

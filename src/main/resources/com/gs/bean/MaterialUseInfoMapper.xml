@@ -18,12 +18,11 @@
     </resultMap>
 
     <insert id="addByRecordIdMu">
-        <selectKey resultType="int" keyProperty="materialUseId" order="AFTER">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
+        <![CDATA[
         insert into t_material_use
         values
-        <foreach collection="list" item="item" index="index" separator="," >
+        ]]>
+        <foreach collection="list" item="item" index="index" separator=",">
             (uuid(),#{item.recordId},#{item.accId}, #{item.accCount}, now(), now())
         </foreach>
     </insert>
@@ -60,6 +59,14 @@
         </if>
         order by mu.muUseDate asc
         limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="queryByIdAccCount" resultType="materialUseInfo">
+        <![CDATA[
+
+			select * from t_material_use where materialUseId = #{materialUseId}
+
+        ]]>
     </select>
 
     <select id="countBySpeedStatus" resultType="int">

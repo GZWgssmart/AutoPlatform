@@ -26,4 +26,7 @@ public interface MaterialUseInfoDAO {
 
     /**根据维修记录编号统计*/
     public int countBySpeedStatus(@Param("recordId") String recordId, @Param("user") User user);
+
+    /**根据领料编号来查当前数据的领料数据*/
+    public MaterialUseInfo queryByIdAccCount(String materialUseId);
 }

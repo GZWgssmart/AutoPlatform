@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRecord;
 import com.gs.bean.User;
+import com.gs.bean.WorkInfo;
 import com.gs.bean.info.SendRemind;
 import com.gs.common.Constants;
 import com.gs.common.bean.*;
@@ -11,6 +12,7 @@ import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.MaintainRecordService;
 import com.gs.service.UserService;
+import com.gs.service.WorkInfoService;
 import com.gs.thread.SendEmailThread;
 import com.jh.email.Mail;
 import org.apache.ibatis.annotations.Param;
@@ -50,6 +52,9 @@ public class RecordController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private WorkInfoService workInfoService;
+
     // 可以查看的角色：董事长、接待员、普通管理员、超级管理员、技师
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE + ","
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ARTIFICER;
@@ -69,6 +74,8 @@ public class RecordController {
     // 可以操作的角色：董事长、库管
     private String editRole1 = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY;
 
+    // 可以操作的角色：董事长、库管、技师
+    private String editRole2 = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," + Constants.COMPANY_ARTIFICER;
 
     @RequestMapping(value = "record_page", method = RequestMethod.GET)
     public String recordPage() {
@@ -263,15 +270,15 @@ public class RecordController {
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
                     List<MaintainRecord> maintainRecordList = new ArrayList<MaintainRecord>();
+                    String[] ss = speedStatus.split(",");
                     if (!CheckRoleUtil.checkRoles(Constants.COMPANY_ARTIFICER)) {
-                        String[] ss = speedStatus.split(",");
                         String pickingStatus = Constants.NOT_APPLY;
                         pager.setTotalRecords(maintainRecordService.countBySpeedStatusAndPickingStatus(ss, pickingStatus, user));
                         maintainRecordList = maintainRecordService.queryPagerBySpeedStatusAndPickingStatus(ss, pager, pickingStatus, user);
                     } else {
                         String pickingStatus = Constants.NOT_APPLY;
-                        pager.setTotalRecords(maintainRecordService.countByUserId(user, pickingStatus));
-                        maintainRecordList = maintainRecordService.queryPagerByUserId(pager, user, pickingStatus);
+                        pager.setTotalRecords(maintainRecordService.countByUserId(user, pickingStatus, ss));
+                        maintainRecordList = maintainRecordService.queryPagerByUserId(pager, user, pickingStatus, ss);
                     }
                     return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
                 }
@@ -288,7 +295,7 @@ public class RecordController {
 
     @ResponseBody
     @RequestMapping(value = "pager_picking",method= RequestMethod.GET)
-    public Pager4EasyUI<MaintainRecord> queryPagerByUserId(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    public Pager4EasyUI<MaintainRecord> queryPagerByUserId(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("speedStatus")String speedStatus){
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole2)) {
@@ -298,14 +305,14 @@ public class RecordController {
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
                     List<MaintainRecord> maintainRecordList = new ArrayList<MaintainRecord>();
+                    String[] ss = speedStatus.split(",");
                     if (!CheckRoleUtil.checkRoles(Constants.COMPANY_ARTIFICER)) {
-                        String speedStatus = Constants.MAINTAIN_FIX;
-                        String[] ss = speedStatus.split(",");
+
                         pager.setTotalRecords(maintainRecordService.countBySpeedStatus(ss, user));
                         maintainRecordList = maintainRecordService.queryPagerBySpeedStatus(pager, ss, user);
                     } else {
-                        pager.setTotalRecords(maintainRecordService.countByUserId(user, ""));
-                        maintainRecordList = maintainRecordService.queryPagerByUserId(pager, user, "");
+                        pager.setTotalRecords(maintainRecordService.countByUserId(user, "", ss));
+                        maintainRecordList = maintainRecordService.queryPagerByUserId(pager, user, "", ss);
                     }
 
                     return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
@@ -328,10 +335,13 @@ public class RecordController {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("更新维修保养记录状态");
+                    WorkInfo wi = workInfoService.queryByRecordId(id);
                     if (status.equals("Y")) {
                         maintainRecordService.inactive(id);
+                        workInfoService.inactive(wi.getWorkId());
                     } else if (status.equals("N")) {
                         maintainRecordService.active(id);
+                        workInfoService.active(wi.getWorkId());
 
                     }
                     return ControllerResult.getSuccessResult("更新成功");
@@ -627,15 +637,33 @@ public class RecordController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "achieve_record", method = RequestMethod.GET)
+    public ControllerResult achieveRecord(String recordId) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        try {
+            if (!CheckRoleUtil.checkRoles(editRole2)) {
+                logger.info("更新失败");
+                return ControllerResult.getFailResult("更新失败，没有该权限操作");
+            }
+            logger.info("更新维修保养进度");
+            maintainRecordService.updateSpeedStatusById(Constants.NOT_REMIND, recordId);
+            return ControllerResult.getSuccessResult("更新进度成功!");
+        } catch (Exception e) {
+            logger.info("更新失败，出现了一个错误");
+            return ControllerResult.getFailResult("更新失败，出现了一个错误");
+        }
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         dateFormat.setLenient(false);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
-
-
-
 
 }
 

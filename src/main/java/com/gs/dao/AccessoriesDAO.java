@@ -33,4 +33,16 @@ public interface AccessoriesDAO extends BaseDAO<String, Accessories>{
 
     /**查询出对应配件编号对应的库存及可用数量*/
     public Accessories queryByIdTotalAndIdle(String accId);
+
+    /*
+    * 根据年，月，季度，周，日查询所有配件总数量
+    * */
+    public List<Accessories> queryByConditionTotal(@Param("startTime")String startTime,@Param("endTime")String endTime,
+                                           @Param("type")String type, @Param("companyId")String companyId,@Param("accTypeId")String accTypeId);
+
+    /*
+ * 根据年，月，季度，周，日查询所有配件可用数量
+ * */
+    public List<Accessories> queryByConditionIdle(@Param("startTime")String startTime,@Param("endTime")String endTime,
+                                                   @Param("type")String type, @Param("companyId")String companyId,@Param("accTypeId")String accTypeId);
 }

@@ -38,6 +38,50 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	public int inactive(String id) { return workInfoDAO.inactive(id); }
 	public int active(String id) { return workInfoDAO.active(id); }
 
+	public List<WorkInfo> queryWorkUserId(Pager pager, String userId) {
+		return workInfoDAO.queryWorkUserId(pager, userId);
+	}
+
+	public int countWorkUserId(String userId) {
+		return workInfoDAO.countWorkUserId(userId);
+	}
+
+	public List<WorkInfo> queryByPager_N(Pager pager, User user) {
+		return workInfoDAO.queryByPager_N(pager, user);
+	}
+
+	public int count_N(User user) {
+		return workInfoDAO.count_N(user);
+	}
+
+	public List<WorkInfo> queryWorkUserId_N(Pager pager, String userId) {
+		return workInfoDAO.queryWorkUserId_N(pager, userId);
+	}
+
+	public int countWorkUserId_N(String userId) {
+		return workInfoDAO.countWorkUserId_N(userId);
+	}
+
+	public List<WorkInfo> queryByPager_Y(Pager pager, User user) {
+		return workInfoDAO.queryByPager_Y(pager, user);
+	}
+
+	public int count_Y(User user) {
+		return workInfoDAO.count_Y(user);
+	}
+
+	public List<WorkInfo> queryWorkUserId_Y(Pager pager, String userId) {
+		return workInfoDAO.queryWorkUserId_Y(pager, userId);
+	}
+
+	public int countWorkUserId_Y(String userId) {
+		return workInfoDAO.countWorkUserId_Y(userId);
+	}
+
+	public WorkInfo queryByRecordId(String id) {
+		return workInfoDAO.queryByRecordId(id);
+	}
+
 	@Override
 	public List<WorkInfo> queryByDefault(String maintainOrFix, String companyId) {
 		return workInfoDAO.queryByDefault(maintainOrFix,companyId);

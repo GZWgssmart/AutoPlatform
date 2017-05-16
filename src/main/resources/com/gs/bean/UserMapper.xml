@@ -356,13 +356,23 @@
 	</select>
 
 
+	<select id="queryByCompanyRole" resultMap="userResultMap">
+		<![CDATA[
+			SELECT u.*, c.companyId, c.companyName, r.roleDes,r.roleId FROM t_user u
+			LEFT JOIN t_company c ON u.companyId = c.companyId
+			LEFT JOIN t_user_role ur ON ur.userId = u.userId
+			LEFT JOIN t_role r ON r.roleId = ur.roleId
+			WHERE r.roleName like concat('companyArtificer') AND u.userStatus = 'Y'
+		]]>
+	</select>
+
 	<select id="countAllEmp" parameterType="String" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) FROM t_user u
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%')
+			WHERE r.roleName like concat('company', '%') AND u.userId != #{userId}
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and u.companyId = #{companyId}
@@ -376,7 +386,7 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%')
+			WHERE r.roleName like concat('company', '%') AND u.userId != #{userId}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
