@@ -150,7 +150,7 @@ public class WorkInfoController {
     @RequestMapping(value = "workInfo_Status_N", method= RequestMethod.GET)
     public Pager4EasyUI<WorkInfo> info_pager_N(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询所有不可用工单");
                     User user = SessionGetUtil.getUser();
@@ -171,10 +171,10 @@ public class WorkInfoController {
                     return new Pager4EasyUI<WorkInfo>(pager.getTotalRecords(), workInfos);
                 }
                 return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -222,9 +222,9 @@ public class WorkInfoController {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("状态修改");
                     if(status.equals("Y")){
-                        workInfoService.inactive(id);
+                        maintainRecordService.inactive(id);
                     } else {
-                        workInfoService.active(id);
+                        maintainRecordService.active(id);
                     }
                     return ControllerResult.getSuccessResult(" 修改成功");
                 }

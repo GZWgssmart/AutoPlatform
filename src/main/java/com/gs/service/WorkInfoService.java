@@ -48,6 +48,9 @@ public interface WorkInfoService extends BaseService<String, WorkInfo>{
     public int countWorkUserId_Y(String userId);
 
 
+    // 根据id查询
+    public WorkInfo queryByRecordId(String id);
+
     /*
    * 默认查询本月的工单统计
    * */
