@@ -63,7 +63,9 @@
         <tr>
             <th data-field="state" data-checkbox="true"></th>
             <th data-field="accessories.accName">配件名称</th>
+            <th data-field="accessories.accCommodityCode">配件条码</th>
             <th data-field="accessories.accessoriesType.accTypeName">配件类别</th>
+            <th data-field="accUnit">计量单位</th>
             <th data-field="accessories.supply.supplyName">供应商</th>
             <th data-field="accessories.company.companyName">配件所属公司</th>
             <th data-field="accBuyCount">采购数量</th>
@@ -71,7 +73,6 @@
             <th data-field="accBuyDiscount">采购折扣</th>
             <th data-field="accBuyTime" data-formatter="formatterDate">采购时间</th>
             <th data-field="accBuyTotal">采购总价</th>
-            <th data-field="accUnit">计量单位</th>
             <th data-field="accBuyMoney">采购最终价</th>
             <th data-field="accBuyCheck" data-formatter="fmtCheckState">审核状态</th>
             <th data-field="accBuyStatus" data-formatter="fmtBuyState">采购状态</th>
@@ -129,6 +130,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改采购信息</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" attr="accessoriesBuy.accBuyId" name="accBuyId"/>
@@ -147,6 +149,19 @@
                             </div>
 
                             <div class="form-group">
+                                <label>配件条码：</label>
+                                <input type="text" name="accessories.accCommodityCode"
+                                       attr="accessoriesBuy.accessories.accCommodityCode" class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>配件描述：</label>
+                                <textarea name="accessories.accDes" class="form-control" rows="3"
+                                          style="resize: none;"
+                                          attr="acc.accDes"></textarea>
+                            </div>
+
+                            <div class="form-group">
                                 <label>类别：</label>
                                 <input type="text" name="accessories.accessoriesType.accTypeName"
                                        attr="accessoriesBuy.accessories.accessoriesType.accTypeName"
@@ -155,19 +170,22 @@
 
                             <div class="form-group">
                                 <label>数量：</label>
-                                <input type="number" name="accBuyCount" attr="accessoriesBuy.accBuyCount"
+                                <input type="text" name="accBuyCount" id="eAccBuyCount"
+                                       attr="accessoriesBuy.accBuyCount"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>单价：</label>
-                                <input type="text" name="accBuyPrice" attr="accessoriesBuy.accBuyPrice"
+                                <input type="text" name="accBuyPrice" id="eAccBuyPrice"
+                                       attr="accessoriesBuy.accBuyPrice"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>折扣：</label>
-                                <input type="text" name="accBuyDiscount" attr="accessoriesBuy.accBuyDiscount"
+                                <input type="text" name="accBuyDiscount" id="eAccBuyDiscount"
+                                       attr="accessoriesBuy.accBuyDiscount"
                                        class="form-control"/>
                             </div>
 
@@ -193,15 +211,16 @@
 
                             <div class="form-group">
                                 <label>总价：</label>
-                                <input type="number" name="accBuyTotal" attr="accessoriesBuy.accBuyTotal"
-                                       onfocus="autoCalculation(this)"
+                                <input type="text" name="accBuyTotal" id="eAccBuyTotal"
+                                       attr="accessoriesBuy.accBuyTotal"
+                                       id="eAccBuyTotal"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
-                                <input type="number" name="accBuyMoney" attr="accessoriesBuy.accBuyMoney"
-                                       onfocus="autoCalculation(this)" onkeyup="value=value.replace(/[^\d]/g,'') "
+                                <input type="text" name="accBuyMoney" attr="accessoriesBuy.accBuyMoney"
+                                       id="eAccBuyMoney" onkeyup="value=value.replace(/[^\d]/g,'') "
                                        class="form-control"/>
                             </div>
 
@@ -228,14 +247,15 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加配件采购信息</h3>
+                        <div class="form-group" style="width: auto; display: inherit;">
+                            <label>是否从库存中添加：</label>
+                            <input type="checkbox" id="isAcc" name="isAcc">
+                        </div>
                         <form role="form" id="addForm">
                             <input type="hidden" attr="acc.accId" name="accId"/>
                             <input type="hidden" attr="acc.accId" name="accessories.accId"/>
-                            <div class="form-group" style="width: auto; display: inherit;">
-                                <label>是否从库存中添加：</label>
-                                <input type="checkbox" id="isAcc" name="isAcc">
-                            </div>
                             <div class="form-group">
                                 <label>配件名称：</label>
                                 <input type="text" name="accessories.accName" class="form-control " id="accName"
@@ -277,7 +297,7 @@
 
                             <div class="form-group">
                                 <label>数量：</label>
-                                <input type="number" name="accBuyCount" id="accBuyCount" attr="acc.accIdle"
+                                <input type="text" name="accBuyCount" id="accBuyCount" attr="acc.accIdle"
                                        class="form-control"/>
                             </div>
 
@@ -338,6 +358,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">选择配件</h3>
                         <form role="form" id="accForm">
                             <table class="table table-hover" id="accTable"
