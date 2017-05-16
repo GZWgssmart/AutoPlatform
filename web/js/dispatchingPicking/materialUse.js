@@ -13,8 +13,13 @@ $(document).ready(function () {
 
 function showMUWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow[0].pickingStatus == "通过") {
+        $("#showMuWinBtn").show();
+    } else {
+        $("#showMuWinBtn").hide();
+    }
     if (selectRow.length != 1) {
-        swal('错误提示', "请选择一条数据查看维修保养明细", "error");
+        swal('错误提示', "请选择一条数据查看领料明细", "error");
         return false;
     } else {
         var record = selectRow[0];

@@ -118,7 +118,7 @@
                             </thead>
                             <tbody>
                             <div id="toolbar1" class="btn-group">
-                                <a>
+                                <a id="showMuWinBtn">
                                     <button onclick="showReturnMaterial()" type="button" class="btn btn-default">
                                         <i class="glyphicon glyphicon-plus"></i> 申请退料
                                     </button>
