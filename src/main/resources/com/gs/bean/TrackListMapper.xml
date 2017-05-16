@@ -111,7 +111,7 @@
 		<if test="user.companyId != null and user.companyId != ''">
 			and l.companyId = #{user.companyId}
 		</if>
-		order by l.trackCreatedTime desc
+		order by c.companyId desc, c.checkinStatus desc, l.trackCreatedTime desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
