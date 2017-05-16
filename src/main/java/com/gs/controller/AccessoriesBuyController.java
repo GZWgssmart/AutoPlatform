@@ -216,29 +216,28 @@ public class AccessoriesBuyController {
     public ControllerResult updateAccessoriesBuyInfo(AccessoriesBuy accessoriesBuy) {
 
         if (SessionGetUtil.isUser()) {
-            try {
+//            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
-                    Accessories acc = accessoriesBuy.getAccessories();
-
-                    int total = accessoriesBuy.getAccBuyCount() + acc.getAccIdle();
-
-                    acc.setAccTotal(total);
-                    accessoriesBuy.setAccBuyCount(total);
+                    Accessories acc = new Accessories();
+                    User user = SessionGetUtil.getUser();
+                    acc.setCompanyId(user.getCompanyId());
+                    acc.setAccIdle(accessoriesBuy.getAccBuyCount());
+                    acc.setAccTotal(accessoriesBuy.getAccBuyCount());
+                    acc.setAccStatus("Y");
                     acc.setAccUnit(accessoriesBuy.getAccUnit());
+                    acc.setAccPrice(accessoriesBuy.getAccBuyPrice());
+                    acc.setAccBuyedTime(accessoriesBuy.getAccBuyTime());
                     acc.setAccDes(accessoriesBuy.getAccessories().getAccDes());
-                    acc.setAccTypeId(acc.getAccTypeId());
-                    acc.setSupplyId(accessoriesBuy.getAccessories().getSupplyId());
 
                     accessoriesBuyService.update(accessoriesBuy);
                     accessoriesService.update(acc);
-
                     return ControllerResult.getSuccessResult("更新成功");
                 }
                 return ControllerResult.getFailResult("没有此权限访问");
-            } catch (Exception e) {
-                logger.info("出现异常【239】" + e.getStackTrace());
-                return ControllerResult.getFailResult("出现了一个错误");
-            }
+//            } catch (Exception e) {
+//                logger.info("出现异常【239】" + e.getStackTrace());
+//                return ControllerResult.getFailResult("出现了一个错误");
+//            }
         } else {
             logger.info("session失效重新登入");
             return ControllerResult.getFailResult("登入失效，重新登入");
@@ -304,16 +303,16 @@ public class AccessoriesBuyController {
 
         if (SessionGetUtil.isUser()) {
 //            try {
-                if (CheckRoleUtil.checkRoles(queryRole)) {
-                    User user = SessionGetUtil.getUser();
-                    Pager pager = new Pager();
-                    pager.setPageNo(Integer.valueOf(pageNumber));
-                    pager.setPageSize(Integer.valueOf(pageSize));
-                    pager.setTotalRecords(accessoriesBuyService.countByCheckState(user));
-                    List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByCheckStatePager(pager, user);
-                    return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
-                }
-                return null;
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                User user = SessionGetUtil.getUser();
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(accessoriesBuyService.countByCheckState(user));
+                List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByCheckStatePager(pager, user);
+                return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
+            }
+            return null;
 //            } catch (Exception e) {
 //                logger.info("出现异常" + e.getStackTrace());
 //                return null;
@@ -331,16 +330,16 @@ public class AccessoriesBuyController {
     public Pager4EasyUI<AccessoriesBuy> onlyBuy(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionGetUtil.isUser()) {
 //            try {
-                if (CheckRoleUtil.checkRoles(queryRole)) {
-                    User user = SessionGetUtil.getUser();
-                    Pager pager = new Pager();
-                    pager.setPageNo(Integer.valueOf(pageNumber));
-                    pager.setPageSize(Integer.valueOf(pageSize));
-                    pager.setTotalRecords(accessoriesBuyService.countByBuyState(user));
-                    List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByBuyStatePager(pager, user);
-                    return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
-                }
-                return null;
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                User user = SessionGetUtil.getUser();
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(accessoriesBuyService.countByBuyState(user));
+                List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.queryByBuyStatePager(pager, user);
+                return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
+            }
+            return null;
 //            } catch (Exception e) {
 //                logger.info("出现异常" + e.getStackTrace());
 //                return null;
@@ -356,7 +355,7 @@ public class AccessoriesBuyController {
     public Pager4EasyUI<AccessoriesBuy> byAccNameSearch(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("accName") String accName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd) {
 
         if (SessionGetUtil.isUser()) {
-            try {
+//            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     User user = SessionGetUtil.getUser();
                     Pager pager = new Pager();
@@ -367,10 +366,10 @@ public class AccessoriesBuyController {
                     return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
                 }
                 return null;
-            } catch (Exception e) {
-                logger.info("出现异常" + e.getStackTrace());
-                return null;
-            }
+//            } catch (Exception e) {
+//                logger.info("出现异常" + e.getStackTrace());
+//                return null;
+//            }
         } else {
             logger.info("session失效重新登入");
             return null;

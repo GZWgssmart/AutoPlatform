@@ -1,7 +1,7 @@
 var isAcc = false;
 var count = 0;
 $(document).ready(function () {
-    initDateTimePicker("form_datetime", "");
+
     initTable("cusTable", "/accessoriesBuy/pager");
 
     initSelect2("supply", "请选择供应商", "/supply/queryAll", 560);
@@ -11,10 +11,10 @@ $(document).ready(function () {
 
     disableSwitch("accWin", "isAcc");
 
-
     destoryValidator("addWin", "addForm");
     destoryValidator("accWin", "accForm");
     destoryValidator("editWin", "editForm");
+
 });
 
 function initBsSwitchBuy(id, onSwitchChange) {
@@ -109,7 +109,6 @@ function addAccessoriesBuyInfo(formId) {
                 swal(data.message, "", "success");
                 $('#cusTable').bootstrapTable('refresh');
                 $("input[type=reset]").trigger("click");
-                $(formId).data('bootstrapValidator').resetForm(true);
             } else if (data.result == "fail") {
                 destoryValidator(formId, "addForm");
                 clearTempData();
@@ -153,8 +152,8 @@ window.operateEvents = {
     },
     'click .showEditWin': function (e, value, row, index) {
         var accessoriesBuy = row;
-        console.log(accessoriesBuy);
         $("#editForm").fill(accessoriesBuy);
+        $("#eAccDes").val(accessoriesBuy.accessories.accDes);
         $('#supplyType').html('<option value="' + accessoriesBuy.accessories.supply.supplyId + '">' + accessoriesBuy.accessories.supply.supplyName + '</option>').trigger("change");
         $('#eAccType').html('<option value="' + accessoriesBuy.accessories.accessoriesType.accTypeId + '">' + accessoriesBuy.accessories.accessoriesType.accTypeName + '</option>').trigger("change");
         $("#buyTime").val(formatterDate(accessoriesBuy.accBuyTime));
@@ -257,6 +256,8 @@ function allBuys() {
 }
 
 function byAccNameSearch() {
+    initDateTimePicker("form_datetime", "buyTimeStart", "formSearch");
+    initDateTimePicker("form_datetime", "buyTimeEnd", "formSearch");
     var accName = $("#sAccName").val();
     var buyTimeStart = $("#buyTimeStart").val();
     var buyTimeEnd = $("#buyTimeEnd").val();
@@ -446,12 +447,14 @@ function clearTempData() {
 }
 
 function showAccAddWin() {
+    initDateTimePicker("form_datetime", "accBuyTime", "addForm");
     // clearTempData();
     validator("addForm");
     $("#addWin").modal('show');
 }
 
 function showAccEditWin() {
+    initDateTimePicker("form_datetime", "accBuyTime", "editForm");
     // clearTempData();
     validator("editForm");
     $("#editWin").modal('show');

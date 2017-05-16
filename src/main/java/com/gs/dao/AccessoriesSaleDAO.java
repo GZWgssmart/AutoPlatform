@@ -22,7 +22,7 @@ public interface AccessoriesSaleDAO extends BaseDAO<String, AccessoriesSale> {
 
     public int byNameCount(@Param("user") User user);
 
-    public List<AccessoriesSale> queryOnlySale(@Param("pager") Pager pager, @Param("status") String status, @Param("user") User user);
+    public List<AccessoriesSale> queryOnlySale(@Param("pager") Pager pager, @Param("user") User user);
 
     public int onlySaleCount(@Param("user") User user);
 

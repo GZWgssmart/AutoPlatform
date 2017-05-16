@@ -95,8 +95,8 @@ public class AccessoriesSaleServiceImpl implements AccessoriesSaleService {
         return accessoriesSaleDAO.byNameCount(user);
     }
 
-    public List<AccessoriesSale> queryOnlySale(Pager pager, String status, User user) {
-        return accessoriesSaleDAO.queryOnlySale(pager, status, user);
+    public List<AccessoriesSale> queryOnlySale(Pager pager, User user) {
+        return accessoriesSaleDAO.queryOnlySale(pager, user);
     }
 
     public int onlySaleCount(User user) {

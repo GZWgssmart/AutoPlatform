@@ -126,12 +126,36 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">修改销售信息</h3>
                         <form role="form" id="editForm">
                             <input type="hidden" attr="accessoriesSale.accSaleId" name="accSaleId"/>
                             <input type="hidden" attr="accessoriesSale.accessories.accId" name="accessories.accId"/>
                             <input type="hidden" attr="accessoriesSale.accessories.accessoriesType.accTypeId"
                                    name="accessories.accessoriesType.accTypeId"/>
+
+                            <div class="form-group" style="width: auto; display: inherit;">
+                                <label for="isUser" >选择用户</label>
+                                <input type="checkbox" name="eisUser"id="eIsUser">
+                                &nbsp;
+                                <a data-toggle="modal">
+                                    <button type="button" onclick="showAccessories()" class="btn btn-primary">从库存中添加
+                                    </button>
+                                </a>
+                            </div>
+
+                            <div class="form-group">
+                                <label>用户：</label>
+                                <input type="text" name="userName" class="form-control" attr="user.userName"
+                                       id="eUserName"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>用户手机号码：</label>
+                                <input type="text" name="userPhone" class="form-control" attr="user.userPhone"
+                                       id="eUserPhone"/>
+                            </div>
+
                             <div class="form-group">
                                 <label>配件名称：</label>
                                 <input type="text" name="accessories.accName" attr="accessoriesSale.accessories.accName"
@@ -166,13 +190,13 @@
 
                             <div class="form-group">
                                 <label>销售单价：</label>
-                                <input type="text" name="accSalePrice" attr="accessoriesSale.accSalePrice"
+                                <input type="text" name="accSalePrice" id="salePrice" attr="accessoriesSale.accSalePrice"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>销售折扣：</label>
-                                <input type="text" name="accSaleDiscount" attr="accessoriesSale.accSaleDiscount"
+                                <input type="text" name="accSaleDiscount" id="saleDiscount" attr="accessoriesSale.accSaleDiscount"
                                        class="form-control"/>
                             </div>
 
@@ -185,13 +209,13 @@
 
                             <div class="form-group">
                                 <label>销售总价：</label>
-                                <input type="text" name="accSaleTotal" attr="accessoriesSale.accSaleTotal"
+                                <input type="text" name="accSaleTotal" id="saleTotal" attr="accessoriesSale.accSaleTotal"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>销售最终价：</label>
-                                <input type="text" name="accSaleMoney" attr="accessoriesSale.accSaleMoney"
+                                <input type="text" name="accSaleMoney" id="saleMoney" attr="accessoriesSale.accSaleMoney"
                                        class="form-control"/>
                             </div>
 
@@ -218,6 +242,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加配件销售信息</h3>
                         <form role="form" id="addForm">
                             <input type="hidden" attr="acc.accId" name="accId"/>
@@ -272,7 +297,7 @@
                                            disabled/>
                                 </span>
                                 <input type="text" name="accSaleCount" id="aSaleCount" attr="acc.accSaleTotal"
-                                       placeholder="此为空则默认为库存配件剩余数量"
+                                       placeholder=""
                                        class="form-control"/>
                             </div>
 
@@ -304,15 +329,13 @@
                             <div class="form-group">
                                 <label>总价：</label>
                                 <input type="text" name="accSaleTotal" id="accSaleTotal" attr="acc.accSaleTotal"
-                                       placeholder="点击可自动计算" readonly class="form-control"
-                                       onfocus="autoCalculation(this)"/>
+                                        readonly class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
                                 <input type="text" name="accSaleMoney" id="accSaleMoney" attr="acc.accSaleMoney"
-                                       placeholder="点击可自动计算" readonly class="form-control"
-                                       onfocus="autoCalculation(this)"/>
+                                        readonly class="form-control"/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
@@ -339,6 +362,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">选择用户</h3>
                         <form role="form" id="userForm">
                             <table class="table table-hover" id="userTable"
@@ -398,6 +422,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">选择配件</h3>
                         <form role="form" id="accForm">
                             <table class="table table-hover" id="accTable"

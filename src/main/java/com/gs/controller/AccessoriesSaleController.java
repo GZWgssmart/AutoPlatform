@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.naming.ldap.Control;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -154,13 +155,16 @@ public class AccessoriesSaleController {
     @ResponseBody
     @RequestMapping(value = "addSale", method = RequestMethod.POST)
     public ControllerResult addSale(AccessoriesSale accessoriesSale, @Param("lastCount") String lastCount) {
-
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
-                    accessoriesSale.setAccSaleId(UUIDUtil.uuid());
-                    accessoriesSaleService.insert(accessoriesSale);
                     User user = SessionGetUtil.getUser();
+
+                    accessoriesSale.setAccSaleId(UUIDUtil.uuid());
+                    accessoriesSale.setCompanyId(user.getCompanyId());
+
+                    accessoriesSaleService.insert(accessoriesSale);
+
                     int lCount = Integer.valueOf(lastCount);
 
                     accessoriesService.updateIdle(accessoriesSale.getAccId(), lCount, user);
@@ -219,7 +223,7 @@ public class AccessoriesSaleController {
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
                     pager.setTotalRecords(accessoriesSaleService.onlySaleCount(user));
-                    List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryOnlySale(pager, "Y", user);
+                    List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryOnlySale(pager, user);
                     return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
                 }
                 return null;
@@ -238,24 +242,51 @@ public class AccessoriesSaleController {
     public Pager4EasyUI<AccessoriesSale> search(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("accName") String accName, @Param("userName") String userName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd) {
 
         if (SessionGetUtil.isUser()) {
-            try {
-                if (CheckRoleUtil.checkRoles(queryRole)) {
-                    User user = SessionGetUtil.getUser();
-                    Pager pager = new Pager();
-                    pager.setPageNo(Integer.valueOf(pageNumber));
-                    pager.setPageSize(Integer.valueOf(pageSize));
-                    pager.setTotalRecords(accessoriesSaleService.bySaleTimeScopeCount(accName, userName, buyTimeStart, buyTimeEnd, user));
-                    List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryBySaleTimeScopeByAccNamePager(pager, accName, userName, buyTimeStart, buyTimeEnd, user);
-                    return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
-                }
-                return null;
-            } catch (Exception e) {
-                logger.info("出现异常" + e.getStackTrace());
-                return null;
+//            try {
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                User user = SessionGetUtil.getUser();
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(accessoriesSaleService.bySaleTimeScopeCount(accName, userName, buyTimeStart, buyTimeEnd, user));
+                List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryBySaleTimeScopeByAccNamePager(pager, accName, userName, buyTimeStart, buyTimeEnd, user);
+                return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
             }
+            return null;
+//            } catch (Exception e) {
+//                logger.info("出现异常" + e.getStackTrace());
+//                return null;
+//            }
         } else {
             logger.info("session失效重新登入");
             return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update", method = RequestMethod.GET)
+    public ControllerResult update(AccessoriesSale accessoriesSale, @Param("lastCount") String lastCount) {
+        if (SessionGetUtil.isUser()) {
+//            try {
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+                User user = SessionGetUtil.getUser();
+                Accessories acc = accessoriesSale.getAccessories();
+
+                int iLastCount = Integer.valueOf(lastCount);
+
+                accessoriesSale.setCompanyId(user.getCompanyId());
+                accessoriesSale.setAccId(acc.getAccId());
+
+                accessoriesSaleService.update(accessoriesSale);
+                accessoriesService.updateIdle(accessoriesSale.getAccId(), iLastCount, user);
+            }
+//            } catch (Exception e) {
+//                return ControllerResult.getFailResult("出现了一个错误");
+//            }
+            return ControllerResult.getSuccessResult("更新成功");
+        } else {
+            logger.info("session失效重新登入");
+            return ControllerResult.getFailResult("登入失效，重新登入");
         }
     }
 

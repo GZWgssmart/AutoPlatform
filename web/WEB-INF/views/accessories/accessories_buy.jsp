@@ -135,8 +135,7 @@
                         <form role="form" id="editForm">
                             <input type="hidden" attr="accessoriesBuy.accBuyId" name="accBuyId"/>
                             <input type="hidden" attr="accessoriesBuy.accessories.accId" name="accessories.accId"/>
-                            <input type="hidden" attr="accessoriesBuy.accessories.accessoriesType.accTypeId"
-                                   name="accessories.accessoriesType.accTypeId"/>
+                            <input type="hidden" attr="accessoriesBuy.accessories.accessoriesType.accTypeId" name="accessories.accessoriesType.accTypeId"/>
                             <div class="form-group">
                                 <label>配件名称：</label>
                                 <input type="text" name="accessories.accName" attr="accessoriesBuy.accessories.accName"
@@ -157,8 +156,7 @@
                             <div class="form-group">
                                 <label>配件描述：</label>
                                 <textarea name="accessories.accDes" class="form-control" rows="3"
-                                          style="resize: none;"
-                                          attr="acc.accDes"></textarea>
+                                          style="resize: none;" attr="accessoriesBuy.accessories.accDes" id="eAccDes"></textarea>
                             </div>
 
                             <div class="form-group">

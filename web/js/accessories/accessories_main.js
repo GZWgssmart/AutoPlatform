@@ -75,6 +75,7 @@ function closeSHForm() {
 }
 
 function showSHForm() {
+    initDateTimePicker("form_datetime", "SaleTimeStart", "formSearch");
     $("#formSearch").show();
     $("#searchDiv").show();
 }

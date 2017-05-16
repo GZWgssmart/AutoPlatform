@@ -23,6 +23,7 @@
             <id property="accId" column="accId"/>
             <result property="accName" column="accName"/>
             <result property="accCommodityCode" column="accCommodityCode"/>
+            <result property="accDes" column="accDes"/>
 
             <association property="accessoriesType" javaType="com.gs.bean.AccessoriesType">
                 <id property="accTypeId" column="accTypeId"/>
@@ -190,11 +191,7 @@
 
     <select id="query" parameterType="accessoriesBuy" resultType="accessoriesBuy">
 		<![CDATA[
-
-
         select * from t_accessories_buy
-
-
         ]]>
 	</select>
 
@@ -207,6 +204,7 @@
         SELECT
             ab.*, ac.accId,
             ac.accName,
+            ac.accDes,
             ac.supplyId,
             ac.accCommodityCode,
             sy.supplyName,
@@ -361,15 +359,15 @@
 
     <select id="queryByBuyTimeScopeByAccNamePager" resultType="list" resultMap="accessoriesBuyResultMap">
         SELECT
-        ab.*,
-        ac.accId,
-        ac.accName,
-        ac.supplyId,
-        ac.accCommodityCode,
-        sy.supplyName,
-        ae.accTypeId,
-        ae.accTypeName,
-        cpy.companyName
+            ab.*,
+            ac.accId,
+            ac.accName,
+            ac.supplyId,
+            ac.accCommodityCode,
+            sy.supplyName,
+            ae.accTypeId,
+            ae.accTypeName,
+            cpy.companyName
         FROM
         (
             (
@@ -391,6 +389,9 @@
         <if test="accName != null and accName != '' ">
           and ac.accName like concat(concat('%',#{accName}),'%')
         </if>
+        <if test="user.companyId != null and user.companyId != ''">
+            and ab.companyId = #{user.companyId}
+        </if>
         order by ab.accBuyTime desc
         limit #{pager.beginIndex},#{pager.pageSize}
     </select>
@@ -399,11 +400,28 @@
         SELECT
         count(ab.accBuyId)
         FROM
-        t_accessories_buy ab
-        where
-            (ab.accBuyTime &gt;= #{buyTimeStart} and ab.accBuyTime &lt;= #{buyTimeEnd})
+        (
+            (
+                (
+                    (
+                        t_accessories_buy ab
+                        INNER JOIN t_accessories ac ON ab.accId = ac.accId
+                    )
+                    INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
+                )
+                INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
+            )
+            INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
+        )
+        where 1 = 1
+        <if test="buyTimeStart != null and buyTimeStart != ''">
+            and (ab.accBuyTime &gt;= #{buyTimeStart} and ab.accBuyTime &lt;= #{buyTimeEnd})
+        </if>
         <if test="accName != null and accName != '' ">
             and ac.accName like concat(concat('%',#{accName}),'%')
+        </if>
+        <if test="user.companyId != null and user.companyId != ''">
+            and ab.companyId = #{user.companyId}
         </if>
     </select>
 
