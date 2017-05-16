@@ -15,7 +15,7 @@ function notLogin() {
         },
         function (isConfirm) {
             if (isConfirm) {
-                top.location.href = "/login/show_login";
+                top.location.href = "/index";
             }
         });
 }
