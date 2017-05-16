@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
     String path = request.getContextPath();
 %>
@@ -32,6 +34,9 @@
                     <h5>最新预约信息</h5>
 
                     <div class="ibox-tools">
+                        <a href="javascript:;" onclick="searchApp()" title="查看更多预约信息">
+                            查看更多
+                        </a>
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
@@ -43,7 +48,6 @@
                            data-page-size="8">
                         <thead>
                         <tr>
-
                             <th data-toggle="true">车主姓名</th>
                             <th>车主电话</th>
                             <th>汽车品牌</th>
@@ -51,54 +55,43 @@
                             <th>汽车车型</th>
                             <th>汽车车牌</th>
                             <th>车牌号码</th>
-                            <th data-hide="all">汽车油量（L）</th>
-                            <th data-hide="all">行驶里程（KM）</th>
-                            <th data-hide="all">是否洗车</th>
-                            <th data-hide="all">到店时间</th>
-                            <th data-hide="all">车上物品描述</th>
-                            <th data-hide="all">汽车完好度描述</th>
-                            <th data-hide="all">用户要求描述</th>
+                            <th data-hide="all">预计到店时间</th>
+                            <th data-hide="all">预约状态</th>
+                            <th data-hide="all">当前进度</th>
                             <th data-hide="all">维修|保养</th>
-                            <th data-hide="all">登记时间</th>
+                            <th data-hide="all">预约创建时间</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>邱康</td>
-                            <td>18279799343</td>
-                            <td>宝马</td>
-                            <td>黑色</td>
-                            <td>奇骏</td>
-                            <td>赣A</td>
-                            <td>23442</td>
-                            <td>22</td>
-                            <td>123</td>
-                            <td>是</td>
-                            <td>2017-06-13</td>
-                            <td>没有物品</td>
-                            <td>特别完好</td>
-                            <td>没有要求</td>
-                            <td>保养</td>
-                            <td>2017-12-13 80:23</td>
-                        </tr>
-                        <tr>
-                            <td>邱康</td>
-                            <td>18279799343</td>
-                            <td>宝马</td>
-                            <td>黑色</td>
-                            <td>奇骏</td>
-                            <td>赣A</td>
-                            <td>23442</td>
-                            <td>22</td>
-                            <td>123</td>
-                            <td>是</td>
-                            <td>2017-06-13</td>
-                            <td>没有物品</td>
-                            <td>特别完好</td>
-                            <td>没有要求</td>
-                            <td>保养</td>
-                            <td>2017-12-13 80:23</td>
-                        </tr>
+                        <c:forEach items="${requestScope.apps}" var="app">
+                            <tr>
+                                <td>${app.userName}</td>
+                                <td>${app.userPhone}</td>
+                                <td>${app.brand.brandName}</td>
+                                <td>${app.color.colorName}</td>
+                                <td>${app.model.modelName}</td>
+                                <td>${app.plate.plateName}</td>
+                                <td>${app.carPlate}</td>
+                                <td>
+                                    <fmt:formatDate value="${app.arriveTime}" pattern="yyyy-MM-dd HH:mm" />
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${app.appoitmentStatus == 'Y'}">
+                                            可用
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span style="color: red;">不可用</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>${app.speedStatus}</td>
+                                <td>${app.maintainOrFix}</td>
+                                <td>
+                                    <fmt:formatDate value="${app.appCreatedTime}" pattern="yyyy-MM-dd HH:mm" />
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                         <tfoot>
                         </tfoot>
@@ -116,6 +109,9 @@
                     <h5>最新的登记记录信息</h5>
 
                     <div class="ibox-tools">
+                        <a href="javascript:;" onclick="searchCheckin()" title="查看更多预约信息">
+                            查看更多
+                        </a>
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
@@ -143,46 +139,54 @@
                             <th data-hide="all">汽车完好度描述</th>
                             <th data-hide="all">用户要求描述</th>
                             <th data-hide="all">维修|保养</th>
+                            <th data-hide="all">记录状态</th>
                             <th data-hide="all">登记时间</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>邱康</td>
-                            <td>18279799343</td>
-                            <td>宝马</td>
-                            <td>黑色</td>
-                            <td>奇骏</td>
-                            <td>赣A</td>
-                            <td>23442</td>
-                            <td>22</td>
-                            <td>123</td>
-                            <td>是</td>
-                            <td>2017-06-13</td>
-                            <td>没有物品</td>
-                            <td>特别完好</td>
-                            <td>没有要求</td>
-                            <td>保养</td>
-                            <td>2017-12-13 80:23</td>
-                        </tr>
-                        <tr>
-                            <td>邱康</td>
-                            <td>18279799343</td>
-                            <td>宝马</td>
-                            <td>黑色</td>
-                            <td>奇骏</td>
-                            <td>赣A</td>
-                            <td>23442</td>
-                            <td>22</td>
-                            <td>123</td>
-                            <td>是</td>
-                            <td>2017-06-13</td>
-                            <td>没有物品</td>
-                            <td>特别完好</td>
-                            <td>没有要求</td>
-                            <td>保养</td>
-                            <td>2017-12-13 80:23</td>
-                        </tr>
+                        <c:forEach items="${requestScope.checkins}" var="checkin">
+                            <tr>
+                                <td>${checkin.userName}</td>
+                                <td>${checkin.userPhone}</td>
+                                <td>${checkin.brand.brandName}</td>
+                                <td>${checkin.color.colorName}</td>
+                                <td>${checkin.model.modelName}</td>
+                                <td>${checkin.plate.plateName}</td>
+                                <td>${checkin.carPlate}</td>
+                                <td>${checkin.oilCount}</td>
+                                <td>${checkin.carMileage}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${checkin.carWash == 'Y'}">
+                                            是
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span style="color: red;">否</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <fmt:formatDate value="${checkin.arriveTime}" pattern="yyyy-MM-dd HH:mm" />
+                                </td>
+                                <td>${checkin.carThings}</td>
+                                <td>${checkin.intactDegrees}</td>
+                                <td>${checkin.userRequests}</td>
+                                <td>${checkin.maintainOrFix}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${checkin.checkinStatus == 'Y'}">
+                                            可用
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span style="color: red;">不可用</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>
+                                    <fmt:formatDate value="${checkin.checkinCreatedTime}" pattern="yyyy-MM-dd HH:mm" />
+                                </td>
+                            </tr>
+                        </c:forEach>
                         </tbody>
                         <tfoot>
                         </tfoot>
@@ -200,6 +204,9 @@
                     <h5>待提醒的车主</h5>
 
                     <div class="ibox-tools">
+                        <a href="javascript:;" onclick="searchRemind()" title="查看更多预约信息">
+                            查看更多
+                        </a>
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>
@@ -284,6 +291,9 @@
                     <h5>车主投诉</h5>
 
                     <div class="ibox-tools">
+                        <a href="javascript:;" onclick="searchComplaint()" title="查看更多预约信息">
+                            查看更多
+                        </a>
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
                         </a>

@@ -55,4 +55,11 @@ public interface CheckinDAO extends BaseDAO<String, Checkin>{
      */
     public Checkin queryByTrackStatus(@Param("userId") String userId, @Param("user") User user);
 
+    /**
+     * 根据指定的{top}查询前{top}条数据
+     * @param top
+     * @param user
+     * @return
+     */
+    public List<Checkin> queryByTop(@Param("top") int top, @Param("user") User user);
 }

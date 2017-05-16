@@ -8,3 +8,16 @@ $(document).ready(function () {
     $("#remindTable").footable();
     $("#complaintTable").footable();
 });
+
+function searchApp() {
+    parent.showAppointmentPage();
+}
+function searchCheckin() {
+    parent.showCheckinPage();
+}
+function searchRemind() {
+    parent.showRemindPage();
+}
+function searchComplaint() {
+    parent.showComplaintPage();
+}

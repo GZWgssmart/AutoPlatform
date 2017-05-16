@@ -188,7 +188,7 @@
                     <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span class="nav-label">维修保养预约</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path %>/appointment/appointment">预约管理</a>
+                        <li><a id="app" class="J_menuItem" href="<%=path %>/appointment/appointment">预约管理</a>
                         </li>
                     </ul>
                 </li>
@@ -201,7 +201,7 @@
                         <ul class="nav nav-second-level">
                             <shiro:hasAnyRoles
                                     name="companyAdmin, companyReceive, systemSuperAdmin, systemOrdinaryAdmin">
-                                <li><a class="J_menuItem" href="<%=path %>/checkin/checkin_page">接待登记管理</a>
+                                <li><a id="checkin" class="J_menuItem" href="<%=path %>/checkin/checkin_page">接待登记管理</a>
                                 </li>
                             </shiro:hasAnyRoles>
                             <li><a id="maintain" class="J_menuItem" href="<%=path%>/record/record_page">维修保养记录管理</a>
@@ -252,11 +252,11 @@
                     <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">客户关系管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养提醒管理</a>
+                        <li><a id="remind" class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养提醒管理</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/reportStatistics/consumption_page">消费统计管理</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉管理</a>
+                        <li><a id="complaint" class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉管理</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/trackVisit/show_trackVisit">跟踪回访管理</a>
                         </li>

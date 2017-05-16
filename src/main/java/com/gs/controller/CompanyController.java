@@ -55,6 +55,9 @@ public class CompanyController {
     @Resource
     private AppointmentService appointmentService;
 
+    @Resource
+    private CheckinService checkinService;
+
     private String CompanyQueryRole = Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_ADMIN;
     private String CompanyEditRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN;
     private String carCommonRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN;
@@ -62,6 +65,7 @@ public class CompanyController {
     private ModelAndView home() {
         ModelAndView mav = new ModelAndView();
         User user = SessionGetUtil.getUser();
+        int count = 5;
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             mav.setViewName("index/notLogin");
@@ -69,7 +73,8 @@ public class CompanyController {
         }
         mav.setViewName("company/home");
         logger.info("访问公司的主页");
-        mav.addObject("apps", appointmentService.queryPagerByTop(5, user));
+        mav.addObject("apps", appointmentService.queryPagerByTop(count, user));
+        mav.addObject("checkins", checkinService.queryByTop(count, user));
         return mav;
     }
 
