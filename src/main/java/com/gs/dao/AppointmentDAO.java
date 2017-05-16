@@ -29,4 +29,11 @@ public interface AppointmentDAO extends BaseDAO<String, Appointment>{
 
     public int updateSpeedStatusById(@Param("speedStatus") String speedStatus, @Param("id") String id);
 
+    /**
+     * 查询指定的前{top}条数据
+     * @param top
+     * @param user
+     * @return
+     */
+    public List<Appointment> queryPagerByTop(@Param("top") int top, @Param("user") User user);
 }
