@@ -6,10 +6,12 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.dao.MaintainFixAccDAO;
 import com.gs.service.MaintainFixAccService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,7 +22,9 @@ import java.util.List;
 @Controller()
 @RequestMapping("/maintainFixAcc")
 public class MaintainFixAccController {
+
     private Logger logger = (Logger) LoggerFactory.getLogger(MaintainFixAccController.class);
+
     @Resource
     private MaintainFixAccService maintainFixAccService;
 
@@ -38,6 +42,27 @@ public class MaintainFixAccController {
             }
             return ControllerResult.getSuccessResult("添加成功");
         } catch (Exception e) {
+            logger.info("添加失败，出现了一个错误");
+            return ControllerResult.getFailResult("添加失败，出现了一个错误");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "insert", method = RequestMethod.GET)
+    public ControllerResult insertAcc(@Param("AccessoriesId")String AccessoriesId,@Param("maintenanceltemId")String maintenanceltemId,@Param("count")String count){
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        try{
+            MaintainFixAcc maintainFixAcc = new MaintainFixAcc();
+            maintainFixAcc.setAccCount(Integer.valueOf(count));
+            maintainFixAcc.setAccId(AccessoriesId);
+            maintainFixAcc.setMaintainId(maintenanceltemId);
+            maintainFixAccService.insert(maintainFixAcc);
+            logger.info("添加成功");
+            return ControllerResult.getSuccessResult("添加配件成功");
+        }catch(Exception e){
             logger.info("添加失败，出现了一个错误");
             return ControllerResult.getFailResult("添加失败，出现了一个错误");
         }

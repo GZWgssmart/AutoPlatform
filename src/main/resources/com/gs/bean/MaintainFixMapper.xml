@@ -117,7 +117,7 @@
 			mf.maintainOrFix = '维修'
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+			and mf.companyId = #{user.companyId}
 		</if>
 		limit #{pager.beginIndex}, #{pager.pageSize}
 
@@ -129,14 +129,14 @@
 			mf.maintainOrFix = '保养'
 		]]>
 			<if test="user.companyId != null and user.companyId != ''">
-				and c.companyId = #{user.companyId}
+				and mf.companyId = #{user.companyId}
 			</if>
 			limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(*) from t_maintain_fix where maintainOrFix = "维修"
+			select count(*) from t_maintain_fix where maintainOrFix = '维修'
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and companyId = #{companyId}
@@ -145,7 +145,7 @@
 
 	<select id="MaintainCont" resultType="int">
 		<![CDATA[
-			select count(*) from t_maintain_fix where maintainOrFix = "保养"
+			select count(*) from t_maintain_fix where maintainOrFix = '保养'
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and companyId = #{companyId}

@@ -14,7 +14,7 @@ import java.util.List;
 *@since 2017-04-14 16:36:52
 */
 public interface MaintainFixService extends BaseService<String, MaintainFix>{
-    public List<MaintainFix> queryBymaintainPager(@Param("pager") Pager pager, @Param("user") User user);
+    public List<MaintainFix> queryBymaintainPager(Pager pager,User user);
     public int MaintainCont(User user);
 
     /*

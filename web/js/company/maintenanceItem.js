@@ -34,7 +34,7 @@ function showAddWin(){
 }
 
 /**
- * 显示 配件窗口
+ * 显示配件窗口
  * */
 var maintenanceltemId
 function showAddacc(){
@@ -45,7 +45,7 @@ function showAddacc(){
     } else {
         var product = selectRow[0];
         maintenanceltemId = product.maintainId;
-        $("#maintenanceWin").modal('show');
+        $("#AccessoriesWin").modal('show');
     }
 }
 
@@ -70,27 +70,53 @@ function operating(value, row, index) {
 
 var AccessoriesId
 function operationWin(value,row,index){
-    alert(row.accId);
     if(row.accId != null){
         return[
-            '<button type="button" class="btn btn-default  btn-sm btn-success" onclick="showAccWin();">选择配件</button>'
+            '<button type="button" class="btn btn-default  btn-sm btn-success" onclick="showAccWin()">选择配件</button>'
         ]
     }
 }
 
 function showAccWin(){
-   $("#accWin").modal('show');
-    var Row = $("#cusTable2").bootstrapTable('getSelections');
-    var acc = Row[0]
-    var accId = null;
+    $("#accWin").modal('show');
+    $("#AccessoriesWin").modal('hide');
+    var selectRow = $("#cusTable2").bootstrapTable('getSelections');
+    if(selectRow.length != 1){
+
+    }else{
+        var accessories = selectRow[0];
+        AccessoriesId =  accessories.accId;
+    }
 }
 
 function Addacc() {
    var count = $("#count").val();
-   if(Id != null || maintenanceltemId != null||count != null){
-       alert(count);
-       alert(AccessoriesId);
-       alert(maintenanceltemId);
+   if(AccessoriesId != null || maintenanceltemId != null || count != null){
+       $.get("/maintainFixAcc/insert?AccessoriesId=" + AccessoriesId + "&maintenanceltemId=" + maintenanceltemId + "&count=" + count,
+           function (data) {
+               if (data.result == "success") {
+                   $("#accWin").modal('hide');
+                   swal(data.message, "", "success");
+               } else if (data.result == "fail") {
+                   $("#accWin").modal('hide');
+                   swal(data.message, "", "error");
+               } else if (data.result == "notLogin") {
+                   swal({
+                           title: "登入失败",
+                           text: data.message,
+                           type: "warning",
+                           showCancelButton: false,
+                           confirmButtonColor: "#DD6B55",
+                           confirmButtonText: "确认",
+                           closeOnConfirm: true
+                       },
+                       function (isConfirm) {
+                           if (isConfirm) {
+                               top.location.href = "/login/show_login";
+                           }
+                   });
+               }
+           }, "json");
    }
 }
 

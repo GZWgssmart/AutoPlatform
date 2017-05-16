@@ -10,7 +10,7 @@
 
     <insert id="insert" parameterType="maintainFixAcc">
 		<![CDATA[
-
+			insert into t_maintain_fix_acc (mainAccId,maintainId,accId,accCount) value (UUID(),#{maintainId},#{accId},#{accCount})
         ]]>
 	</insert>
 

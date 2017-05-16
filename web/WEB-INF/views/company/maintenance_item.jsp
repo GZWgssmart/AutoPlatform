@@ -86,13 +86,13 @@
                         <form role="form" id="editForm">
                             <input name="maintainId" attr="maintain.maintainId" type="hidden"/>
                             <input name="maintainOrFix" attr="maintain.maintainOrFix" type="hidden"/>
-                            <input name="companyId" attr="maintain.companyId" type="hidden"/>
+                            <input name="companyId" attr="maintain.companyId" type="text"/>
                             <div class="form-group">
                                 <label>保养项目名称：</label>
                                 <input type="text"   name="maintainName" attr="maintain.maintainName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>保养所需工时：</label>
+                                <label>保养所需工时（小时）：</label>
                                 <input type="text"  name="maintainHour" attr="maintain.maintainHour"
                                        class="form-control"/>
                             </div>
@@ -185,7 +185,7 @@
     </div>
 </div>
 
-<div id="maintenanceWin" class="modal fade" aria-hidden="true">
+<div id="AccessoriesWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -204,7 +204,7 @@
                                    data-show-toggle="true"
                                    data-showColumns="true">
                                 <thead>
-                                <tr onclick="clickRowByInline(this);">
+                                <tr>
                                     <th data-field="state" data-checkbox="true"></th>
                                     <th data-field="accName">
                                         配件名称
@@ -233,15 +233,12 @@
 <div id="accWin" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
             <div class="modal-body">
+                <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                 <input type="text" name="accCount" id="count" class="col-sm-6" placeholder="请输入项目所需配件数量"/>
                 <div class="modal-footer" style="overflow:hidden;">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <input type="button" class="btn btn-primary" value="确认选择配件" onclick="Addacc();">
-                    </input>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <input type="button" class="btn btn-primary" value="确认选择配件" onclick="Addacc();"/>
                     <input type="reset" name="reset" style="display: none;" />
                 </div>
             </div>

@@ -184,8 +184,8 @@ public class MaintainFixController {
     @ResponseBody
     @RequestMapping(value = "maintain_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
-            logger.info("Session已失效或者权限不足");
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效");
             return null;
         }
         logger.info("查询所有维修保养项目，封装成ComboBox");
