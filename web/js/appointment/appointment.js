@@ -1,4 +1,6 @@
 var userInfo;
+
+var editPhone;
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/appointment/query_pager?status=ALL");
@@ -144,6 +146,7 @@ function showEditWin() {
         return false;
     } else {
         var appointment = selectRow[0];
+        editPhone = appointment.userPhone;
         $("#editForm").fill(appointment);
         $('#editCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
         $('#editCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
@@ -298,6 +301,13 @@ function validator(formId) {
                         min: 11,
                         max: 11,
                         message: '手机号只能是11位'
+                    },
+                    threshold: 11,
+                    remote: {
+                        url: '/peopleManage/peoplePhone_verification?editPhone='+editPhone,
+                        message: '该手机号已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },

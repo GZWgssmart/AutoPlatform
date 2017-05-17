@@ -57,7 +57,7 @@ public class AppointmentController {
     private String queryRole = Constants.CAR_OWNER + "," + Constants.COMPANY_RECEIVE + ","
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN+","+Constants.COMPANY_ADMIN;
     //可操作：董事长、接待员，车主
-    private String editRole = Constants.CAR_OWNER + ","+Constants.COMPANY_RECEIVE+ ","+Constants.COMPANY_ADMIN;
+    private String editRole = Constants.COMPANY_RECEIVE+ ","+Constants.COMPANY_ADMIN;
 //跳转页面
     @RequestMapping(value = "appointment", method = RequestMethod.GET)
     public String appointment() {
@@ -168,8 +168,8 @@ public class AppointmentController {
                     User loginUser = SessionGetUtil.getUser();
 
                     logger.info("添加预约");
-                    String userId = UUIDUtil.uuid();
-                    appointment.setUserId(userId);
+//                    String userId = UUIDUtil.uuid();
+//                    appointment.setUserId(userId);
                     appointment.setSpeedStatus(Constants.APPOINTMENT);
                     appointment.setCompanyId(loginUser.getCompanyId());
 
