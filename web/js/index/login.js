@@ -48,10 +48,14 @@ function register() {
         $("#register_form").serialize(),
         function (data) {
             if (data.result == "success") {
-                cCount(data.message);
-                setTimeout(function() {
-                    window.location.href = contextPath + "/customerHome";
-                },3000)
+                if (data.message == "注册成功，请到邮箱中进行验证") {
+                    $("#successMsg").html(data.message);
+                } else {
+                    cCount(data.message);
+                    setTimeout(function() {
+                        window.location.href = contextPath + "/customerHome";
+                    },3000);
+                }
             } else {
                 $("#errMsg1").html(data.message);
             }

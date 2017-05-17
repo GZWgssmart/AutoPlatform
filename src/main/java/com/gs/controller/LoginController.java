@@ -13,6 +13,8 @@ import com.gs.common.util.UUIDUtil;
 import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
+import com.jh.email.Mail;
+import com.jh.email.MailSender;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -26,6 +28,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.mail.BodyPart;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.UUID;
@@ -109,6 +116,7 @@ public class LoginController {
                     if (userService.queryEmail(number) > 0) {
                         return ControllerResult.getFailResult("注册失败，该邮箱已经存在");
                     }
+                    user.setUserStatus("N");
                     user.setUserEmail(number);
                 } else {
                     if (userService.queryPhone(number) > 0) {
@@ -120,6 +128,7 @@ public class LoginController {
                             if (!code.equals(phoneCode)) {
                                 return ControllerResult.getFailResult("注册失败，验证码有误");
                             }
+                            user.setUserStatus("Y");
                             user.setUserPhone(number);
                         }
                     }
@@ -134,6 +143,20 @@ public class LoginController {
                 userRoleService.insert(userRole);
 
                 if (email) {
+                    Mail mail = new Mail();
+                    mail.setRecipients(user.getUserEmail());
+                    mail.setSubject("注册提醒");
+                    mail.setType(Mail.HTML);
+                    Multipart multipart = new MimeMultipart();
+                    BodyPart part1 = new MimeBodyPart();
+                    try {
+                        part1.setContent("<p>欢迎入驻汽车之家,请点击一下连接完成激活</p><a href='http://localhost:8080/login/ok?userId=" + userId + "'>点击完成验证</a>", mail.getType());
+                        multipart.addBodyPart(part1);
+                        mail.setMultipart(multipart);
+                    } catch (MessagingException e) {
+                    }
+                    MailSender mailSender = new MailSender();
+                    mailSender.sendEmailByType("qq", mail, "672630243@qq.com", "jxtsefrwqaxobbdb");
                     return ControllerResult.getSuccessResult("注册成功，请到邮箱中进行验证");
                 } else {
                     Subject subject = SecurityUtils.getSubject();
@@ -162,6 +185,16 @@ public class LoginController {
         IndustrySMS is = new IndustrySMS(to, smsContent);
         is.execute();
         return ControllerResult.getSuccessResult("验证码发送成功，请注意查收");
+    }
+
+    @RequestMapping("ok")
+    public String ok(String userId) {
+        logger.info("验证成功");
+        User user = userService.queryById(userId);
+        if (user != null) {
+            userService.active(userId);
+        }
+        return "index/index";
     }
 
     @RequestMapping("logout")

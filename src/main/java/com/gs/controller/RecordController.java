@@ -8,6 +8,7 @@ import com.gs.bean.WorkInfo;
 import com.gs.bean.info.SendRemind;
 import com.gs.common.Constants;
 import com.gs.common.bean.*;
+import com.gs.common.message.IndustrySMS;
 import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.MaintainRecordService;
@@ -394,10 +395,34 @@ public class RecordController {
                     List<Mail> mails = new ArrayList<Mail>();
                     for (int i = 0, len = userIds.length; i < len; i++) {
                         logger.info("给已注册用户发送提醒");
+                        User user = userService.queryById(userIds[i]);
                         if (remindMethod.length == 2) {
                             logger.info("发送短信和邮箱提醒");
+                            logger.info("发送短信提醒");
+                            String to = user.getUserPhone();
+                            String smsContent = "尊敬的" + user.getUserName() + "车主，车牌号为" + carPlates[i] + ",您的爱车已经整装待发，如果您有时间，请来领它回家哦^_^";
+                            IndustrySMS is = new IndustrySMS(to, smsContent);
+                            is.execute();
+
+                            if (user.getUserEmail() != null && !user.getUserEmail().equals("")) {
+                                Mail mail = new Mail();
+                                mail.setRecipients(user.getUserEmail());
+                                mail.setSubject(sendRemind.getRemindTitle());
+                                mail.setType(Mail.HTML);
+                                Multipart multipart = new MimeMultipart();
+                                BodyPart part1 = new MimeBodyPart();
+                                sendRemind.setRemindContent("<p>尊敬的" + user.getUserName() + "车主，车牌号为" + carPlates[i] + ",您的爱车已经整装待发，如果您有时间，请来领它回家哦^_^，如有问题，请联系0797-5201314</p>");
+                                try {
+                                    part1.setContent(sendRemind.getRemindContent(), mail.getType());
+                                    multipart.addBodyPart(part1);
+                                    mail.setMultipart(multipart);
+                                    mails.add(mail);
+                                } catch (MessagingException e) {
+                                    logger.info("发送提车提醒失败，出现了一个错误");
+                                    return ControllerResult.getFailResult("邮箱提醒发送失败");
+                                }
+                            }
                         } else {
-                            User user = userService.queryById(userIds[i]);
                             if (remindMethod[0].equals("email")) {
                                 logger.info("发送邮箱提醒");
                                 if (user.getUserEmail() != null && !user.getUserEmail().equals("")) {
@@ -417,11 +442,13 @@ public class RecordController {
                                         logger.info("发送提车提醒失败，出现了一个错误");
                                         return ControllerResult.getFailResult("邮箱提醒发送失败");
                                     }
-                                } else {
-
                                 }
                             } else if (remindMethod[0].equals("message")) {
                                 logger.info("发送短信提醒");
+                                String to = user.getUserPhone();
+                                String smsContent = "尊敬的" + user.getUserName() + "车主，车牌号为" + carPlates[i] + ",您的爱车已经整装待发，如果您有时间，请来领它回家哦^_^";
+                                IndustrySMS is = new IndustrySMS(to, smsContent);
+                                is.execute();
                             }
                         }
                         maintainRecordService.updateSpeedStatusById(Constants.ALREADY_REMIND, recordIds[i]);
@@ -429,8 +456,13 @@ public class RecordController {
                     }
                     for (int i = userIds.length; i < recordIds.length; i++) {
                         logger.info("给未注册用户发送短信提醒");
+                        MaintainRecord record = maintainRecordService.queryById(recordIds[i]);
                         if (remindMethod[0].equals("message")) {
                             logger.info("发送短信提醒");
+                            String to = record.getCheckin().getUserPhone();
+                            String smsContent = "尊敬的" + record.getCheckin().getUserName() + "车主，车牌号为" + record.getCheckin().getPlate().getPlateName() + "-" + record.getCheckin().getCarPlate() + ",您的爱车已经整装待发，如果您有时间，请来领它回家哦^_^";
+                            IndustrySMS is = new IndustrySMS(to, smsContent);
+                            is.execute();
                         }
                         maintainRecordService.updateSpeedStatusById(Constants.ALREADY_REMIND, recordIds[i]);
                     }
