@@ -49,8 +49,9 @@
                     </c:choose>
                     <div class="fh5co-text">
                         <h2>${c.companyName}</h2>
-                        <p>${c.companyTel}</p>
+                        <span>${c.companyTel}</span>
                         <p>${c.companyAddress}</p>
+                        <button class="btn-success col-lg-5  pull-right">预约</button>
                     </div>
                 </a>
             </div>
@@ -70,12 +71,12 @@
                             <input type="hidden" id="companyId" name="companyId" class="form-control"/>
                             <div class="form-group">
                                 <label>车主姓名：</label>
-                                <input type="text" id="addUserName" name="userName" class="form-control"/>
+                                <input type="text" id="addUserName" name="userName" readonly  value="${sessionScope.user.userName}" class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>车主电话：</label>
-                                <input type="text" id="addUserPhone" name="userPhone" class="form-control"/>
+                                <input type="text" id="addUserPhone" name="userPhone" readonly value="${sessionScope.user.userPhone}" class="form-control"/>
                             </div>
 
                             <div class="form-group">

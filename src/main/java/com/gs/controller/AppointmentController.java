@@ -199,7 +199,7 @@ public class AppointmentController {
                     appointment.setSpeedStatus(Constants.APPOINTMENT);
                     appointment.setUserId(loginUser.getUserId());
                     appointmentService.insert(appointment);
-                    return ControllerResult.getSuccessResult("添加成功");
+                    return ControllerResult.getSuccessResult("成功预约");
 
 
         }else {

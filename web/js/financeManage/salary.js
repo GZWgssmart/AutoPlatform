@@ -155,18 +155,6 @@ function validator(formId) {
                     }
                 }
 
-            },
-            salaryDes:{
-                validators:{
-                    notEmpty:{
-                        message: '工作描述不能为空'
-                    },
-                    stringLength: {
-                        min: 2,
-                        max: 500,
-                        message: '收入类型名称长度必须在2到500位之间'
-                    }
-                }
             }
         }
     })

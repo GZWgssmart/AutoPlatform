@@ -116,7 +116,7 @@
                             <input type="hidden" attr="incomingOutgoing.inOutId" name="inOutId" />
                             <div class="form-group">
                                 <label class="control-label">收支记录金额：</label>
-                                <input type="text"   attr="incomingOutgoing.inOutMoney" name="inOutMoney"  class="form-control"/>
+                                <input type="number"   attr="incomingOutgoing.inOutMoney" name="inOutMoney"  class="form-control"/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
@@ -145,10 +145,7 @@
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加收支记录</h3>
                         <form role="form" id="addForm" >
-                            <div class="form-group">
-                                <label class="control-label">收支记录金额：</label>
-                                <input type="text"   name="inOutMoney"  class="form-control"/>
-                            </div>
+
                             <div class="form-group" style="width: auto; display: inherit;">
                                 <label>选择类型：</label>
                                 <input type="checkbox" id="isType" name="isType">
@@ -160,6 +157,10 @@
                             <div class="form-group" id ="inDiv" style="display: none;">
                                 <label class="control-label">收入类型：</label>
                                 <select id="inType" class="js-example-tags form-control inType" name="inTypeId"></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">收支记录金额：</label>
+                                <input type="number"   name="inOutMoney"  class="form-control"/>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"

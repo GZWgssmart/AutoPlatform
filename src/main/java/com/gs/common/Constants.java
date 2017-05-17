@@ -60,6 +60,10 @@ public class Constants {
 
     public static final String  MAINTENANCE_IN = "维修保养收入";
 
+    public static final String  ACC_OUT = "配件支出";
+
+    public static final String  ACC_IN = "配件收入";
+
     public static final String NOT_APPLY = "未申请";
 
     public static final String NOT_AUDITED = "未审核";
