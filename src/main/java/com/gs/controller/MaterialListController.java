@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.WorkInfo;
 import com.gs.bean.info.MaterialListInfo;
 import com.gs.bean.User;
 import com.gs.bean.info.MaterialUseInfo;
@@ -10,10 +11,7 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
-import com.gs.service.MaintainRecordService;
-import com.gs.service.MaterialListInfoService;
-import com.gs.service.MaterialUseInfoService;
-import com.gs.service.RoleService;
+import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -42,6 +40,9 @@ public class MaterialListController {
 
     @Resource
     private RoleService rs;
+
+    @Resource
+    private WorkInfoService wis;
 
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + "," +
             Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ARTIFICER;
@@ -164,5 +165,15 @@ public class MaterialListController {
             logger.info("操作失败，出现了一个错误");
             return ControllerResult.getFailResult("操作失败，出现了一个错误");
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "query_isUse", method = RequestMethod.GET)
+    public String queryIsUse(String recordId) {
+        WorkInfo wi = wis.queryByRocordIdUserId(recordId);
+        if (wi.getUserId() != null && !wi.getUserId().equals("")) {
+            return "1";
+        }
+        return "0";
     }
 }

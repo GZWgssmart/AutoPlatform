@@ -34,7 +34,7 @@ function countPrice(value, row, index) {
     return "" + (row.accPrice * row.accCount);
 }
 
-function achieve() {
+/*function achieve() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('错误提示', "请选择一条数据", "error");
@@ -55,7 +55,7 @@ function achieve() {
             return false;
         }
     }
-}
+}*/
 
 function operateFormatter(value, row, index) {
     if (row.pickingStatus == '未审核') {

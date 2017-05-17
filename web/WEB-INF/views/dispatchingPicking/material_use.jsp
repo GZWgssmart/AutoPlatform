@@ -62,12 +62,12 @@
                     查询领料明细
                 </button>
             </a>
-            <a>
+            <%--<a>
                 <button onclick="achieve();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-ok"></i>
                     确认完成
                 </button>
-            </a>
+            </a>--%>
         </div>
         </tbody>
 
