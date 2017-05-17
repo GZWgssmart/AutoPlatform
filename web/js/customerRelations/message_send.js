@@ -29,7 +29,6 @@ function addCustomer(){
 var userId = new Array();
 /**插入Id*/
 function addMessageId(){
-    alert("6666666666666")
     var selectRow = $("#customerTable").bootstrapTable('getSelections');
     if(selectRow.length>0){
         for(var i = 0; i<selectRow.length;i++){
@@ -37,8 +36,24 @@ function addMessageId(){
         }
         $.get("/MessageSend/addMessageId?userId="+userId,
             function(data){
-                swal('添加成功', "", "success");
-                $('#cusTable').bootstrapTable('refresh');
+                swal({
+                        title: "是否修改短信发送内容",
+                        text: data.message,
+                        type: "warning",
+                        showCancelButton: false,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确认",
+                        cancelButtonText: "取消",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                    },function (isConfirm) {
+                    if (isConfirm) {
+                        showEditWin(1,'all');
+                    } else {
+                        $('#cusTable').bootstrapTable('refresh');
+                    }
+                });
+
             })
     }else {
         swal('添加失败', "至少选择一行数据", "error");
@@ -47,9 +62,15 @@ function addMessageId(){
 
 var idList = new Array();
 var sendMsg = '';
+
 /** 编辑数据 */
-function showEditWin(str) {
+function showEditWin(str,type) {
+    if(type == 'select'){
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    }else if(type == 'all'){
+        $('#cusTable').bootstrapTable('refresh');
+        var selectRow = $("#cusTable").bootstrapTable('getData');
+    }
     if(selectRow.length > 0 || str==2){
         if(str==1){
         idList = new Array();

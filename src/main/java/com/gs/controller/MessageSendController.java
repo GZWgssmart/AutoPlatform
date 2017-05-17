@@ -103,7 +103,7 @@ public class MessageSendController {
             logger.info("登陆已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-        try {
+      //  try {
             List<MessageSend> msList = new ArrayList<MessageSend>();
                 User user = SessionGetUtil.getUser();
             for (int i = 0; i < userId.length; i++) {
@@ -114,10 +114,10 @@ public class MessageSendController {
             }
             messageSendService.addMessageId(msList);
             return ControllerResult.getSuccessResult("插入成功");
-        } catch (Exception e) {
-            logger.info("添加失败，出现了一个错误");
-            return ControllerResult.getFailResult("添加失败，出现了一个错误");
-        }
+      //  } catch (Exception e) {
+       //     logger.info("添加失败，出现了一个错误");
+       //     return ControllerResult.getFailResult("添加失败，出现了一个错误");
+        //}
     }
 }
 
