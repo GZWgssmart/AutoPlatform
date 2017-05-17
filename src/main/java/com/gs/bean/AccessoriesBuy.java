@@ -23,11 +23,20 @@ public class AccessoriesBuy {
     private String accId; // 配件ID
     private String companyId; // 公司ID
     private String accBuyCheck; // 审核状态
+    private String accIsBuy; // 配件是否购买状态
 
     private double coont;       // 用于下单统计报表记录数
 
     private Accessories accessories; // 关联配件表
     private Company company; // 关联公司表
+
+    public String getAccIsBuy() {
+        return accIsBuy;
+    }
+
+    public void setAccIsBuy(String accIsBuy) {
+        this.accIsBuy = accIsBuy;
+    }
 
     public String getAccBuyId() {
         return accBuyId;
@@ -173,6 +182,8 @@ public class AccessoriesBuy {
                 ", accId='" + accId + '\'' +
                 ", companyId='" + companyId + '\'' +
                 ", accBuyCheck='" + accBuyCheck + '\'' +
+                ", accIsBuy='" + accIsBuy + '\'' +
+                ", coont=" + coont +
                 ", accessories=" + accessories +
                 ", company=" + company +
                 '}';

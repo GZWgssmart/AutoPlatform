@@ -90,21 +90,26 @@ function updateAccessoriesBuyInfo(formId) {
 
 /**添加采购信息 */
 function addAccessoriesBuyInfo(formId) {
-    $.post("/accessoriesBuy/isAccAdd?state=" + isAcc,
-        $("#" + formId).serialize(),
-        function (data) {
-            if (data.result == "success") {
-                $('#addWin').modal('hide');
-                swal(data.message, "", "success");
-                $('#cusTable').bootstrapTable('refresh');
-                $("input[type=reset]").trigger("click");
-            } else if (data.result == "fail") {
-                destoryValidator(formId, "addForm");
-                clearTempData();
-                validator(formId);
-                swal(data.message, "", "error");
-            }
-        }, "json");
+    var bDiscount = $("#accBuyDiscount").val();
+    if (bDiscount == '' || bDiscount == null) {
+        $("#accBuyDiscount").val(1);
+        $.post("/accessoriesBuy/isAccAdd?state=" + isAcc,
+            $("#" + formId).serialize(),
+            function (data) {
+                if (data.result == "success") {
+                    $('#addWin').modal('hide');
+                    swal(data.message, "", "success");
+                    $('#cusTable').bootstrapTable('refresh');
+                    $("input[type=reset]").trigger("click");
+                } else if (data.result == "fail") {
+                    destoryValidator(formId, "addForm");
+                    clearTempData();
+                    validator(formId);
+                    swal(data.message, "", "error");
+                }
+            }, "json");
+    }
+
 }
 
 
@@ -197,6 +202,14 @@ function fmtCheckState(value) {
         return "已审核";
     } else {
         return "审核中";
+    }
+}
+
+function fmtDiscount(value) {
+    if (value == 1) {
+        return "无折扣"
+    } else {
+        return value;
     }
 }
 
@@ -362,7 +375,7 @@ function validator(formId) {
             accBuyDiscount: {
                 validators: {
                     regexp: {
-                        regexp: /^(\d(\.\d)?|10)$/,
+                        regexp: /^([0-9](\.[0-9]+)?|10)$/,
                         message: '请输入正确的折扣'
                     }
                 }
@@ -442,6 +455,7 @@ function showAccAddWin() {
     // clearTempData();
     validator("addForm");
     $("#addWin").modal('show');
+    autoCalculation1("accBuyCount", "accBuyPrice", "accBuyDiscount", "accBuyTotal", "accBuyMoney");
 }
 
 function showAccEditWin() {
@@ -507,4 +521,42 @@ function autoCalculation(iId) {
             }
         }
     }
+}
+
+/**
+ *
+ * @param buyCount 购买数量
+ * @param buyPrice 购买单价
+ * @param buyDiscount 购买折扣
+ * @param buyTotal 购买总价
+ * @param buyMoney 购买最终价
+ */
+function autoCalculation1(buyCount, buyPrice, buyDiscount, buyTotal, buyMoney) {
+    var bCount = "";
+    var bPrice = "";
+    var bDiscount = "";
+    var bTotal = "";
+    var bMoney = "";
+    var udrs = ""; //未打折扣总价
+    var rs = ""; // 打完折扣总价
+    $("#" + buyCount + ",#" + buyPrice + ",#" + buyDiscount).bind("input", function () {
+        bCount = $("#" + buyCount).val();
+        bPrice = $("#" + buyPrice).val();
+        bDiscount = $("#" + buyDiscount).val();
+        if (bCount != null && bCount != "") {
+            if (bPrice != null && bPrice != "" && bDiscount != null && bDiscount != "") {
+                rs = (bCount * bPrice) * bDiscount;
+                var urs = bCount * bPrice;
+                $("#" + buyTotal).val(urs);
+                $("#" + buyMoney).val(rs);
+            } else {
+                udrs = bCount * bPrice;
+                $("#" + buyTotal).val(udrs);
+                $("#" + buyMoney).val(udrs);
+            }
+        } else {
+            $("#" + buyTotal).val(0);
+            $("#" + buyMoney).val(0);
+        }
+    })
 }

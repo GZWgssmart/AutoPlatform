@@ -17,6 +17,7 @@
         <result property="companyId" column="companyId"/>
         <result property="accBuyStatus" column="accBuyStatus"/>
         <result property="accBuyCheck" column="accBuyCheck"/>
+        <result property="accIsBuy" column="accIsBuy"/>
         <result property="coont" column="coont"/>
 
         <association property="accessories" javaType="com.gs.bean.Accessories">
@@ -225,12 +226,12 @@
                 )
                 INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
             )
+            where 1 = 1
         ]]>
         <if test="user.companyId != null and user.companyId != ''">
-            where cpy.companyId = #{user.companyId}
+            and cpy.companyId = #{user.companyId}
         </if>
-        ORDER BY
-        ab.accBuyTime DESC
+        ORDER BY ab.accBuyTime DESC
         limit
         #{pager.beginIndex},#{pager.pageSize}
     </select>

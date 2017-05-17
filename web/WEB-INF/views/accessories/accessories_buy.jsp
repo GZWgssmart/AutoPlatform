@@ -70,7 +70,7 @@
             <th data-field="accessories.company.companyName">配件所属公司</th>
             <th data-field="accBuyCount">采购数量</th>
             <th data-field="accBuyPrice">采购单价</th>
-            <th data-field="accBuyDiscount">采购折扣</th>
+            <th data-field="accBuyDiscount" data-formatter="fmtDiscount">采购折扣</th>
             <th data-field="accBuyTime" data-formatter="formatterDate">采购时间</th>
             <th data-field="accBuyTotal">采购总价</th>
             <th data-field="accBuyMoney">采购最终价</th>
@@ -91,9 +91,9 @@
                     </button>
                 </a>
                 <%--<a>--%>
-                    <%--<button onclick="delteleBuy();" type="button" id="remove" class="btn btn-danger">--%>
-                        <%--<i class="glyphicon glyphicon-ban-circle"></i> 冻结--%>
-                    <%--</button>--%>
+                <%--<button onclick="delteleBuy();" type="button" id="remove" class="btn btn-danger">--%>
+                <%--<i class="glyphicon glyphicon-ban-circle"></i> 冻结--%>
+                <%--</button>--%>
                 <%--</a>--%>
             </s:hasAnyRoles>
             <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory, systemOrdinaryAdmin">
@@ -135,7 +135,8 @@
                         <form role="form" id="editForm">
                             <input type="hidden" attr="accessoriesBuy.accBuyId" name="accBuyId"/>
                             <input type="hidden" attr="accessoriesBuy.accessories.accId" name="accessories.accId"/>
-                            <input type="hidden" attr="accessoriesBuy.accessories.accessoriesType.accTypeId" name="accessories.accessoriesType.accTypeId"/>
+                            <input type="hidden" attr="accessoriesBuy.accessories.accessoriesType.accTypeId"
+                                   name="accessories.accessoriesType.accTypeId"/>
                             <div class="form-group">
                                 <label>配件名称：</label>
                                 <input type="text" name="accessories.accName" attr="accessoriesBuy.accessories.accName"
@@ -156,7 +157,8 @@
                             <div class="form-group">
                                 <label>配件描述：</label>
                                 <textarea name="accessories.accDes" class="form-control" rows="3"
-                                          style="resize: none;" attr="accessoriesBuy.accessories.accDes" id="eAccDes"></textarea>
+                                          style="resize: none;" attr="accessoriesBuy.accessories.accDes"
+                                          id="eAccDes"></textarea>
                             </div>
 
                             <div class="form-group">
@@ -248,7 +250,7 @@
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加配件采购信息</h3>
                         <div class="form-group" style="width: auto; display: inherit;">
-                            <label>是否从库存中添加：</label>
+                            <label>库存中是否有剩余配件：</label>
                             <input type="checkbox" id="isAcc" name="isAcc">
                         </div>
                         <form role="form" id="addForm">
@@ -320,14 +322,14 @@
 
                             <div class="form-group">
                                 <label>总价：</label>
-                                <input type="text" name="accBuyTotal" id="accBuyTotal" onfocus="autoCalculation(this)"
+                                <input type="text" name="accBuyTotal" id="accBuyTotal"
                                        readonly
                                        class="form-control" placeholder="点击自动计算"/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
-                                <input type="text" name="accBuyMoney" id="accBuyMoney" onfocus="autoCalculation(this)"
+                                <input type="text" name="accBuyMoney" id="accBuyMoney"
                                        readonly
                                        class="form-control" placeholder="点击自动计算"/>
                             </div>
