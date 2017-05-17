@@ -21,19 +21,19 @@ function addCustomer(){
     if(selectRow.length < 1){
         swal('操作错误', "至少选择一个车主", "error");
     }else{
-        addMessageId();
+        addMessageId(selectRow);
         $("#customerWin").modal('hide');
     }
 }
 
 var userId = new Array();
 /**插入Id*/
-function addMessageId(){
-    var selectRow = $("#customerTable").bootstrapTable('getSelections');
-    if(selectRow.length>0){
-        for(var i = 0; i<selectRow.length;i++){
-            userId[i] =selectRow[i].checkin.userId;
+function addMessageId(obj){
+    if(obj.length > 0){
+        for(var i = 0; i < obj.length; i++){
+            userId[i] =obj[i].checkin.userId;
         }
+        
         $.get("/MessageSend/addMessageId?userId="+userId,
             function(data){
                 swal({

@@ -46,7 +46,7 @@ public class CustomerClientWebController {
     @RequestMapping("/features")
     public String webFeatures() {
         logger.info("进入功能特性页面");
-        return "customerClient/features";
+        return "index/features";
 
     }
 
@@ -63,6 +63,14 @@ public class CustomerClientWebController {
         return "index/tour";
 
     }
+
+    @RequestMapping("/pricing")
+    public String webPricing() {
+        logger.info("进入平台收费");
+        return "index/pricing";
+
+    }
+
 
 
 }

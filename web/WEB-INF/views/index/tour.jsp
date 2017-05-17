@@ -98,7 +98,7 @@
             </div>
         </nav>
 
-        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(<%=path%>/images/img_1.jpg)">
+        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(<%=path%>/images/img_4.jpg)">
             <div class="overlay"></div>
             <div class="gtco-container">
                 <div class="row">

@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: iJangoGuo
   Date: 2017/5/17
-  Time: 10:21
+  Time: 20:01
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,15 +11,17 @@
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 <!DOCTYPE HTML>
+
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>联系我们</title>
+    <title>产品收费</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="" />
+
     <!-- Facebook and Twitter integration -->
     <meta property="og:title" content=""/>
     <meta property="og:image" content=""/>
@@ -77,8 +79,8 @@
                     </div>
                     <div class="col-xs-8 text-right menu-1">
                         <ul>
-                            <li><a href="features.html">功能简介</a></li>
-                            <li><a href="tour.html">平台特性</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/tour">功能简介</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/tour">平台特性</a></li>
                             <li class="has-dropdown">
                                 <a href="#">使用说明</a>
                                 <ul class="dropdown">
@@ -88,9 +90,9 @@
                                     <li><a href="#">API</a></li>
                                 </ul>
                             </li>
-                            <li><a href="pricing.html">相关咨询</a></li>
-                            <li><a href="contact.html">联系方式</a></li>
-                            <li class="btn-cta"><a href="#"><span>入驻 我们</span></a></li>
+                            <li><a href="<%=path%>/customerClientWeb/contact">相关咨询</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/contact">联系方式</a></li>
+                            <li class="btn-cta"><a href="<%=path%>/customerClientWeb/contact"><span>入驻 我们</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -98,7 +100,7 @@
             </div>
         </nav>
 
-        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(<%=path%>/images/contact.jpg)">
+        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(<%=path%>/images/price.jpg)">
             <div class="overlay"></div>
             <div class="gtco-container">
                 <div class="row">
@@ -106,8 +108,9 @@
                         <div class="row row-mt-15em">
 
                             <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-                                <span class="intro-text-small">提交您的意见与投诉</span>
-                                <h1>联系我们</h1>
+                                <span class="intro-text-small">平台收费</span>
+                                <h1>为每户入驻的商家</h1>
+                                <h1>提供定制的产品</h1>
                             </div>
 
                         </div>
@@ -118,61 +121,134 @@
         </header>
 
 
+
         <div class="gtco-section border-bottom">
             <div class="gtco-container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6 animate-box">
-                            <h3>联系方式</h3>
-                            <form action="#">
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <label class="sr-only" for="name">姓名</label>
-                                        <input type="text" id="name" class="form-control" placeholder="请输入您的姓名">
-                                    </div>
+                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+                        <h2>入驻套餐</h2>
+                        <p>根据需求定制属于你自己最实惠的套餐</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="price-box">
+                            <h2 class="pricing-plan">试用</h2>
+                            <div class="price"><sup class="currency">￥</sup>15<small>/月</small></div>
+                            <p>推荐小型门店商家试用了解</p>
+                            <hr>
+                            <ul class="pricing-info">
+                                <li>数据存储 1GB</li>
+                                <li>短信提醒 500条</li>
+                                <li>动态员工支配</li>
+                                <li>使用天数 30天</li>
+                            </ul>
+                            <a href="#" class="btn btn-default btn-sm">立即试用</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="price-box">
+                            <h2 class="pricing-plan">入驻</h2>
+                            <div class="price"><sup class="currency">￥</sup>300<small>/年</small></div>
+                            <p>推荐中型商家入驻</p>
+                            <hr>
+                            <ul class="pricing-info">
+                                <li>云数据存储 5GB</li>
+                                <li>短信提醒 5000条</li>
+                                <li>动态员工支配</li>
+                                <li>工作日提供技术支持</li>
+                                <li>使用天数 365天</li>
+                                <li>免费版本更新</li>
+                            </ul>
+                            <a href="#" class="btn btn-default btn-sm">立即入驻</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="price-box popular">
+                            <div class="popular-text">Popular</div>
+                            <h2 class="pricing-plan">永久VIP</h2>
+                            <div class="price"><sup class="currency">￥</sup>998<small>/~</small></div>
+                            <p>推荐大型商家入驻</p>
+                            <hr>
+                            <ul class="pricing-info">
+                                <li>云数据存储 5GB</li>
+                                <li>用户数据永久备份</li>
+                                <li>短信提醒 5000条</li>
+                                <li>动态员工支配</li>
+                                <li>24小时提供技术支持</li>
+                                <li>使用天数 365天</li>
+                                <li>免费版本更新</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary btn-sm">立即抢购</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                                </div>
+        <div class="gtco-section">
+            <div class="gtco-container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
+                        <h2>常见问题</h2>
+                        <p></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <ul class="fh5co-faq-list">
+                            <li class="animate-box">
+                                <h2>客户数据保密吗?</h2>
+                                <p>入驻平台后我们会为所有用户信息保密并且签署相关合同是不存在泄露隐私问题的.</p>
+                            </li>
+                            <li class="animate-box">
+                                <h2>入驻后不会使用怎么办?</h2>
+                                <p>入驻后的商家我们会发一份详细的使用文档并且会安排相关的客服人员教您使用的.</p>
+                            </li>
+                            <li class="animate-box">
+                                <h2>如果平台系统出现问题怎么办?</h2>
+                                <p>平台使用过程中如果出现问题可以反馈给我们客服,客服会第一时间反馈给我们的程序员为您提供解决方案.</p>
+                            </li>
+                            <li class="animate-box">
+                                <h2>手机号可以重复注册吗?</h2>
+                                <p>我们平台的手机号是一人一号制度,手机号注册过的不能够再注册您可以通过手机号找回密码.</p>
+                            </li>
+                            <li class="animate-box">
+                                <h2>我能够调取客户信息吗?</h2>
+                                <p>我们有权利为顾客保密并且只提供基础信息给商家,做到顾客的资料不泄露.</p>
+                            </li>
+                            <li class="animate-box">
+                                <h2>入驻以后是否有保障?</h2>
+                                <p>入驻的商家我们提供一切援助,并且对所有商家顾客负责,如果有相应问题第一时间通知商家让所有用户放心使用.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <label class="sr-only" for="email">邮箱</label>
-                                        <input type="text" id="email" class="form-control" placeholder="输入您的邮箱">
-                                    </div>
-                                </div>
 
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <label class="sr-only" for="subject">填写主题</label>
-                                        <input type="text" id="subject" class="form-control" placeholder="填写主题">
-                                    </div>
-                                </div>
-
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <label class="sr-only" for="message">信息</label>
-                                        <textarea name="message" id="message" cols="30" rows="10" class="form-control" placeholder="填写信息"></textarea>
-                                    </div>
-                                </div>
+        <div id="gtco-subscribe">
+            <div class="gtco-container">
+                <div class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
+                        <h2>订阅我们</h2>
+                        <p>了解更多汽车资讯您可以订阅我们的公众号和邮件，我们将竭诚为您服务.</p>
+                    </div>
+                </div>
+                <div class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2">
+                        <form class="form-inline">
+                            <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
-                                    <input type="submit" value="提交" class="btn btn-primary">
+                                    <label for="email" class="sr-only">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="请输入您的邮箱">
                                 </div>
-
-                            </form>
-                        </div>
-                        <div class="col-md-5 col-md-push-1 animate-box">
-
-                            <div class="gtco-contact-info">
-                                <h3>公司信息</h3>
-                                <ul>
-                                    <li class="address">地址: 中国江西省赣州市章贡区, <br> 银河大道阳明国际B2栋12楼</li>
-                                    <li class="phone"><a href="tel://1234567920">+ 1235 2355 98</a></li>
-                                    <li class="email"><a href="mailto:info@yoursite.com">Jango@google.com</a></li>
-                                    <li class="url"><a href="http://www.jangomp.com">www.jangomp.com</a></li>
-                                </ul>
                             </div>
-
-
-                        </div>
+                            <div class="col-md-6 col-sm-6">
+                                <button type="submit" class="btn btn-default btn-block">订阅</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -184,7 +260,7 @@
 
                     <div class="col-md-4">
                         <div class="gtco-widget">
-                            <h3>关于我们 <span class="footer-logo"><span>.<span></span></h3>
+                            <h3>关于我们 <span class="footer-logo"><span>.</span></span></h3>
                             <p>汽修店信息化水平普遍偏低，工作效率低，信息的管理混乱，没有实现自动化，没有完善的数据统计，汽修店员工对计算机软件系统缺乏了解。汽车维修保养管理系统需要提供简洁易懂的用户界面，提供简单易用的流程。</p>
                         </div>
                     </div>
