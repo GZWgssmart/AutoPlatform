@@ -97,6 +97,12 @@
 		]]>
 	</select>
 
+	<select id="queryByRocordIdUserId" parameterType="string" resultType="workInfo">
+		<![CDATA[
+		select * from t_work_info where recordId = #{recordId}
+	]]>
+	</select>
+
 	<select id="queryById" parameterType="string" resultType="workInfo">
 		<![CDATA[
 			SELECT * FROM t_work_info WHERE workId = #{workId}

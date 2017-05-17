@@ -92,16 +92,13 @@
     <select id="queryByProgressPager" resultType="list" resultMap="maintainRecordResultMap">
         <![CDATA[
 			SELECT
+			    mr.*,
                 ch.userName,
                 ch.carPlate,
-                mr.startTime,
                 ch.maintainOrFix,
                 c.companyName,
                 wi.userId AS work_userId,
-                mr.pickupTime,
-                cb.recordId AS record_recordId,
-                mr.actualEndTime,
-                mr.recordStatus
+                cb.recordId AS record_recordId
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
@@ -135,16 +132,13 @@
     <select id="queryByProgressPager_Y" resultType="list" resultMap="maintainRecordResultMap">
         <![CDATA[
 			SELECT
+                mr.*,
                 ch.userName,
                 ch.carPlate,
-                mr.startTime,
                 ch.maintainOrFix,
                 c.companyName,
                 wi.userId AS work_userId,
-                mr.pickupTime,
-                cb.recordId AS record_recordId,
-                mr.actualEndTime,
-                mr.recordStatus
+                cb.recordId AS record_recordId
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
@@ -179,16 +173,13 @@
     <select id="queryByProgressPager_N" resultType="list" resultMap="maintainRecordResultMap">
         <![CDATA[
 			SELECT
+                mr.*,
                 ch.userName,
                 ch.carPlate,
-                mr.startTime,
                 ch.maintainOrFix,
                 c.companyName,
                 wi.userId AS work_userId,
-                mr.pickupTime,
-                cb.recordId AS record_recordId,
-                mr.actualEndTime,
-                mr.recordStatus
+                cb.recordId AS record_recordId
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId

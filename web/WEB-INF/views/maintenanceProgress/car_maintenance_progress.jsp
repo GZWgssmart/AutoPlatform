@@ -59,6 +59,9 @@
             <th data-field="recordStatus" data-formatter="status">
                 记录状态
             </th>
+            <th data-field="speedStatus">
+                进度状态
+            </th>
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
@@ -79,6 +82,11 @@
             <a>
                 <button onclick="searchStatus_All();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部进度
+                </button>
+            </a>
+            <a>
+                <button onclick="recordOk();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-ok"></i> 维修或保养完成
                 </button>
             </a>
         </div>

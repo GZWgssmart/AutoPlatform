@@ -15,6 +15,30 @@ function searchStatus_All() {
     initTable("cusTable", "/progress/progress_pager");
 }
 
+function recordOk() {
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('错误提示', "请选择一条数据", "error");
+        return false;
+    } else {
+        var record = selectRow[0]
+        if (record.speedStatus == "已登记" || record.speedStatus == "维修保养中") {
+            $.get(  '/record/achieve_record?recordId=' + record.recordId, function (data) {
+                if (data.result == "success") {
+                    $('#cusTable').bootstrapTable('refresh');
+                    swal("成功提示", data.message, "success");
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            }, 'json');
+        } else {
+            swal('错误提示', "请不要重复确认!", "error");
+            return false;
+        }
+    }
+
+}
+
 function operateFormatter(value, row, index) {
     return [
         '<button type="button" class="showProgressWin btn btn-primary btn-sm">查看进度</button>'

@@ -83,6 +83,11 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 	}
 
 	@Override
+	public WorkInfo queryByRocordIdUserId(String recordId) {
+		return workInfoDAO.queryByRocordIdUserId(recordId);
+	}
+
+	@Override
 	public List<WorkInfo> queryByDefault(String maintainOrFix, String companyId) {
 		return workInfoDAO.queryByDefault(maintainOrFix,companyId);
 	}

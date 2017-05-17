@@ -334,7 +334,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">居住地址：</label>
-                                            <input class="form-control" style="display: initial;" type="text" attr="user.userAddress" name="userAddress"/>
+                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" attr="user.userAddress" name="userAddress"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">所属职位：</label>
