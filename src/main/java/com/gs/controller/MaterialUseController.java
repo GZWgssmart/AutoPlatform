@@ -367,7 +367,7 @@ public class MaterialUseController {
     }
 
     /*
-  *  按年，季度，月，周，日，查询 库存统计
+  *  按年，季度，月，周，日，查询 配件使用统计
   * */
     public void dataCondition(String start,String end,String type,String date,String species,String companyId,String accTypeId){
         HighchartsData.doubleDayTwo = new double[31];
@@ -384,16 +384,16 @@ public class MaterialUseController {
         List<MaterialReturn> materialReturns = null;
         double[] doubles = null;
         String[] strs = null;
-        if(type.equals("one")){
+        if(species.equals("one")){
             materialUses = materialUseService.queryByConditionUse(start,end,type,companyId,accTypeId);
             doubles =  new double[materialUses.size()];
             strs = new String[materialUses.size()];
-        }else if(type.equals("two")){
+        }else if(species.equals("two")){
             materialReturns = materialReturnService.queryByConditionReturn(start,end,type,companyId,accTypeId);
             doubles =  new double[materialReturns.size()];
             strs = new String[materialReturns.size()];
         }
-        if(type.equals("one")){
+        if(species.equals("one")){
             int i = 0;
             HighchartsData.len = 0;
             for(MaterialUse io: materialUses) {
@@ -420,7 +420,7 @@ public class MaterialUseController {
                 }
                 i++;
             }
-        }else if(type.equals("two")){
+        }else if(species.equals("two")){
             int i = 0;
             HighchartsData.len = 0;
             for(MaterialReturn io: materialReturns) {
