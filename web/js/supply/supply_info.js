@@ -104,12 +104,16 @@ function validator(formId) {
             supplyTel: {
                 validators: {
                     notEmpty: {
-                        message: '联系电话不能为空'
+                        message: '手机号不能为空'
                     },
                     stringLength: {
                         min: 11,
                         max: 11,
                         message: '手机号只能是11位'
+                    },
+                    regexp: {
+                        regexp: /^1(3|4|5|7|8)\d{9}$/,
+                        message: '手机号不能是中文'
                     }
                 }
             },

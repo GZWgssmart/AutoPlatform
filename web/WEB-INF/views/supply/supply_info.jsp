@@ -166,7 +166,7 @@
                                 <input type="text" attr="supply.supplyName"  name="supplyName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                               <label>电话：</label>
+                               <label>手机号：</label>
                                 <input type="text"  attr="supply.supplyTel" name="supplyTel" maxlength="11" class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -244,7 +244,7 @@
                                 <input type="text"  name="supplyName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>电话：</label>
+                                <label>手机号：</label>
                                 <input type="text"  name="supplyTel" maxlength="11" class="form-control"/>
                             </div>
                             <div class="form-group">
