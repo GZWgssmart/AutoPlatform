@@ -88,6 +88,9 @@
                     </a>
                     <ul class="nav nav-second-level">
                         <li>
+                            <a id="intention" class="J_menuItem" href="<%=path %>/intention/intention_page">意向公司记录管理</a>
+                        </li>
+                        <li>
                             <a id="company" class="J_menuItem" href="<%=path %>/company/info">公司信息管理</a>
                         </li>
                         <li>

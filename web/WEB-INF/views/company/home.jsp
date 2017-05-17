@@ -28,7 +28,68 @@
 <%-- 系统管理员 --%>
 <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
     <div class="container">
-        <h3 style="text-align: center; margin-top: 20px;">汽车维保平台</h3>
+        <h3 style="text-align: center; margin-top: 20px;">创意科技</h3>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title panel-success">
+                        <h5>最新有意向入驻的公司</h5>
+
+                        <div class="ibox-tools">
+                            <a href="javascript:;" onclick="searchIntention()" title="查看更多意向公司信息">
+                                查看更多
+                            </a>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table id="intentionTable" class="footable table table-stripped toggle-arrow-tiny"
+                               data-page-size="8">
+                            <thead>
+                            <tr>
+                                <th data-toggle="true">负责人姓名</th>
+                                <th>负责人联系电话</th>
+                                <th>负责人邮箱</th>
+                                <th>记录状态</th>
+                                <th>记录创建时间</th>
+                                <th data-hide="all">用户要求</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${requestScope.intentions}" var="intention">
+                                <tr>
+                                    <td>${intention.name}</td>
+                                    <td>${intention.phone}</td>
+                                    <td>${intention.email}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${intention.intentionStatus == 'Y'}">
+                                                可用
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span style="color: red;">不可用</span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td>
+                                        <fmt:formatDate value="${intention.createdTime}" pattern="yyyy-MM-dd HH:mm"/>
+                                    </td>
+                                    <td>${intention.des}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-sm-12">

@@ -25,3 +25,7 @@ function showComplaintPage() {
 function showCompanyPage() {
     document.getElementById("company").click();
 }
+/** 访问意向公司页面*/
+function showIntentionPage() {
+    document.getElementById("intention").click();
+}

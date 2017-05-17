@@ -64,6 +64,9 @@ public class CompanyController {
     @Resource
     private MaintainRemindService maintainRemindService;
 
+    @Resource
+    private IntentionCompanyService intentionCompanyService;
+
     private String CompanyQueryRole = Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_ADMIN;
     private String CompanyEditRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN;
     private String carCommonRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN;
@@ -85,6 +88,7 @@ public class CompanyController {
         mav.addObject("reminds", maintainRemindService.queryByTop(count, user));
         mav.addObject("company", companyService.queryById(user.getCompanyId()));
         mav.addObject("companys", companyService.queryByTop(count));
+        mav.addObject("intentions", intentionCompanyService.queryByTop(count));
         return mav;
     }
 

@@ -8,6 +8,7 @@ $(document).ready(function () {
     $("#remindTable").footable();
     $("#complaintTable").footable();
     $("#companyTable").footable();
+    $("#intentionTable").footable();
 });
 
 function searchApp() {
@@ -24,4 +25,7 @@ function searchComplaint() {
 }
 function searchCompany() {
     parent.showCompanyPage();
+}
+function searchIntention() {
+    parent.showIntentionPage();
 }

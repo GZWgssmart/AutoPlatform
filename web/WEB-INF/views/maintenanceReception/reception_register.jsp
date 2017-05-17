@@ -42,7 +42,7 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="userName" data-space="10">
+            <th data-field="userName">
                 车主姓名
             </th>
             <th data-field="userPhone">

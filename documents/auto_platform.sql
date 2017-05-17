@@ -589,3 +589,16 @@ CREATE TABLE `t_work_info` (
 `workStatus` varchar(2) DEFAULT 'Y' COMMENT '当前状态,Y表示可用，N表示不可用',
 PRIMARY KEY (`workId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/* 意向公司表 */
+DROP TABLE IF EXISTS `t_intention_company`;
+CREATE TABLE `t_intention_company` (
+  `intentionId` varchar(36) NOT NULL COMMENT '意向公司表的id',
+  `name` varchar(255) DEFAULT NULL COMMENT '负责人的名字',
+  `email` varchar(255) DEFAULT NULL COMMENT '负责人邮箱',
+  `phone` varchar(11) DEFAULT NULL COMMENT '负责人联系手机',
+  `intentionStatus` varchar(2) DEFAULT NULL COMMENT '标识这条记录的状态',
+  `createdTime` datetime DEFAULT NULL COMMENT '记录创建时间',
+  `des` varchar(500) DEFAULT NULL COMMENT '记录的描述',
+  PRIMARY KEY (`intentionId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
