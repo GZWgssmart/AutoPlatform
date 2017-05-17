@@ -204,9 +204,6 @@
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName LIKE CONCAT('carOwner') AND u.userStatus = 'N'
 		]]>
-		<if test="companyId != null and companyId != ''">
-			and u.companyId = #{companyId}
-		</if>
 	</select>
 
 
@@ -217,9 +214,6 @@
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName = 'carOwner' AND u.userStatus = 'N'
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
-		</if>
 		ORDER BY userCreatedTime Desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
@@ -240,9 +234,6 @@
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName = 'carOwner' AND u.userStatus = 'Y'
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
-		</if>
 		ORDER BY userCreatedTime Desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
@@ -254,9 +245,6 @@
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName LIKE CONCAT('carOwner')
 		]]>
-		<if test="companyId != null and companyId != ''">
-			and u.companyId = #{companyId}
-		</if>
 	</select>
 
 
@@ -282,16 +270,13 @@
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName = 'carOwner'
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
-		</if>
 		<if test="user.userPhone != null and user.userPhone != ''">
 			AND u.userPhone like concat('%',trim(#{user.userPhone}),'%')
 		</if>
 		<if test="user.userName != null and user.userName != ''">
 			AND u.userName like concat('%',trim(#{user.userName}),'%')
 		</if>
-		ORDER BY u.companyId DESC, u.userStatus DESC, u.userCreatedTime DESC
+		ORDER BY u.userStatus DESC, u.userCreatedTime DESC
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -302,9 +287,6 @@
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName = 'carOwner'
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
-		</if>
 		ORDER BY userCreatedTime Desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
@@ -435,9 +417,15 @@
 			INNER JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName LIKE CONCAT('carOwner') AND u.userStatus = 'Y'
 		]]>
-		<if test="companyId != null and companyId != ''">
-			and u.companyId = #{companyId}
-		</if>
+	</select>
+
+	<select id="countByCustomer" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM t_user u
+			INNER JOIN t_user_role ur ON ur.userId = u.userId
+			INNER JOIN t_role r ON r.roleId = ur.roleId
+			WHERE r.roleName LIKE CONCAT('carOwner') AND u.userStatus = 'Y'
+		]]>
 	</select>
 
 	<select id="countCompanyEmp" parameterType="String" resultType="int">

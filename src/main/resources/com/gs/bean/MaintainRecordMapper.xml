@@ -31,6 +31,17 @@
             <id property="companyId" column="companyId"/>
             <id property="companyName" column="companyName"/>
         </association>
+        <association property="workInfo" javaType="com.gs.bean.WorkInfo">
+            <id property="workId" column="workId"/>
+            <id property="userId" column="work_userId"/>
+        </association>
+        <association property="user" javaType="com.gs.bean.User">
+            <id property="userId" column="user_userId"/>
+        </association>
+        <association property="chargeBill" javaType="com.gs.bean.ChargeBill">
+            <id property="chargeBillId" column="chargeBillId"/>
+            <id property="recordId" column="record_recordId"/>
+        </association>
     </resultMap>
     <insert id="insert" parameterType="maintainRecord">
 		<![CDATA[
@@ -63,21 +74,46 @@
         ]]>
 	</delete>
 
+    <select id="countByProgressPager" resultType="int">
+        SELECT
+          COUNT(*)
+        FROM
+          t_maintain_record mr
+        INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+        INNER JOIN t_company c ON c.companyId = mr.companyId
+        LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
+        LEFT JOIN t_user u ON u.userId = wi.userId
+        LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId
+        <if test="companyId != null and companyId != ''">
+            and mr.companyId = #{companyId}
+        </if>
+    </select>
 
-    <select id="queryByProgress" resultMap="maintainRecordResultMap">
+    <select id="queryByProgressPager" resultType="list" resultMap="maintainRecordResultMap">
         <![CDATA[
-              SELECT
-                wi.userId,
+			SELECT
+                ch.userName,
+                ch.carPlate,
+                mr.startTime,
+                ch.maintainOrFix,
+                c.companyName,
+                wi.userId AS work_userId,
                 mr.pickupTime,
-                cb.recordId
+                cb.recordId AS record_recordId,
+                mr.recordStatus
             FROM
                 t_maintain_record mr
+            INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+            INNER JOIN t_company c ON c.companyId = mr.companyId
             LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
             LEFT JOIN t_user u ON u.userId = wi.userId
-            LEFT JOIN t_checkin c ON c.userId = u.userId
             LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId
-            WHERE mr.recordId = #{maintainRecord.recordId}
-        ]]>
+		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and mr.companyId = #{user.companyId}
+        </if>
+		order by mr.startTime Desc
+		limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
 

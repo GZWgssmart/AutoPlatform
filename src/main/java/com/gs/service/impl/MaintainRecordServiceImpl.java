@@ -171,8 +171,13 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
     }
 
     @Override
-    public MaintainRecord queryByProgress(String id) {
-        return maintainRecordDAO.queryByProgress(id);
+    public List<MaintainRecord> queryByProgressPager(Pager pager, User user) {
+        return maintainRecordDAO.queryByProgressPager(pager, user);
+    }
+
+    @Override
+    public int countByProgressPager(User user) {
+        return maintainRecordDAO.countByProgressPager(user);
     }
 
 

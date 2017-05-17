@@ -97,7 +97,7 @@
                                         <img src="<%=path%>/img/order.png">
                                         <p class="app">维修保养登记</p>
                                     </li>
-                                        <div class="sk-spinner sk-spinner-three-bounce" style="float: left;margin: 40px auto;">
+                                        <div id="animation" class="sk-spinner sk-spinner-three-bounce" style="float: left;margin: 40px auto;">
                                             <div class="sk-bounce1"></div>
                                             <div class="sk-bounce2"></div>
                                             <div class="sk-bounce3"></div>
@@ -106,7 +106,7 @@
                                         <img src="<%=path%>/img/anouncement.png">
                                         <p class="des">指派员工</p>
                                     </li>
-                                    <div class="load" style="float: left;margin: 40px auto;">
+                                    <div id="stopAnimation_1" class="load" style="float: left;margin: 40px auto;">
                                         <div class="load_1"></div>
                                         <div class="load_2"></div>
                                         <div class="load_3"></div>
@@ -214,7 +214,6 @@
 <script src="<%=path %>/js/city-picker.data.js"></script>
 <script src="<%=path %>/js/city-picker.js"></script>
 <script src="<%=path %>/js/jquery.form.min.js"></script>
-<script src="<%=path %>/js/maintenanceProgress/jquery.step.js"></script>
 <script src="<%=path %>/js/maintenanceProgress/progress.js"></script>
 
 </body>

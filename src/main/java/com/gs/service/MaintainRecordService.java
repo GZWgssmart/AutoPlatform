@@ -153,8 +153,14 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
 
 
     /**
-     * 根据维修保养记录Id查询车主进度
+     * 根据维修保养记录分页查询车主进度
      * @return
      */
-    public MaintainRecord queryByProgress(String id);
+    public List<MaintainRecord> queryByProgressPager(Pager pager, User user);
+
+    /**
+     * 根据维修保养记录分页查询车主进度个数
+     * @return
+     */
+    public int countByProgressPager(User user);
 }

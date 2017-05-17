@@ -28,6 +28,7 @@ public class MaintainRecord {
     private Company company; // 公司
     private WorkInfo workInfo; // 工单
     private ChargeBill chargeBill; // 收费单据
+    private User user; // 人员信息
 
     public Company getCompany() {
         return company;
@@ -171,5 +172,13 @@ public class MaintainRecord {
 
     public void setChargeBill(ChargeBill chargeBill) {
         this.chargeBill = chargeBill;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

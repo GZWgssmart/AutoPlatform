@@ -41,8 +41,11 @@ public interface UserDAO extends BaseDAO<String, User>{
     /*统计系统管理员的个数*/
     public int  countSystemAdmin();
 
+    /*分页查询所有车主个数*/
+    public int countByCustomer();
+
     /*分页查询所有车主*/
-    public List<User> queryCustomerPager(@Param("pager")Pager pager, @Param("user")User user);
+    public List<User> queryCustomerPager(@Param("pager")Pager pager);
 
     /*分页查询所有员工*/
     public List<User> queryPeoplePager(@Param("pager") Pager pager, @Param("user")User user);
@@ -88,16 +91,16 @@ public interface UserDAO extends BaseDAO<String, User>{
     public List<User> queryUser(String companyId);
 
     /*分页查询所有不可用车主个数*/
-    public int countStatus(User user);
+    public int countStatus();
 
     /*分页查询所有不可用车主*/
-    public List<User> queryCustomerPagerStatus(@Param("pager") Pager pager, @Param("user")User user);
+    public List<User> queryCustomerPagerStatus(@Param("pager") Pager pager);
 
     /*分页查询所有车主个数*/
-    public int countCustomer(User user);
+    public int countCustomer();
 
     /*分页查询所有车主*/
-    public List<User> queryCustomer(@Param("pager") Pager pager, @Param("user")User user);
+    public List<User> queryCustomer(@Param("pager") Pager pager);
 
     /*条件查询车主个数*/
     public int selectCountCustomer(User user);

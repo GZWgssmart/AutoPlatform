@@ -167,9 +167,15 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
 
 
     /**
-     * 根据维修保养记录Id查询车主进度
+     * 根据维修保养记录分页查询车主进度
      * @return
      */
-    public MaintainRecord queryByProgress(String id);
+    public List<MaintainRecord> queryByProgressPager(@Param("pager") Pager pager, @Param("user")User user);
+
+    /**
+     * 根据维修保养记录分页查询车主进度个数
+     * @return
+     */
+    public int countByProgressPager(User user);
 
 }

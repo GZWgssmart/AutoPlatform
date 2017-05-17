@@ -117,8 +117,12 @@ public class UserServiceImpl implements UserService {
         return userDAO.countSystemAdmin();
     }
 
-    public List<User> queryCustomerPager(Pager pager, User user) {
-        return userDAO.queryCustomerPager(pager, user);
+    public int countByCustomer() {
+        return userDAO.countByCustomer();
+    }
+
+    public List<User> queryCustomerPager(Pager pager) {
+        return userDAO.queryCustomerPager(pager);
     }
 
     public List<User> queryPeoplePager(Pager pager, User user) {
@@ -161,20 +165,20 @@ public class UserServiceImpl implements UserService {
         return userDAO.queryUser(companyId);
     }
 
-    public int countStatus(User user) {
-        return userDAO.countStatus(user);
+    public int countStatus() {
+        return userDAO.countStatus();
     }
 
-    public List<User> queryCustomerPagerStatus(Pager pager, User user) {
-        return userDAO.queryCustomerPagerStatus(pager, user);
+    public List<User> queryCustomerPagerStatus(Pager pager) {
+        return userDAO.queryCustomerPagerStatus(pager);
     }
 
-    public int countCustomer(User user) {
-        return userDAO.countCustomer(user);
+    public int countCustomer() {
+        return userDAO.countCustomer();
     }
 
-    public List<User> queryCustomer(Pager pager, User user) {
-        return userDAO.queryCustomer(pager, user);
+    public List<User> queryCustomer(Pager pager) {
+        return userDAO.queryCustomer(pager);
     }
 
     public int selectCountCustomer(User user) {

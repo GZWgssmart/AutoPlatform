@@ -88,8 +88,6 @@ public class CustomerController {
                     logger.info("信息添加");
                     String customerId = UUIDUtil.uuid();
                     Role role = roleService.queryByName("carOwner");
-                    User user1 = (User)session.getAttribute("user");
-                    user.setCompanyId(user1.getCompanyId());
                     user.setUserId(customerId);
                     user.setUserIcon("img/default.png");
                     userRole.setUserId(user.getUserId());
@@ -200,12 +198,11 @@ public class CustomerController {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询所有不可用车主");
-                    User user = SessionGetUtil.getUser();
                     Pager pager = new Pager();
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
-                    pager.setTotalRecords(userService.countStatus(user));
-                    List<User> users = userService.queryCustomerPagerStatus(pager, user);
+                    pager.setTotalRecords(userService.countStatus());
+                    List<User> users = userService.queryCustomerPagerStatus(pager);
                     return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
                 }
                 return null;
@@ -230,8 +227,8 @@ public class CustomerController {
                     Pager pager = new Pager();
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
-                    pager.setTotalRecords(userService.countCustomer(user));
-                    List<User> users = userService.queryCustomer(pager, user);
+                    pager.setTotalRecords(userService.countCustomer());
+                    List<User> users = userService.queryCustomer(pager);
                     return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
                 }
                 return null;
@@ -281,12 +278,11 @@ public class CustomerController {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询所有可用车主");
-                    User user = SessionGetUtil.getUser();
                     Pager pager = new Pager();
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
-                    pager.setTotalRecords(userService.count(user));
-                    List<User> users = userService.queryCustomerPager(pager, user);
+                    pager.setTotalRecords(userService.countByCustomer());
+                    List<User> users = userService.queryCustomerPager(pager);
                     return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
                 }
                 return null;

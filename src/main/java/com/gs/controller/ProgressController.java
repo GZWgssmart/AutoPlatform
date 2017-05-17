@@ -56,56 +56,27 @@ public class ProgressController {
 
     @ResponseBody
     @RequestMapping(value="progress_pager",method= RequestMethod.GET)
-    public Pager4EasyUI<MaintainRecord> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("status") String status, @Param("maintainRecord") MaintainRecord maintainRecord, HttpServletRequest request){
+    public Pager4EasyUI<MaintainRecord> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         if (SessionGetUtil.isUser()) {
-            try {
+//            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
-                    logger.info("分页查询");
+                    logger.info("分页查询进度");
                     User user = SessionGetUtil.getUser();
                     Pager pager = new Pager();
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
-                    List<MaintainRecord> maintainRecordList = new ArrayList<MaintainRecord>();
-                    if (status.equals("ALL")) {
-                        pager.setTotalRecords(maintainRecordService.count(user));
-                        maintainRecordList = maintainRecordService.queryByPager(pager,user);
-                    } else {
-                        pager.setTotalRecords(maintainRecordService.countByStatus(status,user));
-                        maintainRecordList = maintainRecordService.queryPagerByStatus(pager, status,user);
-                    }
-                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
+                    pager.setTotalRecords(maintainRecordService.countByProgressPager(user));
+                    List<MaintainRecord> maintainRecords = maintainRecordService.queryByProgressPager(pager, user);
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
                 }
                 return null;
-            } catch (Exception e) {
-                logger.info("分页查询失败，出现了异常");
-                return null;
-            }
+//            } catch (Exception e) {
+//                logger.info("分页查询失败，出现了异常");
+//                return null;
+//            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
         }
     }
-
-
-    @ResponseBody
-    @RequestMapping(value = "progress_byInfo", method = RequestMethod.GET)
-    public ControllerResult ByInfo(MaintainRecord maintainRecord){
-        if (SessionGetUtil.isUser()) {
-//            try {
-                if (CheckRoleUtil.checkRoles(queryRole)) {
-                    logger.info("根据id查询");
-                    maintainRecordService.queryByProgress(maintainRecord.getRecordId());
-                    return ControllerResult.getSuccessResult("已查询");
-                }
-                return ControllerResult.getFailResult("查看失败，没有该权限操作");
-//            } catch (Exception e) {
-//                logger.info("查看失败，出现了异常");
-//                return ControllerResult.getFailResult("查看失败，出现了一个错误");
-//            }
-        } else {
-            logger.info("Session已失效，请重新登入");
-            return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
-        }
-    }
-
 }
