@@ -13,6 +13,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.*;
+import com.gs.service.CompanyService;
 import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -56,6 +58,9 @@ public class CustomerController {
     @Resource
     private UserRoleService userRoleService;
 
+    @Resource
+    private CompanyService companyService;
+
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY
             + "," + Constants.COMPANY_RECEIVE + "," + Constants.COMPANY_ARTIFICER
             + "," + Constants.COMPANY_SALES + "," + Constants.COMPANY_HUMAN_MANAGER
@@ -65,6 +70,20 @@ public class CustomerController {
 
     private String editRole = Constants.COMPANY_ADMIN;
 
+    @RequestMapping(value = "home", method = RequestMethod.GET)
+    private ModelAndView home() {
+        ModelAndView mav = new ModelAndView();
+        User user = SessionGetUtil.getUser();
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            mav.setViewName("index/notLogin");
+            return mav;
+        }
+        mav.setViewName("customerClient/index");
+        logger.info("访问车主后台的主页");
+        mav.addObject("companys", companyService.queryByTop(6));
+        return mav;
+    }
 
     @RequestMapping(value = "customer_page", method = RequestMethod.GET)
     public String customerInfo() {

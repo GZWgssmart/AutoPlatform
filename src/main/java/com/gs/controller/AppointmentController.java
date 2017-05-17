@@ -186,6 +186,28 @@ public class AppointmentController {
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
     }
+
+    @ResponseBody
+    @RequestMapping(value = "addCustomer", method = RequestMethod.POST)
+    public ControllerResult appointmentAddCustomer(Appointment appointment) {
+        if (SessionGetUtil.isUser()) {
+
+
+                    User loginUser = SessionGetUtil.getUser();
+                    logger.info("车主预约");
+
+                    appointment.setSpeedStatus(Constants.APPOINTMENT);
+                    appointment.setUserId(loginUser.getUserId());
+                    appointmentService.insert(appointment);
+                    return ControllerResult.getSuccessResult("添加成功");
+
+
+        }else {
+            logger.info("Session已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+    }
+
 //更新
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)

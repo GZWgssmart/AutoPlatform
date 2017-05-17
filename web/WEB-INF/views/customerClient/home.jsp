@@ -235,7 +235,7 @@ progress   checkin   appointment
             </button>
             <nav class="page-tabs J_menuTabs">
                 <div class="page-tabs-content" id="rightEvent">
-                    <a href="javascript:;" class="active J_menuTab" data-id="<%=path %>/company/home">首页</a>
+                    <a href="javascript:;" class="active J_menuTab" data-id="<%=path %>/customer/home">首页</a>
                 </div>
             </nav>
             <button class="roll-nav roll-right J_tabRight"><i class="fa fa-forward"></i>
@@ -260,8 +260,8 @@ progress   checkin   appointment
         </div>
         <div class="row J_mainContent" id="content-main">
             <iframe class="J_iframe" id="J_iframe" name="iframe0" width="100%" height="100%"
-                    src="<%=path %>/company/home"
-                    frameborder="0" data-id="<%=path %>/company/home" seamless></iframe>
+                    src="<%=path %>/customer/home"
+                    frameborder="0" data-id="<%=path %>/customer/home" seamless></iframe>
         </div>
         <div class="footer">
             <div class="pull-right">
