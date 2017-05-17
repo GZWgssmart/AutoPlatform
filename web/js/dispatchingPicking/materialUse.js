@@ -161,7 +161,7 @@ function showReturnMaterial() {
                     $("#editForm").fill(materialUseInfo);
                     $("#editWin").modal('show');
                 } else {
-                    swal('退料失败', "该工作未完成不能退料!", "error");
+                    swal('退料失败', "该维修未完成不能退料!", "error");
                     return false;
                 }
             } else {
