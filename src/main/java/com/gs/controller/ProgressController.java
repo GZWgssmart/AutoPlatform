@@ -3,7 +3,6 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.MaintainRecord;
 import com.gs.bean.User;
-import com.gs.bean.WorkInfo;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -11,12 +10,9 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.MaintainRecordService;
-import com.gs.service.UserService;
-import com.gs.service.WorkInfoService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -93,19 +89,19 @@ public class ProgressController {
 
     @ResponseBody
     @RequestMapping(value = "progress_byInfo", method = RequestMethod.GET)
-    public ControllerResult ByInfo(@Param("id")String id, MaintainRecord maintainRecord, HttpServletRequest request){
+    public ControllerResult ByInfo(MaintainRecord maintainRecord){
         if (SessionGetUtil.isUser()) {
-            try {
+//            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("根据id查询");
-                    maintainRecordService.queryById(id);
+                    maintainRecordService.queryByProgress(maintainRecord.getRecordId());
                     return ControllerResult.getSuccessResult("已查询");
                 }
                 return ControllerResult.getFailResult("查看失败，没有该权限操作");
-            } catch (Exception e) {
-                logger.info("查看失败，出现了异常");
-                return ControllerResult.getFailResult("查看失败，出现了一个错误");
-            }
+//            } catch (Exception e) {
+//                logger.info("查看失败，出现了异常");
+//                return ControllerResult.getFailResult("查看失败，出现了一个错误");
+//            }
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");

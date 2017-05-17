@@ -63,6 +63,24 @@
         ]]>
 	</delete>
 
+
+    <select id="queryByProgress" resultMap="maintainRecordResultMap">
+        <![CDATA[
+              SELECT
+                wi.userId,
+                mr.pickupTime,
+                cb.recordId
+            FROM
+                t_maintain_record mr
+            LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
+            LEFT JOIN t_user u ON u.userId = wi.userId
+            LEFT JOIN t_checkin c ON c.userId = u.userId
+            LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId
+            WHERE mr.recordId = #{maintainRecord.recordId}
+        ]]>
+    </select>
+
+
     <update id="update" parameterType="maintainRecord">
 		<![CDATA[
           update t_maintain_record

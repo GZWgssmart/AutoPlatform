@@ -112,7 +112,7 @@ public interface UserDAO extends BaseDAO<String, User>{
     public List<User> queryPeoplePagerStatus(@Param("pager") Pager pager, @Param("user")User user);
 
     /*分页查询所有员工个数*/
-    public int countAllEmp(User user);
+    public int countAllEmp(@Param("user")User user);
 
     /*分页查询所有员工*/
     public List<User> queryPeoplePagerAll(@Param("pager") Pager pager, @Param("user")User user);

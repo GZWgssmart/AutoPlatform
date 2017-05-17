@@ -26,6 +26,8 @@ public class MaintainRecord {
 
     private Checkin checkin; // 登记表
     private Company company; // 公司
+    private WorkInfo workInfo; // 工单
+    private ChargeBill chargeBill; // 收费单据
 
     public Company getCompany() {
         return company;
@@ -153,5 +155,21 @@ public class MaintainRecord {
 
     public void setPickingStatus(String pickingStatus) {
         this.pickingStatus = pickingStatus;
+    }
+
+    public WorkInfo getWorkInfo() {
+        return workInfo;
+    }
+
+    public void setWorkInfo(WorkInfo workInfo) {
+        this.workInfo = workInfo;
+    }
+
+    public ChargeBill getChargeBill() {
+        return chargeBill;
+    }
+
+    public void setChargeBill(ChargeBill chargeBill) {
+        this.chargeBill = chargeBill;
     }
 }

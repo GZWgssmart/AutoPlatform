@@ -170,5 +170,10 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.queryPagerBySpeedStatusAndPickingStatus(speedStatus, pager, pickingStatus, user);
     }
 
+    @Override
+    public MaintainRecord queryByProgress(String id) {
+        return maintainRecordDAO.queryByProgress(id);
+    }
+
 
 }

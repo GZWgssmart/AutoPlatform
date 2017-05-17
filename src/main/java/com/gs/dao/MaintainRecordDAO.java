@@ -165,4 +165,11 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
      */
     public List<MaintainRecord> queryPagerBySpeedStatusAndPickingStatus(@Param("speedStatus") String[] speedStatus, @Param("pager") Pager pager, @Param("pickingStatus") String pickingStatus, @Param("user") User user);
 
+
+    /**
+     * 根据维修保养记录Id查询车主进度
+     * @return
+     */
+    public MaintainRecord queryByProgress(String id);
+
 }

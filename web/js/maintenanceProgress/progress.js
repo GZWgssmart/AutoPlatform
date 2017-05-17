@@ -14,76 +14,21 @@ $(document).ready(function () {
 function operateFormatter(value, row, index) {
     if (row.recordStatus == 'Y') {
         return [
-            '<button type="button" class="updateActive btn btn-danger btn-sm" style="margin-right:15px;" >冻结</button>',
-            '<button type="button" class="showEditWin btn btn-primary btn-sm">查看进度</button>'
+            '<button style="margin-left: 10px" type="button"  class="showProgressImg btn btn-primary">查看进度</button>'
         ].join('');
     } else {
         return [
-            '<button type="button" class="updateInactive btn btn-success btn-sm" style="margin-right:15px;" >激活</button>',
-            '<button type="button" class="showEditWin btn btn-primary btn-sm">查看进度</button>'
+            '<button style="margin-left: 10px" type="button"  class="showProgressImg btn btn-primary">查看进度</button>'
         ].join('');
     }
 
 }
 window.operateEvents = {
-         'click .updateActive': function (e, value, row, index) {
-             $.get(contextPath + "/record/update_status?id=" + row.recordId + "&status=" + row.recordStatus,
-                 function(data){
-                     if(data.result == "success"){
-                         $('#cusTable').bootstrapTable('refresh');
-                     }else if(data.result == "fail"){
-                         swal(data.message, "", "error");
-                     } else if (data.result == "notLogin") {
-                         swal({
-                                 title: "登入失败",
-                                 text: data.message,
-                                 type: "warning",
-                                 showCancelButton: false,
-                                 confirmButtonColor: "#DD6B55",
-                                 confirmButtonText: "确认",
-                                 closeOnConfirm: true
-                             },
-                             function (isConfirm) {
-                                 if (isConfirm) {
-                                     top.location.href = "/login/show_login";
-                                 }
-                             });
-                     }
-                 },"json");
-         },
-          'click .updateInactive': function (e, value, row, index) {
-              $.get(contextPath + "/record/update_status?id=" + row.recordId + "&status=" + row.recordStatus,
-                  function(data){
-                      if(data.result == "success"){
-                          $('#cusTable').bootstrapTable('refresh');
-                      }else if(data.result == "fail"){
-                          swal(data.message, "", "error");
-                      } else if (data.result == "notLogin") {
-                          swal({
-                                  title: "登入失败",
-                                  text: data.message,
-                                  type: "warning",
-                                  showCancelButton: false,
-                                  confirmButtonColor: "#DD6B55",
-                                  confirmButtonText: "确认",
-                                  closeOnConfirm: true
-                              },
-                              function (isConfirm) {
-                                  if (isConfirm) {
-                                      top.location.href = "/login/show_login";
-                                  }
-                              });
-                      }
-                  },"json");
-          },
-          'click .showEditWin': function (e, value, row, index) {
-              $.get(contextPath + "/progress/progress_byInfo?id=" + row.recordId,
-                  function(data){
-                  },"json");
-              $("#searchDetailWin").modal('show');
-         }
+    'click .showProgressImg': function (e, value, row, index) {
+        var user = row;
+        $("#searchDetailWin").modal('show');
+    }
 }
-
 /** 显示编辑数据 */
 function showEditWin() {
     validator("editForm");

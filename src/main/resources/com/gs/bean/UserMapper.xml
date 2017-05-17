@@ -316,7 +316,7 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'Y'
+			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'Y' AND u.userId != #{user.userId}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
@@ -332,7 +332,7 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'Y'
+			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'N' AND u.userId != #{userId}
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and u.companyId = #{companyId}
@@ -346,12 +346,12 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'N'
+			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'N' AND u.userId != #{user.userId}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
 		</if>
-		ORDER BY userCreatedTime Desc
+		ORDER BY u.userCreatedTime Desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -372,7 +372,7 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userId != #{userId}
+			WHERE r.roleName like concat('company', '%')
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and u.companyId = #{companyId}
@@ -386,12 +386,12 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userId != #{userId}
+			WHERE r.roleName like concat('company', '%')
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
 		</if>
-		ORDER BY userCreatedTime Desc
+		ORDER BY u.userCreatedTime Desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -446,7 +446,7 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'Y'
+			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'Y' AND u.userId = #{userId}
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and u.companyId = #{companyId}
@@ -513,9 +513,6 @@
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName like concat('company', '%')
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
-		</if>
 		<if test="user.userPhone != null and user.userPhone != '' ">
 			and u.userPhone like concat('%',trim(#{user.userPhone}),'%')
 		</if>
@@ -530,6 +527,9 @@
 		</if>
 		<if test="company.companyId != null and company.companyId != '' and company.companyId != 'null' and company.companyId != 'undefined'">
 			and c.companyId = #{company.companyId}
+		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
 		</if>
 	</select>
 
@@ -541,9 +541,6 @@
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
 			WHERE r.roleName like concat('company', '%')
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
-		</if>
 		<if test="user.userPhone != null and user.userPhone != '' ">
 			and u.userPhone like concat('%',trim(#{user.userPhone}),'%')
 		</if>
@@ -558,6 +555,9 @@
 		</if>
 		<if test="company.companyId != null and company.companyId != '' and company.companyId != 'null' and company.companyId != 'undefined'">
 			and c.companyId = #{company.companyId}
+		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and u.companyId = #{user.companyId}
 		</if>
 		order by u.companyId DESC, u.userStatus DESC, u.userCreatedTime DESC
 		limit #{pager.beginIndex}, #{pager.pageSize}
