@@ -52,8 +52,8 @@
                             <thead>
                             <tr>
                                 <th data-toggle="true">负责人姓名</th>
-                                <th>负责人联系电话</th>
-                                <th>负责人邮箱</th>
+                                <th>意向商家联系电话</th>
+                                <th>意向商家邮箱</th>
                                 <th>记录状态</th>
                                 <th>记录创建时间</th>
                                 <th data-hide="all">用户要求</th>

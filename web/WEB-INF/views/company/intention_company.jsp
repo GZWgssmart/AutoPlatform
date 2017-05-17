@@ -41,13 +41,13 @@
         <tr>
             <th data-field="state" data-checkbox="true"></th>
             <th data-field="name">
-                负责人姓名
+                意向商家姓名
             </th>
             <th data-field="phone">
-                负责人联系电话
+                意向商家联系电话
             </th>
             <th data-field="email">
-                负责人邮箱
+                意向商家邮箱
             </th>
             <th data-field="intentionStatus" data-formatter="status">
                 记录状态

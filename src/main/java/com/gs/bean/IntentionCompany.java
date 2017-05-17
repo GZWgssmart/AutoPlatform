@@ -10,12 +10,13 @@ import java.util.Date;
  */
 public class IntentionCompany{
     private String intentionId; // 意向公司的ID
-    private String name;	// 负责人名字
-    private String email; // 负责人邮箱
-    private String phone; // 负责人电话
+    private String name;	// 意向人名字
+    private String email; // 意向人邮箱
+    private String phone; // 意向人电话
     private Date createdTime; // 记录创建时间
     private String intentionStatus; // 记录的状态
     private String des; // 记录描述
+    private String userId; // 员工的ID，来源于t_user表
 
     public String getIntentionId(){
         return this.intentionId;
