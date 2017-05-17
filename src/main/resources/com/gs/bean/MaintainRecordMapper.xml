@@ -269,7 +269,7 @@
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
         </if>
-        order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime desc
+        order by r.companyId desc, r.recordStatus desc, r.pickingStatus desc, r.recordCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

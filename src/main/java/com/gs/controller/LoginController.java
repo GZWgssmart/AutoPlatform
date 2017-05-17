@@ -10,6 +10,7 @@ import com.gs.common.message.IndustrySMS;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
+import com.gs.common.web.ServletContextUtil;
 import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
@@ -143,6 +144,7 @@ public class LoginController {
                 userRoleService.insert(userRole);
 
                 if (email) {
+                    String ip = ServletContextUtil.getServerIp();
                     Mail mail = new Mail();
                     mail.setRecipients(user.getUserEmail());
                     mail.setSubject("注册提醒");
@@ -150,7 +152,7 @@ public class LoginController {
                     Multipart multipart = new MimeMultipart();
                     BodyPart part1 = new MimeBodyPart();
                     try {
-                        part1.setContent("<p>欢迎入驻【创意科技】,请点击一下连接完成激活</p><a href='http://127.0.0.1:8080/login/ok?userId=" + userId + "'>点击完成验证</a>", mail.getType());
+                        part1.setContent("<p>欢迎入驻【创意科技】,请点击一下连接完成激活</p><a href='http://" + ip + ":8080/login/ok?userId=" + userId + "'>点击完成验证</a>", mail.getType());
                         multipart.addBodyPart(part1);
                         mail.setMultipart(multipart);
                     } catch (MessagingException e) {
