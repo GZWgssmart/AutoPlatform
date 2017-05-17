@@ -78,18 +78,16 @@
                     <div class="col-xs-8 text-right menu-1">
                         <ul>
                             <li><a href="<%=path%>/customerClientWeb/tour">功能简介</a></li>
-                            <li><a href="<%=path%>/customerClientWeb/tour">平台特性</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/features">平台特性</a></li>
                             <li class="has-dropdown">
                                 <a href="#">使用说明</a>
                                 <ul class="dropdown">
                                     <li><a href="#">商家入口</a></li>
                                     <li><a href="#">用户入口</a></li>
-                                    <li><a href="#">游客入口</a></li>
                                     <li><a href="#">API</a></li>
                                 </ul>
                             </li>
                             <li><a href="<%=path%>/customerClientWeb/pricing">产品收费</a></li>
-                            <li><a href="<%=path%>/customerClientWeb/contact">联系方式</a></li>
                             <li class="btn-cta"><a href="<%=path%>/customerClientWeb/contact"><span>入驻 我们</span></a></li>
                         </ul>
                     </div>

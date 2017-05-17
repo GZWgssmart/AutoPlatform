@@ -80,18 +80,16 @@
                     <div class="col-xs-8 text-right menu-1">
                         <ul>
                             <li><a href="<%=path%>/customerClientWeb/tour">功能简介</a></li>
-                            <li><a href="<%=path%>/customerClientWeb/tour">平台特性</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/features">平台特性</a></li>
                             <li class="has-dropdown">
                                 <a href="#">使用说明</a>
                                 <ul class="dropdown">
                                     <li><a href="#">商家入口</a></li>
                                     <li><a href="#">用户入口</a></li>
-                                    <li><a href="#">游客入口</a></li>
                                     <li><a href="#">API</a></li>
                                 </ul>
                             </li>
-                            <li><a href="<%=path%>/customerClientWeb/contact">相关咨询</a></li>
-                            <li><a href="<%=path%>/customerClientWeb/contact">联系方式</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/pricing">产品收费</a></li>
                             <li class="btn-cta"><a href="<%=path%>/customerClientWeb/contact"><span>入驻 我们</span></a></li>
                         </ul>
                     </div>
@@ -143,7 +141,7 @@
                                 <li>动态员工支配</li>
                                 <li>使用天数 30天</li>
                             </ul>
-                            <a href="#" class="btn btn-default btn-sm">立即试用</a>
+                            <a href="<%=path%>/customerClientWeb/contact" class="btn btn-default btn-sm">立即试用</a>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -160,7 +158,7 @@
                                 <li>使用天数 365天</li>
                                 <li>免费版本更新</li>
                             </ul>
-                            <a href="#" class="btn btn-default btn-sm">立即入驻</a>
+                            <a href="<%=path%>/customerClientWeb/contact" class="btn btn-default btn-sm">立即入驻</a>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -176,10 +174,10 @@
                                 <li>短信提醒 5000条</li>
                                 <li>动态员工支配</li>
                                 <li>24小时提供技术支持</li>
-                                <li>使用天数 365天</li>
+                                <li>使用天数 永久</li>
                                 <li>免费版本更新</li>
                             </ul>
-                            <a href="#" class="btn btn-primary btn-sm">立即抢购</a>
+                            <a href="<%=path%>/customerClientWeb/contact" class="btn btn-primary btn-sm">立即抢购</a>
                         </div>
                     </div>
                 </div>

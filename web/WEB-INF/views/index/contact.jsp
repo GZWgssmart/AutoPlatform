@@ -77,20 +77,18 @@
                     </div>
                     <div class="col-xs-8 text-right menu-1">
                         <ul>
-                            <li><a href="features.html">功能简介</a></li>
-                            <li><a href="tour.html">平台特性</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/tour">功能简介</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/features">平台特性</a></li>
                             <li class="has-dropdown">
                                 <a href="#">使用说明</a>
                                 <ul class="dropdown">
                                     <li><a href="#">商家入口</a></li>
                                     <li><a href="#">用户入口</a></li>
-                                    <li><a href="#">游客入口</a></li>
                                     <li><a href="#">API</a></li>
                                 </ul>
                             </li>
-                            <li><a href="pricing.html">相关咨询</a></li>
-                            <li><a href="contact.html">联系方式</a></li>
-                            <li class="btn-cta"><a href="#"><span>入驻 我们</span></a></li>
+                            <li><a href="<%=path%>/customerClientWeb/pricing">产品收费</a></li>
+                            <li class="btn-cta"><a href="<%=path%>/customerClientWeb/contact"><span>入驻 我们</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -106,7 +104,7 @@
                         <div class="row row-mt-15em">
 
                             <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-                                <span class="intro-text-small">提交您的意见与投诉</span>
+                                <span class="intro-text-small">提交您的意向或投诉</span>
                                 <h1>联系我们</h1>
                             </div>
 
@@ -142,8 +140,8 @@
 
                                 <div class="row form-group">
                                     <div class="col-md-12">
-                                        <label class="sr-only" for="subject">填写主题</label>
-                                        <input type="text" id="subject" class="form-control" placeholder="填写主题">
+                                        <label class="sr-only" for="subject">填写手机号</label>
+                                        <input type="text" id="subject" class="form-control" placeholder="输入您的手机号">
                                     </div>
                                 </div>
 
