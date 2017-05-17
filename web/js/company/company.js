@@ -282,7 +282,7 @@ function validator(formId) {
                     dataType: 'json',
                     success: function (data) {
                         if (data.result == "success") {
-                            $('#editWin').modal('hide');
+                            $('#addWin').modal('hide');
                             swal(data.message, "", "success");
                             $('#cusTable').bootstrapTable('refresh');
                             $('#addForm').data('bootstrapValidator').resetForm(true);
