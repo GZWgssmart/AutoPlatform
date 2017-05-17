@@ -467,7 +467,7 @@
         </div>
         <div class="footer">
             <div class="pull-right">
-                &copy;版权所有 15秋预科
+                &copy;版权所有 创意科技
             </div>
         </div>
     </div>

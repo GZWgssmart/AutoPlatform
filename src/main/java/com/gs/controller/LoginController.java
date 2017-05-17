@@ -150,7 +150,7 @@ public class LoginController {
                     Multipart multipart = new MimeMultipart();
                     BodyPart part1 = new MimeBodyPart();
                     try {
-                        part1.setContent("<p>欢迎入驻汽车之家,请点击一下连接完成激活</p><a href='http://localhost:8080/login/ok?userId=" + userId + "'>点击完成验证</a>", mail.getType());
+                        part1.setContent("<p>欢迎入驻【创意科技】,请点击一下连接完成激活</p><a href='http://127.0.0.1:8080/login/ok?userId=" + userId + "'>点击完成验证</a>", mail.getType());
                         multipart.addBodyPart(part1);
                         mail.setMultipart(multipart);
                     } catch (MessagingException e) {
@@ -181,7 +181,7 @@ public class LoginController {
         logger.info("获取短信验证码");
         phoneCode = String.valueOf((int)((Math.random()*9+1)*100000));
         String to = userPhone;
-        String smsContent = "【汽车之家】您的验证码为" + phoneCode + "，请于30分钟内正确输入，如非本人操作，请忽略此短信。";
+        String smsContent = "【创意科技】您的验证码为" + phoneCode + "，请于30分钟内正确输入，如非本人操作，请忽略此短信。";
         IndustrySMS is = new IndustrySMS(to, smsContent);
         is.execute();
         return ControllerResult.getSuccessResult("验证码发送成功，请注意查收");

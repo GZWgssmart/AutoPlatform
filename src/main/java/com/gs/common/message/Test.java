@@ -1,5 +1,13 @@
 package com.gs.common.message;
 
+import com.gs.common.web.ServletContextUtil;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
+
 public class Test
 {
 

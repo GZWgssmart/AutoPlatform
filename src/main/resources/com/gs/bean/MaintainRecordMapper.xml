@@ -264,7 +264,7 @@
 		<![CDATA[
 		  select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 		    from t_maintain_record r,  t_checkin c, t_company cpy
-		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId and r.speedStatus = '已登记'
+		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId
         ]]>
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
