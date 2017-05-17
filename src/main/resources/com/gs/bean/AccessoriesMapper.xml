@@ -129,10 +129,10 @@
 			from t_accessories c, t_supply s, t_accessories_type ac, t_company cpy
 			where 1=1 and c.supplyId = s.supplyId and c.accTypeId = ac.accTypeId and c.companyId = cpy.companyId
         ]]>
-		order by c.companyId desc, c.accCreatedTime
 		<if test="user.companyId != null and user.companyId != ''">
 			and c.companyId = #{user.companyId}
 		</if>
+		order by c.companyId desc, c.accCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
