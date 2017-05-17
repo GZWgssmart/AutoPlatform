@@ -109,7 +109,7 @@
                     <a href="#"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">报表统计</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/maintenance_page">我的维修保养消费统计</a>
+                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/consumption_page">我的维修保养消费统计</a>
                         </li>
                     </ul>
                 </li>

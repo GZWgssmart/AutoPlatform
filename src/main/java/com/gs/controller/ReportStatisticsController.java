@@ -27,7 +27,7 @@ public class ReportStatisticsController {
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_BUYER;
 
     // 可以查看的角色：车主
-    private String queryRoleCustomer = Constants.SESSION_CUSTOMER;
+    private String queryRoleCustomer = Constants.CAR_OWNER;
 
     @RequestMapping(value = "finance_page", method = RequestMethod.GET)
     public String showInOutPage() {

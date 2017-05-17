@@ -67,7 +67,7 @@ public class ChargeBillController {
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 
     // 只有车主本人才可以查看消费统计
-    private String queryRoleCustomer = Constants.SESSION_CUSTOMER;
+    private String queryRoleCustomer = Constants.CAR_OWNER;
 
     @RequestMapping(value = "bill_page", method = RequestMethod.GET)
     public String chargeBillPage() {
