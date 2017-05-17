@@ -190,48 +190,54 @@ function formatterTrack(value, row, index) {
 function showGetMaterial() {
     var record = $("#cusTable").bootstrapTable('getSelections')[0];
     var recordId = record.recordId;
-    var materialLists = $("#cusTable1").bootstrapTable('getData');
-    var accIds = new Array();
-    var accCounts = new Array();
-    if (materialLists.length > 0) {
-        if (record.pickingStatus == "未申请") {
-            $.each(materialLists, function (index, item) {
-                accIds[index] = materialLists[index].accId;
-                accCounts[index] = materialLists[index].materialCount;
-            });
-            $.get(contextPath + "/materialUse/add_material?recordId=" + recordId + "&accIds=" + accIds + "&accCounts=" + accCounts,
-                function (data) {
-                    if (data.result == "success") {
-                        swal("成功提示", data.message, "success");
-                        $("#searchMaterialWin").modal('hide');
-                        $('#cusTable').bootstrapTable('refresh');
-                    } else if (data.result == "fail") {
-                        swal("错误提示", data.message, "error");
-                    } else if (data.result == "notLogin") {
-                        swal({
-                                title: "登入失败",
-                                text: data.message,
-                                type: "warning",
-                                showCancelButton: false,
-                                confirmButtonColor: "#DD6B55",
-                                confirmButtonText: "确认",
-                                closeOnConfirm: true
-                            },
-                            function (isConfirm) {
-                                if (isConfirm) {
-                                    top.location.href = "/login/show_login";
+    $.get(contextPath + '/materialList/query_isUse?recordId=' + recordId,
+        function (data) {
+            if (data == "1") {
+                var materialLists = $("#cusTable1").bootstrapTable('getData');
+                var accIds = new Array();
+                var accCounts = new Array();
+                if (materialLists.length > 0) {
+                    if (record.pickingStatus == "未申请") {
+                        $.each(materialLists, function (index, item) {
+                            accIds[index] = materialLists[index].accId;
+                            accCounts[index] = materialLists[index].materialCount;
+                        });
+                        $.get(contextPath + "/materialUse/add_material?recordId=" + recordId + "&accIds=" + accIds + "&accCounts=" + accCounts,
+                            function (data) {
+                                if (data.result == "success") {
+                                    swal("成功提示", data.message, "success");
+                                    $("#searchMaterialWin").modal('hide');
+                                    $('#cusTable').bootstrapTable('refresh');
+                                } else if (data.result == "fail") {
+                                    swal("错误提示", data.message, "error");
+                                } else if (data.result == "notLogin") {
+                                    swal({
+                                            title: "登入失败",
+                                            text: data.message,
+                                            type: "warning",
+                                            showCancelButton: false,
+                                            confirmButtonColor: "#DD6B55",
+                                            confirmButtonText: "确认",
+                                            closeOnConfirm: true
+                                        },
+                                        function (isConfirm) {
+                                            if (isConfirm) {
+                                                top.location.href = "/login/show_login";
+                                            }
+                                        });
                                 }
-                            });
+                            }, "json");
+                    } else {
+                        swal('申请失败', "当前记录已经申请过了", "error");
                     }
-                }, "json");
-        } else {
-            swal('申请失败', "当前记录已经申请过了", "error");
-        }
-    } else {
-        swal('申请失败', "当前记录没有物料", "error");
-    }
+                } else {
+                    swal('申请失败', "当前记录没有物料", "error");
+                }
+            } else {
+                swal('申请失败', "请先指定员工！", "error");
+            }
+        }, 'json');
 }
-
 function isUse(value, row, index) {
     var record = $("#cusTable").bootstrapTable('getSelections')[0];
     if (record.pickingStatus == '未申请') {
