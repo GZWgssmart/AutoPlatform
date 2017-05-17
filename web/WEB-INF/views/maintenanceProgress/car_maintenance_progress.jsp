@@ -214,50 +214,14 @@
                                     </li>
                                 </ul>
                         </div>
-                        <div style="height: 25%;border-top: 1px solid #e5e5e5;"></div>
-                        <%--<div class="tree">--%>
-                            <%--<ul>--%>
-                                <%--<li>--%>
-                                    <%--<span class="badge badge-important">车主：${requestScope.maintainRecord}</span>--%>
-                                    <%--<ul>--%>
-                                        <%--<li>--%>
-                                            <%--<span class="badge badge-success"><i class="icon-minus-sign"></i>2017-4-26&nbsp;&nbsp;周三</span>--%>
-                                            <%--<ul>--%>
-                                                <%--<li>--%>
-                                                    <%--<span>拆除了一个轮胎</span>--%>
-                                                <%--</li>--%>
-                                                <%--<li>--%>
-                                                    <%--<span>拆除了一个轮胎</span>--%>
-                                                <%--</li>--%>
-                                                <%--<li>--%>
-                                                    <%--<span>拆除了一个轮胎</span>--%>
-                                                <%--</li>--%>
-                                                <%--<li>--%>
-                                                    <%--<span>拆除了一个轮胎</span>--%>
-                                                <%--</li>--%>
-                                            <%--</ul>--%>
-                                        <%--<li>--%>
-                                            <%--<span class="badge badge-success"><i class="icon-minus-sign"></i>2017-4-27&nbsp;&nbsp;周三</span>--%>
-                                            <%--<ul>--%>
-                                                <%--<li>--%>
-                                                    <%--<span>拆除了一个轮胎</span>--%>
-                                                <%--</li>--%>
-                                                <%--<li>--%>
-                                                    <%--<span>拆除了一个轮胎</span>--%>
-                                                <%--</li>--%>
-                                                <%--<li>--%>
-                                                    <%--<span>拆除了一个轮胎</span>--%>
-                                                <%--</li>--%>
-                                                <%--<li>--%>
-                                                    <%--<span>拆除了一个轮胎</span>--%>
-                                                <%--</li>--%>
-                                            <%--</ul>--%>
-                                        <%--</li>--%>
-                                        <%--</li>--%>
-                                    <%--</ul>--%>
-                                <%--</li>--%>
-                            <%--</ul>--%>
-                        <%--</div>--%>
+                        <div style="height: 23%;border-top: 1px solid #e5e5e5; text-align: center;color: #00bcd4;">
+                            <h1 id="des_1">维修保养登记</h1>
+                            <h1 id="des_2">指派员工</h1>
+                            <h1 id="des_3">开始维修保养</h1>
+                            <h1 id="des_4">通知提车</h1>
+                            <h1 id="des_5">结算金额</h1>
+                            <h1 id="des_6">完成车辆维修保养</h1>
+                        </div>
                         <div class="modal-footer" style="overflow:hidden;">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         </div>

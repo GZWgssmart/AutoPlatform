@@ -38,6 +38,11 @@ window.operateEvents = {
         $("#textColor_03").hide();
         $("#textColor_04").hide();
         $("#textColor_05").hide();
+        $("#des_2").hide();
+        $("#des_3").hide();
+        $("#des_4").hide();
+        $("#des_5").hide();
+        $("#des_6").hide();
         if (progress.workInfo.userId !=null && progress.workInfo.userId != '' && progress.workInfo.userId != 'null' && progress.workInfo.userId != 'undefined'){
             $("#stopAnimation_01").show();
             $("#stopAnimation_02").show();
@@ -50,6 +55,8 @@ window.operateEvents = {
             $("#textColor_01").show();
             $("#text_2").hide();
             $("#textColor_02").show();
+            $("#des_3").show();
+            $("#des_1").hide();
         } else {
             $("#stopAnimation_01").hide();
             $("#stopAnimation_02").hide();
@@ -62,6 +69,8 @@ window.operateEvents = {
             $("#textColor_01").hide();
             $("#text_2").show();
             $("#textColor_02").hide();
+            $("#des_3").hide();
+            $("#des_1").show();
         }
         if(progress.pickupTime !=null && progress.pickupTime != '' && progress.pickupTime != 'null' && progress.pickupTime != 'undefined'){
             $("#stopAnimation_03").show();
@@ -70,6 +79,8 @@ window.operateEvents = {
             $("#animation_4").show();
             $("#text_3").hide();
             $("#textColor_03").show();
+            $("#des_4").show();
+            $("#des_3").hide();
         } else {
             $("#stopAnimation_03").hide();
             $("#animation_3").show();
@@ -77,6 +88,8 @@ window.operateEvents = {
             $("#animation_4").hide();
             $("#text_3").show();
             $("#textColor_03").hide();
+            $("#des_4").hide();
+            $("#des_3").show();
         }
         if(progress.chargeBill.recordId !=null && progress.chargeBill.recordId != '' && progress.chargeBill.recordId != 'null' && progress.chargeBill.recordId != 'undefined'){
             $("#stopAnimation_04").show();
@@ -85,6 +98,8 @@ window.operateEvents = {
             $("#animation_5").show();
             $("#text_4").hide();
             $("#textColor_04").show();
+            $("#des_5").show();
+            $("#des_4").hide();
         } else {
             $("#stopAnimation_04").hide();
             $("#animation_4").show();
@@ -92,17 +107,23 @@ window.operateEvents = {
             $("#animation_5").hide();
             $("#text_4").show();
             $("#textColor_04").hide();
+            $("#des_5").hide();
+            $("#des_4").show();
         }
         if(progress.actualEndTime !=null && progress.actualEndTime != '' && progress.actualEndTime != 'null' && progress.actualEndTime != 'undefined'){
             $("#stopAnimation_05").show();
             $("#animation_5").hide();
             $("#text_5").hide();
             $("#textColor_05").show();
+            $("#des_5").hide();
+            $("#des_6").show();
         } else {
             $("#stopAnimation_05").hide();
             $("#animation_5").show();
             $("#text_5").show();
             $("#textColor_05").hide();
+            $("#des_6").hide();
+            $("#des_5").show();
         }
         $("#searchDetailWin").modal('show');
     }

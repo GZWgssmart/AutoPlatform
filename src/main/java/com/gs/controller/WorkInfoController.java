@@ -222,9 +222,9 @@ public class WorkInfoController {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("状态修改");
                     if(status.equals("Y")){
-                        maintainRecordService.inactive(id);
+                        workInfoService.inactive(id);
                     } else {
-                        maintainRecordService.active(id);
+                        workInfoService.active(id);
                     }
                     return ControllerResult.getSuccessResult(" 修改成功");
                 }
