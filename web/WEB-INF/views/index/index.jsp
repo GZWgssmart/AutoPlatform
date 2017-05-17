@@ -127,6 +127,24 @@
                                                             <input type="text" name="number" class="form-control" placeholder="请输入手机号或邮箱完成注册" id="username" onblur="variNumber(this.value)">
                                                         </div>
                                                     </div>
+                                                    <div class="row form-group" id="codeDiv" style="display: none;">
+                                                        <div class="col-md-12" style="padding: 0px;">
+                                                            <div class="col-sm-12" style="margin: 0px;">
+
+                                                                <label for="username">验证码</label>
+                                                            </div>
+                                                            <div class="col-sm-7" style="margin: 0px;">
+                                                                <input type="text" name="code" class="form-control" placeholder="输入手机验证码">
+                                                            </div>
+                                                            <div class="col-sm-5" style="margin: 0px;">
+                                                                <input type="button" id="detailButton"
+                                                                       onclick="getCode(this)" class="btn btn-primary"
+                                                                       value="获取验证码" style="padding-left: 10px; padding-right: 10px;">
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
                                                             <label for="password">密码</label>

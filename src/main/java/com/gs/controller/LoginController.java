@@ -90,7 +90,7 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public ControllerResult register(@Param("number")String number, @Param("pwd")String pwd, @Param("password") String password) {
+    public ControllerResult register(@Param("number")String number, @Param("pwd")String pwd, @Param("password") String password, @Param("code") String code) {
         logger.info("车主注册");
         if (number != null && !number.equals("") && pwd != null && !pwd.equals("") && password != null && !password.equals("")) {
             if (pwd.equals(password)) {
@@ -110,8 +110,13 @@ public class LoginController {
                 } else {
                     if (userService.queryPhone(number) > 0) {
                         return ControllerResult.getFailResult("注册失败，该手机号已经存在");
+                    } else {
+                        if (code == null || code.equals("")) {
+                            return ControllerResult.getFailResult("注册失败，请输入验证码");
+                        } else {
+                            user.setUserPhone(number);
+                        }
                     }
-                    user.setUserPhone(number);
                 }
 
                 Role role = roleService.queryByName(Constants.CAR_OWNER);
