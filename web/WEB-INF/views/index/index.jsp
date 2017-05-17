@@ -72,12 +72,12 @@
 
                 <div class="row">
                     <div class="col-sm-4 col-xs-12">
-                        <div id="gtco-logo"><a href="index.html">首页 <em>.</em></a></div>
+                        <div id="gtco-logo"><a href="<%=path%>/index">首页 <em>.</em></a></div>
                     </div>
                     <div class="col-xs-8 text-right menu-1">
                         <ul>
-                            <li><a href="features.html">功能简介</a></li>
-                            <li><a href="tour.html">平台特性</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/tour">功能简介</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/tour">平台特性</a></li>
                             <li class="has-dropdown">
                                 <a href="#">使用说明</a>
                                 <ul class="dropdown">
@@ -87,9 +87,9 @@
                                     <li><a href="#">API</a></li>
                                 </ul>
                             </li>
-                            <li><a href="pricing.html">相关咨询</a></li>
-                            <li><a href="contact.html">联系方式</a></li>
-                            <li class="btn-cta"><a href="#"><span>入驻 我们</span></a></li>
+                            <li><a href="<%=path%>/customerClientWeb/contact">相关咨询</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/contact">联系方式</a></li>
+                            <li class="btn-cta"><a href="<%=path%>/customerClientWeb/contact"><span>入驻 我们</span></a></li>
                         </ul>
                     </div>
                 </div>

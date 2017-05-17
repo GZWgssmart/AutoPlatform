@@ -39,8 +39,30 @@ public class CustomerClientWebController {
     @RequestMapping("/index")
     public String supplierInfo() {
             logger.info("进入公司前台显示");
-            return "customerClient/index";
+            return "index/index";
 
     }
+
+    @RequestMapping("/features")
+    public String webFeatures() {
+        logger.info("进入功能特性页面");
+        return "customerClient/features";
+
+    }
+
+    @RequestMapping("/contact")
+    public String webContact() {
+        logger.info("进入联系我们页面");
+        return "index/contact";
+
+    }
+
+    @RequestMapping("/tour")
+    public String webTour() {
+        logger.info("进入平台特性");
+        return "index/tour";
+
+    }
+
 
 }
