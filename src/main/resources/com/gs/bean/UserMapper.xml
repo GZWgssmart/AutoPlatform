@@ -50,7 +50,7 @@
 			INSERT INTO t_user
 				(userId, userName, userNickname, userIcon, userEmail, userPwd, userGender, userAddress, userPhone, userSalary, userIdentity, userCreatedTime, companyId, userStatus, qqOpenId, weiboOpenId, wechatOpenId, userDes, userBirthday, userLoginedTime)
 			VALUES
-				(#{userId}, #{userName}, #{userNickname}, #{userIcon}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userSalary}, #{userIdentity}, now(), #{companyId}, 'Y', #{qqOpenId}, #{weiboOpenId}, #{wechatOpenId}, #{userDes}, #{userBirthday}, #{userLoginedTime})
+				(#{userId}, #{userName}, #{userNickname}, #{userIcon}, #{userEmail}, #{userPwd}, #{userGender}, #{userAddress}, #{userPhone}, #{userSalary}, #{userIdentity}, now(), #{companyId}, #{userStatus}, #{qqOpenId}, #{weiboOpenId}, #{wechatOpenId}, #{userDes}, #{userBirthday}, #{userLoginedTime})
 		]]>
 	</insert>
 
@@ -543,9 +543,6 @@
 		</if>
 		<if test="company.companyId != null and company.companyId != '' and company.companyId != 'null' and company.companyId != 'undefined'">
 			and c.companyId = #{company.companyId}
-		</if>
-		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
 		</if>
 		order by u.companyId DESC, u.userStatus DESC, u.userCreatedTime DESC
 		limit #{pager.beginIndex}, #{pager.pageSize}

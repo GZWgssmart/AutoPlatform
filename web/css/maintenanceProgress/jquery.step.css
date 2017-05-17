@@ -31,6 +31,14 @@ h3{
 	display: inline-block;
 }
 
+.load_color div {
+	width: 18px;
+	height: 8px;
+	background-color: #009688;
+	border-radius: 100%;
+	display: inline-block;
+}
+
 .step-header .des {
 	line-height: 30px;
 	font-weight: bold;

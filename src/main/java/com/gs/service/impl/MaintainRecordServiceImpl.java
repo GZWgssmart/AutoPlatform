@@ -182,9 +182,26 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
     }
 
     @Override
+    public List<MaintainRecord> queryByProgressPager_Y(Pager pager, User user) {
+        return maintainRecordDAO.queryByProgressPager_Y(pager, user);
+    }
+    @Override
     public int updateEndTimeById(Date endTime, String id) {
         return maintainRecordDAO.updateEndTimeById(endTime, id);
     }
 
+    @Override
+    public int countByProgressPager_Y(User user) {
+        return maintainRecordDAO.countByProgressPager_Y(user);
+    }
 
+    @Override
+    public List<MaintainRecord> queryByProgressPager_N(Pager pager, User user) {
+        return maintainRecordDAO.queryByProgressPager_N(pager, user);
+    }
+
+    @Override
+    public int countByProgressPager_N(User user) {
+        return maintainRecordDAO.countByProgressPager_N(user);
+    }
 }

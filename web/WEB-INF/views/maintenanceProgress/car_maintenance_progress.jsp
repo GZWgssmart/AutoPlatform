@@ -67,13 +67,18 @@
         <tbody>
         <div id="toolbar" class="btn-group">
             <a>
-                <button onclick="searchStatus('/record/pager?status=Y');" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看可用记录
+                <button onclick="searchStatus_Y();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看可用进度
                 </button>
             </a>
             <a>
-                <button onclick="searchStatus('/record/pager?status=N');" type="button" class="btn btn-default">
-                    <i class="glyphicon glyphicon-search"></i> 查看不可用记录
+                <button onclick="searchStatus_N();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看不可用进度
+                </button>
+            </a>
+            <a>
+                <button onclick="searchStatus_All();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i> 查看全部进度
                 </button>
             </a>
         </div>
@@ -97,50 +102,115 @@
                                         <img src="<%=path%>/img/order.png">
                                         <p class="app">维修保养登记</p>
                                     </li>
-                                        <div id="animation" class="sk-spinner sk-spinner-three-bounce" style="float: left;margin: 40px auto;">
+                                        <div id="stopAnimation_01" class="load_color" style="float: left;margin: 40px auto;">
+                                            <div class="load_1"></div>
+                                            <div class="load_2"></div>
+                                            <div class="load_3"></div>
+                                        </div>
+                                        <div id="animation_1" class="sk-spinner sk-spinner-three-bounce" style="float: left;margin: 40px auto;">
                                             <div class="sk-bounce1"></div>
                                             <div class="sk-bounce2"></div>
                                             <div class="sk-bounce3"></div>
                                         </div>
-                                    <li>
+                                    <li id="text_1">
                                         <img src="<%=path%>/img/anouncement.png">
                                         <p class="des">指派员工</p>
                                     </li>
-                                    <div id="stopAnimation_1" class="load" style="float: left;margin: 40px auto;">
+                                    <li id="textColor_01">
+                                        <img src="<%=path%>/img/anouncement.png">
+                                        <p class="app">指派员工</p>
+                                    </li>
+                                    <div id="stopAnimation_02" class="load_color" style="float: left;margin: 40px auto;">
                                         <div class="load_1"></div>
                                         <div class="load_2"></div>
                                         <div class="load_3"></div>
                                     </div>
-                                    <li>
+                                    <div id="animation_2" class="sk-spinner sk-spinner-three-bounce" style="float: left;margin: 40px auto;">
+                                        <div class="sk-bounce1"></div>
+                                        <div class="sk-bounce2"></div>
+                                        <div class="sk-bounce3"></div>
+                                    </div>
+                                    <div id="stopAnimation_2" class="load" style="float: left;margin: 40px auto;">
+                                        <div class="load_1"></div>
+                                        <div class="load_2"></div>
+                                        <div class="load_3"></div>
+                                    </div>
+                                    <li id="text_2">
                                         <img src="<%=path%>/img/car_repair.png">
                                         <p class="des">开始维修保养</p>
                                     </li>
-                                    <div class="load" style="float: left;margin: 40px auto;">
+                                    <li id="textColor_02">
+                                        <img src="<%=path%>/img/car_repair.png">
+                                        <p class="app">开始维修保养</p>
+                                    </li>
+                                    <div id="stopAnimation_03" class="load_color" style="float: left;margin: 40px auto;">
                                         <div class="load_1"></div>
                                         <div class="load_2"></div>
                                         <div class="load_3"></div>
                                     </div>
-                                    <li>
+                                    <div id="animation_3" class="sk-spinner sk-spinner-three-bounce" style="float: left;margin: 40px auto;">
+                                        <div class="sk-bounce1"></div>
+                                        <div class="sk-bounce2"></div>
+                                        <div class="sk-bounce3"></div>
+                                    </div>
+                                    <div id="stopAnimation_3" class="load" style="float: left;margin: 40px auto;">
+                                        <div class="load_1"></div>
+                                        <div class="load_2"></div>
+                                        <div class="load_3"></div>
+                                    </div>
+                                    <li id="text_3">
                                         <img src="<%=path%>/img/phone_icon_by_cemagraphics.png">
                                         <p class="des">通知提车</p>
                                     </li>
-                                    <div class="load" style="float: left;margin: 40px auto;">
+                                    <li id="textColor_03">
+                                        <img src="<%=path%>/img/phone_icon_by_cemagraphics.png">
+                                        <p class="app">通知提车</p>
+                                    </li>
+                                    <div id="stopAnimation_04" class="load_color" style="float: left;margin: 40px auto;">
                                         <div class="load_1"></div>
                                         <div class="load_2"></div>
                                         <div class="load_3"></div>
                                     </div>
-                                    <li>
+                                    <div id="animation_4" class="sk-spinner sk-spinner-three-bounce" style="float: left;margin: 40px auto;">
+                                        <div class="sk-bounce1"></div>
+                                        <div class="sk-bounce2"></div>
+                                        <div class="sk-bounce3"></div>
+                                    </div>
+                                    <div id="stopAnimation_4" class="load" style="float: left;margin: 40px auto;">
+                                        <div class="load_1"></div>
+                                        <div class="load_2"></div>
+                                        <div class="load_3"></div>
+                                    </div>
+                                    <li id="text_4">
                                         <img src="<%=path%>/img/cash_register.png">
                                         <p class="des">结算金额</p>
                                     </li>
-                                    <div class="load" style="float: left;margin: 40px auto;">
+                                    <li id="textColor_04">
+                                        <img src="<%=path%>/img/cash_register.png">
+                                        <p class="app">结算金额</p>
+                                    </li>
+                                    <div id="stopAnimation_05" class="load_color" style="float: left;margin: 40px auto;">
                                         <div class="load_1"></div>
                                         <div class="load_2"></div>
                                         <div class="load_3"></div>
                                     </div>
-                                    <li>
+                                    <div id="animation_5" class="sk-spinner sk-spinner-three-bounce" style="float: left;margin: 40px auto;">
+                                        <div class="sk-bounce1"></div>
+                                        <div class="sk-bounce2"></div>
+                                        <div class="sk-bounce3"></div>
+                                    </div>
+                                    <div id="stopAnimation_5" class="load" style="float: left;margin: 40px auto;">
+                                        <div class="load_1"></div>
+                                        <div class="load_2"></div>
+                                        <div class="load_3"></div>
+                                    </div>
+                                    <li id="text_5">
                                         <img src="<%=path%>/img/Ok.png">
                                         <p class="des">完成车辆维修保养</p>
+                                    </li>
+                                    <li id="textColor_05">
+                                        <img src="<%=path%>/img/Ok.png">
+                                        <p class="app">完成车辆维修保养</p>
                                     </li>
                                 </ul>
                         </div>

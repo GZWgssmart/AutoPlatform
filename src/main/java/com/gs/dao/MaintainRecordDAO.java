@@ -180,6 +180,31 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
     public int countByProgressPager(User user);
 
     /**
+     * 根据维修保养记录分页查询可用车主进度
+     * @return
+     */
+    public List<MaintainRecord> queryByProgressPager_Y(@Param("pager") Pager pager, @Param("user")User user);
+
+    /**
+     * 根据维修保养记录分页查询可用车主进度个数
+     * @return
+     */
+    public int countByProgressPager_Y(User user);
+
+    /**
+     * 根据维修保养记录分页查询不可用车主进度
+     * @return
+     */
+    public List<MaintainRecord> queryByProgressPager_N(@Param("pager") Pager pager, @Param("user")User user);
+
+    /**
+     * 根据维修保养记录分页查询不可用车主进度个数
+     * @return
+     */
+    public int countByProgressPager_N(User user);
+
+
+    /**
      * 根据id更新记录的实际结束时间
      *
      * @param endTime 领料状态
@@ -187,6 +212,5 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
      * @return
      */
     public int updateEndTimeById(@Param("endTime") Date endTime, @Param("id") String id);
-
 
 }

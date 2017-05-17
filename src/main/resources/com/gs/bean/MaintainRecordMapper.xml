@@ -100,6 +100,7 @@
                 wi.userId AS work_userId,
                 mr.pickupTime,
                 cb.recordId AS record_recordId,
+                mr.actualEndTime,
                 mr.recordStatus
             FROM
                 t_maintain_record mr
@@ -114,6 +115,93 @@
         </if>
 		order by mr.startTime Desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="countByProgressPager_Y" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        t_maintain_record mr
+        INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+        INNER JOIN t_company c ON c.companyId = mr.companyId
+        LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
+        LEFT JOIN t_user u ON u.userId = wi.userId
+        LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId WHERE mr.recordStatus = 'Y'
+        <if test="companyId != null and companyId != ''">
+            and mr.companyId = #{companyId}
+        </if>
+    </select>
+
+    <select id="queryByProgressPager_Y" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+			SELECT
+                ch.userName,
+                ch.carPlate,
+                mr.startTime,
+                ch.maintainOrFix,
+                c.companyName,
+                wi.userId AS work_userId,
+                mr.pickupTime,
+                cb.recordId AS record_recordId,
+                mr.actualEndTime,
+                mr.recordStatus
+            FROM
+                t_maintain_record mr
+            INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+            INNER JOIN t_company c ON c.companyId = mr.companyId
+            LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
+            LEFT JOIN t_user u ON u.userId = wi.userId
+            LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId WHERE mr.recordStatus = 'Y'
+		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and mr.companyId = #{user.companyId}
+        </if>
+        order by mr.startTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+
+    <select id="countByProgressPager_N" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        t_maintain_record mr
+        INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+        INNER JOIN t_company c ON c.companyId = mr.companyId
+        LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
+        LEFT JOIN t_user u ON u.userId = wi.userId
+        LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId WHERE mr.recordStatus = 'N'
+        <if test="companyId != null and companyId != ''">
+            and mr.companyId = #{companyId}
+        </if>
+    </select>
+
+    <select id="queryByProgressPager_N" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+			SELECT
+                ch.userName,
+                ch.carPlate,
+                mr.startTime,
+                ch.maintainOrFix,
+                c.companyName,
+                wi.userId AS work_userId,
+                mr.pickupTime,
+                cb.recordId AS record_recordId,
+                mr.actualEndTime,
+                mr.recordStatus
+            FROM
+                t_maintain_record mr
+            INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+            INNER JOIN t_company c ON c.companyId = mr.companyId
+            LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
+            LEFT JOIN t_user u ON u.userId = wi.userId
+            LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId WHERE mr.recordStatus = 'N'
+		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and mr.companyId = #{user.companyId}
+        </if>
+        order by mr.startTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
 
