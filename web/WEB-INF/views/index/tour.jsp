@@ -98,7 +98,7 @@
             </div>
         </nav>
 
-        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(<%=path%>/images/img_4.jpg)">
+        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(<%=path%>/images/tour.jpg)">
             <div class="overlay"></div>
             <div class="gtco-container">
                 <div class="row">
@@ -109,7 +109,7 @@
 
                             <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
                                 <span class="intro-text-small">安心 放心 省心</span>
-                                <h1>平台让爱车维保变得</h1>
+                                <h1>让您的爱车维保变得</h1>
                                 <h1>简单&nbsp;&nbsp;高效</h1>
                             </div>
 
