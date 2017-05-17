@@ -242,13 +242,13 @@
 
     <update id="inactive" parameterType="string">
 		<![CDATA[
-
+        update t_accessories_sale ase set ase.accSaleStatus = 'N' where ase.accSaleId = #{id}
         ]]>
 	</update>
 
     <update id="active" parameterType="string">
 		<![CDATA[
-
+        update t_accessories_sale ase set ase.accSaleStatus = 'Y' where ase.accSaleId = #{id}
         ]]>
 	</update>
 

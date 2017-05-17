@@ -90,11 +90,11 @@
                         <i class="glyphicon glyphicon-plus"></i> 添加
                     </button>
                 </a>
-                <a>
-                    <button onclick="delteleBuy();" type="button" id="remove" class="btn btn-danger">
-                        <i class="glyphicon glyphicon-trash"></i> 删除
-                    </button>
-                </a>
+                <%--<a>--%>
+                    <%--<button onclick="delteleBuy();" type="button" id="remove" class="btn btn-danger">--%>
+                        <%--<i class="glyphicon glyphicon-ban-circle"></i> 冻结--%>
+                    <%--</button>--%>
+                <%--</a>--%>
             </s:hasAnyRoles>
             <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory, systemOrdinaryAdmin">
                 <a>
@@ -109,7 +109,7 @@
                     </button>
                 </a>
                 <a>
-                    <button onclick="showSHForm();" type="button" class="btn btn-default">
+                    <button onclick="showSearchFormSale();" type="button" class="btn btn-default">
                         <i class="glyphicon glyphicon-filter"></i>条件查询
                     </button>
                 </a>

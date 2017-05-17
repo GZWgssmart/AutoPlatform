@@ -66,7 +66,6 @@
 	</delete>
 
     <delete id="deleteById" parameterType="string">
-		delete from auto_platform.t_accessories_buy where accBuyId = #{id}
 
 	</delete>
 
@@ -75,7 +74,7 @@
     </delete>
 
     <delete id="batchDeleteAcc">
-        delete from auto_platform.t_accessories_buy where accBuyId in
+        update from auto_platform.t_accessories_buy aby set aby.accBuyStatus = 'Y' where aby.accBuyId in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>

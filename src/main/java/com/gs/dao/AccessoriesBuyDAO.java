@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Repository
 public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy> {
-    public int batchDeleteAcc(@Param("ids") String[] ids, @Param("user") User user);
+    public int batchDeleteAcc(@Param("ids") String[] ids);
 
     public List<Accessories> queryByCheckStates(@Param("checkState") String checkState, @Param("user") User user);
 

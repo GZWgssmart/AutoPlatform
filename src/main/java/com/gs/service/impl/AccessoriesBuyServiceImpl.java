@@ -85,8 +85,8 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
     }
 
 
-    public int batchDeleteAcc(String[] ids, User user) {
-        return accessoriesBuyDAO.batchDeleteAcc(ids, user);
+    public int batchDeleteAcc(String[] ids) {
+        return accessoriesBuyDAO.batchDeleteAcc(ids);
     }
 
     public List<Accessories> queryByCheckStates(String checkState, User user) {

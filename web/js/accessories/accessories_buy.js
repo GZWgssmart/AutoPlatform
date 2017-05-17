@@ -25,6 +25,11 @@ function switchChange(event, state) {
     onSwitchChange.call(this, event, state);
 }
 
+function showSearchFormSale() {
+    initDateTimePickerNotValitor("form_datetime");
+    showSHForm.call(this);
+}
+
 override :switchChange = function (event, state) {
     if (state == true) {
         disableInput();
@@ -34,22 +39,6 @@ override :switchChange = function (event, state) {
         enableInput();
         isAcc = false;
     }
-}
-
-function closwSwitchCleanData(switchId) {
-
-}
-
-function disableSwitch(modalId, switchId) {
-    $("#" + modalId).on("hide.bs.modal", function () {
-        $("#" + switchId).bootstrapSwitch("state", false);
-    });
-}
-
-function enableSwitch(modalId, switchId) {
-    $("#" + modalId).on("hide.bs.modal", function () {
-        $("#" + switchId).bootstrapSwitch("state", true);
-    });
 }
 
 function disableInput() {
@@ -120,35 +109,27 @@ function addAccessoriesBuyInfo(formId) {
 
 
 function fmtOperate(value, row, index) {
-    return [
-        '<button type="button" class="showEditWin btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>',
-        '<button type="button" class="removeBuy btn btn-danger  btn-sm" style="margin-right:15px;">删除</button>'
-    ].join('');
+    if (row.accBuyStatus == 'Y') {
+        return ['<button type="button" class="removeBuy btn btn-danger  btn-sm" style="margin-right:15px;">冻结</button>',
+            '<button type="button" class="showEditWin btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
+        ].join('')
+    } else {
+        return ['<button type="button" class="enableBuy btn btn-success  btn-sm" style="margin-right:15px;">激活</button>',
+            '<button type="button" class="showEditWin btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
+        ].join('')
+    }
 }
 
 window.operateEvents = {
     'click .removeBuy': function (e, value, row, index) {
-        swal({
-            title: "您确定要删除吗？",
-            text: "",
-            type: "warning",
-            showCancelButton: true,
-            closeOnConfirm: false,
-            cancelButtonText: "取消",
-            confirmButtonText: "是的，我要删除",
-            confirmButtonColor: "#ec6c62"
-        }, function () {
-            $.get("/accessoriesBuy/remove?id=" + row.accBuyId + "&status=" + row.accBuyCheck, function (data) {
-                if (data.result == "success") {
-                    $('#addWin').modal('hide');
-                    swal(data.message, "", "success");
-                    $('#cusTable').bootstrapTable('refresh');
-                } else if (data.result == "fail") {
-                    swal(data.message, "", "error");
-                }
-            });
+        $.get("/accessoriesBuy/remove?id=" + row.accBuyId, function (data) {
+            if (data.result == "success") {
+                $('#addWin').modal('hide');
+                $('#cusTable').bootstrapTable('refresh');
+            } else if (data.result == "fail") {
+                swal(data.message, "", "error");
+            }
         });
-
     },
     'click .showEditWin': function (e, value, row, index) {
         var accessoriesBuy = row;
@@ -159,6 +140,17 @@ window.operateEvents = {
         $("#buyTime").val(formatterDate(accessoriesBuy.accBuyTime));
         showAccEditWin();
         autoCalculation1("eAccBuyCount", "eAccBuyPrice", "eAccBuyDiscount");
+    },
+    'click .enableBuy': function (e, value, row, index) {
+        $.get("/accessoriesBuy/enable?id=" + row.accBuyId,
+            function (data) {
+                if (data.result == "success") {
+                    $('#addWin').modal('hide');
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            });
     }
 }
 
@@ -210,12 +202,15 @@ function fmtCheckState(value) {
 
 function fmtBuyState(value) {
     if (value == 'Y') {
-        return "已采购";
+        return "可用";
     } else {
-        return "未采购";
+
+        return "不可用";
     }
 }
-
+/**
+ * 批量冻结状态
+ */
 function delteleBuy() {
     var selectRows = $("#cusTable").bootstrapTable('getSelections');
     var accBuyIdArr = [];
@@ -224,8 +219,8 @@ function delteleBuy() {
     }
     if (selectRows.length > 0) {
         $.each(selectRows, function (index, value, array) {
-            if (value.accBuyCheck == "Y") {
-                $.get("/accessoriesBuy/batchDelete?accBuyArr=" + accBuyIdArr, function (data) {
+            $.get("/accessoriesBuy/batchDelete?accBuyArr=" + accBuyIdArr,
+                function (data) {
                     if (data.result == "success") {
                         swal(data.result, "", "success");
                         $('#cusTable').bootstrapTable('refresh');
@@ -233,13 +228,9 @@ function delteleBuy() {
                         swal(data.result, "", "error");
                     }
                 });
-            } else if (value.accBuyCheck == "N") {
-                swal('删除失败', "必须选择审核通过的数据", "error");
-            }
         });
-
     } else {
-        swal('删除失败', "请至少选择一条数据删除", "error");
+        swal('操作失败', "请至少选择一条数据冻结", "error");
     }
 }
 

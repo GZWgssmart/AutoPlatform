@@ -37,6 +37,12 @@ function switchChange(event, state) {
     onSwitchChange.call(this, event, state);
 }
 
+function showSearchFormSale() {
+    initDateTimePickerNotValitor("form_datetime");
+    showSHForm.call(this);
+}
+
+
 override :switchChange = function (event, state) {
     if (state == true) {
         isUser = true;
@@ -124,35 +130,28 @@ function addAccessoriesSaleInfo(formId) {
 
 
 function fmtOperate(value, row, index) {
-    return [
-        '<button type="button" class="showEditWin btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>',
-        '<button type="button" class="removeSale btn btn-danger  btn-sm" style="margin-right:15px;">删除</button>'
-    ].join('');
+    if (row.accSaleStatus == 'Y') {
+        return ['<button type="button" class="removeSale btn btn-danger  btn-sm" style="margin-right:15px;">冻结</button>',
+            '<button type="button" class="showEditWin btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
+        ].join('')
+    } else {
+        return ['<button type="button" class="enableSale btn btn-success  btn-sm" style="margin-right:15px;">激活</button>',
+            '<button type="button" class="showEditWin btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
+        ].join('')
+    }
 }
 
 window.operateEvents = {
     'click .removeSale': function (e, value, row, index) {
-        swal({
-            title: "您确定要删除吗？",
-            text: "",
-            type: "warning",
-            showCancelButton: true,
-            closeOnConfirm: false,
-            cancelButtonText: "取消",
-            confirmButtonText: "是的，我要删除",
-            confirmButtonColor: "#ec6c62"
-        }, function () {
-            $.get("/accessoriesSale/remove?id=" + row.accSaleId + "&status=" + row.accSaleCheck, function (data) {
+        $.get("/accessoriesSale/remove?id=" + row.accSaleId,
+            function (data) {
                 if (data.result == "success") {
                     $('#addWin').modal('hide');
-                    swal(data.message, "", "success");
-                    $('#cusTable').bootstrapTable('refresh');
+                    $('#saleTable').bootstrapTable('refresh');
                 } else if (data.result == "fail") {
                     swal(data.message, "", "error");
                 }
             });
-        });
-
     },
     'click .showEditWin': function (e, value, row, index) {
         var accessoriesSale = row;
@@ -171,6 +170,17 @@ window.operateEvents = {
 
         autoEditCalculationCount("saleCount", "salePrice", "saleDiscount", "saleTotal", "saleMoney", "eLastCount", accessoriesSale.accessories.accTotal);
 
+    },
+    'click .enableSale': function (e, value, row, index) {
+        $.get("/accessoriesSale/enable?id=" + row.accSaleId,
+            function (data) {
+                if (data.result == "success") {
+                    $('#addWin').modal('hide');
+                    $('#saleTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            });
     }
 }
 
@@ -228,9 +238,9 @@ function fmtCheckState(value) {
 
 function fmtSaleState(value) {
     if (value == 'Y') {
-        return "已销售";
+        return "可用";
     } else {
-        return "未销售";
+        return "不可用";
     }
 }
 
@@ -475,18 +485,18 @@ function clearTempData() {
 }
 
 function showAccAddWin() {
-    initDateTimePicker("form_datetime", "accSaledTime", "addForm");
+    // initDateTimePicker("form_datetime", "accSaledTime", "addForm");
+    initDateTimePickerNotValitor("form_datetime");
     disableInput();
     $("#aLastCount").attr("placeholder", "无法读取库存数量");
     clearTempData();
     validator("addForm");
     $("#addWin").modal("show");
-
-
 }
 
 function showAccEditWin() {
-    initDateTimePicker("form_datetime", "accSaledTime", "editForm");
+    // initDateTimePicker("form_datetime", "accSaledTime", "editForm");
+    initDateTimePickerNotValitor("form_datetime");
     clearTempData();
     validator("editForm");
     $("#editWin").modal("show");

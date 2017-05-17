@@ -128,29 +128,58 @@ public class AccessoriesSaleController {
         }
     }
 
+    /**
+     * 冻结
+     *
+     * @param id
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "remove", method = RequestMethod.GET)
-    public ControllerResult remove(@Param("id") String id, @Param("status") String status) {
+    public ControllerResult remove(@Param("id") String id) {
+
         if (SessionGetUtil.isUser()) {
-            try {
-                if (CheckRoleUtil.checkRoles(queryRole)) {
-                    if (status.equals("N")) {
-                        return ControllerResult.getFailResult("采购信息正在审核中，无法删除");
-                    } else {
-                        accessoriesSaleService.deleteById(id);
-                        return ControllerResult.getSuccessResult("删除成功");
-                    }
-                }
-                return ControllerResult.getFailResult("没有此权限访问");
-            } catch (Exception e) {
-                logger.info("出现异常" + e.getStackTrace());
-                return ControllerResult.getFailResult("出现了一个错误");
+//            try {
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+
+                accessoriesSaleService.inactive(id);
+                return ControllerResult.getSuccessResult("操作成功");
             }
+            return ControllerResult.getFailResult("没有此权限访问");
+//            } catch (Exception e) {
+//                logger.info("出现异常" + e.getStackTrace());
+//                return ControllerResult.getFailResult("出现了一个错误");
+//            }
+        } else {
+            logger.info("session失效重新登入");
+            return ControllerResult.getFailResult("登入失效，重新登入");
+        }
+
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "enable", method = RequestMethod.GET)
+    public ControllerResult enable(@Param("id") String id) {
+
+        if (SessionGetUtil.isUser()) {
+//            try {
+            if (CheckRoleUtil.checkRoles(queryRole)) {
+
+                accessoriesSaleService.active(id);
+                return ControllerResult.getSuccessResult("操作成功");
+            }
+            return ControllerResult.getFailResult("没有此权限访问");
+//            } catch (Exception e) {
+//                logger.info("出现异常" + e.getStackTrace());
+//                return ControllerResult.getFailResult("出现了一个错误");
+//            }
         } else {
             logger.info("session失效重新登入");
             return ControllerResult.getFailResult("登入失效，重新登入");
         }
     }
+
 
     @ResponseBody
     @RequestMapping(value = "addSale", method = RequestMethod.POST)

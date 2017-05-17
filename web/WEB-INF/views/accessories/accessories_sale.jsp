@@ -90,11 +90,11 @@
                         <i class="glyphicon glyphicon-plus"></i> 添加
                     </button>
                 </a>
-                <a>
-                    <button onclick="delteleSale();" type="button" id="remove" class="btn btn-danger">
-                        <i class="glyphicon glyphicon-trash"></i> 删除
-                    </button>
-                </a>
+                <%--<a>--%>
+                    <%--<button onclick="delteleSale();" type="button" id="remove" class="btn btn-danger">--%>
+                        <%--<i class="glyphicon glyphicon-trash"></i> 删除--%>
+                    <%--</button>--%>
+                <%--</a>--%>
             </shiro:hasAnyRoles>
 
             <shiro:hasAnyRoles
@@ -106,7 +106,7 @@
                 </a>
 
                 <a>
-                    <button onclick="showSHForm();" type="button" class="btn btn-default">
+                    <button onclick="showSearchFormSale();" type="button" class="btn btn-default">
                         <i class="glyphicon glyphicon-filter"></i>条件查询
                     </button>
                 </a>
