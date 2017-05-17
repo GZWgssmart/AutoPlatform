@@ -203,4 +203,25 @@ public class HighchartsData {
         }
 
     }
+
+    public static String stdayDate(){
+        // 获取当月第一天和最后一天
+        Calendar cale = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        // 获取前月的第一天
+        cale = Calendar.getInstance();
+        cale.add(Calendar.MONTH, 0);
+        cale.set(Calendar.DAY_OF_MONTH, 1);
+        return format.format(cale.getTime());
+    }
+
+    public static String lastDate(){
+        // 获取前月的最后一天
+        Calendar cale = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        cale = Calendar.getInstance();
+        cale.add(Calendar.MONTH, 1);
+        cale.set(Calendar.DAY_OF_MONTH, 0);
+        return format.format(cale.getTime());
+    }
 }

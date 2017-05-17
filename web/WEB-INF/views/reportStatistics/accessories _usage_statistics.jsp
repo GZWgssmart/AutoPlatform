@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>配件使用统计</title>
+    <title>库存统计</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -49,8 +49,10 @@
         </shiro:hasAnyRoles>
         <div class="form-group" style="width: auto; display: inherit;">
             <input type="checkbox" id="isGraphics" name="isGraphics">
+            <input type="checkbox" id="isQuantity">
         </div>
-        　　 </ul>
+
+    </ul>
     <div class="tab-content" style="margin-top:10px;">
         <div class="tab-pane  fade in active" id="year">
             <form id="formSearch" class="form-horizontal">
@@ -63,7 +65,7 @@
                         <hr style="color:black"/>
                     </div>
                     <div class="col-sm-4">
-                        <input type="text" readonly placeholder="请选择结束始时间" id="end1" name="endTime"
+                        <input type="text" readonly placeholder="请选择结束时间" id="end1" name="endTime"
                                class="form-control datatimepicker"/>
                     </div>
 
@@ -125,7 +127,7 @@
             <form class="form-horizontal">
                 <div class="form-group"  >
                     <div class="col-sm-4">
-                        <input type="text" readonly placeholder="请选择开始时间 " id="start4" name="startTime"
+                        <input type="text" readonly placeholder="请选择开始时间" id="start4" name="startTime"
                                class="form-control datatimepicker"/>
                     </div>
                     <div class="col-md-1">
@@ -149,7 +151,7 @@
             <form class="form-horizontal">
                 <div class="form-group" >
                     <div class="col-sm-4">
-                        <input type="text" readonly placeholder="请选择开始时间" id="start5" name="startTime"
+                        <input type="text" readonly placeholder="请选择开始时间 " id="start5" name="startTime"
                                class="form-control datatimepicker"/>
                     </div>
                     <div class="col-md-1">
@@ -178,7 +180,6 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">选择公司</h3>
                         <form role="form" id="checkForm" >
                             <div class="form-group">

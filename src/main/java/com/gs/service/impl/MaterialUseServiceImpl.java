@@ -38,4 +38,8 @@ public class MaterialUseServiceImpl implements MaterialUseService {
 	public int inactive(String id) { return materialUseDAO.inactive(id); }
 	public int active(String id) { return materialUseDAO.active(id); }
 
+	@Override
+	public List<MaterialUse> queryByConditionUse(String startTime, String endTime, String type, String companyId, String accTypeId) {
+		return materialUseDAO.queryByConditionUse(startTime,endTime,type,companyId,accTypeId);
+	}
 }

@@ -5,7 +5,15 @@
 <mapper namespace="com.gs.dao.MaterialUseDAO">
 
 	<resultMap id="materialUseResultMap" type="materialUse">
-
+		<id column="materialUseId" property="materialUseId"/>
+		<result column="recordId" property="recordId"/>
+		<result column="accId" property="accId"/>
+		<result column="accCount" property="accCount"/>
+		<result column="muCreatedTime" property="muCreatedTime"/>
+		<result column="muUseDate" property="muUseDate"/>
+		<association property="accessories" javaType="com.gs.bean.Accessories">
+			<id property="accId" column="accId"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="materialUse">
@@ -97,5 +105,34 @@
 
 		]]>
 	</update>
+
+	<select id="queryByConditionUse"  resultType="list" resultMap="materialUseResultMap">
+		<![CDATA[
+			select sum(mu.accCount) as accCount ,mu.muCreatedTime from t_material_use mu, t_accessories a
+            where  mu.accId = a.accId and a.accStatus = 'Y' and
+           	mu.muCreatedTime >= #{startTime} and mu.muCreatedTime <= #{endTime}
+		]]>
+		<if test="companyId != null and companyId != ''">
+			and a.companyId = #{companyId}
+		</if>
+		<if test="accTypeId != null and accTypeId != ''">
+			and a.accTypeId = #{accTypeId}
+		</if>
+		<if test="type =='year'">
+			GROUP BY year(mu.muCreatedTime)
+		</if>
+		<if test="type =='quarter'">
+			GROUP BY quarter(mu.muCreatedTime)
+		</if>
+		<if test="type =='month'">
+			GROUP BY month(mu.muCreatedTime)
+		</if>
+		<if test="type =='week'">
+			GROUP BY week(mu.muCreatedTime)
+		</if>
+		<if test="type =='day'">
+			GROUP BY day(mu.muCreatedTime)
+		</if>
+	</select>
 
 </mapper>

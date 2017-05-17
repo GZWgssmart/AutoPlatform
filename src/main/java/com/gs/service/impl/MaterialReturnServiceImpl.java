@@ -38,4 +38,8 @@ public class MaterialReturnServiceImpl implements MaterialReturnService {
 	public int inactive(String id) { return materialReturnDAO.inactive(id); }
 	public int active(String id) { return materialReturnDAO.active(id); }
 
+	@Override
+	public List<MaterialReturn> queryByConditionReturn(String startTime, String endTime, String type, String companyId, String accTypeId) {
+		return materialReturnDAO.queryByConditionReturn(startTime,endTime,type,companyId,accTypeId);
+	}
 }

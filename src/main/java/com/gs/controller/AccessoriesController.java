@@ -349,7 +349,7 @@ public class AccessoriesController {
                                 dataCondition(start,end,type,"week","one",companyId,accType.getAccTypeId());
                                 lineBasic.setData(HighchartsData.doubleWeekOne);
                             }else if(quantity.equals("可用数量")){
-                                dataCondition(start,end,type,"week","one",companyId,accType.getAccTypeId());;
+                                dataCondition(start,end,type,"week","two",companyId,accType.getAccTypeId());;
                                 lineBasic.setData(HighchartsData.doubleWeekTwo);
                             }
                             lineBasic.setCategories(HighchartsData.strWeek);
@@ -381,16 +381,16 @@ public class AccessoriesController {
     }
 
 
-    /*  默认查询本月的配机使用情况
+    /*  默认查询本月的库存
    * */
     public void dateDay(String type,String companyId,String accTypeId){
         HighchartsData.doubleDayTwo = new double[31];
         HighchartsData.doubleDayOne = new double[31];
         List<Accessories> accessories = null;
         if(type.equals("one")){
-            accessories = accessoriesService.queryByConditionTotal(stdayDate(),lastDate(),"day",companyId,accTypeId);
+            accessories = accessoriesService.queryByConditionTotal(HighchartsData.stdayDate(),HighchartsData.lastDate(),"day",companyId,accTypeId);
         }else if(type.equals("two")){
-            accessories = accessoriesService.queryByConditionIdle(stdayDate(),lastDate(),"day",companyId,accTypeId);
+            accessories = accessoriesService.queryByConditionIdle(HighchartsData.stdayDate(),HighchartsData.lastDate(),"day",companyId,accTypeId);
         }
         int i = 0;
         double[] doubles = new double[accessories.size()];
@@ -505,26 +505,7 @@ public class AccessoriesController {
         }
     }
 
-    public String stdayDate(){
-        // 获取当月第一天和最后一天
-        Calendar cale = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        // 获取前月的第一天
-        cale = Calendar.getInstance();
-        cale.add(Calendar.MONTH, 0);
-        cale.set(Calendar.DAY_OF_MONTH, 1);
-        return format.format(cale.getTime());
-    }
 
-    public String lastDate(){
-        // 获取前月的最后一天
-        Calendar cale = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        cale = Calendar.getInstance();
-        cale.add(Calendar.MONTH, 1);
-        cale.set(Calendar.DAY_OF_MONTH, 0);
-       return format.format(cale.getTime());
-    }
 }
 
 

@@ -16,6 +16,8 @@ public class MaterialReturn {
 	private Date mrCreatedDate;
 	private Date mrReturnDate;
 
+	private Accessories accessories;
+
 	public String getMaterialReturnId(){
 		return this.materialReturnId;
 	}
@@ -58,4 +60,11 @@ public class MaterialReturn {
 		this.mrReturnDate=mrReturnDate;
 	}
 
+	public Accessories getAccessories() {
+		return accessories;
+	}
+
+	public void setAccessories(Accessories accessories) {
+		this.accessories = accessories;
+	}
 }

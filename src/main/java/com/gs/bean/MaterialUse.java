@@ -15,6 +15,7 @@ public class MaterialUse {
 	private int accCount;
 	private Date muCreatedTime;
 	private Date muUseDate;
+	private Accessories accessories;
 
 	public String getMaterialUseId(){
 		return this.materialUseId;
@@ -58,4 +59,11 @@ public class MaterialUse {
 		this.muUseDate=muUseDate;
 	}
 
+	public Accessories getAccessories() {
+		return accessories;
+	}
+
+	public void setAccessories(Accessories accessories) {
+		this.accessories = accessories;
+	}
 }
