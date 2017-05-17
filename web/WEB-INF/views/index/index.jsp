@@ -117,13 +117,14 @@
                                             <li class="gtco-second"><a href="#" data-tab="login">登陆</a></li>
                                         </ul>
                                         <div class="tab-content">
-
+                                            <div id="errMsg1" style="color: red"></div>
+                                            <div id="successMsg" style="color: green"></div>
                                             <div class="tab-content-inner active" data-content="signup">
-                                                <form role="form" id="regist_form" method="post">
+                                                <form role="form" id="register_form" method="post">
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
                                                             <label for="username">用户名</label>
-                                                            <input type="text" name="number" class="form-control" placeholder="请输入手机号或邮箱完成注册" id="username">
+                                                            <input type="text" name="number" class="form-control" placeholder="请输入手机号或邮箱完成注册" id="username" onblur="variNumber(this.value)">
                                                         </div>
                                                     </div>
                                                     <div class="row form-group">
@@ -135,13 +136,14 @@
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
                                                             <label for="password2">密码确认</label>
-                                                            <input type="password" class="form-control" placeholder="请再次输入密码"  id="password2">
+                                                            <input type="password" name="password" class="form-control" placeholder="请再次输入密码"  id="password2">
                                                         </div>
                                                     </div>
 
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
-                                                            <input type="submit" class="btn btn-primary" value="注册">
+                                                            <input type="button" onclick="register()" class="btn btn-primary" value="注册">
+                                                            <input type="reset"  class="btn btn-primary" value="重置" />
                                                         </div>
                                                     </div>
                                                 </form>

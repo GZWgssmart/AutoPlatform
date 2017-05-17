@@ -32,7 +32,7 @@
    		<property name="authorizer" ref="authorizer" />  
         <!-- 我们自定义的realm -->  
         <property name="realm" ref="jdbcRealm"/>    
-        <!-- 缓存管理器 -->  
+        <!-- 缓存管理器 -->
         <property name="cacheManager" ref="cacheManager"/>    
         
     </bean>  

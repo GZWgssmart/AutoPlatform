@@ -4,6 +4,8 @@
 var appointment;
 var userInfo;
 
+var editPhone = "";
+
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/checkin/checkin_pager?status=ALL");
@@ -219,6 +221,7 @@ function showEditWin() {
     } else {
 
         var checkin = selectRow[0];
+        editPhone = checkin.userPhone;
         $("#editForm").fill(checkin);
         initSelect2("car_model", "请选择车型", "/carModel/car_model_all?brandId=" + checkin.brandId, "540");
         $('#editCarBrand').html('<option value="' + checkin.brand.brandId + '">' + checkin.brand.brandName + '</option>').trigger("change");
@@ -369,6 +372,13 @@ function validator(formId) {
                         min: 11,
                         max: 11,
                         message: '手机号只能是11位'
+                    },
+                    threshold: 11,
+                    remote: {
+                        url: '/peopleManage/peoplePhone_verification?editPhone='+editPhone,
+                        message: '该手机号已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             },

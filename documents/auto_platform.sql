@@ -538,7 +538,7 @@ DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
 `userId` varchar(36) NOT NULL COMMENT '用户id',
 `userEmail` varchar(100) DEFAULT NULL COMMENT '用户邮箱',
-`userPhone` varchar(11) NOT NULL COMMENT '用户手机号',
+`userPhone` varchar(11) DEFAULT NULL COMMENT '用户手机号',
 `userPwd` varchar(100) NOT NULL COMMENT '用户登录密码',
 `userNickname` varchar(20) DEFAULT NULL COMMENT '用户昵称',
 `userIdentity` varchar(18) DEFAULT NULL COMMENT '用户身份证号',
