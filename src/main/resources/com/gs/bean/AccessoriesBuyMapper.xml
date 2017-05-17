@@ -201,7 +201,8 @@
     <select id="queryByPager" resultType="list" resultMap="accessoriesBuyResultMap">
         <![CDATA[
         SELECT
-            ab.*, ac.accId,
+            ab.*,
+            ac.accId,
             ac.accName,
             ac.accDes,
             ac.supplyId,
@@ -255,6 +256,7 @@
         SELECT
         ab.*, ac.accId,
         ac.accName,
+        ac.accDes,
         ac.supplyId,
         ac.accCommodityCode,
         sy.supplyName,
@@ -285,7 +287,9 @@
 
     <select id="queryByCheckStatePager" resultType="list" resultMap="accessoriesBuyResultMap">
         SELECT
-        ab.*, ac.accId,
+        ab.*,
+        ac.accId,
+        ac.accDes,
         ac.accName,
         ac.supplyId,
         ac.accCommodityCode,
@@ -361,6 +365,7 @@
             ab.*,
             ac.accId,
             ac.accName,
+            ac.accDes,
             ac.supplyId,
             ac.accCommodityCode,
             sy.supplyName,
