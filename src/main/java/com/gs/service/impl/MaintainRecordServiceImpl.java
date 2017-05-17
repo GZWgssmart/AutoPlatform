@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 import com.gs.dao.MaintainRecordDAO;
@@ -178,6 +179,11 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
     @Override
     public int countByProgressPager(User user) {
         return maintainRecordDAO.countByProgressPager(user);
+    }
+
+    @Override
+    public int updateEndTimeById(Date endTime, String id) {
+        return maintainRecordDAO.updateEndTimeById(endTime, id);
     }
 
 

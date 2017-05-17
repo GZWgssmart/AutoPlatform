@@ -6,6 +6,7 @@ import com.gs.bean.User;
 import com.gs.bean.UserRole;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.message.IndustrySMS;
 import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
@@ -47,6 +48,8 @@ public class LoginController {
 
     @Resource
     private UserRoleService userRoleService;
+
+    private String phoneCode;
 
     @ResponseBody
     @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -114,6 +117,9 @@ public class LoginController {
                         if (code == null || code.equals("")) {
                             return ControllerResult.getFailResult("注册失败，请输入验证码");
                         } else {
+                            if (!code.equals(phoneCode)) {
+                                return ControllerResult.getFailResult("注册失败，验证码有误");
+                            }
                             user.setUserPhone(number);
                         }
                     }
@@ -127,19 +133,35 @@ public class LoginController {
                 userService.insert(user);
                 userRoleService.insert(userRole);
 
-                Subject subject = SecurityUtils.getSubject();
-                user.setUserLoginedTime(new Date());
-                subject.login(new UsernamePasswordToken(user.getUserId(), user.getUserPwd()));
-                Session session = subject.getSession();
-                session.setAttribute("user", user);
-                userService.updateLoginTime(user.getUserId());
-                return ControllerResult.getSuccessResult("注册成功，请不要操作，");
+                if (email) {
+                    return ControllerResult.getSuccessResult("注册成功，请到邮箱中进行验证");
+                } else {
+                    Subject subject = SecurityUtils.getSubject();
+                    user.setUserLoginedTime(new Date());
+                    subject.login(new UsernamePasswordToken(user.getUserId(), user.getUserPwd()));
+                    Session session = subject.getSession();
+                    session.setAttribute("user", user);
+                    userService.updateLoginTime(user.getUserId());
+                    return ControllerResult.getSuccessResult("注册成功，请不要操作，");
+                }
             } else {
                 return ControllerResult.getFailResult("注册失败，两次密码不一致");
             }
         } else {
             return ControllerResult.getFailResult("注册失败，请输入账号和密码");
         }
+    }
+
+    @ResponseBody
+    @RequestMapping("sendCode")
+    public ControllerResult sendCode(@Param("userPhone") String userPhone) {
+        logger.info("获取短信验证码");
+        phoneCode = String.valueOf((int)((Math.random()*9+1)*100000));
+        String to = userPhone;
+        String smsContent = "【汽车之家】您的验证码为" + phoneCode + "，请于30分钟内正确输入，如非本人操作，请忽略此短信。";
+        IndustrySMS is = new IndustrySMS(to, smsContent);
+        is.execute();
+        return ControllerResult.getSuccessResult("验证码发送成功，请注意查收");
     }
 
     @RequestMapping("logout")

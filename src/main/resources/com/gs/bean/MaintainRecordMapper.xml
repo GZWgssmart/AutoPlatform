@@ -464,6 +464,14 @@
         ]]>
     </update>
 
+    <update id="updateEndTimeById">
+        <![CDATA[
+
+		  update t_maintain_record set endTime = #{endTime} where recordId = #{id}
+
+        ]]>
+    </update>
+
     <update id="updatePickupTime">
         <![CDATA[
 

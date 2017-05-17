@@ -58,13 +58,14 @@ function register() {
         }
     );
 }
-
+var userPhone;
 /** 验证输入的账号 */
 function variNumber(number) {
     if (isEmail(number)) {
         $("#errMsg1").html("");
         $("#codeDiv").hide();
     } else if (isPhone(number)) {
+        userPhone = number;
         $("#errMsg1").html("");
         $("#codeDiv").show();
     } else {
@@ -107,6 +108,19 @@ function getCode(val) {
 /** 发送短信 */
 function sendCode(val) {
     if (val == 60) {
+        if (userPhone != null && userPhone != "" && userPhone != undefined) {
+            $.get("/login/sendCode?userPhone=" + userPhone, function (data) {
+                if (data.result == "success") {
+                    $("#successMsg").html(data.message);
+                }
+            },"json");
+        }
+    }
+}
 
+/** 清除提示信息 */
+function clearSuccess(val) {
+    if (val.value != "") {
+        $("#successMsg").html("");
     }
 }

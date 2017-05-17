@@ -6,6 +6,7 @@ import com.gs.bean.User;
 import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -163,4 +164,14 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      * @return
      */
     public int countByProgressPager(User user);
+
+    /**
+     * 根据id更新记录的实际结束时间
+     *
+     * @param endTime 领料状态
+     * @param id          维修保养记录的id
+     * @return
+     */
+    public int updateEndTimeById(Date endTime, String id);
+
 }

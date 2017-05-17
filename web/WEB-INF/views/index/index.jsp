@@ -134,7 +134,7 @@
                                                                 <label for="username">验证码</label>
                                                             </div>
                                                             <div class="col-sm-7" style="margin: 0px;">
-                                                                <input type="text" name="code" class="form-control" placeholder="输入手机验证码">
+                                                                <input type="text" name="code" class="form-control" placeholder="输入手机验证码" onblur="clearSuccess(this)">
                                                             </div>
                                                             <div class="col-sm-5" style="margin: 0px;">
                                                                 <input type="button" id="detailButton"

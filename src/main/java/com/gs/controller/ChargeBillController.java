@@ -239,6 +239,7 @@ public class ChargeBillController {
                     maintainRecordService.updatePickupTime(chargeBill.getRecordId());
                     chargeBillService.insert(chargeBill);
                     maintainRecordService.updateSpeedStatusById(Constants.COMPLETED, chargeBill.getRecordId());
+                    maintainRecordService.updateEndTimeById(new Date(), chargeBill.getRecordId());
                     checkinService.inactive(chargeBill.getRecord().getCheckinId());
                     return ControllerResult.getSuccessResult("已经成功结算，收费单据已经自动生成");
                 }
