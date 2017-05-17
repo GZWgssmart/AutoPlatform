@@ -110,7 +110,7 @@
 		<if test="user.companyId != null and user.companyId != '' ">
 			where c.companyId = #{user.companyId}
 		</if>
-		order by c.companyId desc, c.checkinStatus desc, c.checkinCreatedTime desc
+		order by c.companyId desc, c.complaintCreatedTime desc
  		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

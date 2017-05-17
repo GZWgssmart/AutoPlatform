@@ -105,8 +105,8 @@
 		<![CDATA[
 		select l.userId as customerId,c.userPhone as customerPhone, l.trackUser as adminId, l.*, u.userName as adminName, c.userName as customerName
 		from t_checkin c, t_user u, t_track_list l, t_maintain_record r
-		where l.trackUser=u.userId and c.userId = l.userId and r.checkinId=c.checkinId and
-		c.checkinStatus ='Y' and r.recordStatus ='Y'
+		where l.trackUser=u.userId and c.userId = l.userId and r.checkinId=c.checkinId
+		and r.recordStatus ='Y'
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and l.companyId = #{user.companyId}
