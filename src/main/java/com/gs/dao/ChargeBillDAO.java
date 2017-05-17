@@ -59,4 +59,5 @@ public interface ChargeBillDAO extends BaseDAO<String, ChargeBill>{
     public List<ChargeBill> queryByCondition(@Param("startTime")String startTime,@Param("endTime")String endTime,@Param("maintainOrFix")String maintainOrFix,
                                            @Param("type")String type, @Param("userId")String userId);
 
+    public List<ChargeBill> queryMyName(@Param("user") User user);
 }

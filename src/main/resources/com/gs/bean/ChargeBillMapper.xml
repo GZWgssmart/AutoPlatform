@@ -142,6 +142,18 @@
         limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
+	<select id="queryMyName" resultType="list" resultMap="chargeBillResultMap">
+		<![CDATA[
+			select cb.*, r.recordId, r.checkinId, r.companyId, c.checkinId, c.userName, c.maintainOrFix, c.userPhone, p.plateId, p.plateName, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, cpy.companyId, cpy.companyName
+				from t_charge_bill cb, t_maintain_record r, t_checkin c, t_car_plate p, t_car_brand b, t_car_color co, t_car_model m, t_company cpy
+				where 1 = 1 and cb.recordId = r.recordId and r.checkinId = c.checkinId and c.plateId = p.plateId and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and cb.companyId = cpy.companyId and cb.chargeBillStatus = 'Y'
+		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and cb.companyId = #{user.companyId}
+		</if>
+		order by cb.companyId desc, cb.chargeBillStatus desc, cb.chargeCreatedTime desc
+	</select>
+
 	<select id="queryPagerByStatus" resultType="list" resultMap="chargeBillResultMap">
 		<![CDATA[
 			select cb.*, r.recordId, r.checkinId, r.companyId, c.checkinId, c.userName, c.maintainOrFix, c.userPhone, p.plateId, p.plateName, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, cpy.companyId, cpy.companyName

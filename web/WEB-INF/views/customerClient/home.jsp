@@ -100,7 +100,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path %>/record/reminder_page">我的已完成的维修保养</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path %>/bill/bill_page">我的收费单据管理</a>
+                        <li><a class="J_menuItem" href="<%=path %>/bill/my_bill">我的收费单据管理</a>
                         </li>
                     </ul>
                 </li>

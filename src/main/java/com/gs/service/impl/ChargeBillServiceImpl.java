@@ -109,4 +109,8 @@ public class ChargeBillServiceImpl implements ChargeBillService {
     public List<ChargeBill> queryByCondition(String startTime, String endTime, String maintainOrFix, String type, String userId) {
         return chargeBillDAO.queryByCondition(startTime, endTime, maintainOrFix, type, userId);
     }
+
+    public List<ChargeBill> queryMyName(User user){
+        return chargeBillDAO.queryMyName(user);
+    }
 }

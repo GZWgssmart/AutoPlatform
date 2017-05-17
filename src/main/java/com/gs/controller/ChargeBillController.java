@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +57,7 @@ public class ChargeBillController {
 
     // 可以查看的角色：董事长、接待员、超级管理员、普通管理员
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE + ","
-            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.CAR_OWNER;
 
     // 可以操作的角色：董事长、接待员
     private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE;
@@ -94,6 +95,21 @@ public class ChargeBillController {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
         }
+    }
+
+    //擦看个人预约
+    @RequestMapping(value = "my_bill", method = RequestMethod.GET)
+    private ModelAndView carOwerChargeBill() {
+        ModelAndView mav = new ModelAndView();
+        User user = SessionGetUtil.getUser();
+        if (!SessionGetUtil.isUser()) {
+            mav.setViewName("index/notLogin");
+            return mav;
+        }
+        logger.info("车主用户查看我的收费单据");
+        mav.setViewName("customerClient/chargeBill");
+        mav.addObject("bills", chargeBillService.queryMyName(user));
+        return mav;
     }
 
     @ResponseBody

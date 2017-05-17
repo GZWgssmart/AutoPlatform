@@ -55,4 +55,5 @@ public interface ChargeBillService extends BaseService<String, ChargeBill>{
     public List<ChargeBill> queryByCondition(String startTime,String endTime,String maintainOrFix,
                                              String type, String userId);
 
+    public List<ChargeBill> queryMyName(User user);
 }
