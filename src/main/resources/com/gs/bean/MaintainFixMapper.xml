@@ -12,6 +12,7 @@
 		<result property="maintainManHourFee" column="maintainManHourFee"></result>
 		<result property="maintainOrFix" column="maintainOrFix"></result>
 		<result property="maintainDes" column="maintainDes"></result>
+		<result property="companyId" column="companyId"></result>
 		<result property="maintainStatus" column="maintainStatus"></result>
 		<association property="company" javaType="com.gs.bean.Company">
 			<id property="companyId" column="companyId"></id>

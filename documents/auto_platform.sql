@@ -208,23 +208,24 @@ PRIMARY KEY (`checkinId`)
 
 DROP TABLE IF EXISTS `t_company`;
 CREATE TABLE `t_company` (
-  `companyId` varchar(36) NOT NULL DEFAULT '' COMMENT '公司id',
+  `companyId` varchar(36) NOT NULL COMMENT '公司id',
   `companyName` varchar(100) NOT NULL COMMENT '公司名称',
   `companyAddress` varchar(150) NOT NULL COMMENT '公司地址',
   `companyTel` varchar(13) NOT NULL COMMENT '公司联系方式',
   `companyPricipal` varchar(20) DEFAULT NULL COMMENT '公司负责人',
-  `companyPricipalPhone` varchar(11) DEFAULT NULL COMMENT '公司负责人联系电话',
+  `companyImg` varchar(255) DEFAULT NULL COMMENT '公司图片',
   `companyWebsite` varchar(100) DEFAULT NULL COMMENT '公司官网URL',
-  `companyLogo` varchar(200) DEFAULT '/img/company_logo.png' COMMENT '公司logo图片',
+  `companyLogo` varchar(200) DEFAULT NULL COMMENT '公司logo图片',
   `companyOpenDate` date DEFAULT NULL COMMENT '公司成立时间',
   `companySize` varchar(50) DEFAULT NULL COMMENT '公司规模',
-  `companyLongitude` double(255,2) DEFAULT NULL COMMENT '公司经度',
-  `companyLatitude` double(255,2) DEFAULT NULL COMMENT '公司纬度',
+  `companyLongitude` varchar(255) DEFAULT NULL COMMENT '公司经度',
+  `companyLatitude` varchar(255) DEFAULT NULL COMMENT '公司纬度',
   `companyDes` varchar(500) DEFAULT NULL COMMENT '公司描述',
   `companyStatus` varchar(2) DEFAULT NULL COMMENT '公司状态',
   PRIMARY KEY (`companyId`),
   UNIQUE KEY `companyName` (`companyName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 /*投诉表*/
 

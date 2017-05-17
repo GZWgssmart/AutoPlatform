@@ -2,6 +2,7 @@
 <%
     String path = request.getContextPath();
 %>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -21,6 +22,21 @@
 <body>
 
 <div class="container">
+    <form id="formSearch" class="form-horizontal">
+        <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+            <div class="col-sm-2" style="margin-left: -15px;">
+                <input type="text" id="searchMaintenanceName" class="form-control" placeholder="请输入保养项目名称" >
+            </div>
+            <div class="col-sm-2">
+                <button type="button" onclick="searchPlate();" class="btn btn-primary">
+                    查询
+                </button>
+                <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </form>
     <table class="table table-hover" id="cusTable"
            data-pagination="true"
            data-show-refresh="true"
@@ -52,23 +68,35 @@
             <th data-field="maintainStatus" data-formatter="status">
                 保养项目状态
             </th>
+    <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
             <th data-field="coi" data-formatter="operating" data-events="operateEvents">
                 操作
             </th>
+    </shiro:hasAnyRoles>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <a><button type="button" id="add" onclick="showAddWin();" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加
-            </button></a>
-            <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                <i class="glyphicon glyphicon-pencil"></i> 修改
-            </button></a>
-            <a><button type="button" onclick="showAddacc();" class="btn btn-default" >
-                <i class="glyphicon glyphicon-plus"></i> 添加基础配件
-            </button></a>
+            <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
+                <a><button type="button" id="add" onclick="showAddWin();" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-plus"></i> 添加
+                </button></a>
+                <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-pencil"></i> 修改
+                </button></a>
+                <a><button type="button" onclick="showAddacc();" class="btn btn-default" >
+                    <i class="glyphicon glyphicon-plus"></i> 添加基础配件
+                </button></a>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="systemOrdinaryAdmin,systemSuperAdmin,companyAdmin,companyArtificer">
+                <a>
+                    <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                        <i class="glyphicon glyphicon-search"></i> 条件查询
+                    </button>
+                </a>
+            </shiro:hasAnyRoles>
         </div>
+
         </tbody>
     </table>
 </div>
@@ -86,7 +114,7 @@
                         <form role="form" id="editForm">
                             <input name="maintainId" attr="maintain.maintainId" type="hidden"/>
                             <input name="maintainOrFix" attr="maintain.maintainOrFix" type="hidden"/>
-                            <input name="companyId" attr="maintain.companyId" type="text"/>
+                            <input name="companyId" attr="maintain.companyId" type="hidden"/>
                             <div class="form-group">
                                 <label>保养项目名称：</label>
                                 <input type="text"   name="maintainName" attr="maintain.maintainName" class="form-control"/>

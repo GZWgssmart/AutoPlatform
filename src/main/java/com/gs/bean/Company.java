@@ -23,6 +23,7 @@ public class Company{
 	private String companyLatitude;//经度
 	private String companyDes;//公司描述
 	private String companyStatus;//公司状态
+	private String companyImg;//公司图片
 
 	public String getCompanyId(){
 		return this.companyId;
@@ -121,5 +122,13 @@ public class Company{
 
 	public void setCompanyPricipalPhone(String companyPricipalPhone) {
 		this.companyPricipalPhone = companyPricipalPhone;
+	}
+
+	public String getCompanyImg() {
+		return companyImg;
+	}
+
+	public void setCompanyImg(String companyImg) {
+		this.companyImg = companyImg;
 	}
 }

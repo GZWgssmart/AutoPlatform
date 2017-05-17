@@ -5,6 +5,7 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/maintainFix/queryByPager");
     initSelect2("company", "请选择汽修公司", "/company/company_all", "565");
+    initSelect2("acc_accessoriesType", "请选择配件类别", "/accessoriesType/accessoriesType_All", "550");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
     destoryValidator('addWin', 'addForm');
@@ -107,6 +108,81 @@ window.operateEvents = {
         validator("editForm");
         $("#editForm").fill(incomingType);
         $("#editWin").modal('show');
+    }
+}
+
+var AccessoriesId
+function operationWin(value,row,index){
+    if(row.accId != null){
+        return[
+            '<button type="button" class="btn btn-default  btn-sm btn-success" onclick="showAccWin()">选择配件</button>'
+        ]
+    }
+}
+
+function showAccWin(){
+    $("#accWin").modal('show');
+    $("#AccessoriesWin").modal('hide');
+    var selectRow = $("#cusTable2").bootstrapTable('getSelections');
+    if(selectRow.length != 1){
+
+    }else{
+        var accessories = selectRow[0];
+        AccessoriesId =  accessories.accId;
+    }
+}
+
+
+/**
+ * 显示配件窗口
+ * */
+var maintenanceltemId
+function showAddacc(){
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择维修项目失败', "只能选择一条维修项目进行配件分配", "error");
+        return false;
+    } else {
+        var product = selectRow[0];
+        maintenanceltemId = product.maintainId;
+        $("#AccessoriesWin").modal('show');
+    }
+}
+
+
+function queryByTypeId(obj){
+    initTableNotTollbar("cusTable2", "/accessories/queryByIdAcc?id=" + obj.value);
+}
+
+
+function Addacc() {
+    var count = $("#count").val();
+    if(AccessoriesId != null || maintenanceltemId != null || count != null){
+        $.get("/maintainFixAcc/insert?AccessoriesId=" + AccessoriesId + "&maintenanceltemId=" + maintenanceltemId + "&count=" + count,
+            function (data) {
+                if (data.result == "success") {
+                    $("#accWin").modal('hide');
+                    swal(data.message, "", "success");
+                } else if (data.result == "fail") {
+                    $("#accWin").modal('hide');
+                    swal(data.message, "", "error");
+                } else if (data.result == "notLogin") {
+                    swal({
+                            title: "登入失败",
+                            text: data.message,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                top.location.href = "/login/show_login";
+                            }
+                        });
+                }
+            }, "json");
     }
 }
 

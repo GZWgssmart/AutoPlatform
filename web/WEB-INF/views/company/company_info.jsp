@@ -179,6 +179,15 @@
                                        class="form-control" id="url_input"/>
                             </div>
                             <div class="form-group">
+                                <label class="control-label">公司图片</label>
+                                <div id="previews">
+                                    <img id="icons" name="file" style="width:120px;height:100px;"/>
+                                </div>
+                                <input type="file" name="file" onchange="previewImage(this)" style="display: none;"
+                                       id="previewImgs">
+                                <button id="buttons" onclick="$('#previewImgs').click();">上传公司图片</button>
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label">公司规模</label>
                                 <select class="form-control" name="companySize">
                                     <option value="请选择公司规模">请选择公司规模</option>

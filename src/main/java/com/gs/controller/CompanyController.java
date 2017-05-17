@@ -200,7 +200,7 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "InsertCompany", method = RequestMethod.POST)
-    public ControllerResult InsetCompany(Company company) {
+    public ControllerResult InsetCompany(Company company,MultipartFile file,HttpSession session) {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -209,6 +209,13 @@ public class CompanyController {
                 if(CheckRoleUtil.checkRoles(CompanyEditRole)){
                     logger.info("添加公司");
                     company.setCompanyLogo("uploads/logo.jpg");
+                    String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
+                    String filePath = FileUtil.uploadPath(session, "\\" + fileName);
+                    String logo = "uploads/" + fileName;
+                    if (!file.isEmpty()) {
+                        file.transferTo(new File(filePath));
+                        company.setCompanyImg(logo);
+                    }
                     String companyId = UUIDUtil.uuid();
                     company.setCompanyId(companyId);
                     User user = new User();

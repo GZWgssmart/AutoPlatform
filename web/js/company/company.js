@@ -183,11 +183,8 @@ function validator(formId) {
             companyAddress: {
                 message: '公司地址失败',
                 validators: {
-                    notEmpty: {
-                        message: '公司地址不能为空'
-                    },
                     stringLength: {
-                        min: 10,
+                        min: 2,
                         max: 200,
                         message: '公司地址长度必须在10到200位之间'
                     }
@@ -250,25 +247,17 @@ function validator(formId) {
             companyLongitude: {
                 message: '公司经度失败',
                 validators: {
-                    number: {
-                        number: true,
-                        message: '公司经度格式错误'
-                    },
-                    notEmpty: {
-                        message: '公司经度不能为空'
-                    }
+                    // notEmpty: {
+                    //     message: '公司经度不能为空'
+                    // }
                 }
             },
             companyLatitude: {
                 message: '公司纬度失败',
                 validators: {
-                    number: {
-                        number: true,
-                        message: '公司纬度格式错误'
-                    },
-                    notEmpty: {
-                        message: '公司纬度不能为空'
-                    }
+                    // notEmpty: {
+                    //     message: '公司纬度不能为空'
+                    // }
                 }
             },
             companyPricipalPhone: {
@@ -286,7 +275,24 @@ function validator(formId) {
     })
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                formSubmit("/company/InsertCompany", formId, "addWin");
+                // formSubmit("/company/InsertCompany", formId, "addWin");
+                $('#addForm').ajaxSubmit({
+                    url: '/company/InsertCompany',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.result == "success") {
+                            $('#editWin').modal('hide');
+                            swal(data.message, "", "success");
+                            $('#cusTable').bootstrapTable('refresh');
+                            $('#addForm').data('bootstrapValidator').resetForm(true);
+                        } else if (data.result == "fail") {
+                            $('#addWin').modal('hide');
+                            swal(data.message, "", "error");
+                            $('#addForm').data('bootstrapValidator').resetForm(true);
+                        }
+                    }
+                })
             } else if (formId == "editForm") {
                 $("#editButton").on("click", function () {
                     $("#editForm").data('bootstrapValidator').validate();
@@ -359,6 +365,41 @@ function previewImage(file) {
         var src = document.selection.createRange().text;
         div.innerHTML = '<img id=imghead>';
         var img = document.getElementById('imghead');
+        img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+        status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
+        div.innerHTML = "<div id=divhead style='width:" + rect.width + "px;height:" + rect.height + "px;margin-top:" + rect.top + "px;" + sFilter + src + "\"'></div>";
+    }
+}
+
+//图片上传预览    IE是用了滤镜。
+function previewImage(file) {
+    var MAXWIDTH = 120;
+    var MAXHEIGHT = 60;
+    var div = document.getElementById('previews');
+    if (file.files && file.files[0]) {
+        div.innerHTML = '<img id=imgheads onclick=$("#previewImgs").click()>';
+        var img = document.getElementById('imgheads');
+        img.onload = function () {
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            img.width = rect.width;
+            img.height = rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+            img.style.marginTop = rect.top + 'px';
+        }
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            img.src = evt.target.result;
+        }
+        reader.readAsDataURL(file.files[0]);
+    }
+    else //兼容IE
+    {
+        var sFilter = 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+        file.select();
+        var src = document.selection.createRange().text;
+        div.innerHTML = '<img id=imgheads>';
+        var img = document.getElementById('imgheads');
         img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
         var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
         status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
