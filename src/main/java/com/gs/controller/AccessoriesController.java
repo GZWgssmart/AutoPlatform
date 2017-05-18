@@ -47,7 +47,7 @@ public class AccessoriesController {
     private AccessoriesTypeService accessoriesTypeService;
 
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY + ","
-            + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+            + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_SALES + "," + Constants.COMPANY_BUYER;
 
     private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY;
 
