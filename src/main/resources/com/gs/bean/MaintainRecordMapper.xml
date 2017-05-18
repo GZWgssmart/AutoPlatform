@@ -511,6 +511,16 @@
         </if>
     </select>
 
+    <select id="queryCustomerCar" resultMap="maintainRecordResultMap">
+        <![CDATA[
+        select che.userName, mr.endTime, mr.actualEndTime, mr.speedStatus, mr.pickupTime, cb.chargeBillMoney
+        from t_checkin che, t_maintain_record mr,t_charge_bill cb
+        where che.checkinId=mr.checkinId
+        and mr.recordId=cb.recordId and che.userPhone = #{userPhone} order by mr.startTime desc
+		]]>
+        limit 0,5
+    </select>
+
 
     <update id="inactive" parameterType="string">
 		<![CDATA[

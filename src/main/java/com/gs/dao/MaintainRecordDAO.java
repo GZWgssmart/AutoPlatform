@@ -214,5 +214,11 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
     public int updateEndTimeById(@Param("endTime") Date endTime, @Param("id") String id);
 
     public List<MaintainRecord> queryByMyName(@Param("pager") Pager pager, @Param("user") User user);
+    /**
+     * 前台根据用户手机号查询数据
+     * @param userPhone
+     * @return
+     */
+    public List<MaintainRecord> queryCustomerCar(@Param("userPhone") String userPhone);
 
 }

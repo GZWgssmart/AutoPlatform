@@ -122,73 +122,41 @@
                     <div class="col-md-12">
                         <div class="col-md-6 animate-box">
                             <h3>联系方式</h3>
-                            <form action="#">
+                            <form>
+
                                 <div class="row form-group">
+                                    <div id="successMsg" style="color: green;padding-left: 20px;"></div>
                                     <div class="col-md-12">
-                                        <label class="sr-only" for="name">手机号</label>
-                                        <input type="text" id="name" class="form-control" placeholder="请输入您的手机号">
+                                        <label class="sr-only" for="phone">手机号</label>
+                                        <input type="text" id="phone" name="phone" class="form-control" maxlength="11" placeholder="请输入您的手机号" onblur="checkPhone(this)">
+                                    </div>
+                                    <div id="error" style="color: red;padding-left: 20px;"></div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-sm-8" style="margin: 0px;">
+                                        <input type="text" id="code" name="code" class="form-control" onblur="checkCode(this)" placeholder="输入手机验证码">
+                                    </div>
+                                    <div class="col-sm-4" style="margin: 0px;">
+                                        <input type="button" id="detailButton"
+                                               onclick="getCode1(this)" class="btn btn-primary"
+                                               value="获取验证码" style="padding-left: 10px; padding-right: 10px;">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="查询" class="btn btn-primary">
+                                    <input type="button" onclick="customerCar()" value="查询" id="searchBtn" class="btn btn-primary">
                                     <input type="reset" value="重置" class="btn btn-primary">
                                 </div>
+
 
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            <div class="gtco-container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title panel-success">
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content">
-
-                                <table id="intentionTable" class="footable table table-stripped toggle-arrow-tiny"
-                                       data-page-size="8">
-                                    <thead>
-                                    <tr>
-                                        <th data-toggle="true">车主姓名</th>
-                                        <th>预计结束时间</th>
-                                        <th>实际结束时间</th>
-                                        <th>维修保养进度</th>
-                                        <th>维修保养金额</th>
-                                        <th data-hide="all">用户要求</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach items="${requestScope.intentions}" var="intention">
-                                        <tr>
-                                            <td>${intention.name}</td>
-                                            <td>${intention.phone}</td>
-                                            <td>${intention.email}</td>
-                                            <td>
-                                                <fmt:formatDate value="${intention.createdTime}" pattern="yyyy-MM-dd HH:mm"/>
-                                            </td>
-                                            <td>${intention.des}</td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                    <tfoot>
-                                    </tfoot>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div style="text-align: center;">
+            <iframe src="<%=path %>/customerClientWeb/userPage?phone=" name="iframeTable" id="iframeTable" style="width: 90%; height: 100%;" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
             </div>
-
         </div>
 
         <footer id="gtco-footer" role="contentinfo">
@@ -197,7 +165,7 @@
 
                     <div class="col-md-4">
                         <div class="gtco-widget">
-                            <h3>关于我们 <span class="footer-logo"><span>.<span></span></h3>
+                            <h3>关于我们 <span class="footer-logo"><span>.</span></span></h3>
                             <p>汽修店信息化水平普遍偏低，工作效率低，信息的管理混乱，没有实现自动化，没有完善的数据统计，汽修店员工对计算机软件系统缺乏了解。汽车维修保养管理系统需要提供简洁易懂的用户界面，提供简单易用的流程。</p>
                         </div>
                     </div>
@@ -273,6 +241,9 @@
 <script src="<%=path%>/js/magnific-popup-options.js"></script>
 <!-- Main -->
 <script src="<%=path%>/js/webmain.js"></script>
+
+<%--login js--%>
+<script src="<%=path%>/js/index/login.js"></script>
 
 </body>
 </html>

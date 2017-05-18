@@ -200,4 +200,10 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
 
     public List<MaintainRecord> queryByMyName(Pager pager, User user);
 
+    /**
+     * 前台根据用户手机号查询进度
+     *
+     */
+
+    public List<MaintainRecord> queryCustomerCar(String userPhone);
 }

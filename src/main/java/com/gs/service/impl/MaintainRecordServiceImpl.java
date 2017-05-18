@@ -191,6 +191,11 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
     }
 
     @Override
+    public List<MaintainRecord> queryCustomerCar(String userPhone) {
+        return maintainRecordDAO.queryCustomerCar(userPhone);
+    }
+
+    @Override
     public int countByProgressPager_Y(User user) {
         return maintainRecordDAO.countByProgressPager_Y(user);
     }
