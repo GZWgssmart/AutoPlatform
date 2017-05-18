@@ -160,7 +160,7 @@ public class CheckinController {
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ControllerResult addCheckin(Checkin checkin, String isApp) {
+    public ControllerResult addCheckin(@Param("checkin") Checkin checkin, @Param("isApp") boolean isApp) {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
@@ -177,7 +177,7 @@ public class CheckinController {
                     maintainRecord.setCheckinId(checkinId);
                     maintainRecord.setCompanyId(loginUser.getCompanyId());
 
-                    if (isApp != null && !isApp.equals("") && isApp.equals("on")) {
+                    if (isApp) {
                         appointmentService.updateSpeedStatusById(Constants.CHECKIN, checkin.getAppointmentId());
                     }
 

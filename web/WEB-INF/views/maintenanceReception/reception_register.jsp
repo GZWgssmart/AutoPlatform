@@ -198,12 +198,12 @@
                                    class="form-control"/>
                             <div class="form-group">
                                 <label class="control-label">车主姓名：</label>
-                                <input type="text" attr="checkin.userName" maxlength="4" name="userName"
+                                <input type="text" readonly attr="checkin.userName" maxlength="4" name="userName"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">车主电话：</label>
-                                <input type="text" attr="checkin.userPhone" maxlength="11" name="userPhone"
+                                <input type="text" readonly attr="checkin.userPhone" maxlength="11" name="userPhone"
                                        class="form-control"/>
                             </div>
 

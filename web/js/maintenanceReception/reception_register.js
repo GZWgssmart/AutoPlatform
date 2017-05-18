@@ -191,12 +191,22 @@ function setData(appointment, flag) {
         $('#addCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
         $('#addCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
         $("#addMaintainOrFix").val(appointment.maintainOrFix);
+
+        $("#addCarPlateNumber").attr("readonly","readonly");
+        $("#addDatetimepicker").attr("readonly","readonly");
+        $("#addCarBrand").attr("readonly","readonly");
+        $("#addCarColor").attr("readonly","readonly");
+        $("#addCarModel").attr("readonly","readonly");
+        $("#addCarPlate").attr("readonly","readonly");
+        $("#addMaintainOrFix").attr("readonly","readonly");
     } else if (flag == "userInfo") {
         $("#appDiv").hide();
         $("#addUserName").val(appointment.userName);
         $("#addUserPhone").val(appointment.userPhone);
         $("#addUserId").val(appointment.userId);
     }
+    $("#addUserName").attr("readonly","readonly");
+    $("#addUserPhone").attr("readonly","readonly");
 }
 
 /** 清除添加的form表单信息 */
@@ -207,7 +217,19 @@ function clearAddForm() {
     $('#addCarColor').html('').trigger("change");
     $('#addCarModel').html('').trigger("change");
     $('#addCarPlate').html('').trigger("change");
+    $("#addAppointmentId").val('');
+    $("#addUserId").val('');
     $("input[type=reset]").trigger("click");
+
+    $("#addUserName").removeAttr("readonly");
+    $("#addUserPhone").removeAttr("readonly");
+    $("#addCarPlateNumber").removeAttr("readonly");
+    $("#addDatetimepicker").removeAttr("readonly");
+    $("#addCarBrand").removeAttr("readonly");
+    $("#addCarColor").removeAttr("readonly");
+    $("#addCarModel").removeAttr("readonly");
+    $("#addCarPlate").removeAttr("readonly");
+    $("#addMaintainOrFix").removeAttr("readonly");
 }
 
 /** 编辑数据 */
@@ -507,7 +529,8 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                $.post("/checkin/add",
+                var isApp = $('#isApp').bootstrapSwitch('state');
+                $.post("/checkin/add?isApp=" + isApp,
                     $("#" + formId).serialize(),
                     function (data) {
                         if (data.result == "success") {
@@ -533,6 +556,7 @@ function validator(formId) {
                                     }
                                 });
                         } else if (data.result == "fail") {
+                            $('#addWin').modal('hide');
                             swal("错误提示", data.message, "error");
                         } else if (data.result == "notLogin") {
                             swal({
@@ -554,6 +578,8 @@ function validator(formId) {
                                 });
                         }
                     }, "json");
+                $('#choiceUser').bootstrapSwitch('state', false);
+                $('#isApp').bootstrapSwitch('state', false);
                 clearAddForm();
             } else if (formId == "editForm") {
                 formSubmit("/checkin/edit", formId, "editWin");
