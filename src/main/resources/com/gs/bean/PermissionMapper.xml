@@ -135,6 +135,18 @@
         ]]>
 	</select>
 
+	<select id="queryPNIsExist" resultType="int">
+		<![CDATA[
+			select count(*) from t_permission where permissionName = #{permissionName}
+        ]]>
+	</select>
+
+	<select id="queryPZHNExist" resultType="int">
+		<![CDATA[
+			select count(*) from t_permission where permissionZHName = #{permissionZHName}
+        ]]>
+	</select>
+
     <update id="inactive" parameterType="string">
 		<![CDATA[
 			update t_permission set permissionStatus = 'N' where permissionId = #{id}

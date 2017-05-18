@@ -1,6 +1,8 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.*;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
@@ -22,7 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Xiao-Qiang on 2017/4/17.
@@ -269,16 +273,72 @@ public class PermissionController {
                 logger.info("删除失败");
                 return ControllerResult.getFailResult("删除失败，没有该权限操作");
             }
-        if (permissionIds.length == 1) {
-            logger.info("删除单个权限");
-        } else if (permissionIds.length > 1) {
-            logger.info("删除所有权限");
+            if (permissionIds.length == 1) {
+                logger.info("删除单个权限");
+            } else if (permissionIds.length > 1) {
+                logger.info("删除所有权限");
+            }
+            rolePermissionService.delByRoleIdAndPermissionId(permissionIds, roleId);
+            return ControllerResult.getSuccessResult("成功移除");
+        } catch (Exception e) {
+            logger.info("删除失败，出现了一个错误");
+            return ControllerResult.getFailResult("删除失败，出现了一个错误");
         }
-        rolePermissionService.delByRoleIdAndPermissionId(permissionIds, roleId);
-        return ControllerResult.getSuccessResult("成功移除");
-    } catch (Exception e) {
-        logger.info("删除失败，出现了一个错误");
-        return ControllerResult.getFailResult("删除失败，出现了一个错误");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIs_PZHN", method = RequestMethod.GET)
+    public String queryPZHNExist(@Param("permissionZHName") String permissionZHName, @Param("editZhName") String editZhName) {
+        try {
+            logger.info("权限中文名称验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editZhName.equals(permissionZHName)) {
+                int isExist = permissionService.queryPZHNExist(permissionZHName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("权限中文名称验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIs_PN", method = RequestMethod.GET)
+    public String queryPNExist(@Param("permissionName") String permissionName, @Param("editPName") String editPName) {
+        try {
+            logger.info("权限名称验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editPName.equals(permissionName)) {
+                int isExist = permissionService.queryPNIsExist(permissionName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("权限名称验证失败，出现了异常");
+            return null;
+        }
     }
 }

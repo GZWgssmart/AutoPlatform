@@ -27,4 +27,10 @@ public interface PermissionService extends BaseService<String, Permission> {
 
     /**根据状态来统计*/
     public int countStatus(String status);
+
+    /**根据一段字符串查询权限表是否有这个权限名*/
+    public int queryPNIsExist(String pName);
+
+    /**根据一段字符串查询权限表是否有这个中文权限名*/
+    public int queryPZHNExist(String zhName);
 }

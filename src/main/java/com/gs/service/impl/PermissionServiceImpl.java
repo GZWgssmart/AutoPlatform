@@ -52,4 +52,12 @@ public class PermissionServiceImpl implements PermissionService {
 	public int countStatus(String status) {
 		return permissionDAO.countStatus(status);
 	}
+
+	public int queryPNIsExist(String pName) {
+		return permissionDAO.queryPNIsExist(pName);
+	}
+
+	public int queryPZHNExist(String zhName) {
+		return permissionDAO.queryPZHNExist(zhName);
+	}
 }

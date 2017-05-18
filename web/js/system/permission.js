@@ -8,6 +8,8 @@ var roleId2;
 var roleObj2;
 var moduleId2;
 var moduleObj2;
+var editPName = "";
+var editZhName = "";
 
 function showAduqPermission() {
     $("#allotPermission").hide();
@@ -288,6 +290,8 @@ window.operateEvents = {
     },
     'click .showEditWin': function (e, value, row, index) {
         var permission = row;
+        editPName = permission.permissionName;
+        editZhName = permission.permissionZHName;
         $("#editForm").fill(permission);
         $('#moduleSelect3').html('<option value="' + permission.module.moduleId + '">' + permission.module.moduleName + '</option>').trigger("change");
         validator("editForm");
@@ -303,7 +307,6 @@ function showAddWin() {
 }
 
 function showEditWin() {
-    validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length < 1) {
         swal('编辑失败', "必须选择一条数据进行编辑", "error");
@@ -313,9 +316,12 @@ function showEditWin() {
         return false;
     } else {
         var permission = selectRow[0];
+        editPName = permission.permissionName;
+        editZhName = permission.permissionZHName;
         $("#editForm").fill(permission);
         $('#moduleSelect3').html('<option value="' + permission.module.moduleId + '">' + permission.module.moduleName + '</option>').trigger("change");
         $("#editWin").modal('show');
+        validator("editForm");
     }
 }
 
@@ -348,6 +354,13 @@ function validator(formId) {
                         min: 2,
                         max: 40,
                         message: '权限名称长度必须在2到40位之间'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: contextPath + '/permission/queryIs_PN?editPName=' + editPName,
+                        message: '该名称已存在',
+                        delay: 2000,
+                        type: 'GET'
                     }
                 }
             }
@@ -362,6 +375,13 @@ function validator(formId) {
                         min: 2,
                         max: 30,
                         message: '权限中文名称长度必须在2到30位之间'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: contextPath + '/permission/queryIs_PZHN?editZhName=' + editZhName,
+                        message: '该名称已存在',
+                        delay: 2000,
+                        type: 'GET'
                     }
                 }
             }
@@ -373,6 +393,8 @@ function validator(formId) {
 
             } else if (formId == "editForm") {
                 formSubmit(contextPath + "/permission/update_permission", formId, "editWin");
+                editPName = "";
+                editZhName = "";
             }
         })
 
