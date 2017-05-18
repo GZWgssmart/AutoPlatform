@@ -164,26 +164,29 @@ public class CheckinController {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
-                    logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录");
                     User loginUser = SessionGetUtil.getUser();
-                    String checkinId = UUIDUtil.uuid();
+                    if (checkinService.queryByPhone(checkin.getUserPhone(), loginUser) == 0) {
+                        logger.info("添加登记记录,自动生成" + checkin.getMaintainOrFix() + "记录");
+                        String checkinId = UUIDUtil.uuid();
+                        checkin.setCheckinId(checkinId);
+                        checkin.setCompanyId(loginUser.getCompanyId());
 
-                    checkin.setCheckinId(checkinId);
-                    checkin.setCompanyId(loginUser.getCompanyId());
+                        MaintainRecord maintainRecord = new MaintainRecord();
+                        String recordId = UUIDUtil.uuid();
+                        maintainRecord.setRecordId(recordId);
+                        maintainRecord.setCheckinId(checkinId);
+                        maintainRecord.setCompanyId(loginUser.getCompanyId());
 
-                    MaintainRecord maintainRecord = new MaintainRecord();
-                    String recordId = UUIDUtil.uuid();
-                    maintainRecord.setRecordId(recordId);
-                    maintainRecord.setCheckinId(checkinId);
-                    maintainRecord.setCompanyId(loginUser.getCompanyId());
+                        if (isApp) {
+                            appointmentService.updateSpeedStatusById(Constants.CHECKIN, checkin.getAppointmentId());
+                            appointmentService.inactive(checkin.getAppointmentId());
+                        }
 
-                    if (isApp) {
-                        appointmentService.updateSpeedStatusById(Constants.CHECKIN, checkin.getAppointmentId());
+                        maintainRecordService.insert(maintainRecord);
+                        checkinService.insert(checkin);
+                        return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录已经自动生成");
                     }
-
-                    maintainRecordService.insert(maintainRecord);
-                    checkinService.insert(checkin);
-                    return ControllerResult.getSuccessResult("添加成功," + checkin.getMaintainOrFix() + "记录已经自动生成");
+                    return ControllerResult.getFailResult("添加登记记录失败，已经存在该记录，请不要重复添加");
                 }
                 return ControllerResult.getFailResult("添加登记记录失败，没有该权限操作");
             } catch (Exception e) {

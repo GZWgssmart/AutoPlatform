@@ -184,8 +184,7 @@ function choiceUser() {
 
 /** 给添加的form表单设置值 */
 function setData(appointment, flag) {
-    editPhone = appointment.userPhone;
-    alert(editPhone)
+
     if (flag == "appointment") {
         $("#userDiv").hide();
         $("#addUserName").val(appointment.userName);
@@ -201,12 +200,6 @@ function setData(appointment, flag) {
         $("#addMaintainOrFix").val(appointment.maintainOrFix);
 
         $("#addCarPlateNumber").attr("readonly","readonly");
-        $("#addDatetimepicker").attr("readonly","readonly");
-        $("#addCarBrand").attr("readonly","readonly");
-        $("#addCarColor").attr("readonly","readonly");
-        $("#addCarModel").attr("readonly","readonly");
-        $("#addCarPlate").attr("readonly","readonly");
-        $("#addMaintainOrFix").attr("readonly","readonly");
     } else if (flag == "userInfo") {
         $("#appDiv").hide();
         $("#addUserName").val(appointment.userName);
@@ -233,12 +226,6 @@ function clearAddForm() {
     $("#addUserName").removeAttr("readonly");
     $("#addUserPhone").removeAttr("readonly");
     $("#addCarPlateNumber").removeAttr("readonly");
-    $("#addDatetimepicker").removeAttr("readonly");
-    $("#addCarBrand").removeAttr("readonly");
-    $("#addCarColor").removeAttr("readonly");
-    $("#addCarModel").removeAttr("readonly");
-    $("#addCarPlate").removeAttr("readonly");
-    $("#addMaintainOrFix").removeAttr("readonly");
 }
 
 /** 编辑数据 */
@@ -409,13 +396,6 @@ function validator(formId) {
                         min: 11,
                         max: 11,
                         message: '手机号只能是11位'
-                    },
-                    threshold: 11,
-                    remote: {
-                        url: '/peopleManage/peoplePhone_verification?editPhone='+editPhone,
-                        message: '该手机号已存在',
-                        delay :  2000,
-                        type: 'GET'
                     }
                 }
             },

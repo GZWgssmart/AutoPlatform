@@ -166,15 +166,15 @@ public class AppointmentController {
             if(CheckRoleUtil.checkRoles(editRole)) {
                 try {
                     User loginUser = SessionGetUtil.getUser();
+                    if (appointmentService.queryByPhone(appointment.getUserPhone(), loginUser) == 0) {
+                        logger.info("添加预约");
+                        appointment.setSpeedStatus(Constants.APPOINTMENT);
+                        appointment.setCompanyId(loginUser.getCompanyId());
 
-                    logger.info("添加预约");
-//                    String userId = UUIDUtil.uuid();
-//                    appointment.setUserId(userId);
-                    appointment.setSpeedStatus(Constants.APPOINTMENT);
-                    appointment.setCompanyId(loginUser.getCompanyId());
-
-                    appointmentService.insert(appointment);
-                    return ControllerResult.getSuccessResult("添加成功");
+                        appointmentService.insert(appointment);
+                        return ControllerResult.getSuccessResult("添加预约信息成功");
+                    }
+                    return ControllerResult.getFailResult("添加预约记录失败，已经存在该预约信息，请不要重复添加");
                 } catch (Exception e) {
                     logger.info("添加预约记入失败，出现了一个错误");
                     return ControllerResult.getFailResult("添加预约记录失败，出现了一个错误");

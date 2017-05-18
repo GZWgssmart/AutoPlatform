@@ -63,5 +63,18 @@ public interface CheckinDAO extends BaseDAO<String, Checkin>{
      */
     public List<Checkin> queryByTop(@Param("top") int top, @Param("user") User user);
 
+    /**
+     * 车主用户查询自己的登记信息
+     * @param user
+     * @return
+     */
     public List<Checkin> queryMyName(@Param("user") User user);
+
+    /**
+     * 根据手机号查询登记记录，防止重复添加登记记录
+     * @param phone
+     * @param user
+     * @return
+     */
+    public int queryByPhone(@Param("phone") String phone, @Param("user") User user);
 }

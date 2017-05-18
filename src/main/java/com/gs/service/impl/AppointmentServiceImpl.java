@@ -114,4 +114,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<Appointment> queryMyName(User user){
         return appointmentDAO.queryMyName(user);
     }
+
+    @Override
+    public int queryByPhone(String phone, User user) {
+        return appointmentDAO.queryByPhone(phone, user);
+    }
 }

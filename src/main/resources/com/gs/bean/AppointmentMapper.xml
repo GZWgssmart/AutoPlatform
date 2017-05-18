@@ -279,4 +279,14 @@
         limit 0, #{top}
     </select>
 
+
+    <select id="queryByTop" resultType="list" resultMap="checkinResultMap">
+        <![CDATA[
+			select count(*) from t_appointment where 1 = 1 and appointmentStatus = 'Y' and speedStatus = '已预约' and userPhone = #{phone}
+		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
+    </select>
+
 </mapper>

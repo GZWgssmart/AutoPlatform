@@ -30,4 +30,5 @@ public interface AppointmentService extends BaseService<String, Appointment>{
 
     public List<Appointment> queryMyName(User user);
 
+    public int queryByPhone(String phone, User user);
 }

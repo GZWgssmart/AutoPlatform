@@ -319,7 +319,7 @@ function validator(formId) {
                         min: 11,
                         max: 11,
                         message: '手机号只能是11位'
-                    },
+                    }
                 }
             },
             brandId: {

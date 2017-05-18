@@ -59,6 +59,19 @@ public interface CheckinService extends BaseService<String, Checkin>{
      */
     public List<Checkin> queryByTop(int top, User user);
 
+    /**
+     * 车主用户查询自己的登记信息
+     * @param user
+     * @return
+     */
     public List<Checkin> queryMyName(User user);
+
+    /**
+     * 根据手机号查询登记记录，防止重复添加登记记录
+     * @param phone
+     * @param user
+     * @return
+     */
+    public int queryByPhone(String phone, User user);
 
 }

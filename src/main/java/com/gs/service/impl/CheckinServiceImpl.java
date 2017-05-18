@@ -109,4 +109,9 @@ public class CheckinServiceImpl implements CheckinService {
     }
 
     public List<Checkin> queryMyName(User user) { return checkinDAO.queryMyName(user); }
+
+    @Override
+    public int queryByPhone(String phone, User user) {
+        return checkinDAO.queryByPhone(phone, user);
+    }
 }
