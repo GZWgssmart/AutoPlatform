@@ -133,6 +133,19 @@
 		</if>
 	</select>
 
+	<select id="queryDataIsExist" resultType="int">
+		<![CDATA[
+			select count(*) t_company where 1 = 1
+		]]>
+		<if test="fieldName != null and fieldName != '' and queryValue != null and queryValue != ''">
+			and #{fieldName} = #{queryValue}
+			<choose>
+				<when test=""></when>
+				<when test=""></when>
+			</choose>
+		</if>
+	</select>
+	
 	<update id="inactive" parameterType="string">
 		<![CDATA[
 			update t_company set companyStatus = 'N' where companyId = #{companyId}
