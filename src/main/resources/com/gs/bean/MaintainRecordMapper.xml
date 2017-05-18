@@ -37,6 +37,7 @@
         </association>
         <association property="user" javaType="com.gs.bean.User">
             <id property="userId" column="user_userId"/>
+            <id property="userName" column="user_userName"/>
         </association>
         <association property="chargeBill" javaType="com.gs.bean.ChargeBill">
             <id property="chargeBillId" column="chargeBillId"/>
@@ -78,12 +79,10 @@
         SELECT
           COUNT(*)
         FROM
-          t_maintain_record mr
+        t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-        INNER JOIN t_company c ON c.companyId = mr.companyId
-        LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
-        LEFT JOIN t_user u ON u.userId = wi.userId
-        LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId
+        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        LEFT JOIN t_user u ON u.userId = ch.userId
         <if test="companyId != null and companyId != ''">
             and mr.companyId = #{companyId}
         </if>
@@ -92,20 +91,17 @@
     <select id="queryByProgressPager" resultType="list" resultMap="maintainRecordResultMap">
         <![CDATA[
 			SELECT
-			    mr.*,
+                mr.*,
                 ch.userName,
                 ch.carPlate,
                 ch.maintainOrFix,
                 c.companyName,
-                wi.userId AS work_userId,
-                cb.recordId AS record_recordId
+                u.userName AS user_userName
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-            INNER JOIN t_company c ON c.companyId = mr.companyId
-            LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
-            LEFT JOIN t_user u ON u.userId = wi.userId
-            LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId
+            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            LEFT JOIN t_user u ON u.userId = ch.userId
 		]]>
         <if test="user.companyId != null and user.companyId != ''">
             and mr.companyId = #{user.companyId}
@@ -120,10 +116,8 @@
         FROM
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-        INNER JOIN t_company c ON c.companyId = mr.companyId
-        LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
-        LEFT JOIN t_user u ON u.userId = wi.userId
-        LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId WHERE mr.recordStatus = 'Y'
+        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        LEFT JOIN t_user u ON u.userId = ch.userId WHERE mr.recordStatus = 'Y'
         <if test="companyId != null and companyId != ''">
             and mr.companyId = #{companyId}
         </if>
@@ -137,8 +131,7 @@
                 ch.carPlate,
                 ch.maintainOrFix,
                 c.companyName,
-                wi.userId AS work_userId,
-                cb.recordId AS record_recordId
+                u.userName AS user_userName
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
@@ -161,10 +154,8 @@
         FROM
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-        INNER JOIN t_company c ON c.companyId = mr.companyId
-        LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
-        LEFT JOIN t_user u ON u.userId = wi.userId
-        LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId WHERE mr.recordStatus = 'N'
+        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        LEFT JOIN t_user u ON u.userId = ch.userId WHERE mr.recordStatus = 'N'
         <if test="companyId != null and companyId != ''">
             and mr.companyId = #{companyId}
         </if>
@@ -178,8 +169,7 @@
                 ch.carPlate,
                 ch.maintainOrFix,
                 c.companyName,
-                wi.userId AS work_userId,
-                cb.recordId AS record_recordId
+                u.userName AS user_userName
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
@@ -546,7 +536,7 @@
     <update id="updateEndTimeById">
         <![CDATA[
 
-		  update t_maintain_record set endTime = #{endTime} where recordId = #{id}
+		  update t_maintain_record set actualEndTime = #{endTime} where recordId = #{id}
 
         ]]>
     </update>

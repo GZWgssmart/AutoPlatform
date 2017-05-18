@@ -147,7 +147,6 @@ public class MaintainDetailController {
                     WorkInfo workInfo = new WorkInfo();
                     workInfo.setRecordId(recordId);
 
-                    maintainRecordService.updateSpeedStatusById(Constants.MAINTAIN_FIX, recordId);
                     workInfoService.insert(workInfo);
                     materialListService.batchInsert(materialLists);
                     return ControllerResult.getSuccessResult("用户已经确认签字，工单信息和物料清单已经自动生成");

@@ -185,6 +185,7 @@ function choiceUser() {
 /** 给添加的form表单设置值 */
 function setData(appointment, flag) {
     editPhone = appointment.userPhone;
+    alert(editPhone)
     if (flag == "appointment") {
         $("#userDiv").hide();
         $("#addUserName").val(appointment.userName);
@@ -218,6 +219,7 @@ function setData(appointment, flag) {
 
 /** 清除添加的form表单信息 */
 function clearAddForm() {
+    editPhone = "";
     $("#appDiv").show();
     $("#userDiv").show();
     $('#addCarBrand').html('').trigger("change");
@@ -596,6 +598,7 @@ function validator(formId) {
                 clearAddForm();
             } else if (formId == "editForm") {
                 formSubmit("/checkin/edit", formId, "editWin");
+                clearAddForm();
             }
 
 

@@ -85,6 +85,7 @@ function closeUserWin() {
 
 /** 清除添加的form表单信息 */
 function clearAddForm() {
+    editPhone = "";
     $("#addUserName").removeAttr("readonly");
     $("#addUserPhone").removeAttr("readonly");
     $('#addCarBrand').html('').trigger("change");
@@ -386,6 +387,7 @@ function validator(formId) {
                 clearAddForm();
             } else if (formId == "editForm") {
                 formSubmit("/appointment/update", formId, "editWin");
+                clearAddForm();
             }
         })
 }
