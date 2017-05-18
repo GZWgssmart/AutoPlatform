@@ -683,6 +683,7 @@ public class RecordController {
             }
             logger.info("更新维修保养进度");
             maintainRecordService.updateSpeedStatusById(Constants.NOT_REMIND, recordId);
+            maintainRecordService.updateEndTimeById(new Date(), recordId);
             return ControllerResult.getSuccessResult("更新进度成功!");
         } catch (Exception e) {
             logger.info("更新失败，出现了一个错误");
