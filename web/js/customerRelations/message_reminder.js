@@ -15,8 +15,11 @@ function searchCondition() {
     var userName = $("#searchUserName").val();
     var searchRemindType = $("#searchRemindType").val();
     var speedStatus = "已登记";
-    initTable("cusTable", "/MessageReminder/condition_pager?userName=" + userName + "&searchRemindType=" + searchRemindType );
-
+    if(userName != '' || searchRemindType != 'all'){
+        initTable("cusTable", "/MessageReminder/condition_pager?userName=" + userName + "&searchRemindType=" + searchRemindType );
+    }else{
+        initTable("cusTable", "/MessageReminder/query_pager");
+    }
 }
 
 /** 关闭搜索的form */

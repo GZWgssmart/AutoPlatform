@@ -46,4 +46,14 @@ public class ComplaintServiceImpl implements ComplaintService {
 	public List<Complaint> queryByTop(int top, User user) {
 		return complaintDAO.queryByTop(top, user);
 	}
+
+	@Override
+	public List<Complaint> queryByPagerUser(User user, Pager pager) {
+		return complaintDAO.queryByPagerUser(user,pager);
+	}
+
+	@Override
+	public int countByUser(User user) {
+		return complaintDAO.countByUser(user);
+	}
 }

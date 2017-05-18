@@ -58,9 +58,11 @@
             <%--<a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>--%>
+<shiro:hasAnyRoles name="companyAdmin,companyReceive">
             <a><button onclick="showCustomer();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 添加回访
             </button></a>
+    </shiro:hasAnyRoles>
         </div>
         </tbody>
 

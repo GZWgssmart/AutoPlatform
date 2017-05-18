@@ -5,9 +5,11 @@ import com.gs.bean.Checkin;
 import com.gs.bean.MaintainRecord;
 import com.gs.bean.MaintainRemind;
 import com.gs.bean.User;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.MaintainRemindService;
 import org.apache.ibatis.annotations.Param;
@@ -40,12 +42,17 @@ public class MessageReminderController {
     @Resource
     private MaintainRemindService maintainRemindService;
 
+    private String queryRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE;
+    private String editRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE;
 
     @RequestMapping(value = "show_MessageReminder", method = RequestMethod.GET)
     public String MessageReminder() {
         if (!SessionGetUtil.isUser()) {
             logger.info("登陆已失效，请重新登入");
             return "index/notLogin";
+        } if (!CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("无权访问，想要访问请联系管理员!");
+            return "error/notPermission";
         }
         logger.info("显示维修保养提醒页面");
         return "customer/maintenance_reminder";
@@ -55,7 +62,7 @@ public class MessageReminderController {
     @RequestMapping(value="query_pager",method= RequestMethod.GET)
     public Pager4EasyUI<MaintainRemind> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         logger.info("分页查询所有提醒");
-        if (!SessionGetUtil.isUser()) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("登陆已失效，请重新登入");
             return null;
         }
@@ -76,6 +83,10 @@ public class MessageReminderController {
             logger.info("登陆已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
+        if (!CheckRoleUtil.checkRoles(editRole)) {
+            logger.info("更新失败");
+            return ControllerResult.getFailResult("更新失败，没有该权限操作");
+        }
         try {
         /*maintainRemind.setRemindId("1e8f6410-24f5-11e7-8ee3-00909e9aaeb9");*/
             maintainRemindService.update(maintainRemind);
@@ -90,7 +101,7 @@ public class MessageReminderController {
     public Pager4EasyUI<MaintainRemind> queryPagerByCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,
                                                               @Param("userName")String userName, @Param("searchRemindType")String searchRemindType
                                                               ) {
-        if (SessionGetUtil.isUser()) {
+        if (SessionGetUtil.isUser()  && CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("根据条件分页查询维修保养记录提醒");
             MaintainRemind remind = new MaintainRemind();
             Checkin checkin = new Checkin();

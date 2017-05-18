@@ -7,6 +7,9 @@ $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/complaint/query_pager");
     destoryValidator("addWin","addForm");
+    destoryValidator("editWin","editForm");
+    destoryValidator("adminWin","adminForm");
+    initSelect2("company", "请选择公司", "/company/company_all", "565");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
 });
@@ -52,6 +55,7 @@ function showEditContent() {
     } else {
         var complaint = selectRow[0];
         $("#editForm").fill(complaint);
+        $('#editCompany').html('<option value="' + complaint.company.companyId + '">' + complaint.company.companyName + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
 }
@@ -96,6 +100,13 @@ function validator(formId) {
                         min: 2,
                         max: 500,
                         message: '回复内容长度必须在2到500位之间'
+                    }
+                }
+            },
+            companyId:{
+                validators:{
+                    notEmpty:{
+                        message: '投诉公司不能为空'
                     }
                 }
             },

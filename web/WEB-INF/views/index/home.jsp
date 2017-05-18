@@ -271,14 +271,13 @@
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>
-
+<shiro:hasAnyRoles
+        name="companyAdmin, companyReceive, systemSuperAdmin, systemOrdinaryAdmin">
                 <li>
                     <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">客户关系管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a id="remind" class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养提醒管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/consumption_page">消费统计管理</a>
                         </li>
                         <li><a id="complaint" class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉管理</a>
                         </li>
@@ -288,7 +287,7 @@
                         </li>
                     </ul>
                 </li>
-
+            </shiro:hasAnyRoles>
 
                 <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
                     <li>

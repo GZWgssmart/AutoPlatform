@@ -19,7 +19,7 @@ public class Complaint{
 	private String companyId; 			//公司Id
 	private User admin; 				//管理员的User
 	private User customer;				//顾客的User
-
+	private Company company;		// 投诉公司
 
 	public String getCompanyId() {
 		return companyId;
@@ -91,6 +91,13 @@ public class Complaint{
 		this.complaintReplyUser=complaintReplyUser;
 	}
 
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 
 	@Override
 	public String toString() {

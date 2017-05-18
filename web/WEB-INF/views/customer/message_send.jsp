@@ -53,6 +53,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
+<shiro:hasAnyRoles name="companyAdmin,companyReceive">
             <a><button onclick="showCustomer()" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加用户
             </button></a>
@@ -62,6 +63,7 @@
             <a><button onclick="showEditWin(2);" type="button" id="All" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 一键发送
             </button></a>
+    </shiro:hasAnyRoles>
         </div>
         </tbody>
 

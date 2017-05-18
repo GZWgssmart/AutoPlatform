@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -20,6 +21,7 @@
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -46,6 +48,9 @@
             <th data-field="complaintCreatedTime" data-formatter="formatterDate">
                 投诉时间
             </th>
+            <th data-field="company.companyName">
+                投诉公司
+            </th>
             <th data-field="customer.userName">
                 回复人
             </th>
@@ -55,22 +60,28 @@
             <th data-field="complaintReplyTime" data-formatter="formatterDate">
                 回复时间
             </th>
+        <shiro:hasAnyRoles name="companyAdmin,companyReceive">
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
+        </shiro:hasAnyRoles>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
+        <shiro:hasAnyRoles name="carOwner">
             <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加投诉
             </button></a>
             <a><button onclick="showEditContent();" type="button" id="editContent" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i>修改投诉内容
             </button></a>
+        </shiro:hasAnyRoles>
+        <shiro:hasAnyRoles name="companyAdmin,companyReceive">
             <a><button onclick="showAdminWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i>投诉回复
             </button></a>
+        </shiro:hasAnyRoles>
         </div>
         </tbody>
 
@@ -91,7 +102,12 @@
                             <input type="hidden" class="complaintId" attr="complaint.complaintId"  name="complaintId"/>
                             <div class="form-group">
                                 <label>投诉内容：</label>
-                                <textarea class="form-control" name="complaintContent" id="complaintContentEidt"></textarea>
+                                <textarea class="form-control" name="complaintContent" attr="complaint.complaintContent"
+                                         type="textarea" id="complaintContentEidt"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">投诉公司：</label>
+                                <select id="editCompany" class="js-example-tags form-control company" name="companyId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
@@ -120,11 +136,14 @@
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加投诉</h3>
                         <form role="form" id="addForm" >
-                            <input type="hidden" class="userId" name="userId"/>
-                            <input type="hidden" class="complaintId"  name="complaintId"/>
                             <div class="form-group">
                                 <label>投诉内容：</label>
-                                <textarea class="form-control" name="complaintContent" id="complaint"></textarea>
+                                <textarea class="form-control"
+                                          name="complaintContent" id="complaint"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">投诉公司：</label>
+                                <select id="company" class="js-example-tags form-control company" name="companyId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
@@ -188,6 +207,8 @@
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="<%=path %>/js/select2.full.min.js"></script>
+<script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/customerRelations/complaint.js"></script>
 </body>

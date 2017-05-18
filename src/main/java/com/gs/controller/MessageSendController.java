@@ -4,9 +4,11 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.Complaint;
 import com.gs.bean.MessageSend;
 import com.gs.bean.User;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.ComplaintService;
 import com.gs.service.MessageSendService;
@@ -34,12 +36,18 @@ public class MessageSendController {
     @Resource
     private MessageSendService messageSendService;
 
+    private String queryRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE;
+    private String editRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE;
 
     @RequestMapping(value = "show_MessageSend", method = RequestMethod.GET)
     public String messageSend() {
         if (!SessionGetUtil.isUser()) {
             logger.info("登陆已失效，请重新登入");
             return "index/notLogin";
+        }
+        if (!CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("无权访问，想要访问请联系管理员!");
+            return "error/notPermission";
         }
         logger.info("显示短信发送页面");
         return "customer/message_send";
@@ -49,10 +57,11 @@ public class MessageSendController {
     @RequestMapping(value="query_pager",method= RequestMethod.GET)
     public Pager4EasyUI<MessageSend> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         logger.info("分页查询所有短信");
-        if (!SessionGetUtil.isUser()) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("登陆已失效，请重新登入");
             return null;
         }
+
         User LoginUser = SessionGetUtil.getUser();
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
@@ -71,6 +80,10 @@ public class MessageSendController {
             logger.info("登陆已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
+        if (!CheckRoleUtil.checkRoles(editRole)) {
+            logger.info("更新失败");
+            return ControllerResult.getFailResult("更新失败，没有该权限操作");
+        }
         try{
         messageSendService.batchUpdateBySendMsg(idList, sendMsg);
         return ControllerResult.getSuccessResult("更新成功");
@@ -85,7 +98,7 @@ public class MessageSendController {
     @RequestMapping(value = "queryAllId", method = RequestMethod.GET)
     public List<MessageSend> queryAllId(){
         logger.info("提供所有Id号");
-        if (!SessionGetUtil.isUser()) {
+        if (!SessionGetUtil.isUser()  ) {
             logger.info("登陆已失效，请重新登入");
             return null;
         }
@@ -102,6 +115,10 @@ public class MessageSendController {
         if (!SessionGetUtil.isUser()) {
             logger.info("登陆已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        if (!CheckRoleUtil.checkRoles(editRole)) {
+            logger.info("添加失败");
+            return ControllerResult.getFailResult("添加失败，没有该权限操作");
         }
       //  try {
             List<MessageSend> msList = new ArrayList<MessageSend>();

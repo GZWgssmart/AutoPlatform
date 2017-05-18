@@ -22,6 +22,12 @@
 			<id column="userId" property="userId"/>
 			<result column="customerName" property="userName"/>
 		</association>
+
+		<association property="company" javaType="com.gs.bean.Company">
+			<id column="companyId" property="companyId"/>
+			<result column="companyName" property="companyName"/>
+		</association>
+
 	</resultMap>
 
 
@@ -58,14 +64,14 @@
 
 	<update id="update" parameterType="complaint">
 		<![CDATA[
-		update t_complaint set  complaintContent = #{complaintContent}, complaintCreatedTime= now()
+		update t_complaint set  complaintContent = #{complaintContent},companyId = #{companyId}
 		where complaintId = #{complaintId}
 		]]>
 	</update>
 
 	<update id="updateReply" parameterType="complaint">
 		<![CDATA[
-		update t_complaint set  complaintReply = #{complaintReply}, complaintReplyTime= now(), companyId =#{companyId},
+		update t_complaint set  complaintReply = #{complaintReply}, complaintReplyTime= now(),
 		complaintReplyUser = #{complaintReplyUser}
 		where complaintId = #{complaintId}
 		]]>
@@ -104,11 +110,16 @@
 
 	<select id="queryByPager" resultType="list" resultMap="complaintResultMap">
 		<![CDATA[
-		select c.*,u.userId as adminId,u.userName as adminName,u1.userName as customerName from t_complaint c LEFT JOIN  t_user u on c.userId=u.userId  LEFT JOIN t_user u1 on
- 		c.complaintReplyUser= u1.userId
+		select c.*,u.userId as adminId,u.userName as adminName,u1.userName as customerName
+		,com.companyId,com.companyName
+		from t_complaint c
+		LEFT JOIN  t_user u on c.userId=u.userId
+		LEFT JOIN t_user u1 on c.complaintReplyUser= u1.userId
+		LEFT JOIN  t_company com on c.companyId = com.companyId
+		where 1 = 1
 		]]>
 		<if test="user.companyId != null and user.companyId != '' ">
-			where c.companyId = #{user.companyId}
+			and c.companyId = #{user.companyId}
 		</if>
 		order by c.companyId desc, c.complaintCreatedTime desc
  		limit #{pager.beginIndex}, #{pager.pageSize}
@@ -120,6 +131,32 @@
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and c.companyId = #{companyId}
+		</if>
+	</select>
+
+	<select id="queryByPagerUser" resultType="list" resultMap="complaintResultMap">
+		<![CDATA[
+		select c.*,u.userId as adminId,u.userName as adminName,u1.userName as customerName
+		,com.companyId,com.companyName
+		from t_complaint c
+		LEFT JOIN  t_user u on c.userId=u.userId
+		LEFT JOIN t_user u1 on c.complaintReplyUser= u1.userId
+		LEFT JOIN  t_company com on c.companyId = com.companyId
+		where 1 = 1
+		]]>
+		<if test="user.userId != null and user.userId != '' ">
+			and c.userId = #{user.userId}
+		</if>
+		order by c.companyId desc, c.complaintCreatedTime desc
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="countByUser" resultType="int">
+		<![CDATA[
+		select count(*) from t_complaint c, t_user u where c.userId=u.userId
+		]]>
+		<if test="userId != null and userId != ''">
+			and u.userId = #{userId}
 		</if>
 	</select>
 

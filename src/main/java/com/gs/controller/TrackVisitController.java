@@ -2,9 +2,11 @@ package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.*;
+import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
@@ -40,12 +42,17 @@ public class TrackVisitController {
     @Resource
     private UserService userService;
 
+    private String queryRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE + ","+ Constants.CAR_OWNER;
+    private String editRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE;
 
     @RequestMapping(value = "show_trackVisit", method = RequestMethod.GET)
     public String messageSend() {
         if (!SessionGetUtil.isUser()) {
             logger.info("登陆已失效，请重新登入");
             return "index/notLogin";
+        }if (!CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("无权访问，想要访问请联系管理员!");
+            return "error/notPermission";
         }
         logger.info("显示追踪访问页面");
         return "customer/track_visit";
@@ -55,7 +62,7 @@ public class TrackVisitController {
     @RequestMapping(value="query_pager",method= RequestMethod.GET)
     public Pager4EasyUI<TrackList> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         logger.info("分页查询所有追踪访问");
-        if (!SessionGetUtil.isUser()) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole) ) {
             logger.info("登陆已失效，请重新登入");
             return null;
         }
@@ -75,6 +82,10 @@ public class TrackVisitController {
         if (!SessionGetUtil.isUser()) {
             logger.info("登陆已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        if (!CheckRoleUtil.checkRoles(editRole)) {
+            logger.info("添加失败");
+            return ControllerResult.getFailResult("添加失败，没有该权限操作");
         }
         try {
             User user = SessionGetUtil.getUser();

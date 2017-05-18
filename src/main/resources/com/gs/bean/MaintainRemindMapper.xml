@@ -130,9 +130,16 @@
 	</update>
 
 	<select id="countByCondition" resultType="int">
-  		select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
-		<if test="companyId != null and companyId != ''">
-			and rem.companyId = #{companyId}
+  		select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where
+		rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ='Y'
+		<if test="user.companyId != null and user.companyId != ''">
+			and rem.companyId = #{user.companyId}
+		</if>
+		<if test="remind.checkin.userName != null and remind.checkin.userName != ''">
+			and c.userName like concat('%',#{remind.checkin.userName},'%')
+		</if>
+		<if test="remind.remindType != null and remind.remindType != ''">
+			and rem.remindType = #{remind.remindType}
 		</if>
 	</select>
 
@@ -140,7 +147,7 @@
 	<![CDATA[
 		select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 			  from t_maintain_remind r,  t_checkin c, t_company cpy
-		      where 1 = 1 and c.userId = r.userId and c.companyId = cpy.companyId
+		      where  c.userId = r.userId and c.companyId = cpy.companyId
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and r.companyId = #{user.companyId}
@@ -148,10 +155,10 @@
 		<if test="remind.checkin.userName != null and remind.checkin.userName != ''">
 			and c.userName like concat('%',#{remind.checkin.userName},'%')
 		</if>
-		<if test="remind.remindType != null and remind.remindType != ''">
+		<if test="remind.remindType != null and remind.remindType != '' and remind.remindType != 'all'">
 			and r.remindType = #{remind.remindType}
 		</if>
-		order by c.companyId desc, r.remindCreatedTime desc,
+		order by c.companyId desc, r.remindCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

@@ -2,6 +2,7 @@ package com.gs.service;
 
 import com.gs.bean.Complaint;
 import com.gs.bean.User;
+import com.gs.common.bean.Pager;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,5 +24,12 @@ public interface ComplaintService extends BaseService<String, Complaint>{
      * @return
      */
     public List<Complaint> queryByTop(int top, User user);
+
+     /*
+    * 车主查询自己的投诉
+    * */
+
+    public List<Complaint> queryByPagerUser(User user,Pager pager);
+    public int countByUser(User user);
 
 }
