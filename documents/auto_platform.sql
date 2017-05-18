@@ -213,6 +213,7 @@ CREATE TABLE `t_company` (
   `companyName` varchar(100) NOT NULL COMMENT '公司名称',
   `companyAddress` varchar(150) NOT NULL COMMENT '公司地址',
   `companyTel` varchar(13) NOT NULL COMMENT '公司联系方式',
+  `companyPricipalPhone` varchar(11) DEFAULT NULL COMMENT '公司负责人电话',
   `companyPricipal` varchar(20) DEFAULT NULL COMMENT '公司负责人',
   `companyImg` varchar(255) DEFAULT NULL COMMENT '公司图片',
   `companyWebsite` varchar(100) DEFAULT NULL COMMENT '公司官网URL',
@@ -226,6 +227,8 @@ CREATE TABLE `t_company` (
   PRIMARY KEY (`companyId`),
   UNIQUE KEY `companyName` (`companyName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+SET FOREIGN_KEY_CHECKS=1;
+
 
 
 /*投诉表*/
