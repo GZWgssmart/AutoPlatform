@@ -167,6 +167,7 @@ public class LoginController {
                     Session session = subject.getSession();
                     session.setAttribute("user", user);
                     userService.updateLoginTime(user.getUserId());
+
                     return ControllerResult.getSuccessResult("注册成功，请不要操作，");
                 }
             } else {

@@ -341,6 +341,56 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
+                    <div class="ibox-title panel-danger">
+                        <h5>车主投诉</h5>
+
+                        <div class="ibox-tools">
+                            <a href="javascript:;" onclick="searchComplaint()" title="查看更多投诉信息">
+                                查看更多
+                            </a>
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+
+                        <table id="complaintTable" class="footable table table-stripped toggle-arrow-tiny"
+                               data-page-size="8">
+                            <thead>
+                            <tr>
+
+                                <th data-toggle="true">客户姓名</th>
+                                <th>客户电话</th>
+                                <th>投诉时间</th>
+                                <th data-hide="all">投诉内容</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach items="${requestScope.complaints}" var="complaint">
+                                <tr>
+                                    <td>${complaint.admin.userName}</td>
+                                    <td>${complaint.admin.userPhone}</td>
+                                    <td>
+                                        <fmt:formatDate value="${complaint.complaintCreatedTime}"
+                                                        pattern="yyyy-MM-dd HH:mm"/>
+                                    </td>
+                                    <td>${complaint.complaintContent}</td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
                     <div class="ibox-title panel-warning">
                         <h5>待提醒的车主</h5>
 
@@ -379,56 +429,6 @@
                                     <td>
                                         <fmt:formatDate value="${remind.remindCreatedTime}" pattern="yyyy-MM-dd HH:mm"/>
                                     </td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                            <tfoot>
-                            </tfoot>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title panel-danger">
-                        <h5>车主投诉</h5>
-
-                        <div class="ibox-tools">
-                            <a href="javascript:;" onclick="searchComplaint()" title="查看更多投诉信息">
-                                查看更多
-                            </a>
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-
-                        <table id="complaintTable" class="footable table table-stripped toggle-arrow-tiny"
-                               data-page-size="8">
-                            <thead>
-                            <tr>
-
-                                <th data-toggle="true">客户姓名</th>
-                                <th>客户电话</th>
-                                <th>投诉时间</th>
-                                <th data-hide="all">投诉内容</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach items="${requestScope.complaints}" var="complaint">
-                                <tr>
-                                    <td>${complaint.admin.userName}</td>
-                                    <td>${complaint.admin.userPhone}</td>
-                                    <td>
-                                        <fmt:formatDate value="${complaint.complaintCreatedTime}"
-                                                        pattern="yyyy-MM-dd HH:mm"/>
-                                    </td>
-                                    <td>${complaint.complaintContent}</td>
                                 </tr>
                             </c:forEach>
                             </tbody>
