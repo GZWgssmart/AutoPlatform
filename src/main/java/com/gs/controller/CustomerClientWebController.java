@@ -71,6 +71,13 @@ public class CustomerClientWebController {
 
     }
 
+    @RequestMapping("/customerCar")
+    public String webCustomerCar() {
+        logger.info("进入用户进度查询");
+        return "index/customerCar";
+
+    }
+
 
 
 }

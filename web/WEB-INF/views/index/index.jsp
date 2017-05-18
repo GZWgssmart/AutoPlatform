@@ -81,8 +81,8 @@
                             <li class="has-dropdown">
                                 <a href="#">使用说明</a>
                                 <ul class="dropdown">
-                                    <li><a href="#">商家入口</a></li>
-                                    <li><a href="#">用户入口</a></li>
+                                    <li><a href="<%=path%>/customerClientWeb/customerCar">进度跟踪</a></li>
+                                    <li><a href="#">帮助文档</a></li>
                                     <li><a href="#">API</a></li>
                                 </ul>
                             </li>

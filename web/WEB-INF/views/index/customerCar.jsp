@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: iJangoGuo
-  Date: 2017/5/17
-  Time: 10:21
+  Date: 2017/5/18
+  Time: 9:39
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,7 +15,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>联系我们</title>
+    <title>进度查询</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -96,7 +96,7 @@
             </div>
         </nav>
 
-        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(<%=path%>/images/contact.jpg)">
+        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(<%=path%>/images/customerCar.jpg)">
             <div class="overlay"></div>
             <div class="gtco-container">
                 <div class="row">
@@ -104,8 +104,8 @@
                         <div class="row row-mt-15em">
 
                             <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-                                <span class="intro-text-small">提交您的意向或投诉</span>
-                                <h1>联系我们</h1>
+                                <span class="intro-text-small">提供手机号查询进度</span>
+                                <h1>跟踪查询</h1>
                             </div>
 
                         </div>
@@ -125,55 +125,70 @@
                             <form action="#">
                                 <div class="row form-group">
                                     <div class="col-md-12">
-                                        <label class="sr-only" for="name">姓名</label>
-                                        <input type="text" id="name" class="form-control" placeholder="请输入您的姓名">
-                                    </div>
-
-                                </div>
-
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <label class="sr-only" for="email">邮箱</label>
-                                        <input type="text" id="email" class="form-control" placeholder="输入您的邮箱">
-                                    </div>
-                                </div>
-
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <label class="sr-only" for="subject">填写手机号</label>
-                                        <input type="text" id="subject" class="form-control" placeholder="输入您的手机号">
-                                    </div>
-                                </div>
-
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <label class="sr-only" for="message">信息</label>
-                                        <textarea name="message" id="message" cols="30" rows="10" class="form-control" placeholder="填写您的意向信息或投诉信息,我们将以最快的方式联系您."></textarea>
+                                        <label class="sr-only" for="name">手机号</label>
+                                        <input type="text" id="name" class="form-control" placeholder="请输入您的手机号">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="提交" class="btn btn-primary">
+                                    <input type="submit" value="查询" class="btn btn-primary">
+                                    <input type="reset" value="重置" class="btn btn-primary">
                                 </div>
 
                             </form>
                         </div>
-                        <div class="col-md-5 col-md-push-1 animate-box">
+                    </div>
+                </div>
+            </div>
 
-                            <div class="gtco-contact-info">
-                                <h3>公司信息</h3>
-                                <ul>
-                                    <li class="address">地址: 中国江西省赣州市章贡区, <br> 银河大道阳明国际B2栋12楼</li>
-                                    <li class="phone"><a href="tel://1234567920">+ 1235 2355 98</a></li>
-                                    <li class="email"><a href="mailto:info@yoursite.com">Jango@google.com</a></li>
-                                    <li class="url"><a href="http://www.jangomp.com">www.jangomp.com</a></li>
-                                </ul>
+
+            <div class="gtco-container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title panel-success">
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                </div>
                             </div>
+                            <div class="ibox-content">
 
+                                <table id="intentionTable" class="footable table table-stripped toggle-arrow-tiny"
+                                       data-page-size="8">
+                                    <thead>
+                                    <tr>
+                                        <th data-toggle="true">车主姓名</th>
+                                        <th>预计结束时间</th>
+                                        <th>实际结束时间</th>
+                                        <th>维修保养进度</th>
+                                        <th>维修保养金额</th>
+                                        <th data-hide="all">用户要求</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${requestScope.intentions}" var="intention">
+                                        <tr>
+                                            <td>${intention.name}</td>
+                                            <td>${intention.phone}</td>
+                                            <td>${intention.email}</td>
+                                            <td>
+                                                <fmt:formatDate value="${intention.createdTime}" pattern="yyyy-MM-dd HH:mm"/>
+                                            </td>
+                                            <td>${intention.des}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <footer id="gtco-footer" role="contentinfo">
@@ -261,5 +276,3 @@
 
 </body>
 </html>
-
-
