@@ -173,6 +173,7 @@ public class RoleController {
     @RequestMapping(value = "queryIs_roleName", method = RequestMethod.GET)
     public String queryRoleNameIsExist(String roleName) {
         try {
+            logger.info("角色英文名称验证");
             boolean result = true;
             String resultString = "";
             Map<String, Boolean> map = new HashMap<String, Boolean>();
@@ -189,7 +190,7 @@ public class RoleController {
             }
             return resultString;
         } catch (Exception e) {
-            logger.info("角色名称验证失败，出现了异常");
+            logger.info("角色英文名称验证失败，出现了异常");
             return null;
         }
     }
@@ -198,6 +199,7 @@ public class RoleController {
     @RequestMapping(value = "queryIs_roleDes", method = RequestMethod.GET)
     public String queryRoleDesIsExist(@Param("roleDes") String roleDes, @Param("editDes") String editDes) {
         try {
+            logger.info("角色中文名称验证");
             boolean result = true;
             String resultString = "";
             Map<String, Boolean> map = new HashMap<String, Boolean>();
@@ -216,7 +218,7 @@ public class RoleController {
             }
             return resultString;
         } catch (Exception e) {
-            logger.info("角色名称验证失败，出现了异常");
+            logger.info("角色中文名称验证失败，出现了异常");
             return null;
         }
     }
