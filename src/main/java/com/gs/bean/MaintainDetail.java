@@ -74,7 +74,11 @@ public class MaintainDetail{
 
 	public double getPrice() {
 		if (maintainDiscount < 1) {
-			return maintain.getMaintainMoney() * maintainDiscount;
+			if (maintainDiscount == 0) {
+				return maintain.getMaintainMoney();
+			} else {
+				return maintain.getMaintainMoney() * maintainDiscount;
+			}
 		} else {
 			double temp = maintain.getMaintainMoney() - maintainDiscount;
 			return temp > 0 ? + temp : 0;

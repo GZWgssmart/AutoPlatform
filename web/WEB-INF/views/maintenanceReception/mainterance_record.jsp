@@ -715,6 +715,10 @@
                                     <td id="fixTime9"></td>
                                 </tr>
                                 <tr>
+                                    <td>合计：</td>
+                                    <td id="fixCount" colspan="4"></td>
+                                </tr>
+                                <tr>
                                     <td colspan="5">备注：</td>
                                 </tr>
                                 <tr>

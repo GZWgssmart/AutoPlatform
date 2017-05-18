@@ -19,6 +19,7 @@ $(document).ready(function () {
         $("#maintainCarMileage").html('');
         $("#startTime").html('');
         $("#count").html('');
+        $("#fixCount").html('');
 
         for (var i = 0; i < 10; i++) {
             $("#maintainName" + i).html('');
@@ -360,17 +361,19 @@ function closeEditDetailWin() {
     $("#searchDetailWin").modal('show');
 }
 
-/** 格式化原价 */
+/** 格式化原价和现价 */
 function formatterMoney(value, row, index) {
-    return "$" + value;
+    return "￥" + value;
 }
 
 /** 格式化打折或减价 */
 function formatterDiscount(value, row, index) {
     if (parseFloat(value) < 1) {
         return value + "折";
+    } else if (parseFloat(value) == 0) {
+        return "无减价或折扣";
     } else {
-        return "$" + value;
+        return "￥" + value;
     }
 }
 
@@ -492,6 +495,7 @@ function generateDetail() {
         var detail1 = tableData[0];
         var maintainOrFix = detail1.record.checkin.maintainOrFix;
         var count = 0;
+        var fixCount = 0;
         if (maintainOrFix == "保养") {
             for (var i = 0; i < len; i++) {
                 var detail = tableData[i];
@@ -509,6 +513,7 @@ function generateDetail() {
                 $("#fixCarMileage" + i).html(detail.record.checkin.carMileage);
                 $("#fixPrice" + i).html("￥" + detail.price);
                 $("#fixTime" + i).html(formatterDate1(detail.record.startTime));
+                fixCount += detail.price;
             }
         }
 
@@ -523,6 +528,7 @@ function generateDetail() {
         $("#userPhone").html(userPhone);
         $("#maintainCarMileage").html(maintainCarMileage);
         $("#startTime").html(formatterDate1(startTime));
+        $("#fixCount").html("￥" + fixCount);
 
         $("#maintainFixWin").modal("show");
     } else {
