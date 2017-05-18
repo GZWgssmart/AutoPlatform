@@ -22,7 +22,7 @@ function recordOk() {
         return false;
     } else {
         var record = selectRow[0]
-        if (record.speedStatus == "已登记" || record.speedStatus == "维修保养中") {
+        if (record.speedStatus == "维修保养中") {
             $.get(  '/record/achieve_record?recordId=' + record.recordId, function (data) {
                 if (data.result == "success") {
                     $('#cusTable').bootstrapTable('refresh');
@@ -32,7 +32,7 @@ function recordOk() {
                 }
             }, 'json');
         } else {
-            swal('错误提示', "请不要重复确认!", "error");
+            swal('错误提示', "请确认后再点击", "error");
             return false;
         }
     }
@@ -48,107 +48,107 @@ function operateFormatter(value, row, index) {
 window.operateEvents = {
     'click .showProgressWin': function (e, value, row, index) {
         var progress = row;
-        $("#stopAnimation_01").hide();
-        $("#stopAnimation_02").hide();
-        $("#animation_2").hide();
-        $("#stopAnimation_03").hide();
-        $("#animation_3").hide();
-        $("#stopAnimation_04").hide();
-        $("#animation_4").hide();
-        $("#stopAnimation_05").hide();
-        $("#animation_5").hide();
-        $("#textColor_01").hide();
-        $("#textColor_02").hide();
-        $("#textColor_03").hide();
-        $("#textColor_04").hide();
-        $("#textColor_05").hide();
-        $("#des_2").hide();
-        $("#des_3").hide();
-        $("#des_4").hide();
-        $("#des_5").hide();
-        $("#des_6").hide();
-        if (progress.workInfo.userId !=null && progress.workInfo.userId != '' && progress.workInfo.userId != 'null' && progress.workInfo.userId != 'undefined'){
-            $("#stopAnimation_01").show();
-            $("#stopAnimation_02").show();
-            $("#animation_1").hide();
-            $("#animation_2").hide();
-            $("#stopAnimation_2").hide();
-            $("#stopAnimation_3").hide();
-            $("#animation_3").show();
-            $("#text_1").hide();
-            $("#textColor_01").show();
-            $("#text_2").hide();
-            $("#textColor_02").show();
-            $("#des_3").show();
-            $("#des_1").hide();
-        } else {
-            $("#stopAnimation_01").hide();
-            $("#stopAnimation_02").hide();
-            $("#animation_1").show();
-            $("#animation_2").show();
-            $("#stopAnimation_2").show();
-            $("#stopAnimation_3").show();
-            $("#animation_3").hide();
-            $("#text_1").show();
-            $("#textColor_01").hide();
-            $("#text_2").show();
-            $("#textColor_02").hide();
-            $("#des_3").hide();
-            $("#des_1").show();
-        }
-        if(progress.pickupTime !=null && progress.pickupTime != '' && progress.pickupTime != 'null' && progress.pickupTime != 'undefined'){
-            $("#stopAnimation_03").show();
-            $("#animation_3").hide();
-            $("#stopAnimation_4").hide();
-            $("#animation_4").show();
-            $("#text_3").hide();
-            $("#textColor_03").show();
-            $("#des_4").show();
-            $("#des_3").hide();
-        } else {
-            $("#stopAnimation_03").hide();
-            $("#animation_3").show();
-            $("#stopAnimation_4").show();
-            $("#animation_4").hide();
-            $("#text_3").show();
-            $("#textColor_03").hide();
-            $("#des_4").hide();
-            $("#des_3").show();
-        }
-        if(progress.chargeBill.recordId !=null && progress.chargeBill.recordId != '' && progress.chargeBill.recordId != 'null' && progress.chargeBill.recordId != 'undefined'){
-            $("#stopAnimation_04").show();
-            $("#animation_4").hide();
-            $("#stopAnimation_5").hide();
-            $("#animation_5").show();
-            $("#text_4").hide();
-            $("#textColor_04").show();
-            $("#des_5").show();
-            $("#des_4").hide();
-        } else {
-            $("#stopAnimation_04").hide();
-            $("#animation_4").show();
-            $("#stopAnimation_5").show();
-            $("#animation_5").hide();
-            $("#text_4").show();
-            $("#textColor_04").hide();
-            $("#des_5").hide();
-            $("#des_4").show();
-        }
-        if(progress.actualEndTime !=null && progress.actualEndTime != '' && progress.actualEndTime != 'null' && progress.actualEndTime != 'undefined'){
-            $("#stopAnimation_05").show();
-            $("#animation_5").hide();
-            $("#text_5").hide();
-            $("#textColor_05").show();
-            $("#des_5").hide();
-            $("#des_6").show();
-        } else {
-            $("#stopAnimation_05").hide();
-            $("#animation_5").show();
-            $("#text_5").show();
-            $("#textColor_05").hide();
-            $("#des_6").hide();
-            $("#des_5").show();
-        }
+            if (progress.speedStatus == '维修保养中'){
+                $(".conduct").css("color", "#1a7bb9");
+                $("#text_1").css("color", "#1a7bb9");
+                $("#text_2").css("color", "red");
+                $("#text_3").css("color", "gray");
+                $("#text_4").css("color", "gray");
+                $("#text_5").css("color", "gray");
+                $("#stopAnimation_2 div").css("background-color", "#009688");
+                $("#stopAnimation_3 div").css("background-color", "#009688");
+                $("#stopAnimation_4 div").css("background-color", "rgba(158, 158, 158, 0.54)");
+                $("#stopAnimation_5 div").css("background-color", "rgba(158, 158, 158, 0.54)");
+                $("#animation_1").hide();
+                $("#stopAnimation_1").show();
+                $("#stopAnimation_3").hide();
+                $("#animation_2").show();
+                $("#stopAnimation_4").show();
+                $("#animation_3").hide();
+                $("#stopAnimation_5").show();
+                $("#animation_4").hide();
+                $("#des_1").text("开始维修保养中");
+            } else if(progress.speedStatus == '未提醒'){
+                $(".conduct").css("color", "#1a7bb9");
+                $("#text_1").css("color", "#1a7bb9");
+                $("#text_2").css("color", "#1a7bb9");
+                $("#text_3").css("color", "red");
+                $("#text_4").css("color", "gray");
+                $("#text_5").css("color", "gray");
+                $("#stopAnimation_2 div").css("background-color", "#009688");
+                $("#stopAnimation_3 div").css("background-color", "#009688");
+                $("#stopAnimation_5 div").css("background-color", "rgba(158, 158, 158, 0.54)");
+                $("#animation_1").hide();
+                $("#stopAnimation_1").show();
+                $("#stopAnimation_3").show();
+                $("#animation_2").hide();
+                $("#animation_4").hide();
+                $("#animation_3").show();
+                $("#stopAnimation_5").show();
+                $("#stopAnimation_4").hide();
+                $("#des_1").text("通知提车中");
+            } else if (progress.speedStatus == '已提醒'){
+                $(".conduct").css("color", "#1a7bb9");
+                $("#text_1").css("color", "#1a7bb9");
+                $("#text_2").css("color", "#1a7bb9");
+                $("#text_3").css("color", "#1a7bb9");
+                $("#text_4").css("color", "red");
+                $("#text_5").css("color", "gray");
+                $("#stopAnimation_2 div").css("background-color", "#009688");
+                $("#stopAnimation_3 div").css("background-color", "#009688");
+                $("#stopAnimation_4 div").css("background-color", "#009688");
+                $("#animation_1").hide();
+                $("#stopAnimation_1").show();
+                $("#stopAnimation_3").show();
+                $("#animation_2").hide();
+                $("#animation_3").hide();
+                $("#stopAnimation_4").show();
+                $("#stopAnimation_5").hide();
+                $("#animation_4").show();
+                $("#des_1").text("结算金额中");
+            } else if (progress.speedStatus == '已完成') {
+                $(".conduct").css("color", "#1a7bb9");
+                $("#text_1").css("color", "#1a7bb9");
+                $("#text_2").css("color", "#1a7bb9");
+                $("#text_3").css("color", "#1a7bb9");
+                $("#text_4").css("color", "#1a7bb9");
+                $("#text_5").css("color", "#1a7bb9");
+                $("#stopAnimation_2 div").css("background-color", "#009688");
+                $("#stopAnimation_3 div").css("background-color", "#009688");
+                $("#stopAnimation_4 div").css("background-color", "#009688");
+                $("#stopAnimation_5 div").css("background-color", "#009688");
+                $("#animation_1").hide();
+                $("#stopAnimation_1").show();
+                $("#stopAnimation_3").show();
+                $("#animation_2").hide();
+                $("#animation_3").hide();
+                $("#stopAnimation_4").show();
+                $("#stopAnimation_5").hide();
+                $("#animation_4").show();
+                $("#animation_4").hide();
+                $("#stopAnimation_5").show();
+                $("#des_1").text("完成车辆维修保养");
+            } else {
+                $(".conduct").css("color", "red");
+                $("#text_1").css("color", "gray");
+                $("#text_2").css("color", "gray");
+                $("#text_3").css("color", "gray");
+                $("#text_4").css("color", "gray");
+                $("#text_5").css("color", "gray");
+                $("#stopAnimation_2 div").css("background-color", "rgba(158, 158, 158, 0.54)");
+                $("#stopAnimation_3 div").css("background-color", "rgba(158, 158, 158, 0.54)");
+                $("#stopAnimation_4 div").css("background-color", "rgba(158, 158, 158, 0.54)");
+                $("#stopAnimation_5 div").css("background-color", "rgba(158, 158, 158, 0.54)");
+                $("#stopAnimation_1").hide();
+                $("#animation_1").show();
+                $("#stopAnimation_3").show();
+                $("#animation_2").hide();
+                $("#animation_3").hide();
+                $("#stopAnimation_4").show();
+                $("#stopAnimation_5").show();
+                $("#animation_4").hide();
+                $("#des_1").text("维修保养登记中");
+            }
         $("#searchDetailWin").modal('show');
     }
 }

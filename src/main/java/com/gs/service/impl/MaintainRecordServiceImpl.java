@@ -220,6 +220,56 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.countByUser(user);
     }
 
+    @Override
+    public List<MaintainRecord> queryByEmp(Pager pager, String user) {
+        return maintainRecordDAO.queryByEmp(pager, user);
+    }
+
+    @Override
+    public int countByEmp(String user) {
+        return maintainRecordDAO.countByEmp(user);
+    }
+
+    @Override
+    public List<MaintainRecord> queryByUser_Y(Pager pager, String user) {
+        return maintainRecordDAO.queryByUser_Y(pager, user);
+    }
+
+    @Override
+    public int countByUser_Y(String user) {
+        return maintainRecordDAO.countByUser_Y(user);
+    }
+
+    @Override
+    public List<MaintainRecord> queryByEmp_Y(Pager pager, String user) {
+        return maintainRecordDAO.queryByEmp_Y(pager, user);
+    }
+
+    @Override
+    public int countByEmp_Y(String user) {
+        return maintainRecordDAO.countByEmp_Y(user);
+    }
+
+    @Override
+    public List<MaintainRecord> queryByUser_N(Pager pager, String user) {
+        return maintainRecordDAO.queryByUser_N(pager, user);
+    }
+
+    @Override
+    public int countByUser_N(String user) {
+        return maintainRecordDAO.countByUser_N(user);
+    }
+
+    @Override
+    public List<MaintainRecord> queryByEmp_N(Pager pager, String user) {
+        return maintainRecordDAO.queryByEmp_N(pager, user);
+    }
+
+    @Override
+    public int countByEmp_N(String user) {
+        return maintainRecordDAO.countByEmp_N(user);
+    }
+
     public List<MaintainRecord> queryByMyName(Pager pager, User user){
         return maintainRecordDAO.queryByMyName(pager, user);
     }

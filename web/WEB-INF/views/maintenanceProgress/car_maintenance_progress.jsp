@@ -56,11 +56,11 @@
             <th data-field="company.companyName">
                 汽修公司
             </th>
-            <th data-field="recordStatus" data-formatter="status">
-                记录状态
-            </th>
             <th data-field="speedStatus">
                 进度状态
+            </th>
+            <th data-field="recordStatus" data-formatter="status">
+                记录状态
             </th>
             <th data-field="caozuo" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
@@ -84,14 +84,15 @@
                     <i class="glyphicon glyphicon-search"></i> 查看全部进度
                 </button>
             </a>
+            <shiro:hasAnyRoles name="companyArtificer">
             <a>
                 <button onclick="recordOk();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-ok"></i> 维修或保养完成
                 </button>
             </a>
+            </shiro:hasAnyRoles>
         </div>
         </tbody>
-
     </table>
 </div>
 
@@ -106,11 +107,11 @@
                         <h3 class="m-t-none m-b">维修保养进度</h3>
                             <div class="step-header">
                                 <ul>
-                                    <li>
+                                    <li id="textConduct">
                                         <img src="<%=path%>/img/order.png">
-                                        <p class="app">维修保养登记</p>
+                                        <p class="conduct">维修保养登记</p>
                                     </li>
-                                        <div id="stopAnimation_01" class="load_color" style="float: left;margin: 40px auto;">
+                                        <div id="stopAnimation_1" class="load_color" style="float: left;margin: 40px auto;">
                                             <div class="load_1"></div>
                                             <div class="load_2"></div>
                                             <div class="load_3"></div>
@@ -120,15 +121,20 @@
                                             <div class="sk-bounce2"></div>
                                             <div class="sk-bounce3"></div>
                                         </div>
-                                    <li id="text_1">
+                                    <li>
                                         <img src="<%=path%>/img/anouncement.png">
-                                        <p class="des">指派员工</p>
+                                        <p id="text_1" class="des">指派员工</p>
                                     </li>
-                                    <li id="textColor_01">
-                                        <img src="<%=path%>/img/anouncement.png">
-                                        <p class="app">指派员工</p>
+                                    <div id="stopAnimation_2" class="load" style="float: left;margin: 40px auto;">
+                                        <div class="load_1"></div>
+                                        <div class="load_2"></div>
+                                        <div class="load_3"></div>
+                                    </div>
+                                    <li>
+                                        <img src="<%=path%>/img/car_repair.png">
+                                        <p id="text_2" class="des">开始维修保养</p>
                                     </li>
-                                    <div id="stopAnimation_02" class="load_color" style="float: left;margin: 40px auto;">
+                                    <div id="stopAnimation_3" class="load" style="float: left;margin: 40px auto;">
                                         <div class="load_1"></div>
                                         <div class="load_2"></div>
                                         <div class="load_3"></div>
@@ -138,20 +144,11 @@
                                         <div class="sk-bounce2"></div>
                                         <div class="sk-bounce3"></div>
                                     </div>
-                                    <div id="stopAnimation_2" class="load" style="float: left;margin: 40px auto;">
-                                        <div class="load_1"></div>
-                                        <div class="load_2"></div>
-                                        <div class="load_3"></div>
-                                    </div>
-                                    <li id="text_2">
-                                        <img src="<%=path%>/img/car_repair.png">
-                                        <p class="des">开始维修保养</p>
+                                    <li>
+                                        <img src="<%=path%>/img/phone_icon_by_cemagraphics.png">
+                                        <p id="text_3" class="des">通知提车</p>
                                     </li>
-                                    <li id="textColor_02">
-                                        <img src="<%=path%>/img/car_repair.png">
-                                        <p class="app">开始维修保养</p>
-                                    </li>
-                                    <div id="stopAnimation_03" class="load_color" style="float: left;margin: 40px auto;">
+                                    <div id="stopAnimation_4" class="load" style="float: left;margin: 40px auto;">
                                         <div class="load_1"></div>
                                         <div class="load_2"></div>
                                         <div class="load_3"></div>
@@ -161,20 +158,11 @@
                                         <div class="sk-bounce2"></div>
                                         <div class="sk-bounce3"></div>
                                     </div>
-                                    <div id="stopAnimation_3" class="load" style="float: left;margin: 40px auto;">
-                                        <div class="load_1"></div>
-                                        <div class="load_2"></div>
-                                        <div class="load_3"></div>
-                                    </div>
-                                    <li id="text_3">
-                                        <img src="<%=path%>/img/phone_icon_by_cemagraphics.png">
-                                        <p class="des">通知提车</p>
+                                    <li>
+                                        <img src="<%=path%>/img/cash_register.png">
+                                        <p id="text_4" class="des">结算金额</p>
                                     </li>
-                                    <li id="textColor_03">
-                                        <img src="<%=path%>/img/phone_icon_by_cemagraphics.png">
-                                        <p class="app">通知提车</p>
-                                    </li>
-                                    <div id="stopAnimation_04" class="load_color" style="float: left;margin: 40px auto;">
+                                    <div id="stopAnimation_5" class="load" style="float: left;margin: 40px auto;">
                                         <div class="load_1"></div>
                                         <div class="load_2"></div>
                                         <div class="load_3"></div>
@@ -184,51 +172,14 @@
                                         <div class="sk-bounce2"></div>
                                         <div class="sk-bounce3"></div>
                                     </div>
-                                    <div id="stopAnimation_4" class="load" style="float: left;margin: 40px auto;">
-                                        <div class="load_1"></div>
-                                        <div class="load_2"></div>
-                                        <div class="load_3"></div>
-                                    </div>
-                                    <li id="text_4">
-                                        <img src="<%=path%>/img/cash_register.png">
-                                        <p class="des">结算金额</p>
-                                    </li>
-                                    <li id="textColor_04">
-                                        <img src="<%=path%>/img/cash_register.png">
-                                        <p class="app">结算金额</p>
-                                    </li>
-                                    <div id="stopAnimation_05" class="load_color" style="float: left;margin: 40px auto;">
-                                        <div class="load_1"></div>
-                                        <div class="load_2"></div>
-                                        <div class="load_3"></div>
-                                    </div>
-                                    <div id="animation_5" class="sk-spinner sk-spinner-three-bounce" style="float: left;margin: 40px auto;">
-                                        <div class="sk-bounce1"></div>
-                                        <div class="sk-bounce2"></div>
-                                        <div class="sk-bounce3"></div>
-                                    </div>
-                                    <div id="stopAnimation_5" class="load" style="float: left;margin: 40px auto;">
-                                        <div class="load_1"></div>
-                                        <div class="load_2"></div>
-                                        <div class="load_3"></div>
-                                    </div>
-                                    <li id="text_5">
+                                    <li>
                                         <img src="<%=path%>/img/Ok.png">
-                                        <p class="des">完成车辆维修保养</p>
-                                    </li>
-                                    <li id="textColor_05">
-                                        <img src="<%=path%>/img/Ok.png">
-                                        <p class="app">完成车辆维修保养</p>
+                                        <p id="text_5" class="des">完成车辆维修保养</p>
                                     </li>
                                 </ul>
                         </div>
                         <div style="height: 23%;border-top: 1px solid #e5e5e5; text-align: center;color: #00bcd4;">
-                            <h1 id="des_1">维修保养登记</h1>
-                            <h1 id="des_2">指派员工</h1>
-                            <h1 id="des_3">开始维修保养</h1>
-                            <h1 id="des_4">通知提车</h1>
-                            <h1 id="des_5">结算金额</h1>
-                            <h1 id="des_6">完成车辆维修保养</h1>
+                            <h1 id="des_1">维修保养登记中</h1>
                         </div>
                         <div class="modal-footer" style="overflow:hidden;">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

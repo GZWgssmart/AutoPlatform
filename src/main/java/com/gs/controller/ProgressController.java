@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,10 @@ public class ProgressController {
     private String queryRole = Constants.CAR_OWNER + "," + Constants.COMPANY_RECEIVE + ","
             + Constants.COMPANY_ARTIFICER + "," + "," + Constants.COMPANY_ADMIN;
 
+    private String queryRole2 = Constants.CAR_OWNER;
+
+    private String queryRole3 = Constants.COMPANY_ARTIFICER;
+
     private Logger logger = (Logger) LoggerFactory.getLogger(ProgressController.class);
 
     @RequestMapping(value = "progress_page", method = RequestMethod.GET)
@@ -56,7 +61,7 @@ public class ProgressController {
 
     @ResponseBody
     @RequestMapping(value="progress_pager",method= RequestMethod.GET)
-    public Pager4EasyUI<MaintainRecord> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    public Pager4EasyUI<MaintainRecord> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
 //            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
@@ -67,6 +72,24 @@ public class ProgressController {
                     pager.setPageSize(Integer.valueOf(pageSize));
                     pager.setTotalRecords(maintainRecordService.countByProgressPager(user));
                     List<MaintainRecord> maintainRecords = maintainRecordService.queryByProgressPager(pager, user);
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+                } else if (CheckRoleUtil.checkRoles(queryRole2)){
+                    logger.info("车主查询自己进度");
+                    User user = (User)session.getAttribute("user");
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(maintainRecordService.countByUser(user.getUserId()));
+                    List<MaintainRecord> maintainRecords = maintainRecordService.queryByUser(pager,user.getUserId());
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+                } else if (CheckRoleUtil.checkRoles(queryRole3)){
+                    logger.info("技师查询自己管理进度");
+                    User user = (User)session.getAttribute("user");
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(maintainRecordService.countByEmp(user.getUserId()));
+                    List<MaintainRecord> maintainRecords = maintainRecordService.queryByEmp(pager,user.getUserId());
                     return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
                 }
                 return null;
@@ -83,7 +106,7 @@ public class ProgressController {
 
     @ResponseBody
     @RequestMapping(value="progress_pager_N",method= RequestMethod.GET)
-    public Pager4EasyUI<MaintainRecord> queryPager_N(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    public Pager4EasyUI<MaintainRecord> queryPager_N(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
 //            try {
             if (CheckRoleUtil.checkRoles(queryRole)) {
@@ -94,6 +117,24 @@ public class ProgressController {
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setTotalRecords(maintainRecordService.countByProgressPager_N(user));
                 List<MaintainRecord> maintainRecords = maintainRecordService.queryByProgressPager_N(pager, user);
+                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+            } else if (CheckRoleUtil.checkRoles(queryRole2)){
+                logger.info("车主查询自己不可用进度");
+                User user = (User)session.getAttribute("user");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(maintainRecordService.countByUser_N(user.getUserId()));
+                List<MaintainRecord> maintainRecords = maintainRecordService.queryByUser_N(pager,user.getUserId());
+                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+            } else if (CheckRoleUtil.checkRoles(queryRole3)){
+                logger.info("技师查询自己管理不可用进度");
+                User user = (User)session.getAttribute("user");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(maintainRecordService.countByEmp_N(user.getUserId()));
+                List<MaintainRecord> maintainRecords = maintainRecordService.queryByEmp_N(pager,user.getUserId());
                 return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
             }
             return null;
@@ -112,7 +153,7 @@ public class ProgressController {
 
     @ResponseBody
     @RequestMapping(value="progress_pager_Y",method= RequestMethod.GET)
-    public Pager4EasyUI<MaintainRecord> queryPager_Y(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
+    public Pager4EasyUI<MaintainRecord> queryPager_Y(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
 //            try {
             if (CheckRoleUtil.checkRoles(queryRole)) {
@@ -123,6 +164,24 @@ public class ProgressController {
                 pager.setPageSize(Integer.valueOf(pageSize));
                 pager.setTotalRecords(maintainRecordService.countByProgressPager_Y(user));
                 List<MaintainRecord> maintainRecords = maintainRecordService.queryByProgressPager_Y(pager, user);
+                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+            } else if (CheckRoleUtil.checkRoles(queryRole2)){
+                logger.info("车主查询自己可用进度");
+                User user = (User)session.getAttribute("user");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(maintainRecordService.countByUser_Y(user.getUserId()));
+                List<MaintainRecord> maintainRecords = maintainRecordService.queryByUser_Y(pager,user.getUserId());
+                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+            } else if (CheckRoleUtil.checkRoles(queryRole3)){
+                logger.info("技师查询自己管理可用进度");
+                User user = (User)session.getAttribute("user");
+                Pager pager = new Pager();
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(maintainRecordService.countByEmp_Y(user.getUserId()));
+                List<MaintainRecord> maintainRecords = maintainRecordService.queryByEmp_Y(pager,user.getUserId());
                 return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
             }
             return null;

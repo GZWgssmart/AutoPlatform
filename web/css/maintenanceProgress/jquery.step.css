@@ -39,11 +39,7 @@ h3{
 	display: inline-block;
 }
 
-.step-header .des {
-	line-height: 30px;
-	font-weight: bold;
-	color: gray;
-}
+
 
 .step-header ul li{
 	float: left;
@@ -57,4 +53,16 @@ h3{
 	line-height: 30px;
 	font-weight: bold;
 	color: #1a7bb9;
+}
+
+.step-header .conduct{
+	line-height: 30px;
+	font-weight: bold;
+	color: red;
+}
+
+.step-header .des {
+	line-height: 30px;
+	font-weight: bold;
+	color: gray;
 }

@@ -75,6 +75,111 @@
         ]]>
 	</delete>
 
+    <select id="countByEmp" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        FROM
+            t_maintain_record mr
+         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+         INNER JOIN t_company c ON c.companyId = mr.companyId
+         INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
+         INNER JOIN t_user u ON u.userId = wi.userId
+         WHERE
+            u.userId = #{userId}
+    </select>
+
+    <select id="queryByEmp" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+			SELECT
+                mr.*, ch.userName,
+                ch.carPlate,
+                ch.maintainOrFix,
+                c.companyName,
+                u.userName AS user_userName
+             FROM
+                t_maintain_record mr
+             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+             INNER JOIN t_company c ON c.companyId = mr.companyId
+             INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
+             INNER JOIN t_user u ON u.userId = wi.userId
+             WHERE
+	            u.userId = #{userId}
+		]]>
+        order by mr.startTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="countByEmp_N" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        FROM
+        t_maintain_record mr
+        INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+        INNER JOIN t_company c ON c.companyId = mr.companyId
+        INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
+        INNER JOIN t_user u ON u.userId = wi.userId
+        WHERE
+         mr.recordStatus = 'N' AND u.userId = #{userId}
+    </select>
+
+    <select id="queryByEmp_N" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+			SELECT
+                mr.*, ch.userName,
+                ch.carPlate,
+                ch.maintainOrFix,
+                c.companyName,
+                u.userName AS user_userName
+             FROM
+                t_maintain_record mr
+             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+             INNER JOIN t_company c ON c.companyId = mr.companyId
+             INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
+             INNER JOIN t_user u ON u.userId = wi.userId
+             WHERE
+	            mr.recordStatus = 'N' AND u.userId = #{userId}
+		]]>
+        order by mr.startTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="countByEmp_Y" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        FROM
+        t_maintain_record mr
+        INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+        INNER JOIN t_company c ON c.companyId = mr.companyId
+        INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
+        INNER JOIN t_user u ON u.userId = wi.userId
+        WHERE
+         mr.recordStatus = 'Y' AND u.userId = #{userId}
+    </select>
+
+    <select id="queryByEmp_Y" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+			SELECT
+                mr.*, ch.userName,
+                ch.carPlate,
+                ch.maintainOrFix,
+                c.companyName,
+                u.userName AS user_userName
+             FROM
+                t_maintain_record mr
+             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+             INNER JOIN t_company c ON c.companyId = mr.companyId
+             INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
+             INNER JOIN t_user u ON u.userId = wi.userId
+             WHERE
+	            mr.recordStatus = 'Y' AND u.userId = #{userId}
+		]]>
+        order by mr.startTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
     <select id="countByUser" resultType="int">
         SELECT
         COUNT(*)
@@ -82,7 +187,7 @@
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
         INNER JOIN	t_company c ON c.companyId = mr.companyId
-        LEFT JOIN t_user u ON u.userId = ch.userId WHERE u.userId = #{userId}
+        INNER JOIN t_user u ON u.userId = ch.userId WHERE u.userId = #{userId}
     </select>
 
     <select id="queryByUser" resultType="list" resultMap="maintainRecordResultMap">
@@ -98,7 +203,65 @@
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
             INNER JOIN	t_company c ON c.companyId = mr.companyId
-            LEFT JOIN t_user u ON u.userId = ch.userId WHERE u.userId = #{userId}
+            INNER JOIN t_user u ON u.userId = ch.userId WHERE u.userId = #{userId}
+		]]>
+        order by mr.startTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="countByUser_N" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        t_maintain_record mr
+        INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        INNER JOIN t_user u ON u.userId = ch.userId WHERE  mr.recordStatus = 'N' AND u.userId = #{userId}
+    </select>
+
+    <select id="queryByUser_N" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+			SELECT
+                mr.*,
+                ch.userName,
+                ch.carPlate,
+                ch.maintainOrFix,
+                c.companyName,
+                u.userName AS user_userName
+            FROM
+                t_maintain_record mr
+            INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            INNER JOIN t_user u ON u.userId = ch.userId WHERE  mr.recordStatus = 'N' AND u.userId = #{userId}
+		]]>
+        order by mr.startTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
+    <select id="countByUser_Y" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        t_maintain_record mr
+        INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        INNER JOIN t_user u ON u.userId = ch.userId WHERE mr.recordStatus = 'Y' AND u.userId = #{userId}
+    </select>
+
+    <select id="queryByUser_Y" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+			SELECT
+                mr.*,
+                ch.userName,
+                ch.carPlate,
+                ch.maintainOrFix,
+                c.companyName,
+                u.userName AS user_userName
+            FROM
+                t_maintain_record mr
+            INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            INNER JOIN t_user u ON u.userId = ch.userId WHERE  mr.recordStatus = 'Y' AND u.userId = #{userId}
 		]]>
         order by mr.startTime Desc
         limit #{pager.beginIndex}, #{pager.pageSize}
@@ -129,7 +292,7 @@
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            INNER JOIN	t_company c ON c.companyId = mr .companyId
             LEFT JOIN t_user u ON u.userId = ch.userId
 		]]>
         <if test="user.companyId != null and user.companyId != ''">
