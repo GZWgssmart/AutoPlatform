@@ -105,6 +105,8 @@ function getCode(val) {
     setTimeout(function() {
         if (val.value != "获取验证码") {
             getCode(val);
+        } else {
+            $("#successMsg").html('');
         }
     },1000)
 }

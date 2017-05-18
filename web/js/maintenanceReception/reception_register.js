@@ -551,7 +551,6 @@ function validator(formId) {
                                     }
                                 });
                         } else if (data.result == "fail") {
-                            $('#addWin').modal('hide');
                             swal("错误提示", data.message, "error");
                         } else if (data.result == "notLogin") {
                             swal({

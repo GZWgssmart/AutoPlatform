@@ -261,7 +261,7 @@
 		limit 0, #{top}
 	</select>
 
-	<select id="queryByPhone" resultType="list" resultMap="checkinResultMap">
+	<select id="queryByPhone" resultType="int">
 		<![CDATA[
 			select count(*) from t_checkin where 1 = 1 and checkinStatus = 'Y' and userPhone = #{phone}
 		]]>
