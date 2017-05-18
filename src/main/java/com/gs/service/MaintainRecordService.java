@@ -198,4 +198,6 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      */
     public int updateEndTimeById(Date endTime, String id);
 
+    public List<MaintainRecord> queryByMyName(Pager pager, User user);
+
 }

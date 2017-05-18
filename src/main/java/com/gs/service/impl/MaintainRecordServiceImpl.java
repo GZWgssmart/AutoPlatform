@@ -204,4 +204,8 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
     public int countByProgressPager_N(User user) {
         return maintainRecordDAO.countByProgressPager_N(user);
     }
+
+    public List<MaintainRecord> queryByMyName(Pager pager, User user){
+        return maintainRecordDAO.queryByMyName(pager, user);
+    }
 }

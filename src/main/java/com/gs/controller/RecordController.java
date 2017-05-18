@@ -1,10 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.Checkin;
-import com.gs.bean.MaintainRecord;
-import com.gs.bean.User;
-import com.gs.bean.WorkInfo;
+import com.gs.bean.*;
 import com.gs.bean.info.SendRemind;
 import com.gs.common.Constants;
 import com.gs.common.bean.*;
@@ -16,6 +13,7 @@ import com.gs.service.UserService;
 import com.gs.service.WorkInfoService;
 import com.gs.thread.SendEmailThread;
 import com.jh.email.Mail;
+import org.activiti.engine.impl.Page;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -122,6 +120,19 @@ public class RecordController {
             logger.info("Session已失效，请重新登入");
             return null;
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "record_queryPager", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainRecord> queryrecordPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        logger.info("分页查询我的维修保养记录");
+        User user = SessionGetUtil.getUser();
+        Pager pager = new Pager();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(maintainRecordService.count(user));
+        List<MaintainRecord> maintainRecords = maintainRecordService.queryByMyName(pager, user);
+        return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
     }
 
     @ResponseBody

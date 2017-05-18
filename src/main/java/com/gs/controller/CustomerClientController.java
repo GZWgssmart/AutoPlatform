@@ -38,4 +38,10 @@ public class CustomerClientController {
         logger.info("我的维修保养进度");
         return "customerClient/progress";
     }
+
+    @RequestMapping(value = "record", method = RequestMethod.GET)
+    public String record(){
+        logger.info("我的维修保养记录");
+        return "customerClient/record";
+    }
 }

@@ -86,7 +86,7 @@
                     <a href="#"><i class="glyphicon glyphicon-wrench"></i> <span class="nav-label">维修保养管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">我的维修保养记录</a>
+                        <li><a class="J_menuItem" href="<%=path%>/customerClient/record">我的维修保养记录</a>
                         </li>
                         <li><a class="J_menuItem" href="<%=path%>/customerClient/progress">我的维修保养进度</a>
                         </li>

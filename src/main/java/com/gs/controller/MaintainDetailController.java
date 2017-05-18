@@ -52,7 +52,7 @@ public class MaintainDetailController {
 
     // 可以查看的角色：董事长、接待员、普通管理员、超级管理员、技师
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE + ","
-            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ARTIFICER;
+            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ARTIFICER + "," + Constants.CAR_OWNER;
 
     // 可以操作的角色：董事长、技师
     private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ARTIFICER;
