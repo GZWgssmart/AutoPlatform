@@ -190,6 +190,7 @@ public class WorkInfoController {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("指派员工");
                     workInfoService.update(workInfo);
+                    maintainRecord.setSpeedStatus(Constants.MAINTAIN_FIX);
                     maintainRecordService.updateTime(maintainRecord);
                     return ControllerResult.getSuccessResult("修改成功");
                 }
