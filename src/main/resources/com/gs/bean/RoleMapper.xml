@@ -96,9 +96,22 @@
 			select * from t_role where roleName like concat('%','Admin') and roleName not like 'systemSuperAdmin'
 	]]>
 	</select>
+
 	<select id="count" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) FROM t_role
+		]]>
+	</select>
+
+	<select id="queryRoleNameIsExist" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM t_role WHERE roleName = #{roleName};
+		]]>
+	</select>
+
+	<select id="queryRoleDesIsExist" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM t_role WHERE roleDes = #{roleDes};
 		]]>
 	</select>
 

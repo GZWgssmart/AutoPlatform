@@ -31,10 +31,10 @@
         <tr>
             <th data-field="state" data-checkbox="true"></th>
             <th data-field="roleName">
-                名称
+                英文名称
             </th>
             <th data-field="roleDes">
-                描述
+                中文名称
             </th>
             <th data-field="roleStatus" data-formatter="status">
                 状态
@@ -72,8 +72,8 @@
                             <input type="hidden" attr="role.roleId" name="roleId"/>
                             <input type="hidden" attr="role.roleName" name="roleName"/>
                             <div class="form-group">
-                                <label>角色描述：</label>
-                                <textarea attr="role.roleDes"  type="textarea" name="roleDes" class="form-control"></textarea>
+                                <label class="control-label">中文名称：</label>
+                                <input attr="role.roleDes"  type="text" name="roleDes" class="form-control" />
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
@@ -102,12 +102,12 @@
                         <h3 class="m-t-none m-b">添加员工</h3>
                         <form role="form" id="addForm">
                             <div class="form-group">
-                                <label class="control-label">角色名称：</label>
+                                <label class="control-label">英文名称：</label>
                                 <input type="text" name="roleName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>角色描述：</label>
-                                <textarea name="roleDes" class="form-control"></textarea>
+                                <label class="control-label">中文名称：</label>
+                                <input type="text" name="roleDes" class="form-control" />
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"

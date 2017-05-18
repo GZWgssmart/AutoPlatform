@@ -2,13 +2,12 @@
  * Created by xiao-qiang 2017/4/18.
  */
 var contextPath = '';
+var editModuleName = "";
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", contextPath + "/module/query_pager");
     destoryValidator('addWin', 'addForm');
     destoryValidator('editWin', 'editForm');
-    //当点击查询按钮的时候执行
-    $("#search").bind("click", initTable);
 });
 
 function showAddWin() {
@@ -19,7 +18,6 @@ function showAddWin() {
 
 /** 编辑数据 */
 function showEditWin() {
-    validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length < 1) {
         swal('编辑失败', "必须选择一条数据进行编辑", "error");
@@ -29,6 +27,8 @@ function showEditWin() {
         return false;
     } else {
         var module = selectRow[0];
+        editModuleName = module.moduleName;
+        validator("editForm");
         $("#editForm").fill(module);
         $("#editWin").modal('show');
     }
@@ -103,6 +103,7 @@ window.operateEvents = {
     },
     'click .showEditWin': function (e, value, row, index) {
         var module = row;
+        editModuleName = module.moduleName;
         $("#editForm").fill(module);
         validator("editForm");
         $("#editWin").modal('show');
@@ -138,6 +139,13 @@ function validator(formId) {
                         min: 2,
                         max: 30,
                         message: '模块名称长度必须在2到30位之间'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: contextPath + '/module/queryIs_moduleName?editName=' + editModuleName,
+                        message: '该名称已存在',
+                        delay :  2000,
+                        type: 'GET'
                     }
                 }
             }
@@ -149,6 +157,7 @@ function validator(formId) {
 
             } else if (formId == "editForm") {
                 formSubmit(contextPath + "/module/update_module", formId, "editWin");
+                editModuleName = "";
             }
         })
 

@@ -28,4 +28,10 @@ public interface RoleDAO extends BaseDAO<String, Role>{
 
     /**查询属于公司的全部角色*/
     public List<Role> queryRole();
+
+    /**根据一段字符串查询角色表是否有这个英文角色名*/
+    public int queryRoleNameIsExist(String roleName);
+
+    /**根据一段字符串查询角色表是否有这个中文角色名*/
+    public int queryRoleDesIsExist(String roleDes);
 }

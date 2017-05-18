@@ -53,4 +53,12 @@ public class RoleServiceImpl implements RoleService {
 	public List<Role> queryRole() {
 		return roleDAO.queryRole();
 	}
+
+	public int queryRoleNameIsExist(String roleName) {
+		return roleDAO.queryRoleNameIsExist(roleName);
+	}
+
+	public int queryRoleDesIsExist(String roleDes) {
+		return roleDAO.queryRoleDesIsExist(roleDes);
+	}
 }

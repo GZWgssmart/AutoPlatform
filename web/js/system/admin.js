@@ -215,7 +215,7 @@ function validator(formId) {
                     },
                     threshold: 11,
                     remote: {
-                        url: '/peopleManage/peoplePhone_verification?editPhone=' + editPhone,
+                        url: 'contextPath + /peopleManage/peoplePhone_verification?editPhone=' + editPhone,
                         message: '该手机号已存在',
                         delay :  2000,
                         type: 'GET'
@@ -233,7 +233,7 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: '/peopleManage/peopleEmail_verification?editEmail=' + editEmail,
+                        url: contextPath + '/peopleManage/peopleEmail_verification?editEmail=' + editEmail,
                         message: '该邮箱已存在',
                         delay :  2000,
                         type: 'GET'
@@ -251,7 +251,7 @@ function validator(formId) {
                     },
                     threshold: 18,
                     remote: {
-                        url: '/peopleManage/peopleIdentity_verification?editIdentity=' + editIdentity,
+                        url: contextPath + '/peopleManage/peopleIdentity_verification?editIdentity=' + editIdentity,
                         message: '该身份证已存在',
                         delay :  2000,
                         type: 'GET'

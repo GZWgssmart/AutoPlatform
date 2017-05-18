@@ -98,6 +98,12 @@
 		]]>
 	</select>
 
+	<select id="queryModuleNameIsExist" resultType="int">
+		<![CDATA[
+			select count(*) from t_module where moduleName = #{moduleName}
+		]]>
+	</select>
+
 	<update id="inactive" parameterType="string">
 		<![CDATA[
 			update t_module set moduleStatus = 'N' where moduleId = #{moduleId}

@@ -44,4 +44,8 @@ public class ModuleServiceImpl implements ModuleService {
 	public int countByStatus(String moduleStatus) {
 		return moduleDAO.countByStatus(moduleStatus);
 	}
+
+	public int queryModuleNameIsExist(String moduleName) {
+		return moduleDAO.queryModuleNameIsExist(moduleName);
+	}
 }

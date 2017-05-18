@@ -1,6 +1,8 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.Module;
 import com.gs.bean.User;
 import com.gs.common.Constants;
@@ -20,7 +22,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Xiao-Qiang on 2017/4/17.
@@ -180,5 +184,33 @@ public class ModuleController {
         pager.setTotalRecords(moduleService.countByStatus(status));
         List<Module> modules = moduleService.queryByStatusPager(status, pager);
         return new Pager4EasyUI<Module>(pager.getTotalRecords(), modules);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIs_moduleName", method = RequestMethod.GET)
+    public String queryModuleNameIsExist(@Param("moduleName") String moduleName, @Param("editName") String editName) {
+        try {
+            System.out.println(editName + ", " + moduleName + "^^^^^^^^^^^^^^^^^^^^^^^^^");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editName.equals(moduleName)) {
+                int isExist = moduleService.queryModuleNameIsExist(moduleName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("角色名称验证失败，出现了异常");
+            return null;
+        }
     }
 }

@@ -21,4 +21,7 @@ public interface ModuleService extends BaseService<String, Module> {
 
     /**根据状态来统计*/
     public int countByStatus(String moduleStatus);
+
+    /**根据一段字符串查询模块表是否有这个模块名*/
+    public int queryModuleNameIsExist(String moduleName);
 }

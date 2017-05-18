@@ -1,6 +1,8 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.Role;
 import com.gs.bean.User;
 import com.gs.common.Constants;
@@ -21,7 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 温鑫
@@ -161,6 +165,58 @@ public class RoleController {
             return comboBox4EasyUIs;
         } catch (Exception e) {
             logger.info("发生异常，获取中断！");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIs_roleName", method = RequestMethod.GET)
+    public String queryRoleNameIsExist(String roleName) {
+        try {
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            int isExist = roleService.queryRoleNameIsExist(roleName);
+            if (isExist > 0) {
+                result = false;
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("角色名称验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIs_roleDes", method = RequestMethod.GET)
+    public String queryRoleDesIsExist(@Param("roleDes") String roleDes, @Param("editDes") String editDes) {
+        try {
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editDes.equals(roleDes)) {
+                int isExist = roleService.queryRoleDesIsExist(roleDes);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("角色名称验证失败，出现了异常");
             return null;
         }
     }
