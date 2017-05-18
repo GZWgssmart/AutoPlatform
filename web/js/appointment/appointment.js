@@ -85,7 +85,8 @@ function closeUserWin() {
 
 /** 清除添加的form表单信息 */
 function clearAddForm() {
-    $("#userDiv").show();
+    $("#addUserName").removeAttr("readonly");
+    $("#addUserPhone").removeAttr("readonly");
     $('#addCarBrand').html('').trigger("change");
     $('#addCarColor').html('').trigger("change");
     $('#addCarModel').html('').trigger("change");
@@ -100,10 +101,16 @@ function choiceUser() {
         swal('选择失败', "只能选择一个车主信息", "error");
         return false;
     } else {
-        userInfo = selectRow[0];
-        setData(userInfo, "userInfo");
-        $('#choiceUser').bootstrapSwitch('state', true);
-        $("#userWin").modal('hide');
+        var user = selectRow[0];
+        if (user.userName != null && user.userName != "" && user.userPhone != null && user.userPhone != "") {
+            userInfo = user;
+            setData(userInfo, "userInfo");
+            $('#choiceUser').bootstrapSwitch('state', true);
+            $("#userWin").modal('hide');
+        } else {
+            swal('选择失败', "请选完善该车主的信息,至少要填写车主姓名和手机号", "error");
+            return false;
+        }
     }
 }
 
@@ -123,10 +130,13 @@ function closeAppWin() {
 
 /** 给添加的form表单设置值 */
 function setData(customer) {
-    $("#appDiv").hide();
+    editPhone = customer.userPhone;
     $("#addUserName").val(customer.userName);
     $("#addUserPhone").val(customer.userPhone);
     $("#addUserId").val(customer.userId);
+    $("#addUserName").attr("readonly","readonly");
+    $("#addUserPhone").attr("readonly","readonly");
+
 
 }
 /** 格式化车主信息操作栏 */
@@ -230,6 +240,7 @@ window.operateEvents = {
     },
     'click .showUpdateIncomingType1': function (e, value, row, index) {
         var appointment = row;
+        editPhone = appointment.userPhone;
         $("#editForm").fill(appointment);
         $('#editCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
         $('#editCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
@@ -240,10 +251,16 @@ window.operateEvents = {
         $("#editWin").modal('show');
     },
     'click .choiceUser': function (e, value, row, index) {
-        userInfo = row;
-        setData(userInfo, "userInfo");
-        $('#choiceUser').bootstrapSwitch('state', true);
-        $("#userWin").modal('hide');
+        var user = row;
+        if (user.userName != null && user.userName != "" && user.userPhone != null && user.userPhone != "") {
+            userInfo = user;
+            setData(userInfo, "userInfo");
+            $('#choiceUser').bootstrapSwitch('state', true);
+            $("#userWin").modal('hide');
+        } else {
+            swal('选择失败', "请选完善该车主的信息,至少要填写车主姓名和手机号", "error");
+            return false;
+        }
     },
 }
 
@@ -372,6 +389,7 @@ function validator(formId) {
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/appointment/add", formId, "addWin");
+                $('#choiceUser').bootstrapSwitch('state', false);
                 clearAddForm();
             } else if (formId == "editForm") {
                 formSubmit("/appointment/update", formId, "editWin");
@@ -379,9 +397,4 @@ function validator(formId) {
         })
 }
 
-
-/** 子窗口调用父窗口的js方法 */
-function showMaintain() {
-    parent.showMaintainPage();
-}
 

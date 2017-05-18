@@ -171,12 +171,12 @@
                                 <input type="hidden" attr="appointment.appointmentId" name="appointmentId" class="form-control"/>
                                 <input type="hidden" attr="appointment.userId" name="userId" class="form-control"/>
                                 <label>车主姓名：</label>
-                                <input type="text" attr="appointment.userName" name="userName" class="form-control"/>
+                                <input readonly type="text" attr="appointment.userName" name="userName" class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>车主电话：</label>
-                                <input type="text" readonly attr="appointment.userPhone" name="userPhone" class="form-control"/>
+                                <input readonly type="text" readonly attr="appointment.userPhone" name="userPhone" class="form-control"/>
                             </div>
 
                             <div class="form-group">

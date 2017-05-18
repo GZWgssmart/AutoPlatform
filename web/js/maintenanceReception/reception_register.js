@@ -169,15 +169,22 @@ function choiceUser() {
         swal('选择失败', "只能选择一个车主信息", "error");
         return false;
     } else {
-        userInfo = selectRow[0];
-        setData(userInfo, "userInfo");
-        $('#choiceUser').bootstrapSwitch('state', true);
-        $("#userWin").modal('hide');
+        var user = selectRow[0];
+        if (user.userName != null && user.userName != "" && user.userPhone != null && user.userPhone != "") {
+            userInfo = user;
+            setData(userInfo, "userInfo");
+            $('#choiceUser').bootstrapSwitch('state', true);
+            $("#userWin").modal('hide');
+        } else {
+            swal('选择失败', "请选完善该车主的信息,至少要填写车主姓名和手机号", "error");
+            return false;
+        }
     }
 }
 
 /** 给添加的form表单设置值 */
 function setData(appointment, flag) {
+    editPhone = appointment.userPhone;
     if (flag == "appointment") {
         $("#userDiv").hide();
         $("#addUserName").val(appointment.userName);
@@ -348,10 +355,16 @@ window.operateEvents = {
         $("#editWin").modal('show');
     },
     'click .choiceUser': function (e, value, row, index) {
-        userInfo = row;
-        setData(userInfo, "userInfo");
-        $('#choiceUser').bootstrapSwitch('state', true);
-        $("#userWin").modal('hide');
+        var user = row;
+        if (user.userName != null && user.userName != "" && user.userPhone != null && user.userPhone != "") {
+            userInfo = user;
+            setData(userInfo, "userInfo");
+            $('#choiceUser').bootstrapSwitch('state', true);
+            $("#userWin").modal('hide');
+        } else {
+            swal('选择失败', "请选完善该车主的信息,至少要填写车主姓名和手机号", "error");
+            return false;
+        }
     },
     'click .choiceApp': function (e, value, row, index) {
         appointment = row;
