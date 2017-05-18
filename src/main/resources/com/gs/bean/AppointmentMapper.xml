@@ -280,7 +280,7 @@
     </select>
 
 
-    <select id="queryByTop" resultType="list" resultMap="checkinResultMap">
+    <select id="queryByTop" resultType="list" resultMap="appointmentResultMap">
         <![CDATA[
 			select count(*) from t_appointment where 1 = 1 and appointmentStatus = 'Y' and speedStatus = '已预约' and userPhone = #{phone}
 		]]>
