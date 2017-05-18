@@ -319,13 +319,6 @@ function validator(formId) {
                         max: 11,
                         message: '手机号只能是11位'
                     },
-                    threshold: 11,
-                    remote: {
-                        url: '/peopleManage/peoplePhone_verification?editPhone='+editPhone,
-                        message: '该手机号已存在',
-                        delay :  2000,
-                        type: 'GET'
-                    }
                 }
             },
             brandId: {
