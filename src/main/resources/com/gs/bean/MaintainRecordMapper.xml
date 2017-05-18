@@ -75,9 +75,38 @@
         ]]>
 	</delete>
 
+    <select id="countByUser" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        t_maintain_record mr
+        INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        LEFT JOIN t_user u ON u.userId = ch.userId WHERE u.userId = #{userId}
+    </select>
+
+    <select id="queryByUser" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+			SELECT
+                mr.*,
+                ch.userName,
+                ch.carPlate,
+                ch.maintainOrFix,
+                c.companyName,
+                u.userName AS user_userName
+            FROM
+                t_maintain_record mr
+            INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
+            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            LEFT JOIN t_user u ON u.userId = ch.userId WHERE u.userId = #{userId}
+		]]>
+        order by mr.startTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
     <select id="countByProgressPager" resultType="int">
         SELECT
-          COUNT(*)
+        COUNT(*)
         FROM
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
@@ -106,8 +135,8 @@
         <if test="user.companyId != null and user.companyId != ''">
             and mr.companyId = #{user.companyId}
         </if>
-		order by mr.startTime Desc
-		limit #{pager.beginIndex}, #{pager.pageSize}
+        order by mr.startTime Desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
     <select id="countByProgressPager_Y" resultType="int">
@@ -135,10 +164,8 @@
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-            INNER JOIN t_company c ON c.companyId = mr.companyId
-            LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
-            LEFT JOIN t_user u ON u.userId = wi.userId
-            LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId WHERE mr.recordStatus = 'Y'
+            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            LEFT JOIN t_user u ON u.userId = ch.userId WHERE mr.recordStatus = 'Y'
 		]]>
         <if test="user.companyId != null and user.companyId != ''">
             and mr.companyId = #{user.companyId}
@@ -173,10 +200,8 @@
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-            INNER JOIN t_company c ON c.companyId = mr.companyId
-            LEFT JOIN t_work_info wi ON wi.recordId = mr.recordId
-            LEFT JOIN t_user u ON u.userId = wi.userId
-            LEFT JOIN t_charge_bill cb ON cb.recordId = mr.recordId WHERE mr.recordStatus = 'N'
+            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            LEFT JOIN t_user u ON u.userId = ch.userId WHERE mr.recordStatus = 'N'
 		]]>
         <if test="user.companyId != null and user.companyId != ''">
             and mr.companyId = #{user.companyId}
@@ -187,16 +212,16 @@
 
 
     <update id="update" parameterType="maintainRecord">
-		<![CDATA[
+        <![CDATA[
           update t_maintain_record
             set checkinId = #{checkinId}, startTime = #{startTime}, endTime = #{endTime}, actualEndTime = #{actualEndTime}, recordCreatedTime = now(), pickupTime = #{pickupTime}, recordDes = #{recordDes}, recordStatus = 'Y', trackStatus = #{trackStatus} where recordId = #{recordId}
         ]]>
-	</update>
+    </update>
 
     <update id="updateTime" parameterType="maintainRecord">
         <![CDATA[
           update t_maintain_record
-            set startTime = now(), endTime = #{endTime} where recordId = #{recordId}
+            set startTime = now(), endTime = #{endTime}, speedStatus = #{speedStatus}  where recordId = #{recordId}
         ]]>
     </update>
 
@@ -208,41 +233,41 @@
     </update>
 
     <update id="batchUpdate" parameterType="list">
-		<![CDATA[
+        <![CDATA[
 
         ]]>
-	</update>
+    </update>
 
     <select id="queryAll" resultMap="maintainRecordResultMap">
-		<![CDATA[
+        <![CDATA[
           select * from t_maintian_record where 1 = 1 and recordStatus = 'Y'
         ]]>
         <if test="user.companyId != null and user.companyId != ''">
             and companyId = #{user.companyId}
         </if>
         order by companyId desc, recordStatus desc, recordCreatedTime desc
-	</select>
+    </select>
 
     <select id="queryByStatus" resultMap="maintainRecordResultMap" parameterType="string">
-		<![CDATA[
+        <![CDATA[
 
         ]]>
-	</select>
+    </select>
 
     <select id="query" parameterType="maintainRecord" resultType="maintainRecord">
-		<![CDATA[
+        <![CDATA[
 
         ]]>
-	</select>
+    </select>
 
     <select id="queryById" parameterType="string" resultType="maintainRecord">
-		<![CDATA[
+        <![CDATA[
           select * from t_maintain_record where 1 = 1 and recordId = #{id}
         ]]>
-	</select>
+    </select>
 
     <select id="queryByPager" resultType="list" resultMap="maintainRecordResultMap">
-		<![CDATA[
+        <![CDATA[
 		  select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
 		    from t_maintain_record r,  t_checkin c, t_company cpy
 		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId
@@ -250,17 +275,6 @@
         <if test="user.companyId != null and user.companyId != ''">
             and r.companyId = #{user.companyId}
         </if>
-        order by r.companyId desc, r.recordStatus desc, r.pickingStatus desc, r.recordCreatedTime desc
-        limit #{pager.beginIndex}, #{pager.pageSize}
-	</select>
-
-    <select id="queryByMyName" resultType="list" resultMap="maintainRecordResultMap">
-		<![CDATA[
-          select r.*, c.checkinId, u.userName, c.carPlate, c.carMileage, u.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
-		    from t_maintain_record r,  t_checkin c, t_company cpy, t_user u
-		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId
-		    and c.userId = u.userId and c.userId = #{user.userId}
-        ]]>
         order by r.companyId desc, r.recordStatus desc, r.pickingStatus desc, r.recordCreatedTime desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
@@ -371,13 +385,13 @@
     </select>
 
     <select id="count" resultType="int">
-		<![CDATA[
+        <![CDATA[
 		  select count(*) from t_maintain_record where 1 = 1 and speedStatus = '已登记'
         ]]>
         <if test="companyId != null and companyId != ''">
             and companyId = #{companyId}
         </if>
-	</select>
+    </select>
 
     <select id="countByStatus" resultType="int">
         <![CDATA[
@@ -509,16 +523,6 @@
         <if test="type =='day'">
             GROUP BY day(mr.recordCreatedTime)
         </if>
-    </select>
-
-    <select id="queryCustomerCar" resultMap="maintainRecordResultMap">
-        <![CDATA[
-        select che.userName, mr.endTime, mr.actualEndTime, mr.speedStatus, mr.pickupTime, cb.chargeBillMoney
-        from t_checkin che, t_maintain_record mr,t_charge_bill cb
-        where che.checkinId=mr.checkinId
-        and mr.recordId=cb.recordId and che.userPhone = #{userPhone} order by mr.startTime desc
-		]]>
-        limit 0,5
     </select>
 
 

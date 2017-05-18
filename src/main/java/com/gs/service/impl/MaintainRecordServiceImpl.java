@@ -210,6 +210,16 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
         return maintainRecordDAO.countByProgressPager_N(user);
     }
 
+    @Override
+    public List<MaintainRecord> queryByUser(Pager pager, String user) {
+        return maintainRecordDAO.queryByUser(pager, user);
+    }
+
+    @Override
+    public int countByUser(String user) {
+        return maintainRecordDAO.countByUser(user);
+    }
+
     public List<MaintainRecord> queryByMyName(Pager pager, User user){
         return maintainRecordDAO.queryByMyName(pager, user);
     }

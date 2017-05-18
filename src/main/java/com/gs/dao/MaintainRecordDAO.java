@@ -203,6 +203,19 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
      */
     public int countByProgressPager_N(User user);
 
+    /**
+     * 根据维修保养记录分页查询车主进度
+     * @return
+     */
+    public List<MaintainRecord> queryByUser(@Param("pager") Pager pager, @Param("user")String user);
+
+    /**
+     * 根据维修保养记录分页查询车主进度个数
+     * @return
+     */
+    public int countByUser(String user);
+
+
 
     /**
      * 根据id更新记录的实际结束时间
