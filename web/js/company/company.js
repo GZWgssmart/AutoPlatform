@@ -1,7 +1,10 @@
 /**
  * Created by root on 2017/4/19.
  */
-
+var editName = "";
+var editTel = "";
+var editPricipal = "";
+var editWebsite = "";
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/company/queryByPager");
@@ -32,6 +35,9 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
+        editName = product.companyName;
+        editTel  = product.companyTel;
+        editWebsite = product.companyWebsite;
         initDateTimePicker("form_datetime", "companyOpenDate", "editForm");
         $('#companys').html('<option value="' + product.companySize + '">' + product.companySize + '</option>').trigger("change");
         $('#editCompanyOpenDate').val(formatterDate(product.companyOpenDate));
@@ -137,6 +143,9 @@ window.operateEvents = {
     },
     'click .showUpdateIncomingType1': function (e, value, row, index) {
         var incomingType = row;
+        editName = incomingType.companyName;
+        editTel  = incomingType.companyTel;
+        editWebsite = incomingType.companyWebsite;
         $('#companys').html('<option value="' + incomingType.companySize + '">' + incomingType.companySize + '</option>').trigger("change");
         initDateTimePicker("form_datetime", "", "editForm");
         $("#icon").attr("src", "/" + incomingType.companyLogo);
@@ -146,31 +155,6 @@ window.operateEvents = {
         $("#editWin").modal('show');
         validator("editForm");
     }
-}
-
-var Phone;
-
-function checkPricipalPhone(){
-    Phone = $("#userPhone").val();
-    $("#userPhone").validate({
-            companyPricipalPhone: {
-                validators: {
-                    notEmpty: {
-                        message: '负责人手机号不能为空'
-                    },
-                    regexp: {
-                        regexp: /^1(3|4|5|7|8)\d{9}$/,
-                        message: '手机号格式错误'
-                    },threshold: 11,
-                    remote: {
-                        url: '/peopleManage/peoplePhone_verification?editPhone='+Phone,
-                        message: '该手机号已存在',
-                        delay :  2000,
-                        type: 'GET'
-                    }
-                }
-            }
-    });
 }
 
 function validator(formId) {
@@ -225,6 +209,13 @@ function validator(formId) {
                         min: 13,
                         max: 13,
                         message: '公司号码长度必须是13位'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/company/queryIs_dataIsExist?editValue=' + editTel,
+                        message: '该号码已存在',
+                        delay: 2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -250,6 +241,13 @@ function validator(formId) {
                     },
                     notEmpty: {
                         message: '公司官网URL不能为空'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/company/queryIs_dataIsExist?editValue=' + editWebsite,
+                        message: '该URL已存在',
+                        delay: 2000,
+                        type: 'GET'
                     }
                 }
 
@@ -298,6 +296,9 @@ function validator(formId) {
                     success: function (data) {
                         if (data.result == "success") {
                             $('#addWin').modal('hide');
+                            editName = "";
+                            editTel  = "";
+                            editWebsite = "";
                             swal(data.message, "", "success");
                             $('#cusTable').bootstrapTable('refresh');
                             $('#addForm').data('bootstrapValidator').resetForm(true);
@@ -323,6 +324,7 @@ function validator(formId) {
                         success: function (data) {
                             if (data.result == "success") {
                                 $('#editWin').modal('hide');
+
                                 swal(data.message, "", "success");
                                 $('#cusTable').bootstrapTable('refresh');
                                 $('#editForm').data('bootstrapValidator').resetForm(true);

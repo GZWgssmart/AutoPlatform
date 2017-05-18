@@ -173,7 +173,7 @@
                             <div class="form-group">
                                 <label class="control-label">公司负责人手机号码：</label>
                                 <input type="text" id="userPhone" name="companyPricipalPhone" maxlength="11"
-                                       class="form-control" onblur="checkPricipalPhone();"/>
+                                       class="form-control" />
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司官网</label>

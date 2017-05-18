@@ -1,6 +1,8 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gs.bean.*;
 import com.gs.common.Constants;
 import com.gs.common.bean.ComboBox4EasyUI;
@@ -27,10 +29,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by Administrator on 2017/4/1.
@@ -83,13 +82,17 @@ public class CompanyController {
         }
         mav.setViewName("company/home");
         logger.info("访问公司的主页");
-        mav.addObject("apps", appointmentService.queryPagerByTop(count, user));
-        mav.addObject("checkins", checkinService.queryByTop(count, user));
-        mav.addObject("complaints", complaintService.queryByTop(count, user));
-        mav.addObject("reminds", maintainRemindService.queryByTop(count, user));
-        mav.addObject("company", companyService.queryById(user.getCompanyId()));
-        mav.addObject("companys", companyService.queryByTop(count));
-        mav.addObject("intentions", intentionCompanyService.queryByTop(count));
+        String admin = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
+        if (CheckRoleUtil.checkRoles(admin)) {
+            mav.addObject("companys", companyService.queryByTop(count));
+            mav.addObject("intentions", intentionCompanyService.queryByTop(count));
+        } else {
+            mav.addObject("apps", appointmentService.queryPagerByTop(count, user));
+            mav.addObject("checkins", checkinService.queryByTop(count, user));
+            mav.addObject("complaints", complaintService.queryByTop(count, user));
+            mav.addObject("reminds", maintainRemindService.queryByTop(count, user));
+            mav.addObject("company", companyService.queryById(user.getCompanyId()));
+        }
         return mav;
     }
 
@@ -392,7 +395,6 @@ public class CompanyController {
         List<Company> companyList = companyService.searchByPager(companyName,userName,pager);
         return new Pager4EasyUI<Company>(pager.getTotalRecords(), companyList);
     }
-
 
 }
 

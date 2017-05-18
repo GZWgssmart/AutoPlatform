@@ -23,4 +23,5 @@ public interface CompanyDAO extends BaseDAO<String, Company>{
     public int searchCount(@Param("companyName") String companyName,@Param("userName") String userName);
 
     public List<Company> queryByTop(@Param("top") int top);
+
 }
