@@ -79,6 +79,7 @@
             <th data-field="accBuyStatus" data-formatter="status">状态</th>
             <s:hasAnyRoles name="companyAdmin, systemSuperAdmin, companyBuyer">
                 <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
+                <th data-formatter="fmtIsFinish" data-events="operateEvents">是否完成采购</th>
             </s:hasAnyRoles>
         </tr>
         </thead>
@@ -106,13 +107,13 @@
 
                 <a>
                     <button onclick="onlyStatus();" type="button" class="btn btn-default">
-                        <i class="glyphicon glyphicon-shopping-cart"></i> 只看已采购
+                        <i class="glyphicon glyphicon-shopping-cart"></i> 只看可用
                     </button>
                 </a>
 
                 <a>
                     <button onclick="onlyBuy();" type="button" class="btn btn-default">
-                        <i class="glyphicon glyphicon-shopping-cart"></i> 只看可用
+                        <i class="glyphicon glyphicon-shopping-cart"></i> 只看以采购
                     </button>
                 </a>
                 <a>
@@ -142,8 +143,9 @@
                         <form role="form" id="editForm">
                             <input type="hidden" attr="accessoriesBuy.accBuyId" name="accBuyId"/>
                             <input type="hidden" attr="accessoriesBuy.accessories.accId" name="accessories.accId"/>
-                            <input type="hidden" attr="accessoriesBuy.accessories.accessoriesType.accTypeId"
-                                   name="accessories.accessoriesType.accTypeId"/>
+                            <input type="hidden" attr="accessoriesBuy.accessories.accessoriesType.accTypeId" name="accessories.accessoriesType.accTypeId"/>
+                            <input type="hidden" attr="accessoriesBuy.accessories.supply.supplyId" name="accessories.supply.supplyId"/>
+
                             <div class="form-group">
                                 <label>配件名称：</label>
                                 <input type="text" name="accessories.accName" attr="accessoriesBuy.accessories.accName"
@@ -192,7 +194,7 @@
                             <div class="form-group">
                                 <label>折扣：</label>
                                 <input type="text" name="accBuyDiscount" id="eAccBuyDiscount"
-                                       attr="accessoriesBuy.accBuyDiscount"
+                                       attr="accessoriesBuy.accBuyDiscount" value="1"
                                        class="form-control"/>
                             </div>
 
@@ -221,14 +223,14 @@
                                 <input type="text" name="accBuyTotal" id="eAccBuyTotal"
                                        attr="accessoriesBuy.accBuyTotal"
                                        id="eAccBuyTotal"
-                                       class="form-control"/>
+                                       class="form-control" readonly/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
                                 <input type="text" name="accBuyMoney" attr="accessoriesBuy.accBuyMoney"
-                                       id="eAccBuyMoney" onkeyup="value=value.replace(/[^\d]/g,'') "
-                                       class="form-control"/>
+                                       id="eAccBuyMoney"
+                                       class="form-control" readonly/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
@@ -316,10 +318,10 @@
 
                             <div class="form-group">
                                 <label>折扣：</label>
-                                <input type="text" name="accBuyDiscount" id="accBuyDiscount" title="如：7.8折是0.78、5折是0.5"
-                                       class="form-control" placeholder="没折扣可以不用输入"/>
+                                <input type="text" name="accBuyDiscount" id="accBuyDiscount"
+                                       title="如：7.8折是0.78、5折是0.5" value="1"
+                                       class="form-control"/>
                             </div>
-
 
                             <div class="form-group">
                                 <label>采购时间：</label>
@@ -329,16 +331,12 @@
 
                             <div class="form-group">
                                 <label>总价：</label>
-                                <input type="text" name="accBuyTotal" id="accBuyTotal"
-                                       readonly
-                                       class="form-control" placeholder="点击自动计算"/>
+                                <input type="text" name="accBuyTotal" id="accBuyTotal" class="form-control" readonly/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
-                                <input type="text" name="accBuyMoney" id="accBuyMoney"
-                                       readonly
-                                       class="form-control" placeholder="点击自动计算"/>
+                                <input type="text" name="accBuyMoney" id="accBuyMoney" class="form-control" readonly/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">

@@ -42,13 +42,10 @@ public class AccessoriesBuyController {
     private AccessoriesService accessoriesService;
 
     @Resource
-    private AccessoriesTypeService accessoriesTypeService;
+    private IncomingTypeService incomingTypeService;
 
     @Resource
-    private CompanyService companyService;
-
-    @Resource
-    private SupplyService supplyService;
+    private IncomingOutgoingService incomingOutgoingService;
 
     /**
      * 可以看的角色
@@ -62,6 +59,13 @@ public class AccessoriesBuyController {
      * 董事长、采购员、超级管理员
      */
     private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_BUYER + "," + Constants.SYSTEM_SUPER_ADMIN;
+
+    /**
+     * 控制是否插入库存
+     */
+    private boolean isInsertAcc = false;
+
+    private Accessories accessories;
 
     /**
      * 显示配件采购管理
@@ -84,7 +88,7 @@ public class AccessoriesBuyController {
     @ResponseBody
     @RequestMapping(value = "isAccAdd", method = RequestMethod.POST)
     private ControllerResult isAccAdd(AccessoriesBuy accessoriesBuy, @Param("state") String state) {
-
+        System.out.println(accessoriesBuy);
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
@@ -121,7 +125,6 @@ public class AccessoriesBuyController {
                         acc.setAccIdle(accessoriesBuy.getAccBuyCount());
                         acc.setAccCommodityCode(accessoriesBuy.getAccessories().getAccCommodityCode());
 
-
                         accessoriesBuy.setAccessories(acc);
                         accessoriesBuy.setAccId(acc.getAccId());
                         accessoriesBuy.setCompanyId(user.getCompanyId());
@@ -130,6 +133,14 @@ public class AccessoriesBuyController {
 
                         accessoriesBuyService.insert(accessoriesBuy);
                         accessoriesService.insert(acc);
+
+                        IncomingType incomingType = incomingTypeService.queryByName(Constants.ACC_IN);
+                        IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
+                        incomingOutgoing.setCompanyId(user.getCompanyId());
+                        incomingOutgoing.setInOutCreatedUser(user.getUserId());
+                        incomingOutgoing.setInOutMoney(accessoriesBuy.getAccBuyMoney());
+                        incomingOutgoing.setInTypeId(incomingType.getInTypeId());
+                        incomingOutgoingService.insert(incomingOutgoing);
 
                         return ControllerResult.getSuccessResult("添加成功");
                     }
@@ -145,7 +156,6 @@ public class AccessoriesBuyController {
             return ControllerResult.getFailResult("添加失败");
         }
     }
-
 
     @ResponseBody
     @RequestMapping(value = "pager", method = RequestMethod.GET)
@@ -214,30 +224,35 @@ public class AccessoriesBuyController {
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public ControllerResult updateAccessoriesBuyInfo(AccessoriesBuy accessoriesBuy) {
-
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
-                    Accessories acc = new Accessories();
+                    int total = accessoriesBuy.getAccBuyCount();
+                    int idle = total;
+
                     User user = SessionGetUtil.getUser();
 
-                    acc.setCompanyId(user.getCompanyId());
-                    acc.setAccIdle(accessoriesBuy.getAccBuyCount());
-                    acc.setAccTotal(accessoriesBuy.getAccBuyCount());
+                    Accessories acc = accessoriesBuy.getAccessories();
 
+                    acc.setAccTypeId(acc.getAccessoriesType().getAccTypeId());
+                    acc.setSupplyId(acc.getSupply().getSupplyId());
+                    acc.setCompanyId(user.getCompanyId());
                     acc.setAccStatus("Y");
                     acc.setAccUnit(accessoriesBuy.getAccUnit());
                     acc.setAccPrice(accessoriesBuy.getAccBuyPrice());
                     acc.setAccBuyedTime(accessoriesBuy.getAccBuyTime());
                     acc.setAccDes(accessoriesBuy.getAccessories().getAccDes());
+                    acc.setAccTotal(total);
+                    acc.setAccIdle(idle);
 
                     accessoriesBuyService.update(accessoriesBuy);
                     accessoriesService.update(acc);
+
                     return ControllerResult.getSuccessResult("更新成功");
                 }
                 return ControllerResult.getFailResult("没有此权限访问");
             } catch (Exception e) {
-                logger.info("出现异常【239】" + e.getStackTrace());
+                logger.info("出现异常[248]" + e.getStackTrace());
                 return ControllerResult.getFailResult("出现了一个错误");
             }
         } else {
@@ -287,6 +302,27 @@ public class AccessoriesBuyController {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
 
                     accessoriesBuyService.active(id);
+                    return ControllerResult.getSuccessResult("操作成功");
+                }
+                return ControllerResult.getFailResult("没有此权限访问");
+            } catch (Exception e) {
+                logger.info("出现异常" + e.getStackTrace());
+                return ControllerResult.getFailResult("出现了一个错误");
+            }
+        } else {
+            logger.info("session失效重新登入");
+            return ControllerResult.getFailResult("登入失效，重新登入");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "finish", method = RequestMethod.GET)
+    public ControllerResult finish(@Param("id") String id) {
+
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    accessoriesBuyService.updateAccIsBuy(id);
                     return ControllerResult.getSuccessResult("操作成功");
                 }
                 return ControllerResult.getFailResult("没有此权限访问");
@@ -400,9 +436,8 @@ public class AccessoriesBuyController {
             logger.info("session失效重新登入");
             return null;
         }
-
-
     }
+
 
     @ResponseBody
     @RequestMapping(value = "query_default_count", method = RequestMethod.GET)

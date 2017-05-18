@@ -43,13 +43,17 @@ public class Accessories {
         return supply;
     }
 
-    public void setSupply(Supply supply) {this.supply = supply;}
+    public void setSupply(Supply supply) {
+        this.supply = supply;
+    }
 
     public AccessoriesType getAccessoriesType() {
         return accessoriesType;
     }
 
-    public void setAccessoriesType(AccessoriesType accessoriesType) {this.accessoriesType = accessoriesType;}
+    public void setAccessoriesType(AccessoriesType accessoriesType) {
+        this.accessoriesType = accessoriesType;
+    }
 
     private List<AccessoriesBuy> accessoriesBuys;
 
@@ -189,4 +193,29 @@ public class Accessories {
         this.accStatus = accStatus;
     }
 
+    @Override
+    public String toString() {
+        return "Accessories{" +
+                "accId='" + accId + '\'' +
+                ", accName='" + accName + '\'' +
+                ", accCommodityCode='" + accCommodityCode + '\'' +
+                ", accDes='" + accDes + '\'' +
+                ", accPrice=" + accPrice +
+                ", accSalePrice=" + accSalePrice +
+                ", accUnit='" + accUnit + '\'' +
+                ", accTotal=" + accTotal +
+                ", accIdle=" + accIdle +
+                ", accUsedTime=" + accUsedTime +
+                ", accBuyedTime=" + accBuyedTime +
+                ", supplyId='" + supplyId + '\'' +
+                ", accCreatedTime=" + accCreatedTime +
+                ", accTypeId='" + accTypeId + '\'' +
+                ", companyId='" + companyId + '\'' +
+                ", accStatus='" + accStatus + '\'' +
+                ", supply=" + supply +
+                ", accessoriesType=" + accessoriesType +
+                ", company=" + company +
+                ", accessoriesBuys=" + accessoriesBuys +
+                '}';
+    }
 }

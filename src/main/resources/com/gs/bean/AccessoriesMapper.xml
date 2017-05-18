@@ -125,14 +125,32 @@
 
 	<select id="queryByPager" resultMap="accessoriesResultMap">
 		<![CDATA[
-			select c.*, s.supplyId, s.supplyName, ac.accTypeId, ac.accTypeName, cpy.companyId, cpy.companyName
-			from t_accessories c, t_supply s, t_accessories_type ac, t_company cpy
-			where 1=1 and c.supplyId = s.supplyId and c.accTypeId = ac.accTypeId and c.companyId = cpy.companyId
+			SELECT
+			acc.*,
+			suy.supplyName,
+			cpy.companyName,
+			ate.accTypeName
+		FROM
+			(
+				(
+					(
+						(
+							t_accessories acc
+							INNER JOIN t_accessories_buy aby ON acc.accId = aby.accId
+						)
+						INNER JOIN t_accessories_type ate ON acc.accTypeId = ate.accTypeId
+					)
+					INNER JOIN t_supply suy ON acc.supplyId = suy.supplyId
+				)
+				INNER JOIN t_company cpy ON acc.companyId = cpy.companyId
+			)
+		WHERE
+			aby.accIsBuy = 'Y'
         ]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and c.companyId = #{user.companyId}
+			and cpy.companyId = #{user.companyId}
 		</if>
-		order by c.companyId desc, c.accCreatedTime
+		order by acc.accBuyedTime desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
@@ -182,10 +200,27 @@
 
 	<select id="count" resultType="int">
 		<![CDATA[
-			select count(*) from t_accessories where 1 = 1
+		SELECT
+			count(acc.accId)
+		FROM
+			(
+				(
+					(
+						(
+							t_accessories acc
+							INNER JOIN t_accessories_buy aby ON acc.accId = aby.accId
+						)
+						INNER JOIN t_accessories_type ate ON acc.accTypeId = ate.accTypeId
+					)
+					INNER JOIN t_supply suy ON acc.supplyId = suy.supplyId
+				)
+				INNER JOIN t_company cpy ON acc.companyId = cpy.companyId
+			)
+		WHERE
+			aby.accIsBuy = 'Y'
         ]]>
 		<if test="companyId != null and companyId != ''">
-			and companyId = #{companyId}
+			and acc.companyId = #{companyId}
 		</if>
 	</select>
 	<select id="countByTypeId" resultType="int">

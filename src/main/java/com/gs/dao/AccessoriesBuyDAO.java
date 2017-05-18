@@ -55,7 +55,6 @@ public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy> {
     public int countByBuyState(@Param("user") User user);
 
 
-
     /**
      * 根据某个时间段内模糊查询某个配件
      *
@@ -95,6 +94,13 @@ public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy> {
      * @return
      */
     public int countAccIsBuy(@Param("user") User user);
+
+    /**
+     * 更新配件是否采购
+     *
+     * @param id
+     */
+    public void updateAccIsBuy(@Param("id") String id);
 
     /*
     * 默认查询本月的下单统计

@@ -197,7 +197,7 @@ function addAcc() {
         swal('添加失败', "请至少选择一条数据后关闭本窗口", "error");
     } else {
         var acc = selectRow[0];
-        lCount = acc.accTotal;
+        lCount = acc.accIdle;
         $("#addForm").fill(acc);
         $("#accWin").modal("hide");
         autoEditCalculationCount("aSaleCount", "accSalePrice", "accSaleDiscount", "accSaleTotal", "accSaleMoney", "aLastCount", acc.accTotal);

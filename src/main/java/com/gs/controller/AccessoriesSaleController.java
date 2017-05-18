@@ -142,17 +142,17 @@ public class AccessoriesSaleController {
     public ControllerResult remove(@Param("id") String id) {
 
         if (SessionGetUtil.isUser()) {
-//            try {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
 
-                accessoriesSaleService.inactive(id);
-                return ControllerResult.getSuccessResult("操作成功");
+                    accessoriesSaleService.inactive(id);
+                    return ControllerResult.getSuccessResult("操作成功");
+                }
+                return ControllerResult.getFailResult("没有此权限访问");
+            } catch (Exception e) {
+                logger.info("出现异常" + e.getStackTrace());
+                return ControllerResult.getFailResult("出现了一个错误");
             }
-            return ControllerResult.getFailResult("没有此权限访问");
-//            } catch (Exception e) {
-//                logger.info("出现异常" + e.getStackTrace());
-//                return ControllerResult.getFailResult("出现了一个错误");
-//            }
         } else {
             logger.info("session失效重新登入");
             return ControllerResult.getFailResult("登入失效，重新登入");
@@ -166,17 +166,17 @@ public class AccessoriesSaleController {
     public ControllerResult enable(@Param("id") String id) {
 
         if (SessionGetUtil.isUser()) {
-//            try {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
 
-                accessoriesSaleService.active(id);
-                return ControllerResult.getSuccessResult("操作成功");
+                    accessoriesSaleService.active(id);
+                    return ControllerResult.getSuccessResult("操作成功");
+                }
+                return ControllerResult.getFailResult("没有此权限访问");
+            } catch (Exception e) {
+                logger.info("出现异常" + e.getStackTrace());
+                return ControllerResult.getFailResult("出现了一个错误");
             }
-            return ControllerResult.getFailResult("没有此权限访问");
-//            } catch (Exception e) {
-//                logger.info("出现异常" + e.getStackTrace());
-//                return ControllerResult.getFailResult("出现了一个错误");
-//            }
         } else {
             logger.info("session失效重新登入");
             return ControllerResult.getFailResult("登入失效，重新登入");

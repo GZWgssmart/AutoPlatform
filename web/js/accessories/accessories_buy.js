@@ -17,6 +17,7 @@ $(document).ready(function () {
 
 });
 
+
 function initBsSwitchBuy(id, onSwitchChange) {
     initBsSwitch.call(this, id, onSwitchChange);
 }
@@ -25,10 +26,12 @@ function switchChange(event, state) {
     onSwitchChange.call(this, event, state);
 }
 
+
 function showSearchFormSale() {
     initDateTimePickerNotValitor("form_datetime");
     showSHForm.call(this);
 }
+
 
 override :switchChange = function (event, state) {
     if (state == true) {
@@ -66,7 +69,6 @@ function showEditWin() {
         var accessoriesBuy = selectRow[0];
         $("#editForm").fill(accessoriesBuy);
         $("#buyTime").val(formatterDate(accessoriesBuy.accBuyTime));
-
         $("#editWin").modal('show');
     }
 }
@@ -90,26 +92,25 @@ function updateAccessoriesBuyInfo(formId) {
 
 /**添加采购信息 */
 function addAccessoriesBuyInfo(formId) {
-    var bDiscount = $("#accBuyDiscount").val();
-    if (bDiscount == '' || bDiscount == null) {
-        $("#accBuyDiscount").val(1);
-        $.post("/accessoriesBuy/isAccAdd?state=" + isAcc,
-            $("#" + formId).serialize(),
-            function (data) {
-                if (data.result == "success") {
-                    $('#addWin').modal('hide');
-                    swal(data.message, "", "success");
-                    $('#cusTable').bootstrapTable('refresh');
-                    $("input[type=reset]").trigger("click");
-                } else if (data.result == "fail") {
-                    destoryValidator(formId, "addForm");
-                    clearTempData();
-                    validator(formId);
-                    swal(data.message, "", "error");
-                }
-            }, "json");
-    }
+    addAccBuyInfo(formId);
+}
 
+function addAccBuyInfo(formId) {
+    $.post("/accessoriesBuy/isAccAdd?state=" + isAcc,
+        $("#" + formId).serialize(),
+        function (data) {
+            if (data.result == "success") {
+                $('#addWin').modal('hide');
+                swal(data.message, "", "success");
+                $('#cusTable').bootstrapTable('refresh');
+                $("input[type=reset]").trigger("click");
+            } else if (data.result == "fail") {
+                destoryValidator(formId, "addForm");
+                clearTempData();
+                validator(formId);
+                swal(data.message, "", "error");
+            }
+        }, "json");
 }
 
 
@@ -117,11 +118,22 @@ function fmtOperate(value, row, index) {
     if (row.accBuyStatus == 'Y') {
         return ['<button type="button" class="removeBuy btn btn-danger  btn-sm" style="margin-right:15px;">冻结</button>',
             '<button type="button" class="showEditWin btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
+
         ].join('')
     } else {
         return ['<button type="button" class="enableBuy btn btn-success  btn-sm" style="margin-right:15px;">激活</button>',
             '<button type="button" class="showEditWin btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('')
+    }
+}
+
+function fmtIsFinish(value, row, index) {
+    if (row.accIsBuy == 'N') {
+        return ['<button type="button" class="btn btn-warning isFinish">完成此采购</button>',
+        ].join('');
+    } else {
+        return ['<button type="button" class="btn btn-success" disabled>已完成</button>',
+        ].join('');
     }
 }
 
@@ -144,7 +156,7 @@ window.operateEvents = {
         $('#eAccType').html('<option value="' + accessoriesBuy.accessories.accessoriesType.accTypeId + '">' + accessoriesBuy.accessories.accessoriesType.accTypeName + '</option>').trigger("change");
         $("#buyTime").val(formatterDate(accessoriesBuy.accBuyTime));
         showAccEditWin();
-        autoCalculation1("eAccBuyCount", "eAccBuyPrice", "eAccBuyDiscount");
+        autoCalculation1("eAccBuyCount", "eAccBuyPrice", "eAccBuyDiscount", "eAccBuyTotal", "eAccBuyMoney");
     },
     'click .enableBuy': function (e, value, row, index) {
         $.get("/accessoriesBuy/enable?id=" + row.accBuyId,
@@ -156,6 +168,27 @@ window.operateEvents = {
                     swal(data.message, "", "error");
                 }
             });
+    },
+    'click .isFinish': function (e, value, row, index) {
+        swal({
+            title: "您确定完成了该采购吗？",
+            text: '确定了将不可更改',
+            type: "warning",
+            showCancelButton: true,
+            closeOnConfirm: true,
+            cancelButtonText: "取消",
+            confirmButtonText: "是的，我完成了",
+            confirmButtonColor: "#ec6c62"
+        }, function () {
+            $.get("/accessoriesBuy/finish?id=" + row.accBuyId,
+                function (data) {
+                    if (data.result == "success") {
+                        $('#cusTable').bootstrapTable('refresh');
+                    } else if (data.result == "fail") {
+                        swal(data.message, "", "error");
+                    }
+                });
+        })
     }
 }
 
@@ -188,13 +221,31 @@ function addAccBuy() {
         swal('添加失败', "请至少选择一条数据后关闭本窗口", "error");
     } else {
         var acc = selectRow[0];
+        console.log(acc);
         $("#accBuyTime").val(formatterDate(acc.accUsedTime));
         $("#addForm").fill(acc);
         enableSwitch("accWin", "isAcc");
-
         $("#accWin").modal("hide");
+
+        accAddAutoCalculation(acc.accDiscount, acc.accIdle, acc.accPrice, "accBuyTotal", "accBuyMoney");
+        autoCalculation1("accBuyCount", "accBuyPrice", "accBuyDiscount", "accBuyTotal", "accBuyMoney");
     }
     disableSwitch();
+}
+
+function accAddAutoCalculation(accDiscount, accIdle, accPrice, accBuyTotal, accBuyMoney) {
+    var rs = "";
+    var udrs = "";
+    if (accDiscount < 1) {
+        udrs = accPrice * accIdle;
+        rs = (accPrice * accIdle) * accDiscount;
+        $("#" + accBuyTotal).val(udrs);
+        $("#" + accBuyMoney).val(rs);
+    } else {
+        udrs = accPrice * accIdle;
+        $("#" + accBuyTotal).val(udrs);
+        $("#" + accBuyMoney).val(udrs);
+    }
 }
 
 function fmtCheckState(value) {
@@ -221,6 +272,7 @@ function fmtBuyState(value) {
         return "未采购";
     }
 }
+
 /**
  * 批量冻结状态
  */
@@ -255,7 +307,7 @@ function onlyStatus() {
     initTable("cusTable", "/accessoriesBuy/onlyStatus");
 }
 
-function onlyStatus() {
+function onlyBuy() {
     initTable("cusTable", "/accessoriesBuy/onlyBuy");
 }
 
@@ -467,64 +519,6 @@ function showAccEditWin() {
     // clearTempData();
     validator("editForm");
     $("#editWin").modal('show');
-}
-
-/**
- * 自动计算价格
- * @param buyCount 购买数量
- * @param buyPrice 购买价格
- * @param buyDiscount 购买折扣
- */
-function autoCalculation1(buyCount, buyPrice, buyDiscount) {
-    var bCount = "";
-    var bPrice = ""
-    var bDiscount = "";
-    var rs = "";
-    var urs = "";
-    $("#" + buyCount + ",#" + buyPrice + ",#" + buyDiscount).bind("input onfocus", function () {
-        bCount = $("#" + buyCount).val();
-        bPrice = $("#" + buyPrice).val();
-        bDiscount = $("#" + buyDiscount).val();
-        if (bCount != null && bCount != "" && bPrice != null && bPrice != "" && bDiscount != null && bDiscount != "") {
-            rs = (bCount * bPrice) * bDiscount;
-            urs = bCount * bPrice;
-            $("#eAccBuyTotal").val(urs);
-            $("#eAccBuyMoney").val(rs);
-            if (bDiscount == null && bDiscount == "") {
-                var rs = bCount * bPrice;
-                $("#eAccBuyTotal").val(rs);
-            }
-        } else {
-            $("#eAccBuyTotal").val("0");
-            $("#eAccBuyMoney").val("0");
-        }
-    })
-}
-
-function autoCalculation(iId) {
-    var id = iId.id;
-    count = $("#accBuyCount").val();
-    var price = $("#accBuyPrice").val();
-    var discount = $("#accBuyDiscount").val();
-    var result = 0;
-    var money = 0;
-    if (count != null && count != "" && price != null && price != "") {
-        if (id == "accBuyTotal") {
-            result = count * price;
-            $("#" + id).val(result);
-        } else if (id == "accBuyMoney") {
-            if (discount != null && discount != "") {
-                var rs = $("#accBuyTotal").val();
-                if (rs != null && rs != "") {
-                    money = rs * discount;
-                    $("#" + id).val(money);
-                }
-            } else if (discount == "0" || discount == "") {
-                var rs = $("#accBuyTotal").val();
-                $("#" + id).val(rs);
-            }
-        }
-    }
 }
 
 /**

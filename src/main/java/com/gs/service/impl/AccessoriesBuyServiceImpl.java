@@ -117,6 +117,10 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
         return accessoriesBuyDAO.countAccIsBuy(user);
     }
 
+    public void updateAccIsBuy(String id) {
+        accessoriesBuyDAO.updateAccIsBuy(id);
+    }
+
     public List<AccessoriesBuy> queryByDefaultCount(String companyId) {
         return accessoriesBuyDAO.queryByDefaultCount(companyId);
     }

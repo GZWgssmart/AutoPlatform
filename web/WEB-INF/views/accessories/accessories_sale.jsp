@@ -90,11 +90,6 @@
                         <i class="glyphicon glyphicon-plus"></i> 添加
                     </button>
                 </a>
-                <%--<a>--%>
-                    <%--<button onclick="delteleSale();" type="button" id="remove" class="btn btn-danger">--%>
-                        <%--<i class="glyphicon glyphicon-trash"></i> 删除--%>
-                    <%--</button>--%>
-                <%--</a>--%>
             </shiro:hasAnyRoles>
 
             <shiro:hasAnyRoles
@@ -316,7 +311,7 @@
                             <div class="form-group">
                                 <label>折扣：</label>
                                 <input type="text" name="accSaleDiscount" id="accSaleDiscount" class="form-control"
-                                       placeholder="没折扣可为空" attr="acc.accDiscount"/>
+                                       value="1" attr="acc.accDiscount"/>
                             </div>
 
                             <div class="form-group">

@@ -48,9 +48,9 @@
 
     <insert id="insert" parameterType="accessoriesBuy">
 		insert into
-		auto_platform.t_accessories_buy(accBuyId, accId, accUnit, accBuyCount, accBuyPrice, accBuyTotal, accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime, companyId, accBuyStatus, accBuyCheck)
+		auto_platform.t_accessories_buy(accBuyId, accId, accUnit, accBuyCount, accBuyPrice, accBuyTotal, accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime, companyId, accBuyStatus, accBuyCheck, accIsBuy)
 		values
-		(uuid(),#{accId},#{accUnit},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},now(),#{companyId},'N', 'N')
+		(uuid(),#{accId},#{accUnit},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},now(),#{companyId},'N', 'N', 'N')
 
 	</insert>
 
@@ -88,6 +88,10 @@
 
         ]]>
 	</update>
+
+    <update id="updateAccIsBuy" parameterType="string">
+        update t_accessories_buy aby set aby.accIsBuy = 'Y' where aby.accBuyId = #{id}
+    </update>
 
     <select id="queryByDefaultCount" resultMap="accessoriesBuyResultMap">
         <![CDATA[
@@ -273,7 +277,7 @@
                     (
                         (
                             t_accessories_buy ab
-                            INNER JOIN t_accessories ac ON ab.accId = ac.accId
+                            LEFT JOIN t_accessories ac ON ab.accId = ac.accId
                         )
                         INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
                     )
