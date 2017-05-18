@@ -75,7 +75,8 @@
             <th data-field="accBuyTotal">采购总价</th>
             <th data-field="accBuyMoney">采购最终价</th>
             <th data-field="accBuyCheck" data-formatter="fmtCheckState">审核状态</th>
-            <th data-field="accBuyStatus" data-formatter="fmtBuyState">采购状态</th>
+            <th data-field="accIsBuy" data-formatter="fmtBuyState">采购状态</th>
+            <th data-field="accBuyStatus" data-formatter="status">状态</th>
             <s:hasAnyRoles name="companyAdmin, systemSuperAdmin, companyBuyer">
                 <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
             </s:hasAnyRoles>
@@ -104,8 +105,14 @@
                 </a>
 
                 <a>
-                    <button onclick="onlyBuy();" type="button" class="btn btn-default">
+                    <button onclick="onlyStatus();" type="button" class="btn btn-default">
                         <i class="glyphicon glyphicon-shopping-cart"></i> 只看已采购
+                    </button>
+                </a>
+
+                <a>
+                    <button onclick="onlyBuy();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-shopping-cart"></i> 只看可用
                     </button>
                 </a>
                 <a>

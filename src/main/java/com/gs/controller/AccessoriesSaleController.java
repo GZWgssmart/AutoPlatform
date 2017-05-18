@@ -1,10 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.Accessories;
-import com.gs.bean.AccessoriesBuy;
-import com.gs.bean.AccessoriesSale;
-import com.gs.bean.User;
+import com.gs.bean.*;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
@@ -44,6 +41,12 @@ public class AccessoriesSaleController {
 
     @Resource
     private AccessoriesService accessoriesService;
+
+    @Resource
+    private IncomingTypeService incomingTypeService;
+
+    @Resource
+    private IncomingOutgoingService incomingOutgoingService;
 
     /**
      * 可以查看的角色
@@ -197,6 +200,14 @@ public class AccessoriesSaleController {
                     int lCount = Integer.valueOf(lastCount);
 
                     accessoriesService.updateIdle(accessoriesSale.getAccId(), lCount, user);
+
+                    IncomingType incomingType = incomingTypeService.queryByName(Constants.ACC_IN);
+                    IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
+                    incomingOutgoing.setCompanyId(user.getCompanyId());
+                    incomingOutgoing.setInOutCreatedUser(user.getUserId());
+                    incomingOutgoing.setInOutMoney(accessoriesSale.getAccSaleMoney());
+                    incomingOutgoing.setInTypeId(incomingType.getInTypeId());
+                    incomingOutgoingService.insert(incomingOutgoing);
 
                     return ControllerResult.getSuccessResult("添加成功");
 

@@ -215,10 +215,10 @@ function fmtDiscount(value) {
 
 function fmtBuyState(value) {
     if (value == 'Y') {
-        return "可用";
+        return "已采购";
     } else {
 
-        return "不可用";
+        return "未采购";
     }
 }
 /**
@@ -251,7 +251,11 @@ function onlyCheck() {
     initTable("cusTable", "/accessoriesBuy/onlyCheck");
 }
 
-function onlyBuy() {
+function onlyStatus() {
+    initTable("cusTable", "/accessoriesBuy/onlyStatus");
+}
+
+function onlyStatus() {
     initTable("cusTable", "/accessoriesBuy/onlyBuy");
 }
 

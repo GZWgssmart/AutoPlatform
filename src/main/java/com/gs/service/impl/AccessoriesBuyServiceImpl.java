@@ -85,14 +85,6 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
     }
 
 
-    public int batchDeleteAcc(String[] ids) {
-        return accessoriesBuyDAO.batchDeleteAcc(ids);
-    }
-
-    public List<Accessories> queryByCheckStates(String checkState, User user) {
-        return accessoriesBuyDAO.queryByCheckStates(checkState, user);
-    }
-
     public int countByBuyState(User user) {
         return accessoriesBuyDAO.countByBuyState(user);
     }
@@ -109,20 +101,20 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
         return accessoriesBuyDAO.queryByCheckStatePager(pager, user);
     }
 
-    public int countByAccName(String accName, User user) {
-        return accessoriesBuyDAO.countByAccName(accName, user);
-    }
-
-    public List<AccessoriesBuy> queryByAccNamePager(Pager pager, String accName, User user) {
-        return accessoriesBuyDAO.queryByAccNamePager(pager, accName, user);
-    }
-
     public List<AccessoriesBuy> queryByBuyTimeScopeByAccNamePager(Pager pager, String accName, String buyTimeStart, String buyTimeEnd, User user) {
         return accessoriesBuyDAO.queryByBuyTimeScopeByAccNamePager(pager, accName, buyTimeStart, buyTimeEnd, user);
     }
 
     public int countByBuyTimeScope(String accName, String buyTimeStart, String buyTimeEnd, User user) {
         return accessoriesBuyDAO.countByBuyTimeScope(accName, buyTimeStart, buyTimeEnd, user);
+    }
+
+    public List<AccessoriesBuy> accIsBuy(Pager pager, User user) {
+        return accessoriesBuyDAO.accIsBuy(pager, user);
+    }
+
+    public int countAccIsBuy(User user) {
+        return accessoriesBuyDAO.countAccIsBuy(user);
     }
 
     public List<AccessoriesBuy> queryByDefaultCount(String companyId) {

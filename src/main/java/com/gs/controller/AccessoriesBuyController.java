@@ -300,37 +300,6 @@ public class AccessoriesBuyController {
         }
     }
 
-    /**
-     * 批量冻结
-     *
-     * @param accBuyArr
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "batchDelete", method = RequestMethod.GET)
-    public ControllerResult batchDelete(@Param("accBuyArr") String[] accBuyArr) {
-
-        if (SessionGetUtil.isUser()) {
-            try {
-                if (CheckRoleUtil.checkRoles(queryRole)) {
-                    User user = SessionGetUtil.getUser();
-
-                    accessoriesBuyService.batchDeleteAcc(accBuyArr);
-                    return ControllerResult.getSuccessResult("更新成功");
-                }
-                return ControllerResult.getFailResult("没有此权限访问");
-            } catch (Exception e) {
-                logger.info("出现异常" + e.getStackTrace());
-                return ControllerResult.getFailResult("出现了一个错误");
-            }
-        } else {
-            logger.info("session失效重新登入");
-            return ControllerResult.getFailResult("登入失效，重新登入");
-        }
-
-
-    }
-
     @ResponseBody
     @RequestMapping(value = "onlyCheck", method = RequestMethod.GET)
     public Pager4EasyUI<AccessoriesBuy> onlyCheck(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
@@ -355,13 +324,11 @@ public class AccessoriesBuyController {
             logger.info("session失效重新登入");
             return null;
         }
-
-
     }
 
     @ResponseBody
-    @RequestMapping(value = "onlyBuy", method = RequestMethod.GET)
-    public Pager4EasyUI<AccessoriesBuy> onlyBuy(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+    @RequestMapping(value = "onlyStatus", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesBuy> onlyStatus(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
@@ -376,6 +343,31 @@ public class AccessoriesBuyController {
                 return null;
             } catch (Exception e) {
                 logger.info("出现异常" + e.getStackTrace());
+                return null;
+            }
+        } else {
+            logger.info("session失效重新登入");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "onlyBuy", method = RequestMethod.GET)
+    public Pager4EasyUI<AccessoriesBuy> onlyBuy(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(accessoriesBuyService.countAccIsBuy(user));
+                    List<AccessoriesBuy> accessoriesBuys = accessoriesBuyService.accIsBuy(pager, user);
+                    return new Pager4EasyUI<AccessoriesBuy>(pager.getTotalRecords(), accessoriesBuys);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("出现异常[370]" + e.getStackTrace());
                 return null;
             }
         } else {

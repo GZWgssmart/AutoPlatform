@@ -18,47 +18,103 @@ import java.util.List;
  */
 @Repository
 public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy> {
-    public int batchDeleteAcc(@Param("ids") String[] ids);
 
-    public List<Accessories> queryByCheckStates(@Param("checkState") String checkState, @Param("user") User user);
+    /**
+     * 根据配件状态查询
+     *
+     * @param pager
+     * @param user
+     * @return
+     */
+    public List<AccessoriesBuy> queryByCheckStatePager(@Param("pager") Pager pager, @Param("user") User user);
 
-    public int countByBuyState(@Param("user") User user);
-
+    /**
+     * 根据审核状态计数
+     *
+     * @param user
+     * @return
+     */
     public int countByCheckState(@Param("user") User user);
 
+
+    /**
+     * 根据配件状态查询
+     *
+     * @param pager
+     * @param user
+     * @return
+     */
     public List<AccessoriesBuy> queryByBuyStatePager(@Param("pager") Pager pager, @Param("user") User user);
 
-    public List<AccessoriesBuy> queryByCheckStatePager(@Param("pager")Pager pager, @Param("user") User user);
+    /**
+     * 根据配件状态计数
+     *
+     * @param user
+     * @return
+     */
+    public int countByBuyState(@Param("user") User user);
 
-    public int countByAccName(@Param("accName") String accName, @Param("user") User user);
 
-    public List<AccessoriesBuy> queryByAccNamePager(@Param("pager") Pager pager, @Param("accName") String accName, @Param("user") User user);
 
-    // 在选择购买时间范围内根据名称来查找
+    /**
+     * 根据某个时间段内模糊查询某个配件
+     *
+     * @param pager
+     * @param accName
+     * @param buyTimeStart
+     * @param buyTimeEnd
+     * @param user
+     * @return
+     */
     public List<AccessoriesBuy> queryByBuyTimeScopeByAccNamePager(@Param("pager") Pager pager, @Param("accName") String accName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd, @Param("user") User user);
 
+    /**
+     * 根据某个时间段内模糊查询某个配件
+     *
+     * @param accName
+     * @param buyTimeStart
+     * @param buyTimeEnd
+     * @param user
+     * @return
+     */
     public int countByBuyTimeScope(@Param("accName") String accName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd, @Param("user") User user);
 
+    /**
+     * 根据配件是否采购查询
+     *
+     * @param pager
+     * @param user
+     * @return
+     */
+    public List<AccessoriesBuy> accIsBuy(@Param("pager") Pager pager, @Param("user") User user);
+
+    /**
+     * 根据配件是否采购计数
+     *
+     * @param user
+     * @return
+     */
+    public int countAccIsBuy(@Param("user") User user);
 
     /*
     * 默认查询本月的下单统计
     * */
-    public List<AccessoriesBuy> queryByDefaultCount(@Param("companyId")String companyId);
+    public List<AccessoriesBuy> queryByDefaultCount(@Param("companyId") String companyId);
 
     /*
     * 根据年，月，季度，周，日查询所有下单统计
     * */
-    public List<AccessoriesBuy> queryByConditionCount(@Param("startTime")String startTime,@Param("endTime")String endTime,
-                                                   @Param("type")String type, @Param("companyId")String companyId);
+    public List<AccessoriesBuy> queryByConditionCount(@Param("startTime") String startTime, @Param("endTime") String endTime,
+                                                      @Param("type") String type, @Param("companyId") String companyId);
 
     /*
    * 默认查询本月的支付统计
    * */
-    public List<AccessoriesBuy> queryByDefaultPay(@Param("companyId")String companyId);
+    public List<AccessoriesBuy> queryByDefaultPay(@Param("companyId") String companyId);
 
     /*
     * 根据年，月，季度，周，日查询所有支付统计
     * */
-    public List<AccessoriesBuy> queryByConditionPay(@Param("startTime")String startTime,@Param("endTime")String endTime,
-                                                      @Param("type")String type, @Param("companyId")String companyId);
+    public List<AccessoriesBuy> queryByConditionPay(@Param("startTime") String startTime, @Param("endTime") String endTime,
+                                                    @Param("type") String type, @Param("companyId") String companyId);
 }

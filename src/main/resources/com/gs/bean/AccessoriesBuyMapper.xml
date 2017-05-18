@@ -68,17 +68,10 @@
 
     <delete id="deleteById" parameterType="string">
 
-	</delete>
+    </delete>
 
     <delete id="batchDelete" parameterType="list">
 
-    </delete>
-
-    <delete id="batchDeleteAcc">
-        update from auto_platform.t_accessories_buy aby set aby.accBuyStatus = 'Y' where aby.accBuyId in
-        <foreach collection="ids" item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
     </delete>
 
     <update id="update" parameterType="accessoriesBuy">
@@ -184,6 +177,68 @@
         </if>
     </select>
 
+    <select id="accIsBuy" resultMap="accessoriesBuyResultMap" resultType="list">
+        <![CDATA[
+        SELECT
+        ab.*,
+        ac.accId,
+        ac.accName,
+        ac.accDes,
+        ac.supplyId,
+        ac.accCommodityCode,
+        sy.supplyName,
+        ae.accTypeId,
+        ae.accTypeName,
+        cpy.companyName
+        FROM
+        (
+            (
+                (
+                    (
+                        t_accessories_buy ab
+                        INNER JOIN t_accessories ac ON ab.accId = ac.accId
+                    )
+                    INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
+                )
+                INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
+            )
+            INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
+        )
+        where ab.accIsBuy = 'Y'
+        ]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and cpy.companyId = #{user.companyId}
+        </if>
+        ORDER BY ab.accBuyTime DESC
+        limit
+        #{pager.beginIndex},#{pager.pageSize}
+    </select>
+
+    <select id="countAccIsBuy" resultType="int">
+        <![CDATA[
+        SELECT
+            count(ab.accBuyId)
+        FROM
+        (
+            (
+                (
+                    (
+                        t_accessories_buy ab
+                        INNER JOIN t_accessories ac ON ab.accId = ac.accId
+                    )
+                    INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
+                )
+                INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
+            )
+            INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
+        )
+        where ab.accIsBuy = 'Y'
+        ]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and cpy.companyId = #{user.companyId}
+        </if>
+    </select>
+
     <select id="queryByCheckStatus" resultMap="accessoriesBuyResultMap" parameterType="string">
         select * from auto_platform.t_accessories_buy where accBuyCheck = #{checkState}
     </select>
@@ -266,16 +321,16 @@
         cpy.companyName
         FROM
         (
-            (
-                (
-                    (
-                        t_accessories_buy ab
-                        INNER JOIN t_accessories ac ON ab.accId = ac.accId
-                    )
-                INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
-                )
-            INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
-            )
+        (
+        (
+        (
+        t_accessories_buy ab
+        INNER JOIN t_accessories ac ON ab.accId = ac.accId
+        )
+        INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
+        )
+        INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
+        )
         INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
         )
         where ab.accBuyStatus = 'Y'
@@ -300,16 +355,16 @@
         cpy.companyName
         FROM
         (
-            (
-                (
-                    (
-                        t_accessories_buy ab
-                        INNER JOIN t_accessories ac ON ab.accId = ac.accId
-                    )
-                INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
-                )
-            INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
-            )
+        (
+        (
+        (
+        t_accessories_buy ab
+        INNER JOIN t_accessories ac ON ab.accId = ac.accId
+        )
+        INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
+        )
+        INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
+        )
         INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
         )
         where ab.accBuyCheck = 'Y'
@@ -334,65 +389,38 @@
         </if>
     </select>
 
-    <select id="countByAccName" resultType="int">
-        select count(*) from (auto_platform.t_accessories_buy ab inner join auto_platform.t_accessories ac on
-        ab.accId = ac.accId) inner join t_accessories_type ae on ac.accTypeId = ae.accTypeId where 1 = 1
-        <if test="accName != null and accName  != '' ">
-            and ac.accName like concat(concat('%',#{accName}),'%')
-        </if>
-        <if test="user.companyId != null and user.companyId != ''">
-            and companyId = #{user.companyId}
-        </if>
-    </select>
-
-    <select id="queryByAccNamePager" resultType="list" resultMap="accessoriesBuyResultMap">
-        select * from
-        (auto_platform.t_accessories_buy ab inner join auto_platform.t_accessories ac on ab.accId = ac.accId)
-        inner join t_accessories_type ae on ac.accTypeId = ae.accTypeId
-        where 1=1
-        <if test="accName != null and accName  != '' ">
-            and ac.accName like concat(concat('%',#{accName}),'%')
-        </if>
-        order by ac.accBuyedTime Desc
-        <if test="user.companyId != null and user.companyId != ''">
-            and companyId = #{user.companyId}
-        </if>
-        limit
-        #{pager.beginIndex},#{pager.pageSize}
-    </select>
-
     <select id="queryByBuyTimeScopeByAccNamePager" resultType="list" resultMap="accessoriesBuyResultMap">
         SELECT
-            ab.*,
-            ac.accId,
-            ac.accName,
-            ac.accDes,
-            ac.supplyId,
-            ac.accCommodityCode,
-            sy.supplyName,
-            ae.accTypeId,
-            ae.accTypeName,
-            cpy.companyName
+        ab.*,
+        ac.accId,
+        ac.accName,
+        ac.accDes,
+        ac.supplyId,
+        ac.accCommodityCode,
+        sy.supplyName,
+        ae.accTypeId,
+        ae.accTypeName,
+        cpy.companyName
         FROM
         (
-            (
-                (
-                    (
-                        t_accessories_buy ab
-                        INNER JOIN t_accessories ac ON ab.accId = ac.accId
-                    )
-                    INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
-                )
-                INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
-            )
-            INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
+        (
+        (
+        (
+        t_accessories_buy ab
+        INNER JOIN t_accessories ac ON ab.accId = ac.accId
+        )
+        INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
+        )
+        INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
+        )
+        INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
         )
         where 1 = 1
         <if test="buyTimeStart != null and buyTimeStart != ''">
-          and (ab.accBuyTime &gt;= #{buyTimeStart} and ab.accBuyTime &lt;= #{buyTimeEnd})
+            and (ab.accBuyTime &gt;= #{buyTimeStart} and ab.accBuyTime &lt;= #{buyTimeEnd})
         </if>
         <if test="accName != null and accName != '' ">
-          and ac.accName like concat(concat('%',#{accName}),'%')
+            and ac.accName like concat(concat('%',#{accName}),'%')
         </if>
         <if test="user.companyId != null and user.companyId != ''">
             and ab.companyId = #{user.companyId}
@@ -406,17 +434,17 @@
         count(ab.accBuyId)
         FROM
         (
-            (
-                (
-                    (
-                        t_accessories_buy ab
-                        INNER JOIN t_accessories ac ON ab.accId = ac.accId
-                    )
-                    INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
-                )
-                INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
-            )
-            INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
+        (
+        (
+        (
+        t_accessories_buy ab
+        INNER JOIN t_accessories ac ON ab.accId = ac.accId
+        )
+        INNER JOIN t_company cpy ON ab.companyId = cpy.companyId
+        )
+        INNER JOIN t_accessories_type ae ON ac.accTypeId = ae.accTypeId
+        )
+        INNER JOIN t_supply sy ON ac.supplyId = sy.supplyId
         )
         where 1 = 1
         <if test="buyTimeStart != null and buyTimeStart != ''">
