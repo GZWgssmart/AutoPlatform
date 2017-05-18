@@ -72,6 +72,8 @@ function companyOpDateFormatter(value, row, index) {
     }
 }
 
+
+
 function showAddWin() {
     validator("addForm");
     initDateTimePicker("form_datetime", "companyOpenDate", "addForm");
@@ -146,6 +148,30 @@ window.operateEvents = {
     }
 }
 
+var Phone;
+
+function checkPricipalPhone(){
+    Phone = $("#userPhone").val();
+    $("#userPhone").validate({
+            companyPricipalPhone: {
+                validators: {
+                    notEmpty: {
+                        message: '负责人手机号不能为空'
+                    },
+                    regexp: {
+                        regexp: /^1(3|4|5|7|8)\d{9}$/,
+                        message: '手机号格式错误'
+                    },threshold: 11,
+                    remote: {
+                        url: '/peopleManage/peoplePhone_verification?editPhone='+Phone,
+                        message: '该手机号已存在',
+                        delay :  2000,
+                        type: 'GET'
+                    }
+                }
+            }
+    });
+}
 
 function validator(formId) {
     $("#addButton").removeAttr("disabled");
@@ -258,17 +284,6 @@ function validator(formId) {
                     // notEmpty: {
                     //     message: '公司纬度不能为空'
                     // }
-                }
-            },
-            companyPricipalPhone: {
-                validators: {
-                    notEmpty: {
-                        message: '负责人手机号不能为空'
-                    },
-                    regexp: {
-                        regexp: /^1(3|4|5|7|8)\d{9}$/,
-                        message: '手机号格式错误'
-                    }
                 }
             }
         }
@@ -432,7 +447,9 @@ function showMap() {
 /** 确定 */
 function determine() {
     var temp = $("#result_").val().split(",");
-    $("#addLongitude").val(temp[0]).trigger("change");
-    $("#addLatitude").val(temp[1]).trigger("change");
+    $("#addLatitude").val(temp[0]);
+    $("#editLatitude").val(temp[0]);
+    $("#addLongitude").val(temp[1]);
+    $("#editLongitude").val(temp[1]);
     $("#mapWin").modal("hide");
 }

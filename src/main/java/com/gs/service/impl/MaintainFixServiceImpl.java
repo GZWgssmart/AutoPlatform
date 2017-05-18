@@ -55,7 +55,23 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 		return maintainFixDAO.MaintainCont(user);
 	}
 
-	@Override
+	public List<MaintainFix> byStatusPager(String status, Pager pager,User user) {
+		return maintainFixDAO.byStatusPager(status, pager, user);
+	}
+
+
+	public int countStatus(String status,User user) {
+		return maintainFixDAO.countStatus(status, user);
+	}
+
+	public List<MaintainFix> searchByPager(String name,Pager pager,User user) {
+		return maintainFixDAO.searchByPager(name, pager, user);
+	}
+
+	public int searCount(String name,User user) {
+		return maintainFixDAO.searCount(name, user);
+	}
+
 	public List<MaintainFix> queryByType(String companyId, String maintainOrFix) {
 		return maintainFixDAO.queryByType(companyId,maintainOrFix);
 	}

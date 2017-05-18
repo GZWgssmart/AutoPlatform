@@ -182,6 +182,42 @@ public class MaintainFixController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainFix> search(@Param("name")String name,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或者权限不足");
+            return null;
+        }
+        Pager pager = new Pager();
+        logger.info("模糊查询所有保养项目");
+        User user = SessionGetUtil.getUser();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(maintainFixService.searCount(name,user));
+        List<MaintainFix> maintainFixList = maintainFixService.searchByPager(name,pager,user);
+        return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixList);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "statusPager", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainFix> queryByStatus(@Param("status")String status,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或者权限不足");
+            return null;
+        }
+        Pager pager = new Pager();
+        logger.info("根据状态查询保养项目");
+        User user = SessionGetUtil.getUser();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(maintainFixService.countStatus(status,user));
+        List<MaintainFix> maintainFixList = maintainFixService.byStatusPager(status,pager,user);
+        return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixList);
+    }
+
+
+    @ResponseBody
     @RequestMapping(value = "maintain_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
         if (!SessionGetUtil.isUser()) {

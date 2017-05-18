@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="company">
 		<![CDATA[
-			insert into t_company (companyId,companyName,companyAddress,companyTel,companyPricipal,companyWebsite,companyLogo,companyOpenDate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus,companyImg) values (#{companyId},#{companyName},#{companyAddress},#{companyTel},#{companyPricipal},#{companyWebsite},#{companyLogo},#{companyOpenDate},#{companySize},#{companyLongitude},#{companyLatitude},#{companyDes},'Y',#{companyImg})
+			insert into t_company (companyId,companyName,companyAddress,companyTel,companyPricipal,companyWebsite,companyLogo,companyOpenDate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus,companyImg,companyPricipalPhone) values (#{companyId},#{companyName},#{companyAddress},#{companyTel},#{companyPricipal},#{companyWebsite},#{companyLogo},#{companyOpenDate},#{companySize},#{companyLongitude},#{companyLatitude},#{companyDes},'Y',#{companyImg},#{companyPricipalPhone})
 		]]>
 	</insert>
 

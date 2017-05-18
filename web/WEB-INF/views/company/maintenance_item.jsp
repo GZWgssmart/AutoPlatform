@@ -25,10 +25,10 @@
     <form id="formSearch" class="form-horizontal">
         <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
             <div class="col-sm-2" style="margin-left: -15px;">
-                <input type="text" id="searchMaintenanceName" class="form-control" placeholder="请输入保养项目名称" >
+                <input type="text" id="searchMaintenanceName" class="form-control" style="width:150px;" placeholder="请输入保养项目名称" >
             </div>
             <div class="col-sm-2">
-                <button type="button" onclick="searchPlate();" class="btn btn-primary">
+                <button type="button" onclick="search();" class="btn btn-primary">
                     查询
                 </button>
                 <button type="button" onclick="closeSearchForm()" class="btn btn-default">
@@ -89,6 +89,21 @@
                 </button></a>
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="systemOrdinaryAdmin,systemSuperAdmin,companyAdmin,companyArtificer">
+                <a>
+                    <button onclick="statusUsableness();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>查看可用保养项目
+                    </button>
+                </a>
+                <a>
+                    <button onclick="statusAvailable();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>查看不可用保养项目
+                    </button>
+                </a>
+                <a>
+                    <button onclick=""All();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>查看全部
+                    </button>
+                </a>
                 <a>
                     <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
                         <i class="glyphicon glyphicon-search"></i> 条件查询

@@ -7,6 +7,7 @@ import com.gs.common.bean.ComboBox4EasyUI;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.message.IndustrySMS;
 import com.gs.common.util.*;
 import com.gs.dao.CompanyDAO;
 import com.gs.service.*;
@@ -225,6 +226,7 @@ public class CompanyController {
                     User user = new User();
                     String userId = UUIDUtil.uuid();
                     user.setUserId(userId);
+                    user.setUserStatus("Y");
                     user.setUserPhone(company.getCompanyPricipalPhone());
                     user.setCompanyId(companyId);
                     user.setUserName(company.getCompanyPricipal());
@@ -234,6 +236,10 @@ public class CompanyController {
                     UserRole userRole = new UserRole();
                     userRole.setUserId(userId);
                     userRole.setRoleId(role.getRoleId());
+                    String to = user.getUserPhone();
+                    String smsContent = "【创意科技】尊敬的用户，您已经成功入驻我们的平台，您可以使用您的手机号进行登入我们的系统了哦，登入密码为默认密码";
+                    IndustrySMS is = new IndustrySMS(to, smsContent);
+                    is.execute();
                     userService.insert(user);
                     userRoleService.insert(userRole);
                     companyService.insert(company);

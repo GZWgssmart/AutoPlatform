@@ -17,7 +17,6 @@
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/fileinput.css" rel="stylesheet" type="text/css">
     <script type="text/javascript"
             src="http://api.map.baidu.com/api?v=2.0&ak=kb2drrx8WGDVfXy9UVEGOaNhtkGLxVEV"></script>
 </head>
@@ -63,6 +62,9 @@
             </th>
             <th data-field="companyPricipal">
                 公司负责人
+            </th>
+            <th data-field="">
+                公司负责人手机号码
             </th>
             <th data-field="companyWebsite">
                 公司官网URL
@@ -171,7 +173,7 @@
                             <div class="form-group">
                                 <label class="control-label">公司负责人手机号码：</label>
                                 <input type="text" id="userPhone" name="companyPricipalPhone" maxlength="11"
-                                       class="form-control"/>
+                                       class="form-control" onblur="checkPricipalPhone();"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司官网</label>
@@ -193,7 +195,7 @@
                                     <option value="请选择公司规模">请选择公司规模</option>
                                     <option value="5~10">5~10</option>
                                     <option value="10~50">10~50</option>
-                                    <option value="50~100">50~100</option>
+                                    <option value="50人以上">50人以上</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -238,48 +240,7 @@
     </div>
 </div>
 
-<div id="mapWin" style="overflow:scroll" class="modal fade" aria-hidden="true">
-    <div class="modal-dialog" style="width: 1000px;">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12 b-r">
-                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
-                        <h3 class="m-t-none m-b">选择公司位置</h3>
-
-                        <div style="width:730px;margin:auto;">
-                            <div class="form-group col-sm-4">
-                                <label class="control-label">要查询的地址：</label>
-                                <input id="text_" class="form-control col-sm-4" type="text" value="赣州市"/>
-                            </div>
-                            <div class="form-group col-sm-4">
-                                <label class="control-label">查询结果(经纬度)：</label>
-                                <input id="result_" readonly class="form-control" type="text" value="114.94126,25.837179"/>
-                            </div>
-                            <div class="form-group col-sm-2">
-                                <label class="control-label">&nbsp;</label>
-                                <input type="button" value="查询" class="form-control btn btn-success" onclick="searchByStationName();"/>
-                            </div>
-                            <div id="addMap" style="width: 100%; height: 60%;">
-                            </div>
-                        </div>
-
-                        <div class="modal-footer" style="overflow:hidden;">
-                            <button type="button" class="btn btn-default"
-                                    data-dismiss="modal">关闭
-                            </button>
-                            <input type="button" class="btn btn-primary" onclick="determine();" value="确定">
-                            </input>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="editWin" style="overflow:scroll"  class="modal fade" aria-hidden="true">
+<div id="editWin" style="overflow:scroll" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -321,7 +282,7 @@
                                     <option value="请选择公司规模">请选择公司规模</option>
                                     <option value="5~10">5~10</option>
                                     <option value="10~50">10~50</option>
-                                    <option value="50~100">50~100</option>
+                                    <option value="50人以上">50人以上</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -332,36 +293,83 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司纬度</label>
-                                <input type="text" name="companyLatitude"
+                                <input id="editLatitude" type="text" name="companyLatitude"
                                        class="form-control" attr="company.companyLatitude" readonly/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司经度</label>
-                                <input type="text" name="companyLongitude"
+                                <input id="editLongitude" type="text" name="companyLongitude"
                                        class="form-control" attr="company.companyLongitude" readonly/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">公司logo：</label>
-                                <div id="preview">
-                                    <img id="icon" name="file" style="width:120px;height:60px;"/>
+                                <div class="form-group">
+                                    <label class="control-label">选择公司位置:</label>
+                                    <input type="button" class="btn btn-primary" onclick="showMap();" value="选择公司位置">
+                                    </input>
                                 </div>
-                                <input type="file" name="file" onchange="previewImage(this)" style="display: none;"
-                                       id="previewImg">
-                                <button id="button" onclick="$('#previewImg').click();">修改LOGO</button>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">公司描述：</label>
-                                <textarea name="companyDes" type="textarea" cols="20" rows="5" class="form-control"
-                                          attr="company.companyDes"></textarea>
-                            </div>
-                            <div class="modal-footer" style="overflow:hidden;">
-                                <button type="button" class="btn btn-default"
-                                        data-dismiss="modal">关闭
-                                </button>
-                                <input type="button" id="editButton" class="btn btn-primary" value="修改">
-                                </input>
+                                <div class="form-group">
+                                    <label class="control-label">公司logo：</label>
+                                    <div id="preview">
+                                        <img id="icon" name="file" style="width:120px;height:60px;"/>
+                                    </div>
+                                    <input type="file" name="file" onchange="previewImage(this)" style="display: none;"
+                                           id="previewImg">
+                                    <button id="button" onclick="$('#previewImg').click();">修改LOGO</button>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">公司描述：</label>
+                                    <textarea name="companyDes" type="textarea" cols="20" rows="5" class="form-control"
+                                              attr="company.companyDes"></textarea>
+                                </div>
+                                <div class="modal-footer" style="overflow:hidden;">
+                                    <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">关闭
+                                    </button>
+                                    <input type="button" id="editButton" class="btn btn-primary" value="修改">
+                                    </input>
+                                </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mapWin" style="overflow:scroll" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                        <h3 class="m-t-none m-b">选择公司位置</h3>
+
+                        <div style="width:730px;margin:auto;">
+                            <div class="form-group col-sm-4">
+                                <label class="control-label">要查询的地址：</label>
+                                <input id="text_" class="form-control col-sm-4" type="text" value="赣州市"/>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label class="control-label">查询结果(经纬度)：</label>
+                                <input id="result_" readonly class="form-control" type="text"
+                                       value="114.94126,25.837179"/>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label class="control-label">&nbsp;</label>
+                                <input type="button" value="查询" class="form-control btn btn-success"
+                                       onclick="searchByStationName();"/>
+                            </div>
+                            <div id="addMap" style="width: 100%; height: 60%;">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <button type="button" class="btn btn-default"
+                                    data-dismiss="modal">关闭
+                            </button>
+                            <input type="button" class="btn btn-primary" onclick="determine();" value="确定">
+                            </input>
+                        </div>
                     </div>
 
                 </div>
@@ -379,7 +387,7 @@
 
     map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
     map.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
-    map.addControl(new BMap.OverviewMapControl({ isOpen: true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT }));   //右下角，打开
+    map.addControl(new BMap.OverviewMapControl({isOpen: true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT}));   //右下角，打开
     var marker = new BMap.Marker(new BMap.Point(114.94126, 25.837179));
     map.addOverlay(marker);
     var localSearch = new BMap.LocalSearch(map);
@@ -395,7 +403,9 @@
             map.addOverlay(marker);
             var content = document.getElementById("text_").value + "<br/><br/>经度：" + poi.point.lng + "<br/>纬度：" + poi.point.lat;
             var infoWindow = new BMap.InfoWindow("<p style='font-size:14px;'>" + content + "</p>");
-            marker.addEventListener("click", function () { this.openInfoWindow(infoWindow); });
+            marker.addEventListener("click", function () {
+                this.openInfoWindow(infoWindow);
+            });
             // marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
         });
         localSearch.search(keyword);

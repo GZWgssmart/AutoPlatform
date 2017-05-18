@@ -33,6 +33,22 @@ function showAddWin(){
     $("input[type=reset]").trigger("click");
 }
 
+function All(){
+    initTable("cusTable","/maintainFix/queryByMaintenanceItemPager");
+}
+
+/**查询可用*/
+function statusUsableness(){
+    var status = 'Y';
+    initTable("cusTable","/maintainFix/statusPager?status="+status);
+}
+
+/**查询不可用*/
+function statusAvailable(){
+    var status = 'N';
+    initTable("cusTable","/maintainFix/statusPager?status="+status);
+}
+
 /**
  * 显示配件窗口
  * */
@@ -87,6 +103,23 @@ function showAccWin(){
         var accessories = selectRow[0];
         AccessoriesId =  accessories.accId;
     }
+}
+
+
+/***
+ * 关闭搜索框
+ *
+ * @constructor
+ */
+function closeSearchForm() {
+    $("#searchMaintenanceName").val('');
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
+
+function search(){
+    var Name = $("#searchMaintenanceName").val();
+    initTable("cusTable","/maintainFix/search?name=" + Name);
 }
 
 function Addacc() {
