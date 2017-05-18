@@ -36,11 +36,11 @@ function cCount(val) {
     } else {
         count--;
     }
-    setTimeout(function() {
+    setTimeout(function () {
         if (count >= 0) {
             cCount(val);
         }
-    },1000)
+    }, 1000)
 }
 /** 注册逻辑 */
 function register() {
@@ -52,9 +52,9 @@ function register() {
                     $("#successMsg").html(data.message);
                 } else {
                     cCount(data.message);
-                    setTimeout(function() {
+                    setTimeout(function () {
                         window.location.href = contextPath + "/customerHome";
-                    },3000);
+                    }, 3000);
                 }
             } else {
                 $("#errMsg1").html(data.message);
@@ -78,7 +78,7 @@ function variNumber(number) {
 }
 
 /** 判断是否是邮箱 */
-function isEmail(str){
+function isEmail(str) {
     var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.([a-zA-Z0-9_-])+)+$/;
     return reg.test(str);
 }
@@ -95,20 +95,20 @@ function getCode(val) {
     sendCode(countdown);
     if (countdown == 0) {
         val.removeAttribute("disabled");
-        val.value="获取验证码";
+        val.value = "获取验证码";
         countdown = 60;
     } else {
         val.setAttribute("disabled", true);
-        val.value="重新发送(" + countdown + ")";
+        val.value = "重新发送(" + countdown + ")";
         countdown--;
     }
-    setTimeout(function() {
+    setTimeout(function () {
         if (val.value != "获取验证码") {
             getCode(val);
         } else {
             $("#successMsg").html('');
         }
-    },1000)
+    }, 1000)
 }
 
 /** 发送短信 */
@@ -119,7 +119,7 @@ function sendCode(val) {
                 if (data.result == "success") {
                     $("#successMsg").html(data.message);
                 }
-            },"json");
+            }, "json");
         }
     }
 }
@@ -131,31 +131,31 @@ function getCode1(val) {
     sendCode1(countdown1);
     if (countdown1 == 0) {
         val.removeAttribute("disabled");
-        val.value="获取验证码";
+        val.value = "获取验证码";
         countdown1 = 60;
     } else {
         val.setAttribute("disabled", true);
-        val.value="重新发送(" + countdown1 + ")";
+        val.value = "重新发送(" + countdown1 + ")";
         countdown1--;
     }
-    setTimeout(function() {
+    setTimeout(function () {
         if (val.value != "获取验证码") {
             getCode(val);
         }
-    },1000)
+    }, 1000)
 }
 
 /** 发送查询进度的验证短信 */
 function sendCode1(val) {
-    codeNumber = getCodeNumber();
     if (val == 60) {
+        codeNumber = getCodeNumber();
         var userPhone = $("#phone").val();
         if (userPhone != null && userPhone != "" && userPhone != undefined) {
             $.get("/customerClientWeb/sendCode?userPhone=" + userPhone + "&codeNumber=" + codeNumber, function (data) {
                 if (data.result == "success") {
                     $("#successMsg").html(data.message);
                 }
-            },"json");
+            }, "json");
         }
     }
 }
@@ -169,13 +169,11 @@ function customerCar() {
         $("#successMsg").html('');
         $("#phone").val('');
         $("#code").val('');
-        var url = '/customerClientWeb/userPage?phone='+phone;
+        var url = '/customerClientWeb/userPage?phone=' + phone;
         document.getElementById("iframeTable").src = url;
     } else {
         $("#error").html('您输入的验证码有误，请重新输入');
     }
-
-
 }
 
 /** 清除提示信息 */
@@ -189,13 +187,15 @@ function clearSuccess(val) {
 function checkPhone(phone) {
     if (isPhone(phone.value)) {
         $("#error").html('');
+        $("#getButton").removeAttr("disabled");
     } else {
         $("#error").html('请输入正确的手机号');
+        $("#getButton").attr("disabled","disabled");
     }
 }
 
 /** 获取6位数验证码 */
 function getCodeNumber() {
-    var str = Math.floor((Math.random()*9+1)*100000);
+    var str = Math.floor((Math.random() * 9 + 1) * 100000);
     return str;
 }

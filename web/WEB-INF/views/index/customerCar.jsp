@@ -104,8 +104,8 @@
                         <div class="row row-mt-15em">
 
                             <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-                                <span class="intro-text-small">提供手机号查询进度</span>
-                                <h1>跟踪查询</h1>
+                                <span class="intro-text-small">提供手机号查询维保进度</span>
+                                <h1>维保进度</h1>
                             </div>
 
                         </div>
@@ -121,9 +121,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-6 animate-box">
-                            <h3>联系方式</h3>
+                            <h3>进度跟踪</h3>
                             <form>
-
                                 <div class="row form-group">
                                     <div id="successMsg" style="color: green;padding-left: 20px;"></div>
                                     <div class="col-md-12">
@@ -135,10 +134,10 @@
 
                                 <div class="row form-group">
                                     <div class="col-sm-8" style="margin: 0px;">
-                                        <input type="text" id="code" name="code" class="form-control" onblur="checkCode(this)" placeholder="输入手机验证码">
+                                        <input type="text" id="code" name="code" class="form-control" placeholder="输入手机验证码">
                                     </div>
                                     <div class="col-sm-4" style="margin: 0px;">
-                                        <input type="button" id="detailButton"
+                                        <input type="button" id="getButton"
                                                onclick="getCode1(this)" class="btn btn-primary"
                                                value="获取验证码" style="padding-left: 10px; padding-right: 10px;">
                                     </div>
@@ -147,7 +146,6 @@
                                     <input type="button" onclick="customerCar()" value="查询" id="searchBtn" class="btn btn-primary">
                                     <input type="reset" value="重置" class="btn btn-primary">
                                 </div>
-
 
                             </form>
                         </div>

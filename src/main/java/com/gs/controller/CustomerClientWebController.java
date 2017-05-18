@@ -94,7 +94,6 @@ public class CustomerClientWebController {
     @RequestMapping(value = "userPage", method = RequestMethod.GET)
     public ModelAndView queryPagerByCondition(String phone) {
         ModelAndView md = new ModelAndView("index/iframeTable");
-        System.out.println("a:" + phone);
         if (phone != null || !phone.equals("")) {
             List<MaintainRecord> maintainRecords  = maintainRecordService.queryCustomerCar(phone);
             md.addObject("records",maintainRecords);

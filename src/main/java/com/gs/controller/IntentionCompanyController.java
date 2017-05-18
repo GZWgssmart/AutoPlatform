@@ -127,20 +127,12 @@ public class IntentionCompanyController {
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addIntention(IntentionCompany ic) {
-        if (SessionGetUtil.isUser()) {
-            try {
                 logger.info("添加意向公司");
+                ic.setIntentionStatus("Y");
                 intentionCompanyService.insert(ic);
                 return ControllerResult.getSuccessResult("申请成功，我们的管理员会即使和您联系，请保持手机开机哦");
-            } catch (Exception e) {
-                logger.info("添加登记记录失败，出现了一个错误");
-                return ControllerResult.getFailResult("添加登记记录失败，出现了一个错误");
-            }
-        } else {
-            logger.info("Session已失效，请重新登入");
-            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
-    }
+
 
     @ResponseBody
     @RequestMapping(value = "update_status", method = RequestMethod.GET)
