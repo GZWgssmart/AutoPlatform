@@ -277,4 +277,200 @@ public class VilidateController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_companyName", method = RequestMethod.GET)
+    public String queryIsExistCompanyName(@Param("companyName") String companyName, @Param("editName") String editName) {
+        try {
+            logger.info("公司名称验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editName.equals(companyName)) {
+                int isExist = vilidateService.queryDataIsExistCompanyName(companyName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("公司名称验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_companyTel", method = RequestMethod.GET)
+    public String queryIsExistCompany(@Param("companyTel") String companyTel, @Param("editCompanyTel") String editCompanyTel) {
+        try {
+            logger.info("公司手机号验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editCompanyTel.equals(companyTel)) {
+                int isExist = vilidateService.queryDataIsExistCompanyTel(companyTel);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("公司手机号验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_companyWebsite", method = RequestMethod.GET)
+    public String queryIsExistCompanyWebsite(@Param("companyWebsite") String companyWebsite, @Param("editWebsite") String editWebsite) {
+        try {
+            logger.info("公司官网验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editWebsite.equals(companyWebsite)) {
+                int isExist = vilidateService.queryDataIsExistCompanyWebsite(companyWebsite);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("公司官网验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_ColorName", method = RequestMethod.GET)
+    public String queryIsExistColorName(@Param("colorName") String colorName, @Param("editColorName") String editColorName) {
+        try {
+            logger.info("颜色名称验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editColorName.equals(colorName)) {
+                int isExist = vilidateService.queryDataIsExistColorName(colorName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("颜色名称验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_BrandName", method = RequestMethod.GET)
+    public String queryIsExistBrandName(@Param("brandName") String brandName, @Param("editBrandName") String editBrandName) {
+        try {
+            logger.info("品牌名称验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editBrandName.equals(brandName)) {
+                int isExist = vilidateService.queryDataIsExistBrandName(brandName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("品牌名称验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_PlateName", method = RequestMethod.GET)
+    public String queryIsExistPlateName(@Param("plateName") String plateName, @Param("editPlateName") String editPlateName) {
+        try {
+            logger.info("车牌名称验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editPlateName.equals(plateName)) {
+                int isExist = vilidateService.queryDataIsExistPlateName(plateName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("车牌名称验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_ModelName", method = RequestMethod.GET)
+    public String queryIsExistModelName(@Param("modelName") String modelName, @Param("editModelName") String editModelName) {
+        try {
+            logger.info("车型名称验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editModelName.equals(modelName)) {
+                int isExist = vilidateService.queryDataIsExistModelName(modelName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("车型名称验证失败，出现了异常");
+            return null;
+        }
+    }
+
 }

@@ -1,7 +1,7 @@
 /**
  * Created by root on 2017/4/18.
  */
-
+var editBrandName = ""
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/carBrand/queryByPager");
@@ -126,6 +126,7 @@ window.operateEvents = {
     },
     'click .showUpdateIncomingType1': function (e, value, row, index) {
         var incomingType = row;
+        editBrandName = incomingType.brandName;
         validator("editForm");
         $("#editForm").fill(incomingType);
         $("#editWin").modal('show');
@@ -152,6 +153,13 @@ function validator(formId) {
                         min: 2,
                         max: 20,
                         message: '品牌名称长度必须在2到20位之间'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/vilidate/queryIsExist_BrandName?editBrandName=' + editBrandName,
+                        message: '该品牌已存在',
+                        delay: 2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -174,8 +182,10 @@ function validator(formId) {
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/carBrand/insertCarBrand", formId, "addWin");
+                editBrandName = ""
             } else if (formId == "editForm") {
                 formSubmit("/carBrand/uploadCarBrand", formId, "editWin");
+                editBrandName = ""
             }
         })
 

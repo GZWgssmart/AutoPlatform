@@ -1,6 +1,8 @@
 /**
  * Created by root on 2017/4/18.
  */
+
+var editPlateName = ""
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/carPlate/queryByPager");
@@ -131,6 +133,7 @@ window.operateEvents = {
     },
     'click .showUpdateIncomingType1': function (e, value, row, index) {
         var incomingType = row;
+        editPlateName = incomingType.plateName;
         validator("editForm");
         $("#editForm").fill(incomingType);
         $("#editWin").modal('show');
@@ -157,6 +160,13 @@ function validator(formId) {
                         min: 2,
                         max: 20,
                         message: '车牌名称长度必须在2到4位之间'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/vilidate/queryIsExist_PlateName?editPlateName=' + editPlateName,
+                        message: '该车型已存在',
+                        delay: 2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -181,9 +191,10 @@ function validator(formId) {
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/carPlate/insertCarPlate", formId, "addWin");
+                editPlateName = ""
             } else if (formId == "editForm") {
                 formSubmit("/carPlate/uploadCarPlate", formId, "editWin");
-
+                editPlateName = ""
             }
         })
 

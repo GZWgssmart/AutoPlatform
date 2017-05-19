@@ -1,4 +1,5 @@
 
+var editColorName = "";
 function showAddWin(){
     $("#span").css("background-color","");
     $("#addWin").modal('show');
@@ -158,6 +159,7 @@ window.operateEvents = {
     },
     'click .showUpdateIncomingType1': function (e, value, row, index) {
         var incomingType = row;
+        editColorName = incomingType.colorName;
         validator("editForm");
         $("#editForm").fill(incomingType);
         $("#spans").css("background",incomingType.colorHex);
@@ -185,6 +187,13 @@ function validator(formId) {
                         min: 2,
                         max: 20,
                         message: '颜色名称长度必须在2到4位之间'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/vilidate/queryIsExist_ColorName?editColorName=' + editColorName,
+                        message: '该颜色已存在',
+                        delay: 2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -237,8 +246,10 @@ function validator(formId) {
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/carColor/insertCarColor", formId, "addWin");
+                editColorName = ""
             } else if (formId == "editForm") {
                 formSubmit("/carColor/uploadCarColor", formId, "editWin");
+                editColorName =""
             }
         })
 

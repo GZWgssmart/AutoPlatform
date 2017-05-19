@@ -1,4 +1,4 @@
-
+var editModelName = ""
 /** 编辑数据 */
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
@@ -134,6 +134,7 @@ window.operateEvents = {
     },
     'click .showUpdateIncomingType1': function (e, value, row, index) {
         var incomingType = row;
+        editModelName = incomingType.modelName;
         validator("editForm");
         $("#editForm").fill(incomingType);
         $('.car_brand').html('<option value="' + incomingType.brand.brandId+ '">' + incomingType.brand.brandName + '</option>').trigger("change");
@@ -166,6 +167,12 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '车型名称不能为空'
+                    },threshold: 6,
+                    remote: {
+                        url: '/vilidate/queryIsExist_ModelName?editModelName=' + editModelName,
+                        message: '该车型名称已存在',
+                        delay: 2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -187,9 +194,10 @@ function validator(formId) {
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
                 formSubmit("/carModel/insertCarModel", formId, "addWin");
+                editModelName = ""
             } else if (formId == "editForm") {
                 formSubmit("/carModel/uploadCarModel", formId, "editWin");
-
+                editModelName = ""
             }
         })
 

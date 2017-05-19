@@ -3,8 +3,8 @@
  */
 var editName = "";
 var editTel = "";
-var editPricipal = "";
 var editWebsite = "";
+var editPhone = "";
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/company/queryByPager");
@@ -146,6 +146,7 @@ window.operateEvents = {
         editName = incomingType.companyName;
         editTel  = incomingType.companyTel;
         editWebsite = incomingType.companyWebsite;
+        editPhone = incomingType.companyPricipalPhone;
         $('#companys').html('<option value="' + incomingType.companySize + '">' + incomingType.companySize + '</option>').trigger("change");
         initDateTimePicker("form_datetime", "", "editForm");
         $("#icon").attr("src", "/" + incomingType.companyLogo);
@@ -177,6 +178,13 @@ function validator(formId) {
                         min: 4,
                         max: 20,
                         message: '公司名称长度必须在4到20位之间'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/vilidate/queryIsExist_companyName?editName=' + editName,
+                        message: '该名称已存在',
+                        delay: 2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -212,8 +220,8 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: '/company/queryIs_dataIsExist?editValue=' + editTel,
-                        message: '该号码已存在',
+                        url: '/vilidate/queryIsExist_companyTel?editCompanyTel=' + editTel,
+                        message: '该公司号码已存在',
                         delay: 2000,
                         type: 'GET'
                     }
@@ -244,7 +252,7 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: '/company/queryIs_dataIsExist?editValue=' + editWebsite,
+                        url: '/vilidate/queryIsExist_companyWebsite?editWebsite=' + editWebsite,
                         message: '该URL已存在',
                         delay: 2000,
                         type: 'GET'
@@ -268,20 +276,23 @@ function validator(formId) {
                     }
                 }
             },
-            companyLongitude: {
-                message: '公司经度失败',
+            companyPricipalPhone:{
+                message: '负责人手机号码失败',
                 validators: {
-                    // notEmpty: {
-                    //     message: '公司经度不能为空'
-                    // }
-                }
-            },
-            companyLatitude: {
-                message: '公司纬度失败',
-                validators: {
-                    // notEmpty: {
-                    //     message: '公司纬度不能为空'
-                    // }
+                    notEmpty: {
+                        message: '负责人手机号码不能为空'
+                    },
+                    regexp: {
+                        regexp: /^1(3|4|5|7|8)\d{9}$/,
+                        message: '手机号格式错误'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/vilidate/queryIsExist_userPhone?editPhone=' + editPhone,
+                        message: '该URL已存在',
+                        delay: 2000,
+                        type: 'GET'
+                    }
                 }
             }
         }
@@ -299,6 +310,7 @@ function validator(formId) {
                             editName = "";
                             editTel  = "";
                             editWebsite = "";
+                            editPhone = "";
                             swal(data.message, "", "success");
                             $('#cusTable').bootstrapTable('refresh');
                             $('#addForm').data('bootstrapValidator').resetForm(true);
@@ -310,6 +322,10 @@ function validator(formId) {
                     }
                 })
             } else if (formId == "editForm") {
+                editName = "";
+                editTel  = "";
+                editWebsite = "";
+                editPhone = "";
                 $("#editButton").on("click", function () {
                     $("#editForm").data('bootstrapValidator').validate();
                     if ($("#editForm").data('bootstrapValidator').isValid()) {

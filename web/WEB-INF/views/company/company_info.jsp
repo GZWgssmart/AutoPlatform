@@ -172,7 +172,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司负责人手机号码：</label>
-                                <input type="text" id="userPhone" name="companyPricipalPhone" maxlength="11"
+                                <input type="text" id="userPhone" name="companyPricipalPhone"
                                        class="form-control" />
                             </div>
                             <div class="form-group">
@@ -183,7 +183,7 @@
                             <div class="form-group">
                                 <label class="control-label">公司图片</label>
                                 <div id="previews">
-                                    <img id="icons" name="file" style="width:120px;height:100px;"/>
+                                    <img  name="file" style="width:120px;height:100px;"/>
                                 </div>
                                 <input type="file" name="file" onchange="previewImage(this)" style="display: none;"
                                        id="previewImgs">
