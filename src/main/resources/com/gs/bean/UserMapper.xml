@@ -98,7 +98,7 @@
 	<update id="updatePwd" parameterType="user">
 		<![CDATA[
 			UPDATE t_user SET
-				userPwd = #{userPwd} WHERE userId = #{userId}
+				userPwd = #{user.userPwd} WHERE userId = #{user.userId}
 		]]>
 	</update>
 

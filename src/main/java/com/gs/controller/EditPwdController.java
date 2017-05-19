@@ -1,4 +1,5 @@
 package com.gs.controller;
+
 import ch.qos.logback.classic.Logger;
 import com.gs.bean.Company;
 import com.gs.bean.Role;
@@ -49,20 +50,26 @@ public class EditPwdController {
 
     @ResponseBody
     @RequestMapping(value = "selfPwd", method = RequestMethod.GET)
-    public ControllerResult querySelf(@Param("oldPwd") String oldPwd, @Param("repassword") String repassword, User user) {
+    public ControllerResult querySelf(@Param("oldPwd") String oldPwd, @Param("rePwd") String rePwd) {
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 logger.info("修改密码");
-                if(oldPwd.equals(user.getUserPwd())){
-                    return ControllerResult.getSuccessResult("密码不一致");
-                } else if (!repassword.equals(user.getUserPwd())){
-                    userService.updatePwd(user.getUserPwd());
+                User user = SessionGetUtil.getUser();
+                String encryOldPwd = EncryptUtil.md5Encrypt(oldPwd);
+                String encryNewPwd = EncryptUtil.md5Encrypt(rePwd);
+                if (!encryOldPwd.equals(user.getUserPwd())) {
+                    return ControllerResult.getFailResult("请输入正确的旧密码");
+                } else if (encryNewPwd.equals(user.getUserPwd())) {
+                    return ControllerResult.getFailResult("新密码和旧密码一致");
                 }
-                return ControllerResult.getSuccessResult("修改成功");
-//            } catch (Exception e) {
-//                logger.info("添加信息失败，出现了异常");
-//                return ControllerResult.getFailResult("添加信息失败，出现了一个错误");
-//            }
+                user.setUserPwd(encryNewPwd);
+                userService.updatePwd(user);
+                return ControllerResult.getSuccessResult("密码修改成功，下次登录请使用新密码登录");
+
+            } catch (Exception e) {
+                logger.info("添加信息失败，出现了异常");
+                return ControllerResult.getFailResult("添加信息失败，出现了一个错误");
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");

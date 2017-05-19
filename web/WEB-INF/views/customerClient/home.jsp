@@ -52,11 +52,10 @@
                                 </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
+                            <li><a class="J_menuItem" href="<%=path %>/message/personal_message">个人资料</a>
                             </li>
-                            <li><a class="J_menuItem" href="profile.html">个人资料</a>
+                            <li><a class="J_menuItem" href="<%=path %>/pwd/personal_pwd">修改密码</a>
                             </li>
-                            <li><a class="J_menuItem" href="change_password.html">更改密码</a>
                             <li class="divider"></li>
                             <li><a href="<%=path %>/login/logout">安全退出</a>
                             </li>

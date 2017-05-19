@@ -224,7 +224,7 @@ public class WorkInfoController {
                     logger.info("状态修改");
                     if(status.equals("Y")){
                         workInfoService.inactive(id);
-                    } else {
+                    } else if (status.equals("N")) {
                         workInfoService.active(id);
                     }
                     return ControllerResult.getSuccessResult(" 修改成功");

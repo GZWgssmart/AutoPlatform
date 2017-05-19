@@ -123,7 +123,7 @@ public interface UserService extends BaseService<String, User>{
     /*查询自己公司的技师*/
     public List<User> queryByCompanyRole();
 
-    public int updatePwd(String userPwd);
+    public int updatePwd(User user);
 
     /**
      * 查询平台管理员的信息

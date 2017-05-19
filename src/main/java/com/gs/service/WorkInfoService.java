@@ -48,9 +48,6 @@ public interface WorkInfoService extends BaseService<String, WorkInfo>{
     public int countWorkUserId_Y(String userId);
 
 
-    // 根据id查询
-    public WorkInfo queryByRecordId(String id);
-
     /**根据维修记录编号查询该记录有没有被指定员工*/
     public WorkInfo queryByRocordIdUserId(String recordId);
 

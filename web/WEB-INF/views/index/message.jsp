@@ -34,8 +34,9 @@
             <div class="ibox">
                 <div class="ibox-content">
                     <form role="form" id="editSelf" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="userId" attr="user.userId" />
-                        <input type="hidden" name="uIcon" attr="user.userIcon"/>
+                        <input type="hidden" name="userId" value="${user.userId}" />
+                        <input type="hidden" name="uIcon" value="${user.userIcon}" />
+                        <input type="hidden" name="address" value="${user.userAddress}" />
                         <div class="max_div">
                             <br/>
                             <div class="shell">
@@ -62,7 +63,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">性别：</label>
-                                            <select style="display: initial;" class="form-control" name="userGender" id="gender">
+                                            <select style="display: initial;" class="form-control"  name="userGender" id="gender">
                                                 <option value="N" selected = "selected">未知</option>
                                                 <option value="M">男</option>
                                                 <option value="F">女</option>
@@ -140,7 +141,7 @@
                                 <br/>
                             </div>
                         </div>
-                        <button type="button" id="editSelfButton" class="btn btn-danger btn-block btn-flat" onclick="self();">提交</button>
+                        <button type="button" id="editSelfButton" class="btn btn-danger btn-block btn-flat" onclick="selfMessage();">提交</button>
                     </form>
                 </div>
             </div>
