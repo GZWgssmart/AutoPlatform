@@ -342,20 +342,31 @@ public class AccessoriesBuyController {
     public ControllerResult passChecks(@Param("ids") String[] ids) {
 
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     accessoriesBuyService.batchUpdateBuyCheck(ids);
                     return ControllerResult.getSuccessResult("操作成功");
                 }
                 return ControllerResult.getFailResult("没有此权限访问");
-//            } catch (Exception e) {
-//                logger.info("出现异常" + e.getStackTrace());
-//                return ControllerResult.getFailResult("出现了一个错误");
-//            }
+            } catch (Exception e) {
+                logger.info("出现异常" + e.getStackTrace());
+                return ControllerResult.getFailResult("出现了一个错误");
+            }
         } else {
             logger.info("session失效重新登入");
             return ControllerResult.getFailResult("登入失效，重新登入");
         }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "checkData", method = RequestMethod.GET)
+    public ControllerResult dataPrimary(@Param("name") String name) {
+        if (!name.equals("") && name != null) {
+            int cnt = accessoriesBuyService.dataPrimary(name);
+            if (cnt != 0) {
+                return ControllerResult.getFailResult("改配件已存在");
+            } else return ControllerResult.getSuccessResult("该配件名可用");
+        } else return ControllerResult.getSuccessResult("该配件名可用");
     }
 
     @ResponseBody

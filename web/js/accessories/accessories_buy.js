@@ -1,7 +1,6 @@
 var isAcc = false;
 var count = 0;
 $(document).ready(function () {
-
     initTable("cusTable", "/accessoriesBuy/pager");
 
     initSelect2("supply", "请选择供应商", "/supply/queryAll", 560);
@@ -418,7 +417,7 @@ function validator(formId) {
                         min: 0,
                         max: 15,
                         message: '不能超过15个字符'
-                    }
+                    },
                 }
             },
 
@@ -533,30 +532,6 @@ function validator(formId) {
                     }
                 }
             },
-            accBuyTotal: {
-                validators: {
-                    notEmpty: {
-                        message: '不能为空'
-                    }
-
-                },
-                regexp: {
-                    regexp: /^([1-9][0-9]*)+(.[0-9]{1,2})?$/,
-                    message: '只接受小数点后两位'
-                }
-            },
-            accBuyMoney: {
-                validators: {
-                    notEmpty: {
-                        message: '不能为空'
-                    }
-
-                },
-                regexp: {
-                    regexp: /^\d+(\.\d+)?$/,
-                    message: '只能是数字'
-                }
-            },
         }
     })
 
@@ -585,11 +560,27 @@ function clearTempData() {
 }
 
 function showAccAddWin() {
+    $("#dck").css("display", "none");
     initDateTimePicker("form_datetime", "accBuyTime", "addForm");
     // clearTempData();
     validator("addForm");
     $("#addWin").modal('show');
+    // dataCheck("accName", "addForm");
     autoCalculation1("accBuyCount", "accBuyPrice", "accBuyDiscount", "accBuyTotal", "accBuyMoney");
+}
+
+function dataCheck(inputId) {
+    $("#" + inputId).bind('onfocus input', function () {
+        $.get('/accessoriesBuy/checkData?name=' + this.value, function (data) {
+            if (data.result == "success") {
+                $("#dck").val(1);
+                $("#dck").css("display", "none");
+            } else if (data.result == "fail") {
+                $("#dck").text("此配件已存在");
+                $("#dck").css("display", "block");
+            }
+        })
+    })
 }
 
 function showAccEditWin() {

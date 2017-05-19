@@ -140,25 +140,25 @@
                             </div>
 
                             <div class="form-group">
-                                <label>用户：</label>
+                                <label class="control-label">用户：</label>
                                 <input type="text" name="userName" class="form-control" attr="user.userName"
                                        id="eUserName"/>
                             </div>
 
                             <div class="form-group">
-                                <label>用户手机号码：</label>
+                                <label class="control-label">用户手机号码：</label>
                                 <input type="text" name="userPhone" class="form-control" attr="user.userPhone"
                                        id="eUserPhone"/>
                             </div>
 
                             <div class="form-group">
-                                <label>配件名称：</label>
+                                <label class="control-label">配件名称：</label>
                                 <input type="text" name="accessories.accName" attr="accessoriesSale.accessories.accName"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
-                                <label>计量单位：</label>
+                                <label class="control-label">计量单位：</label>
                                 <input type="text" name="accUnit" attr="accessoriesSale.accessories.accUnit"
                                        class="form-control"/>
                             </div>
@@ -171,7 +171,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>销售数量：（库存剩余数量）：</label>
+                                <label class="control-label">销售数量：（库存剩余数量）：</label>
                                 <span>
                                     <input type="text" attr="accessoriesSale.accessories.accTotal" name="accLastCount"
                                            id="eLastCount"
@@ -190,13 +190,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label>销售折扣：</label>
+                                <label class="control-label">销售折扣：</label>
                                 <input type="text" name="accSaleDiscount" id="saleDiscount" attr="accessoriesSale.accSaleDiscount"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
-                                <label>销售时间：</label>
+                                <label class="control-label">销售时间：</label>
                                 <input size="16" type="text" name="accSaledTime" readonly
                                        class="form_datetime form-control " attr="accessoriesSale.accSaledTime"
                                        id="saleTime">
@@ -254,13 +254,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label>用户：</label>
+                                <label class="control-label">用户：</label>
                                 <input type="text" name="userName" class="form-control" attr="user.userName"
                                        id="userName"/>
                             </div>
 
                             <div class="form-group">
-                                <label>用户手机号码：</label>
+                                <label class="control-label">用户手机号码：</label>
                                 <input type="text" name="userPhone" class="form-control" attr="user.userPhone"
                                        id="userPhone"/>
                             </div>
@@ -285,7 +285,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label> 销售数量：（库存剩余数量）：</label>
+                                <label class="control-label"> 销售数量：（库存剩余数量）：</label>
                                 <span>
                                     <input type="number" attr="acc.accTotal" name="accLastCount" id="aLastCount"
                                            style="border: none; background-color: white;"
@@ -303,19 +303,19 @@
                             </div>
 
                             <div class="form-group">
-                                <label>配件销售单价：</label>
+                                <label class="control-label">配件销售单价：</label>
                                 <input type="text" name="accSalePrice" id="accSalePrice" attr="acc.accSalePrice"
                                        class="form-control" placeholder="此为空则默认按配件售价来计算"/>
                             </div>
 
                             <div class="form-group">
-                                <label>折扣：</label>
+                                <label class="control-label">折扣：</label>
                                 <input type="text" name="accSaleDiscount" id="accSaleDiscount" class="form-control"
                                        value="1" attr="acc.accDiscount"/>
                             </div>
 
                             <div class="form-group">
-                                <label>销售时间：</label>
+                                <label class="control-label">销售时间：</label>
                                 <input size="16" type="text" id="accSaleTime" name="accSaledTime"
                                        attr="acc.accSaledTime" readonly
                                        class="form_datetime form-control ">

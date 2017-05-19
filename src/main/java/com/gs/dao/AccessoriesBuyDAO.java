@@ -3,6 +3,7 @@ package com.gs.dao;
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesBuy;
 import com.gs.bean.User;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import org.apache.ibatis.annotations.Param;
@@ -106,6 +107,8 @@ public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy> {
     public void updateAccBuyCheck(@Param("checkStatus") String checkStatus, @Param("accBuyId") String accBuyId);
 
     public void batchUpdateBuyCheck(@Param("ids") String[] ids);
+
+    public int dataPrimary(@Param("name") String name);
 
     /*
     * 默认查询本月的下单统计
