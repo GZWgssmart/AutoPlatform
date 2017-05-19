@@ -201,6 +201,56 @@
 		</if>
 	</select>
 
+	<select id="repairByStatusPager" resultMap="maintainFixResultMap">
+		<![CDATA[
+			select mf.*, c.companyName from t_maintain_fix mf, t_company c where mf.maintainOrFix = '维修' and  mf.companyId = c.companyId
+		]]>
+		<if test="status != null and status != ''">
+			and mf.maintainStatus = #{status}
+		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and mf.companyId = #{user.companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="repairCountStatus" resultType="int">
+		<![CDATA[
+			select count(*) from t_maintain_fix fx,t_company c where fx.maintainOrFix = '维修' and c.companyId = fx.companyId
+		]]>
+		<if test="status!=null and status !=''">
+			and fx.maintainStatus = #{status}
+		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and fx.companyId = #{user.companyId}
+		</if>
+	</select>
+
+	<select id="searchByRepairPager" resultMap="maintainFixResultMap">
+		<![CDATA[
+			select mf.*, c.companyName from t_maintain_fix mf, t_company c where mf.maintainOrFix = '维修' and  mf.companyId = c.companyId
+		]]>
+		<if test="name != null and name != ''">
+			and mf.maintainName like concat('%',#{name},'%')
+		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and mf.companyId = #{user.companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="searRepairCount" resultType="int">
+		<![CDATA[
+			select count(*) from t_maintain_fix fx,t_company c where fx.maintainOrFix = '维修' and c.companyId = fx.companyId
+		]]>
+		<if test="name!=null and name !=''">
+			and fx.maintainName like concat('%',#{name},'%')
+		</if>
+		<if test="user.companyId != null and user.companyId != ''">
+			and fx.companyId = #{user.companyId}
+		</if>
+	</select>
+
 	<update id="inactive" parameterType="string">
 		<![CDATA[
 			update t_maintain_fix set maintainStatus = 'N' where maintainId = #{maintainId}

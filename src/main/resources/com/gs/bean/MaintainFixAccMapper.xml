@@ -4,14 +4,35 @@
 
 <mapper namespace="com.gs.dao.MaintainFixAccDAO">
 
-    <resultMap id="maintainFixAccResultMap" type="maintainFixAcc">
+		<resultMap id="maintainFixAccMap" type="com.gs.bean.MaintainFixAcc" >
+			<id column="mainAccId" property="mainAccId" jdbcType="VARCHAR" />
+			<result column="maintainId" property="maintainId" jdbcType="VARCHAR" />
+			<result column="accId" property="accId" jdbcType="VARCHAR" />
+			<result column="accCount" property="accCount" jdbcType="INTEGER" />
+			<association property="company" javaType="com.gs.bean.Company">
+				<id property="companyId" column="companyId"/>
+				<result property="companyName" column="companyName"/>
+			</association>
+			<association property="accessories" javaType="com.gs.bean.Accessories">
+				<id property="accId" column="accId"/>
+				<result property="accName" column="accName"/>
+				<result property="accSalePrice" column="accSalePrice"/>
+			</association>
+			<association property="maintainFix" javaType="com.gs.bean.MaintainFix">
+				<id property="maintainId" column="maintainId"/>
+				<result property="maintainName" column="maintainName"/>
+				<result property="maintainHour" column="maintainHour"/>
+				<result property="maintainMoney" column="maintainMoney"/>
+				<result property="maintainManHourFee" column="maintainManHourFee"/>
+				<result property="maintainDes" column="maintainDes"/>
+			</association>
+		</resultMap>
 
-    </resultMap>
 
-    <insert id="insert" parameterType="maintainFixAcc">
-		<![CDATA[
-			insert into t_maintain_fix_acc (mainAccId,maintainId,accId,accCount) value (UUID(),#{maintainId},#{accId},#{accCount})
-        ]]>
+	<insert id="insert" parameterType="maintainFixAcc">
+			<![CDATA[
+				insert into t_maintain_fix_acc (mainAccId,maintainId,accId,accCount) value (UUID(),#{maintainId},#{accId},#{accCount})
+			]]>
 	</insert>
 
     <insert id="batchInsert" parameterType="list">
@@ -50,13 +71,13 @@
         ]]>
 	</update>
 
-    <select id="queryAll" resultMap="maintainFixAccResultMap">
+    <select id="queryAll" resultMap="maintainFixAccMap">
 		<![CDATA[
 
         ]]>
 	</select>
 
-    <select id="queryByStatus" resultMap="maintainFixAccResultMap" parameterType="string">
+    <select id="queryByStatus" resultMap="maintainFixAccMap" parameterType="string">
 		<![CDATA[
 
         ]]>
@@ -74,7 +95,7 @@
         ]]>
 	</select>
 
-    <select id="queryByPager" resultType="list" resultMap="maintainFixAccResultMap"
+    <select id="queryByPager" resultMap="maintainFixAccMap"
             parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
 
@@ -99,10 +120,30 @@
         ]]>
 	</update>
 
-    <select id="queryAllByMaintainId" resultType="list" resultMap="maintainFixAccResultMap">
+    <select id="queryAllByMaintainId" resultType="list" resultMap="maintainFixAccMap">
         select * from t_maintain_fix_acc where maintainId in
         <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
             #{item}
         </foreach>
     </select>
+
+	<select id="queryAllByPager" resultMap="maintainFixAccMap">
+		<![CDATA[
+     		select fix.*,acc.*,a.*, c.* from t_maintain_fix fix,t_maintain_fix_acc acc,t_accessories a, t_company c where fix.maintainId = acc.maintainId and a.accId = acc.accId and c.companyId = fix.companyId and fix.maintainId = #{id}
+    	]]>
+		<if test="user.companyId != '' and user.companyId != null">
+			and fix.companyId = #{user.companyId}
+		</if>
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="queryAllByCount" resultType="int">
+		<![CDATA[
+      		select count(*) from t_maintain_fix fix, t_maintain_fix_acc acc,t_accessories a,t_company c where fix.maintainId = acc.maintainId and a.accId = acc.accId and c.companyId = fix.companyId and fix.maintainId = #{id}
+		]]>
+		<if test="user.companyId != '' and user.companyId !=null">
+			and c.companyId = #{user.companyId}
+		</if>
+	</select>
+
 </mapper>

@@ -34,6 +34,39 @@ function showAddWin(){
 }
 
 
+function All(){
+    initTable("cusTable","/maintainFix/queryByPager");
+}
+
+/**查询可用*/
+function statusUsableness(){
+    var status = 'Y';
+    initTable("cusTable","/maintainFix/statusRepairPager?status="+status);
+}
+
+/**查询不可用*/
+function statusAvailable(){
+    var status = 'N';
+    initTable("cusTable","/maintainFix/statusRepairPager?status="+status);
+}
+
+/***
+ * 关闭搜索框
+ *
+ * @constructor
+ */
+function closeSearchForm() {
+    $("#searchRepairName").val('');
+    $("#searchDiv").hide();
+    $("#showButton").show();
+}
+
+function search(){
+    var Name = $("#searchRepairName").val();
+    initTable("cusTable","/maintainFix/searchRepair?name=" + Name);
+}
+
+
 function operating(value, row, index) {
     if (row.maintainStatus == 'Y') {
         return [
@@ -183,6 +216,19 @@ function Addacc() {
                         });
                 }
             }, "json");
+    }
+}
+
+function showAcc(){
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择维修项目失败', "只能选择一条维修项目进行配件查看", "error");
+        return false;
+    } else {
+        var product = selectRow[0];
+        var Id = product.maintainId;
+        initTableNotTollbar("cusTable3","/maintainFixAcc/accPager?id="+Id);
+        $("#AccWin").modal('show');
     }
 }
 

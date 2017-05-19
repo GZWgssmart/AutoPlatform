@@ -65,6 +65,19 @@ function showAddacc(){
     }
 }
 
+function showAcc(){
+    var selectRow = $("#cusTable").bootstrapTable('getSelections');
+    if (selectRow.length != 1) {
+        swal('选择保养项目失败', "只能选择一条保养项目进行配件查看", "error");
+        return false;
+    } else {
+        var product = selectRow[0];
+        var Id = product.maintainId;
+        initTableNotTollbar("cusTable3","/maintainFixAcc/accPager?id="+Id);
+        $("#AccWin").modal('show');
+    }
+}
+
 
 function queryByTypeId(obj){
     initTableNotTollbar("cusTable2", "/accessories/queryByIdAcc?id=" + obj.value);

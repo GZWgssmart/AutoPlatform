@@ -218,6 +218,42 @@ public class MaintainFixController {
 
 
     @ResponseBody
+    @RequestMapping(value = "statusRepairPager", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainFix> queryByRepairStatus(@Param("status")String status,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或者权限不足");
+            return null;
+        }
+        Pager pager = new Pager();
+        logger.info("根据状态查询维修项目");
+        User user = SessionGetUtil.getUser();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(maintainFixService.repairCountStatus(status,user));
+        List<MaintainFix> maintainFixList = maintainFixService.repairByStatusPager(status,pager,user);
+        return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixList);
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "searchRepair", method = RequestMethod.GET)
+    public Pager4EasyUI<MaintainFix> searchRepair(@Param("name")String name,@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
+        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+            logger.info("Session已失效或者权限不足");
+            return null;
+        }
+        Pager pager = new Pager();
+        logger.info("模糊查询所有维修项目");
+        User user = SessionGetUtil.getUser();
+        pager.setPageNo(Integer.valueOf(pageNumber));
+        pager.setPageSize(Integer.valueOf(pageSize));
+        pager.setTotalRecords(maintainFixService.searRepairCount(name,user));
+        List<MaintainFix> maintainFixList = maintainFixService.searchByRepairPager(name,pager,user);
+        return new Pager4EasyUI<MaintainFix>(pager.getTotalRecords(), maintainFixList);
+    }
+
+
+    @ResponseBody
     @RequestMapping(value = "maintain_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
         if (!SessionGetUtil.isUser()) {

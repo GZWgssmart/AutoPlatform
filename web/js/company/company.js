@@ -235,9 +235,9 @@ function validator(formId) {
             companyWebsite: {
                 message: '公司官网URL失败',
                 validators: {
-                    url: {
-                        url: true,
-                        message: 'url格式有误,例如http://www.baibau.com,https://www.baidu.com'
+                    regexp: {
+                        regexp: /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/,
+                        message: '请输入正确公司官网网址'
                     },
                     notEmpty: {
                         message: '公司官网URL不能为空'

@@ -85,10 +85,9 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level">
-                        <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
+                        <shiro:hasAnyRoles name="systemSuperAdmin,systemOrdinaryAdmin">
                             <li>
-                                <a id="intention" class="J_menuItem"
-                                   href="<%=path %>/intention/intention_page">意向公司记录管理</a>
+                                <a id="intention" class="J_menuItem" href="<%=path %>/intention/intention_page">意向公司记录管理</a>
                             </li>
                         </shiro:hasAnyRoles>
                         <li>
@@ -183,8 +182,7 @@
                                 <li><a class="J_menuItem" href="<%=path %>/accessoriesType/type">配件分类管理</a>
                                 </li>
                             </shiro:hasAnyRoles>
-                            <shiro:hasAnyRoles
-                                    name="companyAdmin, companyRepertory, systemSuperAdmin, systemOrdinaryAdmin, companyBuyer">
+                            <shiro:hasAnyRoles name="companyAdmin, companyRepertory, systemSuperAdmin, systemOrdinaryAdmin, companyBuyer">
                                 <li>
                                     <a class="J_menuItem"
                                        href="<%=path%>/accessoriesBuy/showAccessoriesBuyHome">配件采购管理</a>
@@ -273,13 +271,14 @@
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>
-<shiro:hasAnyRoles
-        name="companyAdmin, companyReceive, systemSuperAdmin, systemOrdinaryAdmin">
+
                 <li>
                     <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">客户关系管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a id="remind" class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养提醒管理</a>
+                        </li>
+                        <li><a class="J_menuItem" href="<%=path%>/reportStatistics/consumption_page">消费统计管理</a>
                         </li>
                         <li><a id="complaint" class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉管理</a>
                         </li>
@@ -289,7 +288,7 @@
                         </li>
                     </ul>
                 </li>
-            </shiro:hasAnyRoles>
+
 
                 <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
                     <li>
@@ -542,9 +541,9 @@
                             </div>
                         </div>
                         <div class="setings-item">
-    <span>
-    固定宽度
-    </span>
+                                <span>
+                        固定宽度
+                    </span>
 
                             <div class="switch">
                                 <div class="onoffswitch">
@@ -560,23 +559,23 @@
                         <div class="title">皮肤选择</div>
                         <a href="#" class="s-skin-0">
                             <div class="setings-item default-skin nb">
-    <span class="skin-name ">
-    默认皮肤
-    </span>
+                                <span class="skin-name ">
+                                    默认皮肤
+                                </span>
                             </div>
                         </a>
                         <a href="#" class="s-skin-1">
                             <div class="setings-item blue-skin nb">
-    <span class="skin-name ">
-    蓝色主题
-    </span>
+                                <span class="skin-name ">
+                                    蓝色主题
+                                </span>
                             </div>
                         </a>
                         <a href="#" class="s-skin-3">
                             <div class="setings-item yellow-skin nb">
-    <span class="skin-name ">
-    黄色/紫色主题
-    </span>
+                                <span class="skin-name ">
+                                    黄色/紫色主题
+                                </span>
                             </div>
                         </a>
                     </div>

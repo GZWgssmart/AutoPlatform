@@ -77,6 +77,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
+            <shiro:hasAnyRoles name="systemOrdinaryAdmin,systemSuperAdmin,companyAdmin,companyArtificer">
             <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
                 <a><button type="button" id="add" onclick="showAddWin();" class="btn btn-default" >
                     <i class="glyphicon glyphicon-plus"></i> 添加
@@ -88,27 +89,33 @@
                     <i class="glyphicon glyphicon-plus"></i> 添加基础配件
                 </button></a>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="systemOrdinaryAdmin,systemSuperAdmin,companyAdmin,companyArtificer">
+
+                <a>
+                    <button type="button" onclick="showAcc();" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i> 查看基础配件
+                    </button>
+                </a>
                 <a>
                     <button onclick="statusUsableness();" type="button" class="btn btn-default">
-                        <i class="glyphicon glyphicon-search"></i>查看可用保养项目
+                        <i class="glyphicon glyphicon-search"></i>可用项目
                     </button>
                 </a>
                 <a>
                     <button onclick="statusAvailable();" type="button" class="btn btn-default">
-                        <i class="glyphicon glyphicon-search"></i>查看不可用保养项目
+                        <i class="glyphicon glyphicon-search"></i>不可用项目
                     </button>
                 </a>
                 <a>
-                    <button onclick=""All();" type="button" class="btn btn-default">
-                        <i class="glyphicon glyphicon-search"></i>查看全部
+                    <button onclick="All();" type="button" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>全部
                     </button>
                 </a>
                 <a>
                     <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
-                        <i class="glyphicon glyphicon-search"></i> 条件查询
+                        <i class="glyphicon glyphicon-search"></i> 搜索
                     </button>
                 </a>
+
             </shiro:hasAnyRoles>
         </div>
 
@@ -136,17 +143,17 @@
                             </div>
                             <div class="form-group">
                                 <label>保养所需工时（小时）：</label>
-                                <input type="text"  name="maintainHour" attr="maintain.maintainHour"
+                                <input type="number"  name="maintainHour" attr="maintain.maintainHour"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>保养基础费用：</label>
-                                <input type="text"  name="maintainMoney" attr="maintain.maintainMoney"
+                                <input type="number"  name="maintainMoney" attr="maintain.maintainMoney"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>保养工时费用：</label>
-                                <input type="text"  name="maintainManHourFee" attr="maintain.maintainManHourFee"
+                                <input type="number"  name="maintainManHourFee" attr="maintain.maintainManHourFee"
                                        class="form-control"/>
                             </div>
                             <%--<div class="form-group" >--%>
@@ -189,17 +196,17 @@
                             </div>
                             <div class="form-group">
                                 <label>保养所需工时（小时）：</label>
-                                <input type="text"  name="maintainHour"
+                                <input type="number"  name="maintainHour"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>保养基础费用：</label>
-                                <input type="text"  name="maintainMoney"
+                                <input type="number"  name="maintainMoney"
                                        class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>保养工时费用：</label>
-                                <input type="text"  name="maintainManHourFee"
+                                <input type="number"  name="maintainManHourFee"
                                        class="form-control"/>
                             </div>
                             <%--<div class="form-group" >--%>
@@ -278,11 +285,49 @@
         <div class="modal-content">
             <div class="modal-body">
                 <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
-                <input type="text" name="accCount" id="count" class="col-sm-6" placeholder="请输入项目所需配件数量"/>
+                <input type="number" name="accCount" id="count" class="form-control"  placeholder="请输入项目所需配件数量"/>
                 <div class="modal-footer" style="overflow:hidden;">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <input type="button" class="btn btn-primary" value="确认选择配件" onclick="Addacc();"/>
                     <input type="reset" name="reset" style="display: none;" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="AccWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                        <h3 class="m-t-none m-b">保养项目基础配件</h3>
+                        <div class="modal-footer" style="overflow:hidden;">
+                            <table class="table table-hover" id="cusTable3"
+                                   data-pagination="true"
+                                   data-show-refresh="true"
+                                   data-show-toggle="true"
+                                   data-showColumns="true">
+                                <thead>
+                                <tr>
+                                    <th data-field="state" data-checkbox="true"></th>
+                                    <th data-field="accessories.accName">
+                                        配件名称
+                                    </th>
+                                    <th data-field="accCount" >
+                                        配件数量
+                                    </th>
+                                    <th data-field="accessories.accSalePrice" >
+                                        配件单价
+                                    </th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -72,6 +72,26 @@ public class MaintainFixServiceImpl implements MaintainFixService {
 		return maintainFixDAO.searCount(name, user);
 	}
 
+
+	public List<MaintainFix> repairByStatusPager(String status,Pager pager,User user) {
+		return maintainFixDAO.repairByStatusPager(status, pager, user);
+	}
+
+
+	public int repairCountStatus(String status,User user) {
+		return maintainFixDAO.repairCountStatus(status, user);
+	}
+
+
+	public List<MaintainFix> searchByRepairPager(String name,Pager pager,User user) {
+		return maintainFixDAO.searchByRepairPager(name, pager, user);
+	}
+
+
+	public int searRepairCount(String name,User user) {
+		return maintainFixDAO.searRepairCount(name, user);
+	}
+
 	public List<MaintainFix> queryByType(String companyId, String maintainOrFix) {
 		return maintainFixDAO.queryByType(companyId,maintainOrFix);
 	}

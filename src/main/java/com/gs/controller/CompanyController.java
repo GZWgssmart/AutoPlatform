@@ -230,6 +230,7 @@ public class CompanyController {
                     String userId = UUIDUtil.uuid();
                     user.setUserId(userId);
                     user.setUserStatus("Y");
+                    user.setUserIcon("/img/default.png");
                     user.setUserPhone(company.getCompanyPricipalPhone());
                     user.setCompanyId(companyId);
                     user.setUserName(company.getCompanyPricipal());

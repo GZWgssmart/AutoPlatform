@@ -63,7 +63,7 @@
             <th data-field="companyPricipal">
                 公司负责人
             </th>
-            <th data-field="">
+            <th data-field="companyPricipalPhone">
                 公司负责人手机号码
             </th>
             <th data-field="companyWebsite">

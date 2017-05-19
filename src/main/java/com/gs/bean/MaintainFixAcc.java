@@ -14,6 +14,34 @@ public class MaintainFixAcc {
 	private String accId;  //配件编号  accessories表
 	private int accCount;  //配件个数
 
+	public Accessories accessories;//配件表
+	public Company company;//公司表
+	public MaintainFix maintainFix;//项目表
+
+	public Accessories getAccessories() {
+		return accessories;
+	}
+
+	public void setAccessories(Accessories accessories) {
+		this.accessories = accessories;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public MaintainFix getMaintainFix() {
+		return maintainFix;
+	}
+
+	public void setMaintainFix(MaintainFix maintainFix) {
+		this.maintainFix = maintainFix;
+	}
+
 	public String getMainAccId(){
 		return this.mainAccId;
 	}

@@ -21,8 +21,12 @@ public interface MaintainFixDAO extends BaseDAO<String, MaintainFix>{
     public List<MaintainFix> byStatusPager(@Param("status") String status, @Param("pager") Pager pager,@Param("user") User user);
     public int countStatus(@Param("status")String status,@Param("user") User user);
     public List<MaintainFix> searchByPager(@Param("name")String name, @Param("pager")Pager pager,@Param("user") User user);
-
     public int searCount(@Param("name")String name,@Param("user")User user);
+
+    public List<MaintainFix> repairByStatusPager(@Param("status") String status, @Param("pager") Pager pager,@Param("user") User user);
+    public int repairCountStatus(@Param("status")String status,@Param("user") User user);
+    public List<MaintainFix> searchByRepairPager(@Param("name")String name, @Param("pager")Pager pager,@Param("user") User user);
+    public int searRepairCount(@Param("name")String name,@Param("user")User user);
 
     /*
     * 查询项目是维修还是保养

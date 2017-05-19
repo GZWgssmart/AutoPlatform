@@ -2,6 +2,7 @@ package com.gs.service.impl;
 
 import com.gs.bean.MaintainFixAcc;
 import com.gs.bean.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -52,4 +53,14 @@ public class MaintainFixAccServiceImpl implements MaintainFixAccService {
 	public List<MaintainFixAcc> queryAllByMaintainId(String[] ids) {
 		return maintainFixAccDAO.queryAllByMaintainId(ids);
 	}
+
+
+	public List<MaintainFixAcc> queryAllByPager(String id,User user,Pager pager) {
+		return maintainFixAccDAO.queryAllByPager(id, user, pager);
+	}
+
+	public int queryAllByCount(String id,User user) {
+		return maintainFixAccDAO.queryAllByCount(id,user);
+	}
+
 }
