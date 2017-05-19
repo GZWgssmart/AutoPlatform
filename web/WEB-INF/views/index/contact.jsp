@@ -45,6 +45,8 @@
     <!-- Magnific Popup -->
     <link rel="stylesheet" href="<%=path%>/css/magnific-popup.css">
 
+    <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
+
     <!-- Owl Carousel  -->
     <link rel="stylesheet" href="<%=path%>/css/owl.carousel.min.css">
     <link rel="stylesheet" href="<%=path%>/css/owl.theme.default.min.css">
@@ -125,25 +127,26 @@
                             <form method="post" id="intentionCompany">
                                 <div class="row form-group">
                                     <div class="col-md-12">
-                                        <label class="sr-only" for="name">姓名</label>
-                                        <input type="text" id="name" name="name" class="form-control" placeholder="请输入您的姓名">
+                                        <label class="sr-only" for="name">您的称呼</label>
+                                        <input type="text" id="name" name="name" class="form-control" maxlength="4" placeholder="请输入您的称呼">
                                     </div>
+                                    <div id="nameError" style="color: red;padding-left: 20px;"></div>
                                 </div>
 
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <label class="sr-only" for="email">邮箱</label>
-                                        <input type="email" id="email" name="email" class="form-control" placeholder="输入您的邮箱" onblur="varEmail(this.value)">
+                                        <input type="email" id="email" name="email" class="form-control" placeholder="输入您的邮箱">
                                     </div>
-                                    <div id="errMsg1" style="color: red;padding-left: 20px;"></div>
+                                    <div id="emailError" style="color: red;padding-left: 20px;"></div>
                                 </div>
 
                                 <div class="row form-group">
                                     <div class="col-md-12">
-                                        <label class="sr-only" for="subject">填写手机号</label>
-                                        <input type="text" id="subject" name="phone" class="form-control" maxlength="11" placeholder="输入您的手机号" onblur="checkPhone(this)">
+                                        <label class="sr-only" for="phone">填写手机号</label>
+                                        <input type="text" id="phone" name="phone" class="form-control" maxlength="11" placeholder="输入您的手机号">
                                     </div>
-                                    <div id="error" style="color: red;padding-left: 20px;"></div>
+                                    <div id="phoneError" style="color: red;padding-left: 20px;"></div>
                                 </div>
 
                                 <div class="row form-group">
@@ -183,7 +186,7 @@
 
                     <div class="col-md-4">
                         <div class="gtco-widget">
-                            <h3>关于我们 <span class="footer-logo"><span>.<span></span></h3>
+                            <h3>关于我们 <span class="footer-logo"><span>.</span></span></h3>
                             <p>汽修店信息化水平普遍偏低，工作效率低，信息的管理混乱，没有实现自动化，没有完善的数据统计，汽修店员工对计算机软件系统缺乏了解。汽车维修保养管理系统需要提供简洁易懂的用户界面，提供简单易用的流程。</p>
                         </div>
                     </div>
@@ -263,29 +266,86 @@
 <%--login js--%>
 <script src="<%=path%>/js/index/login.js"></script>
 
+<script src="<%=path %>/js/sweet-alert.min.js"></script>
+
 <script>
     /** 添加意向公司 */
     function intentionCompany() {
-        var url = "/intention/add";
-    $.post(url, $("#intentionCompany").serialize(),
-        function (data) {
-        }, "json");
-    }
-
-    /** 验证输入的账号 */
-    function varEmail(number) {
-        if (isEmail(number)) {
-            $("#errMsg1").html("");
-        } else {
-            $("#errMsg1").html("请输入正确的邮箱");
+        if (verificationForm()) {
+            var url = "/intention/add";
+            $.post(url, $("#intentionCompany").serialize(),
+                    function (data) {
+                        if (data.result == "success") {
+                            swal("提交成功", data.message, "success");
+                        } else {
+                            swal("提交失败", data.message, "error");
+                        }
+                        $("#name").val('');
+                        $("#email").val('');
+                        $("#phone").val('');
+                        $("#message").val('');
+                    }, "json");
         }
     }
 
-    /** 判断是否是邮箱 */
-    function isEmail(str) {
-        var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.([a-zA-Z0-9_-])+)+$/;
+    /** 验证form表单 */
+    function verificationForm() {
+        var name = $("#name").val();
+        var email = $("#email").val();
+        var phone = $("#phone").val();
+        if (name != null && name != "") {
+            if (isName(name)) {
+                $("#nameError").html('');
+                if (email != null && email != "" && phone != null && phone != "") {
+                    if (isEmail(email)) {
+                        $("#emailError").html("");
+                        if (isPhone(phone)) {
+                            $("#phoneError").html("");
+                            return true;
+                        } else {
+                            $("#emailError").html("");
+                            $("#phoneError").html("请输入正确的手机号");
+                        }
+                    } else {
+                        $("#phoneError").html("");
+                        $("#emailError").html("请输入正确的邮箱");
+                    }
+                } else {
+                    if (email != null && email != "") { // 输入的是邮箱
+                        if (isEmail(email)) {
+                            $("#emailError").html("");
+                            return true;
+                        }
+                        $("#phoneError").html("");
+                        $("#emailError").html("请输入正确的邮箱");
+                    } else if (phone != null && phone != "") { // 输入的是手机号
+                        if (isPhone(phone)) {
+                            $("#phoneError").html("");
+                            return true;
+                        } else {
+                            $("#emailError").html("");
+                            $("#phoneError").html("请输入正确的手机号");
+                        }
+                    } else {
+                        $("#emailError").html("");
+                        $("#phoneError").html("手机号或邮箱至少输入一个");
+                    }
+                }
+            } else {
+                $("#nameError").html("请输入正确的称呼");
+            }
+        } else {
+            $("#nameError").html("请输入您的称呼");
+        }
+        return false;
+    }
+
+    /** 验证用户名是否合法 */
+    function isName(str) {
+        var reg = /^[^a-zA-Z0-9]+$/;
         return reg.test(str);
     }
+
 
 </script>
 

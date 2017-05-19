@@ -1,6 +1,7 @@
 package com.gs.thread;
 
 import com.gs.bean.info.SendRemind;
+import com.gs.common.Constants;
 import com.jh.email.Mail;
 import com.jh.email.MailSender;
 
@@ -27,7 +28,7 @@ public class SendEmailThread implements Runnable {
     public void run() {
         for (Mail mail : mails) {
             MailSender mailSender = new MailSender();
-            mailSender.sendEmailByType("qq", mail, "672630243@qq.com", "jxtsefrwqaxobbdb");
+            mailSender.sendEmailByType(Constants.MAIL_TYPE, mail, Constants.MAIL_SENDER, Constants.MAIL_PASSWORD);
         }
 
     }

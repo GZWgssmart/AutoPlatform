@@ -158,7 +158,7 @@ public class LoginController {
                     } catch (MessagingException e) {
                     }
                     MailSender mailSender = new MailSender();
-                    mailSender.sendEmailByType("qq", mail, "672630243@qq.com", "jxtsefrwqaxobbdb");
+                    mailSender.sendEmailByType(Constants.MAIL_TYPE, mail, Constants.MAIL_SENDER, Constants.MAIL_PASSWORD);
                     return ControllerResult.getSuccessResult("注册成功，请到邮箱中进行验证");
                 } else {
                     Subject subject = SecurityUtils.getSubject();

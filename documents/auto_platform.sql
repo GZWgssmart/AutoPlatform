@@ -44,7 +44,7 @@ CREATE TABLE `t_accessories_buy` (
 `companyId` varchar(36) DEFAULT NULL COMMENT '配件购买记录所属公司',
 `accBuyStatus` varchar(2) DEFAULT NULL COMMENT '配件购买记录状态',
 `accBuyCheck` varchar(2) DEFAULT 'N' COMMENT '配件购买审核状态',
-`accIsBuy` varchar(2) DEFAULT 'N' COMMENT '配件是否购买状态'
+`accIsBuy` varchar(2) DEFAULT 'N' COMMENT '配件是否购买状态',
 PRIMARY KEY (`accBuyId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -9,10 +9,13 @@ import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.message.IndustrySMS;
 import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.service.IntentionCompanyService;
+import com.jh.email.Mail;
+import com.jh.email.MailSender;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -24,6 +27,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.mail.BodyPart;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -127,11 +135,57 @@ public class IntentionCompanyController {
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public ControllerResult addIntention(IntentionCompany ic) {
-                logger.info("添加意向公司");
-                ic.setIntentionStatus("Y");
-                intentionCompanyService.insert(ic);
-                return ControllerResult.getSuccessResult("申请成功，我们的管理员会即使和您联系，请保持手机开机哦");
+        logger.info("添加意向公司");
+        ic.setIntentionStatus("Y");
+        if (ic.getEmail() != null && !ic.getEmail().equals("") && ic.getPhone() != null && !ic.getPhone().equals("")) { // 手机和邮箱都不为空
+            String to = ic.getPhone();
+            String smsContent = "【创意科技】尊敬的" + ic.getName() + "先生/女士,恭喜你成功提交信息,客服将 在一个工作日内与您取得联系,请您保持手机畅通。";
+            IndustrySMS is = new IndustrySMS(to, smsContent);
+            is.execute();
+
+            Mail mail = new Mail();
+            mail.setRecipients(ic.getEmail());
+            mail.setSubject("入驻提醒");
+            mail.setType(Mail.HTML);
+            Multipart multipart = new MimeMultipart();
+            BodyPart part1 = new MimeBodyPart();
+            try {
+                part1.setContent("<p>【创意科技】尊敬的" + ic.getName() + "先生/女士,恭喜你成功提交信息,客服将 在一个工作日内与您取得联系,请您保持手机畅通。</p>", mail.getType());
+                multipart.addBodyPart(part1);
+                mail.setMultipart(multipart);
+            } catch (MessagingException e) {
+            }
+            MailSender mailSender = new MailSender();
+            mailSender.sendEmailByType(Constants.MAIL_TYPE, mail, Constants.MAIL_SENDER, Constants.MAIL_PASSWORD);
+        } else { // 其中一个为空
+            if (ic.getEmail() != null && !ic.getEmail().equals("")) { // 邮箱不为空
+                Mail mail = new Mail();
+                mail.setRecipients(ic.getEmail());
+                mail.setSubject("入驻提醒");
+                mail.setType(Mail.HTML);
+                Multipart multipart = new MimeMultipart();
+                BodyPart part1 = new MimeBodyPart();
+                try {
+                    part1.setContent("<p>【创意科技】尊敬的" + ic.getName() + "先生/女士,恭喜你成功提交信息,客服将 在一个工作日内与您取得联系,请您保持手机畅通。</p>", mail.getType());
+                    multipart.addBodyPart(part1);
+                    mail.setMultipart(multipart);
+                } catch (MessagingException e) {
+                }
+                MailSender mailSender = new MailSender();
+                mailSender.sendEmailByType(Constants.MAIL_TYPE, mail, Constants.MAIL_SENDER, Constants.MAIL_PASSWORD);
+
+            } else if (ic.getPhone() != null && !ic.getPhone().equals("")) { // 手机号不为空
+                String to = ic.getPhone();
+                String smsContent = "【创意科技】尊敬的" + ic.getName() + "先生/女士,恭喜你成功提交信息,客服将 在一个工作日内与您取得联系,请您保持手机畅通。";
+                IndustrySMS is = new IndustrySMS(to, smsContent);
+                is.execute();
+            } else {
+                return ControllerResult.getFailResult("申请失败，请输入手机号或邮箱");
+            }
         }
+        intentionCompanyService.insert(ic);
+        return ControllerResult.getSuccessResult("申请成功，我们的管理员会即使和您联系，请保持手机开机哦");
+    }
 
 
     @ResponseBody
