@@ -18,15 +18,17 @@ import javax.annotation.Resource;
 @RequestMapping("/")
 public class IndexController {
 
+    private Logger logger = (Logger) LoggerFactory.getLogger(IndexController.class);
+
+
     @Resource
     private CompanyService companyService;
-
-    private Logger logger = (Logger) LoggerFactory.getLogger(IndexController.class);
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public ModelAndView index() {
         logger.info("进入首页");
-        ModelAndView mav = new ModelAndView("index/index");
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("index/index");
         mav.addObject("companys", companyService.queryByTop(6));
         return mav;
     }

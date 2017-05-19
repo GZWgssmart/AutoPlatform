@@ -11,6 +11,7 @@ import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.common.web.ServletContextUtil;
+import com.gs.service.CompanyService;
 import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
@@ -56,6 +57,9 @@ public class LoginController {
 
     @Resource
     private UserRoleService userRoleService;
+
+    @Resource
+    private CompanyService companyService;
 
     private String phoneCode;
 
@@ -202,11 +206,14 @@ public class LoginController {
     }
 
     @RequestMapping("logout")
-    public String logout(HttpSession session) {
+    public ModelAndView logout(HttpSession session) {
         logger.info("注销");
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         subject.getSession().removeAttribute("user");
-        return "index/index";
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("index/index");
+        mav.addObject("companys", companyService.queryByTop(6));
+        return mav;
     }
 }

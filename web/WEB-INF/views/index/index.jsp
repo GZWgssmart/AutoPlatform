@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: iJangoGuo
@@ -8,6 +7,7 @@
 --%>
 <!DOCTYPE HTML>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%
     String path = request.getContextPath();
 %>
@@ -246,13 +246,13 @@
                                 <figure>
                                     <div class="overlay"><i class="ti-plus"></i></div>
                                     <img src="<%=path%>/${c.companyImg}" alt="Image" class="img-responsive">
+                                    <div class="fh5co-text">
+                                        <h2>${c.companyName}</h2>
+                                        <p>${c.companyAddress}</p>
+                                    </div>
                                 </figure>
                             </c:otherwise>
                         </c:choose>
-                        <div class="fh5co-text">
-                            <h2>${c.companyName}</h2>
-                            <p>${c.companyAddress}</p>
-                        </div>
                         </a>
                         </div>
                     </c:forEach>
