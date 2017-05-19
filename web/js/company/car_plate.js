@@ -49,6 +49,7 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
+        editPlateName = product.plateName;
         validator("editForm");
         $("#editForm").fill(product);
         $("#editWin").modal('show');
@@ -151,7 +152,7 @@ function validator(formId) {
         },
         fields: {
             plateName: {
-                message: '车牌名称失败',
+                message: '车牌名称验证失败',
                 validators: {
                     notEmpty: {
                         message: '车牌名称不能为空'
@@ -164,14 +165,14 @@ function validator(formId) {
                     threshold: 6,
                     remote: {
                         url: '/vilidate/queryIsExist_PlateName?editPlateName=' + editPlateName,
-                        message: '该车型已存在',
+                        message: '该车牌名称已存在',
                         delay: 2000,
                         type: 'GET'
                     }
                 }
             },
             plateDes: {
-                message: '车牌描述失败',
+                message: '车牌描述验证失败',
                 validators: {
                     notEmpty: {
                         message: '车牌描述不能为空'
@@ -183,9 +184,6 @@ function validator(formId) {
                     }
                 }
             }
-
-
-
         }
     })
         .on('success.form.bv', function (e) {

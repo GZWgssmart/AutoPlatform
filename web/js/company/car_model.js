@@ -9,6 +9,7 @@ function showEditWin() {
         var product = selectRow[0];
         $("#editForm").fill(product);
         $('.car_brand').html('<option value="' + product.brand.brandId+ '">' + product.brand.brandName + '</option>').trigger("change");
+        editModelName = product.modelName;
         validator("editForm");
         $("#editWin").modal('show');
     }

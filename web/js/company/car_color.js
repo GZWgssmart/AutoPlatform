@@ -51,6 +51,7 @@ function showEditWin() {
     }else{
         var product = selectRow[0];
         $("#spans").css("background",product.colorHex);
+        editColorName = product.colorName;
         validator("editForm");
         $("#editForm").fill(product);
         $("#editWin").modal('show');
@@ -191,7 +192,7 @@ function validator(formId) {
                     threshold: 6,
                     remote: {
                         url: '/vilidate/queryIsExist_ColorName?editColorName=' + editColorName,
-                        message: '该颜色已存在',
+                        message: '该颜色名称已存在',
                         delay: 2000,
                         type: 'GET'
                     }

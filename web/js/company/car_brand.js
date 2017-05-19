@@ -51,6 +51,7 @@ function showEditWin() {
         return false;
     } else {
         var product = selectRow[0];
+        editBrandName = product.brandName;
         validator("editForm");
         $("#editForm").fill(product);
         $("#editWin").modal('show');
@@ -157,7 +158,7 @@ function validator(formId) {
                     threshold: 6,
                     remote: {
                         url: '/vilidate/queryIsExist_BrandName?editBrandName=' + editBrandName,
-                        message: '该品牌已存在',
+                        message: '该品牌名称已存在',
                         delay: 2000,
                         type: 'GET'
                     }
