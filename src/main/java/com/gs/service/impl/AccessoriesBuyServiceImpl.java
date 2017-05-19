@@ -121,6 +121,14 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
         accessoriesBuyDAO.updateAccIsBuy(id);
     }
 
+    public void updateAccBuyCheck(String checkStatus, String accBuyId) {
+        accessoriesBuyDAO.updateAccBuyCheck(checkStatus, accBuyId);
+    }
+
+    public void batchUpdateBuyCheck(String[] ids) {
+        accessoriesBuyDAO.batchUpdateBuyCheck(ids);
+    }
+
     public List<AccessoriesBuy> queryByDefaultCount(String companyId) {
         return accessoriesBuyDAO.queryByDefaultCount(companyId);
     }

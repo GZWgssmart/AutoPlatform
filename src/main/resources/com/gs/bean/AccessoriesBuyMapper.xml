@@ -83,11 +83,22 @@
 		where accBuyId = #{accBuyId}
 	</update>
 
+    <update id="updateAccBuyCheck">
+        update t_accessories_buy aby set aby.accBuyCheck = #{checkStatus} where aby.accBuyId = #{accBuyId}
+    </update>
+
     <update id="batchUpdate" parameterType="list">
 		<![CDATA[
 
         ]]>
 	</update>
+
+    <update id="batchUpdateBuyCheck">
+            UPDATE t_accessories_buy SET accBuyCheck = 'Y' WHERE accBuyId in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 
     <update id="updateAccIsBuy" parameterType="string">
         update t_accessories_buy aby set aby.accIsBuy = 'Y' where aby.accBuyId = #{id}
@@ -250,7 +261,23 @@
 
     <select id="query" parameterType="accessoriesBuy" resultType="accessoriesBuy">
 		<![CDATA[
+
+
+
+
+
+
+
+
         select * from t_accessories_buy
+
+
+
+
+
+
+
+
         ]]>
 	</select>
 

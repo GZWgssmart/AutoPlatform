@@ -79,7 +79,8 @@
             <th data-field="accBuyStatus" data-formatter="status">状态</th>
             <s:hasAnyRoles name="companyAdmin, systemSuperAdmin, companyBuyer">
                 <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
-                <th data-formatter="fmtIsFinish" data-events="operateEvents">是否完成采购</th>
+                <th data-formatter="fmtIsFinish" data-events="operateEvents">采购操作</th>
+                <th data-formatter="fmtPassCheck" data-events="operateEvents">审核操作</th>
             </s:hasAnyRoles>
         </tr>
         </thead>
@@ -92,11 +93,6 @@
                         <i class="glyphicon glyphicon-plus"></i> 添加
                     </button>
                 </a>
-                <%--<a>--%>
-                <%--<button onclick="delteleBuy();" type="button" id="remove" class="btn btn-danger">--%>
-                <%--<i class="glyphicon glyphicon-ban-circle"></i> 冻结--%>
-                <%--</button>--%>
-                <%--</a>--%>
             </s:hasAnyRoles>
             <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, companyRepertory, systemOrdinaryAdmin">
                 <a>
@@ -123,6 +119,10 @@
                 </a>
                 <a>
                     <button onclick="allBuys();" type="button" class="btn btn-default">查看所有</button>
+                </a>
+
+                <a>
+                    <button onclick="passChecks();" type="button" class="btn btn-default">审核通过</button>
                 </a>
             </s:hasAnyRoles>
 
@@ -160,7 +160,7 @@
                             <div class="form-group">
                                 <label>配件条码：</label>
                                 <input type="text" name="accessories.accCommodityCode"
-                                       attr="accessoriesBuy.accessories.accCommodityCode" class="form-control"/>
+                                       attr="accessoriesBuy.accessories.accCommodityCode" maxlength="13" class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -273,8 +273,7 @@
                             <div class="form-group">
                                 <label>配件描述：</label>
                                 <textarea name="accessories.accDes" class="form-control" rows="3" id="accDes"
-                                          style="resize: none;"
-                                          attr="acc.accDes"></textarea>
+                                          style="resize: none;" attr="acc.accDes"></textarea>
                             </div>
 
 

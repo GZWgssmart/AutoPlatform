@@ -317,12 +317,13 @@ public class AccessoriesBuyController {
 
     @ResponseBody
     @RequestMapping(value = "finish", method = RequestMethod.GET)
-    public ControllerResult finish(@Param("id") String id) {
+    public ControllerResult finish(@Param("id") String id, @Param("accId") String accId) {
 
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     accessoriesBuyService.updateAccIsBuy(id);
+                    accessoriesService.updateAccUseTime(accId);
                     return ControllerResult.getSuccessResult("操作成功");
                 }
                 return ControllerResult.getFailResult("没有此权限访问");
@@ -330,6 +331,27 @@ public class AccessoriesBuyController {
                 logger.info("出现异常" + e.getStackTrace());
                 return ControllerResult.getFailResult("出现了一个错误");
             }
+        } else {
+            logger.info("session失效重新登入");
+            return ControllerResult.getFailResult("登入失效，重新登入");
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "passChecks", method = RequestMethod.GET)
+    public ControllerResult passChecks(@Param("ids") String[] ids) {
+
+        if (SessionGetUtil.isUser()) {
+//            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    accessoriesBuyService.batchUpdateBuyCheck(ids);
+                    return ControllerResult.getSuccessResult("操作成功");
+                }
+                return ControllerResult.getFailResult("没有此权限访问");
+//            } catch (Exception e) {
+//                logger.info("出现异常" + e.getStackTrace());
+//                return ControllerResult.getFailResult("出现了一个错误");
+//            }
         } else {
             logger.info("session失效重新登入");
             return ControllerResult.getFailResult("登入失效，重新登入");
@@ -435,6 +457,31 @@ public class AccessoriesBuyController {
         } else {
             logger.info("session失效重新登入");
             return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "isPassCheck", method = RequestMethod.GET)
+    public ControllerResult isPassCheck(@Param("accBuyId") String accBuyId, @Param("status") String status) {
+        if (SessionGetUtil.isUser()) {
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    if (!status.equals("Y")) {
+                        accessoriesBuyService.updateAccBuyCheck("Y", accBuyId);
+                        return ControllerResult.getSuccessResult("操作成功");
+                    } else {
+                        accessoriesBuyService.updateAccBuyCheck("N", accBuyId);
+                    }
+                    return ControllerResult.getSuccessResult("操作成功");
+                }
+                return ControllerResult.getFailResult("没有此权限访问");
+            } catch (Exception e) {
+                logger.info("出现异常" + e.getStackTrace());
+                return ControllerResult.getFailResult("出现了一个错误");
+            }
+        } else {
+            logger.info("session失效重新登入");
+            return ControllerResult.getFailResult("登入失效，重新登入");
         }
     }
 

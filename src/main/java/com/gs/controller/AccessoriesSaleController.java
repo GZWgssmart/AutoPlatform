@@ -282,21 +282,21 @@ public class AccessoriesSaleController {
     public Pager4EasyUI<AccessoriesSale> search(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize, @Param("accName") String accName, @Param("userName") String userName, @Param("buyTimeStart") String buyTimeStart, @Param("buyTimeEnd") String buyTimeEnd) {
 
         if (SessionGetUtil.isUser()) {
-//            try {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
-                User user = SessionGetUtil.getUser();
-                Pager pager = new Pager();
-                pager.setPageNo(Integer.valueOf(pageNumber));
-                pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(accessoriesSaleService.bySaleTimeScopeCount(accName, userName, buyTimeStart, buyTimeEnd, user));
-                List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryBySaleTimeScopeByAccNamePager(pager, accName, userName, buyTimeStart, buyTimeEnd, user);
-                return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(accessoriesSaleService.bySaleTimeScopeCount(accName, userName, buyTimeStart, buyTimeEnd, user));
+                    List<AccessoriesSale> accessoriesSales = accessoriesSaleService.queryBySaleTimeScopeByAccNamePager(pager, accName, userName, buyTimeStart, buyTimeEnd, user);
+                    return new Pager4EasyUI<AccessoriesSale>(pager.getTotalRecords(), accessoriesSales);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("出现异常" + e.getStackTrace());
+                return null;
             }
-            return null;
-//            } catch (Exception e) {
-//                logger.info("出现异常" + e.getStackTrace());
-//                return null;
-//            }
         } else {
             logger.info("session失效重新登入");
             return null;
@@ -307,22 +307,22 @@ public class AccessoriesSaleController {
     @RequestMapping(value = "update", method = RequestMethod.GET)
     public ControllerResult update(AccessoriesSale accessoriesSale, @Param("lastCount") String lastCount) {
         if (SessionGetUtil.isUser()) {
-//            try {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
-                User user = SessionGetUtil.getUser();
-                Accessories acc = accessoriesSale.getAccessories();
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    User user = SessionGetUtil.getUser();
+                    Accessories acc = accessoriesSale.getAccessories();
 
-                int iLastCount = Integer.valueOf(lastCount);
+                    int iLastCount = Integer.valueOf(lastCount);
 
-                accessoriesSale.setCompanyId(user.getCompanyId());
-                accessoriesSale.setAccId(acc.getAccId());
+                    accessoriesSale.setCompanyId(user.getCompanyId());
+                    accessoriesSale.setAccId(acc.getAccId());
 
-                accessoriesSaleService.update(accessoriesSale);
-                accessoriesService.updateIdle(accessoriesSale.getAccId(), iLastCount, user);
+                    accessoriesSaleService.update(accessoriesSale);
+                    accessoriesService.updateIdle(accessoriesSale.getAccId(), iLastCount, user);
+                }
+            } catch (Exception e) {
+                return ControllerResult.getFailResult("出现了一个错误");
             }
-//            } catch (Exception e) {
-//                return ControllerResult.getFailResult("出现了一个错误");
-//            }
             return ControllerResult.getSuccessResult("更新成功");
         } else {
             logger.info("session失效重新登入");

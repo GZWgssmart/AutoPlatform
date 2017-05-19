@@ -30,6 +30,8 @@ public interface AccessoriesService extends BaseService<String, Accessories>{
 
     public void updateIdle(@Param("id") String id, @Param("lastCount") int lastCount, User user);
 
+    public void updateAccUseTime(@Param("id") String id);
+
     /**领料申请同意后批量更新最近领料时间及库存*/
     public void updateTotalAndIdle(List<Accessories> accessories);
 

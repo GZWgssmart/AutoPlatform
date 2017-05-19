@@ -102,6 +102,11 @@ public interface AccessoriesBuyDAO extends BaseDAO<String, AccessoriesBuy> {
      */
     public void updateAccIsBuy(@Param("id") String id);
 
+
+    public void updateAccBuyCheck(@Param("checkStatus") String checkStatus, @Param("accBuyId") String accBuyId);
+
+    public void batchUpdateBuyCheck(@Param("ids") String[] ids);
+
     /*
     * 默认查询本月的下单统计
     * */

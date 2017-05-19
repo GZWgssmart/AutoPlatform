@@ -12,11 +12,9 @@ $(document).ready(function () {
     disableSwitch("accWin", "isAcc");
 
     destoryValidator("addWin", "addForm");
-    destoryValidator("accWin", "accForm");
     destoryValidator("editWin", "editForm");
 
 });
-
 
 function initBsSwitchBuy(id, onSwitchChange) {
     initBsSwitch.call(this, id, onSwitchChange);
@@ -26,12 +24,10 @@ function switchChange(event, state) {
     onSwitchChange.call(this, event, state);
 }
 
-
 function showSearchFormSale() {
     initDateTimePickerNotValitor("form_datetime");
     showSHForm.call(this);
 }
-
 
 override :switchChange = function (event, state) {
     if (state == true) {
@@ -95,6 +91,45 @@ function addAccessoriesBuyInfo(formId) {
     addAccBuyInfo(formId);
 }
 
+function passChecks() {
+    var ids = [];
+    var rows = $("#cusTable").bootstrapTable('getSelections');
+    if (rows.length <= 0) {
+        swal('选择失败', "请选择一条或一条以上的数据", "error");
+        return false;
+    } else {
+        var datas = rows;
+        for (var i = 0; i < datas.length; i++) {
+            if (datas[i].accBuyCheck != 'N') {
+                swal("操作失败", "此采购已通过审核无需再次通过", "error");
+                return false;
+            } else continue;
+        }
+        swal({
+            title: "您确定要通过审核吗？",
+            text: '确定了将不可更改',
+            type: "warning",
+            showCancelButton: true,
+            closeOnConfirm: true,
+            cancelButtonText: "取消",
+            confirmButtonText: "是的，我通过",
+            confirmButtonColor: "#ec6c62"
+        }, function () {
+            for (var i = 0; i < rows.length; i++) {
+                ids.push(rows[i].accBuyId);
+            }
+            $.get('/accessoriesBuy/passChecks?ids=' + ids, function (data) {
+                if (data.result == "success") {
+                    swal(data.message, "", "success");
+                    $('#cusTable').bootstrapTable('refresh');
+                } else if (data.result == "fail") {
+                    swal(data.message, "", "error");
+                }
+            })
+        })
+    }
+}
+
 function addAccBuyInfo(formId) {
     $.post("/accessoriesBuy/isAccAdd?state=" + isAcc,
         $("#" + formId).serialize(),
@@ -113,12 +148,10 @@ function addAccBuyInfo(formId) {
         }, "json");
 }
 
-
 function fmtOperate(value, row, index) {
     if (row.accBuyStatus == 'Y') {
         return ['<button type="button" class="removeBuy btn btn-danger  btn-sm" style="margin-right:15px;">冻结</button>',
             '<button type="button" class="showEditWin btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
-
         ].join('')
     } else {
         return ['<button type="button" class="enableBuy btn btn-success  btn-sm" style="margin-right:15px;">激活</button>',
@@ -129,10 +162,21 @@ function fmtOperate(value, row, index) {
 
 function fmtIsFinish(value, row, index) {
     if (row.accIsBuy == 'N') {
-        return ['<button type="button" class="btn btn-warning isFinish">完成此采购</button>',
+        return ['<button type="button" class="btn btn-warning isFinish btn-sm">完成此采购</button>'
         ].join('');
     } else {
-        return ['<button type="button" class="btn btn-success" disabled>已完成</button>',
+        return ['<button type="button" class="btn btn-success btn-sm" disabled>已完成</button>'
+        ].join('');
+    }
+}
+
+
+function fmtPassCheck(value, row, index) {
+    if (row.accBuyCheck != 'Y') {
+        return ['<button type="button" class="passCheck btn btn-warning btn-sm">通过此审核</button>'
+        ].join('');
+    } else {
+        return ['<button type="button" class="btn btn-success btn-sm" disabled>此审核已通过</button>'
         ].join('');
     }
 }
@@ -170,17 +214,42 @@ window.operateEvents = {
             });
     },
     'click .isFinish': function (e, value, row, index) {
+        if (row.accBuyCheck != 'Y') {
+            swal("操作失败", "审核未通过!", "error");
+        } else {
+            swal({
+                title: "您确定完成了该采购吗？",
+                text: '确定了将不可更改',
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: true,
+                cancelButtonText: "取消",
+                confirmButtonText: "是的，我完成了",
+                confirmButtonColor: "#ec6c62"
+            }, function () {
+                $.get("/accessoriesBuy/finish?id=" + row.accBuyId + "&accId=" + row.accessories.accId,
+                    function (data) {
+                        if (data.result == "success") {
+                            $('#cusTable').bootstrapTable('refresh');
+                        } else if (data.result == "fail") {
+                            swal(data.message, "", "error");
+                        }
+                    });
+            })
+        }
+    },
+
+    'click .passCheck': function (e, value, row, index) {
         swal({
-            title: "您确定完成了该采购吗？",
-            text: '确定了将不可更改',
+            title: "您确定通过此审核吗？",
             type: "warning",
             showCancelButton: true,
             closeOnConfirm: true,
             cancelButtonText: "取消",
-            confirmButtonText: "是的，我完成了",
+            confirmButtonText: "是的，通过",
             confirmButtonColor: "#ec6c62"
         }, function () {
-            $.get("/accessoriesBuy/finish?id=" + row.accBuyId,
+            $.get("/accessoriesBuy/isPassCheck?accBuyId=" + row.accBuyId + "&status=" + row.accBuyCheck,
                 function (data) {
                     if (data.result == "success") {
                         $('#cusTable').bootstrapTable('refresh');
@@ -222,15 +291,20 @@ function addAccBuy() {
     } else {
         var acc = selectRow[0];
         console.log(acc);
+        $("#accDes").val(acc.accDes);
         $("#accBuyTime").val(formatterDate(acc.accUsedTime));
         $("#addForm").fill(acc);
+
+        $('#supply').html('<option value="' + acc.supply.supplyId + '">' + acc.supply.supplyName + '</option>').trigger("change");
+        $('#accType').html('<option value="' + acc.accessoriesType.accTypeId + '">' + acc.accessoriesType.accTypeName + '</option>').trigger("change");
+
         enableSwitch("accWin", "isAcc");
         $("#accWin").modal("hide");
 
         accAddAutoCalculation(acc.accDiscount, acc.accIdle, acc.accPrice, "accBuyTotal", "accBuyMoney");
         autoCalculation1("accBuyCount", "accBuyPrice", "accBuyDiscount", "accBuyTotal", "accBuyMoney");
     }
-    disableSwitch();
+    disableSwitch("addWin", "isAcc");
 }
 
 function accAddAutoCalculation(accDiscount, accIdle, accPrice, accBuyTotal, accBuyMoney) {
@@ -249,7 +323,7 @@ function accAddAutoCalculation(accDiscount, accIdle, accPrice, accBuyTotal, accB
 }
 
 function fmtCheckState(value) {
-    if (value == 'Y') {
+    if (value != 'N') {
         return "已审核";
     } else {
         return "审核中";
@@ -364,7 +438,11 @@ function validator(formId) {
                     stringLength: {
                         min: 0,
                         max: 13,
-                        message: '不可以超过13个数字'
+                        message: '不可以超过13个字符'
+                    },
+                    regexp: {
+                        regexp: /^[0-9]+$/,
+                        message: '只能是数字'
                     }
                 }
             },

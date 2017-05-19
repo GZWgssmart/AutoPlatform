@@ -77,6 +77,12 @@
 		]]>
 	</update>
 
+	<update id="updateAccUseTime" parameterType="string">
+		<![CDATA[
+			update t_accessories set accUsedTime = now() where accId = #{id}
+		]]>
+	</update>
+
 	<update id="batchUpdate" parameterType="list">
 		<![CDATA[
 

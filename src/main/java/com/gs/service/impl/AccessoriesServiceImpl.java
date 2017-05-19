@@ -65,6 +65,10 @@ public class AccessoriesServiceImpl implements AccessoriesService {
 		accessoriesDAO.updateIdle(id, lastCount, user);
 	}
 
+	public void updateAccUseTime(String id) {
+		accessoriesDAO.updateAccUseTime(id);
+	}
+
 	public void updateTotalAndIdle(List<Accessories> accessories) {
 		accessoriesDAO.updateTotalAndIdle(accessories);
 	}
