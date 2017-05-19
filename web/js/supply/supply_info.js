@@ -12,7 +12,6 @@ $(document).ready(function () {
 
 /** 编辑数据 */
 function showEditWin() {
-    validator("editForm")
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
@@ -20,6 +19,7 @@ function showEditWin() {
     } else {
         var supply = selectRow[0];
         editSupplyName = supply.supplyName;
+        validator("editForm");
         $("#editForm").fill(supply);
         initCityPicker("editAddress");
         $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");

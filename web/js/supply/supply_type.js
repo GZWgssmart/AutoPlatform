@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 /** 编辑数据 */
 function showEditWin() {
-    validator("editForm")
+
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
@@ -19,6 +19,7 @@ function showEditWin() {
     } else {
         var supplyType = selectRow[0];
         editSupplyTypeName = supplyType.supplyTypeName;
+        validator("editForm");
         $("#editForm").fill(supplyType);
         $("#editWin").modal('show');
     }
