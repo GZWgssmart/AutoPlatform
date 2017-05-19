@@ -130,4 +130,10 @@ public interface UserDAO extends BaseDAO<String, User>{
     public List<User> queryByCompanyRole();
 
     public int updatePwd(String userPwd);
+
+    /**
+     * 查询平台管理员的信息
+     * @return
+     */
+    public User queryAdmin();
 }

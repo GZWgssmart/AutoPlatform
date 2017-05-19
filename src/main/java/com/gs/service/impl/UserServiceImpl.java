@@ -221,6 +221,11 @@ public class UserServiceImpl implements UserService {
         return userDAO.updatePwd(userPwd);
     }
 
+    @Override
+    public User queryAdmin() {
+        return userDAO.queryAdmin();
+    }
+
 
     public void insertAdmin(User user) {
         userDAO.insertAdmin(user);

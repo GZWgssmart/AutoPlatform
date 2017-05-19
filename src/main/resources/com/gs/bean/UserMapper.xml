@@ -587,4 +587,15 @@
 		]]>
 	</update>
 
+	<select id="queryAdmin" resultType="user" resultMap="userResultMap">
+		<![CDATA[
+			select u.* from
+				t_user u, t_user_role ur, t_role r
+				where 1 = 1 and u.userId = ur.userId and r.roleId = ur.roleId
+				and u.userId = (select ur1.userId from t_user_role ur1
+				where ur1.roleId = (select r1.roleId from t_role r1
+				where r1.roleName = 'systemSuperAdmin'))
+		]]>
+	</select>
+
 </mapper>

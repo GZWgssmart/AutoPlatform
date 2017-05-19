@@ -285,3 +285,25 @@
 
 
 }());
+
+/** 判断是否是邮箱 */
+function isEmail(str) {
+	var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.([a-zA-Z0-9_-])+)+$/;
+	return reg.test(str);
+}
+
+function subscribMe() {
+	var email = $("#subEmail").val();
+	if (isEmail(email)) {
+		$("#subError").html("");
+		$.get("/sub_me?email=" + email, function (data) {
+			if (data.result == "success") {
+				$("#subEmail").val("");
+				$("#subSuccess").html(data.message);
+			}
+		}, "json");
+	} else {
+		$("#subSuccess").html("");
+		$("#subError").html("请输入正确的邮箱");
+	}
+}
