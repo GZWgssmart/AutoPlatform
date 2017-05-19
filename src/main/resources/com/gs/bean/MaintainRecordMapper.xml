@@ -538,6 +538,15 @@
         order by r.companyId desc, r.recordStatus desc, r.recordCreatedTime desc
     </select>
 
+    <select id="queryCustomerCar" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+                select c.userName,mr.endTime,mr.actualEndTime,mr.pickupTime,mr.speedStatus,cb.chargeBillMoney from
+                t_maintain_record mr, t_checkin c, t_charge_bill cb
+                where mr.recordId=cb.recordId and c.checkinId=mr.checkinId and c.userPhone=#{userPhone}
+		]]>
+                order by c.arriveTime desc  limit 0,5
+    </select>
+
     <select id="queryPagerBySpeedStatusAndPickingStatus" resultType="list" resultMap="maintainRecordResultMap">
         <![CDATA[
 			select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.userId, c.userRequests, c.maintainOrFix, cpy.companyId, cpy.companyName

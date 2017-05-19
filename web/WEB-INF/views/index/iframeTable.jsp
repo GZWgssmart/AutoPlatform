@@ -53,7 +53,7 @@
                     <fmt:formatDate value="${rd.pickupTime}" pattern="yyyy-MM-dd HH:mm"/>
                 </td>
                 <td>${rd.speedStatus}</td>
-                <td>${rd.chargeBill.actualPayment}</td>
+                <td>${rd.chargeBill.chargeBillMoney}</td>
             </tr>
         </c:forEach>
         </tbody>
