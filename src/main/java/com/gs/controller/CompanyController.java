@@ -216,10 +216,10 @@ public class CompanyController {
             try {
                 if(CheckRoleUtil.checkRoles(CompanyEditRole)){
                     logger.info("添加公司");
-                    company.setCompanyLogo("uploads/logo.jpg");
+                    company.setCompanyLogo("/img/logo.jpg");
                     String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
                     String filePath = FileUtil.uploadPath(session, "\\" + fileName);
-                    String logo = "uploads/" + fileName;
+                    String logo = "/uploads/" + fileName;
                     if (!file.isEmpty()) {
                         file.transferTo(new File(filePath));
                         company.setCompanyImg(logo);
