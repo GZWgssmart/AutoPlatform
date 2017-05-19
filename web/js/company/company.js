@@ -146,7 +146,6 @@ window.operateEvents = {
         editName = incomingType.companyName;
         editTel  = incomingType.companyTel;
         editWebsite = incomingType.companyWebsite;
-        editPhone = incomingType.companyPricipalPhone;
         $('#companys').html('<option value="' + incomingType.companySize + '">' + incomingType.companySize + '</option>').trigger("change");
         initDateTimePicker("form_datetime", "", "editForm");
         $("#icon").attr("src", "/" + incomingType.companyLogo);
@@ -169,7 +168,7 @@ function validator(formId) {
         },
         fields: {
             companyName: {
-                message: '公司名称失败',
+                message: '公司名称验证失败',
                 validators: {
                     notEmpty: {
                         message: '公司名称不能为空'
@@ -189,7 +188,7 @@ function validator(formId) {
                 }
             },
             companyDes: {
-                message: '公司描述失败',
+                message: '公司描述验证失败',
                 validators: {
                     stringLength: {
                         min: 0,
@@ -199,7 +198,7 @@ function validator(formId) {
                 }
             },
             companyAddress: {
-                message: '公司地址失败',
+                message: '公司地址验证失败',
                 validators: {
                     stringLength: {
                         min: 2,
@@ -209,26 +208,26 @@ function validator(formId) {
                 }
             },
             companyTel: {
-                message: '公司联系方式失败',
+                message: '公司电话验证失败',
                 validators: {
                     notEmpty: {
-                        message: '公司联系方式不能为空'
+                        message: '公司电话不能为空'
                     }, stringLength: {
                         min: 13,
                         max: 13,
-                        message: '公司号码长度必须是13位'
+                        message: '公司电话长度必须是13位'
                     },
                     threshold: 6,
                     remote: {
                         url: '/vilidate/queryIsExist_companyTel?editCompanyTel=' + editTel,
-                        message: '该公司号码已存在',
+                        message: '该公司电话已存在',
                         delay: 2000,
                         type: 'GET'
                     }
                 }
             },
             companyPricipal: {
-                message: '公司负责人失败',
+                message: '公司负责人验证失败',
                 validators: {
                     notEmpty: {
                         message: '公司负责人不能为空'
@@ -241,7 +240,7 @@ function validator(formId) {
                 }
             },
             companyWebsite: {
-                message: '公司官网URL失败',
+                message: '公司官网URL验证失败',
                 validators: {
                     regexp: {
                         regexp: /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/,
@@ -288,8 +287,8 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: '/vilidate/queryIsExist_userPhone?editPhone=' + editPhone,
-                        message: '该URL已存在',
+                        url: '/vilidate/queryIsExist_companyPP?editPhone=' + editPhone,
+                        message: '该手机号已存在',
                         delay: 2000,
                         type: 'GET'
                     }
@@ -310,7 +309,6 @@ function validator(formId) {
                             editName = "";
                             editTel  = "";
                             editWebsite = "";
-                            editPhone = "";
                             swal(data.message, "", "success");
                             $('#cusTable').bootstrapTable('refresh');
                             $('#addForm').data('bootstrapValidator').resetForm(true);
@@ -325,7 +323,6 @@ function validator(formId) {
                 editName = "";
                 editTel  = "";
                 editWebsite = "";
-                editPhone = "";
                 $("#editButton").on("click", function () {
                     $("#editForm").data('bootstrapValidator').validate();
                     if ($("#editForm").data('bootstrapValidator').isValid()) {

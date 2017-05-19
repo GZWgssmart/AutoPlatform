@@ -309,7 +309,7 @@ public class VilidateController {
     @RequestMapping(value = "queryIsExist_companyTel", method = RequestMethod.GET)
     public String queryIsExistCompany(@Param("companyTel") String companyTel, @Param("editCompanyTel") String editCompanyTel) {
         try {
-            logger.info("公司手机号验证");
+            logger.info("公司电话验证");
             boolean result = true;
             String resultString = "";
             Map<String, Boolean> map = new HashMap<String, Boolean>();
@@ -328,7 +328,35 @@ public class VilidateController {
             }
             return resultString;
         } catch (Exception e) {
-            logger.info("公司手机号验证失败，出现了异常");
+            logger.info("公司电话验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_companyPP", method = RequestMethod.GET)
+    public String queryIsExistCompanyPP(@Param("companyPricipalPhone")String companyPricipalPhone, @Param("editPhone") String editPhone) {
+        try {
+            logger.info("公司负责人手机号验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editPhone.equals(companyPricipalPhone)) {
+                int isExist = vilidateService.queryDataIsExistUserPhone(companyPricipalPhone);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("公司负责人手机号验证失败，出现了异常");
             return null;
         }
     }
