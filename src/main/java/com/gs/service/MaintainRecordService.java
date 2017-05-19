@@ -282,4 +282,6 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      */
 
     public List<MaintainRecord> queryCustomerCar(String userPhone);
+
+    public List<MaintainRecord> queryMyName(User user);
 }

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.mail.BodyPart;
@@ -268,6 +269,21 @@ public class RecordController {
             logger.info("Session已失效，请重新登入");
             return null;
         }
+    }
+
+    //擦看个人预约
+    @RequestMapping(value = "my_reminder", method = RequestMethod.GET)
+    private ModelAndView carOwerreminder() {
+        ModelAndView mav = new ModelAndView();
+        User user = SessionGetUtil.getUser();
+        if (!SessionGetUtil.isUser()) {
+            mav.setViewName("index/notLogin");
+            return mav;
+        }
+        logger.info("车主用户查看已完成进度");
+        mav.setViewName("customerClient/reminder");
+        mav.addObject("rems", maintainRecordService.queryMyName(user));
+        return mav;
     }
 
     @ResponseBody

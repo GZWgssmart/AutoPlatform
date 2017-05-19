@@ -273,4 +273,8 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
     public List<MaintainRecord> queryByMyName(Pager pager, User user){
         return maintainRecordDAO.queryByMyName(pager, user);
     }
+
+    public List<MaintainRecord> queryMyName(User user) {
+        return maintainRecordDAO.queryMyName(user);
+    }
 }

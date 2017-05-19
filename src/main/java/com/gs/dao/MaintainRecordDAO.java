@@ -294,4 +294,6 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
      */
     public List<MaintainRecord> queryCustomerCar(@Param("userPhone") String userPhone);
 
+    public List<MaintainRecord> queryMyName(@Param("user") User user);
+
 }
