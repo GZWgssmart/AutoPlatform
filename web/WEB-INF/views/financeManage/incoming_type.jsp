@@ -17,7 +17,7 @@
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
-
+    <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -50,6 +50,27 @@
             </shiro:hasAnyRoles>
         </tr>
         </thead>
+        <form id="formSearch" class="form-horizontal">
+            <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
+                <div class="col-sm-4" style="margin-left: -15px;">
+                    <input type="text" id="inTypeName"  class="form-control" placeholder="请输入收入类型名称" >
+                </div>
+                <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
+                    <div class="col-sm-4">
+                        <select class="js-example-tags form-control company" id="searchCompanyId" name="comanyId">
+                        </select>
+                    </div>
+                </shiro:hasAnyRoles>
+                <div class="col-sm-4">
+                    <button type="button" onclick="search()" class="btn btn-primary">
+                        查询
+                    </button>
+                    <button type="button" onclick="closeSearchForm()" class="btn btn-default">
+                        关闭
+                    </button>
+                </div>
+            </div>
+        </form>
         <tbody>
         <div id="toolbar" class="btn-group">
         <shiro:hasAnyRoles name="companyAccounting, companyAdmin">
@@ -75,6 +96,11 @@
                     <i class="glyphicon glyphicon-search"></i> 查看全部
                 </button>
             </a>
+            <a>
+                <button onclick="showSearchForm()" id="showButton" type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-search"></i> 条件查询
+                </button>
+            </a>
         </div>
         </tbody>
 
@@ -94,7 +120,7 @@
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="incomingType.inTypeId" name="inTypeId" />
                             <div class="form-group">
-                                <label>收入类型名称：</label>
+                                <label class="control-label">收入类型名称：</label>
                                 <input type="text"  id="name1" attr="incomingType.inTypeName" name="inTypeName"  class="form-control"/>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
@@ -153,6 +179,8 @@
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
+<script src="<%=path %>/js/select2.full.min.js"></script>
+<script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/financeManage/incoming-type.js"></script>
 <script src="<%=path%>/js/main.js"></script>
 

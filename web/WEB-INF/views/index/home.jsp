@@ -341,8 +341,8 @@
                             </li>
                             <li><a class="J_menuItem" href="<%=path %>/permission/info">权限管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="<%=path %>/process/info">流程管理</a>
-                            </li>
+                            <%--<li><a class="J_menuItem" href="<%=path %>/process/info">流程管理</a>
+                            </li>--%>
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>

@@ -147,7 +147,7 @@
                         <form role="form" id="addForm" >
 
                             <div class="form-group" style="width: auto; display: inherit;">
-                                <label>选择类型：</label>
+                                <label class="control-label">选择类型：</label>
                                 <input type="checkbox" id="isType" name="isType">
                             </div>
                             <div class="form-group" id="outDiv">

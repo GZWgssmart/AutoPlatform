@@ -217,8 +217,8 @@ public class UserServiceImpl implements UserService {
         return userDAO.queryByCompanyRole();
     }
 
-    public int updatePwd(String userPwd) {
-        return userDAO.updatePwd(userPwd);
+    public int updatePwd(User user) {
+        return userDAO.updatePwd(user);
     }
 
     @Override

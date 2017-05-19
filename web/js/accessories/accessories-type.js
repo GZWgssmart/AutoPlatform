@@ -2,7 +2,7 @@
  * Created by GOD on 2017/4/17.
  */
 var contextPath="";
-
+var editTypeName = "";
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/accessoriesType/pager");
@@ -18,13 +18,14 @@ $(document).ready(function () {
 
 /**编辑数据 */
 function showEditWin() {
-    validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
         var accessoriesType = selectRow[0];
+        editTypeName = accessoriesType.accTypeName;
+        validator("editForm");
         $("#editForm").fill(accessoriesType);
         $("#editWin").modal('show');
     }
@@ -107,6 +108,7 @@ window.operateEvents = {
     },
     'click .showUpdateInfo': function (e, value, row, index) {
         var accessoriesType = row;
+        editTypeName = accessoriesType.accTypeName;
         $("#editForm").fill(accessoriesType);
         $('#editCompany').html('<option value="' + accessoriesType.company.companyId + '">' + accessoriesType.company.companyName + '</option>').trigger("change");
         validator("editForm");
@@ -134,7 +136,7 @@ function validator(formId) {
         },
         fields: {
             accTypeName: {
-                message: '配件分类验证失败',
+                message: '配件分类名称验证失败',
                 validators: {
                     notEmpty: {
                         message: '配件分类名称不能为空'
@@ -143,6 +145,13 @@ function validator(formId) {
                         min: 2,
                         max: 8,
                         message: '配件分类名称长度必须在2到8位之间'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/vilidate/queryIsExist_accTypeName?editTypeName=' + editTypeName,
+                        message: '该分类名称已存在',
+                        delay: 2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -175,6 +184,7 @@ function validator(formId) {
 
             } else if (formId == "editForm") {
                 formSubmit("/accessoriesType/update", formId, "editWin");
+                editTypeName = "";
             }
 
 

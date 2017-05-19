@@ -23,4 +23,10 @@ public interface IncomingTypeDAO extends BaseDAO<String, IncomingType>{
 
     public IncomingType queryByName(@Param("inTypeName") String inTypeName);
 
+    public List<IncomingType> queryByPagerCondition(@Param("companyId")String companyId,
+                                               @Param("inTypeName") String inTypeName,
+                                               @Param("pager")Pager pager);
+
+    public int countCondition(@Param("companyId")String companyId,@Param("inTypeName")String inTypeName);
+
 }

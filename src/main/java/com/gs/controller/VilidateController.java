@@ -501,4 +501,115 @@ public class VilidateController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_accTypeName", method = RequestMethod.GET)
+    public String queryIsExistAccTypeName(@Param("accTypeName") String accTypeName, @Param("editTypeName") String editTypeName) {
+        try {
+            logger.info("配件分类名称验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editTypeName.equals(accTypeName)) {
+                int isExist = vilidateService.queryDataIsExistAccTypeName(accTypeName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("配件分类名称验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_accName", method = RequestMethod.GET)
+    public String queryIsExistAccName(@Param("accName") String accName, @Param("editName") String editName) {
+        try {
+            logger.info("配件名称验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editName.equals(accName)) {
+                int isExist = vilidateService.queryDataIsExistAccTypeName(accName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("配件名称验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_inTypeName", method = RequestMethod.GET)
+    public String queryIsExistInTypeName(@Param("inTypeName") String inTypeName, @Param("editTypeName") String editTypeName) {
+        try {
+            logger.info("收入类型名称验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editTypeName.equals(inTypeName)) {
+                int isExist = vilidateService.queryDataIsExistInTypeName(inTypeName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("收入类型名称验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryIsExist_outTypeName", method = RequestMethod.GET)
+    public String queryIsExistOutTypeName(@Param("outTypeName") String outTypeName, @Param("editTypeName") String editTypeName) {
+       // try {
+            logger.info("支出类型名称验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editTypeName.equals(outTypeName)) {
+                int isExist = vilidateService.queryDataIsExistOuTypeName(outTypeName);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+       /* } catch (Exception e) {
+            logger.info("支出类型名称验证失败，出现了异常");
+            return null;
+        }*/
+    }
 }

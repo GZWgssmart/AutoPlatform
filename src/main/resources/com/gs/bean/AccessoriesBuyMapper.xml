@@ -93,6 +93,10 @@
         ]]>
 	</update>
 
+    <select id="dataPrimary" parameterType="string" resultType="int">
+        select count(acc.accName) from t_accessories_buy aby inner join t_accessories acc on aby.accId = acc.accId where acc.accName = #{name}
+    </select>
+
     <update id="batchUpdateBuyCheck">
             UPDATE t_accessories_buy SET accBuyCheck = 'Y' WHERE accBuyId in
         <foreach collection="ids" item="id" open="(" separator="," close=")">

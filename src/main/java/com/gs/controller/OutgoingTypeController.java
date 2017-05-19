@@ -48,7 +48,7 @@ public class OutgoingTypeController {
     public String outgoingType() {
         if(SessionGetUtil.isUser()) {
             if(CheckRoleUtil.checkRoles(queryRole)) {
-                logger.info("显示收入类型页面");
+                logger.info("显示支出类型页面");
                 return "financeManage/outgoing_type";
             }
             return "error/notPermission";
@@ -63,7 +63,7 @@ public class OutgoingTypeController {
     public Pager4EasyUI<OutgoingType> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize) {
         if (SessionGetUtil.isUser()) {
             if(CheckRoleUtil.checkRoles(queryRole)) {
-                logger.info("分页查询所有收入类型");
+                logger.info("分页查询所有支出类型");
                 Pager pager = new Pager();
                 User user = SessionGetUtil.getUser();
                 pager.setPageNo(Integer.valueOf(pageNumber));
@@ -80,11 +80,36 @@ public class OutgoingTypeController {
     }
 
     @ResponseBody
+    @RequestMapping(value="query_condition",method= RequestMethod.GET)
+    public Pager4EasyUI<OutgoingType> queryPagerCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize
+            ,@Param("inTypeName")String inTypeName,@Param("companyId")String companyId){
+        if (SessionGetUtil.isUser()) {
+            if(CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("根据条件分页查询所有支出类型");
+                Pager pager = new Pager();
+                User user = SessionGetUtil.getUser();
+                if(user.getCompanyId() != null && !user.getCompanyId().equals("")){
+                    companyId = user.getCompanyId();
+                }
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(outgoingTypeService.countCondition(companyId,inTypeName));
+                List<OutgoingType> outgoingTypes = outgoingTypeService.queryByPagerCondition(companyId,inTypeName,pager);
+                return new Pager4EasyUI<OutgoingType>(pager.getTotalRecords(), outgoingTypes);
+            }
+            return null;
+        } else {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value="add_outgoingType", method=RequestMethod.POST)
     public ControllerResult outgoingTypeAdd(OutgoingType outgoingType){
         if(SessionGetUtil.isUser()) {
             if(CheckRoleUtil.checkRoles(editRole)) {
-                logger.info("添加收入类型");
+                logger.info("添加支出类型");
                 User user = SessionGetUtil.getUser();
                 outgoingType.setCompanyId(user.getCompanyId());
                 outgoingTypeService.insert(outgoingType);
@@ -102,9 +127,9 @@ public class OutgoingTypeController {
     public ControllerResult outgoingUpdate(OutgoingType outgoingType){
         if(SessionGetUtil.isUser()) {
             if(CheckRoleUtil.checkRoles(editRole)) {
-                logger.info("更新收入类型");
+                logger.info("更新支出类型");
                 User user = SessionGetUtil.getUser();
-                user.setCompanyId(user.getCompanyId());
+                outgoingType.setCompanyId(user.getCompanyId());
                 outgoingTypeService.update(outgoingType);
                 return ControllerResult.getSuccessResult("更新支出类型成功");
             }
@@ -120,7 +145,9 @@ public class OutgoingTypeController {
     public ControllerResult updateStatus(@Param("id") String id, @Param("status")String status){
         if(SessionGetUtil.isUser()) {
             if(CheckRoleUtil.checkRoles(editRole)) {
-                logger.info("更新收入类型状态");
+                User user = SessionGetUtil.getUser();
+                user.setCompanyId(user.getCompanyId());
+                logger.info("更新支出类型状态");
                 if (status.equals("Y")) {
                     outgoingTypeService.active(id);
                 } else if (status.equals("N")) {

@@ -78,9 +78,6 @@ public class WorkInfoServiceImpl implements WorkInfoService {
 		return workInfoDAO.countWorkUserId_Y(userId);
 	}
 
-	public WorkInfo queryByRecordId(String id) {
-		return workInfoDAO.queryByRecordId(id);
-	}
 
 	@Override
 	public WorkInfo queryByRocordIdUserId(String recordId) {

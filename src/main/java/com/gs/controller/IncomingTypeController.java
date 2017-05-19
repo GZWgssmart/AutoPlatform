@@ -105,7 +105,7 @@ public class IncomingTypeController {
             if(CheckRoleUtil.checkRoles(editRole)) {
                 logger.info("更新收入类型");
                 User user = SessionGetUtil.getUser();
-                user.setCompanyId(user.getCompanyId());
+                incomingType.setCompanyId(user.getCompanyId());
                 incomingTypeService.update(incomingType);
                 return ControllerResult.getSuccessResult("更新收入类型成功");
             }
@@ -127,6 +127,7 @@ public class IncomingTypeController {
                 } else if (status.equals("N")) {
                     incomingTypeService.inactive(id);
                 }
+
                 return ControllerResult.getSuccessResult("更新收入类型状态成功");
             }
             return ControllerResult.getFailResult("更新收入类型状态失败，没有该权限");
@@ -157,6 +158,31 @@ public class IncomingTypeController {
                     pager.setTotalRecords(incomingTypeService.count(user));
                     incomingTypes = incomingTypeService.queryByPager(pager,user);
                 }
+                return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
+            }
+            return null;
+        } else{
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value="query_condition",method= RequestMethod.GET)
+    public Pager4EasyUI<IncomingType> queryPagerCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize
+                                                        ,@Param("inTypeName")String inTypeName,@Param("companyId")String companyId){
+        if(SessionGetUtil.isUser()) {
+            if(CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("根据条件分页查询所有收入类型");
+                Pager pager = new Pager();
+                User user = SessionGetUtil.getUser();
+                if(user.getCompanyId() != null && !user.getCompanyId().equals("")){
+                    companyId = user.getCompanyId();
+                }
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(incomingTypeService.countCondition(companyId,inTypeName));
+                List<IncomingType> incomingTypes = incomingTypeService.queryByPagerCondition(companyId,inTypeName,pager);
                 return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
             }
             return null;

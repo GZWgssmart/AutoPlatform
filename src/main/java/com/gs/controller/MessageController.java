@@ -48,7 +48,7 @@ public class MessageController {
 
     @ResponseBody
     @RequestMapping(value = "queryBy_self", method = RequestMethod.POST)
-    public ControllerResult querySelf(String uIcon, User user, MultipartFile file, HttpSession session) {
+    public ControllerResult querySelf(String uIcon, String address, User user, MultipartFile file, HttpSession session) {
         if (SessionGetUtil.isUser()) {
             try {
                 logger.info("信息修改");
@@ -65,10 +65,11 @@ public class MessageController {
                 }else{
                     user.setUserIcon(uIcon);
                 }
+                user.setUserAddress(address);
                 userService.update(user);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("修改信息成功");
             } catch (Exception e) {
-                logger.info("添加信息失败，出现了异常");
+                logger.info("修改信息失败，出现了异常");
                 return ControllerResult.getFailResult("添加信息失败，出现了一个错误");
             }
         } else {

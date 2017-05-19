@@ -363,13 +363,10 @@ public class RecordController {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("更新维修保养记录状态");
-                    WorkInfo wi = workInfoService.queryByRecordId(id);
                     if (status.equals("Y")) {
                         maintainRecordService.inactive(id);
-                        workInfoService.inactive(wi.getWorkId());
                     } else if (status.equals("N")) {
                         maintainRecordService.active(id);
-                        workInfoService.active(wi.getWorkId());
 
                     }
                     return ControllerResult.getSuccessResult("更新成功");

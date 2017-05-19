@@ -108,6 +108,38 @@
 		</if>
 	</select>
 
+	<select id="queryByPagerCondition" resultType="list" resultMap="outgoingTypeResultMap">
+		<![CDATA[
+			select  * from t_outgoing_type ot LEFT JOIN t_company c on ot.companyId = c.companyId  where 1 = 1
+		]]>
+		<if test="companyId != null and companyId != ''">
+			and ot.companyId = #{companyId}
+			OR ot.outTypeName = '工资支出'
+			or ot.outTypeName = '配件支出'
+
+		</if>
+		<if test="inTypeName != null and inTypeName != ''">
+			and ot.outTypeName like concat('%',#{inTypeName},'%')
+		</if>
+
+		order by ot.companyId desc, ot.outTypeStatus desc, ot.outTypeCreatedTime desc
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="countCondition" resultType="int">
+		<![CDATA[
+			select count(*) from t_outgoing_type where 1=1
+		]]>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+			OR outTypeName = '工资支出'
+			or outTypeName = '配件支出'
+		</if>
+		<if test="inTypeName != null and inTypeName != ''">
+			and outTypeName like concat('%',#{inTypeName},'%')
+		</if>
+	</select>
+
 	<select id="queryByName"  resultType="outgoingType">
 		<![CDATA[
 			  select * from t_outgoing_type ot where ot.outTypeName = #{outTypeName}

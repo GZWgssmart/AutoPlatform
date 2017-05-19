@@ -3,6 +3,7 @@ package com.gs.service.impl;
 import com.gs.bean.Accessories;
 import com.gs.bean.AccessoriesBuy;
 import com.gs.bean.User;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.dao.AccessoriesBuyDAO;
 import com.gs.service.AccessoriesBuyService;
@@ -127,6 +128,10 @@ public class AccessoriesBuyServiceImpl implements AccessoriesBuyService {
 
     public void batchUpdateBuyCheck(String[] ids) {
         accessoriesBuyDAO.batchUpdateBuyCheck(ids);
+    }
+
+    public int dataPrimary(String name) {
+        return accessoriesBuyDAO.dataPrimary(name);
     }
 
     public List<AccessoriesBuy> queryByDefaultCount(String companyId) {

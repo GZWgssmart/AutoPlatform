@@ -126,7 +126,7 @@
 
     <select id="queryDataIsExistOuTypeName" resultType="int">
         <![CDATA[
-			select count(*) from t_outgoing_type where ouTypeName = #{ouTypeName}
+			select count(*) from t_outgoing_type where outTypeName = #{ouTypeName}
 		]]>
     </select>
 

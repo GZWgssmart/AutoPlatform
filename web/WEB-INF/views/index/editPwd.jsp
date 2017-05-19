@@ -39,27 +39,27 @@
                         <br/>
                         <form role="form" method="get">
                             <div class="row">
-                                <div class="form-group has-feedback">
+                                <div class="col-sm-5">
                                     <label class="control-label">旧密码：</label>
-                                    <input class="form-control" style="display: initial;" id="oldPwd" placeholder="请输入旧密码" />
+                                    <input class="form-control" type="password" style="display: initial;" id="oldPwd" placeholder="请输入旧密码" />
                                 </div>
                             </div>
                             <br/>
                             <div class="row">
-                                <div class="form-group has-feedback">
+                                <div class="col-sm-5">
                                     <label class="control-label">新密码：</label>
-                                    <input class="form-control" style="display: initial;" id="pwd" placeholder="请输入新密码"/>
+                                    <input class="form-control" type="password" style="display: initial;" id="pwd" placeholder="请输入新密码"/>
                                 </div>
                             </div>
                             <br/>
                             <div class="row">
-                                <div class="form-group has-feedback">
+                                <div class="col-sm-5">
                                     <label class="control-label">确认密码：</label>
-                                    <input class="form-control" style="display: initial;" id="rePwd" placeholder="请输入确认密码"/>
+                                    <input class="form-control" type="password" style="display: initial;" id="rePwd" placeholder="请输入确认密码"/>
                                 </div>
                             </div>
                             <br/>
-                            <button type="button" class="btn btn-danger btn-block btn-flat" onclick="editPwd();">提交</button>
+                            <button type="button" class="btn btn-danger" onclick="editPwd();">提交</button>
                         </form>
                     </div>
                 </div>
