@@ -8,10 +8,7 @@ import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
-import com.gs.common.util.CheckRoleUtil;
-import com.gs.common.util.EncryptUtil;
-import com.gs.common.util.SessionGetUtil;
-import com.gs.common.util.UUIDUtil;
+import com.gs.common.util.*;
 import com.gs.service.RoleService;
 import com.gs.service.UserRoleService;
 import com.gs.service.UserService;
@@ -24,8 +21,11 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -160,7 +160,7 @@ public class AdminController {
 
     @ResponseBody
     @RequestMapping(value = "update_admin", method = RequestMethod.POST)
-    public ControllerResult updateAdmin(User user) {
+    public ControllerResult updateAdmin(@Param("uIcon") String uIcon, @Param("user") User user, @Param("file") MultipartFile file, @Param("session") HttpSession session) {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -171,11 +171,24 @@ public class AdminController {
         }
         try {
             logger.info("更新管理员");
+            if(file != null){
+                String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
+                String filePath = FileUtil.uploadPath(session,"\\" + fileName);
+                String icon = "uploads/"+ fileName;
+                if(!file.isEmpty()){
+                    file.transferTo(new File(filePath));
+                    user.setUserIcon(icon);
+                } else {
+                    user.setUserIcon("img/default.png");
+                }
+            }else{
+                user.setUserIcon(uIcon);
+            }
             userService.updateAdmin(user);
             return ControllerResult.getSuccessResult("更新成功");
         } catch (Exception e) {
-            logger.info("修改失败，出现了一个错误");
-            return ControllerResult.getFailResult("修改失败，出现了一个错误");
+            logger.info("更新失败，出现了一个错误");
+            return ControllerResult.getFailResult("更新失败，出现了一个错误");
         }
     }
 

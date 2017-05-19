@@ -14,12 +14,12 @@
     <title>管理员管理</title>
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/font-awesome.min93e3.css" rel="stylesheet">
+    <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/people_info.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
-
     <style>
         .form_form .form_save{
         position: relative;
@@ -34,6 +34,20 @@
         border: 0px;
         outline: none;
         border-radius:5px;
+        }
+
+        .button_form{
+            width: 265px;
+            height: 50px;
+            margin-left: 12px;
+            margin-top: 0px;
+            font-family: "微软雅黑";
+            color: #d4d4d4;
+            background-color: #909090;
+            font-size: 20px;
+            border: 0px;
+            outline: none;
+            border-radius:5px;
         }
     </style>
 </head>
@@ -283,12 +297,15 @@
                         <div class="form_info">
                             <form role="form" method="post" id="editForm" class="form_form" onkeydown="if(event.keyCode==13){return false;}" enctype="multipart/form-data">
                                 <input type="hidden" name="userId" attr="user.userId" />
+                                <input type="hidden" name="uIcon" attr="user.userIcon"/>
+
                                 <div class="form_img">
                                     <div id="preview">
-                                        <img alt="image" attr="user.userIcon" name="file" style="border-radius: 50%;"/>
+                                        <img id="icon" attr="user.userIcon" name="file" style="border-radius: 50%;"/>
                                     </div>
                                     <input type="file" name="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
                                 </div>
+
                                 <div class="info">
                                     <div class="row">
                                         <div class="col-md-4">
@@ -397,17 +414,18 @@
 <%@ include file="../common/rightMenu.jsp" %>
 <script src="<%=path %>/js/contextmenu.js"></script>
 <script src="<%=path %>/js/jquery.min.js"></script>
-<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap.min.js"></script>
+<script src="<%=path %>/js/bootstrapValidator.js"></script>
 <script src="<%=path %>/js/bootstrap-table.js"></script>
 <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="<%=path %>/js/sweet-alert.min.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
+<script src="<%=path %>/js/system/admin.js"></script>
 <script src="<%=path %>/js/select2.full.min.js"></script>
 <script src="<%=path %>/js/zh-CN.js"></script>
-<script src="<%=path %>/js/system/admin.js"></script>
 <script src="<%=path %>/js/main.js"></script>
+<script src="<%=path %>/js/city-picker.data.js"></script>
+<script src="<%=path %>/js/city-picker.js"></script>
 <script src="<%=path %>/js/jquery.form.min.js"></script>
-
 </body>
 </html>

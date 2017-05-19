@@ -141,6 +141,7 @@ function initEditParam(user) {
     $("#createTime").val(formatterDate(user.userCreatedTime));
     $("#loginTime").val(formatterDate(user.userLoginedTime));
     $("#editForm").fill(user);
+    $("#icon").attr("src","/"+user.userIcon);
     validator("editForm");
     $("#editWin").modal('show');
     fmtDate();
@@ -215,7 +216,7 @@ function validator(formId) {
                     },
                     threshold: 11,
                     remote: {
-                        url: 'contextPath + /peopleManage/peoplePhone_verification?editPhone=' + editPhone,
+                        url: contextPath + '/peopleManage/peoplePhone_verification?editPhone=' + editPhone,
                         message: '该手机号已存在',
                         delay :  2000,
                         type: 'GET'
@@ -278,7 +279,27 @@ function validator(formId) {
                 formSubmit(contextPath + "/admin/add_admin", formId, "addWin");
 
             } else if (formId == "editForm") {
-                formSubmit(contextPath + "/admin/update_admin", formId, "editWin");
+                /*formSubmit(contextPath + "/admin/update_admin", formId, "editWin");*/
+                editIdentity = "";
+                editEmail = "";
+                editPhone = "";
+                $('#editForm').ajaxSubmit({
+                    url: contextPath + '/admin/update_admin',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.result == "success") {
+                            $('#editWin').modal('hide');
+                            swal(data.message, "", "success");
+                            $('#cusTable').bootstrapTable('refresh');
+                            $('#editForm').data('bootstrapValidator').resetForm(true);
+                        } else if (data.result == "fail") {
+                            $('#editForm').modal('hide');
+                            swal(data.message, "内容不匹配", "error");
+                            $('#editForm').data('bootstrapValidator').resetForm(true);
+                        }
+                    }
+                })
             }
         })
 
@@ -381,4 +402,54 @@ function bySelectSearch() {
     var userPhone = $("#searchPhone").val();
     var userEmail = $("#searchEmail").val();
     initTable("cusTable", contextPath + "/admin/select_query?userName=" + userName + "&userPhone=" + userPhone + "&userEmail=" + userEmail);
+}
+
+function previewImage(file)
+{
+    var MAXWIDTH  = 250;
+    var MAXHEIGHT = 250;
+    var div = document.getElementById('preview');
+    if (file.files && file.files[0])
+    {
+        div.innerHTML ='<img id=imghead onclick=$("#previewImg").click()>';
+        var img = document.getElementById('imghead');
+        img.onload = function(){
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            img.width  =  rect.width;
+            img.height =  rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+            img.style.marginTop = rect.top+'px';
+        }
+        var reader = new FileReader();
+        reader.onload = function(evt){img.src = evt.target.result;}
+        reader.readAsDataURL(file.files[0]);
+    }
+    else //兼容IE
+    {
+        var sFilter='filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+        file.select();
+        var src = document.selection.createRange().text;
+        div.innerHTML = '<img id=imghead>';
+        var img = document.getElementById('imghead');
+        img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+        status =('rect:'+rect.top+','+rect.left+','+rect.width+','+rect.height);
+        div.innerHTML = "<div id=divhead style='width:"+rect.width+"px;height:"+rect.height+"px;margin-top:"+rect.top+"px;"+sFilter+src+"\"'></div>";
+    }
+}
+function clacImgZoomParam( maxWidth, maxHeight, width, height ){
+    var param = {top:0, left:0, width:width, height:height};
+    if( width>maxWidth || height>maxHeight ){
+        rateWidth = width / maxWidth;
+        rateHeight = height / maxHeight;
+
+        if( rateWidth > rateHeight ){
+            param.width =  maxWidth;
+            param.height = Math.round(height / rateWidth);
+        }else{
+            param.width = Math.round(width / rateHeight);
+            param.height = maxHeight;
+        }
+    }
+    return param;
 }
