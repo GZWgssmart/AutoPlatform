@@ -26,7 +26,6 @@ function showEditWin() {
     } else {
         var accessoriesType = selectRow[0];
         $("#editForm").fill(accessoriesType);
-        $('#editCompany').html('<option value="' + accessoriesType.company.companyId + '">' + accessoriesType.company.companyName + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
 }
@@ -186,16 +185,14 @@ function validator(formId) {
 /** 根据条件搜索 */
 function searchAccType() {
     var accTypeName = $("#searchAccTypeName").val();
-    var accTypeDes = $("#searchAccTypeDes").val();
     var companyId = $("#searchCompanyId").val();
-    initTable("cusTable", "/accessoriesType/queryByCondition?accTypeName=" + accTypeName + "&accTypeDes=" + accTypeDes + "&companyId=" + companyId);
+    initTable("cusTable", "/accessoriesType/queryByCondition?accTypeName=" + accTypeName + "&companyId=" + companyId);
 
 }
 
 /** 关闭搜索的form */
 function closeSearchForm() {
     $("#searchAccTypeName").val('');
-    $("#searchAccTypeDes").val('');
     $('#searchCompanyId').html('').trigger("change");
     $("#searchDiv").hide();
     $("#showButton").show();

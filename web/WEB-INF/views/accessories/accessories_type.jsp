@@ -66,13 +66,12 @@
                 <div class="col-sm-2" style="margin-left: -15px;">
                     <input type="text" id="searchAccTypeName" name="accTypeName" class="form-control" placeholder="请输入配件分类名称" >
                 </div>
-                <div class="col-sm-2">
-                    <input type="text" id="searchAccTypeDes" name="accTypeDes" class="form-control" placeholder="请输入配件分类描述" >
-                </div>
+                <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
                 <div class="col-sm-2">
                     <select class="js-example-tags form-control company" id="searchCompanyId" name="companyId">
                     </select>
                 </div>
+                </shiro:hasAnyRoles>
                 <div class="col-sm-2">
                     <button type="button" onclick="searchAccType()" class="btn btn-primary">
                         查询
@@ -137,10 +136,6 @@
                                 <input type="text"   name="accTypeName" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">配件所属公司：</label>
-                                <select id="addTypeCompany" class="js-example-tags form-control accType_company" name="companyId"></select>
-                            </div>
-                            <div class="form-group">
                                 <label class="control-label">配件分类描述：</label>
                                 <textarea name="accTypeDes" cols="20" rows="5" class="form-control" ></textarea>
                             </div>
@@ -174,10 +169,6 @@
                             <div class="form-group">
                                 <label class="control-label">配件分类名称：</label>
                                 <input type="text" attr="accessoriesType.accTypeName" name="accTypeName" id="accTypeName" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">配件所属公司：</label>
-                                <select id="editCompany" class="js-example-tags form-control accType_company" name="companyId"></select>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">配件分类描述：</label>

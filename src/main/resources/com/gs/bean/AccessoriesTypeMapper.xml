@@ -115,7 +115,7 @@
 			and at.accTypeName like concat('%', #{accessoriesType.accTypeName},'%')
 		</if>
 		<if test="accessoriesType.companyId != null and accessoriesType.companyId != '' and accessoriesType.companyId != 'null' and accessoriesType.companyId != 'undefined'">
-			and t.companyId = #{accessoriesType.companyId}
+			and at.companyId = #{accessoriesType.companyId}
 		</if>
 		<if test="user.companyId != null and user.companyId != ''">
 			and at.companyId = #{user.companyId}
