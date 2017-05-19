@@ -133,7 +133,7 @@
                             <div class="col-sm-12 b-r">
                                 <h3 class="m-t-none m-b">修改权限信息</h3>
                                 <form role="form" id="editForm">
-                                    <input type="hidden" attr="permission.permissionId" name="permissionId" />
+                                    <input type="hidden" attr="permission.permissionId" name="permissionId"/>
                                     <div class="form-group">
                                         <label class="control-label">所属模块：</label>
                                         <select id="moduleSelect3" class="js-example-tags form-control module_all_2"
@@ -142,24 +142,28 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">权限名称：</label>
-                                        <input attr="permission.permissionName" type="text" name="permissionName" class="form-control"/>
+                                        <input attr="permission.permissionName" type="text" name="permissionName"
+                                               class="form-control"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="control-label">权限中文名称：</label>
-                                        <input attr="permission.permissionZHName" type="text" name="permissionZHName" class="form-control"/>
+                                        <input attr="permission.permissionZHName" type="text" name="permissionZHName"
+                                               class="form-control"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label>权限描述：</label>
-                                        <textarea type="textarea" attr="permission.permissionDes" name="permissionDes" class="form-control"></textarea>
+                                        <textarea type="textarea" attr="permission.permissionDes" name="permissionDes"
+                                                  class="form-control"></textarea>
                                     </div>
 
                                     <div class="modal-footer" style="overflow:hidden;">
                                         <button type="button" class="btn btn-default"
                                                 data-dismiss="modal">关闭
                                         </button>
-                                        <input type="button" onclick="edit()" id="editButton" class="btn btn-primary" value="修改">
+                                        <input type="button" onclick="edit()" id="editButton" class="btn btn-primary"
+                                               value="修改">
                                         </input>
                                     </div>
                                 </form>
@@ -204,7 +208,8 @@
                                         <button type="button" class="btn btn-default"
                                                 data-dismiss="modal">关闭
                                         </button>
-                                        <input type="button" id="addButton" onclick="add()" class="btn btn-primary" value="添加">
+                                        <input type="button" id="addButton" onclick="add()" class="btn btn-primary"
+                                               value="添加">
                                         </input>
                                         <input type="reset" name="reset" style="display: none;"/>
                                     </div>
@@ -255,15 +260,13 @@
             <div class="ibox-title">
                 <h4>已有的权限</h4>
             </div>
-            <div id="permissionY" class="ibox-content" style="height: 170px; OVERFLOW-Y: auto; OVERFLOW-X:hidden;"
-                 title="已有的权限">
+            <div id="permissionY" class="ibox-content" style="height: 170px; OVERFLOW-Y: auto; OVERFLOW-X:hidden;">
             </div>
 
             <div class="ibox-title">
                 <h4>未有的权限</h4>
             </div>
-            <div id="permissionN" class="ibox-content" style="height: 170px; OVERFLOW-Y: auto; OVERFLOW-X:hidden;"
-                 title="未有的权限">
+            <div id="permissionN" class="ibox-content" style="height: 170px; OVERFLOW-Y: auto; OVERFLOW-X:hidden;">
             </div>
             <div id="btnDiv" style="display: none;">
                 <button onclick="addAll();" type="button" class="btn btn-primary" data-toggle="button">

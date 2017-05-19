@@ -7,7 +7,16 @@ public class PermissionInfo {
 
     private String permissionId;
     private String permissionName;
+    private String permissionDes;
     private int status;
+
+    public String getPermissionDes() {
+        return permissionDes;
+    }
+
+    public void setPermissionDes(String permissionDes) {
+        this.permissionDes = permissionDes;
+    }
 
     public String getPermissionId() {
         return permissionId;

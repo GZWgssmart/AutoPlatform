@@ -68,13 +68,17 @@ function drawPermission(data) {
     var count2 = 0;
     $.each(data, function (index, item) {
         var str = "'" + data[index].permissionId + "'";
+        var info =  "'" + data[index].permissionDes + "'";
+        var infoType = '';
         if (data[index].status == 1) {
+            infoType = "'Y'";
             npAll[count1] = data[index].permissionId;
-            yStr += '<span onclick="delById(' + str + ',this);" class="label label-success">' + data[index].permissionName + '&nbsp;&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></span>';
+            yStr += '<span onclick="delById(' + str + ',this);" onmouseout="hidePermissionInfo(' + infoType + ')" onmouseover="showPermissionInfo(' + info + ', '+ infoType +');" class="label label-success">' + data[index].permissionName + '&nbsp;&nbsp;&nbsp;<i class="fa fa-minus-circle"></i></span>';
             count1++;
         } else if (data[index].status == 0) {
+            infoType = "'N'";
             ypAll[count2] = data[index].permissionId;
-            nStr += '<span onclick="addById(' + str + ',this);" class="label label-warning">' + data[index].permissionName + '&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle"></i></span>';
+            nStr += '<span onclick="addById(' + str + ',this);" onmouseout="hidePermissionInfo(' + infoType + ')" onmouseover="showPermissionInfo(' + info + ', '+ infoType +');" class="label label-warning">' + data[index].permissionName + '&nbsp;&nbsp;&nbsp;<i class="fa fa-plus-circle"></i></span>';
             count2++;
         }
     });
@@ -85,6 +89,26 @@ function drawPermission(data) {
     $("#permissionY").html(yStr);
     $("#permissionN").html(nStr);
     $("#btnDiv").show();
+}
+
+function showPermissionInfo(info, infoType) {
+    if (infoType == 'Y') {
+        document.getElementById("permissionY").setAttribute("title", info)
+        document.getElementById("permissionY").title = info;
+    } else if (infoType == 'N') {
+        document.getElementById("permissionN").setAttribute("title", info)
+        document.getElementById("permissionN").title = info;
+    }
+}
+
+function hidePermissionInfo(infoType) {
+    if (infoType == 'Y') {
+        document.getElementById("permissionY").setAttribute("title", "")
+        document.getElementById("permissionY").title = "";
+    } else if (infoType == 'N') {
+        document.getElementById("permissionN").setAttribute("title", "")
+        document.getElementById("permissionN").title = "";
+    }
 }
 
 function addById(permissionId, obj) {
@@ -357,7 +381,7 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: contextPath + '/permission/queryIs_PN?editPName=' + editPName,
+                        url: contextPath + '/vilidate/queryIsExist_PN?editPName=' + editPName,
                         message: '该名称已存在',
                         delay: 2000,
                         type: 'GET'
@@ -378,7 +402,7 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: contextPath + '/permission/queryIs_PZHN?editZhName=' + editZhName,
+                        url: contextPath + '/vilidate/queryIsExist_PZHN?editZhName=' + editZhName,
                         message: '该名称已存在',
                         delay: 2000,
                         type: 'GET'
