@@ -588,7 +588,7 @@ public class VilidateController {
     @ResponseBody
     @RequestMapping(value = "queryIsExist_outTypeName", method = RequestMethod.GET)
     public String queryIsExistOutTypeName(@Param("outTypeName") String outTypeName, @Param("editTypeName") String editTypeName) {
-       // try {
+        try {
             logger.info("支出类型名称验证");
             boolean result = true;
             String resultString = "";
@@ -607,9 +607,9 @@ public class VilidateController {
                 e.printStackTrace();
             }
             return resultString;
-       /* } catch (Exception e) {
+        } catch (Exception e) {
             logger.info("支出类型名称验证失败，出现了异常");
             return null;
-        }*/
+        }
     }
 }
