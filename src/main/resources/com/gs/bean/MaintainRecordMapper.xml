@@ -42,6 +42,7 @@
         <association property="chargeBill" javaType="com.gs.bean.ChargeBill">
             <id property="chargeBillId" column="chargeBillId"/>
             <id property="recordId" column="record_recordId"/>
+            <id property="chargeBillMoney" column="chargeBillMoney"/>
         </association>
     </resultMap>
     <insert id="insert" parameterType="maintainRecord">

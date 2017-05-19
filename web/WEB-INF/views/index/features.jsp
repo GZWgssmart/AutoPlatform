@@ -81,16 +81,18 @@
                         <ul>
                             <li><a href="<%=path%>/customerClientWeb/tour">功能简介</a></li>
                             <li><a href="<%=path%>/customerClientWeb/features">平台特性</a></li>
-                            <li class="has-dropdown">
+                            <li><a href="<%=path%>/customerClientWeb/pricing">产品收费</a></li>
+                            <li><a href="<%=path%>/customerClientWeb/customerCar">进度跟踪</a></li>
+                            <%--<li class="has-dropdown">
                                 <a href="#">使用说明</a>
                                 <ul class="dropdown">
-                                    <li><a href="#">商家入口</a></li>
-                                    <li><a href="#">用户入口</a></li>
+                                    <li><a href="<%=path%>/customerClientWeb/customerCar">进度跟踪</a></li>
+                                    <li><a href="#">帮助文档</a></li>
                                     <li><a href="#">API</a></li>
                                 </ul>
+                            </li>--%>
+                            <li class="btn-cta"><a href="<%=path%>/customerClientWeb/contact"><span>入驻 我们</span></a>
                             </li>
-                            <li><a href="<%=path%>/customerClientWeb/pricing">产品收费</a></li>
-                            <li class="btn-cta"><a href="<%=path%>/customerClientWeb/contact"><span>入驻 我们</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -125,7 +127,7 @@
             <div class="gtco-container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
-                        <h2>这是一场新的汽修革命</h2>
+                        <h2>一场全新的汽修革命</h2>
                         <p>顾客能够从预约到汽车维保，从状态查询到结算提车</p>
                         <p>每一个环节都能够时刻关注爱车的维保情况</p>
                         <p>商家能够顾客信息到维保项目添加,从派工领料到财务统计</p>
