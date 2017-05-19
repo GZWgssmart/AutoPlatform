@@ -2,7 +2,7 @@
  * Created by GOD on 2017/4/18.
  */
 var contextPath="";
-
+var editName = "";
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable","/accessories/pager");
@@ -24,13 +24,14 @@ $(document).ready(function () {
 
 /**编辑数据 */
 function showEditWin() {
-    validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
         var accessories = selectRow[0];
+        editName = accessories.accName;
+        validator("editForm");
         $("#editForm").fill(accessories);
         $('#editCompany').html('<option value="' + accessories.company.companyId + '">' + accessories.company.companyName + '</option>').trigger("change");
         $('#editSupply').html('<option value="' + accessories.supply.supplyId + '">' + accessories.supply.supplyName + '</option>').trigger("change");
@@ -141,7 +142,7 @@ function validator(formId) {
         },
         fields: {
             accName: {
-                message: '配件验证失败',
+                message: '配件名称验证失败',
                 validators: {
                     notEmpty: {
                         message: '配件名称不能为空'
@@ -150,6 +151,13 @@ function validator(formId) {
                         min: 1,
                         max: 8,
                         message: '配件名称长度必须在1到8位之间'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/vilidate/queryIsExist_accName?editName=' + editName,
+                        message: '该分类名称已存在',
+                        delay: 2000,
+                        type: 'GET'
                     }
                 }
             },
@@ -252,6 +260,7 @@ function validator(formId) {
 
             } else if (formId == "editForm") {
                 formSubmit("/accessories/update", formId, "editWin");
+                editName = "";
             }
 
 
