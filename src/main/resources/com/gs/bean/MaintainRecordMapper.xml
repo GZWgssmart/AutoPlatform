@@ -442,6 +442,17 @@
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
+    <select id="queryByMyName" resultType="list" resultMap="maintainRecordResultMap">
+        <![CDATA[
+		  select r.*, c.checkinId, u.userName, c.carPlate, c.carMileage, u.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
+		    from t_maintain_record r,  t_checkin c, t_company cpy, t_user u
+		    where c.checkinId = r.checkinId and c.companyId = cpy.companyId
+		    and c.userId = u.userId and c.userId = #{user.userId}
+        ]]>
+        order by r.companyId desc, r.recordStatus desc, r.pickingStatus desc, r.recordCreatedTime desc
+        limit #{pager.beginIndex}, #{pager.pageSize}
+    </select>
+
     <select id="queryPagerByStatus" resultType="list" resultMap="maintainRecordResultMap">
         <![CDATA[
 			select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName

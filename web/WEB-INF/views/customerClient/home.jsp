@@ -134,7 +134,6 @@
                         </li>
                     </ul>
                 </li>--%>
-progress   checkin   appointment
             </ul>
         </div>
     </nav>
