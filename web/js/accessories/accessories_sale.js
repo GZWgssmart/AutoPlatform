@@ -117,6 +117,7 @@ function addAccessoriesSaleInfo(formId) {
             function (data) {
                 if (data.result == "success") {
                     $('#addWin').modal('hide');
+                    clearTempData();
                     swal(data.message, "", "success");
                     $('#saleTable').bootstrapTable('refresh');
                     $("input[type=reset]").trigger("click");
@@ -128,7 +129,6 @@ function addAccessoriesSaleInfo(formId) {
     }
 }
 
-
 function fmtOperate(value, row, index) {
     if (row.accSaleStatus == 'Y') {
         return ['<button type="button" class="removeSale btn btn-danger  btn-sm" style="margin-right:15px;">冻结</button>',
@@ -139,6 +139,14 @@ function fmtOperate(value, row, index) {
             '<button type="button" class="showEditWin btn btn-primary  btn-sm" style="margin-right:15px;" >编辑</button>'
         ].join('')
     }
+}
+
+function fmtOption() {
+    return ['<button type="button" class="stData btn btn-primary btn-sm" style="margin-right:15px;" >选择</button>'].join('')
+}
+
+function fmtOpt() {
+    return ['<button type="button" class="stUser btn btn-primary btn-sm" style="margin-right:15px;" >选择</button>'].join('')
 }
 
 window.operateEvents = {
@@ -181,6 +189,20 @@ window.operateEvents = {
                     swal(data.message, "", "error");
                 }
             });
+    },
+    'click .stData': function (e, value, row, index) {
+        var acc = row;
+        $("#addForm").fill(acc);
+        $("#accWin").modal("hide");
+        enableInput();
+        autoEditCalculationCount("aSaleCount", "accSalePrice", "accSaleDiscount", "accSaleTotal", "accSaleMoney", "aLastCount", row.accTotal);
+
+    },
+    'click .stUser': function (e, value, row, index) {
+        var user = row;
+        $("#addForm").fill(user);
+        enableSwitch("userWin", "isUser");
+        $("#userWin").modal("hide");
     }
 }
 
@@ -393,6 +415,9 @@ function validator(formId) {
             ,
             accSalePrice: {
                 validators: {
+                    notEmpty: {
+                        message: '不能为空'
+                    },
                     regexp: {
                         regexp: /^([1-9][0-9]*)+(.[0-9]{1,2})?$/,
                         message: '只接受小数点后两位'
@@ -502,60 +527,6 @@ function showAccEditWin() {
     $("#editWin").modal("show");
 }
 
-function autoCalculationCount(id) {
-    $("#" + id).bind("input", function () {
-        var lastCount = $("#aLastCount").val();
-        var saleCount = $("#aSaleCount").val();
-        var result = "";
-        if (lastCount == null && lastCount == "") {
-            $("#lastCount").val("无法读取库存数量");
-        } else {
-            if (saleCount != null && saleCount != "") {
-                result = lCount - saleCount;
-                $("#aLastCount").val(result);
-                if (result < 0 || saleCount == "NaN") {
-                    $("#aLastCount").val(lCount);
-                } else if (result > lCount) {
-                    $("#aLastCount").val(lCount);
-                }
-            } else if (saleCount == "" || saleCount == null || saleCount == "NaN") {
-                $("#aLastCount").val(lCount);
-            }
-        }
-    })
-}
-
-function autoCalculation(iId) {
-    var result = 0;
-    var sMoney = 0;
-
-    var id = iId.id;
-
-    console.log(id);
-
-    var accPrice = $("#accSalePrice").val();
-    var sCount = $("#accSaleCount").val();
-    var sPrice = $("#accSalePrice").val();
-    var sDiscount = $("#accSaleDiscount").val();
-    if (sCount != null && sCount != "" && sPrice != null && sPrice != "") {
-        if (id == "accSaleTotal") {
-            result = sCount * sPrice;
-            $("#" + id).val(result);
-        } else if (id == "accSaleMoney") {
-            if (sDiscount != null && sDiscount != "") {
-                var rs = $("#accSaleTotal").val();
-                if (rs != null && rs != "") {
-                    sMoney = rs * sDiscount;
-                    $("#" + id).val(sMoney);
-                }
-            } else if (sDiscount == "0" || sDiscount == "") {
-                var rs = $("#accSaleTotal").val();
-                $("#" + id).val(rs);
-            }
-        }
-    }
-}
-
 /**
  *
  * @param saleCount 销售数量
@@ -587,12 +558,10 @@ function autoEditCalculationCount(saleCount, salePrice, saleDiscount, saleTotal,
             rs = (sCount * sPrice) * sDiscount;
             $("#" + saleMoney).val(rs);
             $("#" + saleTotal).val(urs);
-
             if (sCount < 0 || sCount > alCount) {
-                $("#" + dLastCount).val(alCount);
+                $("#" + dLastCount).val("超过库存数量");
+
             }
-        } else {
-            $("#" + dLastCount).val(aCount);
         }
     })
 }
