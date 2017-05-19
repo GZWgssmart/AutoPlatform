@@ -86,8 +86,7 @@
                             <div class="form-group">
                                 <label class="control-label">短信内容：</label>
                                 <textarea class="form-control" type="textarea" attr="messageSend.sendMsg" id="sendMsg" name="sendMsg"
-                                          maxlength="400" rows="4">独在异乡为异客，每逢佳节“粽”思亲。遥知兄弟登高处，万水千山“粽”是情。 端午节，要吃“粽”，祝您“粽”横四海，
-                                “粽”是走运!端午节快乐! 端午节平台有惊喜，详情电话咨询，客服小二</textarea>
+                                          maxlength="400" rows="4">独在异乡为异客，每逢佳节“粽”思亲。遥知兄弟登高处，万水千山“粽”是情。 端午节，要吃“粽”，祝您“粽”横四海，“粽”是走运!端午节快乐! 端午节平台有惊喜，详情电话咨询，客服小二</textarea>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"
