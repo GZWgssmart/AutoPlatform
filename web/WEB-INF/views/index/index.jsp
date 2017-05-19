@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: iJangoGuo
@@ -16,19 +17,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>首页</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-    <meta name="author" content="" />
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="author" content=""/>
     <!-- Facebook and Twitter integration -->
     <meta property="og:title" content=""/>
     <meta property="og:image" content=""/>
     <meta property="og:url" content=""/>
     <meta property="og:site_name" content=""/>
     <meta property="og:description" content=""/>
-    <meta name="twitter:title" content="" />
-    <meta name="twitter:image" content="" />
-    <meta name="twitter:url" content="" />
-    <meta name="twitter:card" content="" />
+    <meta name="twitter:title" content=""/>
+    <meta name="twitter:image" content=""/>
+    <meta name="twitter:url" content=""/>
+    <meta name="twitter:card" content=""/>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
 
@@ -87,7 +88,8 @@
                                 </ul>
                             </li>
                             <li><a href="<%=path%>/customerClientWeb/pricing">产品收费</a></li>
-                            <li class="btn-cta"><a href="<%=path%>/customerClientWeb/contact"><span>入驻 我们</span></a></li>
+                            <li class="btn-cta"><a href="<%=path%>/customerClientWeb/contact"><span>入驻 我们</span></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -95,7 +97,8 @@
             </div>
         </nav>
 
-        <header id="gtco-header" class="gtco-cover" role="banner" style="background-image: url(<%=path%>/images/img_4.jpg)">
+        <header id="gtco-header" class="gtco-cover" role="banner"
+                style="background-image: url(<%=path%>/images/img_4.jpg)">
             <div class="overlay"></div>
             <div class="gtco-container">
                 <div class="row">
@@ -122,7 +125,9 @@
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
                                                             <label for="username">用户名</label>
-                                                            <input type="text" name="number" class="form-control" placeholder="请输入手机号或邮箱完成注册" id="username" onblur="variNumber(this.value)">
+                                                            <input type="text" name="number" class="form-control"
+                                                                   placeholder="请输入手机号或邮箱完成注册" id="username"
+                                                                   onblur="variNumber(this.value)">
                                                         </div>
                                                     </div>
                                                     <div class="row form-group" id="codeDiv" style="display: none;">
@@ -132,12 +137,15 @@
                                                                 <label for="code">验证码</label>
                                                             </div>
                                                             <div class="col-sm-7" style="margin: 0px;">
-                                                                <input type="text" id="code" name="code" class="form-control" placeholder="输入手机验证码" onblur="clearSuccess(this)">
+                                                                <input type="text" id="code" name="code"
+                                                                       class="form-control" placeholder="输入手机验证码"
+                                                                       onblur="clearSuccess(this)">
                                                             </div>
                                                             <div class="col-sm-5" style="margin: 0px;">
                                                                 <input type="button" id="detailButton"
                                                                        onclick="getCode(this)" class="btn btn-primary"
-                                                                       value="获取验证码" style="padding-left: 10px; padding-right: 10px;">
+                                                                       value="获取验证码"
+                                                                       style="padding-left: 10px; padding-right: 10px;">
                                                             </div>
 
 
@@ -146,20 +154,23 @@
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
                                                             <label for="password">密码</label>
-                                                            <input type="password" name="pwd" class="form-control" placeholder="请输入密码" id="password">
+                                                            <input type="password" name="pwd" class="form-control"
+                                                                   placeholder="请输入密码" id="password">
                                                         </div>
                                                     </div>
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
                                                             <label for="password2">密码确认</label>
-                                                            <input type="password" name="password" class="form-control" placeholder="请再次输入密码"  id="password2">
+                                                            <input type="password" name="password" class="form-control"
+                                                                   placeholder="请再次输入密码" id="password2">
                                                         </div>
                                                     </div>
 
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
-                                                            <input type="button" onclick="register()" class="btn btn-primary" value="注册">
-                                                            <input type="reset"  class="btn btn-primary" value="重置" />
+                                                            <input type="button" onclick="register()"
+                                                                   class="btn btn-primary" value="注册">
+                                                            <input type="reset" class="btn btn-primary" value="重置"/>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -171,20 +182,23 @@
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
                                                             <label for="username">用户名</label>
-                                                            <input type="text" name="number"  class="form-control" placeholder="请输入手机号或邮箱" id="username1">
+                                                            <input type="text" name="number" class="form-control"
+                                                                   placeholder="请输入手机号或邮箱" id="username1">
                                                         </div>
                                                     </div>
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
                                                             <label for="password">密码</label>
-                                                            <input type="password" name="pwd"  class="form-control" placeholder="请输入密码" id="password1">
+                                                            <input type="password" name="pwd" class="form-control"
+                                                                   placeholder="请输入密码" id="password1">
                                                         </div>
                                                     </div>
 
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
-                                                            <input type="button" onclick="login()" class="btn btn-primary" value="登陆"/>
-                                                            <input type="reset"  class="btn btn-primary" value="重置" />
+                                                            <input type="button" onclick="login()"
+                                                                   class="btn btn-primary" value="登陆"/>
+                                                            <input type="reset" class="btn btn-primary" value="重置"/>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -212,79 +226,34 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_2.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_2.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>华晨汽修</h2>
-                                <p>江西省赣州市汽车精品一条街1G栋120号</p>
-                            </div>
+                    <c:forEach items="${companys}" var="c">
+                        <c:choose>
+                            <c:when test="${c.companyImg == null}">
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                <a href="<%=path%>/images/img_2.jpg" class="fh5co-project-item image-popup">
+                                <figure>
+                                    <div class="overlay"><i class="ti-plus"></i></div>
+                                    <img src="<%=path%>/images/img_2.jpg" alt="Image" class="img-responsive">
+                                </figure>
+                                <div class="fh5co-text">
+                                    <h2>华晨汽修</h2>
+                                    <p>江西省赣州市汽车精品一条街1G栋120号</p>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <figure>
+                                    <div class="overlay"><i class="ti-plus"></i></div>
+                                    <img src="<%=path%>/${c.companyImg}" alt="Image" class="img-responsive">
+                                </figure>
+                            </c:otherwise>
+                        </c:choose>
+                        <div class="fh5co-text">
+                            <h2>${c.companyName}</h2>
+                            <p>${c.companyAddress}</p>
+                        </div>
                         </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_3.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_3.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>纽巴伦汽车美容</h2>
-                                <p>江西赣州市章贡区文清路123号1-5</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_7.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_7.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>车管家汽修</h2>
-                                <p>江西省赣州市沙河区43号1—2</p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_1.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_1.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>金纽扣汽车美容</h2>
-                                <p>北京玄武区文明大道15号1-3</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_5.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_5.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>千斤顶汽车美容</h2>
-                                <p>深圳福田区富田路15号</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_6.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_6.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>樱花汽修美容</h2>
-                                <p>河北陕西文东县银河大道99号</p>
-                            </div>
-                        </a>
-                    </div>
+                        </div>
+                    </c:forEach>
 
                 </div>
             </div>
@@ -385,7 +354,7 @@
 
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center gtco-heading animate-box">
-                        <h2>关于  平台</h2>
+                        <h2>关于 平台</h2>
                         <p>平台提供手机端和PC端的内容显示，让车主随时随地查看自己爱车维修保养情况，更准确的把握汽车维保时间.入驻商家完全脱离纸质化办公，便捷管理维保的一切流程与统计.</p>
                     </div>
                 </div>
@@ -397,7 +366,8 @@
 						<span class="icon">
 							<i class="ti-user"></i>
 						</span>
-                            <span class="counter js-counter" data-from="0" data-to="4938" data-speed="5000" data-refresh-interval="50">1</span>
+                            <span class="counter js-counter" data-from="0" data-to="4938" data-speed="5000"
+                                  data-refresh-interval="50">1</span>
                             <span class="counter-label">拥有用户</span>
 
                         </div>
@@ -407,7 +377,8 @@
 						<span class="icon">
 							<i class="ti-comments-smiley"></i>
 						</span>
-                            <span class="counter js-counter" data-from="0" data-to="1029" data-speed="5000" data-refresh-interval="50">1</span>
+                            <span class="counter js-counter" data-from="0" data-to="1029" data-speed="5000"
+                                  data-refresh-interval="50">1</span>
                             <span class="counter-label">获得好评</span>
                         </div>
                     </div>
@@ -416,7 +387,8 @@
 						<span class="icon">
 							<i class="ti-credit-card"></i>
 						</span>
-                            <span class="counter js-counter" data-from="0" data-to="10293" data-speed="5000" data-refresh-interval="50">1</span>
+                            <span class="counter js-counter" data-from="0" data-to="10293" data-speed="5000"
+                                  data-refresh-interval="50">1</span>
                             <span class="counter-label">完成支付</span>
                         </div>
                     </div>
@@ -425,7 +397,8 @@
 						<span class="icon">
 							<i class="ti-time"></i>
 						</span>
-                            <span class="counter js-counter" data-from="0" data-to="212023" data-speed="5000" data-refresh-interval="50">1</span>
+                            <span class="counter js-counter" data-from="0" data-to="212023" data-speed="5000"
+                                  data-refresh-interval="50">1</span>
                             <span class="counter-label">使用时间</span>
 
                         </div>
@@ -446,28 +419,33 @@
                 <div class="row">
                     <div class="owl-carousel owl-carousel-carousel">
                         <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_1.jpg" alt="Free HTML5 Bootstrap Template by "></a>
+                            <a href="#"><img src="<%=path%>/images/img_1.jpg"
+                                             alt="Free HTML5 Bootstrap Template by "></a>
                         </div>
                         <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_2.jpg" alt="Free HTML5 Bootstrap Template by "></a>
+                            <a href="#"><img src="<%=path%>/images/img_2.jpg"
+                                             alt="Free HTML5 Bootstrap Template by "></a>
                         </div>
                         <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_3.jpg" alt="Free HTML5 Bootstrap Template by "></a>
+                            <a href="#"><img src="<%=path%>/images/img_3.jpg"
+                                             alt="Free HTML5 Bootstrap Template by "></a>
                         </div>
                         <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_7.jpg" alt="Free HTML5 Bootstrap Template by "></a>
+                            <a href="#"><img src="<%=path%>/images/img_7.jpg"
+                                             alt="Free HTML5 Bootstrap Template by "></a>
                         </div>
                         <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_5.jpg" alt="Free HTML5 Bootstrap Template by "></a>
+                            <a href="#"><img src="<%=path%>/images/img_5.jpg"
+                                             alt="Free HTML5 Bootstrap Template by "></a>
                         </div>
                         <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_6.jpg" alt="Free HTML5 Bootstrap Template by "></a>
+                            <a href="#"><img src="<%=path%>/images/img_6.jpg"
+                                             alt="Free HTML5 Bootstrap Template by "></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
 
 
         <div id="gtco-subscribe">
@@ -503,7 +481,8 @@
                     <div class="col-md-4">
                         <div class="gtco-widget">
                             <h3>关于我们 <span class="footer-logo"><span>.</span></span></h3>
-                            <p>汽修店信息化水平普遍偏低，工作效率低，信息的管理混乱，没有实现自动化，没有完善的数据统计，汽修店员工对计算机软件系统缺乏了解。汽车维修保养管理系统需要提供简洁易懂的用户界面，提供简单易用的流程。</p>
+                            <p>
+                                汽修店信息化水平普遍偏低，工作效率低，信息的管理混乱，没有实现自动化，没有完善的数据统计，汽修店员工对计算机软件系统缺乏了解。汽车维修保养管理系统需要提供简洁易懂的用户界面，提供简单易用的流程。</p>
                         </div>
                     </div>
 
@@ -538,7 +517,9 @@
                 <div class="row copyright">
                     <div class="col-md-12">
                         <p class="pull-left">
-                            <small class="block">©2017 Jango 使用平台前必读 意见反馈 京ICP证030173号  <a target="_blank" href="www.baidu.com">大拇指官网</a></small>
+                            <small class="block">©2017 Jango 使用平台前必读 意见反馈 京ICP证030173号 <a target="_blank"
+                                                                                          href="www.baidu.com">大拇指官网</a>
+                            </small>
                         </p>
                         <p class="pull-right">
                         <ul class="gtco-social-icons pull-right">
