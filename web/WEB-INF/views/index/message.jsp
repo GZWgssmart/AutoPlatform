@@ -125,10 +125,6 @@
                                     <br/>
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label class="control-label">基本工资：</label>
-                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" value="${user.userSalary}" name="userSalary"/>
-                                        </div>
-                                        <div class="col-md-3">
                                             <label class="control-label">创建时间：</label>
                                             <input class="form-control" disabled="disabled" style="display: initial;"value="${user.userCreatedTime}" type="text" id="form_datetime" name="userCreatedTime"/>
                                         </div>
@@ -140,6 +136,12 @@
                                             <label class="control-label">当前状态：</label>
                                             <input class="form-control" disabled="disabled" style="display: initial;" type="text" value="${user.userStatus}" id="status" name="userStatus"/>
                                         </div>
+                                        <shiro:hasAnyRoles name="companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, companyAccounting, companyBuyer, companyEmp">
+                                        <div class="col-md-3">
+                                            <label class="control-label">基本工资：</label>
+                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" value="${user.userSalary}" name="userSalary"/>
+                                        </div>
+                                        </shiro:hasAnyRoles>
                                     </div>
                                     <br/>
                                     <div class="row">
