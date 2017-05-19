@@ -83,6 +83,8 @@ public class AccessoriesTypeController {
                 return ControllerResult.getFailResult("添加失败，没有该权限操作");
             }
             logger.info("添加");
+            User loginUser = SessionGetUtil.getUser();
+            accessoriesType.setCompanyId(loginUser.getCompanyId());
             accessoriesType.setAccTypeId(UUIDUtil.uuid());
             System.out.println(accessoriesType);
             accessoriesType.setAccTypeStatus("Y");
@@ -107,6 +109,8 @@ public class AccessoriesTypeController {
                 return ControllerResult.getFailResult("更新失败,没有该权限的操作");
             }
             logger.info("更新");
+            User loginUser = SessionGetUtil.getUser();
+            accessoriesType.setCompanyId(loginUser.getCompanyId());
             accessoriesType.setAccTypeStatus("Y");
             accessoriesTypeService.update(accessoriesType);
             return ControllerResult.getSuccessResult("修改成功");
@@ -186,8 +190,7 @@ public class AccessoriesTypeController {
     @ResponseBody
     @RequestMapping(value = "queryByCondition", method = RequestMethod.GET)
     public Pager4EasyUI<AccessoriesType> queryByCondition(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize,
-                                                          @Param("accTypeName") String accTypeName, @Param("accTypeDes") String accTypeDes,
-                                                          @Param("companyId") String companyId) {
+                                                          @Param("accTypeName") String accTypeName, @Param("companyId") String companyId) {
         if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -196,7 +199,6 @@ public class AccessoriesTypeController {
         User user = SessionGetUtil.getUser();
         AccessoriesType accessoriesType = new AccessoriesType();
         accessoriesType.setAccTypeName(accTypeName);
-        accessoriesType.setAccTypeDes(accTypeDes);
         accessoriesType.setCompanyId(companyId);
         Pager pager = new Pager();
         pager.setPageNo(Integer.valueOf(pageNumber));
