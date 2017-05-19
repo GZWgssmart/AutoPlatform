@@ -162,6 +162,11 @@
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="supply.supplyId" name="supplyId" id = "supplyId"/>
                             <div class="form-group">
+                                <label class="control-label">供应商分类：</label>
+                                <select id="editSupplyType" class="js-example-tags form-control supply_type" name="supplyTypeId">
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label>名称：</label>
                                 <input type="text" attr="supply.supplyName"  name="supplyName" class="form-control"/>
                             </div>
@@ -207,11 +212,6 @@
                                 <label>微信：</label>
                                 <input type="text" attr="supply.supplyWechat" name="supplyWechat" class="form-control"/>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label">供应商分类：</label>
-                                <select id="editSupplyType" class="js-example-tags form-control supply_type" name="supplyTypeId">
-                                </select>
-                            </div>
                             <div class="modal-footer" style="overflow:hidden;">
 
 
@@ -239,6 +239,11 @@
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">添加供应商</h3>
                         <form role="form" id="addForm">
+                            <div class="form-group">
+                                <label class="control-label">供应商分类：</label>
+                                <select id="addSupplyType" class="js-example-tags form-control supply_type" name="supplyTypeId">
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label>名称：</label>
                                 <input type="text"  name="supplyName" class="form-control"/>
@@ -284,11 +289,6 @@
                             <div class="form-group">
                                 <label>微信：</label>
                                 <input type="text"  name="supplyWechat" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">供应商分类：</label>
-                                <select id="addSupplyType" class="js-example-tags form-control supply_type" name="supplyTypeId">
-                                </select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <button type="button" class="btn btn-default"

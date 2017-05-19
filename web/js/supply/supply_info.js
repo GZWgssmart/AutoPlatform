@@ -1,3 +1,5 @@
+
+var editSupplyName = "";
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/supply/queryByPager?status=ALL");
@@ -17,6 +19,7 @@ function showEditWin() {
         return false;
     } else {
         var supply = selectRow[0];
+        editSupplyName = supply.supplyName;
         $("#editForm").fill(supply);
         initCityPicker("editAddress");
         $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");
@@ -70,6 +73,7 @@ window.operateEvents = {
     'click .showUpdateSupplyType1': function (e, value, row, index) {
         validator("editForm");
         var supply = row;
+        editSupplyName = supply.supplyName;
         $("#editForm").fill(supply);
         $('#editSupplyType').html('<option value="' + supply.supplyType.supplyTypeId + '">' + supply.supplyType.supplyTypeName + '</option>').trigger("change");
         validator("editForm");
@@ -89,10 +93,16 @@ function validator(formId) {
         },
         fields: {
             supplyName: {
-                message: '供应商验证失败',
+                message: '供应商名称验证失败',
                 validators: {
                     notEmpty: {
                         message: '供应商名称不能为空'
+                    },
+                    remote: {
+                        url: '/vilidate/queryIsExist_supplyName?editSupplyName=' + editSupplyName,
+                        message: '该名称已存在',
+                        delay: 2000,
+                        type: 'GET'
                     },
                     stringLength: {
                         min: 2,
@@ -206,6 +216,7 @@ function validator(formId) {
 
             } else if (formId == "editForm") {
                 formSubmit("/supply/edit", formId, "editWin");
+                editSupplyName = "";
             }
 
         })

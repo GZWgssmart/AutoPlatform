@@ -1,4 +1,5 @@
 
+var editSupplyTypeName = "";
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/supplyType/queryByPager?status=ALL");
@@ -17,6 +18,7 @@ function showEditWin() {
         return false;
     } else {
         var supplyType = selectRow[0];
+        editSupplyTypeName = supplyType.supplyTypeName;
         $("#editForm").fill(supplyType);
         $("#editWin").modal('show');
     }
@@ -97,6 +99,7 @@ window.operateEvents = {
     },
     'click .showUpdateSupplyType1': function (e, value, row, index) {
         var supplyType = row;
+        editSupplyTypeName = supplyType.supplyTypeName;
         validator("editForm");
         $("#editForm").fill(supplyType);
         $("#editWin").modal('show');
@@ -118,7 +121,13 @@ function validator(formId) {
                 message: '验证失败',
                 validators: {
                     notEmpty: {
-                        message: '供应商分类姓名不能为空'
+                        message: '供应商分类名称不能为空'
+                    },
+                    remote: {
+                        url: '/vilidate/queryIsExist_supplyTypeName?editSupplyTypeName=' + editSupplyTypeName,
+                        message: '该名称已存在',
+                        delay: 2000,
+                        type: 'GET'
                     },
                     stringLength: {
                         min: 2,
@@ -136,6 +145,7 @@ function validator(formId) {
 
             } else if (formId == "editForm") {
                 formSubmit("/supplyType/edit", formId, "editWin");
+                editSupplyTypeName = "";
             }
 
         })
