@@ -31,48 +31,48 @@ public class VilidateServiceImpl implements VilidateService {
     }
 
     @Override
-    public int queryDateIsExistUserEmail(String userEmail) {
-        return vilidateDAO.queryDateIsExistUserEmail(userEmail);
+    public int queryDataIsExistUserEmail(String userEmail) {
+        return vilidateDAO.queryDataIsExistUserEmail(userEmail);
     }
 
     @Override
-    public int queryDateIsExistUserPhone(String userPhone) {
-        return vilidateDAO.queryDateIsExistUserPhone(userPhone);
+    public int queryDataIsExistUserPhone(String userPhone) {
+        return vilidateDAO.queryDataIsExistUserPhone(userPhone);
     }
 
     @Override
-    public int queryDateIsExistRoleName(String roleName) {
-        return vilidateDAO.queryDateIsExistRoleName(roleName);
+    public int queryDataIsExistRoleName(String roleName) {
+        return vilidateDAO.queryDataIsExistRoleName(roleName);
     }
 
     @Override
-    public int queryDateIsExistRoleDes(String roleDes) {
-        return vilidateDAO.queryDateIsExistRoleDes(roleDes);
+    public int queryDataIsExistRoleDes(String roleDes) {
+        return vilidateDAO.queryDataIsExistRoleDes(roleDes);
     }
 
     @Override
-    public int queryDateIsExistModuleName(String moduleName) {
-        return vilidateDAO.queryDateIsExistModuleName(moduleName);
+    public int queryDataIsExistModuleName(String moduleName) {
+        return vilidateDAO.queryDataIsExistModuleName(moduleName);
     }
 
     @Override
-    public int queryDateIsExistPermissionName(String permissionName) {
-        return vilidateDAO.queryDateIsExistPermissionName(permissionName);
+    public int queryDataIsExistPermissionName(String permissionName) {
+        return vilidateDAO.queryDataIsExistPermissionName(permissionName);
     }
 
     @Override
-    public int queryDateIsExistPermissionZHName(String permissionZHName) {
-        return vilidateDAO.queryDateIsExistPermissionZHName(permissionZHName);
+    public int queryDataIsExistPermissionZHName(String permissionZHName) {
+        return vilidateDAO.queryDataIsExistPermissionZHName(permissionZHName);
     }
 
     @Override
-    public int queryDateIsExistBrandName(String brandName) {
-        return vilidateDAO.queryDateIsExistBrandName(brandName);
+    public int queryDataIsExistBrandName(String brandName) {
+        return vilidateDAO.queryDataIsExistBrandName(brandName);
     }
 
     @Override
-    public int queryDateIsExistModelName(String modelName) {
-        return vilidateDAO.queryDateIsExistModelName(modelName);
+    public int queryDataIsExistModelName(String modelName) {
+        return vilidateDAO.queryDataIsExistModelName(modelName);
     }
 
     @Override

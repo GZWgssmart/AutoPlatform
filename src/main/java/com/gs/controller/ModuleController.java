@@ -185,32 +185,4 @@ public class ModuleController {
         List<Module> modules = moduleService.queryByStatusPager(status, pager);
         return new Pager4EasyUI<Module>(pager.getTotalRecords(), modules);
     }
-
-    @ResponseBody
-    @RequestMapping(value = "queryIs_moduleName", method = RequestMethod.GET)
-    public String queryModuleNameIsExist(@Param("moduleName") String moduleName, @Param("editName") String editName) {
-        try {
-            logger.info("模块名称验证");
-            boolean result = true;
-            String resultString = "";
-            Map<String, Boolean> map = new HashMap<String, Boolean>();
-            ObjectMapper mapper = new ObjectMapper();
-            if (!editName.equals(moduleName)) {
-                int isExist = moduleService.queryModuleNameIsExist(moduleName);
-                if (isExist > 0) {
-                    result = false;
-                }
-            }
-            map.put("valid", result);
-            try {
-                resultString = mapper.writeValueAsString(map);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-            return resultString;
-        } catch (Exception e) {
-            logger.info("模块名称验证失败，出现了异常");
-            return null;
-        }
-    }
 }

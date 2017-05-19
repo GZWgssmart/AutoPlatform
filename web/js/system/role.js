@@ -137,7 +137,7 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: contextPath + '/role/queryIs_roleName',
+                        url: contextPath + '/vilidate/queryIsExist_roleName',
                         message: '该名称已存在',
                         delay: 2000,
                         type: 'GET'
@@ -161,7 +161,7 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: contextPath + '/role/queryIs_roleDes?editDes=' + editRoleDes,
+                        url: contextPath + '/vilidate/queryIsExist_roleDes?editDes=' + editRoleDes,
                         message: '该名称已存在',
                         delay: 2000,
                         type: 'GET'

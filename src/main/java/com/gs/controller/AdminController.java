@@ -144,6 +144,7 @@ public class AdminController {
             logger.info("添加管理员");
             user.setUserId(UUIDUtil.uuid());
             user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
+            user.setUserIcon("img/default.png");
             userService.insertAdmin(user);
             Role role = roleService.queryByName("systemOrdinaryAdmin");
             UserRole ur = new UserRole();

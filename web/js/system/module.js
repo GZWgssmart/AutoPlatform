@@ -142,7 +142,7 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: contextPath + '/module/queryIs_moduleName?editName=' + editModuleName,
+                        url: contextPath + '/vilidate/queryIsExist_moduleName?editName=' + editModuleName,
                         message: '该名称已存在',
                         delay :  2000,
                         type: 'GET'

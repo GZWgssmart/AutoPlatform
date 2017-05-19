@@ -19,31 +19,31 @@ public interface VilidateDAO {
     public int queryDataIsExistCompanyWebsite(String companyWebsite);
 
     /**用户表邮箱验证唯一*/
-    public int queryDateIsExistUserEmail(String userEmail);
+    public int queryDataIsExistUserEmail(String userEmail);
 
     /**用户表手机验证唯一*/
-    public int queryDateIsExistUserPhone(String userPhone);
+    public int queryDataIsExistUserPhone(String userPhone);
 
     /**角色表英文名称验证唯一*/
-    public int queryDateIsExistRoleName(String roleName);
+    public int queryDataIsExistRoleName(String roleName);
 
     /**角色表中文名称验证唯一*/
-    public int queryDateIsExistRoleDes(String roleDes);
+    public int queryDataIsExistRoleDes(String roleDes);
 
     /**模块表名称验证唯一*/
-    public int queryDateIsExistModuleName(String moduleName);
+    public int queryDataIsExistModuleName(String moduleName);
 
     /**权限表名称验证唯一*/
-    public int queryDateIsExistPermissionName(String permissionName);
+    public int queryDataIsExistPermissionName(String permissionName);
 
     /**权限表中文名称验证唯一*/
-    public int queryDateIsExistPermissionZHName(String permissionZHName);
+    public int queryDataIsExistPermissionZHName(String permissionZHName);
 
     /**品牌表名称验证唯一*/
-    public int queryDateIsExistBrandName(String brandName);
+    public int queryDataIsExistBrandName(String brandName);
 
     /**车型表名称验证唯一*/
-    public int queryDateIsExistModelName(String modelName);
+    public int queryDataIsExistModelName(String modelName);
 
     /**顔色表名称验证唯一*/
     public int queryDataIsExistColorName(String colorName);

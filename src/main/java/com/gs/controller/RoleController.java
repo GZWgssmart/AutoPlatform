@@ -13,7 +13,7 @@ import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.RoleService;
-import com.gs.service.UserService;
+import com.gs.service.VilidateService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -40,7 +40,10 @@ public class RoleController {
     @Resource
     private RoleService roleService;
 
-    private Logger logger = (Logger) LoggerFactory.getLogger(IncomingTypeController.class);
+    @Resource
+    private VilidateService vilidateService;
+
+    private Logger logger = (Logger) LoggerFactory.getLogger(RoleController.class);
 
     private String queryRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
     private String editRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
@@ -168,59 +171,4 @@ public class RoleController {
             return null;
         }
     }
-
-    @ResponseBody
-    @RequestMapping(value = "queryIs_roleName", method = RequestMethod.GET)
-    public String queryRoleNameIsExist(String roleName) {
-        try {
-            logger.info("角色英文名称验证");
-            boolean result = true;
-            String resultString = "";
-            Map<String, Boolean> map = new HashMap<String, Boolean>();
-            ObjectMapper mapper = new ObjectMapper();
-            int isExist = roleService.queryRoleNameIsExist(roleName);
-            if (isExist > 0) {
-                result = false;
-            }
-            map.put("valid", result);
-            try {
-                resultString = mapper.writeValueAsString(map);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-            return resultString;
-        } catch (Exception e) {
-            logger.info("角色英文名称验证失败，出现了异常");
-            return null;
-        }
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "queryIs_roleDes", method = RequestMethod.GET)
-    public String queryRoleDesIsExist(@Param("roleDes") String roleDes, @Param("editDes") String editDes) {
-        try {
-            logger.info("角色中文名称验证");
-            boolean result = true;
-            String resultString = "";
-            Map<String, Boolean> map = new HashMap<String, Boolean>();
-            ObjectMapper mapper = new ObjectMapper();
-            if (!editDes.equals(roleDes)) {
-                int isExist = roleService.queryRoleDesIsExist(roleDes);
-                if (isExist > 0) {
-                    result = false;
-                }
-            }
-            map.put("valid", result);
-            try {
-                resultString = mapper.writeValueAsString(map);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-            return resultString;
-        } catch (Exception e) {
-            logger.info("角色中文名称验证失败，出现了异常");
-            return null;
-        }
-    }
-
 }
