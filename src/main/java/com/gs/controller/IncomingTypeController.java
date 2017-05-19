@@ -105,7 +105,7 @@ public class IncomingTypeController {
             if(CheckRoleUtil.checkRoles(editRole)) {
                 logger.info("更新收入类型");
                 User user = SessionGetUtil.getUser();
-                user.setCompanyId(user.getCompanyId());
+                incomingType.setCompanyId(user.getCompanyId());
                 incomingTypeService.update(incomingType);
                 return ControllerResult.getSuccessResult("更新收入类型成功");
             }
@@ -127,6 +127,7 @@ public class IncomingTypeController {
                 } else if (status.equals("N")) {
                     incomingTypeService.inactive(id);
                 }
+
                 return ControllerResult.getSuccessResult("更新收入类型状态成功");
             }
             return ControllerResult.getFailResult("更新收入类型状态失败，没有该权限");

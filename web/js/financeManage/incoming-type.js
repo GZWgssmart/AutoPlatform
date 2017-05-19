@@ -13,6 +13,7 @@ $(document).ready(function () {
 
 var MAINTENANCE_IN = '维修保养收入';
 var ACC_IN = '配件收入'
+var editTypeName = "";
 /** 编辑数据 */
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
@@ -22,6 +23,7 @@ function showEditWin() {
     } else {
         var incomingType = selectRow[0];
         if(incomingType.inTypeName != MAINTENANCE_IN && incomingType.inTypeName != ACC_IN  && incomingType.company.companyId != null){
+            editTypeName = incomingType.inTypeName;
             validator("editForm");
             $("#editForm").fill(incomingType);
             $('#editCompany').html('<option value="' + incomingType.company.companyId + '">' + incomingType.company.companyName + '</option>').trigger("change");
@@ -36,6 +38,7 @@ function showEditWin() {
 function showAddWin(){
    validator("addForm");
     $('#addCompany').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }
 
@@ -119,6 +122,7 @@ window.operateEvents = {
           'click .showUpdateIncomingType1': function (e, value, row, index) {
               var incomingType = row;
               if((incomingType.inTypeName != MAINTENANCE_IN || incomingType.inTypeName != ACC_IN)&& incomingType.company.companyId != null) {
+                  editTypeName = incomingType.inTypeName;
                   validator("editForm");
                   $("#editForm").fill(incomingType);
                   $('#editCompany').html('<option value="' + incomingType.company.companyId + '">' + incomingType.company.companyName + '</option>').trigger("change");
@@ -145,11 +149,18 @@ function validator(formId) {
                     notEmpty: {
                         message: '收入类型名称不能为空'
                     },
+                    remote: {
+                        url: '/vilidate/queryIsExist_inTypeName?editTypeName=' + editTypeName,
+                        message: '该名称已存在',
+                        delay: 2000,
+                        type: 'GET'
+                    },
                     stringLength: {
                         min: 2,
                         max: 20,
                         message: '收入类型名称长度必须在2到20位之间'
                     }
+
                 }
             },
             companyId: {
@@ -176,8 +187,9 @@ function validator(formId) {
             } else if (formId == "editForm") {
                 if(editName != MAINTENANCE_IN && editName != ACC_IN) {
                     formSubmit("/incomingType/update_incomingType", formId, "editWin");
+                    editTypeName = '';
                 }else{
-                    swal('添加失败', "你不能添加名称为"+editName, "warning");
+                    swal('更新失败', "你不能添加名称为"+editName, "warning");
                     $('#addWin').modal('hide');
                     $('#' + formId).data('bootstrapValidator').resetForm(true);
                 }

@@ -13,7 +13,7 @@ $(document).ready(function () {
 
 var SALARY_OUT = '工资支出';
 var ACC_OUT = '配件支出';
-
+var editTypeName = "";
 /** 编辑数据 */
 function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
@@ -23,6 +23,7 @@ function showEditWin() {
     } else {
         var outgoingType = selectRow[0];
         if(outgoingType.outTypeName != SALARY_OUT && outgoingType.outTypeName != ACC_OUT && outgoingType.company.companyId != null ){
+            editTypeName = outgoingType.outTypeName;
             validator("editForm");
             $("#editForm").fill(outgoingType);
             $('#editCompany').html('<option value="' + outgoingType.company.companyId + '">' + outgoingType.company.companyName + '</option>').trigger("change");
@@ -36,6 +37,7 @@ function showEditWin() {
 function showAddWin(){
     validator("addForm");
     $('#addCompany').html('').trigger("change");
+    $("input[type=reset]").trigger("click");
     $("#addWin").modal('show');
 }
 
@@ -121,6 +123,7 @@ window.operateEvents = {
           'click .showUpdateoutgoingType1': function (e, value, row, index) {
               var outgoingType = row;
               if(outgoingType.company.companyId != null ) {
+                  editTypeName = outgoingType.outTypeName;
                   validator("editForm");
                   $("#editForm").fill(outgoingType);
                   $('#editCompany').html('<option value="' + outgoingType.company.companyId + '">' + outgoingType.company.companyName + '</option>').trigger("change");
@@ -148,6 +151,12 @@ function validator(formId) {
                 validators: {
                     notEmpty: {
                         message: '支出类型名称不能为空'
+                    },
+                    remote: {
+                        url: '/vilidate/queryIsExist_outTypeName?editTypeName=' + editTypeName,
+                        message: '该名称已存在',
+                        delay: 2000,
+                        type: 'GET'
                     },
                     stringLength: {
                         min: 2,
@@ -183,6 +192,7 @@ function validator(formId) {
             } else if (formId == "editForm") {
                 if(editName != SALARY_OUT && editName != ACC_OUT){
                     formSubmit("/outgoingType/update_outgoingType", formId, "editWin");
+                    editTypeName = '';
                 }else{
                     swal('编辑失败', "你不能修改名称为"+editName, "warning");
                     $('#editWin').modal('hide');
