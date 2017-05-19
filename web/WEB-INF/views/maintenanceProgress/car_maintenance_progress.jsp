@@ -79,11 +79,13 @@
                     <i class="glyphicon glyphicon-search"></i> 查看不可用进度
                 </button>
             </a>
+            <shiro:hasAnyRoles name="companyAdmin, companyReceive">
             <a>
                 <button onclick="searchStatus_All();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部进度
                 </button>
             </a>
+            </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="companyArtificer">
             <a>
                 <button onclick="recordOk();" type="button" class="btn btn-default">

@@ -262,9 +262,6 @@ function validator(formId) {
     $("#editModalButton").removeAttr("disabled");
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
             userAddress: {

@@ -207,74 +207,74 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
      * 根据维修保养记录分页查询车主自己进度
      * @return
      */
-    public List<MaintainRecord> queryByUser(@Param("pager") Pager pager, @Param("user")String user);
+    public List<MaintainRecord> queryByUser(@Param("pager") Pager pager, @Param("userId")String userId);
 
     /**
      * 根据维修保养记录分页查询车主自己进度个数
      * @return
      */
-    public int countByUser(String user);
+    public int countByUser(String userId);
 
     /**
      * 根据维修保养记录分页查询技师管理进度
      * @return
      */
-    public List<MaintainRecord> queryByEmp(@Param("pager") Pager pager, @Param("user")String user);
+    public List<MaintainRecord> queryByEmp(@Param("pager") Pager pager, @Param("userId")String userId);
 
     /**
      * 根据维修保养记录分页查询技师管理进度个数
      * @return
      */
-    public int countByEmp(String user);
+    public int countByEmp(String userId);
 
     /**
      * 根据维修保养记录分页查询车主自己可用进度
      * @return
      */
-    public List<MaintainRecord> queryByUser_Y(@Param("pager") Pager pager, @Param("user")String user);
+    public List<MaintainRecord> queryByUser_Y(@Param("pager") Pager pager, @Param("userId")String userId);
 
     /**
      * 根据维修保养记录分页查询车主自己可用进度个数
      * @return
      */
-    public int countByUser_Y(String user);
+    public int countByUser_Y(String userId);
 
     /**
      * 根据维修保养记录分页查询技师管理可用进度
      * @return
      */
-    public List<MaintainRecord> queryByEmp_Y(@Param("pager") Pager pager, @Param("user")String user);
+    public List<MaintainRecord> queryByEmp_Y(@Param("pager") Pager pager, @Param("userId")String userId);
 
     /**
      * 根据维修保养记录分页查询技师管理可用进度个数
      * @return
      */
-    public int countByEmp_Y(String user);
+    public int countByEmp_Y(String userId);
 
 
     /**
      * 根据维修保养记录分页查询车主自己不可用进度
      * @return
      */
-    public List<MaintainRecord> queryByUser_N(@Param("pager") Pager pager, @Param("user")String user);
+    public List<MaintainRecord> queryByUser_N(@Param("pager") Pager pager, @Param("userId")String userId);
 
     /**
      * 根据维修保养记录分页查询车主自己不可用进度个数
      * @return
      */
-    public int countByUser_N(String user);
+    public int countByUser_N(String userId);
 
     /**
      * 根据维修保养记录分页查询技师管理不可用进度
      * @return
      */
-    public List<MaintainRecord> queryByEmp_N(@Param("pager") Pager pager, @Param("user")String user);
+    public List<MaintainRecord> queryByEmp_N(@Param("pager") Pager pager, @Param("userId")String userId);
 
     /**
      * 根据维修保养记录分页查询技师管理不可用进度个数
      * @return
      */
-    public int countByEmp_N(String user);
+    public int countByEmp_N(String userId);
 
 
     /**

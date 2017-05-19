@@ -197,7 +197,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "peopleInfo_pager", method= RequestMethod.GET)
     public Pager4EasyUI<User> info_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询所有可用员工");
                     User user = SessionGetUtil.getUser();
@@ -209,10 +209,10 @@ public class PeopleInfoController {
                     return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
                 }
                 return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -224,7 +224,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "peopleInfo_pagerStatus", method= RequestMethod.GET)
     public Pager4EasyUI<User> infoStatus_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询所有不可用员工");
                     User user = SessionGetUtil.getUser();
@@ -236,10 +236,10 @@ public class PeopleInfoController {
                     return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
                 }
                 return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -251,7 +251,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "peopleInfoAll", method= RequestMethod.GET)
     public Pager4EasyUI<User> infoAll_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, HttpSession session){
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询所有员工");
                     User user = SessionGetUtil.getUser();
@@ -263,10 +263,10 @@ public class PeopleInfoController {
                     return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
                 }
                 return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -278,7 +278,7 @@ public class PeopleInfoController {
     @RequestMapping(value = "selectPeopleInfo", method= RequestMethod.GET)
     public Pager4EasyUI<User> selectInfo_pager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize, @Param("userPhone")String userPhone, @Param("userName")String userName, @Param("userEmail")String userEmail, @Param("roleName")String roleName, @Param("companyName")String companyName){
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页条件查询员工");
                     User user = new User();
@@ -297,10 +297,10 @@ public class PeopleInfoController {
                     return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
                 }
                 return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;

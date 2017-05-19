@@ -36,8 +36,7 @@ public class ProgressController {
     @Resource
     private MaintainRecordService maintainRecordService;
 
-    private String queryRole = Constants.CAR_OWNER + "," + Constants.COMPANY_RECEIVE + ","
-            + Constants.COMPANY_ARTIFICER + "," + "," + Constants.COMPANY_ADMIN;
+    private String queryRole = Constants.COMPANY_RECEIVE + "," + Constants.COMPANY_ADMIN;
 
     private String queryRole2 = Constants.CAR_OWNER;
 
@@ -48,7 +47,7 @@ public class ProgressController {
     @RequestMapping(value = "progress_page", method = RequestMethod.GET)
     public String progressInfo() {
         if (SessionGetUtil.isUser()) {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
+            if (CheckRoleUtil.checkRoles(queryRole) || CheckRoleUtil.checkRoles(queryRole2) || CheckRoleUtil.checkRoles(queryRole3)) {
                 logger.info(" 维修保养进度页面");
                 return "maintenanceProgress/car_maintenance_progress";
             }
@@ -63,7 +62,7 @@ public class ProgressController {
     @RequestMapping(value="progress_pager",method= RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询进度");
                     User user = SessionGetUtil.getUser();
@@ -93,10 +92,10 @@ public class ProgressController {
                     return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
                 }
                 return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -108,7 +107,7 @@ public class ProgressController {
     @RequestMapping(value="progress_pager_N",method= RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> queryPager_N(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
             if (CheckRoleUtil.checkRoles(queryRole)) {
                 logger.info("分页查询不可用进度");
                 User user = SessionGetUtil.getUser();
@@ -138,10 +137,10 @@ public class ProgressController {
                 return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
             }
             return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -155,7 +154,7 @@ public class ProgressController {
     @RequestMapping(value="progress_pager_Y",method= RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> queryPager_Y(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
             if (CheckRoleUtil.checkRoles(queryRole)) {
                 logger.info("分页查询可用进度");
                 User user = SessionGetUtil.getUser();
@@ -185,10 +184,10 @@ public class ProgressController {
                 return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
             }
             return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;

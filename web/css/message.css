@@ -1,0 +1,34 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.max_div{
+    background-color: rgb(158, 158, 158);
+}
+
+.shell{
+    width: 90%;
+    margin: 0 auto;
+}
+
+.avatar{
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+}
+
+.avatar img{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+}
+
+.table_info{
+}
+
+.zi_em{
+    float: right;
+    font-size: 20px;
+    color: red;
+}

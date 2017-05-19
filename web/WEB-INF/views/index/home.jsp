@@ -63,9 +63,7 @@
                                 </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
-                            </li>
-                            <li><a class="J_menuItem" href="profile.html">个人资料</a>
+                            <li><a class="J_menuItem" href="<%=path %>/message/personal_message">个人资料</a>
                             </li>
                             <li><a class="J_menuItem" href="contacts.html">联系我们</a>
                             </li>

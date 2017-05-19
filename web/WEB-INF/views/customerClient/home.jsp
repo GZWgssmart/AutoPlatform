@@ -40,7 +40,7 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <span><img alt="image" class="img-circle" src="<%=path %>${sessionScope.user.userIcon}"/></span>
+                        <span><img  style="width: 70px;height: 70px" alt="image" class="img-circle" src="<%=path %>${sessionScope.user.userIcon}"/></span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
                                <span class="block m-t-xs"><strong class="font-bold">${sessionScope.user.userName}</strong></span>
@@ -88,7 +88,7 @@
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path%>/customerClient/record">我的维修保养记录</a>
                         </li>
-                        <li><a class="J_menuItem" href="<%=path%>/customerClient/progress">我的维修保养进度</a>
+                        <li><a class="J_menuItem" href="<%=path%>/progress/progress_page">我的维修保养进度</a>
                         </li>
                     </ul>
                 </li>

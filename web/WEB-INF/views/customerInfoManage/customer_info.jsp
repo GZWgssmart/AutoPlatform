@@ -191,11 +191,11 @@
                                 </div>
                                 <div class="info">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 form-group">
                                             <label class="control-label">邮箱：</label>
-                                            <input class="form-control" style="display: initial;" type="email" id="editEmail" attr="user.userEmail" name="userEmail"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="editEmail" attr="user.userEmail" name="userEmail"/>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 form-group">
                                             <label class="control-label">昵称：</label>
                                             <input class="form-control" style="display: initial;" type="text" id="nickname" attr="user.userNickname" name="userNickname"/>
                                         </div>
@@ -215,11 +215,11 @@
                                             <label class="control-label">年龄：</label>
                                             <input class="form-control" style="display: initial;" disabled="disabled" id="age" type="text" attr="user.userAge" name="useAge"/>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 form-group">
                                             <label class="control-label" style="margin-left: -14px">手机号：</label>
                                             <input class="form-control" style="display: initial;" type="text" id="editPhone" attr="user.userPhone" name="userPhone"/>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 form-group">
                                             <label class="control-label" style="margin-left: -14px">身份证：</label>
                                             <input class="form-control" style="display: initial;" type="text" id="editIdentity" attr="user.userIdentity" name="userIdentity"/>
                                         </div>
@@ -227,15 +227,15 @@
                                         <br />
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 form-group">
                                             <label class="control-label" style="margin-left: -14px">微信号：</label>
                                             <input class="form-control" style="display: initial;" type="text" id="wechatOpen" attr="user.wechatOpenId" name="wechatOpenId"/>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 form-group">
                                             <label class="control-label" style="margin-left: -8px">QQ号：</label>
                                             <input class="form-control" style="display: initial;" type="text" id="qqOpen" attr="user.qqOpenId" name="qqOpenId"/>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 form-group">
                                             <label class="control-label">微博：</label>
                                             <input class="form-control" style="display: initial;" type="text" id="weiboOpen" attr="user.weiboOpenId" name="weiboOpenId"/>
                                         </div>
@@ -247,7 +247,7 @@
                                             <label class="control-label">生日：</label>
                                             <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="birthday" attr="user.userBirthday" name="userBirthday"/>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4 form-group">
                                             <label class="control-label" style="margin-left: -28px">真实姓名：</label>
                                             <input class="form-control" style="display: initial;" type="text" attr="user.userName" name="userName"/>
                                         </div>

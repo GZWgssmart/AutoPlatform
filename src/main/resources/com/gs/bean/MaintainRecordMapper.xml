@@ -82,7 +82,7 @@
         FROM
             t_maintain_record mr
          INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-         INNER JOIN t_company c ON c.companyId = mr.companyId
+         INNER JOIN t_company cy ON cy.companyId = ch.companyId
          INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
          INNER JOIN t_user u ON u.userId = wi.userId
          WHERE
@@ -95,12 +95,12 @@
                 mr.*, ch.userName,
                 ch.carPlate,
                 ch.maintainOrFix,
-                c.companyName,
+                cy.companyName,
                 u.userName AS user_userName
              FROM
                 t_maintain_record mr
              INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-             INNER JOIN t_company c ON c.companyId = mr.companyId
+             INNER JOIN t_company cy ON cy.companyId = ch.companyId
              INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
              INNER JOIN t_user u ON u.userId = wi.userId
              WHERE
@@ -117,7 +117,7 @@
         FROM
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-        INNER JOIN t_company c ON c.companyId = mr.companyId
+        INNER JOIN t_company cy ON c.companyId = ch.companyId
         INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
         INNER JOIN t_user u ON u.userId = wi.userId
         WHERE
@@ -130,12 +130,12 @@
                 mr.*, ch.userName,
                 ch.carPlate,
                 ch.maintainOrFix,
-                c.companyName,
+                cy.companyName,
                 u.userName AS user_userName
              FROM
                 t_maintain_record mr
              INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-             INNER JOIN t_company c ON c.companyId = mr.companyId
+             INNER JOIN t_company cy ON cy.companyId = ch.companyId
              INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
              INNER JOIN t_user u ON u.userId = wi.userId
              WHERE
@@ -149,10 +149,9 @@
         SELECT
         COUNT(*)
         FROM
-        FROM
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-        INNER JOIN t_company c ON c.companyId = mr.companyId
+        INNER JOIN t_company cy ON cy.companyId = ch.companyId
         INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
         INNER JOIN t_user u ON u.userId = wi.userId
         WHERE
@@ -165,12 +164,14 @@
                 mr.*, ch.userName,
                 ch.carPlate,
                 ch.maintainOrFix,
-                c.companyName,
-                u.userName AS user_userName
+                cy.companyName,
+                u.userName AS user_userName,
+                u.userId AS user_userId,
+                wi.userId AS work_userId
              FROM
                 t_maintain_record mr
              INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-             INNER JOIN t_company c ON c.companyId = mr.companyId
+             INNER JOIN t_company cy ON cy.companyId = ch.companyId
              INNER JOIN t_work_info wi ON wi.recordId = mr.recordId
              INNER JOIN t_user u ON u.userId = wi.userId
              WHERE
@@ -186,7 +187,7 @@
         FROM
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        INNER JOIN	t_company cy ON cy.companyId = ch.companyId
         INNER JOIN t_user u ON u.userId = ch.userId WHERE u.userId = #{userId}
     </select>
 
@@ -197,12 +198,12 @@
                 ch.userName,
                 ch.carPlate,
                 ch.maintainOrFix,
-                c.companyName,
+                cy.companyName,
                 u.userName AS user_userName
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            INNER JOIN	t_company cy ON cy.companyId = ch.companyId
             INNER JOIN t_user u ON u.userId = ch.userId WHERE u.userId = #{userId}
 		]]>
         order by mr.startTime Desc
@@ -215,7 +216,7 @@
         FROM
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        INNER JOIN	t_company cy ON cy.companyId = ch.companyId
         INNER JOIN t_user u ON u.userId = ch.userId WHERE  mr.recordStatus = 'N' AND u.userId = #{userId}
     </select>
 
@@ -226,25 +227,25 @@
                 ch.userName,
                 ch.carPlate,
                 ch.maintainOrFix,
-                c.companyName,
+                cy.companyName,
                 u.userName AS user_userName
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            INNER JOIN	t_company cy ON cy.companyId = ch.companyId
             INNER JOIN t_user u ON u.userId = ch.userId WHERE  mr.recordStatus = 'N' AND u.userId = #{userId}
 		]]>
         order by mr.startTime Desc
         limit #{pager.beginIndex}, #{pager.pageSize}
     </select>
 
-    <select id="countByUser_Y" resultType="int">
+    <select id="countByUser_Y"  resultType="int">
         SELECT
         COUNT(*)
         FROM
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        INNER JOIN	t_company cy ON cy.companyId = ch.companyId
         INNER JOIN t_user u ON u.userId = ch.userId WHERE mr.recordStatus = 'Y' AND u.userId = #{userId}
     </select>
 
@@ -255,12 +256,12 @@
                 ch.userName,
                 ch.carPlate,
                 ch.maintainOrFix,
-                c.companyName,
+                cy.companyName,
                 u.userName AS user_userName
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            INNER JOIN	t_company cy ON cy.companyId = ch.companyId
             INNER JOIN t_user u ON u.userId = ch.userId WHERE  mr.recordStatus = 'Y' AND u.userId = #{userId}
 		]]>
         order by mr.startTime Desc
@@ -273,10 +274,10 @@
         FROM
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        INNER JOIN	t_company cy ON cy.companyId = ch.companyId
         LEFT JOIN t_user u ON u.userId = ch.userId
         <if test="companyId != null and companyId != ''">
-            and mr.companyId = #{companyId}
+            and ch.companyId = #{companyId}
         </if>
     </select>
 
@@ -287,16 +288,16 @@
                 ch.userName,
                 ch.carPlate,
                 ch.maintainOrFix,
-                c.companyName,
+                cy.companyName,
                 u.userName AS user_userName
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-            INNER JOIN	t_company c ON c.companyId = mr .companyId
+            INNER JOIN	t_company cy ON cy.companyId = ch.companyId
             LEFT JOIN t_user u ON u.userId = ch.userId
 		]]>
         <if test="user.companyId != null and user.companyId != ''">
-            and mr.companyId = #{user.companyId}
+            and ch.companyId = #{user.companyId}
         </if>
         order by mr.startTime Desc
         limit #{pager.beginIndex}, #{pager.pageSize}
@@ -308,10 +309,10 @@
         FROM
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        INNER JOIN	t_company cy ON cy.companyId = ch.companyId
         LEFT JOIN t_user u ON u.userId = ch.userId WHERE mr.recordStatus = 'Y'
         <if test="companyId != null and companyId != ''">
-            and mr.companyId = #{companyId}
+            and ch.companyId = #{companyId}
         </if>
     </select>
 
@@ -322,16 +323,16 @@
                 ch.userName,
                 ch.carPlate,
                 ch.maintainOrFix,
-                c.companyName,
+                cy.companyName,
                 u.userName AS user_userName
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            INNER JOIN	t_company cy ON cy.companyId = ch.companyId
             LEFT JOIN t_user u ON u.userId = ch.userId WHERE mr.recordStatus = 'Y'
 		]]>
         <if test="user.companyId != null and user.companyId != ''">
-            and mr.companyId = #{user.companyId}
+            and ch.companyId = #{user.companyId}
         </if>
         order by mr.startTime Desc
         limit #{pager.beginIndex}, #{pager.pageSize}
@@ -344,10 +345,10 @@
         FROM
         t_maintain_record mr
         INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-        INNER JOIN	t_company c ON c.companyId = mr.companyId
+        INNER JOIN	t_company cy ON cy.companyId = ch.companyId
         LEFT JOIN t_user u ON u.userId = ch.userId WHERE mr.recordStatus = 'N'
         <if test="companyId != null and companyId != ''">
-            and mr.companyId = #{companyId}
+            and ch.companyId = #{companyId}
         </if>
     </select>
 
@@ -358,16 +359,16 @@
                 ch.userName,
                 ch.carPlate,
                 ch.maintainOrFix,
-                c.companyName,
+                cy.companyName,
                 u.userName AS user_userName
             FROM
                 t_maintain_record mr
             INNER JOIN t_checkin ch ON ch.checkinId = mr.checkinId
-            INNER JOIN	t_company c ON c.companyId = mr.companyId
+            INNER JOIN	t_company cy ON cy.companyId = ch.companyId
             LEFT JOIN t_user u ON u.userId = ch.userId WHERE mr.recordStatus = 'N'
 		]]>
         <if test="user.companyId != null and user.companyId != ''">
-            and mr.companyId = #{user.companyId}
+            and ch.companyId = #{user.companyId}
         </if>
         order by mr.startTime Desc
         limit #{pager.beginIndex}, #{pager.pageSize}
