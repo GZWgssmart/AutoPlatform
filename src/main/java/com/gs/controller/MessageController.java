@@ -67,9 +67,9 @@ public class MessageController {
                 }
                 user.setUserAddress(address);
                 userService.update(user);
-                return ControllerResult.getSuccessResult("添加成功");
+                return ControllerResult.getSuccessResult("修改信息成功");
             } catch (Exception e) {
-                logger.info("添加信息失败，出现了异常");
+                logger.info("修改信息失败，出现了异常");
                 return ControllerResult.getFailResult("添加信息失败，出现了一个错误");
             }
         } else {

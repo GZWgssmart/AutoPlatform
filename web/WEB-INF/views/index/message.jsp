@@ -59,14 +59,26 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">手机号：</label>
-                                            <input class="form-control" style="display: initial;" type="text" id="editPhone" value="${user.userPhone}"  name="userPhone"/>
+                                            <input class="form-control" style="display: initial;" type="text" minlength="11" maxlength="11" id="editPhone" value="${user.userPhone}"  name="userPhone"/>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">性别：</label>
                                             <select style="display: initial;" class="form-control"  name="userGender" id="gender">
-                                                <option value="N" selected = "selected">未知</option>
-                                                <option value="M">男</option>
-                                                <option value="F">女</option>
+                                                <c:if test="${user.userGender == 'N'}">
+                                                    <option value="N" selected = "selected">未知</option>
+                                                    <option value="M">男</option>
+                                                    <option value="F">女</option>
+                                                </c:if>
+                                                <c:if test="${user.userGender == 'M'}">
+                                                    <option value="M">男</option>
+                                                    <option value="N" selected = "selected">未知</option>
+                                                    <option value="F">女</option>
+                                                </c:if>
+                                                <c:if test="${user.userGender == 'F'}">
+                                                    <option value="F">女</option>
+                                                    <option value="N" selected = "selected">未知</option>
+                                                    <option value="M">男</option>
+                                                </c:if>
                                             </select>
                                         </div>
                                     </div>
@@ -86,14 +98,14 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">QQ号：</label>
-                                            <input class="form-control" style="display: initial;" type="text" value="${user.qqOpenId}"  name="qqOpenId"/>
+                                            <input class="form-control" style="display: initial;" type="text" minlength="6" maxlength="10" value="${user.qqOpenId}"  name="qqOpenId"/>
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label class="control-label">身份证：</label>
-                                            <input class="form-control" style="display: initial;" type="text" id="editIdentity" value="${user.userIdentity}"  name="userIdentity"/>
+                                            <input class="form-control" style="display: initial;" type="text" minlength="18" maxlength="18" id="editIdentity" value="${user.userIdentity}"  name="userIdentity"/>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">生日：</label>
@@ -101,7 +113,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">真实姓名：</label>
-                                            <input class="form-control" style="display: initial;" type="text" value="${user.userName}"  name="userName"/>
+                                            <input class="form-control" style="display: initial;" type="text" minlength="2" maxlength="4" value="${user.userName}"  name="userName"/>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">居住地址：</label>
@@ -117,7 +129,7 @@
                                             <input class="form-control" disabled="disabled" style="display: initial;" type="text" value="${user.userSalary}" name="userSalary"/>
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="control-label">入职时间：</label>
+                                            <label class="control-label">创建时间：</label>
                                             <input class="form-control" disabled="disabled" style="display: initial;"value="${user.userCreatedTime}" type="text" id="form_datetime" name="userCreatedTime"/>
                                         </div>
                                         <div class="col-md-3">
