@@ -4,7 +4,7 @@
 }
 
 .max_div{
-    background-color: rgb(158, 158, 158);
+    background-color: white;
 }
 
 .shell{
@@ -22,9 +22,12 @@
     width: 250px;
     height: 250px;
     border-radius: 50%;
+    cursor:hand;
 }
 
-.table_info{
+
+.pwd button{
+    margin-left: 30%;
 }
 
 .zi_em{

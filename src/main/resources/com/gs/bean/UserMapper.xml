@@ -95,6 +95,13 @@
 		]]>
 	</update>
 
+	<update id="updatePwd" parameterType="user">
+		<![CDATA[
+			UPDATE t_user SET
+				userPwd = #{userPwd} WHERE userId = #{userId}
+		]]>
+	</update>
+
 	<update id="updateAdmin" parameterType="user">
 		<![CDATA[
 			UPDATE t_user SET

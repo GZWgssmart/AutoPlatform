@@ -1,39 +1,76 @@
-$(document).ready(function (e, value, row, index) {
-    var user = row;
-    var selectGender = document.getElementById("gender");
-    selectGender.value = user.userGender;
-    editEmail = user.userEmail;
-    editPhone = user.userPhone;
-    editIdentity = user.userIdentity;
-    $("#role").val(row.role.roleDes);
-    $("#form_datetime").val(formatterDate(user.userCreatedTime));
-    $("#editModal").fill(user);
-    $("#icon").attr("src","/"+user.userIcon);
-    var company = document.getElementById("editModalCompany");
-    company.value = user.company.companyName;
-    var loginedTime = document.getElementById("form_loginedTime");
-    loginedTime.value = user.userLoginedTime;
-    $("#form_loginedTime").val(formatterDate(user.userLoginedTime));
-    $('#editModalCompany').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
-    validator("editSelf");
-    if(user.userStatus == 'Y'){
-        $("#status").val("可用");
-    }else{
-        $("#status").val("不可用");
+
+var editEmail = "";
+var editPhone = "";
+var editIdentity = "";
+
+var status = $("#status").val();
+if(status == 'Y'){
+    $("#status").val("可用");
+}else{
+    $("#status").val("不可用");
+}
+
+function timeFormatter(value) {
+    var da = new Date(value.replace("/Date(", "").replace(")/" , "").split( "+")[0]);
+    return da.getFullYear() + "-" + (da.getMonth() + 1) + "-" + da.getDate() + " " + da.getHours() + ":" + da.getMinutes() + ":" + da.getSeconds();
+}
+var date = $("#form_datetime").val();
+var datetime = $('#form_loginedTime').val();
+var fmtDate = timeFormatter(date, datetime);
+$("#form_datetime").val(fmtDate);
+$("#form_loginedTime").val(fmtDate);
+
+var card = $("#editIdentity").val();
+if(card != null && card != '') {
+    var myDate = new Date();
+    var month = myDate.getMonth() + 1;
+    var day = myDate.getDate();
+    var age = myDate.getFullYear() - card.substring(6, 10) - 1;
+    if (card.substring(10, 12) < month || card.substring(10, 12) == month && card.substring(12, 14) <= day) {
+        age++;
     }
-    var change = user.userStatus;
-    if (change == 'N'){
-        return 'Y';
+    var birthday = card.substring(6, 10) + "-" + card.substring(10, 12) + "-" + card.substring(12, 14);
+    $("#birthday").val(birthday);
+    $("#age").val(age);
+}
+
+var curLength = $("#chang").val().length;
+var shu = 150-curLength;
+$("#textShu").text(shu);
+var textareaObj=document.getElementById("chang");
+var remainObj=document.getElementById("textShu");
+var num=0;
+if(/msie/i.test()){
+    textareaObj.onpropertychange=function(){
+        num=150-this.value.length;
+        remainObj.innerHTML=num;
     }
-});
+}else{
+    textareaObj.oninput=function(){
+        num=150-this.value.length;
+        remainObj.innerHTML=num;
+    }
+}
+
+
+function self() {
+    $("#editSelf").data('bootstrapValidator').validate();
+    if ($("#editSelf").data('bootstrapValidator').isValid()) {
+        $("#editSelfButton").attr("disabled","disabled");
+    } else {
+        $("#editSelfButton").removeAttr("disabled");
+    }
+}
+
 
 /** 表单验证 */
 function validator(formId) {
-    $("#addButton").removeAttr("disabled");
-    $("#editButton").removeAttr("disabled");
-    $("#editModalButton").removeAttr("disabled");
+    $("#editSelfButton").removeAttr("disabled");
     $('#' + formId).bootstrapValidator({
         feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
             userAddress: {
@@ -177,6 +214,7 @@ function validator(formId) {
 
         })
 }
+
 
 
 //图片上传预览    IE是用了滤镜。

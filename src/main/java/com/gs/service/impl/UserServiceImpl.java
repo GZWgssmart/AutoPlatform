@@ -217,6 +217,10 @@ public class UserServiceImpl implements UserService {
         return userDAO.queryByCompanyRole();
     }
 
+    public int updatePwd(String userPwd) {
+        return userDAO.updatePwd(userPwd);
+    }
+
 
     public void insertAdmin(User user) {
         userDAO.insertAdmin(user);

@@ -128,4 +128,6 @@ public interface UserDAO extends BaseDAO<String, User>{
 
     /*查询自己公司的技师*/
     public List<User> queryByCompanyRole();
+
+    public int updatePwd(String userPwd);
 }
