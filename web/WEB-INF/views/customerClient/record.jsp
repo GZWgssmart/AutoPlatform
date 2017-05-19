@@ -16,6 +16,7 @@
     <title>我的维修保养记录管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
+    <link rel="shortcut icon" href="<%=path %>/img/favicon.ico">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">

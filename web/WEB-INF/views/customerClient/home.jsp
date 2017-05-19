@@ -40,10 +40,12 @@
             <ul class="nav" id="side-menu">
                 <li class="nav-header">
                     <div class="dropdown profile-element">
-                        <span><img  style="width: 70px;height: 70px" alt="image" class="img-circle" src="<%=path %>${sessionScope.user.userIcon}"/></span>
+                        <span><img style="width: 70px;height: 70px" alt="image" class="img-circle"
+                                   src="<%=path %>${sessionScope.user.userIcon}"/></span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">${sessionScope.user.userName}</strong></span>
+                               <span class="block m-t-xs"><strong
+                                       class="font-bold">${sessionScope.user.userName}</strong></span>
                                 <span class="text-muted text-xs block">
 									<shiro:hasRole name="carOwner">车主</shiro:hasRole>
                                     <b class="caret"></b></span>
@@ -65,7 +67,8 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span class="nav-label">维修保养预约管理</span><span
+                    <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span
+                            class="nav-label">维修保养预约管理</span><span
                             class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="<%=path %>/appointment/my_app">我的预约</a>
@@ -282,6 +285,10 @@
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="<%=path %>/js/jquery.min.js?v=2.1.4"></script>
@@ -294,8 +301,5 @@
 <script src="<%=path %>/js/plugins/pace/pace.min.js"></script>
 
 <script src="<%=path %>/js/index/home.js"></script>
-
 </body>
-
-
 </html>

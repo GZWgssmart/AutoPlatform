@@ -15,6 +15,7 @@
 <html>
 <head>
     <title>iframeTable</title>
+    <link rel="shortcut icon" href="<%=path %>/img/favicon.ico">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">

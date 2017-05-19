@@ -31,6 +31,8 @@
     <meta name="twitter:url" content=""/>
     <meta name="twitter:card" content=""/>
 
+    <link rel="shortcut icon" href="<%=path %>/img/favicon.ico">
+
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
 
     <!-- Animate.css -->

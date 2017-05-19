@@ -16,6 +16,7 @@
 
     <meta name="keywords" content="">
     <meta name="description" content="">
+    <link rel="shortcut icon" href="<%=path %>/img/favicon.ico">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
 

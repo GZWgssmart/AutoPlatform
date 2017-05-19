@@ -134,6 +134,7 @@ public class LoginController {
                         }
                     }
                 }
+                user.setUserIcon("/img/default.png");
 
                 Role role = roleService.queryByName(Constants.CAR_OWNER);
                 UserRole userRole = new UserRole();

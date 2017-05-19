@@ -14,7 +14,7 @@
 <head>
     <title>我的维修保养进度</title>
 
-
+    <link rel="shortcut icon" href="<%=path %>/img/favicon.ico">
     <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-table.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
