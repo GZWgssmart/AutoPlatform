@@ -167,6 +167,31 @@ public class IncomingTypeController {
     }
 
     @ResponseBody
+    @RequestMapping(value="query_condition",method= RequestMethod.GET)
+    public Pager4EasyUI<IncomingType> queryPagerCondition(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize
+                                                        ,@Param("inTypeName")String inTypeName,@Param("companyId")String companyId){
+        if(SessionGetUtil.isUser()) {
+            if(CheckRoleUtil.checkRoles(queryRole)) {
+                logger.info("根据条件分页查询所有收入类型");
+                Pager pager = new Pager();
+                User user = SessionGetUtil.getUser();
+                if(user.getCompanyId() != null && !user.getCompanyId().equals("")){
+                    companyId = user.getCompanyId();
+                }
+                pager.setPageNo(Integer.valueOf(pageNumber));
+                pager.setPageSize(Integer.valueOf(pageSize));
+                pager.setTotalRecords(incomingTypeService.countCondition(companyId,inTypeName));
+                List<IncomingType> incomingTypes = incomingTypeService.queryByPagerCondition(companyId,inTypeName,pager);
+                return new Pager4EasyUI<IncomingType>(pager.getTotalRecords(), incomingTypes);
+            }
+            return null;
+        } else{
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "inType_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
         try {

@@ -1,5 +1,6 @@
 package com.gs.dao;
 
+import com.gs.bean.IncomingType;
 import com.gs.bean.OutgoingType;
 import com.gs.bean.User;
 import com.gs.common.bean.Pager;
@@ -21,4 +22,10 @@ public interface OutgoingTypeDAO extends BaseDAO<String, OutgoingType>{
 
     public List<OutgoingType> queryPagerStatus(@Param("status")String status, @Param("pager")Pager pager,@Param("user")User user);
     public int countStatus(@Param("status") String status,@Param("user")User user);
+
+    public List<OutgoingType> queryByPagerCondition(@Param("companyId")String companyId,
+                                                    @Param("inTypeName") String inTypeName,
+                                                    @Param("pager")Pager pager);
+
+    public int countCondition(@Param("companyId")String companyId,@Param("inTypeName")String inTypeName);
 }

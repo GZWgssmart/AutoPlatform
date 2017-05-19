@@ -97,4 +97,14 @@ public class IncomingTypeServiceImpl implements IncomingTypeService {
     public IncomingType queryByName(String inTypeName) {
         return incomingTypeDAO.queryByName(inTypeName);
     }
+
+    @Override
+    public List<IncomingType> queryByPagerCondition(String companyId, String inTypeName, Pager pager) {
+        return incomingTypeDAO.queryByPagerCondition(companyId,inTypeName,pager);
+    }
+
+    @Override
+    public int countCondition(String companyId, String inTypeName) {
+        return incomingTypeDAO.countCondition(companyId,inTypeName);
+    }
 }

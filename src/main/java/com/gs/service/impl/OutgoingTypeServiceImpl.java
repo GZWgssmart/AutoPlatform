@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.IncomingType;
 import com.gs.bean.OutgoingType;
 import com.gs.bean.User;
 import org.springframework.stereotype.Service;
@@ -95,5 +96,15 @@ public class OutgoingTypeServiceImpl implements OutgoingTypeService {
     @Override
     public int countStatus(String status,User user) {
         return outgoingTypeDAO.countStatus(status,user);
+    }
+
+    @Override
+    public List<OutgoingType> queryByPagerCondition(String companyId, String inTypeName, Pager pager) {
+        return outgoingTypeDAO.queryByPagerCondition(companyId,inTypeName,pager);
+    }
+
+    @Override
+    public int countCondition(String companyId, String inTypeName) {
+        return outgoingTypeDAO.countCondition(companyId,inTypeName);
     }
 }

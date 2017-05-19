@@ -6,6 +6,7 @@ var contextPath = '';
 $(document).ready(function () {
     //调用函数，初始化表格
     initTable("cusTable", "/incomingType/query_pager");
+    initSelect2("company", "请选择汽修公司", "/company/company_all", "220");
     destoryValidator("editWin","editForm");
     destoryValidator("addWin","addForm");
 });
@@ -183,4 +184,20 @@ function validator(formId) {
             }
         })
 
+}
+
+/** 根据条件搜索 */
+function search() {
+    var inTypeName = $("#inTypeName").val();
+    var companyId = $("#searchCompanyId").val();
+    initTable("cusTable", "/incomingType/query_condition?inTypeName=" + inTypeName + "&companyId=" + companyId);
+
+}
+
+/** 关闭搜索的form */
+function closeSearchForm() {
+    $("#inTypeName").val('');
+    $('#searchCompanyId').html('').trigger("change");
+    $("#searchDiv").hide();
+    $("#showButton").show();
 }

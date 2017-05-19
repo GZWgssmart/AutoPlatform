@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Company;
 import com.gs.bean.Complaint;
 import com.gs.bean.MessageSend;
 import com.gs.bean.User;
@@ -10,6 +11,7 @@ import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
+import com.gs.service.CompanyService;
 import com.gs.service.ComplaintService;
 import com.gs.service.MessageSendService;
 import com.gs.thread.SendMessageThread;
@@ -42,6 +44,10 @@ public class MessageSendController {
 
     @Resource
     private MessageSendService messageSendService;
+
+    @Resource
+    private CompanyService companyService;
+
 
     private String queryRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE+ ","
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;;
@@ -96,6 +102,11 @@ public class MessageSendController {
         }
         try{
             messageSendService.batchUpdateBySendMsg(idList, sendMsg);
+            User user = SessionGetUtil.getUser();
+            Company company = companyService.queryById(user.getCompanyId());
+            String content = "独在异乡为异客，每逢佳节“粽”思亲。遥知兄弟登高处，万水千山“粽”是情。 端午节，要吃“粽”，祝您“粽”横四海，" +
+                    "“粽”是走运!端午节快乐! 端午节平台有惊喜，详情电话咨询{"+company.getCompanyTel()+"}，客服小二";
+            new Thread(new SendMessageThread(strPhone,content)).start();
             return ControllerResult.getSuccessResult("更新成功");
         } catch (Exception e) {
             logger.info("更新失败，出现了一个错误");
@@ -137,6 +148,7 @@ public class MessageSendController {
         }
         User LoginUser = SessionGetUtil.getUser();
         List<MessageSend> mesList  = messageSendService.queryAll(LoginUser);
+        strPhone = new ArrayList<String>();
         for(MessageSend ms: mesList){
             strPhone.add(ms.getUser().getUserPhone());
         }

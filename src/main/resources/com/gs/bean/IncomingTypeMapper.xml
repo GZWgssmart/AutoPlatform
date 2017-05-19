@@ -97,6 +97,38 @@
 		</if>
 	</select>
 
+	<select id="queryByPagerCondition" resultType="list" resultMap="incomingTypeResultMap">
+		<![CDATA[
+			select  it.*,c.companyId,c.companyName from t_incoming_type it left join t_company c on it.companyId = c.companyId where 1 = 1
+		]]>
+		<if test="companyId != null and companyId != ''">
+			and it.companyId = #{companyId}
+			or it.inTypeName = '维修保养收入'
+			or it.inTypeName = '配件收入'
+
+		</if>
+		<if test="inTypeName != null and inTypeName != ''">
+			and it.inTypeName like concat('%',#{inTypeName},'%')
+		</if>
+
+		order by it.companyId desc, it.inTypeStatus desc, it.inTypeCreatedTime desc
+		limit #{pager.beginIndex}, #{pager.pageSize}
+	</select>
+
+	<select id="countCondition" resultType="int">
+		<![CDATA[
+			select count(*) from t_incoming_type where 1=1
+		]]>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+			or inTypeName = '维修保养收入'
+			or inTypeName = '配件收入'
+		</if>
+		<if test="inTypeName != null and inTypeName != ''">
+			and inTypeName like concat('%',#{inTypeName},'%')
+		</if>
+	</select>
+
 	<select id="query" parameterType="incomingType" resultType="incomingType">
 		<![CDATA[
 
