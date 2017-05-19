@@ -12,15 +12,22 @@ import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.ComplaintService;
 import com.gs.service.MessageSendService;
+import com.gs.thread.SendMessageThread;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,8 +43,11 @@ public class MessageSendController {
     @Resource
     private MessageSendService messageSendService;
 
-    private String queryRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE;
+    private String queryRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE+ ","
+            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;;
     private String editRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE;
+
+    private List<String> strPhone;
 
     @RequestMapping(value = "show_MessageSend", method = RequestMethod.GET)
     public String messageSend() {
@@ -85,11 +95,34 @@ public class MessageSendController {
             return ControllerResult.getFailResult("更新失败，没有该权限操作");
         }
         try{
-        messageSendService.batchUpdateBySendMsg(idList, sendMsg);
-        return ControllerResult.getSuccessResult("更新成功");
+            messageSendService.batchUpdateBySendMsg(idList, sendMsg);
+            return ControllerResult.getSuccessResult("更新成功");
         } catch (Exception e) {
-            logger.info("添加失败，出现了一个错误");
-            return ControllerResult.getFailResult("添加失败，出现了一个错误");
+            logger.info("更新失败，出现了一个错误");
+            return ControllerResult.getFailResult("更新失败，出现了一个错误");
+        }
+    }
+
+    /*多条发送*/
+    @ResponseBody
+    @RequestMapping(value = "update_success", method = RequestMethod.GET)
+    public ControllerResult updateMessageSend(String[] idList){
+        logger.info("一键短信发送");
+        if (!SessionGetUtil.isUser()) {
+            logger.info("登陆已失效，请重新登入");
+            return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
+        }
+        if (!CheckRoleUtil.checkRoles(editRole)) {
+            logger.info("更新失败");
+            return ControllerResult.getFailResult("更新失败，没有该权限操作");
+        }
+       try{
+            messageSendService.batchUpdateBySuccess(idList);
+            new Thread(new SendMessageThread(strPhone,"dd")).start();
+            return ControllerResult.getSuccessResult("发送成功");
+        } catch (Exception e) {
+            logger.info("更新失败，出现了一个错误");
+            return ControllerResult.getFailResult("更新失败，出现了一个错误");
         }
     }
 
@@ -104,6 +137,9 @@ public class MessageSendController {
         }
         User LoginUser = SessionGetUtil.getUser();
         List<MessageSend> mesList  = messageSendService.queryAll(LoginUser);
+        for(MessageSend ms: mesList){
+            strPhone.add(ms.getUser().getUserPhone());
+        }
         return mesList;
     }
 
@@ -120,9 +156,9 @@ public class MessageSendController {
             logger.info("添加失败");
             return ControllerResult.getFailResult("添加失败，没有该权限操作");
         }
-      //  try {
+        try {
             List<MessageSend> msList = new ArrayList<MessageSend>();
-                User user = SessionGetUtil.getUser();
+            User user = SessionGetUtil.getUser();
             for (int i = 0; i < userId.length; i++) {
                 MessageSend m = new MessageSend();
                 m.setCompanyId(user.getCompanyId());
@@ -131,11 +167,13 @@ public class MessageSendController {
             }
             messageSendService.addMessageId(msList);
             return ControllerResult.getSuccessResult("插入成功");
-      //  } catch (Exception e) {
-       //     logger.info("添加失败，出现了一个错误");
-       //     return ControllerResult.getFailResult("添加失败，出现了一个错误");
-        //}
+        } catch (Exception e) {
+            logger.info("添加失败，出现了一个错误");
+            return ControllerResult.getFailResult("添加失败，出现了一个错误");
+        }
     }
+
+
 }
 
 

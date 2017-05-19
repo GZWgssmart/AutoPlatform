@@ -30,4 +30,11 @@ public interface MessageSendDAO extends BaseDAO<String, MessageSend>{
      * @return
      */
     public void addMessageId(List<MessageSend> msd);
+
+    /**
+     * 根据查询车主Id更新发送时间
+     * @param idList
+     * @return
+     */
+    public void batchUpdateBySuccess(@Param("idList")String[] idList);
 }

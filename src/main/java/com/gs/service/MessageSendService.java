@@ -17,4 +17,6 @@ public interface MessageSendService extends BaseService<String, MessageSend>{
 
     public void addMessageId(List<MessageSend> msd);
 
+    public void batchUpdateBySuccess( String[] idList);
+
 }

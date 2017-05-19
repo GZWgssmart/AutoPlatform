@@ -42,7 +42,8 @@ public class MessageReminderController {
     @Resource
     private MaintainRemindService maintainRemindService;
 
-    private String queryRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE;
+    private String queryRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE+ ","
+            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;;
     private String editRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE;
 
     @RequestMapping(value = "show_MessageReminder", method = RequestMethod.GET)

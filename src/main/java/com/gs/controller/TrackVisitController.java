@@ -42,7 +42,8 @@ public class TrackVisitController {
     @Resource
     private UserService userService;
 
-    private String queryRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE + ","+ Constants.CAR_OWNER;
+    private String queryRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE + ","+ Constants.CAR_OWNER+ ","
+            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;;
     private String editRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE;
 
     @RequestMapping(value = "show_trackVisit", method = RequestMethod.GET)

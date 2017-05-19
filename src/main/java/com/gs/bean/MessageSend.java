@@ -16,7 +16,8 @@ public class MessageSend {
 	private String companyId; //公司Id
 	private Date sendCreatedTime; //发送记录创建创建时间
 	private Checkin checkin;//用户登记表
-
+	private User user;
+	private Company company;
 	public String getCompanyId() {
 		return companyId;
 	}
@@ -67,4 +68,19 @@ public class MessageSend {
 		this.sendCreatedTime=sendCreatedTime;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 }

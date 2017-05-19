@@ -167,7 +167,7 @@ public class RecordController {
     @RequestMapping(value="pager_message",method= RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> queryPagerBymessage(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize){
         if (SessionGetUtil.isUser()) {
-            try {
+         //   try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询维修保养过用户");
                     User user = SessionGetUtil.getUser();
@@ -180,10 +180,10 @@ public class RecordController {
                     return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecordList);
                 }
                 return null;
-            } catch (Exception e) {
+           /* } catch (Exception e) {
                 logger.info("分页查询维修保养过用户失败，出现了一个异常");
                 return null;
-            }
+            }*/
         } else {
             logger.info("Session已失效，请重新登入");
             return null;

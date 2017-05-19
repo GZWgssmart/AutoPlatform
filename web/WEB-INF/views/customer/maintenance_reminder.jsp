@@ -75,7 +75,7 @@
                         <option value="all">提醒方式</option>
                         <option value="短信提醒">短信提醒</option>
                         <option value="邮箱提醒">邮箱提醒</option>
-                        <option value="微信提醒">微信提醒</option>
+
                     </select>
                 </div>
                 <div class="col-sm-2">
@@ -113,8 +113,6 @@
                                 <select class="js-example-tags form-control" name="remindType">
                                     <option value="短信提醒" selected="selected">短信提醒</option>
                                     <option value="邮箱提醒">邮箱提醒</option>
-                                    <option value="微信提醒">微信提醒</option>
-                                    <option value="QQ提醒">QQ提醒</option>
                                 </select>
                             </div>
                             <div class="form-group">

@@ -46,4 +46,9 @@ public class MessageSendServiceImpl implements MessageSendService {
 	public void addMessageId(List<MessageSend> msd) {
 		messageSendDAO.addMessageId(msd);
 	}
+
+	@Override
+	public void batchUpdateBySuccess(String[] idList) {
+		messageSendDAO.batchUpdateBySuccess(idList);
+	}
 }

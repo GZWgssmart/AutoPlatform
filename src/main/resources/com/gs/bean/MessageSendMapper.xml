@@ -14,6 +14,16 @@
 			<id property="userName" column="userName"/>
 			<id property="userPhone" column="userPhone"/>
 		</association>
+		<association property="user" javaType="com.gs.bean.User">
+			<id property="userId" column="userId"/>
+			<id property="userName" column="userName"/>
+			<id property="userPhone" column="userPhone"/>
+		</association>
+
+		<association property="company" javaType="com.gs.bean.Company">
+			<id property="companyId" column="companyId"/>
+			<id property="companyName" column="companyName"/>
+		</association>
 	</resultMap>
 
 	<insert id="insert"  parameterType="messageSend">
@@ -76,15 +86,25 @@
 			<foreach collection="idList" item="str" open="(" separator="," close=")">
 				#{str}
 			</foreach>
-		</update>
+	</update>
+
+	<update id="batchUpdateBySuccess" >
+		<![CDATA[
+		  update t_message_send s set s.sendTime = now() where s.messageId in
+		]]>
+		<foreach collection="idList" item="str" open="(" separator="," close=")">
+			#{str}
+		</foreach>
+	</update>
 
 	<select id="queryAll" resultMap="messageSendResultMap">
 		<![CDATA[
-			 select * from t_message_send s, t_checkin c where s.userId=c.userId
+			 select * from t_message_send s, t_user u where s.userId=u.userId
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and s.companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and s.companyId = #{companyId}
 		</if>
+		GROUP BY (s.userId)
 	</select>
 
 	<select id="queryByStatus" resultMap="messageSendResultMap" parameterType="string">
@@ -107,21 +127,23 @@
 
 	<select id="queryByPager" resultType="list" resultMap="messageSendResultMap">
 		<![CDATA[
-		select * from t_message_send s, t_checkin c where s.userId=c.userId
+		select * from t_message_send s, t_user u,t_company c where
+		s.userId=u.userId and s.companyId = c.companyId
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and s.companyId = #{user.companyId}
 		</if>
-		order by c.companyId desc, c.checkinStatus desc, c.checkinCreatedTime desc
+		GROUP BY (s.userId)
+		order by s.companyId desc,s.sendCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-		select count(*) from t_message_send s, t_checkin c where s.userId=c.userId
+		select count(*) from t_message_send where 1 =1
 		]]>
 		<if test="companyId != null and companyId != ''">
-			and s.companyId = #{companyId}
+			and companyId = #{companyId}
 		</if>
 	</select>
 
