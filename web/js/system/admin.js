@@ -1,6 +1,8 @@
 /**
  * Created by xiao-kang on 2017/4/17.
  */
+var sessionUserId;
+
 var contextPath = '';
 var editEmail = "";
 var editPhone = "";
@@ -14,6 +16,10 @@ $(document).ready(function () {
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin", "editForm");
 });
+
+function getSessionUserId(val) {
+    sessionUserId = val;
+}
 
 /** 编辑数据 */
 function showEditWin() {
@@ -65,29 +71,33 @@ function operateFormatter(value, row, index) {
 window.operateEvents = {
     'click .updateActive': function (e, value, row, index) {
         var status = 'N';
-        $.get(contextPath + "/admin/update_status?id=" + row.userId + "&status=" + status,
-            function (data) {
-                if (data.result == "success") {
-                    $('#cusTable').bootstrapTable('refresh');
-                } else if (data.result == "fail") {
-                    swal(data.message, "", "error");
-                } else if (data.result == "notLogin") {
-                    swal({
-                            title: "登入失败",
-                            text: data.message,
-                            type: "warning",
-                            showCancelButton: false,
-                            confirmButtonColor: "#DD6B55",
-                            confirmButtonText: "确认",
-                            closeOnConfirm: true
-                        },
-                        function (isConfirm) {
-                            if (isConfirm) {
-                                top.location.href = "/login/show_login";
-                            }
-                        });
-                }
-            }, "json");
+        if (sessionUserId != row.userId) {
+            $.get(contextPath + "/admin/update_status?id=" + row.userId + "&status=" + status,
+                function (data) {
+                    if (data.result == "success") {
+                        $('#cusTable').bootstrapTable('refresh');
+                    } else if (data.result == "fail") {
+                        swal(data.message, "", "error");
+                    } else if (data.result == "notLogin") {
+                        swal({
+                                title: "登入失败",
+                                text: data.message,
+                                type: "warning",
+                                showCancelButton: false,
+                                confirmButtonColor: "#DD6B55",
+                                confirmButtonText: "确认",
+                                closeOnConfirm: true
+                            },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    top.location.href = "/login/show_login";
+                                }
+                            });
+                    }
+                }, "json");
+        } else {
+            swal("无法冻结自己!", "", "error");
+        }
     },
     'click .updateInactive': function (e, value, row, index) {
         var status = 'Y';
