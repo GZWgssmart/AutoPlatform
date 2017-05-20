@@ -56,14 +56,22 @@ function eachNames(names, finName) {
 //     })
 // }
 
-// 禁用开关
+/**
+ * 禁用开关
+ * @param modalId
+ * @param switchId
+ */
 function disableSwitch(modalId, switchId) {
     $("#" + modalId).on("hide.bs.modal", function () {
         $("#" + switchId).bootstrapSwitch("state", false);
     });
 }
 
-// 启用开关
+/**
+ * 启用开关
+ * @param modalId
+ * @param switchId
+ */
 function enableSwitch(modalId, switchId) {
     $("#" + modalId).on("hide.bs.modal", function () {
         $("#" + switchId).bootstrapSwitch("state", true);

@@ -51,7 +51,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="getSessionUserId('${sessionScope.user.userId}')">
 
 <div class="container">
     <form id="formSearch" class="form-horizontal">

@@ -215,7 +215,7 @@ public class AccessoriesSaleController {
                 return ControllerResult.getFailResult("没有此权限访问");
             } catch (Exception e) {
                 logger.info("出现异常" + e.getStackTrace());
-                return ControllerResult.getFailResult("出现了一个错误");
+                return ControllerResult.getFailResult("大于库存数量");
             }
         } else {
             logger.info("session失效重新登入");
