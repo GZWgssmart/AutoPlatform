@@ -77,7 +77,7 @@
             <th data-field="accBuyCheck" data-formatter="fmtCheckState">审核状态</th>
             <th data-field="accIsBuy" data-formatter="fmtBuyState">采购状态</th>
             <th data-field="accBuyStatus" data-formatter="status">状态</th>
-            <s:hasAnyRoles name="companyAdmin, systemSuperAdmin, companyBuyer">
+            <s:hasAnyRoles name="companyAdmin, companyBuyer">
                 <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
                 <th data-formatter="fmtIsFinish" data-events="operateEvents">采购操作</th>
                 <th data-formatter="fmtPassCheck" data-events="operateEvents">审核操作</th>
@@ -87,7 +87,7 @@
         <tbody>
 
         <div id="toolbar" class="btn-group" style="margin: 10px 0px 10px 0px;">
-            <s:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin">
+            <s:hasAnyRoles name="companyAdmin, companyBuyer">
                 <a data-toggle="modal">
                     <button type="button" onclick="showAccAddWin()" id="add" class="btn btn-default">
                         <i class="glyphicon glyphicon-plus"></i> 添加

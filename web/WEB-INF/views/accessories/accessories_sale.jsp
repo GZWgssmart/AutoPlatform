@@ -76,7 +76,7 @@
             <th data-field="accSaleMoney">销售最终价</th>
             <th data-field="userName">购买人</th>
             <th data-field="accSaleStatus" data-formatter="fmtSaleState">状态</th>
-            <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, companySales">
+            <shiro:hasAnyRoles name="companyAdmin, companySales">
                 <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
             </shiro:hasAnyRoles>
         </tr>
@@ -84,7 +84,7 @@
         <tbody>
 
         <div id="toolbar" class="btn-group" style="margin: 10px 0px 10px 0px;">
-            <shiro:hasAnyRoles name="companyAdmin, companySales, systemSuperAdmin">
+            <shiro:hasAnyRoles name="companyAdmin, companySales">
                 <a data-toggle="modal">
                     <button type="button" onclick="showAccAddWin()" id="add" class="btn btn-default">
                         <i class="glyphicon glyphicon-plus"></i> 添加
