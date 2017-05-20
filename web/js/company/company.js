@@ -41,7 +41,7 @@ function showEditWin() {
         initDateTimePicker("form_datetime", "companyOpenDate", "editForm");
         $('#companys').html('<option value="' + product.companySize + '">' + product.companySize + '</option>').trigger("change");
         $('#editCompanyOpenDate').val(formatterDate(product.companyOpenDate));
-        $("#icon").attr("src", "/" + product.companyLogo);
+        $("#icon").attr("src", "" + product.companyLogo);
         initCityPicker("address");
         $("#editForm").fill(product);
         $("#editWin").modal('show');
@@ -66,7 +66,7 @@ function operating(value, row, index) {
 function formatterImg(value, row, index) {
     if (row.companyLogo != null) {
         return [
-            '<img style="width:120px;height:60px;" src="/' + value + '">'
+            '<img style="width:120px;height:60px;" src="' + value + '">'
         ]
     }
 }
@@ -148,7 +148,7 @@ window.operateEvents = {
         editWebsite = incomingType.companyWebsite;
         $('#companys').html('<option value="' + incomingType.companySize + '">' + incomingType.companySize + '</option>').trigger("change");
         initDateTimePicker("form_datetime", "", "editForm");
-        $("#icon").attr("src", "/" + incomingType.companyLogo);
+        $("#icon").attr("src", "" + incomingType.companyLogo);
         $('#editCompanyOpenDate').val(formatterDate(incomingType.companyOpenDate));
         initCityPicker("address");
         $("#editForm").fill(incomingType);
@@ -244,7 +244,7 @@ function validator(formId) {
                 validators: {
                     regexp: {
                         regexp: /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/,
-                        message: '请输入正确公司官网网址'
+                        message: '请输入正确公司官网网址（http://开头）'
                     },
                     notEmpty: {
                         message: '公司官网URL不能为空'
