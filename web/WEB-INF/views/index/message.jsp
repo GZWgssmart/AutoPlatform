@@ -51,7 +51,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label class="control-label">邮箱：</label>
-                                            <input class="form-control" style="display: initial;" id="editEmail" type="text" value="${user.userEmail}" />
+                                            <input class="form-control" style="display: initial;" id="editEmail" name="userEmail" type="text" value="${user.userEmail}" />
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">昵称：</label>
@@ -118,7 +118,7 @@
                                         <div class="col-md-3">
                                             <label class="control-label">居住地址：</label>
                                             <div style="position: relative;">
-                                                <input data-toggle="city-picker" style="display: initial;" value="${user.userAddress}" id="address" class="address">
+                                                <input data-toggle="city-picker" style="display: initial;" value="${user.userAddress}" id="address" name="userAddress" class="address">
                                             </div>
                                         </div>
                                     </div>

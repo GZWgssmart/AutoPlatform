@@ -131,6 +131,9 @@ public interface UserDAO extends BaseDAO<String, User>{
 
     public int updatePwd(@Param("user") User user);
 
+
+    public int updateMessage(User user);
+
     /**
      * 查询平台管理员的信息
      * @return

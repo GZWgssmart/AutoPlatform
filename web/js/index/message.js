@@ -1,5 +1,5 @@
-var status = $("#status").val();
-if(status == 'Y'){
+var sts = $("#status").val();
+if(sts == 'Y'){
     $("#status").val("可用");
 }else{
     $("#status").val("不可用");
@@ -51,7 +51,7 @@ function selfMessage() {
         dataType: 'json',
         success: function (data) {
             if (data.result == "success") {
-                swal(data.message, "", "success");
+                swal(data.message, "下次登录自动同步修改信息", "success");
             } else if (data.result == "fail") {
                 swal(data.message, "请填写正确的信息", "error");
             }

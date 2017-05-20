@@ -30,6 +30,14 @@ function gender(value, row, index) {
 }
 
 
+function salary(value, row, index) {
+    if (row.userSalary == 0) {
+        return '无'
+    } else {
+        return row.userSalary;
+    }
+}
+
 $(function () {$("[data-toggle='tooltip']").tooltip();});
 function fmtDate(){
     var curLength = $("#chang").val().length;

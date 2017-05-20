@@ -73,7 +73,7 @@
             <th data-field="userEmail" >
                 邮箱
             </th>
-            <th data-field="userGender" data-formatter="gender" >
+            <th data-field="userGender" data-formatter="gender">
                 性别
             </th>
             <th data-field="userPhone" >
@@ -82,20 +82,20 @@
             <th data-field="company.companyName" >
                 所属公司
             </th>
-            <th data-field="userSalary" >
+            <th data-field="userSalary" data-formatter="salary">
                 基本工资
             </th>
             <th data-field="userStatus" data-formatter="status">
                 当前状态
             </th>
-            <shiro:hasAnyRoles name="companyAdmin">
+            <shiro:hasAnyRoles name="companyAdmin, companyHumanManager">
                 <th data-field="operateUpdate" data-formatter="operateUpdateFormatter" data-events="operateUpdateEvents">
-                    操作
+                    查看详情
                 </th>
             </shiro:hasAnyRoles>
-            <shiro:hasAnyRoles name="companyAdmin, companyHumanManager">
+            <shiro:hasAnyRoles name="companyAdmin">
                 <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
-                    查看详情
+                    操作
                 </th>
             </shiro:hasAnyRoles>
         </tr>

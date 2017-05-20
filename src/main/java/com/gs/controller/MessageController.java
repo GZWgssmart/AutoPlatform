@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
 @Controller
@@ -48,7 +49,7 @@ public class MessageController {
 
     @ResponseBody
     @RequestMapping(value = "queryBy_self", method = RequestMethod.POST)
-    public ControllerResult querySelf(String uIcon, String address, User user, MultipartFile file, HttpSession session) {
+    public ControllerResult querySelf(String uIcon, String address, User user, MultipartFile file, HttpSession session) throws IOException {
         if (SessionGetUtil.isUser()) {
             try {
                 logger.info("信息修改");
@@ -66,11 +67,11 @@ public class MessageController {
                     user.setUserIcon(uIcon);
                 }
                 user.setUserAddress(address);
-                userService.update(user);
+                userService.updateMessage(user);
                 return ControllerResult.getSuccessResult("修改信息成功");
             } catch (Exception e) {
                 logger.info("修改信息失败，出现了异常");
-                return ControllerResult.getFailResult("添加信息失败，出现了一个错误");
+                return ControllerResult.getFailResult("修改信息失败，出现了一个错误");
             }
         } else {
             logger.info("Session已失效，请重新登入");

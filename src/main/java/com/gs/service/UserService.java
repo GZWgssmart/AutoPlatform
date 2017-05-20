@@ -125,6 +125,8 @@ public interface UserService extends BaseService<String, User>{
 
     public int updatePwd(User user);
 
+    public int updateMessage(User user);
+
     /**
      * 查询平台管理员的信息
      * @return
