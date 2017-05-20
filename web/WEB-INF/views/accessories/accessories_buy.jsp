@@ -80,7 +80,9 @@
             <s:hasAnyRoles name="companyAdmin, companyBuyer">
                 <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
                 <th data-formatter="fmtIsFinish" data-events="operateEvents">采购操作</th>
+                <s:hasAnyRoles name="companyAdmin">
                 <th data-formatter="fmtPassCheck" data-events="operateEvents">审核操作</th>
+                </s:hasAnyRoles>
             </s:hasAnyRoles>
         </tr>
         </thead>

@@ -149,7 +149,7 @@ public class AccessoriesTypeController {
     @ResponseBody
     @RequestMapping(value = "accessoriesType_All", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
-        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
+        if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return null;
         }
