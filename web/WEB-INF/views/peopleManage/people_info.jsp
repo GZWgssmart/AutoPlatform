@@ -88,9 +88,14 @@
             <th data-field="userStatus" data-formatter="status">
                 当前状态
             </th>
+            <shiro:hasAnyRoles name="companyAdmin">
+                <th data-field="operateUpdate" data-formatter="operateUpdateFormatter" data-events="operateUpdateEvents">
+                    操作
+                </th>
+            </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="companyAdmin, companyHumanManager">
                 <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
-                    操作
+                    查看详情
                 </th>
             </shiro:hasAnyRoles>
         </tr>
@@ -133,12 +138,17 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
-                        <h3 class="m-t-none m-b">修改角色</h3>
+                        <h3 class="m-t-none m-b">分配角色</h3>
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="user.userId" name="userId" />
                             <div class="form-group">
                                 <label class="control-label">角色：</label>
-                                <select id="editRole" class="js-example-tags form-control user_role" name="roleId"></select>
+                                <shiro:hasAnyRoles name="companyHumanManager">
+                                    <select id="editRole" class="js-example-tags form-control user_role" name="roleId"></select>
+                                </shiro:hasAnyRoles>
+                                <shiro:hasAnyRoles name="companyAdmin">
+                                    <select id="editRoleAll" class="js-example-tags form-control user_roleAll" name="roleId"></select>
+                                </shiro:hasAnyRoles>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error1" style="color: red;"></span>

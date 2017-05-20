@@ -42,7 +42,7 @@ public class AccessoriesBuyController {
     private AccessoriesService accessoriesService;
 
     @Resource
-    private IncomingTypeService incomingTypeService;
+    private OutgoingTypeService outgoingTypeService;
 
     @Resource
     private IncomingOutgoingService incomingOutgoingService;
@@ -109,6 +109,14 @@ public class AccessoriesBuyController {
 
                             accessoriesBuyService.insert(accessoriesBuy);
 
+                            OutgoingType outgoingType = outgoingTypeService.queryByName(Constants.ACC_OUT);
+                            IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
+                            incomingOutgoing.setCompanyId(user.getCompanyId());
+                            incomingOutgoing.setInOutCreatedUser(user.getUserId());
+                            incomingOutgoing.setInOutMoney(accessoriesBuy.getAccBuyMoney());
+                            incomingOutgoing.setOutTypeId(outgoingType.getOutTypeId());
+                            incomingOutgoingService.insert(incomingOutgoing);
+
                             return ControllerResult.getSuccessResult("添加成功");
 
                         }
@@ -134,12 +142,12 @@ public class AccessoriesBuyController {
                         accessoriesBuyService.insert(accessoriesBuy);
                         accessoriesService.insert(acc);
 
-                        IncomingType incomingType = incomingTypeService.queryByName(Constants.ACC_IN);
+                        OutgoingType outgoingType = outgoingTypeService.queryByName(Constants.ACC_OUT);
                         IncomingOutgoing incomingOutgoing = new IncomingOutgoing();
                         incomingOutgoing.setCompanyId(user.getCompanyId());
                         incomingOutgoing.setInOutCreatedUser(user.getUserId());
                         incomingOutgoing.setInOutMoney(accessoriesBuy.getAccBuyMoney());
-                        incomingOutgoing.setInTypeId(incomingType.getInTypeId());
+                        incomingOutgoing.setOutTypeId(outgoingType.getOutTypeId());
                         incomingOutgoingService.insert(incomingOutgoing);
 
                         return ControllerResult.getSuccessResult("添加成功");

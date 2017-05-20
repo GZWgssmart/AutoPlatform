@@ -309,12 +309,10 @@ public class ChargeBillController {
                     dataList.add(objs);
                 }
                 ExcelExport ex = new ExcelExport(title, rowsName, dataList, response);
-                if (chargeBills.size() > 0) {
-                    ex.exportData();
-                }
+                ex.exportData();
             }
         } catch (Exception e) {
-
+            logger.info("导出失败,出现异常!");
         }
     }
 

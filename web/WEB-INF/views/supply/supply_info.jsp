@@ -167,16 +167,16 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>名称：</label>
+                                <label>供应商名称：</label>
                                 <input type="text" attr="supply.supplyName"  name="supplyName" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>负责人姓名：</label>
+                                <input type="text" attr="supply.supplyPricipal" name="supplyPricipal" class="form-control"/>
                             </div>
                             <div class="form-group">
                                <label>手机号：</label>
                                 <input type="text"  attr="supply.supplyTel" name="supplyTel" maxlength="11" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label>负责人：</label>
-                                <input type="text" attr="supply.supplyPricipal" name="supplyPricipal" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>地址：</label>
@@ -245,16 +245,16 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>名称：</label>
+                                <label>供应商名称：</label>
                                 <input type="text"  name="supplyName" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>负责人姓名：</label>
+                                <input type="text" name="supplyPricipal" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>手机号：</label>
                                 <input type="text"  name="supplyTel" maxlength="11" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label>负责人：</label>
-                                <input type="text" name="supplyPricipal" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>地址：</label>

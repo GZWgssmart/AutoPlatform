@@ -257,6 +257,7 @@ function showAddWin() {
     validator("addForm");
     $('#addCompany').html('').trigger("change");
     $("input[type=reset]").trigger("click");
+    $("#pwd").val("");
     $("#addWin").modal('show');
 }
 

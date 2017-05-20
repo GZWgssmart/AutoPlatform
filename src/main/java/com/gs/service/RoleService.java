@@ -24,6 +24,9 @@ public interface RoleService extends BaseService<String, Role>{
     /**查询属于公司的角色*/
     public List<Role> queryByCompanyRole();
 
+    /**查询属于公司的角色包括人事部管理员*/
+    public List<Role> queryByCompanyRoleAll();
+
     /**查询属于公司的全部角色*/
     public List<Role> queryRole();
 

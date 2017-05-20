@@ -100,14 +100,14 @@
                             <input type="hidden" attr="work.workId" name="workId" />
                             <input type="hidden" attr="work.maintainRecord.recordId" name="recordId" />
                             <div class="form-group">
+                                <label class="control-label">员工指派：</label>
+                                <select id="editUser" class="js-example-tags form-control work_user" name="userId"></select>
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label">预计结束时间：</label>
                                 <input type="text" name="endTime" readonly
                                        class="form_datetime form-control"
                                        id="workEndTime">
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">员工指派：</label>
-                                <select id="editUser" class="js-example-tags form-control work_user" name="userId"></select>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">
                                 <span id="error1" style="color: red;"></span>
@@ -115,7 +115,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" onclick="edit()" id="editButton" class="btn btn-primary" value="确定"/>
+                                <input type="button" onclick="editWork()" id="editButton" class="btn btn-primary" value="确定"/>
                                 </input>
                             </div>
                         </form>

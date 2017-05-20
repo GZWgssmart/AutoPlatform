@@ -192,7 +192,7 @@ public class WorkInfoController {
                     workInfoService.update(workInfo);
                     maintainRecord.setSpeedStatus(Constants.MAINTAIN_FIX);
                     maintainRecordService.updateTime(maintainRecord);
-                    return ControllerResult.getSuccessResult("修改成功");
+                    return ControllerResult.getSuccessResult("指派成功");
                 }
                 return ControllerResult.getFailResult("指派员工失败，没有该权限操作");
             } catch (Exception e) {
