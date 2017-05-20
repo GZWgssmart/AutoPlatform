@@ -233,29 +233,34 @@
                         <c:choose>
                             <c:when test="${c.companyImg == null}">
                                 <div class="col-lg-4 col-md-4 col-sm-6">
-                                <a href="<%=path%>/images/img_2.jpg" class="fh5co-project-item image-popup">
-                                <figure>
-                                    <div class="overlay"><i class="ti-plus"></i></div>
-                                    <img src="<%=path%>/images/img_2.jpg" alt="Image" class="img-responsive">
-                                </figure>
-                                <div class="fh5co-text">
-                                    <h2>华晨汽修</h2>
-                                    <p>江西省赣州市汽车精品一条街1G栋120号</p>
+                                    <a href="<%=path%>/images/img_2.jpg" class="fh5co-project-item image-popup">
+                                        <figure>
+                                            <div class="overlay"><i class="ti-plus"></i></div>
+                                            <img src="<%=path%>/images/img_2.jpg" alt="Image" class="img-responsive">
+                                        </figure>
+                                        <div class="fh5co-text">
+                                            <h2>华晨汽修</h2>
+                                            <p>江西省赣州市汽车精品一条街1G栋120号</p>
+                                        </div>
+                                    </a>
                                 </div>
                             </c:when>
                             <c:otherwise>
-                                <figure>
-                                    <div class="overlay"><i class="ti-plus"></i></div>
-                                    <img src="<%=path%>/${c.companyImg}" alt="Image" class="img-responsive">
-                                    <div class="fh5co-text">
-                                        <h2>${c.companyName}</h2>
-                                        <p>${c.companyAddress}</p>
-                                    </div>
-                                </figure>
+                                <div class="col-lg-4 col-md-4 col-sm-6">
+                                    <a href="<%=path%>/images/img_2.jpg" class="fh5co-project-item image-popup">
+                                        <figure>
+                                            <div class="overlay"><i class="ti-plus"></i></div>
+                                            <img src="<%=path%>/${c.companyImg}" alt="Image" class="img-responsive">
+                                        </figure>
+                                            <div class="fh5co-text">
+                                                <h2>${c.companyName}</h2>
+                                                <p>${c.companyAddress}</p>
+                                            </div>
+                                    </a>
+                                </div>
                             </c:otherwise>
                         </c:choose>
-                        </a>
-                        </div>
+
                     </c:forEach>
 
                 </div>
