@@ -1,5 +1,6 @@
 var isAcc = false;
 var count = 0;
+var accName = "";
 $(document).ready(function () {
     initTable("cusTable", "/accessoriesBuy/pager");
 
@@ -85,9 +86,10 @@ function updateAccessoriesBuyInfo(formId) {
         }, "json");
 }
 
-/**添加采购信息 */
 function addAccessoriesBuyInfo(formId) {
-    addAccBuyInfo(formId);
+    if ($("#dck").val() == 1) {
+        alert("error");
+    } else  addAccBuyInfo(formId);
 }
 
 function passChecks() {
@@ -136,11 +138,11 @@ function addAccBuyInfo(formId) {
             if (data.result == "success") {
                 $('#addWin').modal('hide');
                 swal(data.message, "", "success");
+                clearTempData();
                 $('#cusTable').bootstrapTable('refresh');
                 $("input[type=reset]").trigger("click");
             } else if (data.result == "fail") {
                 destoryValidator(formId, "addForm");
-                clearTempData();
                 validator(formId);
                 swal(data.message, "", "error");
             }
@@ -417,7 +419,7 @@ function validator(formId) {
                         min: 0,
                         max: 15,
                         message: '不能超过15个字符'
-                    },
+                    }
                 }
             },
 
@@ -537,7 +539,7 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                addAccessoriesBuyInfo(formId);
+                addAccBuyInfo(formId);
             } else if (formId == "editForm") {
                 updateAccessoriesBuyInfo(formId);
             }
@@ -565,17 +567,18 @@ function showAccAddWin() {
     // clearTempData();
     validator("addForm");
     $("#addWin").modal('show');
-    // dataCheck("accName", "addForm");
+    dataCheck("accName", "addForm");
     autoCalculation1("accBuyCount", "accBuyPrice", "accBuyDiscount", "accBuyTotal", "accBuyMoney");
 }
 
-function dataCheck(inputId) {
+function dataCheck(inputId, formId) {
     $("#" + inputId).bind('onfocus input', function () {
         $.get('/accessoriesBuy/checkData?name=' + this.value, function (data) {
             if (data.result == "success") {
-                $("#dck").val(1);
                 $("#dck").css("display", "none");
+                addAccessoriesBuyInfo(formId);
             } else if (data.result == "fail") {
+                $("#dck").val(1);
                 $("#dck").text("此配件已存在");
                 $("#dck").css("display", "block");
             }

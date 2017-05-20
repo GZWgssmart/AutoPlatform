@@ -95,8 +95,9 @@
                 </button></a>
             </shiro:hasAnyRoles>
                 <a>
-                    <button type="button" onclick="showAcc();" class="btn btn-default" />
-                    <i class="glyphicon glyphicon-plus"></i> 查看基础配件
+                    <button type="button" onclick="showAcc();" class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i> 查看基础配件
+                    </button>
                 </a>
                 <a>
                     <button onclick="statusUsableness();" type="button" class="btn btn-default">

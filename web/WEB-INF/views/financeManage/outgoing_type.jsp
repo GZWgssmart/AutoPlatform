@@ -120,7 +120,7 @@
                         <form role="form" id="editForm" >
                             <input type="hidden" attr="outgoingType.outTypeId" name="outTypeId" />
                             <div class="form-group">
-                                <label>支出类型名称：</label>
+                                <label class="control-label">支出类型名称：</label>
                                 <input type="text" id="name1" attr="outgoingType.outTypeName" name="outTypeName"  class="form-control"/>
                             </div>
                             <div class="modal-footer" style="overflow:hidden;">

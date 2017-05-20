@@ -129,7 +129,7 @@ public class OutgoingTypeController {
             if(CheckRoleUtil.checkRoles(editRole)) {
                 logger.info("更新支出类型");
                 User user = SessionGetUtil.getUser();
-                user.setCompanyId(user.getCompanyId());
+                outgoingType.setCompanyId(user.getCompanyId());
                 outgoingTypeService.update(outgoingType);
                 return ControllerResult.getSuccessResult("更新支出类型成功");
             }
@@ -145,6 +145,8 @@ public class OutgoingTypeController {
     public ControllerResult updateStatus(@Param("id") String id, @Param("status")String status){
         if(SessionGetUtil.isUser()) {
             if(CheckRoleUtil.checkRoles(editRole)) {
+                User user = SessionGetUtil.getUser();
+                user.setCompanyId(user.getCompanyId());
                 logger.info("更新支出类型状态");
                 if (status.equals("Y")) {
                     outgoingTypeService.active(id);

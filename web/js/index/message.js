@@ -11,8 +11,6 @@ $("#form_datetime").val(formatterDate(date));
 $("#form_loginedTime").val(formatterDate(datetime));
 
 
-
-
 var card = $("#editIdentity").val();
 if(card != null && card != '') {
     var myDate = new Date();
@@ -55,7 +53,7 @@ function selfMessage() {
             if (data.result == "success") {
                 swal(data.message, "", "success");
             } else if (data.result == "fail") {
-                swal(data.message, "内容不匹配", "error");
+                swal(data.message, "请填写正确的信息", "error");
             }
         }
     })

@@ -287,7 +287,7 @@
                             <div class="form-group">
                                 <label class="control-label"> 销售数量：（库存剩余数量）：</label>
                                 <span>
-                                    <input type="number" attr="acc.accTotal" name="accLastCount" id="aLastCount"
+                                    <input type="text" attr="acc.accTotal" name="accLastCount" id="aLastCount"
                                            style="border: none; background-color: white;"
                                            disabled/>
                                 </span>
@@ -305,7 +305,7 @@
                             <div class="form-group">
                                 <label class="control-label">配件销售单价：</label>
                                 <input type="text" name="accSalePrice" id="accSalePrice" attr="acc.accSalePrice"
-                                       class="form-control" placeholder="此为空则默认按配件售价来计算"/>
+                                       class="form-control" placeholder="此销售价要高于配件买入价"/>
                             </div>
 
                             <div class="form-group">
@@ -389,6 +389,9 @@
                                     <th data-field="userStatus" data-formatter="status">
                                         当前状态
                                     </th>
+                                    <th data-formatter="fmtOpt" data-events="operateEvents">
+                                        操作
+                                    </th>
                                 </tr>
                                 </thead>
                             </table>
@@ -470,9 +473,8 @@
                                     <th data-field="company.companyName">
                                         所属公司
                                     </th>
-                                    <th data-field="accStatus" data-formatter="status">
-                                        状态
-                                    </th>
+                                    <th data-field="accStatus" data-formatter="status"> 状态 </th>
+                                    <th data-formatter="fmtOption" data-events="operateEvents"> 操作 </th>
                                 </tr>
                                 </thead>
                             </table>
