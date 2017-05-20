@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Company;
 import com.gs.bean.User;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
@@ -23,6 +24,8 @@ import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by WangGenshen on 5/17/16.
@@ -41,11 +44,20 @@ public class IndexController {
     private UserService userService;
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
-    public ModelAndView index() {
+    public ModelAndView index(HttpSession session) {
         logger.info("进入首页");
         ModelAndView mav = new ModelAndView();
         mav.setViewName("index/index");
-        mav.addObject("companys", companyService.queryByTop(6));
+        List<Company> companyList = companyService.queryByTop(6);
+        int len = companyList.size();
+        if (len < 6) {
+            int len1 = 6 - len;
+            for (int i = 0; i < len1; i++) {
+                Company c = new Company();
+                companyList.add(c);
+            }
+        }
+        session.setAttribute("companys", companyList);
         return mav;
     }
 

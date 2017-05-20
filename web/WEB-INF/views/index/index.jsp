@@ -228,42 +228,7 @@
                         <p>入驻平台使得车主维保更加方便快捷</p>
                     </div>
                 </div>
-                <div class="row">
-                    <c:forEach items="${companys}" var="c">
-                        <c:choose>
-                            <c:when test="${c.companyImg == null}">
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <a href="<%=path%>/images/img_2.jpg" class="fh5co-project-item image-popup">
-                                        <figure>
-                                            <div class="overlay"><i class="ti-plus"></i></div>
-                                            <img src="<%=path%>/images/img_2.jpg" alt="Image" class="img-responsive">
-                                        </figure>
-                                        <div class="fh5co-text">
-                                            <h2>华晨汽修</h2>
-                                            <p>江西省赣州市汽车精品一条街1G栋120号</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="col-lg-4 col-md-4 col-sm-6">
-                                    <a href="<%=path%>/images/img_2.jpg" class="fh5co-project-item image-popup">
-                                        <figure>
-                                            <div class="overlay"><i class="ti-plus"></i></div>
-                                            <img src="<%=path%>/${c.companyImg}" alt="Image" class="img-responsive">
-                                        </figure>
-                                            <div class="fh5co-text">
-                                                <h2>${c.companyName}</h2>
-                                                <p>${c.companyAddress}</p>
-                                            </div>
-                                    </a>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-
-                    </c:forEach>
-
-                </div>
+                <%@ include file="../common/companyImages.jsp" %>
             </div>
         </div>
 
@@ -424,34 +389,7 @@
                         <p>平台不断更新设计，为入驻用户免费提供更新.</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="owl-carousel owl-carousel-carousel">
-                        <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_1.jpg"
-                                             alt="Free HTML5 Bootstrap Template by "></a>
-                        </div>
-                        <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_2.jpg"
-                                             alt="Free HTML5 Bootstrap Template by "></a>
-                        </div>
-                        <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_3.jpg"
-                                             alt="Free HTML5 Bootstrap Template by "></a>
-                        </div>
-                        <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_7.jpg"
-                                             alt="Free HTML5 Bootstrap Template by "></a>
-                        </div>
-                        <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_5.jpg"
-                                             alt="Free HTML5 Bootstrap Template by "></a>
-                        </div>
-                        <div class="item">
-                            <a href="#"><img src="<%=path%>/images/img_6.jpg"
-                                             alt="Free HTML5 Bootstrap Template by "></a>
-                        </div>
-                    </div>
-                </div>
+                <%@ include file="../common/company_img.jsp" %>
             </div>
         </div>
 

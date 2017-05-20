@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -269,7 +270,7 @@
             </div>
         </div>
 
-        <div class="gtco-section">
+        <div class="gtco-section border-bottom">
             <div class="gtco-container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center gtco-heading">
@@ -277,82 +278,7 @@
                         <p>入驻平台使得车主维保更加方便快捷</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_2.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_2.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>华晨汽修</h2>
-                                <p>江西省赣州市汽车精品一条街1G栋120号</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_3.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_3.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>纽巴伦汽车美容</h2>
-                                <p>江西赣州市章贡区文清路123号1-5</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_7.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_7.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>车管家汽修</h2>
-                                <p>江西省赣州市沙河区43号1—2</p>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_1.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_1.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>金纽扣汽车美容</h2>
-                                <p>北京玄武区文明大道15号1-3</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_5.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_5.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>千斤顶汽车美容</h2>
-                                <p>深圳福田区富田路15号</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6">
-                        <a href="<%=path%>/images/img_6.jpg" class="fh5co-project-item image-popup">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_6.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                            <div class="fh5co-text">
-                                <h2>樱花汽修美容</h2>
-                                <p>河北陕西文东县银河大道99号</p>
-                            </div>
-                        </a>
-                    </div>
-
-                </div>
+                <%@ include file="../common/companyImages.jsp" %>
             </div>
         </div>
 
