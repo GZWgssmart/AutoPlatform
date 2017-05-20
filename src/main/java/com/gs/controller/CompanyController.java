@@ -102,11 +102,8 @@ public class CompanyController {
             logger.info("Session已失效，请重新登入");
             return "index/notLogin";
         }else{
-            if(CheckRoleUtil.checkRoles(CompanyQueryRole)){
-                logger.info("访问公司基本信息页面");
-                return "company/company_info";
-            }
-            return "error/notPermission";
+            logger.info("访问公司基本信息页面");
+            return "company/company_info";
         }
 
     }
@@ -290,7 +287,7 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<Company> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(CompanyQueryRole)) {
+        if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效或者权限不足");
             return null;
         }
@@ -368,7 +365,7 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "queryStatusPager", method = RequestMethod.GET)
     public Pager4EasyUI<Company> companyStatus(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(CompanyQueryRole)) {
+        if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效或者权限不足");
             return null;
         }
@@ -384,7 +381,7 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "search", method = RequestMethod.GET)
     public Pager4EasyUI<Company> companySearch(@Param("companyName")String companyName, @Param("userName")String userName, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(CompanyQueryRole)) {
+        if (!SessionGetUtil.isUser()) {
             logger.info("session已失效或者权限不足");
             return null;
         }
