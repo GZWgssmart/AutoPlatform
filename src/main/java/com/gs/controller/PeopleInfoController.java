@@ -93,7 +93,7 @@ public class PeopleInfoController {
                     User user1 = (User)session.getAttribute("user");
                     user.setCompanyId(user1.getCompanyId());
                     user.setUserStatus("Y");
-                    user.setUserIcon("/img/default.png");
+                    user.setUserIcon("img/default.png");
                     Role role = roleService.queryByName("companyEmp");
                     userRole.setUserId(user.getUserId());
                     userRole.setRoleId(role.getRoleId());

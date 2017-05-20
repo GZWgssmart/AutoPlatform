@@ -260,6 +260,7 @@ function defaultPwd() {
 function showAdd() {
     validator("addForm");
     $("input[type=reset]").trigger("click");
+    $("#pwd").val("");
     $("#addWin").modal('show');
 }
 

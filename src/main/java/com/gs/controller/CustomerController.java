@@ -109,7 +109,7 @@ public class CustomerController {
                     Role role = roleService.queryByName("carOwner");
                     user.setUserId(customerId);
                     user.setUserStatus("Y");
-                    user.setUserIcon("/img/default.png");
+                    user.setUserIcon("img/default.png");
                     userRole.setUserId(user.getUserId());
                     userRole.setRoleId(role.getRoleId());
                     user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
