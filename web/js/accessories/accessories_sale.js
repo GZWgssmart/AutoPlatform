@@ -456,35 +456,6 @@ function validator(formId) {
                     }
                 }
             }
-            ,
-            accSaleTotal: {
-                validators: {
-                    notEmpty: {
-                        message: '不能为空'
-                    }
-
-                }
-                ,
-                regexp: {
-                    regexp: /^([1-9][0-9]*)+(.[0-9]{1,2})?$/,
-                    message: '只接受小数点后两位'
-                }
-            }
-            ,
-            accSaleMoney: {
-                validators: {
-                    notEmpty: {
-                        message: '不能为空'
-                    }
-
-                }
-                ,
-                regexp: {
-                    regexp: /^\d+(\.\d+)?$/,
-                    message: '只能是数字'
-                }
-            }
-            ,
         }
     })
 
