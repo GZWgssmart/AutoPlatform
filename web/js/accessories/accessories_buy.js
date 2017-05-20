@@ -87,9 +87,7 @@ function updateAccessoriesBuyInfo(formId) {
 }
 
 function addAccessoriesBuyInfo(formId) {
-    if ($("#dck").val() == 1) {
-        alert("error");
-    } else  addAccBuyInfo(formId);
+    addAccBuyInfo(formId);
 }
 
 function passChecks() {
@@ -137,6 +135,7 @@ function addAccBuyInfo(formId) {
         function (data) {
             if (data.result == "success") {
                 $('#addWin').modal('hide');
+                disableSwitch("addWin","isAcc");
                 swal(data.message, "", "success");
                 clearTempData();
                 $('#cusTable').bootstrapTable('refresh');
@@ -177,7 +176,7 @@ function fmtPassCheck(value, row, index) {
         return ['<button type="button" class="passCheck btn btn-warning btn-sm">通过此审核</button>'
         ].join('');
     } else {
-        return ['<button type="button" class="btn btn-success btn-sm" disabled>此审核已通过</button>'
+        return ['<button type="button" class="btn btn-success btn-sm" disabled>已通过</button>'
         ].join('');
     }
 }
@@ -539,7 +538,7 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                addAccBuyInfo(formId);
+                addAccessoriesBuyInfo(formId);
             } else if (formId == "editForm") {
                 updateAccessoriesBuyInfo(formId);
             }
@@ -567,7 +566,7 @@ function showAccAddWin() {
     // clearTempData();
     validator("addForm");
     $("#addWin").modal('show');
-    dataCheck("accName", "addForm");
+    // dataCheck("accName", "addForm");
     autoCalculation1("accBuyCount", "accBuyPrice", "accBuyDiscount", "accBuyTotal", "accBuyMoney");
 }
 
@@ -576,7 +575,7 @@ function dataCheck(inputId, formId) {
         $.get('/accessoriesBuy/checkData?name=' + this.value, function (data) {
             if (data.result == "success") {
                 $("#dck").css("display", "none");
-                addAccessoriesBuyInfo(formId);
+                // addAccessoriesBuyInfo(formId);
             } else if (data.result == "fail") {
                 $("#dck").val(1);
                 $("#dck").text("此配件已存在");
