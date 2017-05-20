@@ -3,7 +3,8 @@ $(document).ready(function () {
     initTable("cusTable", "/peopleManage/peopleInfo_pager");
     //当点击查询按钮的时候执行
     $("#search").bind("click", initTable);
-    initSelect2("user_role", "请选择角色", "/peopleManage/role_all", 565);
+    initSelect2("user_role", "请选择角色", "/peopleManage/role_all", 565);//不包括人事部管理员
+    initSelect2("user_roleAll", "请选择角色", "/peopleManage/companyRole_all", 565);//包括人事部管理员
     initSelect2("user_roleName", "请选择角色", "/peopleManage/queryRole_all", 150);
     initSelect2("user_company", "请选择公司", "/peopleManage/user_company", 150);
     destoryValidator("addWin", "addForm");
@@ -71,17 +72,21 @@ function customerAge(row) {
     }
 }
 
+function operateUpdateFormatter(value, row, index) {
+    return [
+        '<button type="button" class="showUpdateInfo btn btn-primary">查看详情</button>'
+    ].join('');
+}
+
 
 function operateFormatter(value, row, index) {
     if (row.userStatus == 'Y') {
         return [
             '<button type="button" class="updateInactive btn btn-danger  btn-sm">冻结</button>',
-            '<button style="margin-left: 10px" type="button" class="showUpdateInfo btn btn-primary">查看详情</button>'
         ].join('');
     } else {
         return [
             '<button type="button" class="updateActive btn btn-success  btn-sm">激活</button>',
-            '<button style="margin-left: 10px" type="button"  class="showUpdateInfo btn btn-primary">查看详情</button>'
         ].join('');
     }
 }
@@ -141,6 +146,8 @@ window.operateEvents = {
                 }
             }, "json");
     },
+}
+window.operateUpdateEvents = {
     'click .showUpdateInfo': function (e, value, row, index) {
         var user = row;
         var selectGender = document.getElementById("gender");
@@ -151,7 +158,7 @@ window.operateEvents = {
         $("#role").val(row.role.roleDes);
         $("#form_datetime").val(formatterDate(user.userCreatedTime));
         $("#editModal").fill(user);
-        $("#icon").attr("src","/"+user.userIcon);
+        $("#icon").attr("src", "/" + user.userIcon);
         var company = document.getElementById("editModalCompany");
         company.value = user.company.companyName;
         var loginedTime = document.getElementById("form_loginedTime");
@@ -160,13 +167,13 @@ window.operateEvents = {
         $('#editModalCompany').html('<option value="' + user.company.companyId + '">' + user.company.companyName + '</option>').trigger("change");
         validator("editModal");
         $("#myModal").modal('show');
-        if(user.userStatus == 'Y'){
+        if (user.userStatus == 'Y') {
             $("#status").val("可用");
-        }else{
+        } else {
             $("#status").val("不可用");
         }
         var change = user.userStatus;
-        if (change == 'N'){
+        if (change == 'N') {
             return 'Y';
         }
         customerAge(row);
@@ -239,6 +246,7 @@ function showEdit() {
         var user = selectRow[0];
         $("#editForm").fill(user);
         $('#editRole').html('<option value="' + user.role.roleId + '">' + user.role.roleDes + '</option>').trigger("change");
+        $('#editRoleAll').html('<option value="' + user.role.roleId + '">' + user.role.roleDes + '</option>').trigger("change");
         $("#editWin").modal('show');
     }
 }

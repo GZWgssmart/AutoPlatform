@@ -65,6 +65,7 @@ public class PeopleInfoController {
 
     private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER;
 
+    private String editRole1 = Constants.COMPANY_ADMIN;
 
     @RequestMapping(value = "people_info", method = RequestMethod.GET)
     private String peopleInfo() {
@@ -367,7 +368,7 @@ public class PeopleInfoController {
     public ControllerResult info_status(@Param("id")String id, @Param("status")String status){
         if (SessionGetUtil.isUser()) {
             try {
-                if (CheckRoleUtil.checkRoles(editRole)) {
+                if (CheckRoleUtil.checkRoles(editRole1)) {
                     logger.info("状态修改");
                     if(status.equals("Y")){
                         userService.inactive(id);
@@ -475,6 +476,27 @@ public class PeopleInfoController {
         try {
             logger.info("查询部分公司角色");
             List<Role> roles = roleService.queryByCompanyRole();
+            List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
+            for (Role role : roles) {
+                ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();
+                comboBox4EasyUI.setId(role.getRoleId());
+                comboBox4EasyUI.setText(role.getRoleDes());
+                comboBox4EasyUIs.add(comboBox4EasyUI);
+            }
+            return comboBox4EasyUIs;
+        } catch (Exception e) {
+            logger.info("查询角色失败，出现了一个错误");
+            return null;
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "companyRole_all", method = RequestMethod.GET)
+    public List<ComboBox4EasyUI> queryCompanyRoleAll() {
+        try {
+            logger.info("查询公司角色");
+            List<Role> roles = roleService.queryByCompanyRoleAll();
             List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
             for (Role role : roles) {
                 ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();

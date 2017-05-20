@@ -121,10 +121,23 @@ function validator(formId) {
     })
         .on('success.form.bv', function (e) {
             if (formId == "editForm") {
-                formSubmit("/peopleManage/workInfo_update", formId, "editWin");
+                var editUser = $("#editUser").val();
+                var workEndTime = $("#workEndTime").val();
+                if (editUser != null && editUser != "" && workEndTime != null && workEndTime != ""){
+                    formSubmit("/peopleManage/workInfo_update", formId, "editWin");
+                } else {
+                    swal('错误提示', "请确认数据无误再操作", "error");
+                }
             }
-
-
         })
 
+}
+
+/** 修改提交按钮 */
+function editWork() {
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
 }
