@@ -84,6 +84,34 @@ public class VilidateController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "queryIsExist_userIdentity", method = RequestMethod.GET)
+    public String queryIsExistUserIdentity(@Param("userIdentity")String userIdentity, @Param("editIdentity") String editIdentity) {
+        try {
+            logger.info("身份证验证");
+            boolean result = true;
+            String resultString = "";
+            Map<String, Boolean> map = new HashMap<String, Boolean>();
+            ObjectMapper mapper = new ObjectMapper();
+            if (!editIdentity.equals(userIdentity)) {
+                int isExist = vilidateService.queryDataIsExistUserIdentity(userIdentity);
+                if (isExist > 0) {
+                    result = false;
+                }
+            }
+            map.put("valid", result);
+            try {
+                resultString = mapper.writeValueAsString(map);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return resultString;
+        } catch (Exception e) {
+            logger.info("身份证验证失败，出现了异常");
+            return null;
+        }
+    }
+
+    @ResponseBody
     @RequestMapping(value = "queryIsExist_roleName", method = RequestMethod.GET)
     public String queryIsExistRoleName(String roleName) {
         try {

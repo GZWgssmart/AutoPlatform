@@ -226,7 +226,7 @@ function validator(formId) {
                     },
                     threshold: 11,
                     remote: {
-                        url: contextPath + '/peopleManage/peoplePhone_verification?editPhone=' + editPhone,
+                        url: contextPath + '/vilidate/queryIsExist_userPhone?editPhone=' + editPhone,
                         message: '该手机号已存在',
                         delay :  2000,
                         type: 'GET'
@@ -244,7 +244,7 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: contextPath + '/peopleManage/peopleEmail_verification?editEmail=' + editEmail,
+                        url: contextPath + '/vilidate/queryIsExist_userEmail?editEmail=' + editEmail,
                         message: '该邮箱已存在',
                         delay :  2000,
                         type: 'GET'
@@ -262,7 +262,7 @@ function validator(formId) {
                     },
                     threshold: 18,
                     remote: {
-                        url: contextPath + '/peopleManage/peopleIdentity_verification?editIdentity=' + editIdentity,
+                        url: contextPath + '/vilidate/queryIsExist_userIdentity?editIdentity=' + editIdentity,
                         message: '该身份证已存在',
                         delay :  2000,
                         type: 'GET'
