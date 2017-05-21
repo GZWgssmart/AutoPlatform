@@ -34,6 +34,12 @@
 		]]>
     </select>
 
+    <select id="queryDataIsExistUserIdentity" resultType="int">
+        <![CDATA[
+			select count(*) from t_user where userIdentity = #{userIdentity}
+		]]>
+    </select>
+
     <select id="queryDataIsExistRoleName" resultType="int">
         <![CDATA[
 			select count(*) from t_role where roleName = #{roleName}

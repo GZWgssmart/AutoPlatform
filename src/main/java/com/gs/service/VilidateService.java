@@ -20,6 +20,9 @@ public interface VilidateService {
     /**用户表手机验证唯一*/
     public int queryDataIsExistUserPhone(String userPhone);
 
+    /**用户表身份证验证唯一*/
+    public int queryDataIsExistUserIdentity(String userIdentity);
+
     /**角色表英文名称验证唯一*/
     public int queryDataIsExistRoleName(String roleName);
 

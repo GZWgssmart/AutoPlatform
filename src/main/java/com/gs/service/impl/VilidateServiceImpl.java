@@ -41,6 +41,11 @@ public class VilidateServiceImpl implements VilidateService {
     }
 
     @Override
+    public int queryDataIsExistUserIdentity(String userIdentity) {
+        return vilidateDAO.queryDataIsExistUserIdentity(userIdentity);
+    }
+
+    @Override
     public int queryDataIsExistRoleName(String roleName) {
         return vilidateDAO.queryDataIsExistRoleName(roleName);
     }
