@@ -415,6 +415,15 @@ function gender(value, row, index) {
     }
 }
 
+/*没有公司和类型的显示*/
+function isNullName(value, row, index) {
+    if (value == null) {
+        return '<span style="color: lightcoral;">暂无</span>'
+    }else{
+        return value;
+    }
+}
+
 /** 关闭指定的win */
 function closeThisWin(winId) {
     $("#" + winId).modal('hide');

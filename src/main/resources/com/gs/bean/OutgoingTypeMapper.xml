@@ -90,8 +90,7 @@
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and ot.companyId = #{user.companyId}
-			OR ot.outTypeName = '工资支出'
-			or ot.outTypeName = '配件支出'
+
 		</if>
 		 order by ot.companyId desc ,ot.outTypeStatus desc , ot.outTypeCreatedTime desc
 		 limit #{pager.beginIndex}, #{pager.pageSize}
@@ -103,8 +102,7 @@
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and companyId = #{user.companyId}
-			OR outTypeName = '工资支出'
-			or outTypeName = '配件支出'
+  
 		</if>
 	</select>
 

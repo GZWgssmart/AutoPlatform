@@ -78,8 +78,6 @@
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and it.companyId = #{user.companyId}
-			or it.inTypeName = '维修保养收入'
-			or it.inTypeName = '配件收入'
 		</if>
 
 		order by it.companyId desc, it.inTypeStatus desc, it.inTypeCreatedTime desc
@@ -92,8 +90,6 @@
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and companyId = #{user.companyId}
-			or inTypeName = '维修保养收入'
-			or inTypeName = '配件收入'
 		</if>
 	</select>
 

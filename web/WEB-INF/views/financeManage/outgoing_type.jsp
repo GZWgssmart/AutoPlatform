@@ -37,7 +37,7 @@
             <th data-field="outTypeCreatedTime" data-formatter="formatterDate">
                 创建时间
             </th>
-            <th data-field="company.companyName" >
+            <th data-field="company.companyName" data-formatter="isNullName">
                 所属公司
             </th>
             <th data-field="outTypeStatus" data-formatter="status">

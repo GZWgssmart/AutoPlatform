@@ -55,6 +55,8 @@ function operateFormatter(value, row, index) {
                 '<button type="button" class="showUpdateIncomingType1 btn btn-primary  btn-sm" style="margin-right:15px;">编辑</button>'
             ].join('');
         }
+    }else{
+        return ['<span style="color: lightcoral;">暂无</span>'].join('');
     }
 
 }
