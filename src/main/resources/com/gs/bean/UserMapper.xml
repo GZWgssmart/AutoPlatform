@@ -312,7 +312,7 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'Y' AND u.userId != #{user.userId}
+			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'Y' AND r.roleName != 'companyAdmin' AND u.userId != #{user.userId}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
@@ -328,7 +328,7 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'N' AND u.userId != #{userId}
+			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'N' AND r.roleName != 'companyAdmin' AND u.userId != #{userId}
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and u.companyId = #{companyId}
@@ -342,7 +342,7 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'N' AND u.userId != #{user.userId}
+			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'N' AND r.roleName != 'companyAdmin' AND u.userId != #{user.userId}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
@@ -368,7 +368,7 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userId != #{user.userId}
+			WHERE r.roleName like concat('company', '%') AND r.roleName != 'companyAdmin' AND u.userId != #{user.userId}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
@@ -382,7 +382,7 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userId != #{user.userId}
+			WHERE r.roleName like concat('company', '%') AND r.roleName != 'companyAdmin' AND u.userId != #{user.userId}
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and u.companyId = #{user.companyId}
@@ -448,7 +448,7 @@
 			LEFT JOIN t_company c ON u.companyId = c.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'Y' AND u.userId = #{userId}
+			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'Y' AND r.roleName != 'companyAdmin' AND u.userId = #{userId}
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and u.companyId = #{companyId}
