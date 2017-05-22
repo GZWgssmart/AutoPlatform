@@ -103,8 +103,6 @@
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and it.companyId = #{companyId}
-			or it.inTypeName = '维修保养收入'
-			or it.inTypeName = '配件收入'
 
 		</if>
 		<if test="inTypeName != null and inTypeName != ''">
@@ -121,8 +119,6 @@
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and companyId = #{companyId}
-			or inTypeName = '维修保养收入'
-			or inTypeName = '配件收入'
 		</if>
 		<if test="inTypeName != null and inTypeName != ''">
 			and inTypeName like concat('%',#{inTypeName},'%')

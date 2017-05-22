@@ -114,9 +114,6 @@
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and ot.companyId = #{companyId}
-			OR ot.outTypeName = '工资支出'
-			or ot.outTypeName = '配件支出'
-
 		</if>
 		<if test="inTypeName != null and inTypeName != ''">
 			and ot.outTypeName like concat('%',#{inTypeName},'%')
@@ -132,8 +129,6 @@
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and companyId = #{companyId}
-			OR outTypeName = '工资支出'
-			or outTypeName = '配件支出'
 		</if>
 		<if test="inTypeName != null and inTypeName != ''">
 			and outTypeName like concat('%',#{inTypeName},'%')
