@@ -449,7 +449,7 @@
     <div class="container">
         <h3 style="text-align: center;">${requestScope.company.companyName}</h3>
         <div class="row" style="text-align: center; padding-top: 20px;">
-            <img src="<%=path %>/${requestScope.company.companyImg}" style="width: 90%; height: 78%"/>
+            <img src="<%=path %>${requestScope.company.companyImg}" style="width: 90%; height: 78%"/>
         </div>
         <div class="row">
             <div class="col-sm-9"></div>
