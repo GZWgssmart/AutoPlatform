@@ -52,7 +52,7 @@ function selfMessage() {
         dataType: 'json',
         success: function (data) {
             if (data.result == "success") {
-                swal(data.message, "下次登录自动同步修改信息", "success");
+                swal(data.message, "下次登录系统自动同步修改信息", "success");
             } else if (data.result == "fail") {
                 swal(data.message, "请填写正确的信息", "error");
             }

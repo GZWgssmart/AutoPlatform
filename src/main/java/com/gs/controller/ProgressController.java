@@ -62,7 +62,7 @@ public class ProgressController {
     @RequestMapping(value="progress_pager",method= RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> queryPager(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("分页查询进度");
                     User user = SessionGetUtil.getUser();
@@ -92,10 +92,10 @@ public class ProgressController {
                     return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
                 }
                 return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
+            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -107,40 +107,40 @@ public class ProgressController {
     @RequestMapping(value="progress_pager_N",method= RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> queryPager_N(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
-//            try {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
-                logger.info("分页查询不可用进度");
-                User user = SessionGetUtil.getUser();
-                Pager pager = new Pager();
-                pager.setPageNo(Integer.valueOf(pageNumber));
-                pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(maintainRecordService.countByProgressPager_N(user));
-                List<MaintainRecord> maintainRecords = maintainRecordService.queryByProgressPager_N(pager, user);
-                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
-            } else if (CheckRoleUtil.checkRoles(queryRole2)){
-                logger.info("车主查询自己不可用进度");
-                User user = (User)session.getAttribute("user");
-                Pager pager = new Pager();
-                pager.setPageNo(Integer.valueOf(pageNumber));
-                pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(maintainRecordService.countByUser_N(user));
-                List<MaintainRecord> maintainRecords = maintainRecordService.queryByUser_N(pager,user);
-                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
-            } else if (CheckRoleUtil.checkRoles(queryRole3)){
-                logger.info("技师查询自己管理不可用进度");
-                User user = (User)session.getAttribute("user");
-                Pager pager = new Pager();
-                pager.setPageNo(Integer.valueOf(pageNumber));
-                pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(maintainRecordService.countByEmp_N(user));
-                List<MaintainRecord> maintainRecords = maintainRecordService.queryByEmp_N(pager,user);
-                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页查询不可用进度");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(maintainRecordService.countByProgressPager_N(user));
+                    List<MaintainRecord> maintainRecords = maintainRecordService.queryByProgressPager_N(pager, user);
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+                } else if (CheckRoleUtil.checkRoles(queryRole2)){
+                    logger.info("车主查询自己不可用进度");
+                    User user = (User)session.getAttribute("user");
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(maintainRecordService.countByUser_N(user));
+                    List<MaintainRecord> maintainRecords = maintainRecordService.queryByUser_N(pager,user);
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+                } else if (CheckRoleUtil.checkRoles(queryRole3)){
+                    logger.info("技师查询自己管理不可用进度");
+                    User user = (User)session.getAttribute("user");
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(maintainRecordService.countByEmp_N(user));
+                    List<MaintainRecord> maintainRecords = maintainRecordService.queryByEmp_N(pager,user);
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
             }
-            return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -154,40 +154,40 @@ public class ProgressController {
     @RequestMapping(value="progress_pager_Y",method= RequestMethod.GET)
     public Pager4EasyUI<MaintainRecord> queryPager_Y(@Param("pageNumber")String pageNumber, @Param("pageSize")String pageSize,HttpSession session){
         if (SessionGetUtil.isUser()) {
-//            try {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
-                logger.info("分页查询可用进度");
-                User user = SessionGetUtil.getUser();
-                Pager pager = new Pager();
-                pager.setPageNo(Integer.valueOf(pageNumber));
-                pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(maintainRecordService.countByProgressPager_Y(user));
-                List<MaintainRecord> maintainRecords = maintainRecordService.queryByProgressPager_Y(pager, user);
-                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
-            } else if (CheckRoleUtil.checkRoles(queryRole2)){
-                logger.info("车主查询自己可用进度");
-                User user = (User)session.getAttribute("user");
-                Pager pager = new Pager();
-                pager.setPageNo(Integer.valueOf(pageNumber));
-                pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(maintainRecordService.countByUser_Y(user));
-                List<MaintainRecord> maintainRecords = maintainRecordService.queryByUser_Y(pager,user);
-                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
-            } else if (CheckRoleUtil.checkRoles(queryRole3)){
-                logger.info("技师查询自己管理可用进度");
-                User user = (User)session.getAttribute("user");
-                Pager pager = new Pager();
-                pager.setPageNo(Integer.valueOf(pageNumber));
-                pager.setPageSize(Integer.valueOf(pageSize));
-                pager.setTotalRecords(maintainRecordService.countByEmp_Y(user));
-                List<MaintainRecord> maintainRecords = maintainRecordService.queryByEmp_Y(pager,user);
-                return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+            try {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
+                    logger.info("分页查询可用进度");
+                    User user = SessionGetUtil.getUser();
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(maintainRecordService.countByProgressPager_Y(user));
+                    List<MaintainRecord> maintainRecords = maintainRecordService.queryByProgressPager_Y(pager, user);
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+                } else if (CheckRoleUtil.checkRoles(queryRole2)){
+                    logger.info("车主查询自己可用进度");
+                    User user = (User)session.getAttribute("user");
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(maintainRecordService.countByUser_Y(user));
+                    List<MaintainRecord> maintainRecords = maintainRecordService.queryByUser_Y(pager,user);
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+                } else if (CheckRoleUtil.checkRoles(queryRole3)){
+                    logger.info("技师查询自己管理可用进度");
+                    User user = (User)session.getAttribute("user");
+                    Pager pager = new Pager();
+                    pager.setPageNo(Integer.valueOf(pageNumber));
+                    pager.setPageSize(Integer.valueOf(pageSize));
+                    pager.setTotalRecords(maintainRecordService.countByEmp_Y(user));
+                    List<MaintainRecord> maintainRecords = maintainRecordService.queryByEmp_Y(pager,user);
+                    return new Pager4EasyUI<MaintainRecord>(pager.getTotalRecords(), maintainRecords);
+                }
+                return null;
+            } catch (Exception e) {
+                logger.info("分页查询失败，出现了异常");
+                return null;
             }
-            return null;
-//            } catch (Exception e) {
-//                logger.info("分页查询失败，出现了异常");
-//                return null;
-//            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;

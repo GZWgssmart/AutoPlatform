@@ -400,7 +400,7 @@ function validator(formId) {
                                 $('#editModal').data('bootstrapValidator').resetForm(true);
                             } else if (data.result == "fail") {
                                 $('#myModal').modal('hide');
-                                swal(data.message, "内容不匹配", "error");
+                                swal(data.message, "修改信息有误", "error");
                                 $('#editModal').data('bootstrapValidator').resetForm(true);
                             }
                         }

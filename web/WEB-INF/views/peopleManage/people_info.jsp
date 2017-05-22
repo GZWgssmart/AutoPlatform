@@ -40,12 +40,10 @@
             <div class="col-sm-2">
                 <input type="text" id="userEmail" class="form-control" placeholder="请输入邮箱">
             </div>
-            <shiro:hasAnyRoles name="companyAdmin">
-            <div class="col-sm-2">
-                <select id="roleName" class="js-example-tags form-control user_roleName" name="roleId"></select>
-            </div>
-            </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
+                <div class="col-sm-2">
+                    <select id="roleName" class="js-example-tags form-control user_roleName" name="roleId"></select>
+                </div>
                 <div class="col-sm-2">
                     <select id="companyName" class="js-example-tags form-control user_company" name="companyId"></select>
                 </div>
@@ -111,7 +109,7 @@
             </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="companyAdmin, companyHumanManager">
                 <a><button onclick="showEdit();" type="button" id="edit" class="btn btn-default">
-                    <i class="glyphicon glyphicon-pencil"></i> 修改角色
+                    <i class="glyphicon glyphicon-pencil"></i> 分配角色
                 </button></a>
             </shiro:hasAnyRoles>
             <a><button onclick="showStatus_N();" type="button" class="btn btn-default">

@@ -18,7 +18,7 @@ function searchStatus_All() {
 function recordOk() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('错误提示', "请选择一条数据", "error");
+        swal('错误提示', "请选择一条进度信息", "error");
         return false;
     } else {
         var record = selectRow[0]

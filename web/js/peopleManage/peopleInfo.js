@@ -257,7 +257,7 @@ function showEdit() {
     validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('分配失败', "只能选择一个员工进行分配", "error");
+        swal('分配失败', "只能选择一条信息进行角色分配", "error");
         return false;
     } else {
         var user = selectRow[0];
@@ -432,7 +432,7 @@ function validator(formId) {
                             $('#editModal').data('bootstrapValidator').resetForm(true);
                         } else if (data.result == "fail") {
                             $('#myModal').modal('hide');
-                            swal(data.message, "内容不匹配", "error");
+                            swal(data.message, "修改信息有误", "error");
                             $('#editModal').data('bootstrapValidator').resetForm(true);
                         }
                     }

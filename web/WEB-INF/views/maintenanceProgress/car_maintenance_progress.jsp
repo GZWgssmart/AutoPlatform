@@ -103,8 +103,8 @@
             <div class="modal-body" style="padding: 0px;">
                 <div class="row">
                     <div class="col-sm-12">
-                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">维修保养进度</h3>
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                             <div class="step-header">
                                 <ul>
                                     <li id="textConduct">

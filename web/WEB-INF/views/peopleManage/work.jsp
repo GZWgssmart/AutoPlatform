@@ -104,7 +104,7 @@
                                 <select id="editUser" class="js-example-tags form-control work_user" name="userId"></select>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">预计结束时间：</label>
+                                <label class="control-label">预计维修或保养结束时间：</label>
                                 <input type="text" name="endTime" readonly
                                        class="form_datetime form-control"
                                        id="workEndTime">

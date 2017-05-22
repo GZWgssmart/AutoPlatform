@@ -268,8 +268,8 @@
                                             <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="form_loginedTime" name="userLoginedTime"/>
                                         </div>
                                         <div class="col-md-4">
-                                            <label class="control-label" style="margin-left: -28px">登录次数：</label>
-                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled"/>
+                                            <label class="control-label" style="margin-left: -28px">所属角色：</label>
+                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="role"/>
                                         </div>
                                         <br />
                                         <br />
@@ -278,10 +278,6 @@
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">居住地址：</label>
                                             <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="address" attr="user.userAddress" name="userAddress"/>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label class="control-label" style="margin-left: -28px">所属角色：</label>
-                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="role"/>
                                         </div>
                                         <div class="col-md-4">
                                             <label class="control-label" style="margin-left: -28px">当前状态：</label>

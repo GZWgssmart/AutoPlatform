@@ -42,11 +42,11 @@
             <th data-field="totalSalary">
                 总工资
             </th>
-            <th data-field="salaryDes">
-                工资描述
-            </th>
             <th data-field="salaryTime" data-formatter="formatterDate">
                 发放时间
+            </th>
+            <th data-field="salaryDes">
+                工资描述
             </th>
         </tr>
         </thead>

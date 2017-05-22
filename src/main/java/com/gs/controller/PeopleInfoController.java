@@ -87,7 +87,7 @@ public class PeopleInfoController {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
-                    logger.info("信息添加");
+                    logger.info("人员信息添加");
                     String peopleId = UUIDUtil.uuid();
                     user.setUserId(peopleId);
                     User user1 = (User)session.getAttribute("user");
@@ -100,7 +100,7 @@ public class PeopleInfoController {
                     user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
                     userRoleService.insert(userRole);
                     userService.insert(user);
-                    return ControllerResult.getSuccessResult("添加成功");
+                    return ControllerResult.getSuccessResult("添加信息成功");
                 }
                 return ControllerResult.getFailResult("添加信息失败，没有该权限操作");
             } catch (Exception e) {
@@ -281,7 +281,7 @@ public class PeopleInfoController {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
-                    logger.info("分页条件查询员工");
+                    logger.info("分页条件查询所有员工信息");
                     User user = new User();
                     user.setUserPhone(userPhone);
                     user.setUserName(userName);
@@ -330,7 +330,7 @@ public class PeopleInfoController {
                         user.setUserIcon(uIcon);
                     }
                     userService.update(user);
-                    return ControllerResult.getSuccessResult(" 修改成功");
+                    return ControllerResult.getSuccessResult("修改信息成功");
                 }
                 return ControllerResult.getFailResult("修改信息失败，没有该权限操作");
             } catch (Exception e) {
@@ -348,14 +348,14 @@ public class PeopleInfoController {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
-                    logger.info("角色修改");
+                    logger.info("角色分配");
                     userRoleService.updateByRole(userRole);
-                    return ControllerResult.getSuccessResult("修改成功");
+                    return ControllerResult.getSuccessResult("角色分配成功");
                 }
-                return ControllerResult.getFailResult("角色修改失败，没有权限操作");
+                return ControllerResult.getFailResult("角色分配失败，没有权限操作");
             } catch (Exception e) {
-                logger.info("角色修改失败，出现了一个错误");
-                return ControllerResult.getFailResult("角色修改失败，出现了一个错误");
+                logger.info("角色分配失败，出现了一个错误");
+                return ControllerResult.getFailResult("角色分配失败，出现了一个错误");
             }
         } else {
             logger.info("Session已失效，请重新登入");
@@ -375,7 +375,7 @@ public class PeopleInfoController {
                     } else {
                         userService.active(id);
                     }
-                    return ControllerResult.getSuccessResult(" 修改成功");
+                    return ControllerResult.getSuccessResult("修改状态成功");
                 }
                 return ControllerResult.getFailResult("修改状态失败，没有权限操作");
             } catch (Exception e) {
@@ -425,7 +425,7 @@ public class PeopleInfoController {
             }
             return comboBox4EasyUIs;
         } catch (Exception e) {
-            logger.info("查询角色失败，出现了一个错误");
+            logger.info("查询全部公司失败，出现了一个错误");
             return null;
         }
     }
@@ -485,7 +485,7 @@ public class PeopleInfoController {
             }
             return comboBox4EasyUIs;
         } catch (Exception e) {
-            logger.info("查询角色失败，出现了一个错误");
+            logger.info("查询部分公司角色失败，出现了一个错误");
             return null;
         }
     }
@@ -506,7 +506,7 @@ public class PeopleInfoController {
             }
             return comboBox4EasyUIs;
         } catch (Exception e) {
-            logger.info("查询角色失败，出现了一个错误");
+            logger.info("查询公司角色失败，出现了一个错误");
             return null;
         }
     }

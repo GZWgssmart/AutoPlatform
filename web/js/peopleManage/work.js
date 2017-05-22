@@ -106,7 +106,7 @@ function showEditWin() {
             swal('指派失败', "该工单为不可用", "error");
         }
     } else {
-        swal('指派失败', "只能选择一条数据进行指派", "error");
+        swal('指派失败', "只能选择一条工单进行指派", "error");
     }
 }
 

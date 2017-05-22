@@ -104,7 +104,7 @@ public class CustomerController {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
-                    logger.info("信息添加");
+                    logger.info("车主信息添加");
                     String customerId = UUIDUtil.uuid();
                     Role role = roleService.queryByName("carOwner");
                     user.setUserId(customerId);
@@ -115,7 +115,7 @@ public class CustomerController {
                     user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
                     userService.insert(user);
                     userRoleService.insert(userRole);
-                    return ControllerResult.getSuccessResult("添加成功");
+                    return ControllerResult.getSuccessResult("添加信息成功");
                 }
                 return ControllerResult.getFailResult("添加信息失败，没有该权限操作");
             } catch (Exception e) {
@@ -227,7 +227,7 @@ public class CustomerController {
                 }
                 return null;
             } catch (Exception e) {
-                logger.info("查询失败，出现了异常");
+                logger.info("分页查询失败，出现了异常");
                 return null;
             }
         } else {
@@ -253,7 +253,7 @@ public class CustomerController {
                 }
                 return null;
             } catch (Exception e) {
-                logger.info("查询失败，出现了异常");
+                logger.info("分页查询失败，出现了异常");
                 return null;
             }
         } else {
@@ -268,7 +268,7 @@ public class CustomerController {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(queryRole)) {
-                    logger.info("条件查询车主");
+                    logger.info("条件查询所有车主信息");
                     User user = new User();
                     user.setUserPhone(userPhone);
                     user.setUserName(userName);
@@ -281,7 +281,7 @@ public class CustomerController {
                 }
                 return null;
             } catch (Exception e) {
-                logger.info("查询失败，出现了异常");
+                logger.info("条件查询失败，出现了异常");
                 return null;
             }
         } else {
@@ -307,7 +307,7 @@ public class CustomerController {
                 }
                 return null;
             } catch (Exception e) {
-                logger.info("查询失败，出现了异常");
+                logger.info("分页查询失败，出现了异常");
                 return null;
             }
         } else {
@@ -322,7 +322,7 @@ public class CustomerController {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
-                    logger.info("信息修改");
+                    logger.info("车主信息修改");
                     if(file != null){
                         String fileName = UUID.randomUUID().toString() + file.getOriginalFilename() ;
                         String filePath = FileUtil.uploadPath(session,"\\" + fileName);
@@ -337,7 +337,7 @@ public class CustomerController {
                         user.setUserIcon(uIcon);
                     }
                     userService.update(user);
-                    return ControllerResult.getSuccessResult(" 修改成功");
+                    return ControllerResult.getSuccessResult("修改信息成功");
                 }
                 return ControllerResult.getFailResult("修改信息失败，没有该权限操作");
             } catch (Exception e) {
@@ -362,7 +362,7 @@ public class CustomerController {
                     }else{
                         userService.active(id);
                     }
-                    return ControllerResult.getSuccessResult("修改成功");
+                    return ControllerResult.getSuccessResult("修改状态成功");
                 }
                 return ControllerResult.getFailResult("修改状态失败，没有权限操作");
             } catch (Exception e) {
