@@ -4,6 +4,9 @@ if(sts == 'Y'){
 }else{
     $("#status").val("不可用");
 }
+ var aa = $("#gender").val();
+
+alert(aa);
 
 var date = $("#form_datetime").val();
 var datetime = $("#form_loginedTime").val();

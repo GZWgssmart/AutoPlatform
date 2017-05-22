@@ -91,7 +91,7 @@
 	<update id="update" parameterType="user">
 		<![CDATA[
 			UPDATE t_user SET
-				userEmail = #{userEmail}, userSalary = #{userSalary}, userPhone = #{userPhone}, userName = #{userName}, userIcon = #{userIcon}, userNickname = #{userNickname}, userDes = #{userDes}, userGender = #{userGender}, userAddress = #{userAddress}, qqOpenId = #{qqOpenId}, weiboOpenId = #{weiboOpenId}, wechatOpenId = #{wechatOpenId}, userIdentity = #{userIdentity}, userBirthday = #{userBirthday} WHERE userId = #{userId}
+				userEmail = #{userEmail}, userSalary = #{userSalary}, userPhone = #{userPhone}, userName = #{userName}, userIcon = #{userIcon}, userNickname = #{userNickname}, userDes = #{userDes}, userGender = #{userGender}, qqOpenId = #{qqOpenId}, weiboOpenId = #{weiboOpenId}, wechatOpenId = #{wechatOpenId}, userIdentity = #{userIdentity}, userBirthday = #{userBirthday} WHERE userId = #{userId}
 		]]>
 	</update>
 

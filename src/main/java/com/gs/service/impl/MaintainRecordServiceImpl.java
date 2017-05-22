@@ -211,63 +211,63 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
     }
 
     @Override
-    public List<MaintainRecord> queryByUser(Pager pager, String userId) {
-        return maintainRecordDAO.queryByUser(pager, userId);
+    public List<MaintainRecord> queryByUser(Pager pager, User user) {
+        return maintainRecordDAO.queryByUser(pager, user);
     }
 
     @Override
-    public int countByUser(String userId) {
-        return maintainRecordDAO.countByUser(userId);
+    public int countByUser(User user) {
+        return maintainRecordDAO.countByUser(user);
     }
 
     @Override
-    public List<MaintainRecord> queryByEmp(Pager pager, String userId) {
-        return maintainRecordDAO.queryByEmp(pager, userId);
+    public List<MaintainRecord> queryByEmp(Pager pager, User user) {
+        return maintainRecordDAO.queryByEmp(pager, user);
     }
 
     @Override
-    public int countByEmp(String userId) {
-        return maintainRecordDAO.countByEmp(userId);
+    public int countByEmp(User user) {
+        return maintainRecordDAO.countByEmp(user);
     }
 
     @Override
-    public List<MaintainRecord> queryByUser_Y(Pager pager, String userId) {
-        return maintainRecordDAO.queryByUser_Y(pager, userId);
+    public List<MaintainRecord> queryByUser_Y(Pager pager, User user) {
+        return maintainRecordDAO.queryByUser_Y(pager, user);
     }
 
     @Override
-    public int countByUser_Y(String userId) {
-        return maintainRecordDAO.countByUser_Y(userId);
+    public int countByUser_Y(User user) {
+        return maintainRecordDAO.countByUser_Y(user);
     }
 
     @Override
-    public List<MaintainRecord> queryByEmp_Y(Pager pager, String userId) {
-        return maintainRecordDAO.queryByEmp_Y(pager, userId);
+    public List<MaintainRecord> queryByEmp_Y(Pager pager, User user) {
+        return maintainRecordDAO.queryByEmp_Y(pager, user);
     }
 
     @Override
-    public int countByEmp_Y(String userId) {
-        return maintainRecordDAO.countByEmp_Y(userId);
+    public int countByEmp_Y(User user) {
+        return maintainRecordDAO.countByEmp_Y(user);
     }
 
     @Override
-    public List<MaintainRecord> queryByUser_N(Pager pager, String userId) {
-        return maintainRecordDAO.queryByUser_N(pager, userId);
+    public List<MaintainRecord> queryByUser_N(Pager pager, User user) {
+        return maintainRecordDAO.queryByUser_N(pager, user);
     }
 
     @Override
-    public int countByUser_N(String userId) {
-        return maintainRecordDAO.countByUser_N(userId);
+    public int countByUser_N(User user) {
+        return maintainRecordDAO.countByUser_N(user);
     }
 
     @Override
-    public List<MaintainRecord> queryByEmp_N(Pager pager, String userId) {
-        return maintainRecordDAO.queryByEmp_N(pager, userId);
+    public List<MaintainRecord> queryByEmp_N(Pager pager, User user) {
+        return maintainRecordDAO.queryByEmp_N(pager, user);
     }
 
     @Override
-    public int countByEmp_N(String userId) {
-        return maintainRecordDAO.countByEmp_N(userId);
+    public int countByEmp_N(User user) {
+        return maintainRecordDAO.countByEmp_N(user);
     }
 
     public List<MaintainRecord> queryByMyName(Pager pager, User user){

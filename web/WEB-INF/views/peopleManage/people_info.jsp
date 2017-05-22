@@ -40,9 +40,11 @@
             <div class="col-sm-2">
                 <input type="text" id="userEmail" class="form-control" placeholder="请输入邮箱">
             </div>
+            <shiro:hasAnyRoles name="companyAdmin">
             <div class="col-sm-2">
                 <select id="roleName" class="js-example-tags form-control user_roleName" name="roleId"></select>
             </div>
+            </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
                 <div class="col-sm-2">
                     <select id="companyName" class="js-example-tags form-control user_company" name="companyId"></select>
@@ -156,7 +158,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" onclick="edit()" id="editButton" class="btn btn-primary" value="修改"/>
+                                <input type="button" onclick="editInfo()" id="editButton" class="btn btn-primary" value="修改"/>
                                 </input>
                             </div>
                         </form>
@@ -312,7 +314,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label class="control-label">生日：</label>
-                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="birthday" attr="user.userBirthday" name="userBirthday"/>
+                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="birthday" name="userBirthday"/>
                                         </div>
                                         <div class="col-md-4 form-group">
                                             <label class="control-label" style="margin-left: -28px">真实姓名：</label>

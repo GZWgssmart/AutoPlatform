@@ -22,7 +22,7 @@ function recordOk() {
         return false;
     } else {
         var record = selectRow[0]
-        if (record.speedStatus == "维修保养中") {
+        if (record.speedStatus == "维修保养中" && record.recordStatus != "N") {
             $.get(  '/record/achieve_record?recordId=' + record.recordId, function (data) {
                 if (data.result == "success") {
                     $('#cusTable').bootstrapTable('refresh');
@@ -32,7 +32,7 @@ function recordOk() {
                 }
             }, 'json');
         } else {
-            swal('错误提示', "请确认后再点击", "error");
+            swal('错误提示', "请确认无误后再点击", "error");
             return false;
         }
     }

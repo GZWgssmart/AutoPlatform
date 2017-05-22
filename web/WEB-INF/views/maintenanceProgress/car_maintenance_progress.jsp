@@ -48,7 +48,7 @@
                 维修保养开始时间
             </th>
             <th data-field="actualEndTime" data-formatter="formatterDate">
-                完成时间
+                维修保养完成时间
             </th>
             <th data-field="checkin.maintainOrFix">
                 保养&nbsp;|&nbsp;维修
@@ -79,13 +79,11 @@
                     <i class="glyphicon glyphicon-search"></i> 查看不可用进度
                 </button>
             </a>
-            <shiro:hasAnyRoles name="companyAdmin, companyReceive">
             <a>
                 <button onclick="searchStatus_All();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-search"></i> 查看全部进度
                 </button>
             </a>
-            </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="companyArtificer">
             <a>
                 <button onclick="recordOk();" type="button" class="btn btn-default">

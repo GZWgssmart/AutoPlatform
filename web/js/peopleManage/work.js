@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //调用函数，初始化表格
-    initTable("cusTable", "/peopleManage/workInfo_pager");
+    initTable("cusTable", "/peopleManage/workInfo_Status_Y");
     initSelect2("work_user", "请选择员工", "/peopleManage/self_user", 565);
     destoryValidator("editWin","editForm");
 });
@@ -96,11 +96,15 @@ function showEditWin() {
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length > 0) {
         var work = selectRow[0];
-        initDateTimePickerNotValitor("form_datetime");
-        validator("editForm");
-        $("#editForm").fill(work);
-        $("#workEndTime").val(formatterDate(work.maintainRecord.endTime));
-        $("#editWin").modal("show");
+        if (work.workStatus != "N"){
+            initDateTimePickerNotValitor("form_datetime");
+            validator("editForm");
+            $("#editForm").fill(work);
+            $("#workEndTime").val(formatterDate(work.maintainRecord.endTime));
+            $("#editWin").modal("show");
+        } else {
+            swal('指派失败', "该工单为不可用", "error");
+        }
     } else {
         swal('指派失败', "只能选择一条数据进行指派", "error");
     }

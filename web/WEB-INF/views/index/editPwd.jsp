@@ -37,25 +37,25 @@
                     <div class="selfPwd">
                         <br/>
                         <br/>
-                        <form role="form" method="get">
+                        <form role="form" method="get" autocomplete="off">
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label class="control-label">旧密码：</label>
-                                    <input class="form-control" type="password" style="display: initial;" id="oldPwd" placeholder="请输入旧密码" />
+                                    <input class="form-control" autocomplete="off" type="password" style="display: initial;" id="oldPwd" placeholder="请输入旧密码" />
                                 </div>
                             </div>
                             <br/>
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label class="control-label">新密码：</label>
-                                    <input class="form-control" type="password" style="display: initial;" id="pwd" placeholder="请输入新密码"/>
+                                    <input class="form-control" autocomplete="off" type="password" style="display: initial;" id="pwd" placeholder="请输入新密码"/>
                                 </div>
                             </div>
                             <br/>
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label class="control-label">确认密码：</label>
-                                    <input class="form-control" type="password" style="display: initial;" id="rePwd" placeholder="请输入确认密码"/>
+                                    <input class="form-control" autocomplete="off" type="password" style="display: initial;" id="rePwd" placeholder="请输入确认密码"/>
                                 </div>
                             </div>
                             <br/>

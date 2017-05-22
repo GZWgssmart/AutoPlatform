@@ -241,6 +241,15 @@ function selectPeopleWin() {
 }
 
 
+/** 修改提交按钮 */
+function editInfo() {
+    $("#editForm").data('bootstrapValidator').validate();
+    if ($("#editForm").data('bootstrapValidator').isValid()) {
+    } else {
+        $("#editButton").removeAttr("disabled");
+    }
+}
+
 
 
 /**编辑数据 */
@@ -248,14 +257,19 @@ function showEdit() {
     validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
-        swal('编辑失败', "只能选择一条数据进行编辑", "error");
+        swal('分配失败', "只能选择一个员工进行分配", "error");
         return false;
     } else {
         var user = selectRow[0];
-        $("#editForm").fill(user);
-        $('#editRole').html('<option value="' + user.role.roleId + '">' + user.role.roleDes + '</option>').trigger("change");
-        $('#editRoleAll').html('<option value="' + user.role.roleId + '">' + user.role.roleDes + '</option>').trigger("change");
-        $("#editWin").modal('show');
+        if(user.userStatus != "N"){
+            $("#editForm").fill(user);
+            $('#editRole').html('<option value="' + user.role.roleId + '">' + user.role.roleDes + '</option>').trigger("change");
+            $('#editRoleAll').html('<option value="' + user.role.roleId + '">' + user.role.roleDes + '</option>').trigger("change");
+            $("#editWin").modal('show');
+        } else {
+            swal('分配失败', "该员工是不可用状态", "error");
+            return false;
+        }
     }
 }
 

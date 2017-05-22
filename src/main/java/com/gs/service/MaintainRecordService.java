@@ -194,76 +194,76 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      * 根据维修保养记录分页查询车主自己进度
      * @return
      */
-    public List<MaintainRecord> queryByUser(Pager pager, String userId);
+    public List<MaintainRecord> queryByUser(Pager pager, User user);
 
     /**
      * 根据维修保养记录分页查询车主自己进度个数
      * @return
      */
-    public int countByUser(String userId);
+    public int countByUser(User user);
 
 
     /**
      * 根据维修保养记录分页查询技师管理进度
      * @return
      */
-    public List<MaintainRecord> queryByEmp(Pager pager, String userId);
+    public List<MaintainRecord> queryByEmp(Pager pager, User user);
 
     /**
      * 根据维修保养记录分页查询技师管理进度个数
      * @return
      */
-    public int countByEmp(String userId);
+    public int countByEmp(User user);
 
 
     /**
      * 根据维修保养记录分页查询车主自己可用进度
      * @return
      */
-    public List<MaintainRecord> queryByUser_Y(Pager pager, String userId);
+    public List<MaintainRecord> queryByUser_Y(Pager pager, User user);
 
     /**
      * 根据维修保养记录分页查询车主自己可用进度个数
      * @return
      */
-    public int countByUser_Y(String userId);
+    public int countByUser_Y(User user);
 
     /**
      * 根据维修保养记录分页查询技师管理可用进度
      * @return
      */
-    public List<MaintainRecord> queryByEmp_Y(Pager pager, String userId);
+    public List<MaintainRecord> queryByEmp_Y(Pager pager, User user);
 
     /**
      * 根据维修保养记录分页查询技师管理可用进度个数
      * @return
      */
-    public int countByEmp_Y(String userId);
+    public int countByEmp_Y(User user);
 
 
     /**
      * 根据维修保养记录分页查询车主自己不可用进度
      * @return
      */
-    public List<MaintainRecord> queryByUser_N(Pager pager, String userId);
+    public List<MaintainRecord> queryByUser_N(Pager pager, User user);
 
     /**
      * 根据维修保养记录分页查询车主自己不可用进度个数
      * @return
      */
-    public int countByUser_N(String userId);
+    public int countByUser_N(User user);
 
     /**
      * 根据维修保养记录分页查询技师管理不可用进度
      * @return
      */
-    public List<MaintainRecord> queryByEmp_N(Pager pager, String userId);
+    public List<MaintainRecord> queryByEmp_N(Pager pager, User user);
 
     /**
      * 根据维修保养记录分页查询技师管理不可用进度个数
      * @return
      */
-    public int countByEmp_N(String userId);
+    public int countByEmp_N(User user);
 
     /**
      * 根据id更新记录的实际结束时间
