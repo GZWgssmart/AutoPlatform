@@ -66,8 +66,8 @@ public class MessageController {
                 }else{
                     user.setUserIcon(uIcon);
                 }
-                user.setUserAddress(address);
                 userService.updateMessage(user);
+                user.setUserAddress(address);
                 return ControllerResult.getSuccessResult("修改信息成功");
             } catch (Exception e) {
                 logger.info("修改信息失败，出现了异常");

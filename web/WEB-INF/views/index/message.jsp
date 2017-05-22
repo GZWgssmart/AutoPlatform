@@ -7,10 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
 %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>个人资料</title>
@@ -65,18 +65,18 @@
                                             <label class="control-label">性别：</label>
                                             <select style="display: initial;" class="form-control"  name="userGender" id="gender">
                                                 <c:if test="${user.userGender == 'N'}">
-                                                    <option value="N" selected = "selected">未知</option>
+                                                    <option value="N">未知</option>
                                                     <option value="M">男</option>
                                                     <option value="F">女</option>
                                                 </c:if>
                                                 <c:if test="${user.userGender == 'M'}">
                                                     <option value="M">男</option>
-                                                    <option value="N" selected = "selected">未知</option>
+                                                    <option value="N">未知</option>
                                                     <option value="F">女</option>
                                                 </c:if>
                                                 <c:if test="${user.userGender == 'F'}">
                                                     <option value="F">女</option>
-                                                    <option value="N" selected = "selected">未知</option>
+                                                    <option value="N">未知</option>
                                                     <option value="M">男</option>
                                                 </c:if>
                                             </select>
@@ -118,7 +118,7 @@
                                         <div class="col-md-3">
                                             <label class="control-label">居住地址：</label>
                                             <div style="position: relative;">
-                                                <input data-toggle="city-picker" style="display: initial;" value="${user.userAddress}" id="address" name="userAddress" class="address">
+                                                <input data-toggle="city-picker" style="display: initial;" value="${user.userAddress}" name="userAddress">
                                             </div>
                                         </div>
                                     </div>
