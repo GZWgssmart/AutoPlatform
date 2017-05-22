@@ -262,7 +262,7 @@
                             <div class="form-group">
                                 <label class="control-label">居住地址：</label>
                                 <div style="position: relative;">
-                                    <input type="text" name="userAddress" class="form-control"/>
+                                    <input data-toggle="city-picker" class="address" name="userAddress">
                                 </div>
                             </div>
                             <div class="form-group">
