@@ -180,15 +180,17 @@
                                 <input type="text" name="companyWebsite"
                                        class="form-control" id="url_input"/>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label">公司图片</label>
-                                <div id="previews">
-                                    <img  name="file" style="width:120px;height:100px;"/>
+                                <div id="preview">
+                                    <img  name="file"  style="width:120px;height:100px;"/>
                                 </div>
                                 <input type="file" name="file" onchange="previewImage(this)" style="display: none;"
-                                       id="previewImgs">
-                                <button id="buttons" onclick="$('#previewImgs').click();">上传公司图片</button>
+                                       id="previewImg">
+                                <a onclick="$('#previewImg').click();" style="cursor:pointer">上传公司图片</a>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label">公司规模</label>
                                 <select class="form-control" name="companySize">
@@ -215,7 +217,7 @@
                                        class="form-control" readonly/>
                             </div>
                             <div class="form-group">
-                                <label class="control-label">选择公司位置:</label>
+                                <label class="control-label">查询公司位置:</label>
                                 <input type="button" class="btn btn-primary" onclick="showMap();" value="选择公司位置">
                                 </input>
                             </div>
@@ -250,10 +252,12 @@
                         <h3 class="m-t-none m-b">修改公司</h3>
                         <form role="form" id="editForm" enctype="multipart/form-data">
                             <input type="hidden" name="companyId" attr="company.companyId"/>
+
                             <div class="form-group">
                                 <label class="control-label">公司名称：</label>
                                 <input type="text" name="companyName" class="form-control" attr="company.companyName"/>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label">公司地址：</label>
                                 <div style="position: relative;">
@@ -261,6 +265,7 @@
                                            name="companyAddress"/>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label">公司联系方式：</label>
                                 <input type="text" name="companyTel"
@@ -271,11 +276,13 @@
                                 <input type="text" name="companyPricipal"
                                        class="form-control" attr="company.companyPricipal"/>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label">公司官网</label>
                                 <input type="text" name="companyWebsite"
                                        class="form-control" attr="company.companyWebsite"/>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label">公司规模</label>
                                 <select class="form-control" id="companys" name="companySize">
@@ -285,12 +292,34 @@
                                     <option value="50人以上">50人以上</option>
                                 </select>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label">公司创建时间</label>
                                 <input type="text" name="companyOpenDate" readonly
                                        class="form_datetime form-control " id="editCompanyOpenDate">
                                 <span class="add-on"><i class="icon-th"></i></span>
                             </div>
+
+                            <div class="form-group">
+                                <label class="control-label">公司logo：</label>
+                                <div id="preview2">
+                                    <img id="icon" name="file" style="width:120px;height:60px;"/>
+                                </div>
+                                <input type="file" name="file" onchange="previewImage2(this)" style="display: none;"
+                                       id="previewImg2">
+                                <a id="button" onclick="$('#previewImg2').click();" style="cursor:pointer">修改LOGO</a>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">公司图片</label>
+                                <div id="preview1">
+                                    <img  name="file1" id="img" style="width:120px;height:60px;"/>
+                                </div>
+                                <input type="file" name="file1" onchange="previewImage1(this)" style="display: none;"
+                                       id="previewImg1" >
+                                <a onclick="$('#previewImg1').click();" style="cursor:pointer">修改公司图片</a>
+                            </div>
+
                             <div class="form-group">
                                 <label class="control-label">公司纬度</label>
                                 <input id="editLatitude" type="text" name="companyLatitude"
@@ -302,18 +331,10 @@
                                        class="form-control" attr="company.companyLongitude" readonly/>
                                 <div class="form-group">
                                     <label class="control-label">选择公司位置:</label>
-                                    <input type="button" class="btn btn-primary" onclick="showMap();" value="选择公司位置">
+                                    <input type="button" class="btn btn-primary" onclick="showMap();" value="查询公司位置">
                                     </input>
                                 </div>
-                                <div class="form-group">
-                                    <label class="control-label">公司logo：</label>
-                                    <div id="preview">
-                                        <img id="icon" name="file" style="width:120px;height:60px;"/>
-                                    </div>
-                                    <input type="file" name="file" onchange="previewImage(this)" style="display: none;"
-                                           id="previewImg">
-                                    <button id="button" onclick="$('#previewImg').click();">修改LOGO</button>
-                                </div>
+
                                 <div class="form-group">
                                     <label class="control-label">公司描述：</label>
                                     <textarea name="companyDes" type="textarea" cols="20" rows="5" class="form-control"
@@ -323,7 +344,7 @@
                                     <button type="button" class="btn btn-default"
                                             data-dismiss="modal">关闭
                                     </button>
-                                    <input type="button" id="editButton" class="btn btn-primary" value="修改">
+                                    <input type="button" id="editButton" class="btn btn-primary" onclick="edit();" value="修改">
                                     </input>
                                 </div>
                             </div>

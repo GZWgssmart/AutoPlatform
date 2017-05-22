@@ -27,6 +27,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -257,30 +258,47 @@ public class CompanyController {
 
     @ResponseBody
     @RequestMapping(value = "uploadCompany", method = RequestMethod.POST)
-    public ControllerResult upload(Company company, MultipartFile file,HttpSession session) {
+    public ControllerResult upload(Company company,MultipartFile file,HttpSession session,MultipartFile file1) {
+        System.out.println("进入给方法。。。。。。。。。。");
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
         }
         if (CheckRoleUtil.checkRoles(CompanyEditRole)) {
-            try {
+//            try {
                 logger.info("更新公司成功");
-                    String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
+                    String fileName = UUIDUtil.uuid() + file.getOriginalFilename();
+                     System.out.println(fileName);
                     String filePath = FileUtil.uploadPath(session, "\\" + fileName);
-                    String logo = "uploads/" + fileName;
+                    String logo = "/uploads/" + fileName;
                     if (!file.isEmpty()) {
-                        file.transferTo(new File(filePath));
+                        try {
+                            file.transferTo(new File(filePath));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         company.setCompanyLogo(logo);
                     }
+                    String fileImg = UUIDUtil.uuid() + file1.getOriginalFilename();
+                    String filImgPath = FileUtil.uploadPath(session, "\\" + fileImg);
+                    String img = "/uploads/" + fileImg;
+                    if (!file1.isEmpty()) {
+                        try {
+                            file.transferTo(new File(filImgPath));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        company.setCompanyImg(img);
+                    }
+                    System.out.println(company);
                     companyService.update(company);
                     return ControllerResult.getSuccessResult("更新公司成功");
-
-            } catch (Exception e) {
-                logger.info("更新失败，出现了一个错误");
-                return ControllerResult.getFailResult("更新失败，出现了一个错误");
-            }
+//            } catch (Exception e) {
+//                logger.info("更新失败，出现了一个错误");
+//                return ControllerResult.getFailResult("更新失败，出现了一个错误");
+//            }
         }else{
-            return null;
+            return ControllerResult.getFailResult("您没有权限修改");
         }
     }
 

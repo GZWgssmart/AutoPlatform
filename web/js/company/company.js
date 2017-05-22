@@ -10,9 +10,8 @@ $(document).ready(function () {
     initTable("cusTable", "/company/queryByPager");
     destoryValidator("addWin", "addForm");
     destoryValidator("editWin", "editForm");
-
-
 });
+
 function companyAll() {
     initTable("cusTable", "/company/queryByPager");
 }
@@ -38,14 +37,16 @@ function showEditWin() {
         editName = product.companyName;
         editTel  = product.companyTel;
         editWebsite = product.companyWebsite;
+        initCityPicker("address");
         initDateTimePicker("form_datetime", "companyOpenDate", "editForm");
         $('#companys').html('<option value="' + product.companySize + '">' + product.companySize + '</option>').trigger("change");
         $('#editCompanyOpenDate').val(formatterDate(product.companyOpenDate));
         $("#icon").attr("src", "" + product.companyLogo);
+        $("#img").attr("src","" + product.companyImg);
         initCityPicker("address");
+        validator("editForm");
         $("#editForm").fill(product);
         $("#editWin").modal('show');
-        validator("editForm");
     }
 }
 
@@ -81,9 +82,10 @@ function companyOpDateFormatter(value, row, index) {
 
 
 function showAddWin() {
-    validator("addForm");
     initDateTimePicker("form_datetime", "companyOpenDate", "addForm");
     $('#companys').html('').trigger("change");
+    $("#img").attr("src","");
+    validator("addForm");
     $("#addWin").modal('show');
 }
 
@@ -146,14 +148,16 @@ window.operateEvents = {
         editName = incomingType.companyName;
         editTel  = incomingType.companyTel;
         editWebsite = incomingType.companyWebsite;
+        editPhone = incomingType.companyPricipalPhone;
         $('#companys').html('<option value="' + incomingType.companySize + '">' + incomingType.companySize + '</option>').trigger("change");
         initDateTimePicker("form_datetime", "", "editForm");
         $("#icon").attr("src", "" + incomingType.companyLogo);
+        $("#img").attr("src", "" + incomingType.companyImg);
         $('#editCompanyOpenDate').val(formatterDate(incomingType.companyOpenDate));
         initCityPicker("address");
+        validator("editForm");
         $("#editForm").fill(incomingType);
         $("#editWin").modal('show');
-        validator("editForm");
     }
 }
 
@@ -168,7 +172,7 @@ function validator(formId) {
         },
         fields: {
             companyName: {
-                message: '公司名称验证失败',
+                message: '公司名称失败',
                 validators: {
                     notEmpty: {
                         message: '公司名称不能为空'
@@ -188,7 +192,7 @@ function validator(formId) {
                 }
             },
             companyDes: {
-                message: '公司描述验证失败',
+                message: '公司描述失败',
                 validators: {
                     stringLength: {
                         min: 0,
@@ -198,7 +202,7 @@ function validator(formId) {
                 }
             },
             companyAddress: {
-                message: '公司地址验证失败',
+                message: '公司地址失败',
                 validators: {
                     stringLength: {
                         min: 2,
@@ -208,26 +212,29 @@ function validator(formId) {
                 }
             },
             companyTel: {
-                message: '公司电话验证失败',
+                message: '公司联系方式失败',
                 validators: {
                     notEmpty: {
-                        message: '公司电话不能为空'
+                        message: '公司联系方式不能为空'
                     }, stringLength: {
                         min: 13,
                         max: 13,
-                        message: '公司电话长度必须是13位'
+                        message: '公司号码长度必须是13至13位,(例如:010-11111111)'
+                    },regexp:{
+                        regexp: /^\d{3,4}-?\d{7,9}$/,
+                        message: '请输入正确公司官电话(例如：010-11111111)'
                     },
                     threshold: 6,
                     remote: {
                         url: '/vilidate/queryIsExist_companyTel?editCompanyTel=' + editTel,
-                        message: '该公司电话已存在',
+                        message: '该公司号码已存在',
                         delay: 2000,
                         type: 'GET'
                     }
                 }
             },
             companyPricipal: {
-                message: '公司负责人验证失败',
+                message: '公司负责人失败',
                 validators: {
                     notEmpty: {
                         message: '公司负责人不能为空'
@@ -240,7 +247,7 @@ function validator(formId) {
                 }
             },
             companyWebsite: {
-                message: '公司官网URL验证失败',
+                message: '公司官网URL失败',
                 validators: {
                     regexp: {
                         regexp: /^(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?$/,
@@ -255,15 +262,6 @@ function validator(formId) {
                         message: '该URL已存在',
                         delay: 2000,
                         type: 'GET'
-                    }
-                }
-
-            },
-            companyOpenDate: {
-                message: '公司创建时间',
-                validators: {
-                    notEmpty: {
-                        message: '公司创建时间不能为空'
                     }
                 }
             },
@@ -287,8 +285,8 @@ function validator(formId) {
                     },
                     threshold: 6,
                     remote: {
-                        url: '/vilidate/queryIsExist_companyPP?editPhone=' + editPhone,
-                        message: '该手机号已存在',
+                        url: '/vilidate/queryIsExist_userPhone?editPhone=' + editPhone,
+                        message: '该URL已存在',
                         delay: 2000,
                         type: 'GET'
                     }
@@ -309,6 +307,7 @@ function validator(formId) {
                             editName = "";
                             editTel  = "";
                             editWebsite = "";
+                            editPhone = "";
                             swal(data.message, "", "success");
                             $('#cusTable').bootstrapTable('refresh');
                             $('#addForm').data('bootstrapValidator').resetForm(true);
@@ -323,13 +322,7 @@ function validator(formId) {
                 editName = "";
                 editTel  = "";
                 editWebsite = "";
-                $("#editButton").on("click", function () {
-                    $("#editForm").data('bootstrapValidator').validate();
-                    if ($("#editForm").data('bootstrapValidator').isValid()) {
-                        $("#editButton").attr("disabled", "disabled");
-                    } else {
-                        $("#editButton").removeAttr("disabled");
-                    }
+                editPhone = "";
                     $('#editForm').ajaxSubmit({
                         url: '/company/uploadCompany',
                         type: 'post',
@@ -337,19 +330,18 @@ function validator(formId) {
                         success: function (data) {
                             if (data.result == "success") {
                                 $('#editWin').modal('hide');
-
                                 swal(data.message, "", "success");
                                 $('#cusTable').bootstrapTable('refresh');
                                 $('#editForm').data('bootstrapValidator').resetForm(true);
                             } else if (data.result == "fail") {
                                 $('#editWin').modal('hide');
                                 swal(data.message, "", "error");
+                                $('#cusTable').bootstrapTable('refresh');
                                 $('#editForm').data('bootstrapValidator').resetForm(true);
                             }
                         }
                     })
-                })
-            }
+                }
         })
 }
 
@@ -403,13 +395,13 @@ function previewImage(file) {
 }
 
 //图片上传预览    IE是用了滤镜。
-function previewImage(file) {
+function previewImage2(file) {
     var MAXWIDTH = 120;
     var MAXHEIGHT = 60;
-    var div = document.getElementById('previews');
+    var div = document.getElementById('preview2');
     if (file.files && file.files[0]) {
-        div.innerHTML = '<img id=imgheads onclick=$("#previewImgs").click()>';
-        var img = document.getElementById('imgheads');
+        div.innerHTML = '<img id=imghead2 onclick=$("#previewImg2").click()>';
+        var img = document.getElementById('imghead2');
         img.onload = function () {
             var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
             img.width = rect.width;
@@ -429,7 +421,42 @@ function previewImage(file) {
         file.select();
         var src = document.selection.createRange().text;
         div.innerHTML = '<img id=imgheads>';
-        var img = document.getElementById('imgheads');
+        var img = document.getElementById('imghead2');
+        img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+        status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
+        div.innerHTML = "<div id=divhead style='width:" + rect.width + "px;height:" + rect.height + "px;margin-top:" + rect.top + "px;" + sFilter + src + "\"'></div>";
+    }
+}
+
+//图片上传预览    IE是用了滤镜。
+function previewImage1(file) {
+    var MAXWIDTH = 120;
+    var MAXHEIGHT = 60;
+    var div = document.getElementById('preview1');
+    if (file.files && file.files[0]) {
+        div.innerHTML = '<img id=imghead1 onclick=$("#previewImg1").click()>';
+        var img = document.getElementById('imghead1');
+        img.onload = function () {
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            img.width = rect.width;
+            img.height = rect.height;
+//                 img.style.marginLeft = rect.left+'px';
+            img.style.marginTop = rect.top + 'px';
+        }
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            img.src = evt.target.result;
+        }
+        reader.readAsDataURL(file.files[0]);
+    }
+    else //兼容IE
+    {
+        var sFilter = 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+        file.select();
+        var src = document.selection.createRange().text;
+        div.innerHTML = '<img id=imghead1>';
+        var img = document.getElementById('imghead1');
         img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
         var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
         status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
