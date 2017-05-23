@@ -44,7 +44,7 @@
                         <c:otherwise>
                             <figure>
                                 <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/${c.companyImg}" alt="Image" class="img-responsive">
+                                <img src="<%=path%>${c.companyImg}" alt="Image" class="img-responsive">
                             </figure>
                         </c:otherwise>
                     </c:choose>
