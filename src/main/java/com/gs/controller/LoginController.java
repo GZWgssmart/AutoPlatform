@@ -212,14 +212,11 @@ public class LoginController {
     }
 
     @RequestMapping("logout")
-    public ModelAndView logout(HttpSession session) {
+    public String logout(HttpSession session) {
         logger.info("注销");
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         subject.getSession().removeAttribute("user");
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("index/index");
-        mav.addObject("companys", companyService.queryByTop(6));
-        return mav;
+        return "redirect:/index";
     }
 }
