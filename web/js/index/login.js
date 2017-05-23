@@ -176,10 +176,14 @@ function showPwdWin(){
     $("#error1").html("");
     $('#successMsg2').html("");
     $('#pwdDiv').hide();
+    $("#codeButton").val("获取验证码");
+    $("#codeButton").attr("disabled","disabled");
+
 }
 
 
-function checkPhone1(number){
+
+function checkEmail(number){
     if (number != null && number != "") {
         $.get("/pwd/checkPhone?number=" + number,
             function (data) {
@@ -187,6 +191,7 @@ function checkPhone1(number){
                     userPhone = number;
                     $("#error").html("");
                     $("#pwdDiv").show();
+                    $("#codeButton").removeAttr("disabled");
                 } else if (data == "false") {
                     $("#error").html("不存在该用户");
                 }
@@ -195,12 +200,14 @@ function checkPhone1(number){
 }
 /** 验证找回密码输入的账号 */
 function variNumber1(number) {
-    if (isEmail(number)) {
-        checkPhone1(number);
-    } else if (isPhone(number)) {
-        checkPhone1(number);
-    } else {
-        $("#error").html("请输入正确的手机号或邮箱");
+    if(number != '') {
+        if (isEmail(number)) {
+            checkEmail(number);
+        } else if (isPhone(number)) {
+            checkEmail(number);
+        } else {
+            $("#error").html("请输入正确的手机号或邮箱");
+        }
     }
 }
 
@@ -208,25 +215,21 @@ function variNumber1(number) {
 var countdown2 = 60;
 function getCode2(val) {
     var phone = $("#phone").val();
-    if(phone != '') {
-        sendCode2(countdown2);
-        if (countdown2 == 0) {
-            val.removeAttribute("disabled");
-            val.value = "获取验证码";
-            countdown2 = 60;
-        } else {
-            val.setAttribute("disabled", true);
-            val.value = "重新发送(" + countdown2 + ")";
-            countdown2--;
-        }
-        setTimeout(function () {
-            if (val.value != "获取验证码") {
-                getCode2(val);
-            }
-        }, 1000)
-    }else{
-        $("#error").html("请输入您的手机号或邮箱");
+    sendCode2(countdown2);
+    if (countdown2 == 0) {
+    val.removeAttribute("disabled");
+    val.value = "获取验证码";
+    countdown2 = 60;
+    } else {
+    val.setAttribute("disabled", true);
+    val.value = "重新发送(" + countdown2 + ")";
+    countdown2--;
     }
+    setTimeout(function () {
+    if (val.value != "获取验证码") {
+        getCode2(val);
+    }
+    }, 1000)
 }
 
 /** 发送找回密码的验证短信 */
@@ -247,31 +250,43 @@ function sendCode2(val) {
 }
 
 function variCode(val){
-    if (val == codeNumber) {
-        $("#error").html("");
-        $("#pwd").removeAttr("disabled");
-        $("#pwd1").removeAttr("disabled");
-    } else {
-        $("#pwd").attr("disabled", "disabled");
-        $("#pwd1").attr("disabled", "disabled");
-        $("#error").html('您输入的验证码有误，请重新输入');
+    if(val != '') {
+        if (val == codeNumber) {
+            $("#error").html("");
+            $("#pwd").removeAttr("disabled");
+            $("#pwd1").removeAttr("disabled");
+        } else {
+            $("#pwd").attr("disabled", "disabled");
+            $("#pwd1").attr("disabled", "disabled");
+            $("#error").html('您输入的验证码有误，请重新输入');
+        }
+    }else{
+
     }
 }
 function editPwd(){
     var pwd = $("#pwd").val();
     var pwd1 = $("#pwd1").val();
     var number = $("#phone").val();
-    if(pwd == pwd1){
-        $("#error1").html("");
-        $.get("/pwd/editPwd?number="+number +"&pwd="+pwd,
-            function(data){
-                if(data.result == "success"){
-                    swal("修改密码成功","","success");
-                    $("#editPwd").modal("hide");
-                }
-        },"json");
+    if(pwd != '' && pwd1 != '') {
+        if(pwd >= 6 && pwd1 >= 6 && pwd >= 16 && pwd1 >= 16) {
+            if (pwd == pwd1) {
+                $("#error1").html("");
+                $.get("/pwd/editPwd?number=" + number + "&pwd=" + pwd,
+                    function (data) {
+                        if (data.result == "success") {
+                            swal("修改密码成功", "", "success");
+                            $("#editPwd").modal("hide");
+                        }
+                    }, "json");
+            } else {
+                $("#error1").html('您输入的两次密码不一样，请重新输入');
+            }
+        }else{
+            $("#error1").html('密码不能小于6位,大于16位');
+        }
     }else{
-        $("#error1").html('您输入的两次密码不一样，请重新输入');
+        $("#error1").html('请输人密码');
     }
 }
 

@@ -431,8 +431,8 @@
                                     <input type="text" id="" name="code" class="form-control" onblur="variCode(this.value)" placeholder="输入手机验证码">
                                 </div>
                                 <div class="col-sm-4" style="margin: 0px;">
-                                    <input type="button" id="getButton"
-                                           onclick="getCode2(this)" class="btn btn-primary" maxlength="6"
+                                    <input type="button" id="codeButton"
+                                           onclick="getCode2(this)"   class="btn btn-primary" maxlength="6"
                                            value="获取验证码" style="padding-left: 10px; padding-right: 10px;">
                                 </div>
                             </div>
