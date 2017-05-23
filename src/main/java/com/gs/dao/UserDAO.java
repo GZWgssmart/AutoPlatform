@@ -139,4 +139,8 @@ public interface UserDAO extends BaseDAO<String, User>{
      * @return
      */
     public User queryAdmin();
+    /*
+    *  根据手机号或邮箱修改密码
+    * */
+    public int updatePwdPhone(@Param("user") User user);
 }

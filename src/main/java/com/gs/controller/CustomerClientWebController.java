@@ -8,6 +8,7 @@ import com.gs.bean.User;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.message.IndustrySMS;
+import com.gs.common.util.Base64Util;
 import com.gs.common.util.EncryptUtil;
 import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
@@ -108,7 +109,9 @@ public class CustomerClientWebController {
     public ControllerResult sendCode(@Param("userPhone") String userPhone, @Param("codeNumber") String codeNumber) {
         logger.info("获取短信验证码");
         String to = userPhone;
-        String smsContent = "【创意科技】您的验证码为" + codeNumber + "，请于30分钟内正确输入，如非本人操作，请忽略此短信。";
+        byte[] bytes = Base64Util.decode(codeNumber);
+        String code = new String(bytes);
+        String smsContent = "【创意科技】您的验证码为" + code + "，请于30分钟内正确输入，如非本人操作，请忽略此短信。";
         IndustrySMS is = new IndustrySMS(to, smsContent);
         is.execute();
         return ControllerResult.getSuccessResult("验证码发送成功，请注意查收");

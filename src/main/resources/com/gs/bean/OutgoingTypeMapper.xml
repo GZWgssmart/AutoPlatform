@@ -102,7 +102,7 @@
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and companyId = #{user.companyId}
-  
+
 		</if>
 	</select>
 

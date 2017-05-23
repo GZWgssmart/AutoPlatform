@@ -9,6 +9,7 @@ import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
+import com.gs.common.message.IndustrySMS;
 import com.gs.common.util.CheckRoleUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.service.CompanyService;
@@ -53,7 +54,7 @@ public class MessageSendController {
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;;
     private String editRole = Constants.COMPANY_ADMIN + ","+ Constants.COMPANY_RECEIVE;
 
-    private List<String> strPhone;
+    private String strPhone;
 
     @RequestMapping(value = "show_MessageSend", method = RequestMethod.GET)
     public String messageSend() {
@@ -102,11 +103,7 @@ public class MessageSendController {
         }
         try{
             messageSendService.batchUpdateBySendMsg(idList, sendMsg);
-            User user = SessionGetUtil.getUser();
-            Company company = companyService.queryById(user.getCompanyId());
-            String content = "独在异乡为异客，每逢佳节“粽”思亲。遥知兄弟登高处，万水千山“粽”是情。 端午节，要吃“粽”，祝您“粽”横四海，" +
-                    "“粽”是走运!端午节快乐! 端午节平台有惊喜，详情电话咨询{"+company.getCompanyTel()+"}，客服小二";
-            new Thread(new SendMessageThread(strPhone,content)).start();
+
             return ControllerResult.getSuccessResult("更新成功");
         } catch (Exception e) {
             logger.info("更新失败，出现了一个错误");
@@ -128,8 +125,13 @@ public class MessageSendController {
             return ControllerResult.getFailResult("更新失败，没有该权限操作");
         }
        try{
-            messageSendService.batchUpdateBySuccess(idList);
-            new Thread(new SendMessageThread(strPhone,"dd")).start();
+           System.out.println(strPhone+ "-----------------phone");
+           messageSendService.batchUpdateBySuccess(idList);
+           String content = "尊敬的用户，您已经成功入驻我们的平台，您可以使用您的手机号进行登入我们的系统了哦，登入密码为默认密码";
+           String to = strPhone;
+           String smsContent = content;
+           IndustrySMS is = new IndustrySMS(to, smsContent);
+           is.execute();
             return ControllerResult.getSuccessResult("发送成功");
         } catch (Exception e) {
             logger.info("更新失败，出现了一个错误");
@@ -148,9 +150,13 @@ public class MessageSendController {
         }
         User LoginUser = SessionGetUtil.getUser();
         List<MessageSend> mesList  = messageSendService.queryAll(LoginUser);
-        strPhone = new ArrayList<String>();
+        strPhone = "";
         for(MessageSend ms: mesList){
-            strPhone.add(ms.getUser().getUserPhone());
+            if(strPhone.equals("")){
+                strPhone = ms.getUser().getUserPhone();
+            }else {
+                strPhone +=  "," + ms.getUser().getUserPhone();
+            }
         }
         return mesList;
     }

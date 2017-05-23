@@ -42,7 +42,7 @@
     <!-- Themify Icons-->
     <link rel="stylesheet" href="<%=path%>/css/themify-icons.css">
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="<%=path%>/css/bootstrap.css">
+    <link rel="stylesheet" href="<%=path%>/css/bootstrap.min.css">
 
     <!-- Magnific Popup -->
     <link rel="stylesheet" href="<%=path%>/css/magnific-popup.css">
@@ -50,6 +50,7 @@
     <!-- Owl Carousel  -->
     <link rel="stylesheet" href="<%=path%>/css/owl.carousel.min.css">
     <link rel="stylesheet" href="<%=path%>/css/owl.theme.default.min.css">
+    <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
 
     <!-- Theme style  -->
     <link rel="stylesheet" href="<%=path%>/css/style.css">
@@ -205,9 +206,10 @@
                                                         </div>
                                                     </div>
                                                 </form>
+                                                <div>
+                                                    <dutton onclick="showPwdWin()" style="cursor: pointer;">忘记密码</dutton>
+                                                </div>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -402,6 +404,59 @@
 <div class="gototop js-top">
     <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 </div>
+<%--
+找回密码窗口
+--%>
+<div id="editPwd" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                        <h3 class="m-t-none m-b">找回密码</h3>
+                        <form>
+                            <div class="row form-group">
+                                <div id="successMsg2" style="color: green;padding-left: 20px;"></div>
+                                <div class="col-md-12">
+                                    <label class="sr-only" for="phone">手机号</label>
+                                    <input type="text" id="phone" name="phone" class="form-control"
+                                           placeholder="请输入您的手机号或邮箱" onblur="variNumber1(this.value)">
+                                </div>
+                                <div id="error" style="color: red;padding-left: 20px;"></div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-sm-8" style="margin: 0px;">
+                                    <input type="text" id="" name="code" class="form-control" onblur="variCode(this.value)" placeholder="输入手机验证码">
+                                </div>
+                                <div class="col-sm-4" style="margin: 0px;">
+                                    <input type="button" id="getButton"
+                                           onclick="getCode2(this)" class="btn btn-primary" maxlength="6"
+                                           value="获取验证码" style="padding-left: 10px; padding-right: 10px;">
+                                </div>
+                            </div>
+                            <div id="pwdDiv" style="display:none;">
+                                <div class="form-group">
+                                    <input type="password" class="form-control" autocomplete="off"  disabled id="pwd" placeholder="请输入新密码"/>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" autocomplete="off"  disabled id="pwd1" placeholder="请确认密码"/>
+                                </div>
+                                <div id="error1" style="color: red;padding-left: 20px;"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="button" onclick="editPwd()" value="确定" id="searchBtn" class="btn btn-primary">
+                                <input type="reset" value="重置" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <%--login js--%>
 <script src="<%=path%>/js/index/login.js"></script>
@@ -411,6 +466,8 @@
 <script src="<%=path%>/js/jquery.easing.1.3.js"></script>
 <!-- Bootstrap -->
 <script src="<%=path%>/js/bootstrap.min.js"></script>
+<script src="<%=path %>/js/sweet-alert.min.js"></script>
+<script src="<%=path %>/js/base64.js"></script>
 <!-- Waypoints -->
 <script src="<%=path%>/js/jquery.waypoints.min.js"></script>
 <!-- Carousel -->

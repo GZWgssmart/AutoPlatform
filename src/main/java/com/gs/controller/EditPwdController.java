@@ -1,29 +1,29 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.Company;
-import com.gs.bean.Role;
 import com.gs.bean.User;
-import com.gs.bean.UserRole;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
+import com.gs.common.message.IndustrySMS;
 import com.gs.common.util.*;
-import com.gs.service.CompanyService;
-import com.gs.service.RoleService;
-import com.gs.service.UserRoleService;
-import com.gs.service.UserService;
+import com.gs.service.*;
+import com.jh.email.Mail;
+import com.jh.email.MailSender;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.util.UUID;
+import javax.mail.BodyPart;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Star on 2017/5/19.
@@ -36,6 +36,9 @@ public class EditPwdController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private VilidateService vilidateService;
 
     @RequestMapping(value = "personal_pwd", method = RequestMethod.GET)
     private String personalPwd() {
@@ -75,4 +78,79 @@ public class EditPwdController {
             return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
         }
     }
+
+    @ResponseBody
+    @RequestMapping("sendCode")
+    public ControllerResult sendCode(@Param("number") String number, @Param("codeNumber") String codeNumber) {
+        logger.info("获取验证码");
+        Pattern p = Pattern.compile("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.([a-zA-Z0-9_-])+)+$");
+        Matcher m = p.matcher(number);
+        boolean email = m.matches();
+        byte[] bytes = Base64Util.decode(codeNumber);
+        String code = new String(bytes);
+        if(email){
+            Mail mail = new Mail();
+            mail.setRecipients(number);
+            mail.setSubject("修改密码提醒");
+            mail.setType(Mail.HTML);
+            Multipart multipart = new MimeMultipart();
+            BodyPart part1 = new MimeBodyPart();
+            try {
+                part1.setContent("<p>【创意科技】您的验证码为" + code + "，请于30分钟内正确输入，如非本人操作，请忽略此邮件。</p>", mail.getType());
+                multipart.addBodyPart(part1);
+                mail.setMultipart(multipart);
+            } catch (MessagingException e) {
+            }
+            MailSender mailSender = new MailSender();
+            mailSender.sendEmailByType(Constants.MAIL_TYPE, mail, Constants.MAIL_SENDER, Constants.MAIL_PASSWORD);
+        }else{
+            String to = number;
+            String smsContent = "【创意科技】您的验证码为" + code + "，请于30分钟内正确输入，如非本人操作，请忽略此短信。";
+            IndustrySMS is = new IndustrySMS(to, smsContent);
+            is.execute();
+        }
+        return ControllerResult.getSuccessResult("验证码发送成功，请注意查收");
+    }
+
+    @ResponseBody
+    @RequestMapping("checkPhone")
+    public String checkPhone(@Param("number") String number) {
+        logger.info("判断是否存在该用户");
+        Pattern p = Pattern.compile("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.([a-zA-Z0-9_-])+)+$");
+        Matcher m = p.matcher(number);
+        boolean email = m.matches();
+        if(email){
+            if(vilidateService.queryDataIsExistUserEmail(number) >= 1){
+                return "true";
+            }else{
+                return "false";
+            }
+        }else{
+            if(vilidateService.queryDataIsExistUserPhone(number) >= 1){
+                return "true";
+            }else{
+                return "false";
+            }
+        }
+    }
+    @ResponseBody
+    @RequestMapping(value = "editPwd", method = RequestMethod.GET)
+    public ControllerResult editPwd(@Param("number")String number,@Param("pwd")String pwd){
+        logger.info("根据手机或邮箱修改密码");
+        Pattern p = Pattern.compile("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.([a-zA-Z0-9_-])+)+$");
+        Matcher m = p.matcher(number);
+        boolean email = m.matches();
+        User user = new User();
+        String pwd1 =  EncryptUtil.md5Encrypt(pwd);
+        if(email){
+            user.setUserEmail(number);
+        }else{
+            user.setUserPhone(number);
+        }
+        user.setUserPwd(pwd1);
+        userService.updatePwdPhone(user);
+        return ControllerResult.getSuccessResult("密码修改成功");
+    }
+
+
 }

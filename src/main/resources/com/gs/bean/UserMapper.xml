@@ -109,6 +109,19 @@
 		]]>
 	</update>
 
+	<update id="updatePwdPhone" parameterType="user">
+		<![CDATA[
+			UPDATE t_user SET
+				userPwd = #{user.userPwd} WHERE  1 = 1
+		]]>
+		<if test="user.userPhone != null and user.userPhone != ''">
+			and userPhone = #{user.userPhone}
+		</if>
+		<if test="user.userEmail != null and user.userEmail != ''">
+			and userEmail = #{user.userEmail}
+		</if>
+	</update>
+
 	<update id="updateAdmin" parameterType="user">
 		<![CDATA[
 			UPDATE t_user SET

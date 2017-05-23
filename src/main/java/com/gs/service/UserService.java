@@ -132,4 +132,9 @@ public interface UserService extends BaseService<String, User>{
      * @return
      */
     public User queryAdmin();
+
+    /*
+    *  根据手机号或邮箱修改密码
+    * */
+    public int updatePwdPhone( User user);
 }
