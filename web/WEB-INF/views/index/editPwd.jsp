@@ -23,7 +23,6 @@
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/code.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/style.min862f.css" rel="stylesheet" type="text/css">
 
 
 </head>
