@@ -29,3 +29,17 @@ function editPwd() {
     }
 }
 
+
+$(".arrowImg2").hide();
+
+function arrow2() {
+    $(".arrowImg1").show();
+    $(".arrowImg2").hide();
+    $("#oldPwd").prop('type', 'password');
+}
+
+function arrow1() {
+    $(".arrowImg1").hide();
+    $(".arrowImg2").show();
+    $("#oldPwd").prop('type', 'text');
+}

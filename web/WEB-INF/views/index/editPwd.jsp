@@ -22,50 +22,33 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/message.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/code.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/style.min862f.css" rel="stylesheet" type="text/css">
 
 
 </head>
 <body>
 
-<div class="wrapper">
-    <div class="modal-content">
-        <div class="col-sm-12">
-            <div class="ibox">
-                <div class="ibox-content">
-                    <div class="selfPwd">
-                        <br/>
-                        <br/>
-                        <form role="form" method="get" autocomplete="off">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <label class="control-label">旧密码：</label>
-                                    <input class="form-control" autocomplete="off" type="password" style="display: initial;" id="oldPwd" placeholder="请输入旧密码" />
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <label class="control-label">新密码：</label>
-                                    <input class="form-control" autocomplete="off" type="password" style="display: initial;" id="pwd" placeholder="请输入新密码"/>
-                                </div>
-                            </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <label class="control-label">确认密码：</label>
-                                    <input class="form-control" autocomplete="off" type="password" style="display: initial;" id="rePwd" placeholder="请输入确认密码"/>
-                                </div>
-                            </div>
-                            <br/>
-                            <button type="button" class="btn btn-danger" onclick="editPwd();">提交</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+<div id="main">
+    <form method="get">
+        <div class="row pass">
+            <input type="password" id="oldPwd" placeholder="请输入旧密码"/>
+            <img class="arrowImg1" onclick="arrow1();" src="<%=path%>/img/alien_2.png">
+            <img class="arrowImg2" onclick="arrow2();" src="<%=path%>/img/alien_17.png">
         </div>
-    </div>
+
+        <div class="row pass">
+            <input type="password" id="pwd" placeholder="请输入新密码" onfocus="this.type='password'" autocomplete = 'new-password'/>
+        </div>
+
+        <div class="row pass">
+            <input type="password" id="rePwd" placeholder="请输入确认密码 " disabled="true"  onfocus="this.type='password'"autocomplete = 'new-password'/>
+        </div>
+        <div class="arrowCap"></div>
+        <div class="arrow"></div>
+        <p class="meterText">密码强度</p>
+        <input type="submit" onclick="editPwd();" value="确定" />
+    </form>
 </div>
 
 
@@ -87,6 +70,8 @@
 <script src="<%=path %>/js/city-picker.js"></script>
 <script src="<%=path %>/js/jquery.form.min.js"></script>
 <script src="<%=path %>/js/index/editPwd.js"></script>
+<script src="<%=path %>/js/index/script.js"></script>
+<script src="<%=path %>/js/index/jquery.complexify.js"></script>
 
 </body>
 </html>
