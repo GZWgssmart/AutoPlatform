@@ -40,4 +40,11 @@ public interface AppointmentDAO extends BaseDAO<String, Appointment>{
     public List<Appointment> queryMyName(@Param("user") User user);
 
     public int queryByPhone(@Param("phone") String phone, @Param("user") User user);
+
+    /**
+     * 根据用户手机号更新预约记录
+     * @param user
+     * @return
+     */
+    public int updateAppByPhone(@Param("user") User user);
 }

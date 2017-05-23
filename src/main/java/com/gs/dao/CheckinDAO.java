@@ -77,4 +77,11 @@ public interface CheckinDAO extends BaseDAO<String, Checkin>{
      * @return
      */
     public int queryByPhone(@Param("phone") String phone, @Param("user") User user);
+
+    /**
+     * 根据用户手机号更新登记记录
+     * @param user
+     * @return
+     */
+    public int updateCheckinByPhone(@Param("user") User user);
 }

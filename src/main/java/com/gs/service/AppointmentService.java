@@ -31,4 +31,11 @@ public interface AppointmentService extends BaseService<String, Appointment>{
     public List<Appointment> queryMyName(User user);
 
     public int queryByPhone(String phone, User user);
+
+    /**
+     * 根据用户手机号更新预约记录
+     * @param user
+     * @return
+     */
+    public int updateAppByPhone(User user);
 }

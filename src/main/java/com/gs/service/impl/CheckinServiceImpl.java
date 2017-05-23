@@ -114,4 +114,9 @@ public class CheckinServiceImpl implements CheckinService {
     public int queryByPhone(String phone, User user) {
         return checkinDAO.queryByPhone(phone, user);
     }
+
+    @Override
+    public int updateCheckinByPhone(User user) {
+        return checkinDAO.updateCheckinByPhone(user);
+    }
 }

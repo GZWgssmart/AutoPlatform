@@ -1,7 +1,7 @@
 /**
 t_user表基本数据
 */
-INSERT INTO `t_user` VALUES ('8ad97bb9-7989-4c37-8bf5-ca7cc4bf0366', '847315251@.qq.com', '18279700221', '6khXbzC+FmmXFpnAmtBclA==', '大牛', '360735199503242117', '王根参', 'M', '1995-03-24', '江西省/赣州市/章贡区', null, null, null, '/img/default.png', null, null, '0', '2017-04-26 10:15:55', null, 'Y');
+INSERT INTO `t_user` VALUES ('8ad97bb9-7989-4c37-8bf5-ca7cc4bf0366', '847315251@.qq.com', '13672297775', '6khXbzC+FmmXFpnAmtBclA==', '大牛', '360735199503242117', '王根参', 'M', '1995-03-24', '江西省/赣州市/章贡区', null, null, null, '/img/default.png', null, null, '0', '2017-04-26 10:15:55', null, 'Y');
 
 /**
 t_user_role表基本数据

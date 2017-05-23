@@ -270,4 +270,10 @@
 		</if>
 	</select>
 
+	<update id="updateCheckinByPhone">
+		<![CDATA[
+			update t_checkin set userId = #{user.userId} where userPhone = #{user.userPhone}
+		]]>
+	</update>
+
 </mapper>

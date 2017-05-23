@@ -289,4 +289,12 @@
         </if>
     </select>
 
+    <update id="updateAppByPhone">
+        <![CDATA[
+
+			update t_appointment set userId = #{user.userId} where userPhone = #{user.userPhone}
+
+        ]]>
+    </update>
+
 </mapper>

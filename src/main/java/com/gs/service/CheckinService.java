@@ -74,4 +74,11 @@ public interface CheckinService extends BaseService<String, Checkin>{
      */
     public int queryByPhone(String phone, User user);
 
+    /**
+     * 根据用户手机号更新登记记录
+     * @param user
+     * @return
+     */
+    public int updateCheckinByPhone(User user);
+
 }

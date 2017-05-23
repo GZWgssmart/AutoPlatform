@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Appointment;
 import com.gs.bean.Role;
 import com.gs.bean.User;
 import com.gs.bean.UserRole;
@@ -11,10 +12,7 @@ import com.gs.common.util.EncryptUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.common.web.ServletContextUtil;
-import com.gs.service.CompanyService;
-import com.gs.service.RoleService;
-import com.gs.service.UserRoleService;
-import com.gs.service.UserService;
+import com.gs.service.*;
 import com.jh.email.Mail;
 import com.jh.email.MailSender;
 import org.apache.ibatis.annotations.Param;
@@ -60,6 +58,12 @@ public class LoginController {
 
     @Resource
     private CompanyService companyService;
+
+    @Resource
+    private AppointmentService appointmentService;
+
+    @Resource
+    private CheckinService checkinService;
 
     private String phoneCode;
 
@@ -135,6 +139,8 @@ public class LoginController {
                             }
                             user.setUserStatus("Y");
                             user.setUserPhone(number);
+                            appointmentService.updateAppByPhone(user);
+                            checkinService.updateCheckinByPhone(user);
                         }
                     }
                 }

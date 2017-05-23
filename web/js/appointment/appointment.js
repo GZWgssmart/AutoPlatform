@@ -81,6 +81,7 @@ function editCheckBrand(combo) {
 /** 关闭选择车主信息 */
 function closeUserWin() {
     $('#choiceUser').bootstrapSwitch('state', false);
+    $('#userWin').modal('hide');
 }
 
 /** 清除添加的form表单信息 */
@@ -149,22 +150,27 @@ function formatterChoiceUser(value, row, index) {
 
 /** 编辑数据 */
 function showEditWin() {
-    validator("editForm");
     var selectRow = $("#cusTable").bootstrapTable('getSelections');
-
     if (selectRow.length != 1) {
         swal('编辑失败', "只能选择一条数据进行编辑", "error");
         return false;
     } else {
         var appointment = selectRow[0];
-        editPhone = appointment.userPhone;
-        $("#editForm").fill(appointment);
-        $('#editCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
-        $('#editCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
-        $('#editCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
-        $('#editCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
-        $('#editDatetimepicker').val(formatterDate(appointment.arriveTime));
-        $("#editWin").modal('show');
+        if (appointment.speedStatus == "已登记") {
+            swal('编辑失败', "不能修改‘已登记’的记录", "error");
+            return false;
+        } else {
+            validator("editForm");
+            editPhone = appointment.userPhone;
+            $("#editForm").fill(appointment);
+            $('#editCarBrand').html('<option value="' + appointment.brand.brandId + '">' + appointment.brand.brandName + '</option>').trigger("change");
+            $('#editCarColor').html('<option value="' + appointment.color.colorId + '">' + appointment.color.colorName + '</option>').trigger("change");
+            $('#editCarModel').html('<option value="' + appointment.model.modelId + '">' + appointment.model.modelName + '</option>').trigger("change");
+            $('#editCarPlate').html('<option value="' + appointment.plate.plateId + '">' + appointment.plate.plateName + '</option>').trigger("change");
+            $('#editDatetimepicker').val(formatterDate(appointment.arriveTime));
+            $("#editWin").modal('show');
+        }
+
     }
 }
 

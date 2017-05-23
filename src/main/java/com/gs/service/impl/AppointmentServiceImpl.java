@@ -119,4 +119,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     public int queryByPhone(String phone, User user) {
         return appointmentDAO.queryByPhone(phone, user);
     }
+
+    @Override
+    public int updateAppByPhone(User user) {
+        return appointmentDAO.updateAppByPhone(user);
+    }
 }
