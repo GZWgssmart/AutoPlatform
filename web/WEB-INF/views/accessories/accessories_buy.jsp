@@ -268,7 +268,7 @@
                             <input type="hidden" attr="acc.accId" name="accId"/>
                             <input type="hidden" attr="acc.accId" name="accessories.accId"/>
                             <div class="form-group">
-                                <label class="control-label">配件名称：</label>
+                                <label class="control-label" id="aName">配件名称：</label>
                                 <input type="text" name="accessories.accName" class="form-control " id="accName" attr="acc.accName"/>
                                 <small class="help-block" id="dck" style="color: #a94442; display: none"></small>
                             </div>

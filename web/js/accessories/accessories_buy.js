@@ -1,6 +1,8 @@
 var isAcc = false;
 var count = 0;
 var accName = "";
+var isSelect = false;
+
 $(document).ready(function () {
     initTable("cusTable", "/accessoriesBuy/pager");
 
@@ -135,12 +137,13 @@ function addAccBuyInfo(formId) {
         function (data) {
             if (data.result == "success") {
                 $('#addWin').modal('hide');
-                disableSwitch("addWin","isAcc");
+                // disableSwitch("addWin","isAcc");
                 swal(data.message, "", "success");
                 clearTempData();
                 $('#cusTable').bootstrapTable('refresh');
                 $("input[type=reset]").trigger("click");
             } else if (data.result == "fail") {
+                enableSwitch("addWin", "isAcc");
                 destoryValidator(formId, "addForm");
                 validator(formId);
                 swal(data.message, "", "error");
@@ -283,6 +286,7 @@ function showAccessories() {
     $("#accWin").modal("show");
 }
 
+
 function addAccBuy() {
     var selectRow = $("#accTable").bootstrapTable('getSelections');
     if (selectRow.length != 1) {
@@ -290,10 +294,10 @@ function addAccBuy() {
         swal('添加失败', "请至少选择一条数据后关闭本窗口", "error");
     } else {
         var acc = selectRow[0];
-        console.log(acc);
         $("#accDes").val(acc.accDes);
         $("#accBuyTime").val(formatterDate(acc.accUsedTime));
         $("#addForm").fill(acc);
+        isSelect = true;
 
         $('#supply').html('<option value="' + acc.supply.supplyId + '">' + acc.supply.supplyName + '</option>').trigger("change");
         $('#accType').html('<option value="' + acc.accessoriesType.accTypeId + '">' + acc.accessoriesType.accTypeName + '</option>').trigger("change");
@@ -561,6 +565,11 @@ function clearTempData() {
 }
 
 function showAccAddWin() {
+    checkName("accName");
+    showAccessoriesAddWin(isSelect);
+}
+
+function showAccessoriesAddWin() {
     $("#dck").css("display", "none");
     initDateTimePicker("form_datetime", "accBuyTime", "addForm");
     // clearTempData();
@@ -570,16 +579,20 @@ function showAccAddWin() {
     autoCalculation1("accBuyCount", "accBuyPrice", "accBuyDiscount", "accBuyTotal", "accBuyMoney");
 }
 
-function dataCheck(inputId, formId) {
-    $("#" + inputId).bind('onfocus input', function () {
+function checkName(nameId) {
+    $("#" + nameId).bind('onfocus input', function () {
         $.get('/accessoriesBuy/checkData?name=' + this.value, function (data) {
             if (data.result == "success") {
                 $("#dck").css("display", "none");
-                // addAccessoriesBuyInfo(formId);
+                $("#addButton").removeAttr("disabled");
             } else if (data.result == "fail") {
                 $("#dck").val(1);
                 $("#dck").text("此配件已存在");
                 $("#dck").css("display", "block");
+                $("#" + nameId).css("border-color", "#a94442");
+                $("#aName").css("color", "#a94442");
+                $("#accName").next().removeClass("glyphicon-ok").addClass("glyphicon-remove").css("color", "#a94442");
+                $("#addButton").attr("disabled", "disabled");
             }
         })
     })
