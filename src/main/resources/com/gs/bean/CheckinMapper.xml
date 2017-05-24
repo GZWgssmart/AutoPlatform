@@ -134,11 +134,15 @@
 	<select id="queryMyName" resultType="list" resultMap="checkinResultMap">
 		<![CDATA[
 			select c.*, b.brandId, b.brandName, co.colorId, co.colorName, m.modelId, m.modelName, p.plateId, p.plateName, cpy.companyId, cpy.companyName
-				from t_checkin c, t_car_brand b, t_car_color co, t_car_model m, t_car_plate p, t_company cpy
-				where 1 = 1 and c.brandId = b.brandId and c.colorId = co.colorId and c.modelId = m.modelId and c.plateId = p.plateId and cpy.companyId = c.companyId and c.checkinStatus = 'Y'
+			from t_checkin c LEFT JOIN t_car_brand b on c.brandId = b.brandId
+			LEFT JOIN t_car_color co on c.colorId = co.colorId
+			LEFT JOIN t_car_model m on c.modelId = m.modelId
+			LEFT JOIN t_car_plate p on c.plateId = p.plateId
+			LEFT JOIN t_company cpy on cpy.companyId = c.companyId
+			where c.checkinStatus = 'Y'
 		]]>
-		<if test="user.userName != null and user.userName != ''">
-			and c.userName = #{user.userName}
+		<if test="user.userId != null and user.userId != ''">
+			and c.userId = #{user.userId}
 		</if>
 		order by c.userName desc, c.checkinStatus desc, c.checkinCreatedTime
 	</select>
