@@ -1,5 +1,7 @@
 package com.gs.service;
 
+import com.gs.bean.User;
+
 /**
  * Created by Xiao-Qiang on 2017/5/18.
  */
@@ -51,23 +53,23 @@ public interface VilidateService {
     public int queryDataIsExistPlateName(String plateName);
 
     /**项目表名称验证唯一*/
-    public int queryDataIsExistFixName(String maintainName);
+    public int queryDataIsExistFixName(String maintainName, User user);
 
     /**供应商分类表名称验证唯一*/
-    public int queryDataIsExistSupplyTypeName(String supplyTypeName);
+    public int queryDataIsExistSupplyTypeName(String supplyTypeName, User user);
 
     /**供应商表名称验证唯一*/
-    public int queryDataIsExistSupplyName(String supplyName);
+    public int queryDataIsExistSupplyName(String supplyName, User user);
 
     /**配件分类表名称验证唯一*/
-    public int queryDataIsExistAccTypeName(String accTypeName);
+    public int queryDataIsExistAccTypeName(String accTypeName, User user);
 
     /**配件表名称验证唯一*/
-    public int queryDataIsExistAccName(String accName);
+    public int queryDataIsExistAccName(String accName, User user);
 
     /**收入类型表名称验证唯一*/
-    public int queryDataIsExistInTypeName(String inTypeName);
+    public int queryDataIsExistInTypeName(String inTypeName, User user);
 
     /**支出类型表名称验证唯一*/
-    public int queryDataIsExistOuTypeName(String ouTypeName);
+    public int queryDataIsExistOuTypeName(String ouTypeName, User user);
 }

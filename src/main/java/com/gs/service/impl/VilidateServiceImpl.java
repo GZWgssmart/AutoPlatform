@@ -1,5 +1,6 @@
 package com.gs.service.impl;
 
+import com.gs.bean.User;
 import com.gs.dao.VilidateDAO;
 import com.gs.service.VilidateService;
 import org.springframework.stereotype.Service;
@@ -91,37 +92,37 @@ public class VilidateServiceImpl implements VilidateService {
     }
 
     @Override
-    public int queryDataIsExistFixName(String maintainName) {
-        return vilidateDAO.queryDataIsExistFixName(maintainName);
+    public int queryDataIsExistFixName(String maintainName, User user) {
+        return vilidateDAO.queryDataIsExistFixName(maintainName, user);
     }
 
     @Override
-    public int queryDataIsExistSupplyTypeName(String supplyTypeName) {
-        return vilidateDAO.queryDataIsExistSupplyTypeName(supplyTypeName);
+    public int queryDataIsExistSupplyTypeName(String supplyTypeName, User user) {
+        return vilidateDAO.queryDataIsExistSupplyTypeName(supplyTypeName, user);
     }
 
     @Override
-    public int queryDataIsExistSupplyName(String supplyName) {
-        return vilidateDAO.queryDataIsExistSupplyName(supplyName);
+    public int queryDataIsExistSupplyName(String supplyName, User user) {
+        return vilidateDAO.queryDataIsExistSupplyName(supplyName, user);
     }
 
     @Override
-    public int queryDataIsExistAccTypeName(String accTypeName) {
-        return vilidateDAO.queryDataIsExistAccTypeName(accTypeName);
+    public int queryDataIsExistAccTypeName(String accTypeName, User user) {
+        return vilidateDAO.queryDataIsExistAccTypeName(accTypeName, user);
     }
 
     @Override
-    public int queryDataIsExistAccName(String accName) {
-        return vilidateDAO.queryDataIsExistAccName(accName);
+    public int queryDataIsExistAccName(String accName, User user) {
+        return vilidateDAO.queryDataIsExistAccName(accName, user);
     }
 
     @Override
-    public int queryDataIsExistInTypeName(String inTypeName) {
-        return vilidateDAO.queryDataIsExistInTypeName(inTypeName);
+    public int queryDataIsExistInTypeName(String inTypeName, User user) {
+        return vilidateDAO.queryDataIsExistInTypeName(inTypeName, user);
     }
 
     @Override
-    public int queryDataIsExistOuTypeName(String ouTypeName) {
-        return vilidateDAO.queryDataIsExistOuTypeName(ouTypeName);
+    public int queryDataIsExistOuTypeName(String ouTypeName, User user) {
+        return vilidateDAO.queryDataIsExistOuTypeName(ouTypeName, user);
     }
 }

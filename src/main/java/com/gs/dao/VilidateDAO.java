@@ -1,5 +1,7 @@
 package com.gs.dao;
 
+import com.gs.bean.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -55,23 +57,23 @@ public interface VilidateDAO {
     public int queryDataIsExistPlateName(String plateName);
 
     /**项目表名称验证唯一*/
-    public int queryDataIsExistFixName(String maintainName);
+    public int queryDataIsExistFixName(@Param("maintainName ")String maintainName, @Param("user") User user);
 
     /**供应商分类表名称验证唯一*/
-    public int queryDataIsExistSupplyTypeName(String supplyTypeName);
+    public int queryDataIsExistSupplyTypeName(@Param("supplyTypeName") String supplyTypeName, @Param("user") User user);
 
     /**供应商表名称验证唯一*/
-    public int queryDataIsExistSupplyName(String supplyName);
+    public int queryDataIsExistSupplyName(@Param("supplyName") String supplyName, @Param("user") User user);
 
     /**配件分类表名称验证唯一*/
-    public int queryDataIsExistAccTypeName(String accTypeName);
+    public int queryDataIsExistAccTypeName(@Param("accTypeName") String accTypeName, @Param("user") User user);
 
     /**配件表名称验证唯一*/
-    public int queryDataIsExistAccName(String accName);
+    public int queryDataIsExistAccName(@Param("accName") String accName, @Param("user") User user);
 
     /**收入类型表名称验证唯一*/
-    public int queryDataIsExistInTypeName(String inTypeName);
+    public int queryDataIsExistInTypeName(@Param("inTypeName") String inTypeName, @Param("user") User user);
 
     /**支出类型表名称验证唯一*/
-    public int queryDataIsExistOuTypeName(String ouTypeName);
+    public int queryDataIsExistOuTypeName(@Param("ouTypeName") String ouTypeName, @Param("user") User user);
 }

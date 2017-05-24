@@ -3,6 +3,8 @@ package com.gs.controller;
 import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gs.bean.User;
+import com.gs.common.util.SessionGetUtil;
 import com.gs.service.VilidateService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;
@@ -259,7 +261,7 @@ public class VilidateController {
             Map<String, Boolean> map = new HashMap<String, Boolean>();
             ObjectMapper mapper = new ObjectMapper();
             if (!editSupplyName.equals(supplyName)) {
-                int isExist = vilidateService.queryDataIsExistSupplyName(supplyName);
+                int isExist = vilidateService.queryDataIsExistSupplyName(supplyName, SessionGetUtil.getUser());
                 if (isExist > 0) {
                     result = false;
                 }
@@ -287,7 +289,7 @@ public class VilidateController {
             Map<String, Boolean> map = new HashMap<String, Boolean>();
             ObjectMapper mapper = new ObjectMapper();
             if (!editSupplyTypeName.equals(supplyTypeName)) {
-                int isExist = vilidateService.queryDataIsExistSupplyTypeName(supplyTypeName);
+                int isExist = vilidateService.queryDataIsExistSupplyTypeName(supplyTypeName, SessionGetUtil.getUser());
                 if (isExist > 0) {
                     result = false;
                 }
@@ -539,7 +541,7 @@ public class VilidateController {
             Map<String, Boolean> map = new HashMap<String, Boolean>();
             ObjectMapper mapper = new ObjectMapper();
             if (!editTypeName.equals(accTypeName)) {
-                int isExist = vilidateService.queryDataIsExistAccTypeName(accTypeName);
+                int isExist = vilidateService.queryDataIsExistAccTypeName(accTypeName, SessionGetUtil.getUser());
                 if (isExist > 0) {
                     result = false;
                 }
@@ -567,7 +569,7 @@ public class VilidateController {
             Map<String, Boolean> map = new HashMap<String, Boolean>();
             ObjectMapper mapper = new ObjectMapper();
             if (!editName.equals(accName)) {
-                int isExist = vilidateService.queryDataIsExistAccTypeName(accName);
+                int isExist = vilidateService.queryDataIsExistAccTypeName(accName, SessionGetUtil.getUser());
                 if (isExist > 0) {
                     result = false;
                 }
@@ -595,7 +597,7 @@ public class VilidateController {
             Map<String, Boolean> map = new HashMap<String, Boolean>();
             ObjectMapper mapper = new ObjectMapper();
             if (!editTypeName.equals(inTypeName)) {
-                int isExist = vilidateService.queryDataIsExistInTypeName(inTypeName);
+                int isExist = vilidateService.queryDataIsExistInTypeName(inTypeName, SessionGetUtil.getUser());
                 if (isExist > 0) {
                     result = false;
                 }
@@ -623,7 +625,7 @@ public class VilidateController {
             Map<String, Boolean> map = new HashMap<String, Boolean>();
             ObjectMapper mapper = new ObjectMapper();
             if (!editTypeName.equals(outTypeName)) {
-                int isExist = vilidateService.queryDataIsExistOuTypeName(outTypeName);
+                int isExist = vilidateService.queryDataIsExistOuTypeName(outTypeName, SessionGetUtil.getUser());
                 if (isExist > 0) {
                     result = false;
                 }

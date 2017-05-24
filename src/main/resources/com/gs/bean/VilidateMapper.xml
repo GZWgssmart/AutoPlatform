@@ -98,42 +98,63 @@
         <![CDATA[
 			select count(*) from t_maintain_fix where maintainName = #{maintainName}
 		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
     <select id="queryDataIsExistSupplyTypeName" resultType="int">
         <![CDATA[
 			select count(*) from t_supply_type where supplyTypeName = #{supplyTypeName}
 		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
     <select id="queryDataIsExistSupplyName" resultType="int">
         <![CDATA[
 			select count(*) from t_supply where supplyName = #{supplyName}
 		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
     <select id="queryDataIsExistAccTypeName" resultType="int">
         <![CDATA[
 			select count(*) from t_accessories_type where accTypeName = #{accTypeName}
 		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
     <select id="queryDataIsExistAccName" resultType="int">
         <![CDATA[
 			select count(*) from t_accessories where accName = #{accName}
 		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
     <select id="queryDataIsExistInTypeName" resultType="int">
         <![CDATA[
 			select count(*) from t_incoming_type where inTypeName = #{inTypeName}
 		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
     <select id="queryDataIsExistOuTypeName" resultType="int">
         <![CDATA[
 			select count(*) from t_outgoing_type where outTypeName = #{ouTypeName}
 		]]>
+        <if test="user.companyId != null and user.companyId != ''">
+            and companyId = #{user.companyId}
+        </if>
     </select>
 
 </mapper>
