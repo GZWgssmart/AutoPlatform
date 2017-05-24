@@ -61,14 +61,7 @@ public class CustomerController {
     @Resource
     private CompanyService companyService;
 
-    private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_REPERTORY
-            + "," + Constants.COMPANY_RECEIVE + "," + Constants.COMPANY_ARTIFICER
-            + "," + Constants.COMPANY_SALES + "," + Constants.COMPANY_HUMAN_MANAGER
-            + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ACCOUNTING
-            + "," + Constants.COMPANY_BUYER + "," + Constants.SYSTEM_ORDINARY_ADMIN
-            + "," + Constants.COMPANY_EMP;
-
-    private String editRole = Constants.COMPANY_ADMIN;
+    private String queryRole = Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
 
     @RequestMapping(value = "home", method = RequestMethod.GET)
     private ModelAndView home() {
@@ -103,13 +96,13 @@ public class CustomerController {
     public ControllerResult infoInsert(User user, UserRole userRole, Company company,HttpSession session){
         if (SessionGetUtil.isUser()) {
             try {
-                if (CheckRoleUtil.checkRoles(editRole)) {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("车主信息添加");
                     String customerId = UUIDUtil.uuid();
                     Role role = roleService.queryByName("carOwner");
                     user.setUserId(customerId);
                     user.setUserStatus("Y");
-                    user.setUserIcon("img/default.png");
+                    user.setUserIcon("/img/default.png");
                     userRole.setUserId(user.getUserId());
                     userRole.setRoleId(role.getRoleId());
                     user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
@@ -321,17 +314,17 @@ public class CustomerController {
     public ControllerResult info_update(String uIcon, User user, MultipartFile file, HttpSession session) throws IOException {
         if (SessionGetUtil.isUser()) {
             try {
-                if (CheckRoleUtil.checkRoles(editRole)) {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("车主信息修改");
                     if(file != null){
                         String fileName = UUID.randomUUID().toString() + file.getOriginalFilename() ;
                         String filePath = FileUtil.uploadPath(session,"\\" + fileName);
-                        String icon = "uploads/"+ fileName;
+                        String icon = "/uploads/"+ fileName;
                         if(!file.isEmpty()){
                             file.transferTo(new File(filePath));
                             user.setUserIcon(icon);
                         }else{
-                            user.setUserIcon("img/default.png");
+                            user.setUserIcon("/img/default.png");
                         }
                     }else{
                         user.setUserIcon(uIcon);
@@ -355,7 +348,7 @@ public class CustomerController {
     public ControllerResult info_status(@Param("id")String id, @Param("status")String status){
         if (SessionGetUtil.isUser()) {
             try {
-                if (CheckRoleUtil.checkRoles(editRole)) {
+                if (CheckRoleUtil.checkRoles(queryRole)) {
                     logger.info("状态修改");
                     if(status.equals("Y")){
                         userService.inactive(id);

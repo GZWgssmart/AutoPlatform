@@ -160,7 +160,7 @@ window.operateEvents = {
         var loginedTime = document.getElementById("form_loginedTime");
         $("#ffile").val(user.userIcon);
         loginedTime.value = user.userLoginedTime;
-        $("#icon").attr("src","/"+user.userIcon);
+        $("#icon").attr("src", user.userIcon);
         $("#form_loginedTime").val(formatterDate(user.userLoginedTime));
         $("#role").val(user.role.roleDes);
         $("#form_datetime").val(formatterDate(user.userCreatedTime));

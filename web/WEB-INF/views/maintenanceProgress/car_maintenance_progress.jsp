@@ -53,9 +53,11 @@
             <th data-field="checkin.maintainOrFix">
                 保养&nbsp;|&nbsp;维修
             </th>
+            <shiro:hasAnyRoles name="carOwner">
             <th data-field="company.companyName">
-                汽修公司
+                所属公司
             </th>
+            </shiro:hasAnyRoles>
             <th data-field="speedStatus">
                 进度状态
             </th>
@@ -84,7 +86,7 @@
                     <i class="glyphicon glyphicon-search"></i> 查看全部进度
                 </button>
             </a>
-            <shiro:hasAnyRoles name="companyArtificer">
+            <shiro:hasAnyRoles name="companyAdmin, companyArtificer">
             <a>
                 <button onclick="recordOk();" type="button" class="btn btn-default">
                     <i class="glyphicon glyphicon-ok"></i> 维修或保养完成

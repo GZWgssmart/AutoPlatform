@@ -93,7 +93,7 @@ public class PeopleInfoController {
                     User user1 = (User)session.getAttribute("user");
                     user.setCompanyId(user1.getCompanyId());
                     user.setUserStatus("Y");
-                    user.setUserIcon("img/default.png");
+                    user.setUserIcon("/img/default.png");
                     Role role = roleService.queryByName("companyEmp");
                     userRole.setUserId(user.getUserId());
                     userRole.setRoleId(role.getRoleId());
@@ -319,12 +319,12 @@ public class PeopleInfoController {
                     if(file != null){
                         String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
                         String filePath = FileUtil.uploadPath(session,"\\" + fileName);
-                        String icon = "uploads/"+ fileName;
+                        String icon = "/uploads/"+ fileName;
                         if(!file.isEmpty()){
                             file.transferTo(new File(filePath));
                             user.setUserIcon(icon);
                         } else {
-                            user.setUserIcon("img/default.png");
+                            user.setUserIcon("/img/default.png");
                         }
                     }else{
                         user.setUserIcon(uIcon);
@@ -435,7 +435,8 @@ public class PeopleInfoController {
     public List<ComboBox4EasyUI> selfUser(HttpSession session) {
         try {
             logger.info("查询本公司员工");
-            List<User> users = userService.queryByCompanyRole();
+            User user1 = SessionGetUtil.getUser();
+            List<User> users = userService.queryByCompanyRole(user1);
             List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
             for (User user : users) {
                 ComboBox4EasyUI comboBox4EasyUI = new ComboBox4EasyUI();

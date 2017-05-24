@@ -52,9 +52,11 @@
             <th data-field="user.userName">
                 指派员工
             </th>
+            <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
             <th data-field="company.companyName">
                 汽修公司
             </th>
+            </shiro:hasAnyRoles>
             <th data-field="workStatus" data-formatter="status">
                 当前状态
             </th>

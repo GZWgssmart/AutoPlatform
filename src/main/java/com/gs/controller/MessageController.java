@@ -56,12 +56,12 @@ public class MessageController {
                 if(file != null){
                     String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
                     String filePath = FileUtil.uploadPath(session,"\\" + fileName);
-                    String icon = "uploads/"+ fileName;
+                    String icon = "/uploads/"+ fileName;
                     if(!file.isEmpty()){
                         file.transferTo(new File(filePath));
                         user.setUserIcon(icon);
                     } else {
-                        user.setUserIcon("img/default.png");
+                        user.setUserIcon("/img/default.png");
                     }
                 }else{
                     user.setUserIcon(uIcon);

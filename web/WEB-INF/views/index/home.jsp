@@ -112,7 +112,7 @@
                     </ul>
                 </li>
                 <shiro:hasAnyRoles
-                        name="companyAdmin, companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, systemSuperAdmin, companyAccounting, companyBuyer, systemOrdinaryAdmin, companyEmp">
+                        name="systemSuperAdmin, systemOrdinaryAdmin">
                     <li>
                         <a href="#"><i class="glyphicon glyphicon-user"></i> <span class="nav-label">车主管理</span><span
                                 class="fa arrow"></span></a>

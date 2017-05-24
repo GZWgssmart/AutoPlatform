@@ -75,20 +75,16 @@
             <th data-field="userStatus" data-formatter="status">
                 当前状态
             </th>
-            <shiro:hasAnyRoles name="companyAdmin">
             <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">
                 操作
             </th>
-            </shiro:hasAnyRoles>
         </tr>
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="companyAdmin">
             <a><button onclick="showAddWin();" type="button" id="add" class="btn btn-default" >
                 <i class="glyphicon glyphicon-plus"></i> 添加
             </button></a>
-            </shiro:hasAnyRoles>
             <a><button onclick="showStatusWin_N();" type="button" class="btn btn-default">
                 <i class="glyphicon glyphicon-search"></i> 查看不可用
             </button></a>
@@ -178,7 +174,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h4 class="m-t-none m-b">个人信息</h4>
+                        <h4 class="m-t-none m-b">车主个人信息</h4>
                         <div class="form_info">
                             <form role="form" method="post" id="editModal" class="form_form" onkeydown="if(event.keyCode==13){return false;}" enctype="multipart/form-data">
                                 <input type="hidden" name="userId" attr="user.userId" />

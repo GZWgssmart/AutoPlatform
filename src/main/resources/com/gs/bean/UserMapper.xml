@@ -368,10 +368,10 @@
 	<select id="queryByCompanyRole" resultMap="userResultMap">
 		<![CDATA[
 			SELECT u.*, c.companyId, c.companyName, r.roleDes,r.roleId FROM t_user u
-			LEFT JOIN t_company c ON u.companyId = c.companyId
+			LEFT JOIN t_company c ON c.companyId = u.companyId
 			LEFT JOIN t_user_role ur ON ur.userId = u.userId
 			LEFT JOIN t_role r ON r.roleId = ur.roleId
-			WHERE r.roleName like concat('companyArtificer') AND u.userStatus = 'Y'
+			WHERE r.roleName like concat('companyArtificer') AND u.userStatus = 'Y' AND u.companyId = #{user.companyId}
 		]]>
 	</select>
 

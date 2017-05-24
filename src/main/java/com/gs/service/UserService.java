@@ -121,7 +121,7 @@ public interface UserService extends BaseService<String, User>{
     public List<User> selectQueryEmp(Pager pager, User user, Role role, Company company);
 
     /*查询自己公司的技师*/
-    public List<User> queryByCompanyRole();
+    public List<User> queryByCompanyRole(User user);
 
     public int updatePwd(User user);
 

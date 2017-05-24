@@ -166,7 +166,7 @@ window.operateUpdateEvents = {
         $("#role").val(row.role.roleDes);
         $("#form_datetime").val(formatterDate(user.userCreatedTime));
         $("#editModal").fill(user);
-        $("#icon").attr("src", "/" + user.userIcon);
+        $("#icon").attr("src", user.userIcon);
         var company = document.getElementById("editModalCompany");
         company.value = user.company.companyName;
         var loginedTime = document.getElementById("form_loginedTime");

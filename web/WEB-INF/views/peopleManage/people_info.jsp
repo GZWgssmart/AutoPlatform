@@ -79,12 +79,19 @@
             <th data-field="userPhone" >
                 手机号
             </th>
-            <th data-field="company.companyName" >
-                所属公司
-            </th>
             <th data-field="userSalary" data-formatter="salary">
                 基本工资
             </th>
+            <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
+            <th data-field="company.companyName">
+                所属公司
+            </th>
+            </shiro:hasAnyRoles>
+            <shiro:hasAnyRoles name="companyAdmin, companyHumanManager">
+            <th data-field="role.roleDes">
+                所属职位
+            </th>
+            </shiro:hasAnyRoles>
             <th data-field="userStatus" data-formatter="status">
                 当前状态
             </th>
@@ -245,7 +252,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h4 class="m-t-none m-b">个人信息</h4>
+                        <h4 class="m-t-none m-b">员工个人信息</h4>
                         <div class="form_info">
                             <form role="form" method="post" id="editModal" class="form_form" onkeydown="if(event.keyCode==13){return false;}" enctype="multipart/form-data">
                                 <input type="hidden" name="userId" attr="user.userId" />
