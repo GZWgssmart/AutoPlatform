@@ -69,7 +69,7 @@
             <th data-field="accessories.accessoriesType.accTypeName">配件类别</th>
             <th data-field="accSaleCount">销售数量</th>
             <th data-field="accSalePrice">销售单价</th>
-            <th data-field="accSaleDiscount">销售折扣</th>
+            <th data-field="accSaleDiscount" data-formatter="fmtDiscount">销售折扣</th>
             <th data-field="accSaledTime" data-formatter="formatterDate">销售时间</th>
             <th data-field="accSaleTotal">销售总价</th>
             <th data-field="accessories.accUnit">计量单位</th>
@@ -310,8 +310,8 @@
 
                             <div class="form-group">
                                 <label class="control-label">折扣：</label>
-                                <input type="text" name="accSaleDiscount" id="accSaleDiscount" class="form-control"
-                                       value="1" attr="acc.accDiscount"/>
+                                <input type="text" name="accSaleDiscount" id="accSaleDiscount" placeholder="没有折扣可以不填" class="form-control"
+                                       attr="acc.accDiscount"/>
                             </div>
 
                             <div class="form-group">

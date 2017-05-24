@@ -109,6 +109,16 @@ function updateAccessoriesSaleInfo(formId) {
     }
 }
 
+function addAccSaleInfo(formId) {
+    var discount = $("#accSaleDiscount").val();
+    if (discount != '' && discount != null) {
+        addAccessoriesSaleInfo(formId);
+    } else {
+        $("#accSaleDiscount").val(1);
+        addAccessoriesSaleInfo(formId);
+    }
+}
+
 function addAccessoriesSaleInfo(formId) {
     var lCount = $("#aLastCount").val();
     if (lCount != null && lCount != '') {
@@ -176,7 +186,7 @@ window.operateEvents = {
         disableEditInput();
         showAccEditWin();
 
-        autoEditCalculationCount("saleCount", "salePrice", "saleDiscount", "saleTotal", "saleMoney", "eLastCount", accessoriesSale.accessories.accTotal);
+        autoEditCalculationCount1("saleCount", "salePrice", "saleDiscount", "saleTotal", "saleMoney", "eLastCount", accessoriesSale.accessories.accTotal, accessoriesSale.accessories.accIdle);
 
     },
     'click .enableSale': function (e, value, row, index) {
@@ -193,9 +203,10 @@ window.operateEvents = {
     'click .stData': function (e, value, row, index) {
         var acc = row;
         $("#addForm").fill(acc);
+        $("#aLastCount").val(acc.accIdle);
         $("#accWin").modal("hide");
         enableInput();
-        autoEditCalculationCount("aSaleCount", "accSalePrice", "accSaleDiscount", "accSaleTotal", "accSaleMoney", "aLastCount", row.accTotal);
+        autoEditCalculationCount("aSaleCount", "accSalePrice", "accSaleDiscount", "accSaleTotal", "accSaleMoney", "aLastCount", row.accTotal, row.accIdle);
 
     },
     'click .stUser': function (e, value, row, index) {
@@ -219,8 +230,10 @@ function addAcc() {
         swal('添加失败', "请至少选择一条数据后关闭本窗口", "error");
     } else {
         var acc = selectRow[0];
+        console.log(acc);
         lCount = acc.accIdle;
         $("#addForm").fill(acc);
+        $("#aLastCount").val(acc.accIdle);
         $("#accWin").modal("hide");
         autoEditCalculationCount("aSaleCount", "accSalePrice", "accSaleDiscount", "accSaleTotal", "accSaleMoney", "aLastCount", acc.accTotal);
         enableInput();
@@ -263,6 +276,14 @@ function fmtSaleState(value) {
         return "可用";
     } else {
         return "不可用";
+    }
+}
+
+function fmtDiscount(value) {
+    if (value != 1) {
+        return value;
+    } else {
+        return "无折扣";
     }
 }
 
@@ -461,7 +482,7 @@ function validator(formId) {
 
         .on('success.form.bv', function (e) {
             if (formId == "addForm") {
-                addAccessoriesSaleInfo("#addForm")
+                addAccSaleInfo("#addForm")
             } else if (formId == "editForm") {
                 updateAccessoriesSaleInfo("#editForm");
             }
@@ -485,7 +506,7 @@ function showAccAddWin() {
     initDateTimePickerNotValitor("form_datetime");
     disableInput();
     $("#aLastCount").attr("placeholder", "无法读取库存数量");
-    clearTempData();
+    // clearTempData();
     validator("addForm");
     $("#addWin").modal("show");
 }
@@ -493,7 +514,7 @@ function showAccAddWin() {
 function showAccEditWin() {
     // initDateTimePicker("form_datetime", "accSaledTime", "editForm");
     initDateTimePickerNotValitor("form_datetime");
-    clearTempData();
+    // clearTempData();
     validator("editForm");
     $("#editWin").modal("show");
 }
@@ -508,7 +529,7 @@ function showAccEditWin() {
  * @param dLastCount 显示库存数量
  * @param alCount 库存总数量
  */
-function autoEditCalculationCount(saleCount, salePrice, saleDiscount, saleTotal, saleMoney, dLastCount, alCount) {
+function autoEditCalculationCount(saleCount, salePrice, saleDiscount, saleTotal, saleMoney, dLastCount, alCount, accIdle) {
     var aBuyPrice = $("#accBuyPrice").val();
     var aCount = alCount;
     var sCount = "";
@@ -522,17 +543,77 @@ function autoEditCalculationCount(saleCount, salePrice, saleDiscount, saleTotal,
         sCount = $("#" + saleCount).val();
         sPrice = $("#" + salePrice).val();
         sDiscount = $("#" + saleDiscount).val();
-        if (sCount != null && sCount != "" || sPrice != null && sPrice != '' || sDiscount != null && sDiscount != '') {
-            acCount = alCount - sCount;
+
+        if (sCount != null && sCount != "") {
+            acCount = accIdle - sCount;
             $("#" + dLastCount).val(acCount);
-            urs = sCount * sPrice;
-            rs = (sCount * sPrice) * sDiscount;
-            $("#" + saleMoney).val(rs);
-            $("#" + saleTotal).val(urs);
-            if (sCount < 0 || sCount > alCount) {
+
+            if (sPrice != null && sPrice != '' && sDiscount != null && sDiscount != '') {
+                urs = sCount * sPrice;
+                rs = (sCount * sPrice) * sDiscount;
+                $("#" + saleMoney).val(rs);
+                $("#" + saleTotal).val(urs);
+            } else {
+                urs = sCount * sPrice;
+                $("#" + saleMoney).val(urs);
+                $("#" + saleTotal).val(urs);
+            }
+            if (sCount < 0 || sCount > accIdle) {
                 $("#" + dLastCount).val("超过库存数量");
 
             }
+            if ("#" + dLastCount) {
+
+            }
+        } else {
+            $("#" + dLastCount).val(accIdle);
+        }
+    })
+}
+
+
+function autoEditCalculationCount1(saleCount, salePrice, saleDiscount, saleTotal, saleMoney, dLastCount, alCount, accIdle) {
+    var aBuyPrice = $("#accBuyPrice").val();
+    var aCount = alCount;
+    var sCount = "";
+    var sPrice = ""
+    var sDiscount = "";
+    var rs = "";
+    var urs = "";
+    var acCount = "";
+    $("#" + saleCount + ",#" + salePrice + ",#" + saleDiscount).bind("input onfocus", function () {
+        acCount = $("#aLastCount").val();
+        sCount = $("#" + saleCount).val();
+        sPrice = $("#" + salePrice).val();
+        sDiscount = $("#" + saleDiscount).val();
+
+        if (sCount != null && sCount != "") {
+
+            acCount = accIdle - sCount;
+            $("#" + dLastCount).val(acCount);
+
+            if (sPrice != null && sPrice != '' && sDiscount != null && sDiscount != '') {
+                urs = sCount * sPrice;
+                rs = (sCount * sPrice) * sDiscount;
+                $("#" + saleMoney).val(rs);
+                $("#" + saleTotal).val(urs);
+            } else {
+                urs = sCount * sPrice;
+                $("#" + saleMoney).val(urs);
+                $("#" + saleTotal).val(urs);
+            }
+            if (sCount < 0 || sCount > accIdle) {
+                $("#" + dLastCount).val("超过库存数量");
+
+            }
+            if ("#" + dLastCount) {
+
+            }
+        } else {
+            $("#" + dLastCount).val(accIdle);
+            $("#" + saleTotal).val(0);
+            $("#" + saleMoney).val(0);
+
         }
     })
 }

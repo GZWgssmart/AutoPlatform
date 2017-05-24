@@ -6,8 +6,8 @@ var isSelect = false;
 $(document).ready(function () {
     initTable("cusTable", "/accessoriesBuy/pager");
 
-    initSelect2("supply", "请选择供应商", "/supply/queryAll", 560);
-    initSelect2("accTypeA", "请选择配件类别", "/accessoriesType/accessoriesType_All", 560);
+    initSelect2("supply", "请选择供应商", "/supply/queryAll", 568);
+    initSelect2("accTypeA", "请选择配件类别", "/accessoriesType/accessoriesType_All", 568);
 
     initBsSwitchBuy("isAcc", switchChange);
 
@@ -32,13 +32,12 @@ function showSearchFormSale() {
 }
 
 override :switchChange = function (event, state) {
-    if (state == true) {
+    console.log(state);
+    if (state != false) {
         disableInput();
-        isAcc = true;
         showAccessories();
-    } else if (state == false) {
+    } else {
         enableInput();
-        isAcc = false;
     }
 }
 
@@ -71,6 +70,16 @@ function showEditWin() {
     }
 }
 
+function updateAccBuyInfo(formId) {
+    var discount = $("#eAccBuyDiscount").val();
+    if (discount != '' && discount != null) {
+        updateAccessoriesBuyInfo(formId);
+    } else {
+        $("#eAccBuyDiscount").val(0);
+        updateAccessoriesBuyInfo(formId);
+    }
+}
+
 /**更新数据 */
 function updateAccessoriesBuyInfo(formId) {
     $.post("/accessoriesBuy/update",
@@ -89,7 +98,13 @@ function updateAccessoriesBuyInfo(formId) {
 }
 
 function addAccessoriesBuyInfo(formId) {
-    addAccBuyInfo(formId);
+    var discount = $("#accBuyDiscount").val();
+    if (discount != '' && discount != null) {
+        addAccBuyInfo(formId);
+    } else {
+        $("#accBuyDiscount").val(0);
+        addAccBuyInfo(formId);
+    }
 }
 
 function passChecks() {
@@ -151,6 +166,14 @@ function addAccBuyInfo(formId) {
         }, "json");
 }
 
+function reSetDiscount(discount) {
+    if (discount != 0) {
+        return discount;
+    } else {
+        return '';
+    }
+}
+
 function fmtOperate(value, row, index) {
     if (row.accBuyStatus == 'Y') {
         return ['<button type="button" class="removeBuy btn btn-danger  btn-sm" style="margin-right:15px;">冻结</button>',
@@ -198,6 +221,7 @@ window.operateEvents = {
     'click .showEditWin': function (e, value, row, index) {
         var accessoriesBuy = row;
         $("#editForm").fill(accessoriesBuy);
+        $("#eAccBuyDiscount").val(reSetDiscount(accessoriesBuy.accBuyDiscount));
         $("#eAccDes").val(accessoriesBuy.accessories.accDes);
         $('#supplyType').html('<option value="' + accessoriesBuy.accessories.supply.supplyId + '">' + accessoriesBuy.accessories.supply.supplyName + '</option>').trigger("change");
         $('#eAccType').html('<option value="' + accessoriesBuy.accessories.accessoriesType.accTypeId + '">' + accessoriesBuy.accessories.accessoriesType.accTypeName + '</option>').trigger("change");
@@ -270,14 +294,25 @@ function fmtAccOperate(value, row, index) {
     ].join('');
 }
 
+function afterEdit(buyCount, buyPrice, buyTotal, buyMoney) {
+    var rs = '';
+    var urs = '';
+    urs = buyCount * buyPrice;
+    $("#" + buyTotal).val(urs);
+    $("#" + buyMoney).val(urs);
+}
+
 window.operateAccEvents = {
     'click .slData': function (e, value, row, index) {
         var acc = row;
+        console.log(acc);
         $("#accBuyTime").val(formatterDate(acc.accUsedTime));
-        // autoCalculation1(formId, count, price, discount, names);
+        $('#supply').html('<option value="' + acc.supply.supplyId + '">' + acc.supply.supplyName + '</option>').trigger("change");
+        $('#accType').html('<option value="' + acc.accessoriesType.accTypeId + '">' + acc.accessoriesType.accTypeName + '</option>').trigger("change");
         $("#addForm").fill(acc);
         enableSwitch("accWin", "isAcc");
         $("#accWin").modal("hide");
+        afterEdit(acc.accIdle, acc.accPrice, "accBuyTotal", "accBuyMoney");
     }
 }
 
@@ -308,7 +343,7 @@ function addAccBuy() {
         accAddAutoCalculation(acc.accDiscount, acc.accIdle, acc.accPrice, "accBuyTotal", "accBuyMoney");
         autoCalculation1("accBuyCount", "accBuyPrice", "accBuyDiscount", "accBuyTotal", "accBuyMoney");
     }
-    disableSwitch("addWin", "isAcc");
+    // disableSwitch("addWin", "isAcc");
 }
 
 function accAddAutoCalculation(accDiscount, accIdle, accPrice, accBuyTotal, accBuyMoney) {
@@ -335,10 +370,10 @@ function fmtCheckState(value) {
 }
 
 function fmtDiscount(value) {
-    if (value == 1) {
-        return "无折扣"
-    } else {
+    if (value != 0) {
         return value;
+    } else {
+        return "无折扣"
     }
 }
 
@@ -423,6 +458,16 @@ function validator(formId) {
                         max: 15,
                         message: '不能超过15个字符'
                     }
+                }
+            },
+
+            'accessories.accDes': {
+                validators: {
+                    stringLength: {
+                        min: 0,
+                        max: 500,
+                        message: '不可以超过500个字符'
+                    },
                 }
             },
 
@@ -544,7 +589,7 @@ function validator(formId) {
             if (formId == "addForm") {
                 addAccessoriesBuyInfo(formId);
             } else if (formId == "editForm") {
-                updateAccessoriesBuyInfo(formId);
+                updateAccBuyInfo(formId);
             }
         })
 }
@@ -561,6 +606,9 @@ function clearTempData() {
     $('#accBuyTime').html('').trigger("change");
     $('#accBuyTotal').html('').trigger("change");
     $('#accBuyMoney').html('').trigger("change");
+    $('#supply').html('').trigger("change");
+    $('#accType').html('').trigger("change");
+
     $("input[type=reset]").trigger("click");
 }
 
@@ -589,9 +637,9 @@ function checkName(nameId) {
                 $("#dck").val(1);
                 $("#dck").text("此配件已存在");
                 $("#dck").css("display", "block");
-                $("#" + nameId).css("border-color", "#a94442");
-                $("#aName").css("color", "#a94442");
-                $("#accName").next().removeClass("glyphicon-ok").addClass("glyphicon-remove").css("color", "#a94442");
+                // $("#" + nameId).css("border-color", "#a94442");
+                // $("#aName").css("color", "#a94442");
+                // $("#accName").next().removeClass("glyphicon-ok").addClass("glyphicon-remove").css("color", "#a94442");
                 $("#addButton").attr("disabled", "disabled");
             }
         })

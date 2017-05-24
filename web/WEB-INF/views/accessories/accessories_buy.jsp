@@ -18,9 +18,7 @@
     <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
           type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
-    <style>
-
-    </style>
+    <style>th{text-align: center;}td{text-align: center;}</style>
 </head>
 <body>
 <div class="container">
@@ -62,11 +60,11 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
+            <th data-field="accessories.supply.supplyName">供应商</th>
+            <th data-field="accessories.accessoriesType.accTypeName">配件类别</th>
             <th data-field="accessories.accName">配件名称</th>
             <th data-field="accessories.accCommodityCode">配件条码</th>
-            <th data-field="accessories.accessoriesType.accTypeName">配件类别</th>
-            <th data-field="accUnit">计量单位</th>
-            <th data-field="accessories.supply.supplyName">供应商</th>
+            <th data-field="accUnit">单位</th>
             <th data-field="accessories.company.companyName">配件所属公司</th>
             <th data-field="accBuyCount">采购数量</th>
             <th data-field="accBuyPrice">采购单价</th>
@@ -81,7 +79,7 @@
                 <th data-formatter="fmtOperate" data-events="operateEvents">操作</th>
                 <th data-formatter="fmtIsFinish" data-events="operateEvents">采购操作</th>
                 <s:hasAnyRoles name="companyAdmin">
-                <th data-formatter="fmtPassCheck" data-events="operateEvents">审核操作</th>
+                    <th data-formatter="fmtPassCheck" data-events="operateEvents">审核操作</th>
                 </s:hasAnyRoles>
             </s:hasAnyRoles>
         </tr>
@@ -145,8 +143,23 @@
                         <form role="form" id="editForm">
                             <input type="hidden" attr="accessoriesBuy.accBuyId" name="accBuyId"/>
                             <input type="hidden" attr="accessoriesBuy.accessories.accId" name="accessories.accId"/>
-                            <input type="hidden" attr="accessoriesBuy.accessories.accessoriesType.accTypeId" name="accessories.accessoriesType.accTypeId"/>
-                            <input type="hidden" attr="accessoriesBuy.accessories.supply.supplyId" name="accessories.supply.supplyId"/>
+                            <input type="hidden" attr="accessoriesBuy.accessories.accessoriesType.accTypeId"
+                                   name="accessories.accessoriesType.accTypeId"/>
+                            <input type="hidden" attr="accessoriesBuy.accessories.supply.supplyId"
+                                   name="accessories.supply.supplyId"/>
+
+                            <div class="form-group">
+                                <label class="control-label">配件供应商：</label>
+                                <select id="supplyType" class="js-example-tags form-control supply"
+                                        name="accessories.supplyId"
+                                        attr="accessoriesBuy.accessories.supply.supplyName"></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">配件类别：</label>
+                                <select id="eAccType" class="js-example-tags form-control accTypeA"
+                                        name="accessories.accTypeId" attr="acc.accessoriesType.accTypeName"></select>
+                            </div>
 
                             <div class="form-group">
                                 <label class="control-label">配件名称：</label>
@@ -162,21 +175,16 @@
                             <div class="form-group">
                                 <label class="control-label">配件条码：</label>
                                 <input type="text" name="accessories.accCommodityCode"
-                                       attr="accessoriesBuy.accessories.accCommodityCode" maxlength="13" class="form-control"/>
+                                       attr="accessoriesBuy.accessories.accCommodityCode" maxlength="13"
+                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">配件描述：</label>
                                 <textarea name="accessories.accDes" class="form-control" rows="3"
                                           style="resize: none;" attr="accessoriesBuy.accessories.accDes"
+                                          placeholder="描述信息可以不填"
                                           id="eAccDes"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label">类别：</label>
-                                <input type="text" name="accessories.accessoriesType.accTypeName"
-                                       attr="accessoriesBuy.accessories.accessoriesType.accTypeName"
-                                       class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -197,20 +205,7 @@
                                 <label class="control-label">折扣：</label>
                                 <input type="text" name="accBuyDiscount" id="eAccBuyDiscount"
                                        attr="accessoriesBuy.accBuyDiscount" value="1"
-                                       class="form-control"/>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label">配件类别：</label>
-                                <select id="eAccType" class="js-example-tags form-control accTypeA"
-                                        name="accessories.accTypeId" attr="acc.accessoriesType.accTypeName"></select>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label">配件供应商：</label>
-                                <select id="supplyType" class="js-example-tags form-control supply"
-                                        name="accessories.supplyId"
-                                        attr="accessoriesBuy.accessories.supply.supplyName"></select>
+                                       class="form-control" placeholder="没折扣可以不填" title="如：7.8折是0.78、5折是0.5"/>
                             </div>
 
                             <div class="form-group">
@@ -267,22 +262,31 @@
                         <form role="form" id="addForm">
                             <input type="hidden" attr="acc.accId" name="accId"/>
                             <input type="hidden" attr="acc.accId" name="accessories.accId"/>
-                            <div class="form-group">
-                                <label class="control-label" id="aName">配件名称：</label>
-                                <input type="text" name="accessories.accName" class="form-control " id="accName" attr="acc.accName"/>
-                                <small class="help-block" id="dck" style="color: #a94442; display: none"></small>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label">配件描述：</label>
-                                <textarea name="accessories.accDes" class="form-control" rows="3" id="accDes"
-                                          style="resize: none;" attr="acc.accDes"></textarea>
-                            </div>
-
 
                             <div class="form-group">
                                 <label class="control-label">配件供应商：</label>
                                 <select id="supply" class="js-example-tags form-control supply"
                                         name="accessories.supplyId" style="width: 100%;"></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">类别：</label>
+                                <select id="accType" class="js-example-tags form-control accTypeA"
+                                        name="accessories.accTypeId" attr="acc.accessoriesType.accTypeName"
+                                        style="width: 100%;"></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label" id="aName">配件名称：</label>
+                                <input type="text" name="accessories.accName" class="form-control " id="accName"
+                                       attr="acc.accName"/>
+                                <small class="help-block" id="dck" style="color: #a94442; display: none"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">配件描述：</label>
+                                <textarea name="accessories.accDes" class="form-control" rows="3" id="accDes"
+                                          style="resize: none;" attr="acc.accDes" placeholder="描述信息可以不填"></textarea>
                             </div>
 
                             <div class="form-group">
@@ -293,16 +297,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label">计量单位：</label>
+                                <label class="control-label">单位：</label>
                                 <input type="text" name="accUnit" id="aAccUnit" attr="acc.accUnit"
                                        class="form-control"/>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label">类别：</label>
-                                <select id="accType" class="js-example-tags form-control accTypeA"
-                                        name="accessories.accTypeId" attr="acc.accessoriesType.accTypeName"
-                                        style="width: 100%;"></select>
                             </div>
 
                             <div class="form-group">
@@ -320,7 +317,7 @@
                             <div class="form-group">
                                 <label class="control-label">折扣：</label>
                                 <input type="text" name="accBuyDiscount" id="accBuyDiscount"
-                                       title="如：7.8折是0.78、5折是0.5" value="1"
+                                       title="如：7.8折是0.78、5折是0.5" placeholder="没有折扣可以不填"
                                        class="form-control"/>
                             </div>
 
