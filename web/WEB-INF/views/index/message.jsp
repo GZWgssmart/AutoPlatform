@@ -41,7 +41,7 @@
                             <div class="shell">
                                 <div class="avatar">
                                     <div id="preview">
-                                        <img id="icon" src="<%=path%>/${user.userIcon}" onclick="$('#previewImg').click();" name="file" style="border-radius: 50%;"/>
+                                        <img id="icon" src="<%=path%>${user.userIcon}" onclick="$('#previewImg').click();" name="file" style="border-radius: 50%;"/>
                                     </div>
                                     <input type="file" name="file" onchange="previewImage(this)" style="display: none;" id="previewImg">
                                 </div>
