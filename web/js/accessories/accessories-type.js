@@ -155,18 +155,6 @@ function validator(formId) {
                     }
                 }
             },
-            accTypeDes: {
-                validators: {
-                    notEmpty: {
-                        message: '配件分类描述不能为空'
-                    },
-                    stringLength: {
-                        min: 2,
-                        max: 15,
-                        message: '配件分类描述长度必须在2到15位之间'
-                    }
-                }
-            },
             companyId: {
                 validators: {
                     notEmpty: {
