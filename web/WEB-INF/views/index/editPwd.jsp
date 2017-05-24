@@ -37,7 +37,7 @@
         </div>
 
         <div class="row pass">
-            <input type="password" id="pwd" placeholder="请输入新密码" onfocus="this.type='password'" autocomplete = 'new-password'/>
+            <input type="password" id="pwd" title="新密码必须是六位或六位以上" placeholder="请输入新密码" onfocus="this.type='password'" autocomplete = 'new-password'/>
         </div>
 
         <div class="row pass">

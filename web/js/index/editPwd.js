@@ -24,7 +24,7 @@ function editPwd() {
             }
         }, 'json');
     } else {
-        swal('错误提示', "两次密码输入错误", "error");
+        swal('错误提示', "两次密码输入有误", "error");
         return false;
     }
 }

@@ -1,10 +1,3 @@
-var sts = $("#status").val();
-if(sts == 'Y'){
-    $("#status").val("可用");
-}else{
-    $("#status").val("不可用");
-}
-
 var date = $("#form_datetime").val();
 var datetime = $("#form_loginedTime").val();
 $("#form_datetime").val(formatterDate(date));
@@ -44,18 +37,147 @@ if(/msie/i.test()){
 }
 
 
+var email = $("#editEmail").val();
+var phone = $("#editPhone").val();
+var identity = $("#editIdentity").val();
 
+var editEmail = email;
+var editPhone = phone;
+var editIdentity = identity;
+
+$(document).ready(function () {
+    destoryValidator("mySelf","editSelf");
+    validator("editSelf");
+})
+
+/** 修改提交 */
 function selfMessage() {
-    $('#editSelf').ajaxSubmit({
-        url: '/message/queryBy_self',
-        type: 'post',
-        dataType: 'json',
-        success: function (data) {
-            if (data.result == "success") {
-                swal(data.message, "下次登录系统自动同步修改信息", "success");
-            } else if (data.result == "fail") {
-                swal(data.message, "请填写正确的信息", "error");
+    $("#editSelf").data('bootstrapValidator').validate();
+    if ($("#editSelf").data('bootstrapValidator').isValid()) {
+    } else {
+        $("#editSelfButton").removeAttr("disabled");
+    }
+}
+
+/** 表单验证 */
+function validator(formId) {
+    $("#editSelfButton").removeAttr("disabled");
+    $('#' + formId).bootstrapValidator({
+        feedbackIcons: {
+        },
+        fields: {
+            userAddress: {
+                validators: {
+                    notEmpty: {
+                        message: '居住地不能为空'
+                    }
+                }
+            },
+            userName: {
+                validators: {
+                    notEmpty: {
+                        message: '姓名不能为空'
+                    },
+                    regexp: {
+                        regexp: /^[\u4e00-\u9fa5]{2,4}$/,
+                        message: '姓名格式错误'
+                    }
+                }
+            },
+            userPhone: {
+                validators: {
+                    notEmpty: {
+                        message: '手机号不能为空'
+                    },
+                    regexp: {
+                        regexp: /^1(3|4|5|7|8)\d{9}$/,
+                        message: '手机号格式错误'
+                    },
+                    threshold: 11,
+                    remote: {
+                        url: '/peopleManage/peoplePhone_verification?editPhone='+editPhone,
+                        message: '该手机号已存在',
+                        delay :  2000,
+                        type: 'GET'
+                    }
+                }
+            },
+            userEmail: {
+                validators: {
+                    notEmpty: {
+                        message: '邮箱不能为空'
+                    },
+                    regexp: {
+                        regexp: /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
+                        message: '邮箱格式错误'
+                    },
+                    threshold: 6,
+                    remote: {
+                        url: '/peopleManage/peopleEmail_verification?editEmail='+editEmail,
+                        message: '该邮箱已存在',
+                        delay :  2000,
+                        type: 'GET'
+                    }
+                }
+            },
+            userIdentity: {
+                validators: {
+                    notEmpty: {
+                        message: '身份证不能为空'
+                    },
+                    regexp: {
+                        regexp: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
+                        message: '身份证格式错误'
+                    },
+                    threshold: 18,
+                    remote: {
+                        url: '/peopleManage/peopleIdentity_verification?editIdentity='+editIdentity,
+                        message: '该身份证已存在',
+                        delay :  2000,
+                        type: 'GET'
+                    }
+                }
+            },
+            wechatOpenId: {
+                validators: {
+                    regexp: {
+                        regexp: /^[a-zA-Z\d_.]{5,}$/,
+                        message: '微信号格式错误'
+                    }
+                }
+            },
+            qqOpenId: {
+                validators: {
+                    regexp: {
+                        regexp: /[1-9][0-9]{4,}/,
+                        message: 'QQ号格式错误'
+                    }
+                }
+            },
+            weiboOpenId: {
+                validators: {
+                    regexp: {
+                        regexp: /[a-zA-z0-9_\d_.]{5,}/,
+                        message: '微博号格式错误'
+                    }
+                }
             }
+        }
+    })
+    .on('success.form.bv', function (e) {
+        if(formId == 'editSelf') {
+            $('#editSelf').ajaxSubmit({
+                url: '/message/queryBy_self',
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.result == "success") {
+                        swal(data.message, "下次登录系统自动同步修改信息", "success");
+                    } else if (data.result == "fail") {
+                        swal(data.message, "请填写正确的信息", "error");
+                    }
+                }
+            })
         }
     })
 }

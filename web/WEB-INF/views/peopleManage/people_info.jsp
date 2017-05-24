@@ -366,7 +366,7 @@
                                     </div>
                                 </div>
                                 <button class="form_save" data-dismiss="modal" aria-hidden="true">关闭</button>
-                                <button class="form_save" type="button" id="editModalButton" onclick="editModal()">保存</button>
+                                <button class="form_save" type="button" id="editModalButton" onclick="editModal_1()">保存</button>
                             </form>
                             <button class="button_form" id="button" onclick="$('#previewImg').click();">更换头像</button>
                         </div>

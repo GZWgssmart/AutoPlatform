@@ -23,14 +23,13 @@
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/message.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/style.min862f.css" rel="stylesheet" type="text/css">
 
 
 </head>
 <body>
 <div class="wrapper" id="mySelf">
     <div class="modal-content">
-        <div class="col-sm-12">
+        <div class="col-sm-12 b-r">
             <div class="ibox">
                 <div class="ibox-content">
                     <form role="form" id="editSelf" method="post" enctype="multipart/form-data">
@@ -49,7 +48,7 @@
                                 <br/>
                                 <div class="table_info">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 form-group">
                                             <label class="control-label">邮箱：</label>
                                             <input class="form-control" style="display: initial;" id="editEmail" name="userEmail" type="text" value="${user.userEmail}" />
                                         </div>
@@ -57,9 +56,9 @@
                                             <label class="control-label">昵称：</label>
                                             <input class="form-control" style="display: initial;" type="text" value="${user.userNickname}"  name="userNickname"/>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 form-group">
                                             <label class="control-label">手机号：</label>
-                                            <input class="form-control" style="display: initial;" type="text" minlength="11" maxlength="11" id="editPhone" value="${user.userPhone}"  name="userPhone"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="editPhone" value="${user.userPhone}"  name="userPhone"/>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">性别：</label>
@@ -88,34 +87,34 @@
                                             <label class="control-label">年龄：</label>
                                             <input class="form-control" style="display: initial;" disabled="disabled" id="age" type="text" name="userAge"/>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 form-group">
                                             <label class="control-label">微博：</label>
-                                            <input class="form-control" style="display: initial;" type="text" value="${user.weiboOpenId}"  name="weiboOpenId"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="weiboOpen" value="${user.weiboOpenId}"  name="weiboOpenId"/>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 form-group">
                                             <label class="control-label">微信号：</label>
-                                            <input class="form-control" style="display: initial;" type="text" value="${user.wechatOpenId}"  name="wechatOpenId"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="wechatOpen" value="${user.wechatOpenId}"  name="wechatOpenId"/>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 form-group">
                                             <label class="control-label">QQ号：</label>
-                                            <input class="form-control" style="display: initial;" type="text" minlength="6" maxlength="10" value="${user.qqOpenId}"  name="qqOpenId"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="qqOpen" value="${user.qqOpenId}"  name="qqOpenId"/>
                                         </div>
                                     </div>
                                     <br/>
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 form-group">
                                             <label class="control-label">身份证：</label>
-                                            <input class="form-control" style="display: initial;" type="text" minlength="18" maxlength="18" id="editIdentity" value="${user.userIdentity}"  name="userIdentity"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="editIdentity" value="${user.userIdentity}"  name="userIdentity"/>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">生日：</label>
                                             <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="birthday" value="${user.userBirthday}"  name="userBirthday"/>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 form-group">
                                             <label class="control-label">真实姓名：</label>
-                                            <input class="form-control" style="display: initial;" type="text" minlength="2" maxlength="4" value="${user.userName}"  name="userName"/>
+                                            <input class="form-control" style="display: initial;" type="text" id="userName" value="${user.userName}"  name="userName"/>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3 form-group">
                                             <label class="control-label">居住地址：</label>
                                             <div style="position: relative;">
                                                 <input data-toggle="city-picker" style="display: initial;" value="${user.userAddress}" name="userAddress">
@@ -131,10 +130,6 @@
                                         <div class="col-md-3">
                                             <label class="control-label">最近登录：</label>
                                             <input class="form-control" disabled="disabled" style="display: initial;" value="${user.userLoginedTime}" type="text" id="form_loginedTime" name="userLoginedTime"/>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="control-label">当前状态：</label>
-                                            <input class="form-control" disabled="disabled" style="display: initial;" type="text" value="${user.userStatus}" id="status" name="userStatus"/>
                                         </div>
                                         <shiro:hasAnyRoles name="companyRepertory, companyReceive, companyArtificer, companySales, companyHumanManager, companyAccounting, companyBuyer, companyEmp">
                                         <div class="col-md-3">

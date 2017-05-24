@@ -191,7 +191,7 @@ window.operateUpdateEvents = {
 }
 
 /** 修改提交 */
-function editModal() {
+function editModal_1() {
     $("#editModal").data('bootstrapValidator').validate();
     if ($("#editModal").data('bootstrapValidator').isValid()) {
         $("#editModalButton").attr("disabled","disabled");
