@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Logger;
 import com.gs.bean.AccessoriesType;
 import com.gs.bean.Appointment;
 import com.gs.bean.User;
+import com.gs.common.bean.ControllerResult;
 import com.gs.common.bean.Pager;
 import com.gs.common.bean.Pager4EasyUI;
 import com.gs.common.util.CheckRoleUtil;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -46,8 +48,19 @@ public class CustomerClientController {
     }
 
     @RequestMapping(value = "app", method = RequestMethod.GET)
-    public String app(){
-        logger.info("我要预约");
-        return "customerClient/app";
+    public String app(HttpSession session){
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return "index/notLogin";
+        }
+        User user = (User) session.getAttribute("user");
+        if (user.getUserName() != null && !user.getUserName().equals("") && user.getUserPhone() != null && !user.getUserPhone().equals("")) {
+            logger.info("我要预约");
+            return "customerClient/app";
+        } else {
+            logger.info("个人资料不完善");
+            return "error/notData";
+        }
+
     }
 }

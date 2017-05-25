@@ -14,16 +14,34 @@
     <head>
         <title>我要预约</title>
         <link rel="shortcut icon" href="<%=path %>/img/favicon.ico">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
         <link href="<%=path %>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
-        <link href="<%=path %>/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
         <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
         <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
         <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
         <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
-        <link href="<%=path %>/css/bootstrap-table.css" rel="stylesheet" type="text/css">
-        <link href="<%=path %>/css/animate.min.css" rel="stylesheet">
-        <link href="<%=path %>/css/style.css" rel="stylesheet">
+        <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
+              type="text/css">
+
+        <%@ include file="../common/rightMenu.jsp" %>
+        <script src="<%=path %>/js/contextmenu.js"></script>
+        <script src="<%=path %>/js/jquery.min.js"></script>
+        <script src="<%=path %>/js/bootstrapValidator.js"></script>
+        <script src="<%=path %>/js/bootstrap.min.js"></script>
+        <script src="<%=path %>/js/bootstrap-table.js"></script>
+        <script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
+        <script src="<%=path %>/js/sweet-alert.min.js"></script>
+        <script src="<%=path %>/js/jquery.formFill.js"></script>
+        <script src="<%=path %>/js/select2.full.min.js"></script>
+        <script src="<%=path %>/js/zh-CN.js"></script>
+        <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
+        <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+        <script src="<%=path %>/js/accessories/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+        <script src="<%=path %>/js/main.js"></script>
+        <script src="<%=path%>/js/customerClient/app.js"></script>
     </head>
 <body>
 
@@ -98,7 +116,7 @@
                                 <button type="button" class="btn btn-default"
                                         data-dismiss="modal">关闭
                                 </button>
-                                <input type="button" id="addButton" class="btn btn-primary" onclick="add()" onclick="itemOnclik2();" value="添加">
+                                <input type="button" id="addButton" class="btn btn-primary" onclick="add()" value="添加">
                                 </input>
                             </div>
                         </form>
@@ -108,22 +126,6 @@
         </div>
     </div>
 </div>
-
-<%@ include file="../common/rightMenu.jsp" %>
-<script src="<%=path %>/js/contextmenu.js"></script>
-<script src="<%=path %>/js/jquery.min.js"></script>
-<script src="<%=path %>/js/bootstrap.min.js"></script>
-<script src="<%=path %>/js/bootstrapValidator.js"></script>
-<script src="<%=path %>/js/content.min.js?v=1.0.0"></script>
-<script src="<%=path %>/js/sweet-alert.min.js"></script>
-<script src="<%=path %>/js/select2.full.min.js"></script>
-<script src="<%=path %>/js/zh-CN.js"></script>
-<script src="<%=path %>/js/bootstrap-table.js"></script>
-<script src="<%=path %>/js/bootstrap-table-zh-CN.min.js"></script>
-<script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
-<script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-<script src="<%=path %>/js/main.js"></script>
-<script src="<%=path%>/js/customerClient/app.js"></script>
 
 </body>
 </html>
