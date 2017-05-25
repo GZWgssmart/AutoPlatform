@@ -63,7 +63,7 @@
                                 </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="J_menuItem" href="<%=path %>/message/personal_message">个人资料</a>
+                            <li><a id="personalData" class="J_menuItem" href="<%=path %>/message/personal_message">个人资料</a>
                             </li>
                             <li><a class="J_menuItem" href="<%=path %>/pwd/personal_pwd">修改密码</a>
                             </li>

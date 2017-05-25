@@ -93,10 +93,6 @@ function setData(customer) {
 
 }
 
-
-
-
-
 /** 表单验证 */
 function validator(formId) {
     $("#addButton").removeAttr("disabled");

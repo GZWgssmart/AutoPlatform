@@ -29,3 +29,8 @@ function showCompanyPage() {
 function showIntentionPage() {
     document.getElementById("intention").click();
 }
+/** 访问个人资料页面*/
+function showDataPage() {
+    document.getElementById("personalData").click();
+}
+

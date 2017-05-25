@@ -3,14 +3,43 @@ var userInfo;
 var editPhone;
 /** 显示添加数据的窗口 */
 $(document).ready(function () {
-    $("#addWin").modal('show');
-    validator("addForm");
-    initDateTimePicker("datetimepicker", "arriveTime","addForm");
-    initSelect2("car_brand", "请选择品牌", "/carBrand/car_brand_all", "565");
-    initSelect2("car_color", "请选择颜色", "/carColor/car_color_all", "565");
-    initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "565");
-    initSelect2("company", "请选择汽修公司", "/company/company_all", "565");
+    var userName = $("#addUserName").val();
+    var userPhone = $("#addUserPhone").val();
+    alert(userName + "," + userPhone2)
+    if (userName != null && userName != "" && userPhone != null && userPhone != "") {
+        $("#addWin").modal('show');
+        validator("addForm");
+        initDateTimePicker("datetimepicker", "arriveTime", "addForm");
+        initSelect2("car_brand", "请选择品牌", "/carBrand/car_brand_all", "565");
+        initSelect2("car_color", "请选择颜色", "/carColor/car_color_all", "565");
+        initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "565");
+        initSelect2("company", "请选择汽修公司", "/company/company_all", "565");
+    } else {
+        swal({
+                title: "预约失败",
+                text: "您的个人资料不完整,是否完善个人资料？",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "是",
+                cancelButtonText: "否",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    showData();
+                } else {
+                    window.parent.closeThis();
+                }
+            });
+    }
 });
+
+/** 子窗口调用父窗口的js方法 */
+function showData() {
+    parent.showDataPage();
+}
 
 /** 添加选择品牌 */
 function checkBrand(combo) {

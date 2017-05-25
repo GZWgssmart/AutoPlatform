@@ -27,7 +27,7 @@
     </head>
 <body>
 
-<div id="addWin" class="modal fade" style="overflow:scroll" aria-hidden="true">
+<div id="addWin" class="modal fade" style="overflow:scroll" aria-hidden="true" data-backdrop="static" keyboard:false>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
