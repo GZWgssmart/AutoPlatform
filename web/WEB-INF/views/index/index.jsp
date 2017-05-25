@@ -241,7 +241,7 @@
 
                         <div class="row row-mt-15em">
                             <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
-                                <span class="intro-text-small">欢迎登陆 汽车维保平台</span>
+                                <span class="intro-text-small">欢迎登录 汽车维保平台</span>
                                 <h1>更快捷 更方便 更便利 小拇指 为您服务.</h1>
                             </div>
                             <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
@@ -249,7 +249,7 @@
                                     <div class="tab">
                                         <ul class="tab-menu">
                                             <li class="active gtco-first"><a href="#" data-tab="signup">注册</a></li>
-                                            <li class="gtco-second"><a href="#" data-tab="login">登陆</a></li>
+                                            <li class="gtco-second"><a href="#" data-tab="login">登录</a></li>
                                         </ul>
                                         <div class="tab-content">
                                             <div id="errMsg1" style="color: red"></div>
@@ -331,7 +331,7 @@
                                                     <div class="row form-group">
                                                         <div class="col-md-12">
                                                             <input type="button" onclick="login()"
-                                                                   class="btn btn-primary" value="登陆"/>
+                                                                   class="btn btn-primary" value="登录"/>
                                                             <input type="reset" class="btn btn-primary" value="重置"/>
                                                         </div>
                                                     </div>

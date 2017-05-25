@@ -56,6 +56,137 @@
 
     <!-- Modernizr JS -->
     <script src="<%=path%>/js/modernizr-2.6.2.min.js"></script>
+    <%--rightMenu--%>
+    <script type="text/javascript" src="<%=path%>/js/jquery.min.js"></script>
+    <style type="text/css">
+        body,div,ul,li,p,a,img{
+            padding: 0;
+            margin: 0;
+        }
+        /*右侧悬浮菜单*/
+        .slide{
+            width: 50px;
+            height: 250px;
+            position: fixed;
+            top: 50%;
+            margin-top: -126px;
+            background: #999999;
+            right: 0;
+            border-radius: 5px 0 0 5px;
+            z-index: 999;
+        }
+        .slide ul{
+            list-style: none;
+        }
+        .slide .icon li{
+            width: 49px;
+            height: 50px;
+            background: url(<%=path%>/img/icon.png) no-repeat;
+        }
+        .slide .icon .up{
+            background-position:-330px -120px ;
+        }
+        .slide .icon li.qq{
+            background-position:-385px -73px ;
+        }
+        .slide .icon li.tel{
+            background-position:-385px -160px ;
+        }
+        .slide .icon li.wx{
+            background-position:-385px -120px ;
+        }
+        .slide .icon li.down{
+            background-position:-330px -160px ;
+        }
+        .slide .info{
+            top: 50%;
+            height: 147px;
+            position: absolute;
+            right: 100%;
+            background: #999999;
+            width: 0px;
+            overflow: hidden;
+            margin-top: -73.5px;
+            transition:0.5s;
+            border-radius:4px 0 0 4px ;
+        }
+        .slide .info.hover{
+            width: 145px;
+
+        }
+        .slide .info li{
+            width: 145px;
+            color: #FFFFCC;
+            text-align: center;
+        }
+        .slide .info li p{
+            font-size: 1.1em;
+            line-height: 2em;
+            padding: 15px;
+            text-align: left;
+        }
+        .slide .info li.qq p a{
+            display: block;
+            margin-top: 12px;
+            width: 100px;
+            height: 32px;
+            line-height: 32px;
+            color: #CCCCCC;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            border: 1px solid #CCCCCC;
+            border-radius: 5px;
+        }
+        .slide .info li.qq p a:hover{
+            color: #FFFFFF;
+            border: none;
+            background: #CCCCCC;
+        }
+        .slide .info li div.img{
+            height: 100%;
+            background: #DEFFF9;
+            margin: 15px;
+        }
+        .slide .info li div.img img{
+            width: 100%;
+            height: 100%;
+        }
+        /*控制菜单的按钮*/
+        .index_cy{
+            width: 30px;
+            height: 30px;
+            background: url(<%=path%>/img/index_cy.png);
+            position: fixed;
+            right: 0;
+            top: 50%;
+            margin-top: 140px;
+            background-position: 62px 0;
+            cursor: pointer;
+        }
+        .index_cy2{
+            width: 30px;
+            height: 30px;
+            background: url(<%=path%>/img/index_cy.png);
+            position: fixed;
+            right: 0;
+            top: 50%;
+            margin-top: 140px;
+            background-position: 30px 0;
+            cursor: pointer;
+        }
+
+        /*自适应 当屏小于1050时隐藏*/
+        @media screen and (max-width: 300px) {
+            .slide{
+                display: none;
+            }
+            #btn{
+                display: none;
+            }
+
+        }
+    </style>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
     <script src="<%=path%>/js/respond.min.js"></script>
@@ -65,6 +196,8 @@
 <body>
 
 <div class="gtco-loader"></div>
+
+<%@ include file="../index/rightMenu.jsp" %>
 
 <div id="page">
 
@@ -183,6 +316,34 @@
 <!-- Magnific Popup -->
 <script src="<%=path%>/js/jquery.magnific-popup.min.js"></script>
 <script src="<%=path%>/js/magnific-popup-options.js"></script>
+<%--rightMenu--%>
+<div id="btn" class="index_cy"></div>
+<script type="text/javascript">
+    $(function(){
+
+        $('.slide .icon li').not('.up,.down').mouseenter(function(){
+            $('.slide .info').addClass('hover');
+            $('.slide .info li').hide();
+            $('.slide .info li.'+$(this).attr('class')).show();//.slide .info li.qq
+        });
+        $('.slide').mouseleave(function(){
+            $('.slide .info').removeClass('hover');
+        });
+
+        $('#btn').click(function(){
+            $('.slide').toggle();
+            if($(this).hasClass('index_cy')){
+                $(this).removeClass('index_cy');
+                $(this).addClass('index_cy2');
+            }else{
+                $(this).removeClass('index_cy2');
+                $(this).addClass('index_cy');
+            }
+
+        });
+
+    });
+</script>
 <!-- Main -->
 <script src="<%=path%>/js/webmain.js"></script>
 <script src="<%=path%>/js/base64.js"></script>
