@@ -240,7 +240,7 @@ public class CompanyController {
                     userRole.setUserId(userId);
                     userRole.setRoleId(role.getRoleId());
                     String to = user.getUserPhone();
-                    String smsContent = "尊敬的" + user.getUserName() + "用户，您已经成功入驻我们的平台，您可以使用您的手机号进行登入我们的系统了哦，登入密码为:" + pwd;
+                    String smsContent = "【创意科技】尊敬的" + user.getUserName() + "用户，您已经成功入驻我们的平台，您可以使用您的手机号进行登入我们的系统了哦，登入密码为:" + pwd;
                     IndustrySMS is = new IndustrySMS(to, smsContent);
                     is.execute();
                     userService.insert(user);

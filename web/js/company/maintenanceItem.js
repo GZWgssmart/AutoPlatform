@@ -293,9 +293,6 @@ function validator(formId) {
             maintainDes: {
                 message: '保养描述失败',
                 validators: {
-                    notEmpty: {
-                        message: '保养描述用不能为空'
-                    },
                     stringLength: {
                         min: 1,
                         max: 10,
