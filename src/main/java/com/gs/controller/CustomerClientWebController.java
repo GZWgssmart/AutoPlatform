@@ -7,6 +7,7 @@ import com.gs.common.bean.ControllerResult;
 import com.gs.common.message.IndustrySMS;
 import com.gs.common.util.Base64Util;
 import com.gs.common.util.EncryptUtil;
+import com.gs.common.util.GetCodeUtil;
 import com.gs.service.*;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -118,19 +120,30 @@ public class CustomerClientWebController {
 
     }
 
+    private String phone;
+
     @ResponseBody
     @RequestMapping("sendCode")
-    public ControllerResult sendCode(@Param("userPhone") String userPhone, @Param("codeNumber") String codeNumber) {
+    public ControllerResult sendCode(@Param("userPhone") String userPhone, HttpSession session) {
         logger.info("获取短信验证码");
         String to = userPhone;
-        byte[] bytes = Base64Util.decode(codeNumber);
-        String code = new String(bytes);
+        String code = GetCodeUtil.getCode(6,0);
+        phone = userPhone;
+        session.setAttribute(userPhone,code);
         String smsContent = "【创意科技】您的验证码为" + code + "，请于30分钟内正确输入，如非本人操作，请忽略此短信。";
         IndustrySMS is = new IndustrySMS(to, smsContent);
         is.execute();
         return ControllerResult.getSuccessResult("验证码发送成功，请注意查收");
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "code", method = RequestMethod.GET)
+    public String getCode(HttpSession session){
+        logger.info("返回验证码");
+        String code = (String)session.getAttribute(phone);
+        return Base64Util.getBase64(code);
+    }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

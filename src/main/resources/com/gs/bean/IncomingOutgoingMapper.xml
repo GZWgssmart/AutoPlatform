@@ -200,7 +200,7 @@
 				LEFT JOIN t_incoming_type i on io.inTypeId = i.inTypeId
 				LEFT JOIN t_outgoing_type o on io.outTypeId = o.outTypeId
 				LEFT JOIN  t_user u on io.inOutCreatedUser = u.userId
-				LEFT JOIN t_company c on io.companyId = c.companyId
+				LEFT JOIN t_company c on io.companyId = c.companyId  where 1 = 1
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and io.companyId = #{user.companyId}

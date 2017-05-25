@@ -1,5 +1,6 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
     String path = request.getContextPath();
 %>
@@ -54,9 +55,11 @@
             <th data-field="chargeBillDes">
                 收费单据描述
             </th>
+        <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
             <th data-field="record.company.companyName">
                 所属公司
             </th>
+        </shiro:hasAnyRoles>
             <th data-field="chargeBillStatus" data-formatter="status">
                 单据状态
             </th>
@@ -95,7 +98,11 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
-
+            <a>
+                <button onclick="showChargeBillWin();" type="button" class="btn btn-default">
+                    <i class="glyphicon glyphicon-print"></i> 打印收费单据
+                </button>
+            </a>
 
             <a>
                 <button onclick="searchStatus('/bill/pager?status=Y');" type="button" class="btn btn-default">

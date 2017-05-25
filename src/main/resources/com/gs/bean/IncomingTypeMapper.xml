@@ -64,6 +64,9 @@
 		<![CDATA[
 			select * from t_incoming_type where inTypeStatus = 'Y'
 		]]>
+		<if test="user.companyId != null and user.companyId != ''">
+			and companyId = #{user.companyId}
+		</if>
 	</select>
 
 	<select id="queryByStatus" resultMap="incomingTypeResultMap" parameterType="string">

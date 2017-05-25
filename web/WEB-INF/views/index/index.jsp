@@ -205,7 +205,7 @@
                                                     </div>
                                                 </form>
                                                 <div>
-                                                    <dutton onclick="showPwdWin()" style="cursor: pointer;">忘记密码</dutton>
+                                                    <span onclick="showPwdWin()" style="cursor: pointer;">忘记密码</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -455,6 +455,7 @@
         </div>
     </div>
 </div>
+
 
 <%--login js--%>
 <script src="<%=path%>/js/index/login.js"></script>

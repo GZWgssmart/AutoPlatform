@@ -185,6 +185,7 @@
 <script src="<%=path%>/js/magnific-popup-options.js"></script>
 <!-- Main -->
 <script src="<%=path%>/js/webmain.js"></script>
+<script src="<%=path%>/js/base64.js"></script>
 
 <%--login js--%>
 <script src="<%=path%>/js/index/login.js"></script>

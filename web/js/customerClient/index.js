@@ -75,8 +75,31 @@ function showAddWin(companyId, userName, userPhone) {
         $("#addWin").modal('show');
         $("#companyId").val(companyId);
     } else {
-        swal("错误提示", "个人信息不足，请您完善信息后再来预约！", "error");
+        swal({
+                title: "预约失败",
+                text: "您的个人资料不完整,是否完善个人资料？",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "是",
+                cancelButtonText: "否",
+                closeOnConfirm: true,
+                closeOnCancel: true
+            },
+            function (isConfirm) {
+                if (isConfirm) {
+                    showData();
+                } else {
+                    window.parent.closeThis();
+                }
+            });
     }
+}
+
+
+/** 子窗口调用父窗口的js方法 */
+function showData() {
+    parent.showDataPage();
 }
 
 /** 关闭选择 */
@@ -94,6 +117,10 @@ function setData(customer) {
 
 }
 
+
+
+
+
 /** 表单验证 */
 function validator(formId) {
     $("#addButton").removeAttr("disabled");
@@ -104,31 +131,6 @@ function validator(formId) {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            userName: {
-                message: '车主验证失败',
-                validators: {
-                    notEmpty: {
-                        message: '车主姓名不能为空'
-                    },
-                    stringLength: {
-                        min: 2,
-                        max: 4,
-                        message: '车主长度必须在2到4位之间'
-                    }
-                }
-            },
-            userPhone: {
-                validators: {
-                    notEmpty: {
-                        message: '手机号不能为空'
-                    },
-                    stringLength: {
-                        min: 11,
-                        max: 11,
-                        message: '手机号只能是11位'
-                    }
-                }
-            },
             brandId: {
                 validators: {
                     notEmpty: {

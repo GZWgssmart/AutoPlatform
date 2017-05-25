@@ -22,6 +22,7 @@ import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
+import javax.servlet.http.HttpSession;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -78,16 +79,17 @@ public class EditPwdController {
             return ControllerResult.getNotLoginResult("登录信息已失效，请重新登录");
         }
     }
-
+    private String phone;
     @ResponseBody
     @RequestMapping("sendCode")
-    public ControllerResult sendCode(@Param("number") String number, @Param("codeNumber") String codeNumber) {
+    public ControllerResult sendCode(@Param("number") String number, HttpSession session) {
         logger.info("获取验证码");
         Pattern p = Pattern.compile("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.([a-zA-Z0-9_-])+)+$");
         Matcher m = p.matcher(number);
         boolean email = m.matches();
-        byte[] bytes = Base64Util.decode(codeNumber);
-        String code = new String(bytes);
+        String code = GetCodeUtil.getCode(6,0);
+        phone = number;
+        session.setAttribute(number,code);
         if(email){
             Mail mail = new Mail();
             mail.setRecipients(number);
@@ -135,7 +137,7 @@ public class EditPwdController {
     }
     @ResponseBody
     @RequestMapping(value = "editPwd", method = RequestMethod.GET)
-    public ControllerResult editPwd(@Param("number")String number,@Param("pwd")String pwd){
+    public ControllerResult editPwd(@Param("number")String number,@Param("pwd")String pwd,HttpSession session){
         logger.info("根据手机或邮箱修改密码");
         Pattern p = Pattern.compile("^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.([a-zA-Z0-9_-])+)+$");
         Matcher m = p.matcher(number);
@@ -149,8 +151,17 @@ public class EditPwdController {
         }
         user.setUserPwd(pwd1);
         userService.updatePwdPhone(user);
+        session.removeAttribute(number);
         return ControllerResult.getSuccessResult("密码修改成功");
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "code", method = RequestMethod.GET)
+    public String getCode(HttpSession session){
+        logger.info("返回验证码");
+        String code = (String)session.getAttribute(phone);
+        return Base64Util.getBase64(code);
+    }
 
 }

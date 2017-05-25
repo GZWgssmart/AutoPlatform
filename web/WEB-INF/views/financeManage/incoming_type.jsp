@@ -37,9 +37,11 @@
             <th data-field="inTypeCreatedTime" data-formatter="formatterDate">
                 创建时间
             </th>
+        <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
             <th data-field="company.companyName" data-formatter="isNullName">
                 所属公司
             </th>
+        </shiro:hasAnyRoles>
             <th data-field="inTypeStatus" data-formatter="status">
                 当前状态
             </th>

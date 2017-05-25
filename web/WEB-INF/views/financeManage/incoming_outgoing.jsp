@@ -48,9 +48,11 @@
             <th data-field="inOutCreatedTime" data-formatter="formatterDate">
                 创建时间
             </th>
+        <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
             <th data-field="company.companyName">
                 所属公司
             </th>
+        </shiro:hasAnyRoles>
             <th data-field="inOutStatus" data-formatter="status">
                 当前状态
             </th>

@@ -9,6 +9,7 @@ import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.message.IndustrySMS;
 import com.gs.common.util.EncryptUtil;
+import com.gs.common.util.GetCodeUtil;
 import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.common.web.ServletContextUtil;
@@ -126,6 +127,7 @@ public class LoginController {
                         return ControllerResult.getFailResult("注册失败，该邮箱已经存在");
                     }
                     user.setUserStatus("N");
+
                     user.setUserEmail(number);
                 } else {
                     if (userService.queryPhone(number) > 0) {
@@ -145,7 +147,7 @@ public class LoginController {
                     }
                 }
                 user.setUserIcon("/img/default.png");
-
+                user.setUserGender("N");
                 Role role = roleService.queryByName(Constants.CAR_OWNER);
                 UserRole userRole = new UserRole();
                 userRole.setUserId(userId);
@@ -178,7 +180,7 @@ public class LoginController {
                     Session session = subject.getSession();
                     session.setAttribute("user", user);
                     userService.updateLoginTime(user.getUserId());
-
+                    session.removeAttribute(number);
                     return ControllerResult.getSuccessResult("注册成功，请不要操作，");
                 }
             } else {
@@ -191,9 +193,10 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping("sendCode")
-    public ControllerResult sendCode(@Param("userPhone") String userPhone) {
+    public ControllerResult sendCode(@Param("userPhone") String userPhone,HttpSession session) {
         logger.info("获取短信验证码");
-        phoneCode = String.valueOf((int)((Math.random()*9+1)*100000));
+        phoneCode = GetCodeUtil.getCode(6,0);
+        session.setAttribute(userPhone,phoneCode);
         String to = userPhone;
         String smsContent = "【创意科技】您的验证码为" + phoneCode + "，请于30分钟内正确输入，如非本人操作，请忽略此短信。";
         IndustrySMS is = new IndustrySMS(to, smsContent);

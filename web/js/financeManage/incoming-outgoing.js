@@ -14,8 +14,8 @@ $(document).ready(function () {
 
 function isType(){
     $("#isType").bootstrapSwitch({
-        onText: '支出',
-        offText: '收入',
+        onText: '收入',
+        offText: '支出',
         onColor: 'success',
         offColor: 'danger',
         size: 'normal',

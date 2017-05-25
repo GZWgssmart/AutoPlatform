@@ -49,7 +49,25 @@ function register() {
         function (data) {
             if (data.result == "success") {
                 if (data.message == "注册成功，请到邮箱中进行验证") {
-                    $("#successMsg").html(data.message);
+                    $("#errMsg1").html("");
+                    swal({
+                            title: "注册成功",
+                            text: data.message + ",是否打开邮箱？",
+                            type: "success",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "是",
+                            cancelButtonText: "否",
+                            closeOnConfirm: true,
+                            closeOnCancel: true
+                        },
+                        function (isConfirm) {
+                            if (isConfirm) {
+                                window.open("http://www.mail.qq.com");
+                            } else {
+
+                            }
+                        });
                 } else {
                     cCount(data.message);
                     setTimeout(function () {
@@ -154,17 +172,53 @@ function getCode1(val) {
 /** 发送查询进度的验证短信 */
 function sendCode1(val) {
     if (val == 60) {
-        codeNumber = getCodeNumber();
-        var b = new Base64();
-        var hash = b.encode(""+codeNumber);
         var userPhone = $("#phone").val();
         if (userPhone != null && userPhone != "" && userPhone != undefined) {
-            $.get("/customerClientWeb/sendCode?userPhone=" + userPhone + "&codeNumber=" + hash, function (data) {
+            $.get("/customerClientWeb/sendCode?userPhone=" + userPhone, function (data) {
                 if (data.result == "success") {
                     $("#successMsg").html(data.message);
+                    getCodeCar();
                 }
             }, "json");
         }
+    }
+}
+
+var carCode = '';
+function getCodeCar(){
+    $.get("/customerClientWeb/code",
+        function(data){
+            carCode = data;
+        })
+}
+
+/** 检查手机号 */
+function checkPhone(phone) {
+    if (isPhone(phone.value)) {
+        $("#error").html('');
+        $("#getButton").removeAttr("disabled");
+    } else {
+        $("#error").html('请输入正确的手机号');
+        $("#getButton").attr("disabled","disabled");
+    }
+}
+
+/** 查询 */
+function customerCar() {
+    var phone = $("#phone").val();
+    var code = $("#code").val();
+    var base = new Base64();
+    var codeData = base.decode(""+carCode);
+    if (code == codeData) {
+        $("#error").html('');
+        $("#successMsg").html('');
+        $("#phone").val('');
+        $("#code").val('');
+        countdown1 = 60;
+        var url = '/customerClientWeb/userPage?phone=' + phone;
+        document.getElementById("iframeTable").src = url;
+    } else {
+        $("#error").html('您输入的验证码有误，请重新输入');
     }
 }
 
@@ -176,6 +230,7 @@ function showPwdWin(){
     $("#error1").html("");
     $('#successMsg2').html("");
     $('#pwdDiv').hide();
+    countdown2 = 60;
     $("#codeButton").val("获取验证码");
     $("#codeButton").attr("disabled","disabled");
 
@@ -235,23 +290,31 @@ function getCode2(val) {
 /** 发送找回密码的验证短信 */
 function sendCode2(val) {
     if (val == 60) {
-        codeNumber = getCodeNumber();
-        var b = new Base64();
-        var hash = b.encode(""+codeNumber);
         var userPhone = $("#phone").val();
         if (userPhone != null && userPhone != "" && userPhone != undefined) {
-            $.get("/pwd/sendCode?number=" + userPhone + "&codeNumber=" + hash, function (data) {
+            $.get("/pwd/sendCode?number=" + userPhone , function (data) {
                 if (data.result == "success") {
                     $("#successMsg2").html(data.message);
+                    getCodePwd();
                 }
             }, "json");
+
         }
     }
 }
+var pwdCode = '';
+function getCodePwd(){
+    $.get("/pwd/code",
+        function(data){
+            pwdCode = data;
+    })
+}
 
 function variCode(val){
+    var base = new Base64();
+    var code = base.decode(""+pwdCode);
     if(val != '') {
-        if (val == codeNumber) {
+        if (val == code) {
             $("#error").html("");
             $("#pwd").removeAttr("disabled");
             $("#pwd1").removeAttr("disabled");
@@ -291,21 +354,7 @@ function editPwd(){
 }
 
 
-/** 查询 */
-function customerCar() {
-    var phone = $("#phone").val();
-    var code = $("#code").val();
-    if (code == codeNumber) {
-        $("#error").html('');
-        $("#successMsg").html('');
-        $("#phone").val('');
-        $("#code").val('');
-        var url = '/customerClientWeb/userPage?phone=' + phone;
-        document.getElementById("iframeTable").src = url;
-    } else {
-        $("#error").html('您输入的验证码有误，请重新输入');
-    }
-}
+
 
 /** 清除提示信息 */
 function clearSuccess(val) {
@@ -314,16 +363,7 @@ function clearSuccess(val) {
     }
 }
 
-/** 检查手机号 */
-function checkPhone(phone) {
-    if (isPhone(phone.value)) {
-        $("#error").html('');
-        $("#getButton").removeAttr("disabled");
-    } else {
-        $("#error").html('请输入正确的手机号');
-        $("#getButton").attr("disabled","disabled");
-    }
-}
+
 
 /** 获取6位数验证码 */
 function getCodeNumber() {

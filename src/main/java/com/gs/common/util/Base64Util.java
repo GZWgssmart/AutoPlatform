@@ -1,6 +1,9 @@
 package com.gs.common.util;
 
+import sun.misc.BASE64Encoder;
+
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 
 public class Base64Util {
@@ -75,6 +78,20 @@ public class Base64Util {
             buf.write((int) (((b3 & 0x03) << 6) | b4));
         }
         return buf.toByteArray();
+    }
+
+    public static String getBase64(String str) {
+        byte[] b = null;
+        String s = null;
+        try {
+            b = str.getBytes("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        if (b != null) {
+            s = new BASE64Encoder().encode(b);
+        }
+        return s;
     }
 
 }
