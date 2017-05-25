@@ -50,7 +50,7 @@
 		insert into
 		auto_platform.t_accessories_buy(accBuyId, accId, accUnit, accBuyCount, accBuyPrice, accBuyTotal, accBuyDiscount, accBuyMoney, accBuyTime, accBuyCreatedTime, companyId, accBuyStatus, accBuyCheck, accIsBuy)
 		values
-		(uuid(),#{accId},#{accUnit},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},now(),#{companyId},'N', 'N', 'N')
+		(uuid(),#{accId},#{accUnit},#{accBuyCount},#{accBuyPrice},#{accBuyTotal},#{accBuyDiscount},#{accBuyMoney},#{accBuyTime},now(),#{companyId},#{accBuyStatus}, #{accBuyCheck}, #{accIsBuy})
 
 	</insert>
 
@@ -265,23 +265,7 @@
 
     <select id="query" parameterType="accessoriesBuy" resultType="accessoriesBuy">
 		<![CDATA[
-
-
-
-
-
-
-
-
-        select * from t_accessories_buy
-
-
-
-
-
-
-
-
+          select * from t_accessories_buy
         ]]>
 	</select>
 

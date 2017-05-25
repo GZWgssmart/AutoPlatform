@@ -106,7 +106,9 @@ public class AccessoriesBuyController {
                         if (ab == null) {
                             accessoriesBuy.setAccBuyCount(acc.getAccIdle() + accessoriesBuy.getAccBuyCount());
                             accessoriesBuy.setCompanyId(user.getCompanyId());
-
+                            accessoriesBuy.setAccBuyStatus("Y");
+                            accessoriesBuy.setAccBuyCheck("N");
+                            accessoriesBuy.setAccIsBuy("N");
                             accessoriesBuyService.insert(accessoriesBuy);
 
                             OutgoingType outgoingType = outgoingTypeService.queryByName(Constants.ACC_OUT);
@@ -136,6 +138,9 @@ public class AccessoriesBuyController {
                         accessoriesBuy.setAccessories(acc);
                         accessoriesBuy.setAccId(acc.getAccId());
                         accessoriesBuy.setCompanyId(user.getCompanyId());
+                        accessoriesBuy.setAccBuyStatus("Y");
+                        accessoriesBuy.setAccBuyCheck("N");
+                        accessoriesBuy.setAccIsBuy("N");
 
                         acc.setCompanyId(accessoriesBuy.getCompanyId());
 

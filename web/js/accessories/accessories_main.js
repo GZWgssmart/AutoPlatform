@@ -37,6 +37,14 @@ function eachNames(names, finName) {
     return ne;
 }
 
+function reSetDiscount(discount) {
+    if (discount != 0) {
+        return discount;
+    } else {
+        return '';
+    }
+}
+
 // 自动计算库存数量
 // function autoEditCalculationCount(totalCount, saleCount, alCount) {
 //     var aCount = alCount;

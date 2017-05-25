@@ -166,14 +166,6 @@ function addAccBuyInfo(formId) {
         }, "json");
 }
 
-function reSetDiscount(discount) {
-    if (discount != 0) {
-        return discount;
-    } else {
-        return '';
-    }
-}
-
 function fmtOperate(value, row, index) {
     if (row.accBuyStatus == 'Y') {
         return ['<button type="button" class="removeBuy btn btn-danger  btn-sm" style="margin-right:15px;">冻结</button>',

@@ -17,7 +17,7 @@
     <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
           type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
-
+    <style>th{text-align: center;}td{text-align: center;}</style>
 </head>
 <body>
 <div class="container">
@@ -65,14 +65,14 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="accessories.accName">配件名称</th>
             <th data-field="accessories.accessoriesType.accTypeName">配件类别</th>
+            <th data-field="accessories.accName">配件名称</th>
+            <th data-field="accessories.accUnit">单位</th>
             <th data-field="accSaleCount">销售数量</th>
             <th data-field="accSalePrice">销售单价</th>
             <th data-field="accSaleDiscount" data-formatter="fmtDiscount">销售折扣</th>
             <th data-field="accSaledTime" data-formatter="formatterDate">销售时间</th>
             <th data-field="accSaleTotal">销售总价</th>
-            <th data-field="accessories.accUnit">计量单位</th>
             <th data-field="accSaleMoney">销售最终价</th>
             <th data-field="userName">购买人</th>
             <th data-field="accSaleStatus" data-formatter="fmtSaleState">状态</th>
@@ -130,8 +130,8 @@
                                    name="accessories.accessoriesType.accTypeId"/>
 
                             <div class="form-group" style="width: auto; display: inherit;">
-                                <label for="isUser" >选择用户</label>
-                                <input type="checkbox" name="eisUser"id="eIsUser">
+                                <label for="isUser">选择用户</label>
+                                <input type="checkbox" name="eisUser" id="eIsUser">
                                 &nbsp;
                                 <a data-toggle="modal">
                                     <button type="button" onclick="showAccessories()" class="btn btn-primary">从库存中添加
@@ -152,21 +152,23 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="control-label">配件名称：</label>
-                                <input type="text" name="accessories.accName" attr="accessoriesSale.accessories.accName"
-                                       class="form-control"/>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label">计量单位：</label>
-                                <input type="text" name="accUnit" attr="accessoriesSale.accessories.accUnit"
-                                       class="form-control"/>
-                            </div>
-
-                            <div class="form-group">
                                 <label>销售类别：</label>
                                 <input type="text" name="accessories.accessoriesType.accTypeName"
-                                       attr="accessoriesSale.accessories.accessoriesType.accTypeName"
+                                       attr="accessoriesSale.accessories.accessoriesType.accTypeName" id="eAccTypeName"
+                                       class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">配件名称：</label>
+                                <input type="text" name="accessories.accName" attr="accessoriesSale.accessories.accName"
+                                       id="eAccName"
+                                       class="form-control"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label">单位：</label>
+                                <input type="text" name="accUnit" attr="accessoriesSale.accessories.accUnit"
+                                       id="eAccUnit"
                                        class="form-control"/>
                             </div>
 
@@ -185,32 +187,36 @@
 
                             <div class="form-group">
                                 <label>销售单价：</label>
-                                <input type="text" name="accSalePrice" id="salePrice" attr="accessoriesSale.accSalePrice"
+                                <input type="text" name="accSalePrice" id="salePrice"
+                                       attr="accessoriesSale.accSalePrice"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">销售折扣：</label>
-                                <input type="text" name="accSaleDiscount" id="saleDiscount" attr="accessoriesSale.accSaleDiscount"
+                                <input type="text" name="accSaleDiscount" id="saleDiscount"
+                                       attr="accessoriesSale.accSaleDiscount" placeholder="没有折扣可以不填"
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">销售时间：</label>
                                 <input size="16" type="text" name="accSaledTime" readonly
-                                       class="form_datetime form-control " attr="accessoriesSale.accSaledTime"
+                                       class="form_datetime form-control accSaleTime" attr="accessoriesSale.accSaledTime"
                                        id="saleTime">
                             </div>
 
                             <div class="form-group">
                                 <label>销售总价：</label>
-                                <input type="text" name="accSaleTotal" id="saleTotal" attr="accessoriesSale.accSaleTotal"
+                                <input type="text" name="accSaleTotal" id="saleTotal"
+                                       attr="accessoriesSale.accSaleTotal" readonly
                                        class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>销售最终价：</label>
-                                <input type="text" name="accSaleMoney" id="saleMoney" attr="accessoriesSale.accSaleMoney"
+                                <input type="text" name="accSaleMoney" id="saleMoney"
+                                       attr="accessoriesSale.accSaleMoney" readonly
                                        class="form-control"/>
                             </div>
 
@@ -266,22 +272,22 @@
                             </div>
 
                             <div class="form-group">
+                                <label>类别：</label>
+                                <input type="text" name="accessories.accessoriesType.accTypeName" id="accTypeName"
+                                       attr="acc.accessoriesType.accTypeName"
+                                       class="form-control" disabled/>
+                            </div>
+
+                            <div class="form-group">
                                 <label>配件名称：</label>
                                 <input type="text" class="form-control" id="accName" disabled
                                        attr="acc.accName"/>
                             </div>
 
                             <div class="form-group">
-                                <label>计量单位：</label>
+                                <label>单位：</label>
                                 <input type="text" id="aAccUnit" attr="acc.accUnit" disabled
                                        class="form-control"/>
-                            </div>
-
-                            <div class="form-group">
-                                <label>类别：</label>
-                                <input type="text" name="accessories.accessoriesType.accTypeName" id="accTypeName"
-                                       attr="acc.accessoriesType.accTypeName"
-                                       class="form-control" disabled/>
                             </div>
 
                             <div class="form-group">
@@ -292,7 +298,6 @@
                                            disabled/>
                                 </span>
                                 <input type="text" name="accSaleCount" id="aSaleCount" attr="acc.accSaleTotal"
-                                       placeholder=""
                                        class="form-control"/>
                             </div>
 
@@ -310,7 +315,8 @@
 
                             <div class="form-group">
                                 <label class="control-label">折扣：</label>
-                                <input type="text" name="accSaleDiscount" id="accSaleDiscount" placeholder="没有折扣可以不填" class="form-control"
+                                <input type="text" name="accSaleDiscount" id="accSaleDiscount" placeholder="没有折扣可以不填"
+                                       class="form-control"
                                        attr="acc.accDiscount"/>
                             </div>
 
@@ -318,19 +324,19 @@
                                 <label class="control-label">销售时间：</label>
                                 <input size="16" type="text" id="accSaleTime" name="accSaledTime"
                                        attr="acc.accSaledTime" readonly
-                                       class="form_datetime form-control ">
+                                       class="form_datetime form-control accSaleTime">
                             </div>
 
                             <div class="form-group">
                                 <label>总价：</label>
                                 <input type="text" name="accSaleTotal" id="accSaleTotal" attr="acc.accSaleTotal"
-                                        readonly class="form-control"/>
+                                       readonly class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>最终价：</label>
                                 <input type="text" name="accSaleMoney" id="accSaleMoney" attr="acc.accSaleMoney"
-                                        readonly class="form-control"/>
+                                       readonly class="form-control"/>
                             </div>
 
                             <div class="modal-footer" style="overflow:hidden;">
@@ -368,9 +374,6 @@
                                 <thead>
                                 <tr>
                                     <th data-field="state" data-checkbox="true"></th>
-                                    <th data-field="userCreatedTime" data-sortable="true">
-                                        车主编号
-                                    </th>
                                     <th data-field="userNickname">
                                         昵称
                                     </th>
@@ -473,8 +476,8 @@
                                     <th data-field="company.companyName">
                                         所属公司
                                     </th>
-                                    <th data-field="accStatus" data-formatter="status"> 状态 </th>
-                                    <th data-formatter="fmtOption" data-events="operateEvents"> 操作 </th>
+                                    <th data-field="accStatus" data-formatter="status"> 状态</th>
+                                    <th data-formatter="fmtOption" data-events="operateEvents"> 操作</th>
                                 </tr>
                                 </thead>
                             </table>
