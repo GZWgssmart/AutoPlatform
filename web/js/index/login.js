@@ -376,6 +376,12 @@ function clearSuccess(val) {
     }
 }
 
+$('#password1').bind('keyup', function(event) {
+    if (event.keyCode == "13") {
+        //回车执行查询
+        login();
+    }
+});
 
 
 /** 获取6位数验证码 */
