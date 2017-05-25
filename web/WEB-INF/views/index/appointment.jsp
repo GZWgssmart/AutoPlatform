@@ -102,7 +102,7 @@
             </div>
         </nav>
 
-        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(<%=path%>/images/customerCar.jpg)">
+        <header id="gtco-header" class="gtco-cover gtco-cover-sm" role="banner" style="background-image: url(<%=path%>/images/appointment.jpg)">
             <div class="overlay"></div>
             <div class="gtco-container">
                 <div class="row">
@@ -167,7 +167,7 @@
                                     <div id="errorBrand" style="color: red;padding-left: 20px;"></div>
                                 </div>
 
-                                <div class="row form-group">
+                                <div id="carModelDiv" class="row form-group" style="display: none;">
                                     <div id="successCarModel" style="color: green;padding-left: 20px;"></div>
                                     <div class="col-md-12">
                                         <label class="sr-only" for="addCarModel">汽车车型</label>
