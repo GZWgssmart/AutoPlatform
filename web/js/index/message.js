@@ -66,13 +66,6 @@ function validator(formId) {
         feedbackIcons: {
         },
         fields: {
-            userAddress: {
-                validators: {
-                    notEmpty: {
-                        message: '居住地不能为空'
-                    }
-                }
-            },
             userName: {
                 validators: {
                     notEmpty: {
@@ -122,9 +115,6 @@ function validator(formId) {
             },
             userIdentity: {
                 validators: {
-                    notEmpty: {
-                        message: '身份证不能为空'
-                    },
                     regexp: {
                         regexp: /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
                         message: '身份证格式错误'
