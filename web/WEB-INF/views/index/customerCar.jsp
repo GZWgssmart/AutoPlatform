@@ -82,15 +82,13 @@
                             <li><a href="<%=path%>/customerClientWeb/tour">功能简介</a></li>
                             <li><a href="<%=path%>/customerClientWeb/features">平台特性</a></li>
                             <li><a href="<%=path%>/customerClientWeb/pricing">产品收费</a></li>
-                            <li><a href="<%=path%>/customerClientWeb/customerCar">进度跟踪</a></li>
-                            <%--<li class="has-dropdown">
-                                <a href="#">使用说明</a>
+                            <li class="has-dropdown">
+                                <a href="#">车主入口</a>
                                 <ul class="dropdown">
+                                    <li><a href="<%=path%>/customerClientWeb/appointment">车主预约</a></li>
                                     <li><a href="<%=path%>/customerClientWeb/customerCar">进度跟踪</a></li>
-                                    <li><a href="#">帮助文档</a></li>
-                                    <li><a href="#">API</a></li>
                                 </ul>
-                            </li>--%>
+                            </li>
                             <li class="btn-cta"><a href="<%=path%>/customerClientWeb/contact"><span>入驻 我们</span></a>
                             </li>
                         </ul>

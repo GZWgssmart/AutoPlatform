@@ -1,10 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
-import com.gs.bean.ChargeBill;
-import com.gs.bean.MaintainRecord;
-import com.gs.bean.Role;
-import com.gs.bean.User;
+import com.gs.bean.*;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
 import com.gs.common.message.IndustrySMS;
@@ -42,12 +39,11 @@ public class CustomerClientWebController {
     @Resource
     private MaintainRecordService maintainRecordService;  //保养
 
-
+    @Resource
+    private AppointmentService appointmentService;  //预约
 
     @Resource
-    private UserService userService;
-    @Resource
-    private RoleService roleService;
+    private UserService userService;  //用户
 
     @RequestMapping("/index")
     public String supplierInfo() {
@@ -88,6 +84,24 @@ public class CustomerClientWebController {
     public String webCustomerCar() {
         logger.info("进入用户进度查询");
         return "index/customerCar";
+
+    }
+
+    @RequestMapping("/appointment")
+    public String webAppointment() {
+        logger.info("进入用户预约");
+        return "index/appointment";
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "addCustomer", method = RequestMethod.POST)
+    public ControllerResult appointmentAddCustomer(Appointment appointment) {
+            logger.info("车主预约");
+
+            appointment.setSpeedStatus(Constants.APPOINTMENT);
+            appointmentService.insert(appointment);
+            return ControllerResult.getSuccessResult("成功预约");
 
     }
 
