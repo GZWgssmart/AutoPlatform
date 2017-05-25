@@ -184,7 +184,7 @@
                             <div class="form-group">
                                 <label class="control-label">公司图片</label>
                                 <div id="preview">
-                                    <img  name="file"  style="width:120px;height:100px;"/>
+                                    <img  name="file"  style="width:120px;height:60px;"/>
                                 </div>
                                 <input type="file" name="file" onchange="previewImage(this)" style="display: none;"
                                        id="previewImg">
@@ -303,21 +303,19 @@
                             <div class="form-group">
                                 <label class="control-label">公司logo：</label>
                                 <div id="preview2">
-                                    <img id="icon" name="file" style="width:120px;height:60px;"/>
+                                    <img id="icon" name="file"onclick="$('#previewImg2').click();" style="width:120px;height:60px;cursor:pointer;"/>
                                 </div>
                                 <input type="file" name="file" onchange="previewImage2(this)" style="display: none;"
                                        id="previewImg2">
-                                <a id="button" onclick="$('#previewImg2').click();" style="cursor:pointer">修改LOGO</a>
                             </div>
 
                             <div class="form-group">
                                 <label class="control-label">公司图片</label>
                                 <div id="preview1">
-                                    <img  name="file1" id="img" style="width:120px;height:60px;"/>
+                                    <img  name="file1" onclick="$('#previewImg1').click();" id="img" style="width:120px;height:60px;cursor:pointer;"/>
                                 </div>
                                 <input type="file" name="file1" onchange="previewImage1(this)" style="display: none;"
                                        id="previewImg1" >
-                                <a onclick="$('#previewImg1').click();" style="cursor:pointer">修改公司图片</a>
                             </div>
 
                             <div class="form-group">

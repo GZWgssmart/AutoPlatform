@@ -151,10 +151,6 @@ public class CarBrandController {
     @ResponseBody
     @RequestMapping(value = "car_brand_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarBrandAll() {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效");
-            return null;
-        }
         logger.info("查询汽车品牌");
         User user = SessionGetUtil.getUser();
         List<CarBrand> carBrands = carBrandService.queryAll(user);

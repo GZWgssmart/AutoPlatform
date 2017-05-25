@@ -131,4 +131,25 @@ public class Company{
 	public void setCompanyImg(String companyImg) {
 		this.companyImg = companyImg;
 	}
+
+	@Override
+	public String toString() {
+		return "Company{" +
+				"companyId='" + companyId + '\'' +
+				", companyName='" + companyName + '\'' +
+				", companyAddress='" + companyAddress + '\'' +
+				", companyTel='" + companyTel + '\'' +
+				", companyPricipal='" + companyPricipal + '\'' +
+				", companyPricipalPhone='" + companyPricipalPhone + '\'' +
+				", companyWebsite='" + companyWebsite + '\'' +
+				", companyLogo='" + companyLogo + '\'' +
+				", companyOpenDate=" + companyOpenDate +
+				", companySize='" + companySize + '\'' +
+				", companyLongitude='" + companyLongitude + '\'' +
+				", companyLatitude='" + companyLatitude + '\'' +
+				", companyDes='" + companyDes + '\'' +
+				", companyStatus='" + companyStatus + '\'' +
+				", companyImg='" + companyImg + '\'' +
+				'}';
+	}
 }

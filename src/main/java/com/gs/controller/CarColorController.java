@@ -128,10 +128,6 @@ public class CarColorController {
     @ResponseBody
     @RequestMapping(value = "car_color_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarColorAll() {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效");
-            return null;
-        }
         logger.info("查询汽车颜色");
         User user = SessionGetUtil.getUser();
         List<CarColor> carColors = carColorService.queryAll(user);

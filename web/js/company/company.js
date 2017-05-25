@@ -219,10 +219,10 @@ function validator(formId) {
                     }, stringLength: {
                         min: 13,
                         max: 13,
-                        message: '公司号码长度必须是13至13位,(例如:010-11111111)'
+                        message: '公司号码长度必须是13至13位,(例如:097-999977776)'
                     },regexp:{
                         regexp: /^\d{3,4}-?\d{7,9}$/,
-                        message: '请输入正确公司官电话(例如：010-11111111)'
+                        message: '请输入正确公司官电话(例如：097-999977776)'
                     },
                     threshold: 6,
                     remote: {

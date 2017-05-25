@@ -43,10 +43,6 @@ public class CarPlateController {
     @ResponseBody
     @RequestMapping(value = "car_plate_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarModelAll() {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效");
-            return null;
-        }
         logger.info("查询汽车车型");
         User user = SessionGetUtil.getUser();
         List<CarPlate> CarModels = carPlateService.queryAll(user);

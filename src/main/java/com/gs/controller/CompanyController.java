@@ -233,13 +233,14 @@ public class CompanyController {
                     user.setCompanyId(companyId);
                     user.setUserName(company.getCompanyPricipal());
                     user.setUserAddress(company.getCompanyAddress());
-                    user.setUserPwd(EncryptUtil.md5Encrypt("123456"));
+                    String pwd = getCharAndNumr(8);
+                    user.setUserPwd(EncryptUtil.md5Encrypt(pwd));
                     Role role = roleService.queryByName(Constants.COMPANY_ADMIN);
                     UserRole userRole = new UserRole();
                     userRole.setUserId(userId);
                     userRole.setRoleId(role.getRoleId());
                     String to = user.getUserPhone();
-                    String smsContent = "【创意科技】尊敬的用户，您已经成功入驻我们的平台，您可以使用您的手机号进行登入我们的系统了哦，登入密码为默认密码";
+                    String smsContent = "尊敬的用户，您已经成功入驻我们的平台，您可以使用您的手机号进行登入我们的系统了哦，登入密码为:" + pwd;
                     IndustrySMS is = new IndustrySMS(to, smsContent);
                     is.execute();
                     userService.insert(user);
@@ -259,7 +260,6 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "uploadCompany", method = RequestMethod.POST)
     public ControllerResult upload(Company company,MultipartFile file,HttpSession session,MultipartFile file1) {
-        System.out.println("进入给方法。。。。。。。。。。");
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -356,11 +356,6 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "company_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryUserAll() {
-
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效，请重新登入");
-            return null;
-        }
         try{
             User user = SessionGetUtil.getUser();
             logger.info("查询所有公司");
@@ -410,6 +405,24 @@ public class CompanyController {
         pager.setTotalRecords(companyService.searchCount(companyName, userName));
         List<Company> companyList = companyService.searchByPager(companyName,userName,pager);
         return new Pager4EasyUI<Company>(pager.getTotalRecords(), companyList);
+    }
+
+    public static String getCharAndNumr(int length) {
+        String val = "";
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            // 输出字母还是数字
+            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
+            // 字符串
+            if ("char".equalsIgnoreCase(charOrNum)) {
+                // 取得大写字母还是小写字母
+                int choice = random.nextInt(2) % 2 == 0 ? 65 : 97;
+                val += (char) (choice + random.nextInt(26));
+            } else if ("num".equalsIgnoreCase(charOrNum)) { // 数字
+                val += String.valueOf(random.nextInt(10));
+            }
+        }
+        return val;
     }
 
 }

@@ -43,10 +43,6 @@ public class CarModelController {
     @ResponseBody
     @RequestMapping(value = "car_model_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarModelAll(String brandId) {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效");
-            return null;
-        }
         logger.info("查询汽车车型");
         List<CarModel> CarModels = carModelService.queryByBrandId(brandId);
         List<ComboBox4EasyUI> comboBox4EasyUIs = new ArrayList<ComboBox4EasyUI>();
@@ -62,10 +58,6 @@ public class CarModelController {
     @ResponseBody
     @RequestMapping(value = "carModel_all", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryCarModelAlls() {
-        if (!SessionGetUtil.isUser()) {
-            logger.info("Session已失效");
-            return null;
-        }
         logger.info("查询全部汽车车型");
         User user = SessionGetUtil.getUser();
         List<CarModel> CarModels = carModelService.queryAll(user);
