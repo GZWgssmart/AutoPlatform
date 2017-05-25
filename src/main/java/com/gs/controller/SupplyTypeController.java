@@ -194,7 +194,7 @@ public class SupplyTypeController {
     @RequestMapping(value = "queryAll", method = RequestMethod.GET)
     public List<ComboBox4EasyUI> queryAll() {
         if (SessionGetUtil.isUser()) {
-            try {
+//            try {
                 logger.info("查询供应商分类");
                 User user = SessionGetUtil.getUser();
                 List<SupplyType> supplyTypeList = supplyTypeService.queryAll(user);
@@ -206,10 +206,10 @@ public class SupplyTypeController {
                     comboBox4EasyUIs.add(comboBox4EasyUI);
                 }
                 return comboBox4EasyUIs;
-            } catch (Exception e) {
-                logger.info("更查询失败，出现了异常");
-                return null;
-            }
+//           comboBox4EasyUIs } catch (Exception e) {
+//                logger.info("查询失败，出现了异常");
+//                return null;
+//            }
         } else {
             logger.info("Session已失效，请重新登入");
             return null;

@@ -60,8 +60,11 @@
 
 	<select id="queryAll" resultMap="supplyTypeResultMap">
 		<![CDATA[
-		select * from t_supply_type
+		select * from t_supply_type where 1 = 1
 		]]>
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
+		</if>
 	</select>
 
 	<select id="queryByStatus" resultMap="supplyTypeResultMap" parameterType="string">
