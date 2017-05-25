@@ -42,7 +42,7 @@
 		<![CDATA[
 			update t_company set companyName = #{companyName} , companyAddress= #{companyAddress} ,companyTel= #{companyTel},
 			companyPricipal = #{companyPricipal},companyWebsite=#{companyWebsite},companyLogo=#{companyLogo},companyOpenDate=#{companyOpenDate},
-			companySize = #{companySize},companyLongitude=#{companyLongitude},companyLatitude=#{companyLatitude},companyDes=#{companyDes},companyStatus = 'Y',companyImg = #{companyImg},createTime = #{createTime}
+			companySize = #{companySize},companyLongitude=#{companyLongitude},companyLatitude=#{companyLatitude},companyDes=#{companyDes},companyStatus = 'Y',companyImg = #{companyImg}
 			where companyId = #{companyId}
 		]]>
 	</update>
