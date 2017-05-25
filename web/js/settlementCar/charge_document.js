@@ -212,6 +212,7 @@ function printChargeBill() {
     newWin.document.location.reload();
     newWin.print();
     newWin.close();
+    $("#chargeBillWin").modal("hide");
 }
 
 

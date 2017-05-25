@@ -144,7 +144,7 @@ public class AdminController {
             logger.info("添加管理员");
             user.setUserId(UUIDUtil.uuid());
             user.setUserPwd(EncryptUtil.md5Encrypt(user.getUserPwd()));
-            user.setUserIcon("img/default.png");
+            user.setUserIcon("/img/default.png");
             userService.insertAdmin(user);
             Role role = roleService.queryByName("systemOrdinaryAdmin");
             UserRole ur = new UserRole();
@@ -174,7 +174,7 @@ public class AdminController {
             if(file != null){
                 String fileName = UUID.randomUUID().toString() + file.getOriginalFilename();
                 String filePath = FileUtil.uploadPath(session,"\\" + fileName);
-                String icon = "uploads/"+ fileName;
+                String icon = "/uploads/"+ fileName;
                 if(!file.isEmpty()){
                     file.transferTo(new File(filePath));
                     user.setUserIcon(icon);

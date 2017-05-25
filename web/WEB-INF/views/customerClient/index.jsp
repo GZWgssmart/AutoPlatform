@@ -35,20 +35,10 @@
             <div class="col-lg-4 col-md-4 col-sm-6">
                 <a onclick="showAddWin('${c.companyId}', '${sessionScope.user.userName}', '${sessionScope.user.userPhone}');"
                    class="fh5co-project-item image-popup model">
-                    <c:choose>
-                        <c:when test="${c.companyImg == null}">
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>/images/img_2.jpg" alt="Image" class="img-responsive">
-                            </figure>
-                        </c:when>
-                        <c:otherwise>
-                            <figure>
-                                <div class="overlay"><i class="ti-plus"></i></div>
-                                <img src="<%=path%>${c.companyImg}" alt="Image" class="img-responsive">
-                            </figure>
-                        </c:otherwise>
-                    </c:choose>
+                    <figure>
+                        <div class="overlay"><i class="ti-plus"></i></div>
+                        <img src="<%=path%>${c.companyImg}" alt="Image" class="img-responsive">
+                    </figure>
                     <div class="fh5co-text">
                         <h2>${c.companyName}</h2>
                         <span>${c.companyTel}</span>
@@ -59,13 +49,15 @@
             </div>
         </c:forEach>
     </div>
-    <ul style="margin: auto" class="pagination pagination-lg">
-        <li><a href="javascript:;" onclick="lastPage();">&laquo;</a></li>
-        <c:forEach items="${pageTotal}" var="pt">
-            <li><a href="javascript:;" onclick="selectPage(this);" id="pb${pt}">${pt}</a></li>
-        </c:forEach>
-        <li><a href="javascript:;" onclick="nextPage(${pageTotal.size()});">&raquo;</a></li>
-    </ul>
+    <c:if test="${pageTotal.size() >= 2}">
+        <ul style="margin: auto" class="pagination pagination-lg">
+            <li><a href="javascript:;" onclick="lastPage();">&laquo;</a></li>
+            <c:forEach items="${pageTotal}" var="pt">
+                <li><a href="javascript:;" onclick="selectPage(this);" id="pb${pt}">${pt}</a></li>
+            </c:forEach>
+            <li><a href="javascript:;" onclick="nextPage(${pageTotal.size()});">&raquo;</a></li>
+        </ul>
+    </c:if>
 </div>
 
 <div id="addWin" class="modal fade" style="overflow:scroll" aria-hidden="true">

@@ -151,7 +151,7 @@ function initEditParam(user) {
     $("#createTime").val(formatterDate(user.userCreatedTime));
     $("#loginTime").val(formatterDate(user.userLoginedTime));
     $("#editForm").fill(user);
-    $("#icon").attr("src","/"+user.userIcon);
+    $("#icon").attr("src",user.userIcon);
     validator("editForm");
     $("#editWin").modal('show');
     fmtDate();

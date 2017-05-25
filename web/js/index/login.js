@@ -63,7 +63,8 @@ function register() {
                         },
                         function (isConfirm) {
                             if (isConfirm) {
-                                window.open("http://www.mail.qq.com");
+                                var type = getEmailType(userEmail);
+                                window.open("http://www.mail." + type + ".com");
                             } else {
 
                             }
@@ -80,10 +81,18 @@ function register() {
         }
     );
 }
+
+/** 获取邮箱类型 */
+function getEmailType(val) {
+    var value = val.split(".");
+    alert(value[0].split("@")[1]);
+}
 var userPhone;
+var userEmail;
 /** 验证输入的账号 */
 function variNumber(number) {
     if (isEmail(number)) {
+        userEmail = number;
         $("#errMsg1").html("");
         $("#codeDiv").hide();
     } else if (isPhone(number)) {

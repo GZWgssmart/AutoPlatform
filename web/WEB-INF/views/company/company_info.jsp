@@ -72,6 +72,9 @@
             <th data-field="companyLogo" data-formatter="formatterImg">
                 公司logo
             </th>
+            <th data-field="companyImg" data-formatter="formatterImg">
+                公司图片
+            </th>
             <th data-field="companyOpenDate" data-formatter="companyOpDateFormatter">
                 公司创建时间
             </th>

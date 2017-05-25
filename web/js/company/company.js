@@ -65,11 +65,9 @@ function operating(value, row, index) {
 }
 
 function formatterImg(value, row, index) {
-    if (row.companyLogo != null) {
-        return [
-            '<img style="width:120px;height:60px;" src="' + value + '">'
-        ]
-    }
+    return [
+        '<img style="width:120px;height:60px;" src="' + value + '">'
+    ]
 }
 
 function companyOpDateFormatter(value, row, index) {

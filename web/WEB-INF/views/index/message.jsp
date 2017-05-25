@@ -85,7 +85,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label class="control-label">年龄：</label>
-                                            <input class="form-control" style="display: initial;" disabled="disabled" title="根据身份证获取年龄" id="age" type="text" name="userAge"/>
+                                            <input class="form-control" style="display: initial;" disabled="disabled" placeholder="根据身份证获取年龄" id="age" type="text" name="userAge"/>
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label class="control-label">微博号：</label>
@@ -104,11 +104,11 @@
                                     <div class="row">
                                         <div class="col-md-3 form-group">
                                             <label class="control-label">身份证：</label>
-                                            <input class="form-control" style="display: initial;" type="text" id="editIdentity" value="${user.userIdentity}"  name="userIdentity"/>
+                                            <input class="form-control" onblur="setAgeAndBrithday()" style="display: initial;" type="text" id="editIdentity" value="${user.userIdentity}"  name="userIdentity"/>
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">生日：</label>
-                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" title="根据身份证获取生日" id="birthday" value="${user.userBirthday}"  name="userBirthday"/>
+                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" placeholder="根据身份证获取生日" id="birthday" value="${user.userBirthday}"  name="userBirthday"/>
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label class="control-label">真实姓名：</label>

@@ -25,7 +25,7 @@
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
 
     <link href="<%=path %>/css/my-table.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %></>/css/main.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -142,7 +142,7 @@
                                     <a>
                                         <button onclick="userConfirm();" type="button"
                                                 class="btn btn-success">
-                                            <i class="glyphicon glyphicon-ok"></i> 用户已签字
+                                            <i class="glyphicon glyphicon-ok"></i> 确认签字
                                         </button>
                                     </a>
                             </div>

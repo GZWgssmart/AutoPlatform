@@ -261,6 +261,7 @@ public class CompanyController {
     @ResponseBody
     @RequestMapping(value = "uploadCompany", method = RequestMethod.POST)
     public ControllerResult upload(Company company,MultipartFile file,HttpSession session,MultipartFile file1) {
+        System.out.println(file1.getOriginalFilename());
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
@@ -285,7 +286,7 @@ public class CompanyController {
                     String img = "/uploads/" + fileImg;
                     if (!file1.isEmpty()) {
                         try {
-                            file.transferTo(new File(filImgPath));
+                            file1.transferTo(new File(filImgPath));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

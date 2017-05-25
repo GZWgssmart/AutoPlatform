@@ -3,21 +3,6 @@ var datetime = $("#form_loginedTime").val();
 $("#form_datetime").val(formatterDate(date));
 $("#form_loginedTime").val(formatterDate(datetime));
 
-
-var card = $("#editIdentity").val();
-if(card != null && card != '') {
-    var myDate = new Date();
-    var month = myDate.getMonth() + 1;
-    var day = myDate.getDate();
-    var age = myDate.getFullYear() - card.substring(6, 10) - 1;
-    if (card.substring(10, 12) < month || card.substring(10, 12) == month && card.substring(12, 14) <= day) {
-        age++;
-    }
-    var birthday = card.substring(6, 10) + "-" + card.substring(10, 12) + "-" + card.substring(12, 14);
-    $("#birthday").val(birthday);
-    $("#age").val(age);
-}
-
 var curLength = $("#chang").val().length;
 var shu = 150-curLength;
 $("#textShu").text(shu);
@@ -56,6 +41,22 @@ function selfMessage() {
     if ($("#editSelf").data('bootstrapValidator').isValid()) {
     } else {
         $("#editSelfButton").removeAttr("disabled");
+    }
+}
+
+function setAgeAndBrithday() {
+    var card = $("#editIdentity").val();
+    if(card != null && card != '') {
+        var myDate = new Date();
+        var month = myDate.getMonth() + 1;
+        var day = myDate.getDate();
+        var age = myDate.getFullYear() - card.substring(6, 10) - 1;
+        if (card.substring(10, 12) < month || card.substring(10, 12) == month && card.substring(12, 14) <= day) {
+            age++;
+        }
+        var birthday = card.substring(6, 10) + "-" + card.substring(10, 12) + "-" + card.substring(12, 14);
+        $("#birthday").val(birthday);
+        $("#age").val(age);
     }
 }
 
