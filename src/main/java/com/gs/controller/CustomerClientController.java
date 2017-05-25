@@ -44,4 +44,10 @@ public class CustomerClientController {
         logger.info("我的维修保养记录");
         return "customerClient/record";
     }
+
+    @RequestMapping(value = "app", method = RequestMethod.GET)
+    public String app(){
+        logger.info("我要预约");
+        return "customerClient/app";
+    }
 }

@@ -73,6 +73,10 @@
                         <li><a class="J_menuItem" href="<%=path %>/appointment/my_app">我的预约</a>
                         </li>
                     </ul>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="<%=path %>/customerClient/app">我要预约</a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li>
