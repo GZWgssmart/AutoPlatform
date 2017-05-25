@@ -1,5 +1,6 @@
 var userInfo;
-
+var carUserName;
+var carUserPhone;
 var editPhone;
 $(document).ready(function () {
     //调用函数，初始化表格
@@ -10,8 +11,7 @@ $(document).ready(function () {
     initSelect2("car_plate", "请选择车牌", "/carPlate/car_plate_all", "565");
     initSelect2("company", "请选择汽修公司", "/company/company_all", "150");
 
-    destoryValidator("addWin","addForm");
-
+    destoryValidator("addWin", "addForm");
 
 
 });
@@ -28,7 +28,6 @@ function isUserChoice() {
         }
     }
 }
-
 
 
 /** 添加选择品牌 */
@@ -67,15 +66,17 @@ function clearAddForm() {
 }
 
 
-
 /** 显示添加数据的窗口 */
-function showAddWin(companyId) {
+function showAddWin(companyId, userName, userPhone) {
     userInfo = "";
-    validator("addForm");
-
-    initDateTimePicker("datetimepicker", "arriveTime","addForm");
-    $("#addWin").modal('show');
-    $("#companyId").val(companyId);
+    if (userName != null && userName != "" && userPhone != null && userPhone != "") {
+        validator("addForm");
+        initDateTimePicker("datetimepicker", "arriveTime", "addForm");
+        $("#addWin").modal('show');
+        $("#companyId").val(companyId);
+    } else {
+        swal("错误提示", "个人信息不足，请您完善信息后再来预约！", "error");
+    }
 }
 
 /** 关闭选择 */
@@ -125,13 +126,6 @@ function validator(formId) {
                         min: 11,
                         max: 11,
                         message: '手机号只能是11位'
-                    },
-                    threshold: 11,
-                    remote: {
-                        url: '/peopleManage/peoplePhone_verification?editPhone='+editPhone,
-                        message: '该手机号已存在',
-                        delay :  2000,
-                        type: 'GET'
                     }
                 }
             },
@@ -207,3 +201,76 @@ function showMaintain() {
     parent.showMaintainPage();
 }
 
+var currPage = 1;
+
+function selectPage(obj) {
+    $("#companyDiv").html("");
+    $.get("queryCompany_pager?index=" + obj.text,
+        function (data) {
+            var htmlFor = "";
+            $.each(data, function (index, item) {
+                var companyStr = "'" + item.companyId + "'";
+                htmlFor += '<div class="col-lg-4 col-md-4 col-sm-6">';
+                htmlFor += '<a onclick="showAddWin(' + companyStr + carUserName + carUserPhone + ');" class="fh5co-project-item image-popup model">';
+                htmlFor += '<figure><div class="overlay"><i class="ti-plus"></i></div>';
+                htmlFor += '<img src="' + item.companyImg + '" alt="Image" class="img-responsive"></figure>';
+                htmlFor += '<div class="fh5co-text"><h2>' + item.companyName + '</h2><span>' + item.companyTel + '</span>';
+                htmlFor += '<p>' + item.companyAddress + '</p><button class="btn-success col-lg-5  pull-right">预约</button></div></a></div>';
+            });
+            $("#companyDiv").html(htmlFor);
+        }, "json");
+    currPage = parseInt(obj.text);
+}
+
+function nextPage(pageSize) {
+    var idx = currPage + 1;
+    if (currPage == pageSize) {
+        idx = currPage;
+    } else {
+        currPage = currPage + 1;
+    }
+    $("#companyDiv").html("");
+    $.get("queryCompany_pager?index=" + idx,
+        function (data) {
+            var htmlFor = "";
+            $.each(data, function (index, item) {
+                var companyStr = "'" + item.companyId + "'";
+                htmlFor += '<div class="col-lg-4 col-md-4 col-sm-6">';
+                htmlFor += '<a onclick="showAddWin(' + companyStr + carUserName + carUserPhone + ');" class="fh5co-project-item image-popup model">';
+                htmlFor += '<figure><div class="overlay"><i class="ti-plus"></i></div>';
+                htmlFor += '<img src="' + item.companyImg + '" alt="Image" class="img-responsive"></figure>';
+                htmlFor += '<div class="fh5co-text"><h2>' + item.companyName + '</h2><span>' + item.companyTel + '</span>';
+                htmlFor += '<p>' + item.companyAddress + '</p><button class="btn-success col-lg-5  pull-right">预约</button></div></a></div>';
+            });
+            $("#companyDiv").html(htmlFor);
+        }, "json");
+}
+
+function lastPage() {
+    var idx = (currPage - 1);
+    if (currPage == 1) {
+        idx = currPage;
+    } else {
+        currPage = currPage - 1;
+    }
+    $("#companyDiv").html("");
+    $.get("queryCompany_pager?index=" + idx,
+        function (data) {
+            var htmlFor = "";
+            $.each(data, function (index, item) {
+                var companyStr = "'" + item.companyId + "'";
+                htmlFor += '<div class="col-lg-4 col-md-4 col-sm-6">';
+                htmlFor += '<a onclick="showAddWin(' + companyStr + carUserName + carUserPhone + ');" class="fh5co-project-item image-popup model">';
+                htmlFor += '<figure><div class="overlay"><i class="ti-plus"></i></div>';
+                htmlFor += '<img src="' + item.companyImg + '" alt="Image" class="img-responsive"></figure>';
+                htmlFor += '<div class="fh5co-text"><h2>' + item.companyName + '</h2><span>' + item.companyTel + '</span>';
+                htmlFor += '<p>' + item.companyAddress + '</p><button class="btn-success col-lg-5  pull-right">预约</button></div></a></div>';
+            });
+            $("#companyDiv").html(htmlFor);
+        }, "json");
+}
+
+function intNamePhone(userName, userPhone) {
+    carUserName = ", '" + userName + "'";
+    carUserPhone = ", '" + userPhone + "'";
+}

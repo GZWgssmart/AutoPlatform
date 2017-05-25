@@ -20,4 +20,7 @@ public interface CompanyService extends BaseService<String, Company>{
     public int searchCount(@Param("companyName") String companyName,@Param("userName") String userName);
     public List<Company> queryByTop(int top);
 
+    /**分页查找车主后台首页的公司*/
+    public List<Company> queryByTop2(int index, int top);
+
 }

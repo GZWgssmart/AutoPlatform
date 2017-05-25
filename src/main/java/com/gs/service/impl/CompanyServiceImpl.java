@@ -68,4 +68,9 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDAO.queryByTop(top);
 	}
 
+	@Override
+	public List<Company> queryByTop2(int index, int top) {
+		return companyDAO.queryByTop2(index, top);
+	}
+
 }

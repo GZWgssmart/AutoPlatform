@@ -163,4 +163,12 @@
 		limit 0, #{top}
 	</select>
 
+	<select id="queryByTop2" resultMap="companyResultMap">
+		<![CDATA[
+			select * from t_company where 1 = 1
+		]]>
+		order by companyOpenDate desc
+		limit #{index}, #{top}
+	</select>
+
 </mapper>

@@ -74,8 +74,37 @@ public class CustomerController {
         }
         mav.setViewName("customerClient/index");
         logger.info("访问车主后台的主页");
-        mav.addObject("companys", companyService.queryByTop(6));
+        int count = companyService.count(user);
+        List<Integer> pageTotal = new ArrayList<Integer>();
+        int forIndex = count / 3;
+        if (count % 3 != 0 && count > 3) {
+            forIndex += 1;
+        }
+        for (int i = 0; i < forIndex; i++) {
+            pageTotal.add(i + 1);
+        }
+        mav.addObject("companys", companyService.queryByTop(3));
+        mav.addObject("pageTotal", pageTotal);
         return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "queryCompany_pager", method = RequestMethod.GET)
+    public List<Company> queryCompanyPager(int index) {
+        if (!SessionGetUtil.isUser()) {
+            logger.info("Session已失效，请重新登入");
+            return null;
+        }
+        logger.info("分页查找推荐的公司");
+        User user = SessionGetUtil.getUser();
+        int count = companyService.count(user);
+        if (index > 1) {
+            index = (index - 1) * 3;
+        } else {
+            index = 0;
+        }
+        List<Company> companies = companyService.queryByTop2(index, 3);
+        return companies;
     }
 
     @RequestMapping(value = "customer_page", method = RequestMethod.GET)

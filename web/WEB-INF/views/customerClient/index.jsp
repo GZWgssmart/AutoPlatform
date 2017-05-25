@@ -26,14 +26,15 @@
     <link href="<%=path %>/css/style.css" rel="stylesheet">
 
 </head>
-<body>
+<body onload="intNamePhone('${sessionScope.user.userName}', '${sessionScope.user.userPhone}');">
 
 <div class="container" style="margin-top: 20px;">
     <h3>推荐汽修公司</h3>
-    <div class="row">
+    <div class="row" id="companyDiv">
         <c:forEach items="${companys}" var="c">
             <div class="col-lg-4 col-md-4 col-sm-6">
-                <a  onclick="showAddWin('${c.companyId}');" class="fh5co-project-item image-popup model">
+                <a onclick="showAddWin('${c.companyId}', '${sessionScope.user.userName}', '${sessionScope.user.userPhone}');"
+                   class="fh5co-project-item image-popup model">
                     <c:choose>
                         <c:when test="${c.companyImg == null}">
                             <figure>
@@ -58,6 +59,13 @@
             </div>
         </c:forEach>
     </div>
+    <ul style="margin: auto" class="pagination pagination-lg">
+        <li><a href="javascript:;" onclick="lastPage();">&laquo;</a></li>
+        <c:forEach items="${pageTotal}" var="pt">
+            <li><a href="javascript:;" onclick="selectPage(this);" id="pb${pt}">${pt}</a></li>
+        </c:forEach>
+        <li><a href="javascript:;" onclick="nextPage(${pageTotal.size()});">&raquo;</a></li>
+    </ul>
 </div>
 
 <div id="addWin" class="modal fade" style="overflow:scroll" aria-hidden="true">
@@ -72,17 +80,20 @@
                             <input type="hidden" id="companyId" name="companyId" class="form-control"/>
                             <div class="form-group">
                                 <label>车主姓名：</label>
-                                <input type="text" id="addUserName" name="userName" readonly  value="${sessionScope.user.userName}" class="form-control"/>
+                                <input type="text" id="addUserName" name="userName" readonly
+                                       value="${sessionScope.user.userName}" class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>车主电话：</label>
-                                <input type="text" id="addUserPhone" name="userPhone" readonly value="${sessionScope.user.userPhone}" class="form-control"/>
+                                <input type="text" id="addUserPhone" name="userPhone" readonly
+                                       value="${sessionScope.user.userPhone}" class="form-control"/>
                             </div>
 
                             <div class="form-group">
                                 <label>汽车品牌：</label>
-                                <select id="addCarBrand" class="js-example-tags form-control car_brand" onchange="checkBrand(this)" name="brandId">
+                                <select id="addCarBrand" class="js-example-tags form-control car_brand"
+                                        onchange="checkBrand(this)" name="brandId">
                                 </select>
                             </div>
 

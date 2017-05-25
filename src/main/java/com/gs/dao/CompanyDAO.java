@@ -24,4 +24,7 @@ public interface CompanyDAO extends BaseDAO<String, Company>{
 
     public List<Company> queryByTop(@Param("top") int top);
 
+    /**分页查找车主后台首页的公司*/
+    public List<Company> queryByTop2(@Param("index")int index, @Param("top") int top);
+
 }
