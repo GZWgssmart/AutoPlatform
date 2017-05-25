@@ -194,12 +194,14 @@ function getCodeCar(){
 
 /** 检查手机号 */
 function checkPhone(phone) {
-    if (isPhone(phone.value)) {
-        $("#error").html('');
-        $("#getButton").removeAttr("disabled");
-    } else {
-        $("#error").html('请输入正确的手机号');
-        $("#getButton").attr("disabled","disabled");
+    if(phone != '') {
+        if (isPhone(phone.value)) {
+            $("#error").html('');
+            $("#getButton").removeAttr("disabled");
+        } else {
+            $("#error").html('请输入正确的手机号');
+            $("#getButton").attr("disabled", "disabled");
+        }
     }
 }
 
@@ -215,6 +217,8 @@ function customerCar() {
         $("#phone").val('');
         $("#code").val('');
         countdown1 = 60;
+        $("#getButton").val("获取验证码");
+        $("#getButton").removeAttribute("disabled");
         var url = '/customerClientWeb/userPage?phone=' + phone;
         document.getElementById("iframeTable").src = url;
     } else {
