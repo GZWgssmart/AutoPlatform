@@ -85,10 +85,10 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label class="control-label">年龄：</label>
-                                            <input class="form-control" style="display: initial;" disabled="disabled" id="age" type="text" name="userAge"/>
+                                            <input class="form-control" style="display: initial;" disabled="disabled" title="根据身份证获取年龄" id="age" type="text" name="userAge"/>
                                         </div>
                                         <div class="col-md-3 form-group">
-                                            <label class="control-label">微博：</label>
+                                            <label class="control-label">微博号：</label>
                                             <input class="form-control" style="display: initial;" type="text" id="weiboOpen" value="${user.weiboOpenId}"  name="weiboOpenId"/>
                                         </div>
                                         <div class="col-md-3 form-group">
@@ -108,7 +108,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">生日：</label>
-                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" id="birthday" value="${user.userBirthday}"  name="userBirthday"/>
+                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" title="根据身份证获取生日" id="birthday" value="${user.userBirthday}"  name="userBirthday"/>
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label class="control-label">真实姓名：</label>
