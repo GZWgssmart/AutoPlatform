@@ -119,13 +119,6 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="companyAdmin, companyReceive">
-                <a>
-                    <button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
-                        <i class="glyphicon glyphicon-pencil"></i> 修改
-                    </button>
-                </a>
-            </shiro:hasAnyRoles>
             <shiro:hasAnyRoles name="companyAdmin, companyArtificer">
                 <a>
                     <button onclick="showAddDetailWin();" type="button" class="btn btn-default">

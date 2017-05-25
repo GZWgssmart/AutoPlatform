@@ -61,7 +61,9 @@ public class PeopleInfoController {
     private RoleService roleService;
 
     private String queryRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER
-            + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN;
+            + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ADMIN
+            + "," + Constants.COMPANY_ACCOUNTING + "," + Constants.COMPANY_BUYER
+            + "," + Constants.COMPANY_REPERTORY + "," + Constants.COMPANY_ARTIFICER;
 
     private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER;
 
