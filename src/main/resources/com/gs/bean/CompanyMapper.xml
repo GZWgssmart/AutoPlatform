@@ -10,7 +10,7 @@
 
 	<insert id="insert"  parameterType="company">
 		<![CDATA[
-			insert into t_company (companyId,companyName,companyAddress,companyTel,companyPricipal,companyWebsite,companyLogo,companyOpenDate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus,companyImg,companyPricipalPhone) values (#{companyId},#{companyName},#{companyAddress},#{companyTel},#{companyPricipal},#{companyWebsite},#{companyLogo},#{companyOpenDate},#{companySize},#{companyLongitude},#{companyLatitude},#{companyDes},'Y',#{companyImg},#{companyPricipalPhone})
+			insert into t_company (companyId,companyName,companyAddress,companyTel,companyPricipal,companyWebsite,companyLogo,companyOpenDate,companySize,companyLongitude,companyLatitude,companyDes,companyStatus,companyImg,companyPricipalPhone,createTime) values (#{companyId},#{companyName},#{companyAddress},#{companyTel},#{companyPricipal},#{companyWebsite},#{companyLogo},#{companyOpenDate},#{companySize},#{companyLongitude},#{companyLatitude},#{companyDes},'Y',#{companyImg},#{companyPricipalPhone},now())
 		]]>
 	</insert>
 
@@ -42,7 +42,7 @@
 		<![CDATA[
 			update t_company set companyName = #{companyName} , companyAddress= #{companyAddress} ,companyTel= #{companyTel},
 			companyPricipal = #{companyPricipal},companyWebsite=#{companyWebsite},companyLogo=#{companyLogo},companyOpenDate=#{companyOpenDate},
-			companySize = #{companySize},companyLongitude=#{companyLongitude},companyLatitude=#{companyLatitude},companyDes=#{companyDes},companyStatus = 'Y',companyImg = #{companyImg}
+			companySize = #{companySize},companyLongitude=#{companyLongitude},companyLatitude=#{companyLatitude},companyDes=#{companyDes},companyStatus = 'Y',companyImg = #{companyImg},createTime = #{createTime}
 			where companyId = #{companyId}
 		]]>
 	</update>
@@ -82,7 +82,7 @@
 
 	<select id="queryByPager" resultMap="companyResultMap">
 		<![CDATA[
-			select * from t_company where 1 = 1
+			select * from t_company  where 1 = 1 order by createTime desc
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and companyId = #{user.companyId}

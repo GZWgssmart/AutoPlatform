@@ -224,6 +224,7 @@ CREATE TABLE `t_company` (
   `companyLatitude` varchar(255) DEFAULT NULL COMMENT '公司纬度',
   `companyDes` varchar(500) DEFAULT NULL COMMENT '公司描述',
   `companyStatus` varchar(2) DEFAULT NULL COMMENT '公司状态',
+  `createTime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`companyId`),
   UNIQUE KEY `companyName` (`companyName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

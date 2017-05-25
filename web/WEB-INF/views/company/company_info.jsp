@@ -252,7 +252,7 @@
                         <h3 class="m-t-none m-b">修改公司</h3>
                         <form role="form" id="editForm" enctype="multipart/form-data">
                             <input type="hidden" name="companyId" attr="company.companyId"/>
-
+                            <input type="hidden" name="createTime" attr="company.createTime"/>
                             <div class="form-group">
                                 <label class="control-label">公司名称：</label>
                                 <input type="text" name="companyName" class="form-control" attr="company.companyName"/>

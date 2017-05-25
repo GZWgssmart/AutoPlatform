@@ -1,5 +1,8 @@
 package com.gs.bean;
 
+import org.joda.time.DateTime;
+
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -24,6 +27,7 @@ public class Company{
 	private String companyDes;//公司描述
 	private String companyStatus;//公司状态
 	private String companyImg;//公司图片
+	private Timestamp createTime;//创建时间
 
 	public String getCompanyId(){
 		return this.companyId;
@@ -132,24 +136,11 @@ public class Company{
 		this.companyImg = companyImg;
 	}
 
-	@Override
-	public String toString() {
-		return "Company{" +
-				"companyId='" + companyId + '\'' +
-				", companyName='" + companyName + '\'' +
-				", companyAddress='" + companyAddress + '\'' +
-				", companyTel='" + companyTel + '\'' +
-				", companyPricipal='" + companyPricipal + '\'' +
-				", companyPricipalPhone='" + companyPricipalPhone + '\'' +
-				", companyWebsite='" + companyWebsite + '\'' +
-				", companyLogo='" + companyLogo + '\'' +
-				", companyOpenDate=" + companyOpenDate +
-				", companySize='" + companySize + '\'' +
-				", companyLongitude='" + companyLongitude + '\'' +
-				", companyLatitude='" + companyLatitude + '\'' +
-				", companyDes='" + companyDes + '\'' +
-				", companyStatus='" + companyStatus + '\'' +
-				", companyImg='" + companyImg + '\'' +
-				'}';
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
 	}
 }
