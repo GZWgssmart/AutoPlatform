@@ -233,6 +233,7 @@ public class CompanyController {
                     user.setCompanyId(companyId);
                     user.setUserName(company.getCompanyPricipal());
                     user.setUserAddress(company.getCompanyAddress());
+                    user.setUserGender("N");
                     String pwd = getCharAndNumr(8);
                     user.setUserPwd(EncryptUtil.md5Encrypt(pwd));
                     Role role = roleService.queryByName(Constants.COMPANY_ADMIN);
