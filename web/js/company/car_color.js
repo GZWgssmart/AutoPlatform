@@ -228,16 +228,13 @@ function validator(formId) {
             colorRGB: {
                 message: '颜色RGB失败',
                 validators: {
-                    notEmpty: {
-                        message: '颜色RGB不能为空'
+                    stringLength: {
+                        min: 1,
+                        max: 500,
+                        message: '颜色RGB长度必须在1到500位之间'
                     }
-
-                },
-                stringLength: {
-                    min: 1,
-                    max: 500,
-                    message: '颜色RGB长度必须在1到500位之间'
                 }
+
             }
 
 
