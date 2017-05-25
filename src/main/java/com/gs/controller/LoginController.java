@@ -16,6 +16,7 @@ import com.gs.common.web.ServletContextUtil;
 import com.gs.service.*;
 import com.jh.email.Mail;
 import com.jh.email.MailSender;
+import org.activiti.engine.repository.Model;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -205,13 +206,15 @@ public class LoginController {
     }
 
     @RequestMapping("ok")
-    public String ok(String userId) {
+    public ModelAndView ok(String userId) {
         logger.info("验证成功");
+        ModelAndView mav = new ModelAndView("index/index");
         User user = userService.queryById(userId);
         if (user != null) {
             userService.active(userId);
         }
-        return "index/index";
+        mav.addObject("ok", "验证成功，您可以使用邮箱进行登入了");
+        return mav;
     }
 
     @RequestMapping("logout")

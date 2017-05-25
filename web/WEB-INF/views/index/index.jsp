@@ -253,7 +253,7 @@
                                         </ul>
                                         <div class="tab-content">
                                             <div id="errMsg1" style="color: red"></div>
-                                            <div id="successMsg" style="color: green"></div>
+                                            <div id="successMsg" style="color: green">${requestScope.ok}</div>
                                             <div class="tab-content-inner active" data-content="signup">
                                                 <form role="form" id="register_form" method="post">
                                                     <div class="row form-group">
