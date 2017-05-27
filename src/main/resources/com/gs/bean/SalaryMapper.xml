@@ -80,8 +80,8 @@
 		<![CDATA[
 			select s.*,u.userId as user_id,u.userName from t_salary s ,t_user u where s.userId = u.userId
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and u.companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and u.companyId = #{companyId}
 		</if>
 		order by u.companyId Desc ,s.salaryCreatedTime
 	</select>

@@ -52,6 +52,18 @@ function showAddWin(){
     $("#addWin").modal('show');
 }
 
+function rowStyle(row, index) {
+    if (row.incomingType == null) {
+        return {
+            css: {"background-color": "#E8E8E8"}
+        }
+    }else if(row.outgoingType == null){
+        return {
+            css: {"background": "#E0FFFF"}
+        }
+    }
+}
+
 function operateFormatter(value, row, index) {
     if (row.inOutStatus == 'Y') {
         return [
@@ -190,3 +202,5 @@ function validator(formId) {
         })
 
 }
+
+

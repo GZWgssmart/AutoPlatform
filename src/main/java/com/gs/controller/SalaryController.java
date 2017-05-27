@@ -260,7 +260,7 @@ public class SalaryController {
                     incomingOutgoing.setOutTypeId(outgoingType.getOutTypeId());
                     incomingOutgoing.setInOutCreatedUser(sessionUser.getUserId());
                     incomingOutgoing.setInOutMoney(salary.getTotalSalary());
-                    incomingOutgoing.setCompanyId(outgoingType.getCompanyId());
+                    incomingOutgoing.setCompanyId(sessionUser.getCompanyId());
                     incomingOutgoings.add(incomingOutgoing);
                     salaries.add(salary);
                 }

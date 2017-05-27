@@ -93,11 +93,11 @@
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 修改
             </button></a>
+            <a onclick="location.href='/salary/export'" href="javascript:;"><button type="button"  class="btn btn-default">
+                <i class="glyphicon glyphicon-floppy-open"></i> 导出
+            </button></a>
             <a><button onclick="showImport()" type="button"  class="btn btn-default" >
                 <i class="glyphicon glyphicon-floppy-save"></i> 导入
-            </button></a>
-                <a onclick="location.href='/salary/export'" href="javascript:;"><button type="button"  class="btn btn-default">
-                <i class="glyphicon glyphicon-floppy-open"></i> 导出
             </button></a>
     </shiro:hasAnyRoles>
             <a>

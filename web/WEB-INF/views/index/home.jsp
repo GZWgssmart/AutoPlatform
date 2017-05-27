@@ -161,10 +161,12 @@
                                 <li><a class="J_menuItem" href="<%=path %>/supply/info">供应商信息管理</a>
                                 </li>
                             </shiro:hasAnyRoles>
+                    <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, systemOrdinaryAdmin,companyBuyer">
                             <li><a class="J_menuItem" href="<%=path %>/reportStatistics/order_page">下单统计</a>
                             </li>
                             <li><a class="J_menuItem" href="<%=path %>/reportStatistics/pay_page">支付统计</a>
                             </li>
+                    </shiro:hasAnyRoles>
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>
@@ -305,27 +307,31 @@
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>
-                <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
+
                     <li>
                         <a href="#"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">报表统计</span><span
                                 class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="<%=path%>/reportStatistics/maintenance_page">维修保养统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="<%=path%>/reportStatistics/staff_page">员工工单统计</a>
-                            </li>
-                            <li><a class="J_menuItem"
-                                   href="<%=path%>/reportStatistics/maintenanceItems_page">维修保养项目统计</a>
-                            </li>
+                            <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
+                                <li><a class="J_menuItem" href="<%=path%>/reportStatistics/maintenance_page">维修保养统计</a>
+                                </li>
+                                <li><a class="J_menuItem" href="<%=path%>/reportStatistics/staff_page">员工工单统计</a>
+                                </li>
+                                <li><a class="J_menuItem"
+                                       href="<%=path%>/reportStatistics/maintenanceItems_page">维修保养项目统计</a>
+                                </li>
+                                <li><a class="J_menuItem" href="<%=path%>/reportStatistics/finance_page">财务统计</a>
+                                </li>
+                            </shiro:hasAnyRoles>
+                        <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, systemOrdinaryAdmin,companyBuyer">
                             <li><a class="J_menuItem" href="<%=path%>/reportStatistics/stock_page">库存统计</a>
                             </li>
                             <li><a class="J_menuItem" href="<%=path%>/reportStatistics/accessories_page">配件使用统计</a>
                             </li>
-                            <li><a class="J_menuItem" href="<%=path%>/reportStatistics/finance_page">财务统计</a>
-                            </li>
+                        </shiro:hasAnyRoles>
                         </ul>
                     </li>
-                </shiro:hasAnyRoles>
+
                 <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
                     <li>
                         <a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>

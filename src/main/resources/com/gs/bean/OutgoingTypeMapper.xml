@@ -64,8 +64,8 @@
 		<![CDATA[
 			select * from t_outgoing_type where outTypeStatus = 'Y'
 		]]>
-		<if test="user.companyId != null and user.companyId != ''">
-			and companyId = #{user.companyId}
+		<if test="companyId != null and companyId != ''">
+			and companyId = #{companyId}
 		</if>
 	</select>
 

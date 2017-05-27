@@ -29,11 +29,13 @@
            data-show-refresh="true"
            data-show-toggle="true"
            data-showColumns="true"
-           data-height="450">
+           data-height="450"
+           data-row-style="rowStyle"
+           >
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
-            <th data-field="incomingType.inTypeName" data-formatter="isNullName" >
+            <th data-field="incomingType.inTypeName"  data-formatter="isNullName" >
                 收入类型
             </th>
             <th data-field="outgoingType.outTypeName" data-formatter="isNullName">
