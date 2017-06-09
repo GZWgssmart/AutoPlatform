@@ -22,6 +22,7 @@ public class MaintainRecord {
     private String recordStatus;  // 维修保养记录状态
     private String speedStatus; // 标识当前进度
     private String pickingStatus; // 标识这条记录的领料状态
+    private String signStatus; // 标识是否用户已经签字
     private double coont;
 
     private Checkin checkin; // 登记表
@@ -180,5 +181,13 @@ public class MaintainRecord {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getSignStatus() {
+        return signStatus;
+    }
+
+    public void setSignStatus(String signStatus) {
+        this.signStatus = signStatus;
     }
 }

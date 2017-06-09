@@ -15,6 +15,7 @@
         <result column="recordStatus" property="recordStatus"/>
         <result column="speedStatus" property="speedStatus"/>
         <result column="pickingStatus" property="pickingStatus"/>
+        <result column="signStatus" property="signStatus"/>
         <result column="coont" property="coont"></result>
         <!--接待表Id-->
         <association property="checkin" javaType="com.gs.bean.Checkin">
@@ -767,6 +768,14 @@
         <![CDATA[
 
 		  update t_maintain_record set pickupTime = now() where recordId = #{recordId}
+
+        ]]>
+    </update>
+
+    <update id="updateSign">
+        <![CDATA[
+
+		  update t_maintain_record set signStatus = #{status} where recordId = #{id}
 
         ]]>
     </update>

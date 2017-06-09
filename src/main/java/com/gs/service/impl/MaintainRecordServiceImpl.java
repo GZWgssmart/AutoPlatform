@@ -277,4 +277,9 @@ public class MaintainRecordServiceImpl implements MaintainRecordService {
     public List<MaintainRecord> queryMyName(User user) {
         return maintainRecordDAO.queryMyName(user);
     }
+
+    @Override
+    public int updateSign(String id, String status) {
+        return maintainRecordDAO.updateSign(id, status);
+    }
 }

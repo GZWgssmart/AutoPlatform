@@ -331,6 +331,16 @@ function showDetailWin() {
         return false;
     } else {
         var record = selectRow[0];
+        if (record.signStatus == "Y") {
+            $("#signDiv").show();
+            $("#editBtn").hide();
+            $("#signBtn").hide();
+            $("#detailBtn").css("margin-left", "230px");
+        } else {
+            $("#signDiv").hide();
+            $("#editBtn").show();
+            $("#signBtn").show();
+        }
         var recordId = record.recordId;
         initTableSetToolbar("detailTable", "/detail/pager?recordId=" + recordId, "toolbar1");
         $("#searchDetailWin").modal('show');
@@ -577,7 +587,10 @@ function userConfirm() {
                         if (data.result == "success") {
                             swal("确认成功", data.message, "success");
                             $('#cusTable').bootstrapTable('refresh');
-                            $("#searchDetailWin").modal('hide');
+                            $("#signDiv").show();
+                            $("#editBtn").hide();
+                            $("#signBtn").hide();
+                            $("#detailBtn").css("margin-left", "230px");
                         } else if (data.result == "fail") {
                             swal("确认失败", "出现了一个错误", "error");
                         } else if (data.result == "notLogin") {

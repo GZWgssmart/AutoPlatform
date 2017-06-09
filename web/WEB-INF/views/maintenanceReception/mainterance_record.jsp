@@ -273,7 +273,8 @@
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="row">
+                <div class="row" style="position: relative;">
+                    <div id="signDiv" style="background: url('/img/userCornfirm.png')-25px -25px no-repeat;position: absolute;z-index:80;width: 250px;height: 250px;background-size:250px;display: none;"></div>
                     <div class="col-sm-12 b-r">
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">查看维修保养明细</h3>
@@ -315,7 +316,7 @@
                             <tbody>
                             <div id="toolbar1" class="btn-group">
                                 <shiro:hasAnyRoles name="companyAdmin, companyArtificer">
-                                    <a>
+                                    <a id="editBtn">
                                         <button onclick="showEditDetailWin();" type="button" id="editDetail"
                                                 class="btn btn-default">
                                             <i class="glyphicon glyphicon-pencil"></i> 修改
@@ -323,13 +324,13 @@
                                     </a>
                                 </shiro:hasAnyRoles>
                                 <shiro:hasAnyRoles name="companyAdmin, companyReceive">
-                                    <a>
+                                    <a id="detailBtn">
                                         <button onclick="generateDetail();" type="button" id="generateDetail"
                                                 class="btn btn-default">
                                             <i class="glyphicon glyphicon-list-alt"></i> 生成明细清单
                                         </button>
                                     </a>
-                                    <a>
+                                    <a id="signBtn">
                                         <button onclick="userConfirm();" type="button"
                                                 class="btn btn-success">
                                             <i class="glyphicon glyphicon-ok"></i> 用户已签字

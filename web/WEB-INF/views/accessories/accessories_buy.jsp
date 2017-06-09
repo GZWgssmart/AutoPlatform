@@ -291,7 +291,7 @@
 
                             <div class="form-group">
                                 <label class="control-label">配件条码：</label>
-                                <input type="text" name="accessories.accCommodityCode" class="form-control"
+                                <input type="text" name="accessories.accCommodityCode" class="form-control" maxlength="13"
                                        id="accCommodityCode"
                                        attr="acc.accCommodityCode"/>
                             </div>

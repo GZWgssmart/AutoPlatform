@@ -294,6 +294,19 @@ public interface MaintainRecordDAO extends BaseDAO<String, MaintainRecord> {
      */
     public List<MaintainRecord> queryCustomerCar(@Param("userPhone") String userPhone);
 
+    /**
+     * 查询自己的维修保养记录
+     * @param user
+     * @return
+     */
     public List<MaintainRecord> queryMyName(@Param("user") User user);
+
+    /**
+     * 更新用户签字状态
+     * @param id
+     * @param status
+     * @return
+     */
+    public int updateSign(@Param("id") String id, @Param("status") String status);
 
 }

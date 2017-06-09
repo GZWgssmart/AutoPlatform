@@ -280,8 +280,20 @@ public interface MaintainRecordService extends BaseService<String, MaintainRecor
      * 前台根据用户手机号查询进度
      *
      */
-
     public List<MaintainRecord> queryCustomerCar(String userPhone);
 
+    /**
+     * 查询自己的维修保养记录
+     * @param user
+     * @return
+     */
     public List<MaintainRecord> queryMyName(User user);
+
+    /**
+     * 更新用户签字状态
+     * @param id
+     * @param status
+     * @return
+     */
+    public int updateSign(String id, String status);
 }

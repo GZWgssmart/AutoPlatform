@@ -411,9 +411,14 @@
     map.addControl(new BMap.OverviewMapControl()); //添加默认缩略地图控件
     map.addControl(new BMap.OverviewMapControl({isOpen: true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT}));   //右下角，打开
     var marker = new BMap.Marker(new BMap.Point(114.94126, 25.837179));
+    marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
     map.addOverlay(marker);
     var localSearch = new BMap.LocalSearch(map);
     localSearch.enableAutoViewport(); //允许自动调节窗体大小
+    map.panBy(345,200);
+    var stCtrl = new BMap.PanoramaControl(); //构造全景控件
+    stCtrl.setOffset(new BMap.Size(20, 20));
+    map.addControl(stCtrl);//添加全景控件
     function searchByStationName() {
         map.clearOverlays();//清空原来的标注
         var keyword = document.getElementById("text_").value;
@@ -428,7 +433,7 @@
             marker.addEventListener("click", function () {
                 this.openInfoWindow(infoWindow);
             });
-            // marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
         });
         localSearch.search(keyword);
     }
