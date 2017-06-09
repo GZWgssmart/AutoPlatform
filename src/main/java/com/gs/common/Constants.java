@@ -74,7 +74,7 @@ public class Constants {
 
     public static final String MAIL_TYPE = "qq";
 
-    public static final String MAIL_SENDER = "672630243@qq.com";
+    public static final String MAIL_SENDER = "371396453@qq.com";
 
-    public static final String MAIL_PASSWORD = "jxtsefrwqaxobbdb";
+    public static final String MAIL_PASSWORD = "bsvwaoujugihbggf";
 }

@@ -17,10 +17,10 @@
     </ul>
     <ul class="info">
         <li class="qq">
-            <p style="text-align: center;margin-top: 15px;">点我QQ咨询<a href="http://wpa.qq.com/msgrd?v=3&uin=3234396045&site=qq&menu=yes" target="_blank" style="font-size: 18px;margin-left: 12px;">在线咨询</a></p>
+            <p style="text-align: center;margin-top: 15px;">点我QQ咨询<a href="http://wpa.qq.com/msgrd?v=3&uin=371396453&site=qq&menu=yes" target="_blank" style="font-size: 18px;margin-left: 12px;">在线咨询</a></p>
         </li>
         <li class="tel">
-            <p style="font-size: 15px;">咨询热线：<br>400-800-8888<br>客服qq：<br>3234396045</p>
+            <p style="font-size: 15px;">咨询热线：<br>400-800-8888<br>客服qq：<br>371396453</p>
         </li>
         <li class="wx">
             <div class="img"><img src="/img/weichar.png" /></div>

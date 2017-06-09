@@ -88,7 +88,7 @@
             <th data-field="userName">
                 姓名
             </th>
-            <th data-field="role.name">
+            <th data-field="role.roleDes" data-formatter="roleName">
                 角色
             </th>
             <th data-field="userEmail">

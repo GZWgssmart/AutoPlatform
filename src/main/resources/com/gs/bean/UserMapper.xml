@@ -406,7 +406,7 @@
 
 	<select id="queryByAdminPager" resultType="list" resultMap="userResultMap" parameterType="com.gs.common.bean.Pager">
 		<![CDATA[
-			select u.*, c.companyId, c.companyName, r.roleDes from t_user u
+			select u.*, c.companyId, c.companyName, r.roleDes, r.roleName from t_user u
 			LEFT JOIN t_company c on u.companyId = c.companyId
 			LEFT JOIN t_user_role ur  on ur.userId = u.userId
 			LEFT JOIN t_role r on r.roleId = ur.roleId

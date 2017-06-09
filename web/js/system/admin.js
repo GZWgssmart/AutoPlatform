@@ -463,3 +463,10 @@ function clacImgZoomParam( maxWidth, maxHeight, width, height ){
     }
     return param;
 }
+
+function roleName(value, row, index) {
+    if (value == "董事长") {
+        return row.company.companyName + value;
+    }
+    return value;
+}
