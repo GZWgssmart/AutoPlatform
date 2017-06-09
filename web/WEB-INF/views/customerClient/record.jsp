@@ -98,7 +98,8 @@
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="row">
+                <div class="row" style="position: relative;">
+                    <div id="signDiv" style="background: url('/img/userCornfirm.png')-25px -25px no-repeat;position: absolute;z-index:80;width: 250px;height: 250px;background-size:250px;display: none;"></div>
                     <div class="col-sm-12 b-r">
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">查看维修保养明细</h3>
@@ -139,7 +140,7 @@
                             </thead>
                             <tbody>
                             <div id="toolbar1" class="btn-group">
-                                    <a>
+                                    <a id="signBtn">
                                         <button onclick="userConfirm();" type="button"
                                                 class="btn btn-success">
                                             <i class="glyphicon glyphicon-ok"></i> 确认签字
