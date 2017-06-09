@@ -48,10 +48,10 @@
 		<![CDATA[
 			insert into t_checkin(checkinId, userId, appointmentId, userName, userPhone, brandId, colorId,
 				modelId, plateId, carPlate, arriveTime, carMileage, carThings, intactDegrees, userRequests,
-				maintainOrFix, checkinCreatedTime, companyId, checkinStatus, carWash, oilCount)
+				maintainOrFix, checkinCreatedTime, companyId, carWash, oilCount)
 				values(#{checkinId}, #{userId}, #{appointmentId}, #{userName}, #{userPhone}, #{brandId}, #{colorId},
 				#{modelId}, #{plateId}, #{carPlate}, #{arriveTime}, #{carMileage}, #{carThings}, #{intactDegrees}, #{userRequests},
-				#{maintainOrFix}, now(), #{companyId}, 'Y', #{carWash}, #{oilCount})
+				#{maintainOrFix}, now(), #{companyId}, #{carWash}, #{oilCount})
 		]]>
 	</insert>
 

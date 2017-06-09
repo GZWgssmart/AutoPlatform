@@ -57,17 +57,15 @@
     <form id="formSearch" class="form-horizontal">
         <div class="form-group" id="searchDiv" style="margin-top:15px; display: none;">
             <div class="col-sm-2" style="margin-left: -15px;">
+                <input type="text" id="searchName" class="form-control" placeholder="姓名：">
+            </div>
+            <div class="col-sm-2" style="margin-left: -15px;">
                 <input type="text" id="searchEmail" class="form-control" placeholder="邮箱：">
             </div>
 
             <div class="col-sm-2" style="margin-left: -15px;">
                 <input type="text" id="searchPhone" class="form-control" placeholder="手机号：">
             </div>
-
-            <div class="col-sm-2" style="margin-left: -15px;">
-                <input type="text" id="searchName" class="form-control" placeholder="姓名：">
-            </div>
-
             <div class="col-sm-2">
                 <button type="button" onclick="bySelectSearch()" class="btn btn-primary">
                     查询
@@ -87,6 +85,12 @@
         <thead>
         <tr>
             <th data-field="state" data-checkbox="true"></th>
+            <th data-field="userName">
+                姓名
+            </th>
+            <th data-field="role.name">
+                角色
+            </th>
             <th data-field="userEmail">
                 邮箱
             </th>
@@ -98,9 +102,6 @@
             </th>
             <th data-field="userIdentity">
                 身份证
-            </th>
-            <th data-field="userName">
-                姓名
             </th>
             <th data-field="userGender" data-formatter="gender">
                 性别

@@ -202,7 +202,7 @@ CREATE TABLE `t_checkin` (
 `maintainOrFix` varchar(20) DEFAULT NULL COMMENT '标识是保养还是维修',
 `checkinCreatedTime` datetime DEFAULT NULL COMMENT '登记记录创建的时间',
 `companyId` varchar(36) DEFAULT NULL COMMENT '汽修公司编号，来源于t_company表',
-`checkinStatus` varchar(255) DEFAULT NULL COMMENT '登记记录状态，Y表示可用，N表示不可用',
+`checkinStatus` varchar(255) DEFAULT 'Y' COMMENT '登记记录状态，Y表示可用，N表示不可用',
 PRIMARY KEY (`checkinId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
