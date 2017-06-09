@@ -222,7 +222,8 @@
     <div class="modal-dialog" style="width: 1000px;">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="row">
+                <div class="row" style="position: relative;">
+                    <div id="signDiv" style="background: url('/img/materialsFlag1.png')-25px -25px no-repeat;position: absolute;z-index:999;width: 250px;height: 250px;background-size:250px;display: block;"></div>
                     <div class="col-sm-12 b-r">
                         <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
                         <h3 class="m-t-none m-b">
@@ -240,7 +241,7 @@
                                         <hr style="margin-top: -15px; border-color: black;"/>
                                     </div>
                                     <div class="col-sm-4">
-                                        <h2>Νο<span style="color: red;">0969996</span></h2>
+                                        <h2>Νο<span id="code" style="color: red;"></span></h2>
                                     </div>
                                 </div>
 
@@ -290,7 +291,8 @@
 
                                 <div class="col-sm-12" style="margin-top: 10px;">
                                     <div class="col-sm-1" style="width: 13px;">单位盖章</div>
-                                    <div class="col-sm-5"></div>
+                                    <div class="col-sm-5">
+                                    </div>
                                     <div class="col-sm-1" style="width: 13px;">才会主管</div>
                                     <div class="col-sm-1"></div>
                                     <div class="col-sm-1" style="width: 13px;">记账</div>

@@ -193,6 +193,7 @@ function showChargeBillWin() {
         return false;
     } else {
         var chargeBill = selectRow[0];
+        $("#code").html(getCodeNumber());
         $("#chargeTime").html(formatterDate2(chargeBill.chargeTime));
         $("#companyName").html(chargeBill.record.company.companyName);
         $("#paymentMethod").html(chargeBill.paymentMethod);
@@ -213,6 +214,12 @@ function printChargeBill() {
     newWin.print();
     newWin.close();
     $("#chargeBillWin").modal("hide");
+}
+
+/** 获取7位数验证码 */
+function getCodeNumber() {
+    var str = Math.floor((Math.random() * 9 + 1) * 1000000);
+    return str;
 }
 
 
