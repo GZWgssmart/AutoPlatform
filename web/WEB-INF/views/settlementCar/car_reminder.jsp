@@ -190,6 +190,8 @@
                             <input type="hidden" attr="record.checkin.userId" name="userId" class="form-control"/>
                             <input type="hidden" attr="record.checkin.carMileage" name="carMileage"
                                    class="form-control"/>
+                            <input type="hidden" attr="record.checkin.checkinId" name="checkinId"
+                                   class="form-control"/>
                             <input type="text" attr="record.checkin.maintainOrFix" name="maintainOrFix"
                                    class="form-control"/>
                             <div class="form-group">

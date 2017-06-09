@@ -271,7 +271,7 @@
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>
-
+<shiro:hasAnyRoles name="companyAdmin,companyReceive,systemSuperAdmin, systemOrdinaryAdmin">
                 <li>
                     <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">客户关系管理</span><span
                             class="fa arrow"></span></a>
@@ -287,6 +287,7 @@
                         </li>
                     </ul>
                 </li>
+</shiro:hasAnyRoles>
 
 
                 <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">

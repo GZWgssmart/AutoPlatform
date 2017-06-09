@@ -206,7 +206,8 @@ public class ChargeBillController {
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ControllerResult addChargeBill(@Param("chargeBill") ChargeBill chargeBill, @Param("userId") String userId, @Param("carMileage") String carMileage, @Param("maintainOrFix") String maintainOrFix) {
+    public ControllerResult addChargeBill(@Param("chargeBill") ChargeBill chargeBill, @Param("userId") String userId, @Param("carMileage") String carMileage,
+                                          @Param("maintainOrFix") String maintainOrFix,@Param("checkinId")String checkinId) {
         if (SessionGetUtil.isUser()) {
             try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
@@ -223,6 +224,7 @@ public class ChargeBillController {
                         maintainRemind.setCompanyId(loginUser.getCompanyId());
                         maintainRemind.setRemindTime(calendar.getTime());
                         maintainRemind.setUserId(userId);
+                        maintainRemind.setCheckinId(checkinId);
                         maintainRemind.setLastMaintainMileage(carMileage);
                         maintainRemindService.insert(maintainRemind);
                     }

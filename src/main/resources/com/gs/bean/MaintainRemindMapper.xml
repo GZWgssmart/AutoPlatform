@@ -13,7 +13,7 @@
 		<result property="remindType" column="remindType" />
 		<result property="remindCreatedTime" column="remindCreatedTime" />
 		<result column="companyId" property="companyId"/>
-
+		<result column="checkinId" property="checkinId"/>
 		<association property="checkin" javaType="com.gs.bean.Checkin">
 			<id property="checkinId" column="checkinId"></id>
 			<id property="userId" column="userId"/>
@@ -31,8 +31,8 @@
 	<insert id="insert"  parameterType="maintainRemind">
 		<![CDATA[
 		insert into t_maintain_remind
-		(remindId, userId, lastMaintainTime, lastMaintainMileage, remindMsg, remindTime, remindType, companyId, remindCreatedTime)
-		VALUE (UUID(),#{userId},#{lastMaintainTime},#{lastMaintainMileage},#{remindMsg},#{remindTime},#{remindType},#{companyId},NOW())
+		(remindId, userId, checkinId,lastMaintainTime, lastMaintainMileage, remindMsg, remindTime, remindType, companyId, remindCreatedTime)
+		VALUE (UUID(),#{userId},#{checkinId},#{lastMaintainTime},#{lastMaintainMileage},#{remindMsg},#{remindTime},#{remindType},#{companyId},NOW())
 		]]>
 	</insert>
 
@@ -99,18 +99,20 @@
 
 	<select id="queryByPager" resultType="list" resultMap="maintainRemindResultMap">
 		<![CDATA[
-		  select * from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
+		   select * from t_maintain_remind rem, t_checkin c
+			where  c.checkinId = rem.checkinId
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
 			and rem.companyId = #{user.companyId}
 		</if>
-		order by rem.companyId desc, rem.remindCreatedTime desc, red.recordStatus desc
+		order by rem.companyId desc, rem.remindCreatedTime desc
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 
 	<select id="count" resultType="int">
 		<![CDATA[
-		  select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ="Y"
+		  select count(*) from t_maintain_remind rem, t_checkin c
+			where  c.checkinId = rem.checkinId
 		]]>
 		<if test="companyId != null and companyId != ''">
 			and rem.companyId = #{companyId}
@@ -130,8 +132,8 @@
 	</update>
 
 	<select id="countByCondition" resultType="int">
-  		select COUNT(*) from t_maintain_remind rem, t_maintain_record red, t_checkin c where
-		rem.userId=c.userId and c.checkinId = red.checkinId and red.recordStatus ='Y'
+		select count(*) from t_maintain_remind rem, t_checkin c
+		where  c.checkinId = rem.checkinId
 		<if test="user.companyId != null and user.companyId != ''">
 			and rem.companyId = #{user.companyId}
 		</if>
@@ -145,20 +147,20 @@
 
 	<select id="queryPagerByCondition" resultType="list" resultMap="maintainRemindResultMap">
 	<![CDATA[
-		select r.*, c.checkinId, c.userName, c.carPlate, c.carMileage, c.userPhone, c.maintainOrFix, cpy.companyId, cpy.companyName
-			  from t_maintain_remind r,  t_checkin c, t_company cpy
-		      where  c.userId = r.userId and c.companyId = cpy.companyId
+		select * from t_maintain_remind rem, t_checkin c
+			where  c.checkinId = rem.checkinId
+
 		]]>
 		<if test="user.companyId != null and user.companyId != ''">
-			and r.companyId = #{user.companyId}
+			and rem.companyId = #{user.companyId}
 		</if>
 		<if test="remind.checkin.userName != null and remind.checkin.userName != ''">
 			and c.userName like concat('%',#{remind.checkin.userName},'%')
 		</if>
 		<if test="remind.remindType != null and remind.remindType != '' and remind.remindType != 'all'">
-			and r.remindType = #{remind.remindType}
+			and rem.remindType = #{remind.remindType}
 		</if>
-		order by c.companyId desc, r.remindCreatedTime
+		order by c.companyId desc, rem.remindCreatedTime
 		limit #{pager.beginIndex}, #{pager.pageSize}
 	</select>
 

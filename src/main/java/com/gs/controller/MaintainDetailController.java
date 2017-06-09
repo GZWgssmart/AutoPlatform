@@ -128,7 +128,7 @@ public class MaintainDetailController {
     @RequestMapping(value = "confirm", method = RequestMethod.GET)
     public ControllerResult userConfirm(@Param("recordId") String recordId, @Param("maintainIds") String maintainIds) {
         if (SessionGetUtil.isUser()) {
-//            try {
+            try {
                 if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("用户签字确认");
                     String[] maintainIds1 = maintainIds.split(",");
@@ -154,10 +154,10 @@ public class MaintainDetailController {
                 }
                 logger.info("用户确认失败，没有权限操作");
                 return ControllerResult.getFailResult("用户确认失败，没有权限操作");
-//            } catch (Exception e) {
-//                logger.info("用户确认失败，出现了一个异常");
-//                return ControllerResult.getFailResult("用户确认失败，出现了一个异常");
-//            }
+            } catch (Exception e) {
+                logger.info("用户确认失败，出现了一个异常");
+                return ControllerResult.getFailResult("用户确认失败，出现了一个异常");
+            }
 
         } else {
             logger.info("Session已失效，请重新登入");

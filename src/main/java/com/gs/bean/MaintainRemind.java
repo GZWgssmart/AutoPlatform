@@ -11,6 +11,7 @@ import java.util.Date;
 public class MaintainRemind {
 	private String remindId; //保养提醒记录Id
 	private String userId;  //用户编号 来源于t_user表
+	private String checkinId;	// 登记编号
 	private Date lastMaintainTime;  //上次保养时间
 	private String lastMaintainMileage;  //上次保养行驶里程
 	private String remindMsg;  //保养提醒消息
@@ -42,6 +43,13 @@ public class MaintainRemind {
 		this.maintainRecord = maintainRecord;
 	}
 
+	public String getCheckinId() {
+		return checkinId;
+	}
+
+	public void setCheckinId(String checkinId) {
+		this.checkinId = checkinId;
+	}
 
 	public String getRemindId(){
 		return this.remindId;

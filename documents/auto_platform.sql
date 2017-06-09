@@ -344,6 +344,7 @@ DROP TABLE IF EXISTS `t_maintain_remind`;
 CREATE TABLE `t_maintain_remind` (
 `remindId` varchar(36) NOT NULL COMMENT '保养提醒记录编号，UUID,主键',
 `userId` varchar(36) DEFAULT NULL COMMENT '用户编号，来源于t_user表',
+`checkinId` varchar(36) DEFAULT NULL COMMENT '登记编号，来源于t_checkin表',
 `lastMaintainTime` datetime DEFAULT NULL COMMENT '上次保养时间',
 `lastMaintainMileage` double(255,2) DEFAULT NULL COMMENT '上次保养汽车行驶里程',
 `remindMsg` varchar(255) DEFAULT NULL COMMENT '保养提醒消息',
