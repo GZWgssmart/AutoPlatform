@@ -143,76 +143,7 @@
                         <h3 class="m-t-none m-b">
 
                         </h3>
-                        <div id="printDiv">
-                            <div class="col-sm-12">
-                                <div class="col-sm-12">
-                                    <div class="col-sm-4"></div>
-                                    <div class="col-sm-4" style="text-align: center;">
-                                        <h2>
-                                            &nbsp;收&nbsp;费&nbsp;单&nbsp;据&nbsp;
-                                        </h2>
-                                        <hr style="margin-top: -5px; border-color: black" />
-                                        <hr style="margin-top: -15px; border-color: black;" />
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <h2>Νο<span id="code" style="color: red;"></span></h2>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-sm-12">
-                                    <div class="col-sm-4"></div>
-                                    <div class="col-sm-4" style="text-align: center;">
-                                        入账日期：<span id="chargeTime"></span>
-                                    </div>
-                                    <div class="col-sm-4">
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12" style="border: 1px solid black; height: 180px; font-size: 20px; padding-top: 20px;">
-                                    <div class="col-sm-12" style="margin-bottom: 10px;">
-                                        <div class="col-sm-1" style="width: 130px;">收款单位：</div>
-                                        <div id="companyName" class="col-sm-4" style="border-bottom: 1px solid black;"></div>
-                                        <div class="col-sm-1" style="width: 130px;">收款方式：</div>
-                                        <div id="paymentMethod" class="col-sm-4" style="border-bottom: 1px solid black;"></div>
-                                    </div>
-
-                                    <div class="col-sm-12" style="margin-bottom: 10px;">
-                                        <div class="col-sm-1" style="width: 150px;">人民币<span style="font-size: 13px;">(大写)</span>：</div>
-                                        <div id="actualPaymentMax" class="col-sm-4" style="border-bottom: 1px solid black;"></div>
-                                        <div class="col-sm-1" style="width: 40px;">￥：</div>
-                                        <div id="actualPayment" class="col-sm-4" style="border-bottom: 1px solid black;"></div>
-                                    </div>
-
-                                    <div class="col-sm-12" style="margin-bottom: 10px;">
-                                        <div class="col-sm-1" style="width: 130px;">收款事由：</div>
-                                        <div id="chargeBillDes" class="col-sm-10" style="border-bottom: 1px solid black;"></div>
-                                    </div>
-
-                                    <div class="col-sm-12">
-                                        <div class="col-sm-9"></div>
-                                        <div class="col-sm-1" style="width: 130px;">车主签字：</div>
-                                        <div class="col-sm-1" ></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12" style="margin-top: 10px;">
-                                    <div class="col-sm-1" style="width: 13px;">单位盖章</div>
-                                    <div class="col-sm-5"></div>
-                                    <div class="col-sm-1" style="width: 13px;">才会主管</div>
-                                    <div class="col-sm-1"></div>
-                                    <div class="col-sm-1" style="width: 13px;">记账</div>
-                                    <div class="col-sm-1"></div>
-                                    <div class="col-sm-1" style="width: 13px;">出纳</div>
-                                    <div class="col-sm-1"></div>
-                                    <div class="col-sm-1" style="width: 13px;">审核</div>
-                                    <div class="col-sm-1"></div>
-                                    <div class="col-sm-1" style="width: 13px;">经办</div>
-                                    <div class="col-sm-1"></div>
-                                </div>
-
-                            </div>
-                        </div>
+                        <%@ include file="../common/print.jsp" %>
                         <div style="height: 40px;"></div>
                         <div class="modal-footer" style="overflow:hidden;">
                             <button type="button" class="btn btn-default"

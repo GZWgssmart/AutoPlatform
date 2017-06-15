@@ -207,12 +207,15 @@ function showChargeBillWin() {
 
 /** 打印收费单据 */
 function printChargeBill() {
+    /**
     var newWin=window.open('about:blank', '', '');
     var titleHTML = document.getElementById('printDiv').innerHTML;// 拿打印div所有元素
     newWin.document.write("<html><head><title></title><link rel='stylesheet' type ='text/css' href='/css/bootstrap.min.css'></head><body>" + titleHTML + "</body></html>");
     newWin.document.location.reload();
     newWin.print();
     newWin.close();
+     */
+    $("#printDiv").jqprint();
     $("#chargeBillWin").modal("hide");
 }
 
