@@ -148,6 +148,23 @@ function previewImage(file) {
     }
 }
 
+function clacImgZoomParam(maxWidth, maxHeight, width, height) {
+    var param = {top: 0, left: 0, width: width, height: height};
+    if (width > maxWidth || height > maxHeight) {
+        rateWidth = width / maxWidth;
+        rateHeight = height / maxHeight;
+
+        if (rateWidth > rateHeight) {
+            param.width = maxWidth;
+            param.height = Math.round(height / rateWidth);
+        } else {
+            param.width = Math.round(width / rateHeight);
+            param.height = maxHeight;
+        }
+    }
+    return param;
+}
+
 /** 选择公司位置 */
 function showMap() {
     $("#mapWin").modal("show");

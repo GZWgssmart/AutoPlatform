@@ -249,6 +249,32 @@ function showPwdWin(){
 
 }
 
+/*显示动态登录窗口*/
+function showLoginWin(){
+    $("#loginWin").modal("show");
+    $("input[type=reset]").trigger("click");
+    $("#error").html("");
+    countdown2 = 60;
+    $("#codeButton").val("获取验证码");
+    $("#codeButton").attr("disabled","disabled");
+
+}
+
+function checkPhone(number){
+    if (number != null && number != "") {
+        $.get("/pwd/checkPhone?number=" + number,
+            function (data) {
+                if (data == "true") {
+                    userPhone = number;
+                    $("#loginError").html("");
+                    $("#codeButton1").removeAttr("disabled");
+                } else if (data == "false") {
+                    $("#codeButton1").attr("disabled", "disabled");
+                    $("#loginError").html("不存在该用户");
+                }
+            })
+    }
+}
 
 
 function checkEmail(number){
@@ -279,6 +305,18 @@ function variNumber1(number) {
     }
 }
 
+/** 验证手机号登录 */
+function variNumber2(number) {
+    if(number != '') {
+        if (isPhone(number)) {
+            checkPhone(number);
+        } else {
+            $("#codeButton1").attr("disabled", "disabled");
+            $("#loginError").html("请输入正确的手机号");
+        }
+    }
+}
+
 /*获取验证码*/
 var countdown2 = 60;
 function getCode2(val) {
@@ -300,6 +338,27 @@ function getCode2(val) {
     }, 1000)
 }
 
+/*获取验证码*/
+var countdown3 = 60;
+function getCode3(val) {
+    var phone = $("#phone1").val();
+    sendCode3(countdown3);
+    if (countdown3 == 0) {
+        val.removeAttribute("disabled");
+        val.value = "获取验证码";
+        countdown3 = 60;
+    } else {
+        val.setAttribute("disabled", true);
+        val.value = "重新发送(" + countdown3 + ")";
+        countdown3--;
+    }
+    setTimeout(function () {
+        if (val.value != "获取验证码") {
+            getCode2(val);
+        }
+    }, 1000)
+}
+
 /** 发送找回密码的验证短信 */
 function sendCode2(val) {
     if (val == 60) {
@@ -308,6 +367,21 @@ function sendCode2(val) {
             $.get("/pwd/sendCode?number=" + userPhone , function (data) {
                 if (data.result == "success") {
                     $("#successMsg2").html(data.message);
+                    getCodePwd();
+                }
+            }, "json");
+
+        }
+    }
+}
+/** 发送动态登录的验证短信 */
+function sendCode3(val) {
+    if (val == 60) {
+        var userPhone = $("#phone1").val();
+        if (userPhone != null && userPhone != "" && userPhone != undefined) {
+            $.get("/pwd/sendCode1?number=" + userPhone , function (data) {
+                if (data.result == "success") {
+                    $("#loginSuccess").html(data.message);
                     getCodePwd();
                 }
             }, "json");
@@ -338,6 +412,19 @@ function variCode(val){
         }
     }else{
 
+    }
+}
+function variCode1(val){
+    var base = new Base64();
+    var code = base.decode(""+pwdCode);
+    if(val != '') {
+        if (val == code) {
+            $("#loginError1").html("");
+        } else {
+            $("#loginError1").html('您输入的验证码有误，请重新输入');
+        }
+    }else{
+        $("#loginError1").html('请输入手机验证码');
     }
 }
 function editPwd(){
@@ -382,6 +469,10 @@ $('#password1').bind('keyup', function(event) {
         login();
     }
 });
+
+function login1() {
+    
+}
 
 
 /** 获取6位数验证码 */

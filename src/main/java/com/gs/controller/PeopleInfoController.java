@@ -207,7 +207,7 @@ public class PeopleInfoController {
                     Pager pager = new Pager();
                     pager.setPageNo(Integer.valueOf(pageNumber));
                     pager.setPageSize(Integer.valueOf(pageSize));
-                    pager.setTotalRecords(userService.countCompanyEmp(user));
+                    pager.setTotalRecords(userService.countPeopleEmp(user));
                     List<User> users = userService.queryPeoplePager(pager, user);
                     return new Pager4EasyUI<User>(pager.getTotalRecords(), users);
                 }

@@ -187,7 +187,7 @@
                             <div class="form-group">
                                 <label class="control-label">公司图片</label>
                                 <div id="preview">
-                                    <img  name="file"  style="width:120px;height:60px;"/>
+                                    <img  name="file" id="companyImg"/>
                                 </div>
                                 <input type="file" name="file" onchange="previewImage(this)" style="display: none;"
                                        id="previewImg">

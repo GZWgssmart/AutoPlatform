@@ -63,6 +63,9 @@ public interface UserService extends BaseService<String, User>{
     /**统计当前登陆者公司的所有员工*/
     public int countCompanyEmp(User user);
 
+    /**查询可用员工个数*/
+    public int countPeopleEmp(User user);
+
     /*验证手机号*/
     public int queryPhone(String userPhone);
 

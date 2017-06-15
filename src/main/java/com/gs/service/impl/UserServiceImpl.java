@@ -247,4 +247,8 @@ public class UserServiceImpl implements UserService {
     public int countCompanyEmp(User user) {
         return userDAO.countCompanyEmp(user);
     }
+
+    public int countPeopleEmp(User user) {
+        return userDAO.countPeopleEmp(user);
+    }
 }

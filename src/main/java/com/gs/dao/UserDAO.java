@@ -60,7 +60,8 @@ public interface UserDAO extends BaseDAO<String, User>{
     /*根据手机号查询id*/
     public User queryByPhone(String phone);
 
-
+    /**查询可用员工个数*/
+    public int countPeopleEmp(User user);
 
     /*验证手机号*/
     public int queryPhone(String userPhone);

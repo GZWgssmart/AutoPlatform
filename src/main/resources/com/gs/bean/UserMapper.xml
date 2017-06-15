@@ -468,6 +468,19 @@
 		</if>
 	</select>
 
+	<select id="countPeopleEmp" parameterType="String" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM t_user u
+			LEFT JOIN t_company c ON u.companyId = c.companyId
+			LEFT JOIN t_user_role ur ON ur.userId = u.userId
+			LEFT JOIN t_role r ON r.roleId = ur.roleId
+			WHERE r.roleName like concat('company', '%') AND u.userStatus = 'Y' AND r.roleName != 'companyAdmin' AND u.userId = #{userId}
+		]]>
+		<if test="companyId != null and companyId != ''">
+			and u.companyId = #{companyId}
+		</if>
+	</select>
+
 	<select id="countAdmin" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) from t_user u

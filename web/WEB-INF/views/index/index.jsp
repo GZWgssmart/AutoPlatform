@@ -337,7 +337,9 @@
                                                     </div>
                                                 </form>
                                                 <div>
-                                                    <span onclick="showPwdWin()" style="cursor: pointer;">忘记密码</span>
+                                                    <span onclick="showPwdWin()" style="cursor: pointer;">忘记密码?</span>
+                                                    &nbsp;&nbsp;
+                                                    <span onclick="showLoginWin()" style="cursor: pointer;color: red;">手机号动态登录</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -578,6 +580,49 @@
                             <div class="form-group">
                                 <input type="button" onclick="editPwd()" value="确定" id="searchBtn" class="btn btn-primary">
                                 <input type="reset" value="重置" class="btn btn-primary">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%--手机号动态登录--%>
+<div id="loginWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                        <h3 class="m-t-none m-b">手机号登录</h3>
+                        <form>
+                            <div class="row form-group">
+                                <div id="loginSuccess" style="color: green;padding-left: 20px;"></div>
+                                <div class="col-md-12">
+                                    <label class="sr-only" for="phone">手机号</label>
+                                    <input type="text" id="phone1" name="phone" class="form-control"
+                                           placeholder="请输入您的手机号" maxlength="11" onblur="variNumber2(this.value)">
+                                </div>
+                                <div id="loginError" style="color: red;padding-left: 20px;"></div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-sm-8" style="margin: 0px;">
+                                    <input type="text" id="loginCode" name="code" class="form-control" onblur="variCode1(this.value)" placeholder="输入手机验证码">
+                                </div>
+                                <div class="col-sm-4" style="margin: 0px;">
+                                    <input type="button" id="codeButton1"
+                                           onclick="getCode3(this)"   class="btn btn-primary" maxlength="6" disabled
+                                           value="获取验证码" style="padding-left: 10px; padding-right: 10px;">
+                                </div>
+                                <div id="loginError1" style="color: red;padding-left: 20px;"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="button" onclick="login1()" value="登录" id="loginBtn" class="btn btn-primary">
                             </div>
                         </form>
                     </div>
