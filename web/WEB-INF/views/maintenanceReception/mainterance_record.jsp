@@ -119,7 +119,7 @@
         </form>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="companyAdmin, companyArtificer">
+            <shiro:hasAnyRoles name="companyAdmin, companyArtificer, companyReceive">
                 <a>
                     <button onclick="showAddDetailWin();" type="button" class="btn btn-default">
                         <i class="glyphicon glyphicon-glass"></i> 生成明细
@@ -315,7 +315,7 @@
                             </thead>
                             <tbody>
                             <div id="toolbar1" class="btn-group">
-                                <shiro:hasAnyRoles name="companyAdmin, companyArtificer">
+                                <shiro:hasAnyRoles name="companyAdmin, companyArtificer, companyReceive">
                                     <a id="editBtn">
                                         <button onclick="showEditDetailWin();" type="button" id="editDetail"
                                                 class="btn btn-default">
