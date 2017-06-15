@@ -751,6 +751,8 @@
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="<%=path %>/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="<%=path %>/js/jquery.jqprint-0.3.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/maintenanceReception/record.js"></script>
 </body>

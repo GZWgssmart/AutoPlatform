@@ -548,12 +548,13 @@ function generateDetail() {
 /** 打印维修保养清单 */
 function printMaintainAndFix() {
 
-    var newWin = window.open('about:blank', '', '');
+    /*var newWin = window.open('about:blank', '', '');
     var titleHTML = document.getElementById('printDiv').innerHTML;// 拿打印div所有元素
     newWin.document.write("<html><head><title></title><link rel='stylesheet' type ='text/css' href='/css/my-table.css'></head><body>" + titleHTML + "</body></html>");
     newWin.document.location.reload();
     newWin.print();
-    newWin.close();
+    newWin.close();*/
+    $("#printDiv").jqprint();
     $("#maintainFixWin").modal("hide");
 }
 
