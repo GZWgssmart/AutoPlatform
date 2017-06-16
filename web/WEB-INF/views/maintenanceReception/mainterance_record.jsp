@@ -323,7 +323,7 @@
                                         </button>
                                     </a>
                                 </shiro:hasAnyRoles>
-                                <shiro:hasAnyRoles name="companyAdmin, companyReceive">
+                                <shiro:hasAnyRoles name="companyAdmin, companyReceive, companyArtificer">
                                     <a id="detailBtn">
                                         <button onclick="generateDetail();" type="button" id="generateDetail"
                                                 class="btn btn-default">

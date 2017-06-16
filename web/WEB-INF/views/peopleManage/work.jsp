@@ -69,7 +69,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="companyAdmin">
+            <shiro:hasAnyRoles name="companyAdmin, companyArtificer, companyReceive">
             <a><button onclick="showEditWin();" type="button" id="edit" class="btn btn-default">
                 <i class="glyphicon glyphicon-pencil"></i> 指派员工
             </button></a>

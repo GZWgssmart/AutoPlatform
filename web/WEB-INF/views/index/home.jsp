@@ -17,7 +17,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <title>后台主页</title>
+    <title>汽车维保平台</title>
+
 
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html"/>
@@ -105,6 +106,9 @@
                             <li>
                                 <a class="J_menuItem" href="<%=path %>/company/plate">车牌管理</a>
                             </li>
+                        </shiro:hasAnyRoles>
+                        <shiro:hasAnyRoles
+                                name="systemSuperAdmin, systemOrdinaryAdmin, companyAdmin, companyReceive, companyArtificer">
                             <li>
                                 <a class="J_menuItem" href="<%=path %>/company/maintenanceItem">保养项目管理</a>
                             </li>
@@ -145,7 +149,7 @@
                             </shiro:hasAnyRoles>
 
                             <shiro:hasAnyRoles
-                                    name="companyAdmin, companyArtificer,  systemSuperAdmin, systemOrdinaryAdmin">
+                                    name="companyAdmin, companyArtificer, systemSuperAdmin, systemOrdinaryAdmin, companyReceive">
                                 <li><a class="J_menuItem" href="<%=path%>/peopleManage/work">工单查询</a>
                                 </li>
                             </shiro:hasAnyRoles>
@@ -203,14 +207,18 @@
                     </li>
                 </shiro:hasAnyRoles>
 
-                <li>
-                    <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span class="nav-label">维修保养预约</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a id="app" class="J_menuItem" href="<%=path %>/appointment/appointment">预约管理</a>
-                        </li>
-                    </ul>
-                </li>
+                <shiro:hasAnyRoles
+                        name="companyAdmin, companyReceive">
+                    <li>
+                        <a href="#"><i class="glyphicon glyphicon-phone-alt"></i> <span
+                                class="nav-label">维修保养预约</span><span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a id="app" class="J_menuItem" href="<%=path %>/appointment/appointment">预约管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                </shiro:hasAnyRoles>
 
                 <shiro:hasAnyRoles
                         name="companyAdmin, companyReceive, companyArtificer, systemSuperAdmin, systemOrdinaryAdmin">

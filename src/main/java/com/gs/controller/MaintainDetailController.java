@@ -54,8 +54,8 @@ public class MaintainDetailController {
     private String queryRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE + ","
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.COMPANY_ARTIFICER + "," + Constants.CAR_OWNER;
 
-    // 可以操作的角色：董事长、技师
-    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ARTIFICER + "," + Constants.CAR_OWNER ;
+    // 可以操作的角色：董事长、技师、接待员、车主用于用户前置
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ARTIFICER + "," + Constants.CAR_OWNER + "," + Constants.COMPANY_RECEIVE ;
 
     @ResponseBody
     @RequestMapping(value = "add", method = RequestMethod.POST)

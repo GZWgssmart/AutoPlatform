@@ -44,9 +44,10 @@ public class MaintainFixController {
             + Constants.COMPANY_ACCOUNTING
             + Constants.COMPANY_EMP + ","
             + Constants.COMPANY_SALES + ","
-            + Constants.COMPANY_RECEIVE;
+            + Constants.COMPANY_RECEIVE + ","
+            + Constants.COMPANY_ARTIFICER;
 
-    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ARTIFICER;
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ARTIFICER + "," + Constants.COMPANY_RECEIVE;
 
     // 可以查看的角色：董事长、财务员、超级管理员、普通管理员
     private String queryRole1 = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ACCOUNTING + ","

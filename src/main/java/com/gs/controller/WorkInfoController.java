@@ -47,11 +47,12 @@ public class WorkInfoController {
     @Resource
     private MaintainRecordService maintainRecordService;
 
-    private String queryRole = Constants.COMPANY_ADMIN  + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN;
+    private String queryRole = Constants.COMPANY_ADMIN  + "," + Constants.SYSTEM_SUPER_ADMIN + "," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_RECEIVE + "," + Constants.COMPANY_ARTIFICER;;
 
     private String queryRole2 = Constants.COMPANY_ARTIFICER;
 
-    private String editRole = Constants.COMPANY_ADMIN;
+    // 可以修改的角色：董事长、技师、接待员
+    private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_RECEIVE + "," + Constants.COMPANY_ARTIFICER;
 
     // 可以查看的角色：董事长、财务员、超级管理员、普通管理员
     private String queryRole1 = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ACCOUNTING + ","
