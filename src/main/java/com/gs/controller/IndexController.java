@@ -105,7 +105,7 @@ public class IndexController {
         MailSender mailSender = new MailSender();
         mailSender.sendEmailByType(Constants.MAIL_TYPE, mail, Constants.MAIL_SENDER, Constants.MAIL_PASSWORD);
 
-        return ControllerResult.getSuccessResult("订阅成功，我们管理员会尽快与您联系");
+        return ControllerResult.getSuccessResult("订阅成功，平台管理员会在12小时內与您联系");
     }
 
 }

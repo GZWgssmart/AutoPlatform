@@ -18,7 +18,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <form class="form-inline">
                     <div id="subError" style="color: red; padding-left: 15px;"></div>
-                    <div id="subSuccess" style="color: green; padding-left: 15px;"></div>
+                    <div id="subSuccess" style="color: white; padding-left: 15px;"></div>
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
                             <label for="subEmail" class="sr-only">Email</label>
