@@ -18,7 +18,13 @@
     <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
           type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
-    <style>th{text-align: center;}td{text-align: center;}</style>
+    <style>th {
+        text-align: center;
+    }
+
+    td {
+        text-align: center;
+    }</style>
 </head>
 <body>
 <div class="container">
@@ -120,10 +126,12 @@
                 <a>
                     <button onclick="allBuys();" type="button" class="btn btn-default">查看所有</button>
                 </a>
-
-                <a>
-                    <button onclick="passChecks();" type="button" class="btn btn-default">审核通过</button>
-                </a>
+                <s:hasAnyRoles
+                        name="companyAdmin, companyRepertory">
+                    <a>
+                        <button onclick="passChecks();" type="button" class="btn btn-default">审核通过</button>
+                    </a>
+                </s:hasAnyRoles>
             </s:hasAnyRoles>
 
         </div>
@@ -291,7 +299,8 @@
 
                             <div class="form-group">
                                 <label class="control-label">配件条码：</label>
-                                <input type="text" name="accessories.accCommodityCode" class="form-control" maxlength="13"
+                                <input type="text" name="accessories.accCommodityCode" class="form-control"
+                                       maxlength="13"
                                        id="accCommodityCode"
                                        attr="acc.accCommodityCode"/>
                             </div>
