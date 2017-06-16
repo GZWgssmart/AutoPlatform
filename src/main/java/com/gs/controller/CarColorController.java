@@ -31,9 +31,13 @@ import java.util.List;
 @RequestMapping("/carColor")
 public class CarColorController {
 
-    private String queryRole = Constants.COMPANY_ADMIN +"," + Constants.SYSTEM_SUPER_ADMIN +"," +
-            Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER +"," +
-            Constants.COMPANY_ACCOUNTING + Constants.COMPANY_EMP + "," + Constants.COMPANY_SALES;
+    private String queryRole = Constants.COMPANY_ADMIN + ","
+            + Constants.SYSTEM_SUPER_ADMIN + ","
+            + Constants.SYSTEM_ORDINARY_ADMIN + ","
+            + Constants.COMPANY_HUMAN_MANAGER + ","
+            + Constants.COMPANY_ACCOUNTING + ","
+            + Constants.COMPANY_EMP + ","
+            + Constants.COMPANY_SALES;
 
     private String editRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 
@@ -49,13 +53,13 @@ public class CarColorController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
-        }else{
+        } else {
             try {
-                if(CheckRoleUtil.checkRoles(editRole)){
+                if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("添加汽车颜色");
                     carColorService.insert(carColor);
                     return ControllerResult.getSuccessResult("添加汽车颜色成功");
-                }else{
+                } else {
                     return ControllerResult.getFailResult("添加失败，你没有权限操作");
                 }
 
@@ -70,7 +74,7 @@ public class CarColorController {
     @ResponseBody
     @RequestMapping(value = "searchByPager", method = RequestMethod.GET)
     public Pager4EasyUI<CarColor> search(@Param("colorName") String colorName, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效或者权限不足");
             return null;
         }
@@ -89,14 +93,14 @@ public class CarColorController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
-        }else{
+        } else {
             try {
-                if(CheckRoleUtil.checkRoles(editRole)){
+                if (CheckRoleUtil.checkRoles(editRole)) {
                     carColorService.update(carColor);
                     System.out.println();
                     logger.info("更新汽车颜色");
                     return ControllerResult.getSuccessResult("更新汽车颜色成功");
-                }else{
+                } else {
                     return ControllerResult.getFailResult("更新失败，你没有权限操作");
                 }
 
@@ -111,7 +115,7 @@ public class CarColorController {
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<CarColor> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效或者权限不足");
             return null;
         }
@@ -121,7 +125,7 @@ public class CarColorController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(carColorService.count(user));
-        List<CarColor> carColorList = carColorService.queryByPager(pager,user);
+        List<CarColor> carColorList = carColorService.queryByPager(pager, user);
         return new Pager4EasyUI<CarColor>(pager.getTotalRecords(), carColorList);
     }
 
@@ -147,9 +151,9 @@ public class CarColorController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
-        }else{
+        } else {
             try {
-                if(CheckRoleUtil.checkRoles(editRole)){
+                if (CheckRoleUtil.checkRoles(editRole)) {
                     if (status.equals("Y")) {
                         logger.info("颜色冻结");
                         carColorService.inactive(id);
@@ -158,7 +162,7 @@ public class CarColorController {
                         carColorService.active(id);
                     }
                     return ControllerResult.getSuccessResult("操作成功");
-                }else{
+                } else {
                     return ControllerResult.getFailResult("操作失败，你没有权限操作");
                 }
 
@@ -174,7 +178,7 @@ public class CarColorController {
     @ResponseBody
     @RequestMapping(value = "queryByStatusPager", method = RequestMethod.GET)
     public Pager4EasyUI<CarColor> queryByStatusPager(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效或者权限不足");
             return null;
         }

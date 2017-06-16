@@ -30,9 +30,13 @@ import java.util.List;
 @RequestMapping("/carBrand")
 public class CarBrandController {
 
-    private String queryRole = Constants.COMPANY_ADMIN +"," + Constants.SYSTEM_SUPER_ADMIN +"," +
-            Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER +"," +
-            Constants.COMPANY_ACCOUNTING + Constants.COMPANY_EMP + "," + Constants.COMPANY_SALES;
+    private String queryRole = Constants.COMPANY_ADMIN + ","
+            + Constants.SYSTEM_SUPER_ADMIN + ","
+            + Constants.SYSTEM_ORDINARY_ADMIN + ","
+            + Constants.COMPANY_HUMAN_MANAGER + ","
+            + Constants.COMPANY_ACCOUNTING + ","
+            + Constants.COMPANY_EMP + ","
+            + Constants.COMPANY_SALES;
 
     private String editRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 
@@ -52,13 +56,13 @@ public class CarBrandController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
-        }else{
+        } else {
             try {
-                if(CheckRoleUtil.checkRoles(editRole)){
+                if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("添加汽车品牌");
                     carBrandService.insert(carBrand);
                     return ControllerResult.getSuccessResult("添加汽车品牌成功");
-                }else{
+                } else {
                     return ControllerResult.getFailResult("添加失败，你没有权限操作");
                 }
 
@@ -71,7 +75,6 @@ public class CarBrandController {
     }
 
     /**
-     *
      * @param brandName
      * @param pageNumber
      * @param pageSize
@@ -80,7 +83,7 @@ public class CarBrandController {
     @ResponseBody
     @RequestMapping(value = "search", method = RequestMethod.GET)
     public Pager4EasyUI<CarBrand> searchByPager(@Param("brandName") String brandName, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效或者权限不足");
             return null;
         }
@@ -93,7 +96,6 @@ public class CarBrandController {
     }
 
     /**
-     *
      * @param carBrand
      * @return 更新汽车品牌
      */
@@ -103,13 +105,13 @@ public class CarBrandController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
-        }else{
+        } else {
             try {
-                if(CheckRoleUtil.checkRoles(editRole)){
+                if (CheckRoleUtil.checkRoles(editRole)) {
                     carBrandService.update(carBrand);
                     logger.info("更新汽车品牌");
                     return ControllerResult.getSuccessResult("更新汽车品牌成功");
-                }else{
+                } else {
                     return ControllerResult.getFailResult("更新失败,你没有权限操作");
                 }
 
@@ -122,7 +124,6 @@ public class CarBrandController {
     }
 
     /**
-     *
      * @param pageNumber
      * @param pageSize
      * @return 分页查询
@@ -130,7 +131,7 @@ public class CarBrandController {
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<CarBrand> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效或者权限不足");
             return null;
         }
@@ -140,12 +141,11 @@ public class CarBrandController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(carBrandService.count(user));
-        List<CarBrand> carBrandList = carBrandService.queryByPager(pager,user);
+        List<CarBrand> carBrandList = carBrandService.queryByPager(pager, user);
         return new Pager4EasyUI<CarBrand>(pager.getTotalRecords(), carBrandList);
     }
 
     /**
-     *
      * @return 用于显示下拉菜单
      */
     @ResponseBody
@@ -165,14 +165,13 @@ public class CarBrandController {
     }
 
     /**
-     *
      * @param brandId
      * @return 根据汽车id查询汽车品牌
      */
     @ResponseBody
     @RequestMapping(value = "name", method = RequestMethod.GET)
     public String queryName(String brandId) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效或者权限不足");
             return null;
         }
@@ -181,7 +180,6 @@ public class CarBrandController {
     }
 
     /**
-     *
      * @param id
      * @param status
      * @return 冻结激活
@@ -192,9 +190,9 @@ public class CarBrandController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
-        }else{
+        } else {
             try {
-                if(CheckRoleUtil.checkRoles(editRole)){
+                if (CheckRoleUtil.checkRoles(editRole)) {
                     if (status.equals("Y")) {
                         logger.info("品牌冻结");
                         carBrandService.inactive(id);
@@ -203,7 +201,7 @@ public class CarBrandController {
                         carBrandService.active(id);
                     }
                     return ControllerResult.getSuccessResult("操作成功");
-                }else{
+                } else {
                     return ControllerResult.getFailResult("操作失败，你没有权限操作");
                 }
 
@@ -216,7 +214,6 @@ public class CarBrandController {
     }
 
     /**
-     *
      * @param status
      * @param pageNumber
      * @param pageSize
@@ -225,7 +222,7 @@ public class CarBrandController {
     @ResponseBody
     @RequestMapping(value = "queryByStatusPager", method = RequestMethod.GET)
     public Pager4EasyUI<CarBrand> queryByStatusPager(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效或者权限不足");
             return null;
         }

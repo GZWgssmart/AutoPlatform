@@ -31,9 +31,13 @@ public class CarPlateController {
 
     private Logger logger = (Logger) LoggerFactory.getLogger(CarPlateController.class);
 
-    private String queryRole = Constants.COMPANY_ADMIN +"," + Constants.SYSTEM_SUPER_ADMIN +"," +
-            Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER +"," +
-            Constants.COMPANY_ACCOUNTING + Constants.COMPANY_EMP + "," + Constants.COMPANY_SALES;
+    private String queryRole = Constants.COMPANY_ADMIN + ","
+            + Constants.SYSTEM_SUPER_ADMIN + ","
+            + Constants.SYSTEM_ORDINARY_ADMIN + ","
+            + Constants.COMPANY_HUMAN_MANAGER + ","
+            + Constants.COMPANY_ACCOUNTING + ","
+            + Constants.COMPANY_EMP + ","
+            + Constants.COMPANY_SALES;
 
     private String editRole = Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 
@@ -62,14 +66,14 @@ public class CarPlateController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
-        }else{
+        } else {
             try {
-                if(CheckRoleUtil.checkRoles(editRole)){
+                if (CheckRoleUtil.checkRoles(editRole)) {
                     logger.info("添加车牌");
                     System.out.println(carPlate);
                     carPlateService.insert(carPlate);
                     return ControllerResult.getSuccessResult("添加车牌成功");
-                }else{
+                } else {
                     return ControllerResult.getFailResult("添加失败，你没有权限操作");
                 }
 
@@ -87,13 +91,13 @@ public class CarPlateController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
-        }else{
+        } else {
             try {
-                if(CheckRoleUtil.checkRoles(editRole)){
+                if (CheckRoleUtil.checkRoles(editRole)) {
                     carPlateService.update(carPlate);
                     logger.info("更新车牌");
                     return ControllerResult.getSuccessResult("更新车牌成功");
-                }else{
+                } else {
                     return ControllerResult.getFailResult("更新失败，你没有权限操作");
                 }
 
@@ -108,7 +112,7 @@ public class CarPlateController {
     @ResponseBody
     @RequestMapping(value = "queryByPager", method = RequestMethod.GET)
     public Pager4EasyUI<CarPlate> queryByPager(@Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效或者权限不足");
             return null;
         }
@@ -118,7 +122,7 @@ public class CarPlateController {
         pager.setPageNo(Integer.valueOf(pageNumber));
         pager.setPageSize(Integer.valueOf(pageSize));
         pager.setTotalRecords(carPlateService.count(user));
-        List<CarPlate> carModelList = carPlateService.queryByPager(pager,user);
+        List<CarPlate> carModelList = carPlateService.queryByPager(pager, user);
         return new Pager4EasyUI<CarPlate>(pager.getTotalRecords(), carModelList);
     }
 
@@ -128,9 +132,9 @@ public class CarPlateController {
         if (!SessionGetUtil.isUser()) {
             logger.info("Session已失效，请重新登入");
             return ControllerResult.getNotLoginResult("登入信息已失效，请重新登入");
-        }else{
+        } else {
             try {
-                if(CheckRoleUtil.checkRoles(editRole)){
+                if (CheckRoleUtil.checkRoles(editRole)) {
                     if (status.equals("Y")) {
                         logger.info("车牌冻结");
                         carPlateService.inactive(id);
@@ -139,7 +143,7 @@ public class CarPlateController {
                         carPlateService.active(id);
                     }
                     return ControllerResult.getSuccessResult("操作成功");
-                }else{
+                } else {
                     return ControllerResult.getFailResult("操作失败，你没有权限操作");
                 }
 
@@ -155,7 +159,7 @@ public class CarPlateController {
     @ResponseBody
     @RequestMapping(value = "statusPager", method = RequestMethod.GET)
     public Pager4EasyUI<CarPlate> statusPager(@Param("status") String status, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效或者权限不足");
             return null;
         }
@@ -170,7 +174,7 @@ public class CarPlateController {
     @ResponseBody
     @RequestMapping(value = "searchPager", method = RequestMethod.GET)
     public Pager4EasyUI<CarPlate> searchPager(@Param("plateName") String plateName, @Param("pageNumber") String pageNumber, @Param("pageSize") String pageSize) {
-        if (!SessionGetUtil.isUser()|| !CheckRoleUtil.checkRoles(queryRole)) {
+        if (!SessionGetUtil.isUser() || !CheckRoleUtil.checkRoles(queryRole)) {
             logger.info("Session已失效或者权限不足");
             return null;
         }

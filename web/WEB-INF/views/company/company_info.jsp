@@ -176,7 +176,7 @@
                             <div class="form-group">
                                 <label class="control-label">公司负责人手机号码：</label>
                                 <input type="text" id="userPhone" name="companyPricipalPhone"
-                                       class="form-control" />
+                                       class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label class="control-label">公司官网</label>
@@ -187,7 +187,7 @@
                             <div class="form-group">
                                 <label class="control-label">公司图片</label>
                                 <div id="preview">
-                                    <img  name="file" id="companyImg"/>
+                                    <img name="file" id="companyImg"/>
                                 </div>
                                 <input type="file" name="file" onchange="previewImage(this)" style="display: none;"
                                        id="previewImg">
@@ -306,7 +306,8 @@
                             <div class="form-group">
                                 <label class="control-label">公司logo：</label>
                                 <div id="preview2">
-                                    <img id="icon" name="file"onclick="$('#previewImg2').click();" style="width:120px;height:60px;cursor:pointer;"/>
+                                    <img id="icon" name="file" onclick="$('#previewImg2').click();"
+                                         style="width:120px;height:60px;cursor:pointer;"/>
                                 </div>
                                 <input type="file" name="file" onchange="previewImage2(this)" style="display: none;"
                                        id="previewImg2">
@@ -315,10 +316,11 @@
                             <div class="form-group">
                                 <label class="control-label">公司图片</label>
                                 <div id="preview1">
-                                    <img  name="file1" onclick="$('#previewImg1').click();" id="img" style="width:120px;height:60px;cursor:pointer;"/>
+                                    <img name="file1" onclick="$('#previewImg1').click();" id="img"
+                                         style="width:120px;height:60px;cursor:pointer;"/>
                                 </div>
                                 <input type="file" name="file1" onchange="previewImage1(this)" style="display: none;"
-                                       id="previewImg1" >
+                                       id="previewImg1">
                             </div>
 
                             <div class="form-group">
@@ -345,7 +347,8 @@
                                     <button type="button" class="btn btn-default"
                                             data-dismiss="modal">关闭
                                     </button>
-                                    <input type="button" id="editButton" class="btn btn-primary" onclick="edit();" value="修改">
+                                    <input type="button" id="editButton" class="btn btn-primary" onclick="edit();"
+                                           value="修改">
                                     </input>
                                 </div>
                             </div>
@@ -415,7 +418,7 @@
     map.addOverlay(marker);
     var localSearch = new BMap.LocalSearch(map);
     localSearch.enableAutoViewport(); //允许自动调节窗体大小
-    map.panBy(345,200);
+    map.panBy(345, 200);
     var stCtrl = new BMap.PanoramaControl(); //构造全景控件
     stCtrl.setOffset(new BMap.Size(20, 20));
     map.addControl(stCtrl);//添加全景控件

@@ -77,7 +77,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="systemOrdinaryAdmin,systemSuperAdmin,companyAdmin,companyArtificer">
+            <shiro:hasAnyRoles name="systemOrdinaryAdmin,systemSuperAdmin,companyAdmin,companyArtificer,companyReceive">
             <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
                 <a><button type="button" id="add" onclick="showAddWin();" class="btn btn-default" >
                     <i class="glyphicon glyphicon-plus"></i> 添加

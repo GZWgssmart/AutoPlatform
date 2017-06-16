@@ -78,7 +78,7 @@
         </thead>
         <tbody>
         <div id="toolbar" class="btn-group">
-            <shiro:hasAnyRoles name="companyAdmin,companyRepertory,systemSuperAdmin,systemOrdinaryAdmin">
+            <shiro:hasAnyRoles name="companyAdmin,companyRepertory,systemSuperAdmin,systemOrdinaryAdmin,companyArtificer,companyReceive">
             <shiro:hasAnyRoles name="companyAdmin,companyRepertory">
                 <a>
                     <button type="button" id="add" onclick="showAddWin();" class="btn btn-default" >

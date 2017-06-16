@@ -35,14 +35,14 @@ function showEditWin() {
     } else {
         var product = selectRow[0];
         editName = product.companyName;
-        editTel  = product.companyTel;
+        editTel = product.companyTel;
         editWebsite = product.companyWebsite;
         initCityPicker("address");
         initDateTimePicker("form_datetime", "companyOpenDate", "editForm");
         $('#companys').html('<option value="' + product.companySize + '">' + product.companySize + '</option>').trigger("change");
         $('#editCompanyOpenDate').val(formatterDate(product.companyOpenDate));
         $("#icon").attr("src", "" + product.companyLogo);
-        $("#img").attr("src","" + product.companyImg);
+        $("#img").attr("src", "" + product.companyImg);
         initCityPicker("address");
         validator("editForm");
         $("#editForm").fill(product);
@@ -77,12 +77,10 @@ function companyOpDateFormatter(value, row, index) {
     }
 }
 
-
-
 function showAddWin() {
     initDateTimePicker("form_datetime", "companyOpenDate", "addForm");
     $('#companys').html('').trigger("change");
-    $("#img").attr("src","");
+    $("#img").attr("src", "");
     validator("addForm");
     $("#addWin").modal('show');
 }
@@ -144,7 +142,7 @@ window.operateEvents = {
     'click .showUpdateIncomingType1': function (e, value, row, index) {
         var incomingType = row;
         editName = incomingType.companyName;
-        editTel  = incomingType.companyTel;
+        editTel = incomingType.companyTel;
         editWebsite = incomingType.companyWebsite;
         editPhone = incomingType.companyPricipalPhone;
         $('#companys').html('<option value="' + incomingType.companySize + '">' + incomingType.companySize + '</option>').trigger("change");
@@ -218,7 +216,7 @@ function validator(formId) {
                         min: 13,
                         max: 13,
                         message: '公司号码长度必须是13至13位,(例如:097-999977776)'
-                    },regexp:{
+                    }, regexp: {
                         regexp: /^\d{3,4}-?\d{7,9}$/,
                         message: '请输入正确公司官电话(例如：097-999977776)'
                     },
@@ -271,7 +269,7 @@ function validator(formId) {
                     }
                 }
             },
-            companyPricipalPhone:{
+            companyPricipalPhone: {
                 message: '负责人手机号码失败',
                 validators: {
                     notEmpty: {
@@ -303,7 +301,7 @@ function validator(formId) {
                         if (data.result == "success") {
                             $('#addWin').modal('hide');
                             editName = "";
-                            editTel  = "";
+                            editTel = "";
                             editWebsite = "";
                             editPhone = "";
                             swal(data.message, "", "success");
@@ -318,28 +316,28 @@ function validator(formId) {
                 })
             } else if (formId == "editForm") {
                 editName = "";
-                editTel  = "";
+                editTel = "";
                 editWebsite = "";
                 editPhone = "";
-                    $('#editForm').ajaxSubmit({
-                        url: '/company/uploadCompany',
-                        type: 'post',
-                        dataType: 'json',
-                        success: function (data) {
-                            if (data.result == "success") {
-                                $('#editWin').modal('hide');
-                                swal(data.message, "", "success");
-                                $('#cusTable').bootstrapTable('refresh');
-                                $('#editForm').data('bootstrapValidator').resetForm(true);
-                            } else if (data.result == "fail") {
-                                $('#editWin').modal('hide');
-                                swal(data.message, "", "error");
-                                $('#cusTable').bootstrapTable('refresh');
-                                $('#editForm').data('bootstrapValidator').resetForm(true);
-                            }
+                $('#editForm').ajaxSubmit({
+                    url: '/company/uploadCompany',
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.result == "success") {
+                            $('#editWin').modal('hide');
+                            swal(data.message, "", "success");
+                            $('#cusTable').bootstrapTable('refresh');
+                            $('#editForm').data('bootstrapValidator').resetForm(true);
+                        } else if (data.result == "fail") {
+                            $('#editWin').modal('hide');
+                            swal(data.message, "", "error");
+                            $('#cusTable').bootstrapTable('refresh');
+                            $('#editForm').data('bootstrapValidator').resetForm(true);
                         }
-                    })
-                }
+                    }
+                })
+            }
         })
 }
 
