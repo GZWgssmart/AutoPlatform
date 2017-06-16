@@ -49,8 +49,7 @@
         <div class="row copyright">
             <div class="col-md-12">
                 <p class="pull-left">
-                    <small class="block">©2017 Jango 使用平台前必读 意见反馈 京ICP证030173号 <a target="_blank"
-                                                                                  href="www.baidu.com">大拇指官网</a>
+                    <small class="block">©2017 创意科技
                     </small>
                 </p>
                 <p class="pull-right">
