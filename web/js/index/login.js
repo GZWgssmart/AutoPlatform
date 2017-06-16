@@ -28,6 +28,10 @@ function login() {
     );
 }
 
+function showCodeWin() {
+    $("#codeWin").modal('show');
+}
+
 var count = 3;
 function cCount(val) {
     $("#successMsg").html(val + count + "s后自动登入");

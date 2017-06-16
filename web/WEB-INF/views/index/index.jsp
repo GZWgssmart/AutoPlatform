@@ -304,7 +304,8 @@
                                                         <div class="col-md-12">
                                                             <input type="button" onclick="register()"
                                                                    class="btn btn-primary" value="注册">
-                                                            <input type="reset" class="btn btn-primary" value="重置"/>
+                                                            <input type="reset" class="btn btn-primary" value="重置" style="float: right"/>
+                                                            <p style="clear: both;"></p>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -332,7 +333,14 @@
                                                         <div class="col-md-12">
                                                             <input type="button" onclick="login()"
                                                                    class="btn btn-primary" value="登录"/>
-                                                            <input type="reset" class="btn btn-primary" value="重置"/>
+                                                            <input type="reset" class="btn btn-primary" value="重置" style="float: right;"/>
+                                                            <p style="clear: both;"></p>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <button onclick="showCodeWin()" type="button" class="btn btn-success col-md-12">
+                                                                <i class="glyphicon glyphicon-phone"></i>
+                                                                微信扫码访问
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -625,6 +633,26 @@
                                 <input type="button" onclick="login1()" value="登录" id="loginBtn" class="btn btn-primary">
                             </div>
                         </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%--微信扫码登入--%>
+<div id="codeWin" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <span class="glyphicon glyphicon-remove closeModal" data-dismiss="modal"></span>
+                        <h3 class="m-t-none m-b">使用微信客户端扫码</h3>
+                        <div style="text-align: center;">
+                            <img src="/img/watch_login.png" />
+                        </div>
                     </div>
 
                 </div>
