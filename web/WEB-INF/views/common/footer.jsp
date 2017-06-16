@@ -36,10 +36,9 @@
                     <h3>联系我们</h3>
                     <ul class="gtco-quick-contact" style="margin-top: 20px;">
                         <li><a href="#"><i class="icon-phone"></i>13672297775(王经理)</a></li>
-                        <li><a href="#"><i class="icon-mail2"></i>wgssmart@vip.qq.com</a></li>
-                        <li><a href="#"><i class="icon-email"></i>847315251@qq.com</a></li>
-                        <li><a href="#"><i class="icon-camera"></i>www.cykj.com</a></li>
-                        <li><a href="#"><i class="icon-chat"></i>+0797 8873847</a></li>
+                        <li><a href="#"><i class="icon-mail2"></i>847315251@qq.com</a></li>
+                        <li><a href="#"><i class="icon-qq"></i>QQ：847315251</a></li>
+                        <li><a href="#"><i class="icon-qq"></i>微信：Wgssmart</a></li>
                     </ul>
                 </div>
             </div>
