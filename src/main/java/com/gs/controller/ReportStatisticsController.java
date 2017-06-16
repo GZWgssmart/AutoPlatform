@@ -22,9 +22,10 @@ public class ReportStatisticsController {
     private String queryRoleFinance = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ACCOUNTING + ","
             + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN;
 
-    // 可以查看的角色：董事长、采购员、超级管理员、普通管理员
+    // 可以查看的角色：董事长、采购员、超级管理员、普通管理员、销售员、库管
     private String queryRoleAcc = Constants.COMPANY_ADMIN + "," + Constants.SYSTEM_SUPER_ADMIN + ","
-            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_BUYER;
+            + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_BUYER+ ","
+            + Constants.COMPANY_SALES + "," + Constants.COMPANY_REPERTORY;
 
     // 可以查看的角色：车主
     private String queryRoleCustomer = Constants.CAR_OWNER;
@@ -75,7 +76,7 @@ public class ReportStatisticsController {
     public String showPay() {
         if(SessionGetUtil.isUser()) {
             if(CheckRoleUtil.checkRoles(queryRoleAcc)) {
-                logger.info("显示下单统计页面");
+                logger.info("显示支付统计页面");
                 return "supply/pay_statistics";
             }
             return "error/notPermission";

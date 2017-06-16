@@ -514,7 +514,7 @@ public class AccessoriesBuyController {
     @RequestMapping(value = "query_default_count", method = RequestMethod.GET)
     public List<LineBasic> queryAll(@Param("companyId") String companyId) {
         if (SessionGetUtil.isUser()) {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
+
                 logger.info("默认查询本月下单统计报表显示");
                 List<LineBasic> lineBasics = new ArrayList<LineBasic>();
                 LineBasic lineBasic = new LineBasic();
@@ -528,8 +528,8 @@ public class AccessoriesBuyController {
                 lineBasic.setCategories(HighchartsData.strDay);
                 lineBasics.add(lineBasic);
                 return lineBasics;
-            }
-            return null;
+
+
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -542,7 +542,7 @@ public class AccessoriesBuyController {
     public List<LineBasic> queryConditionCount(@Param("start") String start, @Param("end") String end,
                                                @Param("type") String type, @Param("companyId") String companyId) {
         if (SessionGetUtil.isUser()) {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
+
                 logger.info("根据年，月，季度，周，日查询所有下单报表显示");
                 List<LineBasic> lineBasics = new ArrayList<LineBasic>();
                 LineBasic lineBasic = new LineBasic();
@@ -578,8 +578,8 @@ public class AccessoriesBuyController {
                 }
                 lineBasics.add(lineBasic);
                 return lineBasics;
-            }
-            return null;
+
+
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -590,7 +590,7 @@ public class AccessoriesBuyController {
     @RequestMapping(value = "query_default_pay", method = RequestMethod.GET)
     public List<LineBasic> queryPay(@Param("companyId") String companyId) {
         if (SessionGetUtil.isUser()) {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
+
                 logger.info("默认查询本月支付统计报表显示");
                 List<LineBasic> lineBasics = new ArrayList<LineBasic>();
                 LineBasic lineBasic = new LineBasic();
@@ -604,8 +604,8 @@ public class AccessoriesBuyController {
                 lineBasic.setCategories(HighchartsData.strDay);
                 lineBasics.add(lineBasic);
                 return lineBasics;
-            }
-            return null;
+
+
         } else {
             logger.info("Session已失效，请重新登入");
             return null;
@@ -618,7 +618,7 @@ public class AccessoriesBuyController {
     public List<LineBasic> queryConditionPay(@Param("start") String start, @Param("end") String end,
                                              @Param("type") String type, @Param("companyId") String companyId) {
         if (SessionGetUtil.isUser()) {
-            if (CheckRoleUtil.checkRoles(queryRole)) {
+
                 logger.info("根据年，月，季度，周，日查询所有支付报表显示");
                 List<LineBasic> lineBasics = new ArrayList<LineBasic>();
                 LineBasic lineBasic = new LineBasic();
@@ -654,8 +654,8 @@ public class AccessoriesBuyController {
                 }
                 lineBasics.add(lineBasic);
                 return lineBasics;
-            }
-            return null;
+
+
         } else {
             logger.info("Session已失效，请重新登入");
             return null;

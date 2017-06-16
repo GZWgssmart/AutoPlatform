@@ -189,7 +189,7 @@ public class MaterialUseController {
     @RequestMapping(value="query_default",method= RequestMethod.GET)
     public List<LineBasic> queryAll(@Param("companyId")String companyId, @Param("quantity")String quantity){
         if(SessionGetUtil.isUser()) {
-            if(CheckRoleUtil.checkRoles(queryRole1)) {
+
                 logger.info("默认查询本月配件使用统计");
                 List<LineBasic> lineBasics = new ArrayList<LineBasic>();
                 User user = SessionGetUtil.getUser();
@@ -211,8 +211,7 @@ public class MaterialUseController {
                     lineBasics.add(lineBasic);
                 }
                 return lineBasics;
-            }
-            return null;
+
         } else{
             logger.info("Session已失效，请重新登入");
             return null;
@@ -226,7 +225,7 @@ public class MaterialUseController {
                                           @Param("type")String type,@Param("companyId")String companyId,
                                           @Param("quantity")String quantity){
         if(SessionGetUtil.isUser()) {
-            if(CheckRoleUtil.checkRoles(queryRole1)) {
+
                 logger.info("根据年，月，季度，周，日查询配件使用统计");
                 List<LineBasic> lineBasics = new ArrayList<LineBasic>();
                 User user = SessionGetUtil.getUser();
@@ -310,8 +309,7 @@ public class MaterialUseController {
                     }
                 }
                 return lineBasics;
-            }
-            return null;
+
         } else{
             logger.info("Session已失效，请重新登入");
             return null;

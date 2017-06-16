@@ -31,7 +31,7 @@
 <body onload="adminQuery()">
 <span id="span" hidden>admin</span>
 </shiro:hasAnyRoles>
-<shiro:hasAnyRoles name="companyBuyer, companyAdmin">
+<shiro:hasAnyRoles name="companyAdmin,companyBuyer,companySales,companyRepertory">
 <body onload="companyQuery()">
 <span id="span" hidden>company</span>
 </shiro:hasAnyRoles>

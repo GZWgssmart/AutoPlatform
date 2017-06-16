@@ -22,8 +22,9 @@ function recordOk() {
         return false;
     } else {
         var record = selectRow[0]
+        if (record.recordStatus != "N") {
         if (record.speedStatus == "维修保养中" && record.recordStatus != "N") {
-            $.get(  '/record/achieve_record?recordId=' + record.recordId, function (data) {
+            $.get('/record/achieve_record?recordId=' + record.recordId, function (data) {
                 if (data.result == "success") {
                     $('#cusTable').bootstrapTable('refresh');
                     swal("成功提示", data.message, "success");
@@ -31,9 +32,13 @@ function recordOk() {
                     swal(data.message, "", "error");
                 }
             }, 'json');
-        } else {
-            swal('错误提示', "请确认无误后再点击", "error");
-            return false;
+        } else if (record.speedStatus == "已登记") {
+            swal('错误提示', "请先指派员工", "error");
+        } else if (record.speedStatus == "已提醒" || record.speedStatus == "未提醒" || record.speedStatus == "已完成") {
+            swal('错误提示', "请不要重复完成", "error");
+        }
+    } else {
+            swal('错误提示', "该记录不可用！", "error");
         }
     }
 

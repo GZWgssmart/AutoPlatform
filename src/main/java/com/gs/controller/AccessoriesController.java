@@ -251,7 +251,7 @@ public class AccessoriesController {
     @RequestMapping(value="query_default",method= RequestMethod.GET)
     public List<LineBasic> queryAll(@Param("companyId")String companyId,@Param("quantity")String quantity){
         if(SessionGetUtil.isUser()) {
-            if(CheckRoleUtil.checkRoles(queryRole1)) {
+
                 logger.info("默认查询本月库存统计");
                 List<LineBasic> lineBasics = new ArrayList<LineBasic>();
                 User user = SessionGetUtil.getUser();
@@ -273,8 +273,7 @@ public class AccessoriesController {
                     lineBasics.add(lineBasic);
                 }
                 return lineBasics;
-            }
-            return null;
+
         } else{
             logger.info("Session已失效，请重新登入");
             return null;
