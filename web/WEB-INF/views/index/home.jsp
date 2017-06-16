@@ -315,7 +315,7 @@
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>
-
+<shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin,companyRepertory,companySales,companyBuyer">
                 <li>
                     <a href="#"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">报表统计</span><span
                             class="fa arrow"></span></a>
@@ -331,13 +331,11 @@
                             <li><a class="J_menuItem" href="<%=path%>/reportStatistics/finance_page">财务统计</a>
                             </li>
                         </shiro:hasAnyRoles>
-                        <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, systemOrdinaryAdmin,companyBuyer">
+                        <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, systemOrdinaryAdmin,companyBuyer,companySales,companyRepertory">
                             <li><a class="J_menuItem" href="<%=path%>/reportStatistics/stock_page">库存统计</a>
                             </li>
                             <li><a class="J_menuItem" href="<%=path%>/reportStatistics/accessories_page">配件使用统计</a>
                             </li>
-                        </shiro:hasAnyRoles>
-                        <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, systemOrdinaryAdmin,companyBuyer">
                             <li><a class="J_menuItem" href="<%=path %>/reportStatistics/order_page">下单统计</a>
                             </li>
                             <li><a class="J_menuItem" href="<%=path %>/reportStatistics/pay_page">支付统计</a>
@@ -345,6 +343,7 @@
                         </shiro:hasAnyRoles>
                     </ul>
                 </li>
+</shiro:hasAnyRoles>
 
                 <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
                     <li>
