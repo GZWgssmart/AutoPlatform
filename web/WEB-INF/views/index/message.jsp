@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     String path = request.getContextPath();
 %>
@@ -108,7 +109,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label class="control-label">生日：</label>
-                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" placeholder="根据身份证获取生日" id="birthday" value="${user.userBirthday}"  name="userBirthday"/>
+                                            <input class="form-control" style="display: initial;" type="text" disabled="disabled" placeholder="根据身份证获取生日" id="birthday" value='<fmt:formatDate value="${user.userBirthday}" pattern="yyyy-MM-dd" />'  name="userBirthday"/>
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label class="control-label">真实姓名：</label>
