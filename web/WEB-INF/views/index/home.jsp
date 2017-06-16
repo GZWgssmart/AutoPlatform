@@ -85,30 +85,33 @@
                     <ul class="nav nav-second-level">
                         <shiro:hasAnyRoles name="systemSuperAdmin,systemOrdinaryAdmin">
                             <li>
-                                <a id="intention" class="J_menuItem" href="<%=path %>/intention/intention_page">意向公司记录管理</a>
+                                <a id="intention" class="J_menuItem"
+                                   href="<%=path %>/intention/intention_page">意向公司记录管理</a>
                             </li>
                         </shiro:hasAnyRoles>
                         <li>
                             <a id="company" class="J_menuItem" href="<%=path %>/company/info">公司信息管理</a>
                         </li>
-                        <li>
-                            <a class="J_menuItem" href="<%=path %>/company/brand">汽车品牌管理</a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="<%=path %>/company/model">车型管理</a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="<%=path %>/company/color">汽车颜色管理</a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="<%=path %>/company/plate">车牌管理</a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="<%=path %>/company/maintenanceItem">保养项目管理</a>
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="<%=path %>/company/maintainItem">维修项目管理</a>
-                        </li>
+                        <shiro:hasAnyRoles name="companyAdmin,systemSuperAdmin,systemOrdinaryAdmin">
+                            <li>
+                                <a class="J_menuItem" href="<%=path %>/company/brand">汽车品牌管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="<%=path %>/company/model">车型管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="<%=path %>/company/color">汽车颜色管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="<%=path %>/company/plate">车牌管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="<%=path %>/company/maintenanceItem">保养项目管理</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="<%=path %>/company/maintainItem">维修项目管理</a>
+                            </li>
+                        </shiro:hasAnyRoles>
                     </ul>
                 </li>
                 <shiro:hasAnyRoles
@@ -161,12 +164,7 @@
                                 <li><a class="J_menuItem" href="<%=path %>/supply/info">供应商信息管理</a>
                                 </li>
                             </shiro:hasAnyRoles>
-                    <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, systemOrdinaryAdmin,companyBuyer">
-                            <li><a class="J_menuItem" href="<%=path %>/reportStatistics/order_page">下单统计</a>
-                            </li>
-                            <li><a class="J_menuItem" href="<%=path %>/reportStatistics/pay_page">支付统计</a>
-                            </li>
-                    </shiro:hasAnyRoles>
+
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>
@@ -182,7 +180,8 @@
                                 <li><a class="J_menuItem" href="<%=path %>/accessoriesType/type">配件分类管理</a>
                                 </li>
                             </shiro:hasAnyRoles>
-                            <shiro:hasAnyRoles name="companyAdmin, companyRepertory, systemSuperAdmin, systemOrdinaryAdmin, companyBuyer">
+                            <shiro:hasAnyRoles
+                                    name="companyAdmin, companyRepertory, systemSuperAdmin, systemOrdinaryAdmin, companyBuyer">
                                 <li>
                                     <a class="J_menuItem"
                                        href="<%=path%>/accessoriesBuy/showAccessoriesBuyHome">配件采购管理</a>
@@ -271,23 +270,23 @@
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>
-<shiro:hasAnyRoles name="companyAdmin,companyReceive,systemSuperAdmin, systemOrdinaryAdmin">
-                <li>
-                    <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">客户关系管理</span><span
-                            class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a id="remind" class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养提醒管理</a>
-                        </li>
+                <shiro:hasAnyRoles name="companyAdmin,companyReceive,systemSuperAdmin, systemOrdinaryAdmin">
+                    <li>
+                        <a href="#"><i class="fa fa-object-ungroup"></i> <span class="nav-label">客户关系管理</span><span
+                                class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li><a id="remind" class="J_menuItem" href="<%=path%>/MessageReminder/show_MessageReminder">维修保养提醒管理</a>
+                            </li>
 
-                        <li><a id="complaint" class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/trackVisit/show_trackVisit">跟踪回访管理</a>
-                        </li>
-                        <li><a class="J_menuItem" href="<%=path%>/MessageSend/show_MessageSend">短信群发管理</a>
-                        </li>
-                    </ul>
-                </li>
-</shiro:hasAnyRoles>
+                            <li><a id="complaint" class="J_menuItem" href="<%=path%>/complaint/show_complaint">投诉管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path%>/trackVisit/show_trackVisit">跟踪回访管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path%>/MessageSend/show_MessageSend">短信群发管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                </shiro:hasAnyRoles>
 
 
                 <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
@@ -309,29 +308,35 @@
                     </li>
                 </shiro:hasAnyRoles>
 
-                    <li>
-                        <a href="#"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">报表统计</span><span
-                                class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
-                                <li><a class="J_menuItem" href="<%=path%>/reportStatistics/maintenance_page">维修保养统计</a>
-                                </li>
-                                <li><a class="J_menuItem" href="<%=path%>/reportStatistics/staff_page">员工工单统计</a>
-                                </li>
-                                <li><a class="J_menuItem"
-                                       href="<%=path%>/reportStatistics/maintenanceItems_page">维修保养项目统计</a>
-                                </li>
-                                <li><a class="J_menuItem" href="<%=path%>/reportStatistics/finance_page">财务统计</a>
-                                </li>
-                            </shiro:hasAnyRoles>
+                <li>
+                    <a href="#"><i class="fa fa fa-bar-chart-o"></i> <span class="nav-label">报表统计</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <shiro:hasAnyRoles name="companyAccounting, companyAdmin,systemSuperAdmin, systemOrdinaryAdmin">
+                            <li><a class="J_menuItem" href="<%=path%>/reportStatistics/maintenance_page">维修保养统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path%>/reportStatistics/staff_page">员工工单统计</a>
+                            </li>
+                            <li><a class="J_menuItem"
+                                   href="<%=path%>/reportStatistics/maintenanceItems_page">维修保养项目统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path%>/reportStatistics/finance_page">财务统计</a>
+                            </li>
+                        </shiro:hasAnyRoles>
                         <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, systemOrdinaryAdmin,companyBuyer">
                             <li><a class="J_menuItem" href="<%=path%>/reportStatistics/stock_page">库存统计</a>
                             </li>
                             <li><a class="J_menuItem" href="<%=path%>/reportStatistics/accessories_page">配件使用统计</a>
                             </li>
                         </shiro:hasAnyRoles>
-                        </ul>
-                    </li>
+                        <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, systemOrdinaryAdmin,companyBuyer">
+                            <li><a class="J_menuItem" href="<%=path %>/reportStatistics/order_page">下单统计</a>
+                            </li>
+                            <li><a class="J_menuItem" href="<%=path %>/reportStatistics/pay_page">支付统计</a>
+                            </li>
+                        </shiro:hasAnyRoles>
+                    </ul>
+                </li>
 
                 <shiro:hasAnyRoles name="systemSuperAdmin, systemOrdinaryAdmin">
                     <li>
@@ -347,8 +352,8 @@
                             </li>
                             <li><a class="J_menuItem" href="<%=path %>/permission/info">权限管理</a>
                             </li>
-                            <%--<li><a class="J_menuItem" href="<%=path %>/process/info">流程管理</a>
-                            </li>--%>
+                                <%--<li><a class="J_menuItem" href="<%=path %>/process/info">流程管理</a>
+                                </li>--%>
                         </ul>
                     </li>
                 </shiro:hasAnyRoles>
