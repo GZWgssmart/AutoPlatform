@@ -22,7 +22,7 @@
                     <div class="col-md-6 col-sm-6">
                         <div class="form-group">
                             <label for="subEmail" class="sr-only">Email</label>
-                            <input type="email" class="form-control" id="subEmail" placeholder="请输入您的邮箱">
+                            <input type="text" class="form-control" id="subEmail" placeholder="请输入您的手机号或邮箱">
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-6">

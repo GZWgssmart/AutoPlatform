@@ -147,7 +147,7 @@
 
                             <div class="form-group">
                                 <label class="control-label">用户手机号码：</label>
-                                <input type="text" name="userPhone" class="form-control" attr="user.userPhone"
+                                <input type="text" name="userPhone" class="form-control" attr="user.userPhone" maxlength="11"
                                        id="eUserPhone"/>
                             </div>
 
@@ -267,7 +267,7 @@
 
                             <div class="form-group">
                                 <label class="control-label">用户手机号码：</label>
-                                <input type="text" name="userPhone" class="form-control" attr="user.userPhone"
+                                <input type="text" name="userPhone" class="form-control" attr="user.userPhone" maxlength="11"
                                        id="userPhone"/>
                             </div>
 

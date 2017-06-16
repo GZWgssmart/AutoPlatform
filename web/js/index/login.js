@@ -85,7 +85,7 @@ function register() {
 /** 获取邮箱类型 */
 function getEmailType(val) {
     var value = val.split(".");
-    alert(value[0].split("@")[1]);
+    return value[0].split("@")[1];
 }
 var userPhone;
 var userEmail;

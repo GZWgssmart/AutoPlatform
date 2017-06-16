@@ -294,7 +294,7 @@ function isEmail(str) {
 
 function subscribMe() {
 	var email = $("#subEmail").val();
-	if (isEmail(email)) {
+	if (isEmail(email) || isPhone(email)) {
 		$("#subError").html("");
 		$.get("/sub_me?email=" + email, function (data) {
 			if (data.result == "success") {
@@ -304,6 +304,6 @@ function subscribMe() {
 		}, "json");
 	} else {
 		$("#subSuccess").html("");
-		$("#subError").html("请输入正确的邮箱");
+		$("#subError").html("请输入正确的手机号或邮箱");
 	}
 }
