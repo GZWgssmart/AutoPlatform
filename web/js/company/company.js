@@ -37,7 +37,6 @@ function showEditWin() {
         editName = product.companyName;
         editTel = product.companyTel;
         editWebsite = product.companyWebsite;
-        initCityPicker("address");
         initDateTimePicker("form_datetime", "companyOpenDate", "editForm");
         $('#companys').html('<option value="' + product.companySize + '">' + product.companySize + '</option>').trigger("change");
         $('#editCompanyOpenDate').val(formatterDate(product.companyOpenDate));
