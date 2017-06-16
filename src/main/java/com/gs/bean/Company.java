@@ -2,6 +2,7 @@ package com.gs.bean;
 
 import org.joda.time.DateTime;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
 *@author Wjhsmart
 *@since 2017-04-14 16:16:21
 */
-public class Company{
+public class Company implements Serializable{
 	private String companyId;//公司编号
 	private String companyName;//公司名称
 	private String companyAddress;//公司地址

@@ -12,7 +12,7 @@ import com.gs.service.MaintainRecordService;
 import com.gs.service.UserService;
 import com.gs.service.WorkInfoService;
 import com.gs.thread.SendEmailThread;
-import com.jh.email.Mail;
+import com.gs.email.Mail;
 import org.activiti.engine.impl.Page;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.LoggerFactory;

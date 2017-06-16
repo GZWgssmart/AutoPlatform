@@ -2,8 +2,8 @@ package com.gs.thread;
 
 import com.gs.bean.info.SendRemind;
 import com.gs.common.Constants;
-import com.jh.email.Mail;
-import com.jh.email.MailSender;
+import com.gs.email.Mail;
+import com.gs.email.MailSender;
 
 import javax.mail.BodyPart;
 import javax.mail.MessagingException;

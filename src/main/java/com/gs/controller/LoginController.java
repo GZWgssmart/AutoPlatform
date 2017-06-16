@@ -14,8 +14,8 @@ import com.gs.common.util.SessionGetUtil;
 import com.gs.common.util.UUIDUtil;
 import com.gs.common.web.ServletContextUtil;
 import com.gs.service.*;
-import com.jh.email.Mail;
-import com.jh.email.MailSender;
+import com.gs.email.Mail;
+import com.gs.email.MailSender;
 import org.activiti.engine.repository.Model;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
@@ -170,6 +170,7 @@ public class LoginController {
                         multipart.addBodyPart(part1);
                         mail.setMultipart(multipart);
                     } catch (MessagingException e) {
+                        logger.info("发送邮件失败，出现了一个异常，异常信息：" + e.getMessage());
                     }
                     MailSender mailSender = new MailSender();
                     mailSender.sendEmailByType(Constants.MAIL_TYPE, mail, Constants.MAIL_SENDER, Constants.MAIL_PASSWORD);
