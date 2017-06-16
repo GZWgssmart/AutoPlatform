@@ -37,8 +37,14 @@ public class MaintainFixController {
     @Resource
     private MaintainDetailService maintainDetailService;
 
-    private String queryRole  = Constants.COMPANY_ADMIN +"," + Constants.SYSTEM_SUPER_ADMIN +"," + Constants.SYSTEM_ORDINARY_ADMIN + "," + Constants.COMPANY_HUMAN_MANAGER +"," + Constants.COMPANY_ACCOUNTING
-            + Constants.COMPANY_EMP + "," + Constants.COMPANY_SALES;
+    private String queryRole  = Constants.COMPANY_ADMIN + ","
+            + Constants.SYSTEM_SUPER_ADMIN + ","
+            + Constants.SYSTEM_ORDINARY_ADMIN + ","
+            + Constants.COMPANY_HUMAN_MANAGER + ","
+            + Constants.COMPANY_ACCOUNTING
+            + Constants.COMPANY_EMP + ","
+            + Constants.COMPANY_SALES + ","
+            + Constants.COMPANY_RECEIVE;
 
     private String editRole = Constants.COMPANY_ADMIN + "," + Constants.COMPANY_ARTIFICER;
 
