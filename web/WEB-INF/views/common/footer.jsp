@@ -22,11 +22,11 @@
                 <div class="gtco-widget">
                     <h3>友情 链接</h3>
                     <ul class="gtco-footer-links" style="margin-top: 10px;">
-                        <li><a href="#">汽车之家</a></li>
-                        <li><a href="#">汽修平台</a></li>
-                        <li><a href="#">宝马官网</a></li>
-                        <li><a href="#">奥迪官网</a></li>
-                        <li><a href="#">奔驰官网</a></li>
+                        <li><a href="http://www.autohome.com.cn/beijing/" target="_blank">汽车之家</a></li>
+                        <li><a href="http://www.maserati.com.cn/maserati/cn/zh" target="_blank">马萨拉蒂官网</a></li>
+                        <li><a href="http://www.bmw.com.cn/zh/index.html?bmw=sea:17_baidu:brand:p_baidu_17-all-lt-bd-bz_wh_bz_tw&mz_ca=2038656&mz_sp=75Qoa&mz_kw=6269233" target="_blank">宝马官网</a></li>
+                        <li><a href="http://www.audi.cn/cn/web/zh.html" target="_blank">奥迪官网</a></li>
+                        <li><a href="http://www.mercedes-benz.com.cn/content/china/mpc/mpc_china_website/zhng/home_mpc/passengercars.html?smtid=497613064z1snkz14efqz1pdz0z" target="_blank">奔驰官网</a></li>
                     </ul>
                 </div>
             </div>

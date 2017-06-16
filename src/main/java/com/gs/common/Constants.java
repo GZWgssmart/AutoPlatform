@@ -52,7 +52,7 @@ public class Constants {
 
     public static final String COMPANY_BUYER = "companyBuyer";
 
-    public static final String SYSTEM_ORDINARY_ADMIN = "systemOrdinaryAdmin";
+    public static final String SYSTEM_ORDINARY_ADMIN = "systemOrdinaryAdmin";//普通管理员
 
     public static final String COMPANY_EMP = "companyEmp";
 
