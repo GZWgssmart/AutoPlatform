@@ -385,14 +385,15 @@ function sendCode3(val) {
         if (userPhone != null && userPhone != "" && userPhone != undefined) {
             $.get("/pwd/sendCode1?number=" + userPhone , function (data) {
                 if (data.result == "success") {
+                    getCodePwd1();
                     $("#loginSuccess").html(data.message);
-                    getCodePwd();
                 }
             }, "json");
 
         }
     }
 }
+/*获取到找回密码的验证码*/
 var pwdCode = '';
 function getCodePwd(){
     $.get("/pwd/code",
@@ -401,6 +402,15 @@ function getCodePwd(){
     })
 }
 
+/*获取到动态登入的验证码*/
+var pwdCode1 = '';
+function getCodePwd1(){
+    $.get("/pwd/code1",
+        function(data){
+            pwdCode1 = data;
+        })
+}
+/*找回密码验证用户输入的验证码*/
 function variCode(val){
     var base = new Base64();
     var code = base.decode(""+pwdCode);
@@ -418,19 +428,23 @@ function variCode(val){
 
     }
 }
+/*动态登入验证用户输入的验证码*/
 function variCode1(val){
     var base = new Base64();
-    var code = base.decode(""+pwdCode);
+    var code = base.decode(""+pwdCode1);
     if(val != '') {
         if (val == code) {
             $("#loginError1").html("");
+            return true;
         } else {
             $("#loginError1").html('您输入的验证码有误，请重新输入');
         }
     }else{
         $("#loginError1").html('请输入手机验证码');
     }
+    return false;
 }
+
 function editPwd(){
     var pwd = $("#pwd").val();
     var pwd1 = $("#pwd1").val();
@@ -475,7 +489,24 @@ $('#password1').bind('keyup', function(event) {
 });
 
 function login1() {
-    
+    var phone = $("#phone1").val();
+    var code = $("#loginCode").val();
+    if (variCode1(code)) {
+        $.get(contextPath + "/pwd/login?phone=" + phone,
+            function (data) {
+                if (data.result == "success") {
+                    if (data.message == "adminHome") {
+                        window.location.href = contextPath + "/adminHome";
+                    } else if (data.message == "customerHome") {
+                        window.location.href = contextPath + "/customerHome";
+                    }
+                } else {
+                    $("#loginError1").html(data.message);
+                }
+            }
+        );
+    }
+
 }
 
 

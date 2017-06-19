@@ -235,6 +235,11 @@ public class UserServiceImpl implements UserService {
         return userDAO.updatePwdPhone(user);
     }
 
+    @Override
+    public User queryUserByPhone(String phone) {
+        return userDAO.queryByPhone(phone);
+    }
+
 
     public void insertAdmin(User user) {
         userDAO.insertAdmin(user);

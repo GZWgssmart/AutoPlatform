@@ -1,6 +1,7 @@
 package com.gs.controller;
 
 import ch.qos.logback.classic.Logger;
+import com.gs.bean.Role;
 import com.gs.bean.User;
 import com.gs.common.Constants;
 import com.gs.common.bean.ControllerResult;
@@ -10,6 +11,10 @@ import com.gs.service.*;
 import com.gs.email.Mail;
 import com.gs.email.MailSender;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +28,7 @@ import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,6 +43,9 @@ public class EditPwdController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private RoleService roleService;
 
     @Resource
     private VilidateService vilidateService;
@@ -159,9 +168,64 @@ public class EditPwdController {
     @ResponseBody
     @RequestMapping(value = "code", method = RequestMethod.GET)
     public String getCode(HttpSession session){
-        logger.info("返回验证码");
+        logger.info("返回找回密码验证码");
         String code = (String)session.getAttribute(phone);
         return Base64Util.getBase64(code);
     }
 
+    private String phone1;
+    @ResponseBody
+    @RequestMapping("sendCode1")
+    public ControllerResult sendCode1(@Param("number") String number, HttpSession session) {
+        logger.info("手机号码动态登入，获取验证码");
+        String code = GetCodeUtil.getCode(6,0);
+        phone1 = number;
+        session.setAttribute(number,code);
+        String to = number;
+        String smsContent = "【创意科技】您的验证码为" + code + "，请于30分钟内正确输入，如非本人操作，请忽略此短信。";
+        IndustrySMS is = new IndustrySMS(to, smsContent);
+        is.execute();
+        System.out.println("code:" + code);
+        return ControllerResult.getSuccessResult("验证码发送成功，请注意查收");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "code1", method = RequestMethod.GET)
+    public String getCode1(HttpSession session){
+        logger.info("返回动态登入验证码");
+        String code = (String)session.getAttribute(phone1);
+        return Base64Util.getBase64(code);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public ControllerResult login(String phone) {
+        logger.info("用户" + phone + "使用手机动态登入");
+        Subject subject = SecurityUtils.getSubject();
+        User user = userService.queryByPhone(phone);
+        if (user != null) {
+            if (user.getUserStatus().equals("Y")) {
+                Role role = roleService.queryByUserId(user.getUserId());
+                if (!role.getRoleName().equals(Constants.CAR_OWNER)) {
+                    userService.updateLoginTime(user.getUserId());
+                    user.setUserLoginedTime(new Date());
+                    subject.login(new UsernamePasswordToken(user.getUserId(), user.getUserPwd()));
+                    Session session = subject.getSession();
+                    session.setAttribute("user", user);
+                    return ControllerResult.getSuccessResult("adminHome");
+                } else {
+                    userService.updateLoginTime(user.getUserId());
+                    user.setUserLoginedTime(new Date());
+                    subject.login(new UsernamePasswordToken(user.getUserId(), user.getUserPwd()));
+                    Session session = subject.getSession();
+                    session.setAttribute("user", user);
+                    return ControllerResult.getSuccessResult("customerHome");
+                }
+            } else {
+                return ControllerResult.getFailResult("登录失败,此账号已被冻结!");
+            }
+        } else {
+            return ControllerResult.getFailResult("登录失败,该手机号不存在!");
+        }
+    }
 }

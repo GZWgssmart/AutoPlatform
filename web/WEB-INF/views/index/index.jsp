@@ -620,7 +620,7 @@
 
                             <div class="row form-group">
                                 <div class="col-sm-8" style="margin: 0px;">
-                                    <input type="text" id="loginCode" name="code" class="form-control" onblur="variCode1(this.value)" placeholder="输入手机验证码">
+                                    <input type="text" id="loginCode" name="code" class="form-control" placeholder="输入手机验证码">
                                 </div>
                                 <div class="col-sm-4" style="margin: 0px;">
                                     <input type="button" id="codeButton1"

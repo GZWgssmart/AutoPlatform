@@ -456,7 +456,7 @@
             <div class="col-sm-3">
                 <b>联系方式：</b><span style="color: red;">${requestScope.companyTel}</span>
                 <br/>
-                <b>公司官网：</b><a href="${requestScope.company.companyWebsite}"
+                <b>公司官网：</b><a href="${requestScope.company.companyWebsite}" target="_blank"
                                title="${requestScope.company.companyName}">${requestScope.company.companyWebsite}</a>
             </div>
         </div>

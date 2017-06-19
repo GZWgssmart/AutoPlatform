@@ -157,17 +157,16 @@
                     </li>
                 </shiro:hasAnyRoles>
 
-                <shiro:hasAnyRoles name="companyAdmin, companyBuyer, systemSuperAdmin, systemOrdinaryAdmin">
+                <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, systemOrdinaryAdmin">
                     <li>
                         <a href="#"><i class="glyphicon glyphicon-bishop"></i> <span class="nav-label">供应商管理</span><span
                                 class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <shiro:hasAnyRoles name="companyAdmin, systemSuperAdmin, systemOrdinaryAdmin">
+
                                 <li><a class="J_menuItem" href="<%=path %>/supplyType/type">供应商分类管理</a>
                                 </li>
                                 <li><a class="J_menuItem" href="<%=path %>/supply/info">供应商信息管理</a>
                                 </li>
-                            </shiro:hasAnyRoles>
 
                         </ul>
                     </li>

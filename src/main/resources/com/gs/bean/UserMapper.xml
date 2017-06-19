@@ -631,4 +631,10 @@
 		]]>
 	</select>
 
+	<select id="queryUserByPhone" resultMap="userResultMap">
+		<![CDATA[
+			select * from t_user u where u.userPhone = #{phone}
+		]]>
+	</select>
+
 </mapper>
