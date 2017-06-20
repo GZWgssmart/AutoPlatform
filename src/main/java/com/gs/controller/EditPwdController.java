@@ -185,7 +185,6 @@ public class EditPwdController {
         String smsContent = "【创意科技】您的验证码为" + code + "，请于30分钟内正确输入，如非本人操作，请忽略此短信。";
         IndustrySMS is = new IndustrySMS(to, smsContent);
         is.execute();
-        System.out.println("code:" + code);
         return ControllerResult.getSuccessResult("验证码发送成功，请注意查收");
     }
 
