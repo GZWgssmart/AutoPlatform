@@ -20,7 +20,7 @@
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/plugins/city-picker/city-picker.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/people_info.css" rel="stylesheet" type="text/css">
 
 
@@ -398,8 +398,8 @@
 <script src="<%=path %>/js/select2.full.min.js"></script>
 <script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/main.js"></script>
-<script src="<%=path %>/js/city-picker.data.js"></script>
-<script src="<%=path %>/js/city-picker.js"></script>
+<script src="<%=path %>/plugins/city-picker/city-picker.data.js"></script>
+<script src="<%=path %>/plugins/city-picker/city-picker.js"></script>
 <script src="<%=path %>/js/jquery.form.min.js"></script>
 </body>
 </html>

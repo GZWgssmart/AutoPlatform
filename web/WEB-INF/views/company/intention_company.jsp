@@ -22,7 +22,7 @@
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/select2.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/plugins/city-picker/city-picker.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/js/accessories/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet"
           type="text/css">
@@ -318,8 +318,8 @@
 <script src="<%=path %>/js/zh-CN.js"></script>
 <script src="<%=path %>/js/jquery.formFill.js"></script>
 <script src="<%=path %>/js/jquery.form.min.js"></script>
-<script src="<%=path %>/js/city-picker.data.js"></script>
-<script src="<%=path %>/js/city-picker.js"></script>
+<script src="<%=path %>/plugins/city-picker/city-picker.data.js"></script>
+<script src="<%=path %>/plugins/city-picker/city-picker.js"></script>
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
