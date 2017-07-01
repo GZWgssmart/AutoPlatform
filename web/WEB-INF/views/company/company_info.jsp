@@ -15,7 +15,7 @@
     <link href="<%=path %>/css/sweet-alert.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/bootstrapValidator.min.css" rel="stylesheet" type="text/css">
-    <link href="<%=path %>/plugins/city-picker/city-picker.css" rel="stylesheet" type="text/css">
+    <link href="<%=path %>/css/city-picker.css" rel="stylesheet" type="text/css">
     <link href="<%=path %>/css/main.css" rel="stylesheet" type="text/css">
     <script type="text/javascript"
             src="http://api.map.baidu.com/api?v=2.0&ak=kb2drrx8WGDVfXy9UVEGOaNhtkGLxVEV"></script>
@@ -457,8 +457,8 @@
 <script src="<%=path %>/js/bootstrap-datetimepicker.min.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="<%=path %>/js/locales/bootstrap-datetimepicker.fr.js"></script>
-<script src="<%=path %>/plugins/city-picker/city-picker.data.js"></script>
-<script src="<%=path %>/plugins/city-picker/city-picker.js"></script>
+<script src="<%=path %>/js/city-picker.data.js"></script>
+<script src="<%=path %>/js/city-picker.js"></script>
 <script src="<%=path %>/js/company/company.js"></script>
 <script src="<%=path %>/js/main.js"></script>
 <script src="<%=path %>/js/fileinput.js"></script>
